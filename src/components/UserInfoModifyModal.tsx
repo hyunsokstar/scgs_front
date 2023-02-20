@@ -22,8 +22,11 @@ import {
   GridItem,
   HStack,
   VStack,
+  RadioGroup,
+  Radio,
 } from "@chakra-ui/react";
 import React from "react";
+import { useForm } from "react-hook-form";
 import { IUsersForUserList } from "../types";
 
 // type Props = {}
@@ -33,12 +36,24 @@ interface UserModifyModalProps {
   user: IUsersForUserList;
 }
 
+interface IForm {
+  username: string;
+  avatar_image: FileList;
+}
+
 function UserInfoModifyModal({ isOpen, onClose, user }: UserModifyModalProps) {
   const {
     isOpen: isUserModifyModalOpen,
     onClose: onUserModifyModalClose,
     onOpen: onUserModifyModalOpen,
   } = useDisclosure();
+
+  const { register, handleSubmit, watch, reset } = useForm<IForm>();
+
+  const onSubmit = (data: any) => {
+    console.log("file data : ", data);
+    // mutation.mutate();
+  };
 
   return (
     <Box>
@@ -54,15 +69,22 @@ function UserInfoModifyModal({ isOpen, onClose, user }: UserModifyModalProps) {
           <ModalHeader>유저 정보 수정</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <VStack gap={2}>
+            <VStack gap={2} as="form" onSubmit={handleSubmit(onSubmit)}>
               <FormControl>
                 <FormLabel>username</FormLabel>
-                <Input htmlSize={40} width="auto" value={user.username} />
+                <Input
+                  htmlSize={40}
+                  width="auto"
+                  value={user.username}
+                  {...register("username", {
+                    required: "Please write a username",
+                  })}
+                />
               </FormControl>
               <FormControl>
                 <FormLabel>avatar</FormLabel>
 
-                <HStack h="100px" w="160px" bgColor={"lightgrey"} gap={0}>
+                <HStack h="100px" w="100%" bgColor={"lightgrey"} gap={0}>
                   <Image
                     boxSize="80px"
                     objectFit="cover"
@@ -74,8 +96,16 @@ function UserInfoModifyModal({ isOpen, onClose, user }: UserModifyModalProps) {
                     alt="Dan Abramov"
                   />
                   <VStack>
-                    <Button colorScheme="linkedin">수정</Button>
-                    <Button colorScheme="linkedin">삭제</Button>
+                    {/* <Button colorScheme="linkedin">수정</Button> */}
+                    <Input
+                      {...register("avatar_image")}
+                      type="file"
+                      accept="image/*"
+                    />
+
+                    <Button colorScheme="linkedin" width={"90%"}>
+                      삭제
+                    </Button>
                   </VStack>
                 </HStack>
 
@@ -84,20 +114,41 @@ function UserInfoModifyModal({ isOpen, onClose, user }: UserModifyModalProps) {
               <FormControl>
                 <FormLabel>is_host</FormLabel>
                 <Stack spacing={5} direction="row">
-                  <Checkbox isChecked={user.is_host ? true : false}>
-                    주인
+                  {/* <Checkbox isChecked={user.is_host ? true : false}>
+                    직원
                   </Checkbox>
                   <Checkbox isChecked={user.is_host ? false : true}>
                     고객
-                  </Checkbox>
+                  </Checkbox> */}
+
+                  <RadioGroup
+                    defaultValue={user.is_host ? "admin" : "employee"}
+                  >
+                    <HStack>
+                      <Radio
+                        value="true"
+                        {...register("is_host", { required: true })}
+                      >
+                        관리자
+                      </Radio>
+                      <Radio
+                        value="false"
+                        {...register("is_host", { required: true })}
+                      >
+                        직원
+                      </Radio>
+                    </HStack>
+                  </RadioGroup>
                 </Stack>
               </FormControl>
               <FormControl>
                 <FormLabel>성별</FormLabel>
-                <Stack spacing={5} direction="row">
-                  <Checkbox isChecked={user.gender == "male"}>남자</Checkbox>
-                  <Checkbox isChecked={user.gender == "feamale"}>여자</Checkbox>
-                </Stack>
+                <RadioGroup defaultValue={user.gender ? "male" : "female"}>
+                  <Stack spacing={5} direction="row">
+                    <Radio value="male">남자</Radio>
+                    <Radio value="female">여자</Radio>
+                  </Stack>
+                </RadioGroup>
               </FormControl>
               <FormControl>
                 <FormLabel>language</FormLabel>
@@ -113,14 +164,21 @@ function UserInfoModifyModal({ isOpen, onClose, user }: UserModifyModalProps) {
                   <option value="france">프랑스</option>
                 </Select>
               </FormControl>
+              <FormControl>
+                <Button
+                  m={"auto"}
+                  mt={5}
+                  w={"100%"}
+                  colorScheme="green"
+                  type="submit"
+                >
+                  수정
+                </Button>
+              </FormControl>
             </VStack>
           </ModalBody>
 
-          <ModalFooter>
-            <Button m={"auto"} w={"100%"} colorScheme="green">
-              수정
-            </Button>
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </Box>
