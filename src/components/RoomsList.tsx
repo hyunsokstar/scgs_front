@@ -29,7 +29,7 @@ function RoomsList({}: Props) {
     return (
         <div>
             <Grid
-                mt={10}
+                // mt={10}
                 px={40}
                 columnGap={4}
                 rowGap={8}

@@ -75,7 +75,7 @@ function PhotoUploadButton({}: Props) {
         <div>
             <Box
                 pb={40}
-                mt={10}
+                mt={0}
                 px={{
                     base: 10,
                     lg: 40,

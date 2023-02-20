@@ -8,6 +8,8 @@ export default function Home() {
         <Box>
             <br />
             <UsersList />
+
+            <br /><br />
             <PhotoUploadButton />
             <RoomsList />
         </Box>
