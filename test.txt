@@ -1,0 +1,5 @@
+product
+manager
+email
+phone_number
+estimate_content
