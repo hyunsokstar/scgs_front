@@ -1,21 +1,18 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-
 import { Box, Grid, Heading, Skeleton, Image, GridItem, HStack, VStack, Text, Avatar, Container } from "@chakra-ui/react";
-// import { getRoom } from "../api";
-// import { IRoomDetail } from "../types";
-
 import { getRoom, getRoomReviews } from "../api";
 import { IReview, IRoomDetail } from "../types";
 import { FaStar } from "react-icons/fa";
-
 import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
+
 export default function RoomDetail() {
     const { roomPk } = useParams();
     const { isLoading, data } = useQuery<IRoomDetail>([`rooms`, roomPk], getRoom);
+    
     const { data: reviewsData, isLoading: isReviewsLoading } = useQuery<IReview[]>([`rooms`, roomPk, `reviews`], getRoomReviews);
     const [dates, setDates] = useState<Date>();
     console.log("date : ", dates);

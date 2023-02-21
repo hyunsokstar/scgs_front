@@ -11,6 +11,12 @@ const instance = axios.create({
 // estimate 리스트 요청
 export const getEstimates = () =>
   instance.get("estimates/").then((response) => response.data);
+  
+  export const getOneEstimate = ({ queryKey }: QueryFunctionContext) => {
+    const [_, estimatePk] = queryKey;
+    console.log("roomPestimatePkk : ", estimatePk);
+    return instance.get(`estimates/${estimatePk}`).then((response) => response.data);
+  };
 
 export const getRooms = () =>
   instance.get("rooms/").then((response) => response.data);

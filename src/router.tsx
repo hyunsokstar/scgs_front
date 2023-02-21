@@ -15,64 +15,69 @@ import TinyMcePage from "./routes/TinyMcePage";
 import UploadPhotos from "./routes/UploadPhotos";
 import EstimateRequire from "./routes/EstimateRequire";
 import Estimates from "./routes/Estimates";
+import EstimateDetail from "./routes/EstimateDetail";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <Root />,
-        errorElement: <NotFound />,
-        children: [
-            {
-                path: "",
-                element: <Home />,
-            },
-            {
-                path: "rooms/:roomPk",
-                element: <RoomDetail />,
-            },
-            {
-                path: "rooms/upload",
-                element: <UploadRoom />,
-            },
-            {
-                path: "/building_management",
-                element: <BuildingManagement />,
-            },
-            {
-                path: "/test/react-draft",
-                element: <ReactDraft />,
-            },
-            {
-                path: "/test/sun-editor",
-                element: <SunEditorPage />,
-            },
-            {
-                path: "/test/lexical-editor",
-                element: <LexicalEditorPage />,
-            },
-            {
-                path: "/test/tiptap-editor",
-                element: <TipTabPage />,
-            },
-            {
-                path: "/test/tinymce-editor",
-                element: <TinyMcePage />,
-            },
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "rooms/:roomPk",
+        element: <RoomDetail />,
+      },
+      {
+        path: "rooms/upload",
+        element: <UploadRoom />,
+      },
+      {
+        path: "/building_management",
+        element: <BuildingManagement />,
+      },
+      {
+        path: "/test/react-draft",
+        element: <ReactDraft />,
+      },
+      {
+        path: "/test/sun-editor",
+        element: <SunEditorPage />,
+      },
+      {
+        path: "/test/lexical-editor",
+        element: <LexicalEditorPage />,
+      },
+      {
+        path: "/test/tiptap-editor",
+        element: <TipTabPage />,
+      },
+      {
+        path: "/test/tinymce-editor",
+        element: <TinyMcePage />,
+      },
 
-            {
-                path: "rooms/:roomPk/photos",
-                element: <UploadPhotos />,
-            },
-            {
-                path:"estimate_require",
-                element:<EstimateRequire />
-            },
-            {
-                path:"estimates",
-                element:<Estimates />
-            }
-        ],
-    },
+      {
+        path: "rooms/:roomPk/photos",
+        element: <UploadPhotos />,
+      },
+      {
+        path: "estimate_require",
+        element: <EstimateRequire />,
+      },
+      {
+        path: "estimates",
+        element: <Estimates />,
+      },
+      {
+        path: "estimates/:estimatePk",
+        element: <EstimateDetail />,
+      },
+    ],
+  },
 ]);
 
 export default router;
