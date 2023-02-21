@@ -1,5 +1,5 @@
-product
-manager
-email
-phone_number
-estimate_content
+앱을 추가할 거냐 
+
+기존 로직을 활용할 거냐 
+
+requiremets

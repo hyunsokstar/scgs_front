@@ -8,6 +8,10 @@ const instance = axios.create({
     withCredentials: true,
 });
 
+
+// estimate 리스트 요청
+export const getEstimates = () => instance.get("estimates/").then((response) => response.data);
+
 export const getRooms = () => instance.get("rooms/").then((response) => response.data);
 
 export const getRoom = ({ queryKey }: QueryFunctionContext) => {

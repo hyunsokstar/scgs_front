@@ -28,7 +28,7 @@ interface IForm {
   completion_status: string;
 }
 
-function EstimateRequest({}: Props): ReactElement {
+function EstimateRequire({}: Props): ReactElement {
   const { register, handleSubmit, watch, reset } = useForm<IForm>();
 
   const onSubmit = (data: any) => {
@@ -155,4 +155,4 @@ function EstimateRequest({}: Props): ReactElement {
   );
 }
 
-export default EstimateRequest;
+export default EstimateRequire;

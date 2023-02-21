@@ -25,6 +25,7 @@ import useUser from "../lib/useUser";
 import { logOut } from "../api";
 import { useQueryClient } from "@tanstack/react-query";
 import HeadMenus from "./HeadMenus";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 // HeadMenus
 
 export default function Header() {
@@ -91,6 +92,33 @@ export default function Header() {
         {/* <img src="https://www.scgs.co.kr/img/logo.png" alt="" /> */}
       </Box>
       <HStack spacing={2}>
+        {/* <Box>
+          <Link to="/estimate_require">견적 문의</Link>
+        </Box> */}
+
+        <Menu>
+          <MenuButton
+            px={4}
+            py={2}
+            transition="all 0.2s"
+            borderRadius="md"
+            borderWidth="1px"
+            _hover={{ bg: "gray.400" }}
+            _expanded={{ bg: "blue.400" }}
+            _focus={{ boxShadow: "outline" }}
+          >
+            견적 <ChevronDownIcon />
+          </MenuButton>
+          <MenuList>
+            <MenuItem>
+              <Link to="/estimates">견적 요청 리스트</Link>
+            </MenuItem>
+            <MenuItem>
+              <Link to="/estimate_require">견적 문의</Link>
+            </MenuItem>
+          </MenuList>
+        </Menu>
+
         <HeadMenus />
 
         <IconButton

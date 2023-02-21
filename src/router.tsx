@@ -13,7 +13,8 @@ import LexicalEditorPage from "./routes/LexicalEditorPage";
 import TipTabPage from "./routes/TipTabPage";
 import TinyMcePage from "./routes/TinyMcePage";
 import UploadPhotos from "./routes/UploadPhotos";
-import EstimateRequest from "./routes/EstimateRequest";
+import EstimateRequire from "./routes/EstimateRequire";
+import Estimates from "./routes/Estimates";
 
 const router = createBrowserRouter([
     {
@@ -63,8 +64,12 @@ const router = createBrowserRouter([
                 element: <UploadPhotos />,
             },
             {
-                path:"estimate_request",
-                element:<EstimateRequest />
+                path:"estimate_require",
+                element:<EstimateRequire />
+            },
+            {
+                path:"estimates",
+                element:<Estimates />
             }
         ],
     },
