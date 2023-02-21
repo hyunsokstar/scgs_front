@@ -25,7 +25,7 @@ interface IEstimateRequire {
   phone_number: string;
   estimate_content: string;
   content: string;
-  completion_status: string;
+  estimate_require_completion: string;
 }
 
 function Estimates({}: Props): ReactElement {

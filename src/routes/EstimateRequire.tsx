@@ -1,5 +1,8 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
+
 import {
   Container,
+  useToast,
   Divider,
   FormControl,
   FormHelperText,
@@ -15,6 +18,8 @@ import {
 } from "@chakra-ui/react";
 import React, { ReactElement } from "react";
 import { useForm } from "react-hook-form";
+import { insertEstimateRequire } from "../api";
+import { useNavigate } from "react-router-dom";
 
 interface Props {}
 
@@ -25,15 +30,55 @@ interface IForm {
   email: string;
   phone_number: string;
   estimate_content: string;
-  completion_status: string;
+  // estimate_require_completion: string;
+  estimate_require_completion: string;
+  memo: string;
 }
 
 function EstimateRequire({}: Props): ReactElement {
   const { register, handleSubmit, watch, reset } = useForm<IForm>();
+  const toast = useToast();
+  const navigate = useNavigate();
 
-  const onSubmit = (data: any) => {
-    console.log("data : ", data);
+  const onSubmit = ({
+    title,
+    product,
+    manager,
+    email,
+    phone_number,
+    estimate_content,
+    estimate_require_completion,
+    memo,
+  }: IForm) => {
+    mutation.mutate({
+      title,
+      product,
+      manager,
+      email,
+      phone_number,
+      estimate_content,
+      estimate_require_completion,
+      memo,
+    });
   };
+
+  const mutation = useMutation(insertEstimateRequire, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
+
+      toast({
+        title: "welcome back!",
+        status: "success",
+      });
+      navigate('/estimates')
+    },
+    onError: (error) => {
+      console.log("mutation has an error");
+    },
+  });
 
   return (
     <div>
@@ -119,10 +164,16 @@ function EstimateRequire({}: Props): ReactElement {
               <FormLabel>처리 여부</FormLabel>
               <RadioGroup>
                 <HStack>
-                  <Radio value="uncomplete" {...register("completion_status")}>
+                  <Radio
+                    value="uncomplete"
+                    {...register("estimate_require_completion")}
+                  >
                     처리전
                   </Radio>
-                  <Radio value="complete" {...register("completion_status")}>
+                  <Radio
+                    value="complete"
+                    {...register("estimate_require_completion")}
+                  >
                     처리 완료
                   </Radio>
                 </HStack>
@@ -145,11 +196,10 @@ function EstimateRequire({}: Props): ReactElement {
               colorScheme="green"
               type="submit"
             >
-              수정
+              견적 요청 저장
             </Button>
           </FormControl>
         </VStack>
-        
       </Container>
     </div>
   );
