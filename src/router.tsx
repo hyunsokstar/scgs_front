@@ -13,6 +13,7 @@ import LexicalEditorPage from "./routes/LexicalEditorPage";
 import TipTabPage from "./routes/TipTabPage";
 import TinyMcePage from "./routes/TinyMcePage";
 import UploadPhotos from "./routes/UploadPhotos";
+import EstimateRequest from "./routes/EstimateRequest";
 
 const router = createBrowserRouter([
     {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
                 path: "rooms/:roomPk/photos",
                 element: <UploadPhotos />,
             },
+            {
+                path:"estimate_request",
+                element:<EstimateRequest />
+            }
         ],
     },
 ]);

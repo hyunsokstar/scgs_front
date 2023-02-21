@@ -19,6 +19,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { getUsersList } from "../api";
 import { IUsersForUserList } from "../types";
+import UserInfoDeleteModal from "./UserInfoDeleteModal";
 import UserInfoModifyModal from "./UserInfoModifyModal";
 
 function UsersList() {
@@ -30,6 +31,12 @@ function UsersList() {
     isOpen: isUserModifyModalOpen,
     onClose: onUserModifyModalClose,
     onOpen: onUserModifyModalOpen,
+  } = useDisclosure();
+
+  const {
+    isOpen: isUserDeleteModalOpen,
+    onClose: onUserDeleteModalClose,
+    onOpen: onUserDeleteModalOpen,
   } = useDisclosure();
 
   return (
@@ -79,6 +86,7 @@ function UsersList() {
                     <Td>{user.gender}</Td>
                     <Td>{user.language}</Td>
                     <Td>
+                      {/* 수정 */}
                       <UserInfoModifyModal
                         isOpen={isUserModifyModalOpen}
                         onClose={onUserModifyModalClose}
@@ -86,7 +94,12 @@ function UsersList() {
                       />
                     </Td>
                     <td>
-                      <Button>삭제</Button>
+                      {/* <Button>삭제</Button> */}
+                      <UserInfoDeleteModal
+                        isOpen={isUserDeleteModalOpen}
+                        onClose={onUserDeleteModalClose}
+                        user={user}
+                      />
                     </td>
                   </Tr>
                 );
