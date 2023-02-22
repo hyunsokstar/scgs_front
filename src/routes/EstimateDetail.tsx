@@ -15,68 +15,47 @@ import {
   Text,
   VStack,
   Button,
+  Editable,
+  EditablePreview,
+  EditableInput,
 } from "@chakra-ui/react";
 import React, { ReactElement } from "react";
 import { useForm } from "react-hook-form";
-import { getOneEstimate, insertEstimateRequire } from "../api";
+import {
+  getOneEstimate,
+  insertEstimateRequire,
+  updateEstimateRequire,
+} from "../api";
 import { useNavigate, useParams } from "react-router-dom";
-import { EstimateRequire, IRoomDetail } from "../types";
+import { EstimateRequire, EstimateRequireForm, IRoomDetail } from "../types";
+
+import { VisuallyHidden, VisuallyHiddenInput } from "@chakra-ui/react";
 
 interface Props {}
 
-interface EstimateRequireForm {
-  title: string;
-  product: string;
-  manager: string;
-  email: string;
-  phone_number: string;
-  estimate_content: string;
-  // estimate_require_completion: string;
-  estimate_require_completion: string;
-  memo: string;
-}
-
 function EstimateDetail({}: Props): ReactElement {
   const { estimatePk } = useParams();
-  //   const { estimatePk } = useParams();
+  // const { estimatePk } = useParams();
 
   const { register, handleSubmit, watch, reset } =
     useForm<EstimateRequireForm>();
 
   const { data: estimateData, isLoading: isEstimateDataLoading } =
     useQuery<EstimateRequire>(
-      [`getOneEstimate`, estimatePk, `reviews`],
+      [`getOneEstimate`, estimatePk, `estimate_detail`],
       getOneEstimate
     );
 
-  console.log("estimateData : ", estimateData);
+  // console.log("estimateData : ", estimateData);
+  console.log("watch", watch());
 
   const toast = useToast();
   const navigate = useNavigate();
 
-  const onSubmit = ({
-    title,
-    product,
-    manager,
-    email,
-    phone_number,
-    estimate_content,
-    estimate_require_completion,
-    memo,
-  }: EstimateRequireForm) => {
-    mutation.mutate({
-      title,
-      product,
-      manager,
-      email,
-      phone_number,
-      estimate_content,
-      estimate_require_completion,
-      memo,
-    });
-  };
-
-  const mutation = useMutation(insertEstimateRequire, {
+  // 에러 메세지
+  // '({ title, product, manager, email, phone_number, content, estimate_require_completion, memo, }: EstimateRequireForm, { estimatePk }: any) => Promise<any>'
+  // 형식의 인수는 'MutationKey' 형식의 매개 변수에 할당될 수 없습니다.
+  const mutation = useMutation(updateEstimateRequire, {
     onMutate: () => {
       console.log("mutation starting");
     },
@@ -87,12 +66,39 @@ function EstimateDetail({}: Props): ReactElement {
         title: "welcome back!",
         status: "success",
       });
-      navigate("/estimates");
+      // navigate("/estimates");
     },
     onError: (error) => {
       console.log("mutation has an error");
     },
   });
+
+  const onSubmit = ({
+    estimatePk,
+    title,
+    product,
+    manager,
+    email,
+    phone_number,
+    content,
+    estimate_require_completion,
+    memo,
+  }: EstimateRequireForm) => {
+    console.log("estimatePk : ", estimatePk);
+    console.log("estimate_require_completion : ", estimate_require_completion);
+
+    mutation.mutate({
+      estimatePk,
+      title,
+      product,
+      manager,
+      email,
+      phone_number,
+      content,
+      estimate_require_completion,
+      memo,
+    });
+  };
 
   return (
     <div>
@@ -101,16 +107,37 @@ function EstimateDetail({}: Props): ReactElement {
           견적 문의
         </Text>
         <VStack gap={2} as="form" onSubmit={handleSubmit(onSubmit)}>
+          <VisuallyHidden>
+            <FormControl>
+              <HStack>
+                <Input
+                  type="text"
+                  {...register("estimatePk", {
+                    // required: "Please write a username",
+                    required: "Please write a username",
+                  })}
+                  defaultValue={estimatePk}
+                />
+              </HStack>
+            </FormControl>
+          </VisuallyHidden>
+
           <FormControl>
             <HStack>
-              <FormLabel>제목</FormLabel>
-              <Input
+              <FormLabel>제목 {estimateData?.title}</FormLabel>
+              {/* <Input
                 type="text"
-                {...register("title", {
-                  required: "Please write a username",
-                })}
-                value={estimateData?.title}
-              />
+                {...register("title", {})}
+                defaultValue={estimateData?.title}
+              /> */}
+
+              <Editable defaultValue={estimateData?.title}>
+                <EditablePreview />
+                <EditableInput
+                  {...register("title", {})}
+                  value={estimateData?.title}
+                />
+              </Editable>
             </HStack>
           </FormControl>
 
@@ -120,8 +147,9 @@ function EstimateDetail({}: Props): ReactElement {
               <Input
                 type="text"
                 {...register("product", {
-                  required: "Please write a username",
+                  // required: "Please write a username",
                 })}
+                defaultValue={estimateData?.product}
               />
             </HStack>
           </FormControl>
@@ -132,8 +160,9 @@ function EstimateDetail({}: Props): ReactElement {
               <Input
                 type="text"
                 {...register("manager", {
-                  required: "Please write a username",
+                  // required: "Please write a username",
                 })}
+                defaultValue={estimateData?.manager}
               />
             </HStack>
           </FormControl>
@@ -144,8 +173,9 @@ function EstimateDetail({}: Props): ReactElement {
               <Input
                 type="text"
                 {...register("email", {
-                  required: "Please write a username",
+                  // required: "Please write a username",
                 })}
+                defaultValue={estimateData?.email}
               />
             </HStack>
           </FormControl>
@@ -156,8 +186,9 @@ function EstimateDetail({}: Props): ReactElement {
               <Input
                 type="text"
                 {...register("phone_number", {
-                  required: "Please write a username",
+                  // required: "Please write a username",
                 })}
+                defaultValue={estimateData?.phone_number}
               />
             </HStack>
           </FormControl>
@@ -166,9 +197,10 @@ function EstimateDetail({}: Props): ReactElement {
             <HStack>
               <FormLabel>내용</FormLabel>
               <Textarea
+                defaultValue={estimateData?.content}
                 placeholder="내용"
-                {...register("estimate_content", {
-                  required: "Please write a username",
+                {...register("content", {
+                  // required: "Please write a username",
                 })}
               />
             </HStack>
@@ -176,8 +208,17 @@ function EstimateDetail({}: Props): ReactElement {
 
           <FormControl>
             <HStack>
-              <FormLabel>처리 여부</FormLabel>
-              <RadioGroup>
+              <FormLabel>
+                처리 여부
+                {estimateData?.estimate_require_completion}
+              </FormLabel>
+              <RadioGroup
+                defaultValue={
+                  estimateData?.estimate_require_completion === "complete"
+                    ? "complete"
+                    : "uncomplete"
+                }
+              >
                 <HStack>
                   <Radio
                     value="uncomplete"
@@ -199,7 +240,11 @@ function EstimateDetail({}: Props): ReactElement {
           <FormControl>
             <HStack>
               <FormLabel>메모</FormLabel>
-              <Textarea placeholder="메모" />
+              <Textarea
+                placeholder="메모"
+                defaultValue={estimateData?.memo}
+                // {...register("memo")}
+              />
             </HStack>
           </FormControl>
 

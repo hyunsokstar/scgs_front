@@ -1,12 +1,24 @@
+export interface EstimateRequireForm {
+  estimatePk: string;
+  title: string;
+  product: string;
+  manager: string;
+  email: string;
+  phone_number: string;
+  content: string;
+  estimate_require_completion: string;
+  memo: string;
+}
+
 export interface EstimateRequire {
   title: string;
   product: string;
   manager: string;
   email: string;
   phone_number: string;
-  estimate_content: string;
   content: string;
   estimate_require_completion: string;
+  memo: string;
 }
 
 export interface IRoomPhotoPhoto {

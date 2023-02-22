@@ -2,6 +2,7 @@ import axios from "axios";
 import Cookie from "js-cookie";
 
 import { QueryFunctionContext } from "@tanstack/react-query";
+import { EstimateRequire, EstimateRequireForm } from "./types";
 
 const instance = axios.create({
   baseURL: "http://127.0.0.1:8000/api/v1/",
@@ -11,12 +12,14 @@ const instance = axios.create({
 // estimate 리스트 요청
 export const getEstimates = () =>
   instance.get("estimates/").then((response) => response.data);
-  
-  export const getOneEstimate = ({ queryKey }: QueryFunctionContext) => {
-    const [_, estimatePk] = queryKey;
-    console.log("roomPestimatePkk : ", estimatePk);
-    return instance.get(`estimates/${estimatePk}`).then((response) => response.data);
-  };
+
+export const getOneEstimate = ({ queryKey }: QueryFunctionContext) => {
+  const [_, estimatePk] = queryKey;
+  console.log("roomPestimatePk : ", estimatePk);
+  return instance
+    .get(`estimates/${estimatePk}`)
+    .then((response) => response.data);
+};
 
 export const getRooms = () =>
   instance.get("rooms/").then((response) => response.data);
@@ -60,16 +63,64 @@ export const logOut = () =>
 
 //
 
-interface IEstimateRequire {
-  title: string;
-  product: string;
-  manager: string;
-  email: string;
-  phone_number: string;
-  estimate_content: string;
-  estimate_require_completion: string;
-  memo: string;
-}
+// interface EstimateRequireForm {
+//   title: string;
+//   product: string;
+//   manager: string;
+//   email: string;
+//   phone_number: string;
+//   content: string;
+//   estimate_require_completion: string;
+//   memo: string;
+// }
+
+// export const getRoomReviews = ({ queryKey }: QueryFunctionContext) => {
+//   const [_, roomPk] = queryKey;
+//   return instance
+//     .get(`rooms/${roomPk}/reviews`)
+//     .then((response) => response.data);
+// };
+
+export const updateEstimateRequire = (
+  // { queryKey }: QueryFunctionContext,
+  {
+    estimatePk,
+    title,
+    product,
+    manager,
+    email,
+    phone_number,
+    content,
+    estimate_require_completion,
+    memo,
+  }: EstimateRequireForm
+) => {
+  // const [_, estimatePk] = queryKey;
+
+  console.log("api estimate_require_completion : ", estimate_require_completion);
+  
+
+  return instance
+    .put(
+      `/estimates/${estimatePk}`,
+      {
+        title,
+        product,
+        manager,
+        email,
+        phone_number,
+        content,
+        estimate_require_completion,
+        memo,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
 
 export const insertEstimateRequire = ({
   title,
@@ -77,10 +128,10 @@ export const insertEstimateRequire = ({
   manager,
   email,
   phone_number,
-  estimate_content,
+  content,
   estimate_require_completion,
   memo,
-}: IEstimateRequire) =>
+}: EstimateRequire) =>
   instance
     .post(
       `/estimates/`,
@@ -90,7 +141,7 @@ export const insertEstimateRequire = ({
         manager,
         email,
         phone_number,
-        estimate_content,
+        content,
         estimate_require_completion,
         memo,
       },

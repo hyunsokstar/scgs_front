@@ -20,23 +20,23 @@ import React, { ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import { insertEstimateRequire } from "../api";
 import { useNavigate } from "react-router-dom";
+import { EstimateRequire } from "../types";
 
 interface Props {}
 
-interface IForm {
-  title: string;
-  product: string;
-  manager: string;
-  email: string;
-  phone_number: string;
-  estimate_content: string;
-  // estimate_require_completion: string;
-  estimate_require_completion: string;
-  memo: string;
-}
+// interface IForm {
+//   title: string;
+//   product: string;
+//   manager: string;
+//   email: string;
+//   phone_number: string;
+//   estimate_content: string;
+//   estimate_require_completion: string;
+//   memo: string;
+// }
 
-function EstimateRequire({}: Props): ReactElement {
-  const { register, handleSubmit, watch, reset } = useForm<IForm>();
+function EstimateRequireForm({}: Props): ReactElement {
+  const { register, handleSubmit, watch, reset } = useForm<EstimateRequire>();
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -46,17 +46,17 @@ function EstimateRequire({}: Props): ReactElement {
     manager,
     email,
     phone_number,
-    estimate_content,
+    content,
     estimate_require_completion,
     memo,
-  }: IForm) => {
+  }: EstimateRequire) => {
     mutation.mutate({
       title,
       product,
       manager,
       email,
       phone_number,
-      estimate_content,
+      content,
       estimate_require_completion,
       memo,
     });
@@ -152,7 +152,7 @@ function EstimateRequire({}: Props): ReactElement {
               <FormLabel>내용</FormLabel>
               <Textarea
                 placeholder="내용"
-                {...register("estimate_content", {
+                {...register("content", {
                   required: "Please write a username",
                 })}
               />
@@ -205,4 +205,4 @@ function EstimateRequire({}: Props): ReactElement {
   );
 }
 
-export default EstimateRequire;
+export default EstimateRequireForm;
