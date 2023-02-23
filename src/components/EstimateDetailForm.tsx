@@ -1,18 +1,18 @@
 import { FormControl, FormLabel, HStack, Input, VisuallyHidden, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { EstimateRequireForm } from "../types";
+import { EstimateRequire, EstimateRequireForm } from "../types";
 
 type Props = {
-    title?: string;
+    data?: EstimateRequire;
 };
 
-const EstimateDetailForm = ({ title }: Props) => {
-    const { register, handleSubmit, watch, reset } = useForm<EstimateRequireForm>({
+const EstimateDetailForm = ({ data }: Props) => {
+    const { register, handleSubmit, watch, reset } = useForm<EstimateRequire>({
         // mode: "onSubmit",
         // estimatePk, title, product, manager, email, phone_number, content, estimate_require_completion, memo
         defaultValues: {
-            title: "hi",
+            title: data?.title,
             // product: estimateData?.product,
             // email: estimateData?.email,
             // manager: estimateData?.manager,
