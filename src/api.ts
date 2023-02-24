@@ -9,7 +9,11 @@ const instance = axios.create({
     withCredentials: true,
 });
 
-// estimate 리스트 요청
+export const deleteOneEstimates =  (estimatePk: number) => {
+    console.log("estimatePk : ", estimatePk);
+    return  instance.delete(`estimates/${estimatePk}`).then((response) => response.data);
+};
+
 export const getEstimates = () => instance.get("estimates/").then((response) => response.data);
 
 export const getOneEstimate = async ({ queryKey }: QueryFunctionContext) => {
@@ -35,7 +39,6 @@ export const getUsersList = () => instance.get(`users`).then((response) => respo
 
 export const getMe = () => instance.get(`users/me`).then((response) => response.data);
 
-// export const logOut = () => instance.post(`users/log-out`).then((response) => response.data);
 export const logOut = () =>
     instance
         .post(`users/log-out`, null, {
@@ -45,40 +48,7 @@ export const logOut = () =>
         })
         .then((response) => response.data);
 
-//
-// export interface IUsernameLoginSuccess {
-//     ok: string;
-// }
-// export interface IUsernameLoginError {
-//     error: string;
-// }
-
-//
-
-// interface EstimateRequireForm {
-//   title: string;
-//   product: string;
-//   manager: string;
-//   email: string;
-//   phone_number: string;
-//   content: string;
-//   estimate_require_completion: string;
-//   memo: string;
-// }
-
-// export const getRoomReviews = ({ queryKey }: QueryFunctionContext) => {
-//   const [_, roomPk] = queryKey;
-//   return instance
-//     .get(`rooms/${roomPk}/reviews`)
-//     .then((response) => response.data);
-// };
-
-export const updateEstimateRequire = (
-    // { queryKey }: QueryFunctionContext,
-    { estimatePk, title, product, manager, email, phone_number, content, estimate_require_completion, memo }: EstimateRequireForm
-) => {
-    // const [_, estimatePk] = queryKey;
-
+export const updateEstimateRequire = ({ estimatePk, title, product, manager, email, phone_number, content, estimate_require_completion, memo }: EstimateRequireForm) => {
     console.log("api estimate_require_completion : ", estimate_require_completion);
 
     return instance
