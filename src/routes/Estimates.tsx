@@ -1,12 +1,33 @@
-import { Button, Container, useToast } from "@chakra-ui/react";
-import React, { ReactElement, useEffect } from "react";
+import { Box, Button, Container, useToast } from "@chakra-ui/react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, Text } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteOneEstimates, getEstimates } from "../api";
+import PaginationComponent from "../components/PaginationComponent";
 
 interface Props {}
 
+// interface IEstimateRequire {}
+
 interface IEstimateRequire {
+    data: [
+        {
+            pk: number;
+            title: string;
+            product: string;
+            manager: string;
+            email: string;
+            phone_number: string;
+            estimate_content: string;
+            content: string;
+            estimate_require_completion: string;
+            total_count: number;
+        }
+    ];
+    total_count: number;
+}
+
+interface IEstimateRow {
     pk: number;
     title: string;
     product: string;
@@ -16,16 +37,21 @@ interface IEstimateRequire {
     estimate_content: string;
     content: string;
     estimate_require_completion: string;
+    total_count: number;
 }
 
 function Estimates({}: Props): ReactElement {
+    const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+
     const {
         isLoading,
         data: estimateList,
-        refetch:estimateListRefatch,
-    } = useQuery<IEstimateRequire[]>(["estimates"], getEstimates, {
+        refetch: estimateListRefatch,
+    } = useQuery<IEstimateRequire>(["estimates", currentPageNum], getEstimates, {
         enabled: true,
     });
+    console.log("estimateList at front : ", estimateList);
+    console.log("estimateList.data at front : ", estimateList?.data);
 
     const toast = useToast();
 
@@ -43,15 +69,12 @@ function Estimates({}: Props): ReactElement {
     const deleteHandelr = (pk: number) => {
         const response = deleteMutation.mutate(pk);
         console.log("response :", response);
-        // estimateListRefatch();
 
         toast({
             title: "delete 성공!",
             status: "success",
         });
     };
-
-    console.log("견적 요청 리스트 데이터 : ", estimateList);
 
     return (
         <div>
@@ -64,6 +87,7 @@ function Estimates({}: Props): ReactElement {
                         <TableCaption>Imperial to metric conversion factors</TableCaption>
                         <Thead>
                             <Tr>
+                                <Th>id</Th>
                                 <Th>제목</Th>
                                 <Th>제품</Th>
                                 <Th>담당자(이메일)</Th>
@@ -73,9 +97,10 @@ function Estimates({}: Props): ReactElement {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {estimateList?.map((row: IEstimateRequire) => {
+                            {estimateList?.data.map((row: IEstimateRow) => {
                                 return (
                                     <Tr>
+                                        <Td>{row.pk}</Td>
                                         <Td>{row.title}</Td>
                                         <Td>{row.product}</Td>
                                         <Td>{row.manager}</Td>
@@ -93,6 +118,10 @@ function Estimates({}: Props): ReactElement {
                         {deleteMutation.isSuccess && <p style={{ color: "green" }}>Deleted the post</p>}
                     </Table>
                 </TableContainer>
+            </Container>
+
+            <Container maxW="80%" bg="blue.200" color="#262626" mt={2}>
+                <PaginationComponent current_page_num={currentPageNum} total_page_num={estimateList?.total_count} setCurrentPageNum={setCurrentPageNum} />
             </Container>
         </div>
     );

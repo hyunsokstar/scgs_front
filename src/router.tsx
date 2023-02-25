@@ -16,6 +16,9 @@ import UploadPhotos from "./routes/UploadPhotos";
 import EstimateRequire from "./routes/EstimateRequire";
 import Estimates from "./routes/Estimates";
 import EstimateDetail from "./routes/EstimateDetail";
+import Pagination from "./components/PaginationComponent";
+import PaginationComponent from "./components/PaginationComponent";
+import SamplePageForPagination from "./routes/SamplePageForPagination";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +79,12 @@ const router = createBrowserRouter([
         path: "estimates/:estimatePk",
         element: <EstimateDetail />,
       },
+
+      {
+        path: "sample/",
+        element:<SamplePageForPagination />
+      }
+
     ],
   },
 ]);

@@ -9,12 +9,35 @@ const instance = axios.create({
     withCredentials: true,
 });
 
-export const deleteOneEstimates =  (estimatePk: number) => {
+export const deleteOneEstimates = (estimatePk: number) => {
     console.log("estimatePk : ", estimatePk);
-    return  instance.delete(`estimates/${estimatePk}`).then((response) => response.data);
+    return instance.delete(`estimates/${estimatePk}`).then((response) => response.data);
 };
 
-export const getEstimates = () => instance.get("estimates/").then((response) => response.data);
+// export const getEstimates = () => instance.get("estimates/").then((response) => response.data);
+export const getEstimates = async ({ queryKey }: QueryFunctionContext) => {
+    console.log("estimate 요청 확인 at api");
+
+    const [_, pageNum] = queryKey;
+    console.log("pageNum : ", pageNum);
+    return await instance.get(`estimates/?page=${pageNum}`).then((response) => {
+        console.log("response at api: ", response);
+
+        // const response_data = [
+        //     ...response.data.estimateRequires,
+        //     {
+        //         "total_count": response.data.totalCount
+        //     }
+        // ]
+
+        const response_data = {
+            total_count: response.data.totalCount,
+            data: response.data.estimateRequires,
+        };
+
+        return response_data;
+    });
+};
 
 export const getOneEstimate = async ({ queryKey }: QueryFunctionContext) => {
     const [_, estimatePk] = queryKey;
