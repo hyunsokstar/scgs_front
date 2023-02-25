@@ -1,14 +1,21 @@
-import React from 'react'
-import PaginationComponent from '../components/PaginationComponent'
+import React, { useState } from 'react';
+import Pagination from 'react-responsive-pagination';
+import './pagination.css'; // see pagination.css examples below
 
-type Props = {}
+export default function MyApp() {
+  const totalPages = 120;
+  const [currentPage, setCurrentPage] = useState(1);
 
-function SamplePageForPagination({}: Props) {
+  function handlePageChange(page:number) {
+    setCurrentPage(page);
+    // ... do something with `page`
+  }
+
   return (
-    <div>
-      {/* <PaginationComponent current_page={10} total_page={100} /> */}
-    </div>
-  )
+    <Pagination
+      total={totalPages}
+      current={currentPage}
+      onPageChange={page => handlePageChange(page)}
+    />
+  );
 }
-
-export default SamplePageForPagination

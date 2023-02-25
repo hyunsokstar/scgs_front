@@ -15,12 +15,12 @@ export const deleteOneEstimates = (estimatePk: number) => {
 };
 
 // export const getEstimates = () => instance.get("estimates/").then((response) => response.data);
-export const getEstimates = async ({ queryKey }: QueryFunctionContext) => {
+export const getEstimates = ({ queryKey }: QueryFunctionContext) => {
     console.log("estimate 요청 확인 at api");
 
     const [_, pageNum] = queryKey;
     console.log("pageNum : ", pageNum);
-    return await instance.get(`estimates/?page=${pageNum}`).then((response) => {
+    return instance.get(`estimates/?page=${pageNum}`).then((response) => {
         console.log("response at api: ", response);
 
         // const response_data = [

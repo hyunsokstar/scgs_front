@@ -120,9 +120,13 @@ function Estimates({}: Props): ReactElement {
                 </TableContainer>
             </Container>
 
-            <Container maxW="80%" bg="blue.200" color="#262626" mt={2}>
-                <PaginationComponent current_page_num={currentPageNum} total_page_num={estimateList?.total_count} setCurrentPageNum={setCurrentPageNum} />
-            </Container>
+            {!isLoading ? (
+                <Container maxW="80%" bg="blue.100" color="red.500" mt={2}>
+                    <PaginationComponent current_page_num={currentPageNum} total_page_num={estimateList?.total_count} setCurrentPageNum={setCurrentPageNum} />
+                </Container>
+            ) : (
+                ""
+            )}
         </div>
     );
 }
