@@ -106,3 +106,10 @@ interface IUsersForUserList {
     gender: string;
     language: string;
 }
+
+interface ISignupForm {
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+}

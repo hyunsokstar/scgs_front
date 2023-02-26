@@ -1,6 +1,8 @@
 import { Flex, HStack, Spacer } from "@chakra-ui/react";
 import Pagination from "rc-pagination";
 import "rc-pagination/assets/index.css";
+import Select from 'rc-select';
+import localeInfo from "../../src/locale/en_US";
 
 type Props = {
     current_page_num: number;
@@ -14,7 +16,16 @@ function PaginationComponent({ current_page_num, setCurrentPageNum, total_page_n
         <Flex height={12}>
             <Spacer />
             <HStack>
-                <Pagination current={current_page_num} total={total_page_num} pageSize={3} onChange={setCurrentPageNum} />
+                <Pagination
+                    selectComponentClass={Select}
+                    current={current_page_num}
+                    total={total_page_num}
+                    defaultPageSize={3}
+                    onChange={setCurrentPageNum}
+                    locale={localeInfo}
+                    showQuickJumper
+                    // showSizeChanger
+                />
             </HStack>
             <Spacer />
             {/* <Spacer /> */}
