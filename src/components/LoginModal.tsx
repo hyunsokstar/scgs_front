@@ -22,7 +22,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //
-import { IUsernameLoginVariables, usernameLogIn } from "../api";
+import { usernameLogIn } from "../apis/user_api";
 
 interface LoginModalProps {
   isOpen: boolean;

@@ -1,8 +1,8 @@
-import { Box, Button, Container, useToast } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Container, Flex, useToast } from "@chakra-ui/react";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, Text } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { deleteOneEstimates, getEstimates } from "../api";
+import { deleteEstimateListForCheck, deleteOneEstimates, getEstimates } from "../api";
 import PaginationComponent from "../components/PaginationComponent";
 
 interface Props {}
@@ -42,6 +42,7 @@ interface IEstimateRow {
 
 function Estimates({}: Props): ReactElement {
     const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+    const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
     const {
         isLoading,
@@ -50,8 +51,8 @@ function Estimates({}: Props): ReactElement {
     } = useQuery<IEstimateRequire>(["estimates", currentPageNum], getEstimates, {
         enabled: true,
     });
-    console.log("estimateList at front : ", estimateList);
-    console.log("estimateList.data at front : ", estimateList?.data);
+    // console.log("estimateList at front : ", estimateList);
+    // console.log("estimateList.data at front : ", estimateList?.data);
 
     const toast = useToast();
 
@@ -60,11 +61,45 @@ function Estimates({}: Props): ReactElement {
             return deleteOneEstimates(pk);
         },
         {
+            onSettled: () => {
+                // setSelectedItems([]);
+            },
             onSuccess: (data) => {
-                estimateListRefatch();
+                setSelectedItems([]);
+                // estimateListRefatch();
             },
         }
     );
+
+    const deleteMutationForCheck = useMutation(
+        (ids_to_delete: number[]) => {
+            return deleteEstimateListForCheck(ids_to_delete);
+        },
+        {
+            onSuccess: (data) => {
+                console.log("selectedItems : ", selectedItems);
+                console.log("data : ", data);
+                setSelectedItems([]);
+
+                estimateListRefatch();
+                toast({
+                    title: "delete for checkbox 성공!",
+                    status: "success",
+                });
+            },
+        }
+    );
+
+    // const deleteMutationForChekcBox = useMutation(
+    //     () => {
+    //         return deleteEstimateListForCheck(selectedItems);
+    //     },
+    //     {
+    //         onSuccess: (data) => {
+    //             estimateListRefatch();
+    //         },
+    //     }
+    // );
 
     const deleteHandelr = (pk: number) => {
         const response = deleteMutation.mutate(pk);
@@ -76,17 +111,40 @@ function Estimates({}: Props): ReactElement {
         });
     };
 
+    const deleteEstimateHandelrForCheckBox = () => {
+        const response = deleteMutationForCheck.mutate(selectedItems);
+        setSelectedItems([]);
+        // console.log("response : ", response);
+    };
+
+    function handleCheckboxChange(id: number) {
+        if (selectedItems.includes(id)) {
+            setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
+        } else {
+            setSelectedItems([...selectedItems, id]);
+        }
+    }
+
     return (
         <div>
-            <Container maxW="80%" bg="green.100" color="#262626" mt={5}>
+            <Container maxW="80%" mt={5}>
                 <Text fontSize="5xl" mb={2} color="blue">
                     견적 문의
                 </Text>
+                <Flex justifyContent="flex-end">
+                    <Button bgColor={"red.200"} onClick={() => deleteEstimateHandelrForCheckBox()}>
+                        삭제
+                    </Button>
+                </Flex>
+                {selectedItems ? selectedItems : ""}
                 <TableContainer>
                     <Table variant="simple">
                         <TableCaption>Imperial to metric conversion factors</TableCaption>
                         <Thead>
                             <Tr>
+                                <Th>
+                                    <Checkbox />
+                                </Th>
                                 <Th>id</Th>
                                 <Th>제목</Th>
                                 <Th>제품</Th>
@@ -100,6 +158,9 @@ function Estimates({}: Props): ReactElement {
                             {estimateList?.data.map((row: IEstimateRow) => {
                                 return (
                                     <Tr>
+                                        <Td>
+                                            <input type="checkbox" value={row.pk} checked={selectedItems.includes(row.pk)} onChange={() => handleCheckboxChange(row.pk)} />
+                                        </Td>
                                         <Td>{row.pk}</Td>
                                         <Td>{row.title}</Td>
                                         <Td>{row.product}</Td>

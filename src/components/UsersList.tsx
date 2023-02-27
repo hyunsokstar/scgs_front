@@ -24,14 +24,11 @@ function UsersList() {
                         <ModalButtonForInsertUser />
                     </Box>
 
-                    <Table variant="simple">
+                    <Table variant="simple" size={"sm"}>
                         <Thead>
                             <Tr>
                                 <Th>userName</Th>
                                 <Th>avatar</Th>
-                                <Th>is_host</Th>
-                                <Th>gender</Th>
-                                <Th>language</Th>
                                 <Th>수정</Th>
                                 <Th>삭제</Th>
                             </Tr>
@@ -52,9 +49,6 @@ function UsersList() {
                                                 alt="Dan Abramov"
                                             />
                                         </Td>
-                                        <Td>{user.is_host ? "owner" : "client"}</Td>
-                                        <Td>{user.gender}</Td>
-                                        <Td>{user.language}</Td>
                                         <Td>
                                             {/* 수정 */}
                                             <UserInfoModifyModal isOpen={isUserModifyModalOpen} onClose={onUserModifyModalClose} user={user} />

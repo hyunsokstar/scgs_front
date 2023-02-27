@@ -1,5 +1,12 @@
-앱을 추가할 거냐 
+    {
+        "name": "ohhyunsok",
+        "username": "terecal5",
+        "email": "terecal5@daum.net"
+    }
 
-기존 로직을 활용할 거냐 
-
-requiremets
+{
+  "name": "ohhyunsok",
+  "username": "tereca5l",
+  "email": "terecal5@daum.net",
+  "profile_image":""
+}

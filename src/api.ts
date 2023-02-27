@@ -9,6 +9,24 @@ const instance = axios.create({
     withCredentials: true,
 });
 
+export const deleteEstimateListForCheck = (ids_to_delete: number[]) => {
+    console.log("ids_to_delete : ", ids_to_delete);
+
+    return axios
+        .delete("http://127.0.0.1:8000/api/v1/estimates/delete", {
+            data: {
+                ids: ids_to_delete,
+            },
+        })
+        .then((response) => {
+            console.log(response.data);
+            return response;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+};
+
 export const deleteOneEstimates = (estimatePk: number) => {
     console.log("estimatePk : ", estimatePk);
     return instance.delete(`estimates/${estimatePk}`).then((response) => response.data);
@@ -22,13 +40,6 @@ export const getEstimates = ({ queryKey }: QueryFunctionContext) => {
     console.log("pageNum : ", pageNum);
     return instance.get(`estimates/?page=${pageNum}`).then((response) => {
         console.log("response at api: ", response);
-
-        // const response_data = [
-        //     ...response.data.estimateRequires,
-        //     {
-        //         "total_count": response.data.totalCount
-        //     }
-        // ]
 
         const response_data = {
             total_count: response.data.totalCount,
@@ -110,24 +121,6 @@ export const insertEstimateRequire = ({ title, product, manager, email, phone_nu
                 estimate_require_completion,
                 memo,
             },
-            {
-                headers: {
-                    "X-CSRFToken": Cookie.get("csrftoken") || "",
-                },
-            }
-        )
-        .then((response) => response.data);
-
-export interface IUsernameLoginVariables {
-    username: string;
-    password: string;
-}
-
-export const usernameLogIn = ({ username, password }: IUsernameLoginVariables) =>
-    instance
-        .post(
-            `/users/log-in`,
-            { username, password },
             {
                 headers: {
                     "X-CSRFToken": Cookie.get("csrftoken") || "",

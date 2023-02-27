@@ -112,4 +112,5 @@ interface ISignupForm {
     username: string;
     email: string;
     password: string;
+    password_check:string;
 }
