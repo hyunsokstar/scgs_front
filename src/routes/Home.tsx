@@ -7,7 +7,6 @@ export default function Home() {
     return (
         <Box>
             <br />
-            
             <UsersList />
             <br /><br />
             <PhotoUploadButton />

@@ -19,6 +19,7 @@ import EstimateDetail from "./routes/EstimateDetail";
 import Pagination from "./components/PaginationComponent";
 import PaginationComponent from "./components/PaginationComponent";
 import SamplePageForPagination from "./routes/SamplePageForPagination";
+import UserProfile from "./routes/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Home />,
+      },
+      {
+        path:"users/:userPk",
+        element:<UserProfile />
       },
       {
         path: "rooms/:roomPk",

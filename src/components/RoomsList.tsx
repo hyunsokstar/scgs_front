@@ -7,20 +7,20 @@ import { useQuery } from "@tanstack/react-query";
 type Props = {};
 
 interface IPhoto {
-  pk: string;
-  file: string;
-  description: string;
+    pk: string;
+    file: string;
+    description: string;
 }
 
 interface IRoom {
-  pk: number;
-  name: string;
-  country: string;
-  city: string;
-  price: number;
-  rating: number;
-  is_owner: boolean;
-  photos: IPhoto[];
+    pk: number;
+    name: string;
+    country: string;
+    city: string;
+    price: number;
+    rating: number;
+    is_owner: boolean;
+    photos: IPhoto[];
 }
 
 function RoomsList({}: Props) {

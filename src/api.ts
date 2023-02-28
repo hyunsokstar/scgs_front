@@ -166,20 +166,44 @@ export const getUploadURL = () =>
         .then((response) => response.data);
 
 export interface IUploadImageVarialbes {
-    file: FileList;
+    file: any;
     uploadURL: string;
 }
 
 export const uploadImage = ({ file, uploadURL }: IUploadImageVarialbes) => {
+    console.log("uploadURL:", uploadURL);
+    console.log("file:", file);
+    // console.log("file[0] : ", file[0]);
+
     const form = new FormData();
-    form.append("file", file[0]);
-    return axios
+    form.append("file", file);
+
+    if (file) {
+        return axios
+            .post(uploadURL, form, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((response) => response.data);
+    } else {
+        alert("파일이 없습니다 : " + file);
+        return axios
         .post(uploadURL, form, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         })
         .then((response) => response.data);
+    }
+
+    // return axios
+    //     .post(uploadURL, form, {
+    //         headers: {
+    //             "Content-Type": "multipart/form-data",
+    //         },
+    //     })
+    //     .then((response) => response.data);
 };
 
 export interface ICreatePhotoVariables {

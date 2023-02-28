@@ -100,6 +100,7 @@ export interface IUser {
 }
 
 interface IUsersForUserList {
+    pk:number;
     username: string;
     avatar: string;
     is_host: string;
