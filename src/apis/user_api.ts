@@ -3,9 +3,10 @@ import Cookie from "js-cookie";
 
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { EstimateRequire, EstimateRequireForm } from "../types";
+import { backendApi } from "./common_api";
 
 const instance = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/v1/",
+    baseURL: `${backendApi}/api/v1/`,
     withCredentials: true,
 });
 

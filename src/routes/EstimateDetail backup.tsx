@@ -32,6 +32,7 @@ import { EstimateRequire, EstimateRequireForm, IRoomDetail } from "../types";
 import { VisuallyHidden, VisuallyHiddenInput } from "@chakra-ui/react";
 import EstimateDetailForm from "../components/EstimateDetailForm";
 import axios from "axios";
+import { backendApi } from "../apis/common_api";
 
 interface Props {}
 
@@ -65,7 +66,7 @@ function EstimateDetail({}: Props): ReactElement {
 
   useEffect(() => {
     axios
-      .put(`http://127.0.0.1:8000/api/v1/estimates/${estimatePk}`, {
+      .put(`${backendApi}/api/v1/estimates/${estimatePk}`, {
         title: estimateData?.title,
         product: estimateData?.product,
         email: estimateData?.email,
@@ -134,7 +135,7 @@ function EstimateDetail({}: Props): ReactElement {
     // });
 
     axios
-      .put(`http://127.0.0.1:8000/api/v1/estimates/${estimatePk}`, {
+      .put(`http://v/api/v1/estimates/${estimatePk}`, {
         ...estimateData,
         estimatePk,
         title,

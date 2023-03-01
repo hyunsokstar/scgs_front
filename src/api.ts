@@ -3,9 +3,10 @@ import Cookie from "js-cookie";
 
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { EstimateRequire, EstimateRequireForm } from "./types";
+import { backendApi } from "./apis/common_api";
 
 const instance = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/v1/",
+    baseURL: `${backendApi}/api/v1/`,
     withCredentials: true,
 });
 
@@ -13,7 +14,7 @@ export const deleteEstimateListForCheck = (ids_to_delete: number[]) => {
     console.log("ids_to_delete : ", ids_to_delete);
 
     return axios
-        .delete("http://127.0.0.1:8000/api/v1/estimates/delete", {
+        .delete(`${backendApi}/api/v1/estimates/delete`, {
             data: {
                 ids: ids_to_delete,
             },
