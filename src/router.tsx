@@ -8,7 +8,6 @@ import RoomDetail from "./routes/RoomDetail";
 import UploadRoom from "./routes/UploadRoom";
 
 import ReactDraft from "./routes/ReactDraft";
-import SunEditorPage from "./routes/SunEditor";
 import LexicalEditorPage from "./routes/LexicalEditorPage";
 import TipTabPage from "./routes/TipTabPage";
 import TinyMcePage from "./routes/TinyMcePage";
@@ -18,7 +17,6 @@ import Estimates from "./routes/Estimates";
 import EstimateDetail from "./routes/EstimateDetail";
 import Pagination from "./components/PaginationComponent";
 import PaginationComponent from "./components/PaginationComponent";
-import SamplePageForPagination from "./routes/SamplePageForPagination";
 import UserProfile from "./routes/UserProfile";
 
 const router = createBrowserRouter([
@@ -52,10 +50,6 @@ const router = createBrowserRouter([
         element: <ReactDraft />,
       },
       {
-        path: "/test/sun-editor",
-        element: <SunEditorPage />,
-      },
-      {
         path: "/test/lexical-editor",
         element: <LexicalEditorPage />,
       },
@@ -84,11 +78,6 @@ const router = createBrowserRouter([
         path: "estimates/:estimatePk",
         element: <EstimateDetail />,
       },
-
-      {
-        path: "sample/",
-        element:<SamplePageForPagination />
-      }
 
     ],
   },

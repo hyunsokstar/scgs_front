@@ -13,6 +13,9 @@
 export interface IUserProfile {
     pk: string;
     name: string;
-    eamil: string;
-    profileImages: [{pk: string, file?: string}];
+    email: string;
+    position: { pk: string; position_name: string };
+    profileImages: [{ pk: string; file?: string }];
+    about_me: string;
+    skill_for_frameWork: [{ pk: number; frame_work_name: string }];
 }

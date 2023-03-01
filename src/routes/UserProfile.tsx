@@ -31,25 +31,31 @@ const ProfilePage = () => {
                             <Avatar
                                 size="2xl"
                                 name="John Doe"
-                                src={userProfileData?.profileImages[0]  ? userProfileData.profileImages[0].file : "https://bit.ly/broken-link"}
+                                src={userProfileData?.profileImages[0] ? userProfileData.profileImages[0].file : "https://bit.ly/broken-link"}
                                 mb={4}
                             />
                             <Text fontSize="xl" fontWeight="bold" mb={2}>
                                 {userProfileData?.name}
                             </Text>
                             <Text fontSize="md" mb={4}>
-                                Software Engineer
+                                {userProfileData?.position.position_name}
                             </Text>
                             <Box>
-                                <Badge colorScheme="orange" mb={2}>
-                                    React
-                                </Badge>
-                                <Badge colorScheme="purple" mb={2} ml={2}>
+                                {userProfileData?.skill_for_frameWork.map((row) => {
+                                    return (
+                                        <Box>
+                                            <Badge colorScheme="orange" mb={2}>
+                                                {row.frame_work_name}
+                                            </Badge>
+                                        </Box>
+                                    );
+                                })}
+                                {/* <Badge colorScheme="purple" mb={2} ml={2}>
                                     Node.js
                                 </Badge>
                                 <Badge colorScheme="blue" mb={2} ml={2}>
                                     AWS
-                                </Badge>
+                                </Badge> */}
                             </Box>
                         </Box>
                         <Box ml={{ md: 8 }} flex="2">
@@ -57,14 +63,13 @@ const ProfilePage = () => {
                                 About Me
                             </Text>
                             <Text fontSize="md" mb={4}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet feugiat quam, eu facilisis felis. Etiam sit amet tellus turpis. Etiam sit
-                                amet tellus turpis. Etiam sit amet tellus turpis. Etiam sit amet tellus turpis.
+                                {userProfileData?.about_me}
                             </Text>
                             <Text fontSize="md" mb={4}>
-                                Contact: john.doe@example.com
+                                {userProfileData?.email}
                             </Text>
                         </Box>
-                        <Box flex="1" w="100%" p={4} color="white" bg="tomato" ml={5}>
+                        <Box flex="1" w="100%" p={4} color="white" ml={5}>
                             <ModalForUserProfileImageUpdate
                                 userPk={userPk}
                                 profile_image={userProfileData?.profileImages.length ? userProfileData?.profileImages[0].file : "https://bit.ly/broken-link"}

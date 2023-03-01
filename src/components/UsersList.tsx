@@ -18,7 +18,7 @@ function UsersList() {
             <Box>
                 <TableContainer mb={20} marginX={40}>
                     <Text fontSize="5xl" mb={5}>
-                        유저 리스트{" "}
+                        유저 목록{" "}
                     </Text>
 
                     <Box textAlign={"right"} mb={5} mr={5}>

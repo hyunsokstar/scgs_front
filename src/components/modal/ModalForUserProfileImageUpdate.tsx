@@ -102,7 +102,7 @@ function ModalForUserProfileImageUpdate({ userPk, profile_image }: Props) {
     return (
         <Container textAlign={"center"}>
             <Button size="sm" colorScheme="twitter" width="80%" onClick={onOpen}>
-                모달 버튼
+                UPDATE
             </Button>
             <Modal isOpen={isOpen} onClose={onClose} size="6xl">
                 <ModalOverlay />

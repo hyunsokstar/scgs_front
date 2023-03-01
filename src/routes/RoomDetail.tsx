@@ -8,27 +8,26 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-
 export default function RoomDetail() {
     const { roomPk } = useParams();
-    const { isLoading, data } = useQuery<IRoomDetail>([`rooms`, roomPk], getRoom);
-    
+    const { isLoading, data: roomDetailData } = useQuery<IRoomDetail>([`rooms`, roomPk], getRoom);
+
     const { data: reviewsData, isLoading: isReviewsLoading } = useQuery<IReview[]>([`rooms`, roomPk, `reviews`], getRoomReviews);
     const [dates, setDates] = useState<Date>();
-    console.log("date : ", dates);
+    console.log("roomDetailData : ", roomDetailData);
 
     return (
         <Box mt={10} px={{ base: 10, lg: 40 }}>
             <Skeleton height={"43px"} width="25%" isLoaded={!isLoading}>
-                <Heading>{data?.name}</Heading>
+                <Heading>{roomDetailData?.name}</Heading>
             </Skeleton>{" "}
             <Grid gap={2} height="60vh" templateRows={"repeat(2, 1fr)"} templateColumns={"repeat(4, 1fr)"} mt={8} rounded="xl" overflow={"hidden"}>
                 {[0, 1, 2, 3, 4].map((index) => {
-                    if (data?.photos[index]?.file !== undefined) {
+                    if (roomDetailData?.photos[index]?.file !== undefined) {
                         return (
                             <GridItem colSpan={index === 0 ? 2 : 1} rowSpan={index === 0 ? 2 : 1} overflow={"hidden"} key={index}>
                                 <Skeleton isLoaded={!isLoading} h="100%" w="100%">
-                                    <Image w="100%" h="100%" objectFit={"cover"} src={data?.photos[index]?.file} alt="" />
+                                    <Image w="100%" h="100%" objectFit={"cover"} src={roomDetailData?.photos[index]?.file} alt="" />
                                 </Skeleton>
                             </GridItem>
                         );
@@ -52,26 +51,26 @@ export default function RoomDetail() {
             <HStack width={"40%"} justifyContent={"space-between"} mt={10}>
                 <VStack alignItems={"flex-start"}>
                     <Skeleton isLoaded={!isLoading} height={"30px"}>
-                        <Heading fontSize={"2xl"}>House hosted by {data?.owner.name}</Heading>
+                        <Heading fontSize={"2xl"}>House hosted by {roomDetailData?.owner.name}</Heading>
                     </Skeleton>
                     <Skeleton isLoaded={!isLoading} height={"30px"}>
                         <HStack justifyContent={"flex-start"} w="100%">
                             <Text>
-                                {data?.toilets} toliet{data?.toilets === 1 ? "" : "s"}
+                                {roomDetailData?.toilets} toliet{roomDetailData?.toilets === 1 ? "" : "s"}
                             </Text>
                             <Text>∙</Text>
                             <Text>
-                                {data?.rooms} room{data?.rooms === 1 ? "" : "s"}
+                                {roomDetailData?.rooms} room{roomDetailData?.rooms === 1 ? "" : "s"}
                             </Text>
                         </HStack>
                     </Skeleton>
                 </VStack>
-                <Avatar name={data?.owner.name} size={"xl"} src={data?.owner.avatar} />
+                <Avatar name={roomDetailData?.owner.name} size={"xl"} src={roomDetailData?.owner.avatar} />
             </HStack>
             <Box mt={10}>
                 <Heading fontSize={"2xl"}>
                     <HStack>
-                        <FaStar /> <Text>{data?.rating}</Text>
+                        <FaStar /> <Text>{roomDetailData?.rating}</Text>
                         <Text>∙</Text>
                         <Text>
                             {reviewsData?.length} review{reviewsData?.length === 1 ? "" : "s"}
@@ -98,7 +97,16 @@ export default function RoomDetail() {
                                 </VStack>
                             ))}
                         </Box>
+
                         <Box>
+                            {roomDetailData?.amenities
+                                ? roomDetailData.amenities.map((row) => {
+                                      return <div>{row.name}</div>;
+                                  })
+                                : ""}
+                        </Box>
+
+                        {/* <Box>
                             <Calendar
                                 onChange={setDates}
                                 // value={value}
@@ -110,7 +118,7 @@ export default function RoomDetail() {
                                 selectRange // 선택한 두 범위 사이 색 칠해지도록
                             />{" "}
                             <br />
-                        </Box>
+                        </Box> */}
                     </Grid>
                 </Container>
             </Box>
