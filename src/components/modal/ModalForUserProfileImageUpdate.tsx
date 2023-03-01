@@ -24,24 +24,29 @@ import { createProfilePhoto } from "../../apis/user_api";
 type Props = {
     userPk: string | undefined;
     profile_image: string | undefined;
+    setProfileImage: any;
 };
 
-function ModalForUserProfileImageUpdate({ userPk, profile_image }: Props) {
+function ModalForUserProfileImageUpdate({ userPk, profile_image, setProfileImage }: Props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const [image, setImage] = useState<any>();
-    const [fileToUpload, setFileToUpload] = useState<any>();
+    const [originalImage, setOriginalImage] = useState<string | undefined>(profile_image);
 
-    // console.log("image : ", image);
+    const [showForProfileUpdateButton, setShowForProfileUpdateButton] = useState<Boolean>(false);
+    const [urlToImageUpload, setUrlToImageUpload] = useState<string>();
+    // console.log("profile_image 1111111 : ", profile_image);
+    const [fileToUpload, setFileToUpload] = useState<any>();
+    // let fileToUpload: File;
 
     const toast = useToast();
-    let file_to_upload: any;
+    // let file_to_upload: any;
 
     const createProfilePhotoMutation = useMutation(createProfilePhoto, {
         onSuccess: (result) => {
             console.log("result : ", result);
-            setImage(result.file);
-            
+            // setImage(result.file);
+            // setProfileImage(result.file)
+            setShowForProfileUpdateButton(false);
             toast({
                 status: "success",
                 title: "Profile Image uploaded!",
@@ -51,11 +56,13 @@ function ModalForUserProfileImageUpdate({ userPk, profile_image }: Props) {
         },
     });
 
+    // 실제 이미지 업로드 + db 등록
     const uploadImageMutation = useMutation(uploadImage, {
         onSuccess: ({ result }: any) => {
             console.log("result : ", result.variants[0]);
             const uploaded_image = result.variants[0];
             // setImage(uploaded_image);
+            setProfileImage(uploaded_image);
 
             if (userPk) {
                 createProfilePhotoMutation.mutate({
@@ -68,27 +75,37 @@ function ModalForUserProfileImageUpdate({ userPk, profile_image }: Props) {
         },
     });
 
+    // 이미지 업로드 url 가져오기 + 등록 취소 버튼 보이게 하기
     const getImageUploadUrlMutation = useMutation(getUploadURL, {
         onSuccess: (data: any) => {
-            // console.log("image for upload 아직 이미지 업로드전): ", image);
-            // console.log("data (업로드 이미지 url 주소 얻어 왔는지 확인): ", data);
+            // console.log("data : ", data);
 
-            uploadImageMutation.mutate({
-                uploadURL: data.uploadURL,
-                file: file_to_upload,
-            });
+            setShowForProfileUpdateButton(true);
+            setUrlToImageUpload(data.uploadURL);
+
+            // uploadImageMutation.mutate({
+            //     uploadURL: data.uploadURL,
+            //     file: file_to_upload,
+            // });
         },
     });
 
+    // drag and drop event
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-        console.log("e : ", e);
-
+        // console.log("e : ", e);
         e.preventDefault();
-        file_to_upload = e.dataTransfer.files[0];
+        console.log("upload 할 파일 정보 : ", e.dataTransfer.files[0]);
+
+        setFileToUpload(e.dataTransfer.files[0])
         const reader = new FileReader();
         reader.onload = () => {
-            // setImage(reader.result);
-            // setFileToUpload(file_to_upload)
+            console.log("fileToUpload 1111111 : ", fileToUpload);
+            setProfileImage(reader.result);
+            setOriginalImage(profile_image);
+            // setFileToUpload(e.dataTransfer.files[0]); // setState 는 즉시 변경 되는 값이 아니므로 이렇게 하면 안됨
+            // fileToUpload = setFi e.dataTransfer.files[0];
+            console.log("fileToUpload 22222222 : ", fileToUpload);
+
             getImageUploadUrlMutation.mutate();
         };
         reader.readAsDataURL(e.dataTransfer.files[0]);
@@ -96,8 +113,28 @@ function ModalForUserProfileImageUpdate({ userPk, profile_image }: Props) {
 
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        // console.log("image : ", image);
     };
+
+    function updateProfileImageToDbAndCloud() {
+        console.log("실제 이미지 업로드");
+        console.log("fileToUpload : ", fileToUpload);
+
+        if (urlToImageUpload && fileToUpload) {
+            uploadImageMutation.mutate({
+                uploadURL: urlToImageUpload,
+                file: fileToUpload,
+            });
+        } else {
+            console.log("file이 없습니다 : ", fileToUpload);
+        }
+    }
+
+    // 취소
+    function canCleSelectProfileImage() {
+        console.log("set profile image with originalImage ", originalImage);
+        setShowForProfileUpdateButton(false);
+        setProfileImage(originalImage);
+    }
 
     return (
         <Container textAlign={"center"}>
@@ -111,7 +148,20 @@ function ModalForUserProfileImageUpdate({ userPk, profile_image }: Props) {
                     <ModalCloseButton />
                     <ModalBody>
                         <Flex width="100%" height="100%">
-                            <Flex flex={1} bg="red.200" direction={{ base: "column" }} alignItems={"center"} pt={2}>
+                            <Flex flex={1} bg="red.200" direction={{ base: "column" }} alignItems={"center"} pt={2} position="relative">
+                                {showForProfileUpdateButton ? (
+                                    <Box position="absolute" top={0} right={0}>
+                                        <Button size={"xs"} onClick={() => updateProfileImageToDbAndCloud()}>
+                                            등록
+                                        </Button>
+                                        <Button size={"xs"} ml={2} mr={1} onClick={() => canCleSelectProfileImage()}>
+                                            취소
+                                        </Button>
+                                    </Box>
+                                ) : (
+                                    ""
+                                )}
+                                {/* {profile_image ? profile_image : "hi"} */}
                                 <Avatar
                                     size="2xl"
                                     name="John Doe"
