@@ -49,6 +49,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       console.log("mutation starting");
     },
     onSuccess: (data) => {
+
+      console.log("data : ", data);
+
       toast({
         title: "welcome back!",
         status: "success",

@@ -12,6 +12,8 @@ type Props = {
 
 function PaginationComponent({ current_page_num, setCurrentPageNum, total_page_num }: Props) {
     // return <Pagination current={current_page_num} total={total_page_num} pageSize={3} onChange={setCurrentPageNum} />;
+
+    
     return (
         <Flex height={12}>
             <Spacer />

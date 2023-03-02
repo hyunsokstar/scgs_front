@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookie from "js-cookie";
 
 import { QueryFunctionContext } from "@tanstack/react-query";
-import { EstimateRequire, EstimateRequireForm } from "../types";
+import { EstimateRequire, EstimateRequireForm, IUsersForUserList } from "../types";
 import { backendApi } from "./common_api";
 
 const instance = axios.create({
@@ -32,6 +32,8 @@ export interface ICreateProfilePhotoVariables {
 //     console.log("roomPk : ", roomPk);
 //     return instance.get(`rooms/${roomPk}`).then((response) => response.data);
 // };
+
+export const getUsersList = () => instance.get(`users`).then((response) => response.data);
 
 export const getProfile = ({ queryKey }: QueryFunctionContext) => {
     const [_, userPk] = queryKey;

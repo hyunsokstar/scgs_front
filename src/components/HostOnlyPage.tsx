@@ -7,9 +7,6 @@ export default function useHostOnlyPage() {
     const navigate = useNavigate();
     useEffect(() => {
         if (!userLoading) {
-            if (!user?.is_host) {
-                navigate("/");
-            }
         }
     }, [userLoading, user, navigate]);
     return;

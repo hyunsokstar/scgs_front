@@ -128,14 +128,9 @@ export default function Header() {
                     ) : (
                         <Menu>
                             <MenuButton>
-                                <Avatar name={user?.name} src={user?.avatar} size={"md"} />
+                                <Avatar name={user?.name} src={user?.profileImages[0].file} size={"md"} />
                             </MenuButton>
                             <MenuList>
-                                {user?.is_host ? (
-                                    <Link to="/rooms/upload">
-                                        <MenuItem>Upload room</MenuItem>
-                                    </Link>
-                                ) : null}
                                 <MenuItem onClick={onLogOut}>Log out</MenuItem>
                             </MenuList>
                         </Menu>

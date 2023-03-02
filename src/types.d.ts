@@ -87,25 +87,18 @@ export interface IReview {
 }
 
 export interface IUser {
-    last_login: string;
     username: string;
     email: string;
     date_joined: string;
-    avatar: string;
     name: string;
-    is_host: boolean;
-    gender: string;
-    language: string;
-    currency: string;
+    profileImages: [{ pk: string; file?: string }];
+    last_login: string;
 }
 
 interface IUsersForUserList {
-    pk:number;
+    pk: number;
     username: string;
-    avatar: string;
-    is_host: string;
-    gender: string;
-    language: string;
+    profileImages: [{ pk: string; file?: string }];
 }
 
 interface ISignupForm {
@@ -113,5 +106,5 @@ interface ISignupForm {
     username: string;
     email: string;
     password: string;
-    password_check:string;
+    password_check: string;
 }

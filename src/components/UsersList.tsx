@@ -2,22 +2,23 @@ import { Box, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, 
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Link } from "react-router-dom";
-import { getUsersList } from "../api";
+import { getUsersList } from "../apis/user_api";
 import { IUsersForUserList } from "../types";
 import ModalButtonForInsertUser from "./ModalButtonForInsertUser";
 import UserInfoDeleteModal from "./UserInfoDeleteModal";
 import UserInfoModifyModal from "./UserInfoModifyModal";
 
 function UsersList() {
-    const { isLoading, data } = useQuery<IUsersForUserList[]>(["users"], getUsersList);
+    const { isLoading, data: usersData } = useQuery<IUsersForUserList[]>(["users_list2"], getUsersList);
     const { isOpen: isUserModifyModalOpen, onClose: onUserModifyModalClose, onOpen: onUserModifyModalOpen } = useDisclosure();
     const { isOpen: isUserDeleteModalOpen, onClose: onUserDeleteModalClose, onOpen: onUserDeleteModalOpen } = useDisclosure();
+    console.log("usersData 22 : ", usersData);
 
     return (
         <div>
-            <Box>
-                <TableContainer mb={20} marginX={40}>
-                    <Text fontSize="5xl" mb={5}>
+            <Box bgColor={"blue.50"}>
+                <TableContainer>
+                    <Text fontSize="5xl" mb={5} textAlign={"center"} mt={3}>
                         유저 목록{" "}
                     </Text>
 
@@ -36,37 +37,38 @@ function UsersList() {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {data?.map((user: IUsersForUserList) => {
-                                return (
-                                    <Tr>
-                                        <Td>{user.pk}</Td>
-                                        {/* <Td>{user.username}</Td> */}
-                                        <Td>
-                                            <Link to={`users/${user.pk}`}>{user.username}</Link>
-                                        </Td>
-                                        {/* <Td>{user.username}</Td> */}
-                                        {/* <Td><img src={user.avatar} /></Td> */}
+                            {!isLoading && usersData
+                                ? usersData.map((user: IUsersForUserList) => {
+                                      console.log("user row: ", user);
 
-                                        {/* <img src={user.avatar} /> */}
-                                        <Td>
-                                            <Image
-                                                boxSize="80px"
-                                                objectFit="cover"
-                                                src={user.avatar ? user.avatar : "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"}
-                                                alt="Dan Abramov"
-                                            />
-                                        </Td>
-                                        <Td>
-                                            {/* 수정 */}
-                                            <UserInfoModifyModal isOpen={isUserModifyModalOpen} onClose={onUserModifyModalClose} user={user} />
-                                        </Td>
-                                        <td>
-                                            {/* <Button>삭제</Button> */}
-                                            <UserInfoDeleteModal isOpen={isUserDeleteModalOpen} onClose={onUserDeleteModalClose} user={user} />
-                                        </td>
-                                    </Tr>
-                                );
-                            })}
+                                      return (
+                                          <Tr>
+                                              <Td>{user.pk}</Td>
+                                              <Td>
+                                                  <Link to={`/users/${user.pk}`}>
+                                                      <Text fontFamily={"sans-serif"} color={"blue.500"} _hover={{ color: "red" }}>
+                                                          {user.username}
+                                                      </Text>
+                                                  </Link>
+                                              </Td>
+                                              <Td>
+                                                  <Image
+                                                      boxSize="60px"
+                                                      objectFit="cover"
+                                                        src={user?.profileImages.length ? user?.profileImages[0].file : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5SA0AfZTXQCmKrqom8yfEN7Gm3tiT0s11dQ&usqp=CAU"}
+                                                      alt="Dan Abramov"
+                                                  />
+                                              </Td>
+                                              <Td>
+                                                  <UserInfoModifyModal isOpen={isUserModifyModalOpen} onClose={onUserModifyModalClose} user={user} />
+                                              </Td>
+                                              <td>
+                                                  <UserInfoDeleteModal isOpen={isUserDeleteModalOpen} onClose={onUserDeleteModalClose} user={user} />
+                                              </td>
+                                          </Tr>
+                                      );
+                                  })
+                                : "loading"}
                         </Tbody>
                     </Table>
                 </TableContainer>

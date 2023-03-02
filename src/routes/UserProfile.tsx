@@ -16,9 +16,9 @@ const ProfilePage = () => {
     const [profileImage, setProfileImage] = useState<string | undefined>();
     console.log("userProfileData : ", userProfileData);
     
-    useEffect(() => {
-      setProfileImage(userProfileData?.profileImages[0].file)
-    }, [userProfileData])
+    // useEffect(() => {
+    //   setProfileImage(userProfileData?.profileImages[0].file)
+    // }, [userProfileData])
     
 
     return (
@@ -45,7 +45,7 @@ const ProfilePage = () => {
                                 {userProfileData?.name}
                             </Text>
                             <Text fontSize="md" mb={4}>
-                                {userProfileData?.position.position_name}
+                                {userProfileData?.position !== null ? userProfileData?.position.position_name: "default"}
                             </Text>
                             <Box>
                                 {userProfileData?.skill_for_frameWork.map((row) => {
