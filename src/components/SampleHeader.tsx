@@ -21,7 +21,7 @@ import {
     MenuItem,
     HStack,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import { FaMoon, FaSun } from "react-icons/fa";
 import useUser from "../lib/useUser";
 import { useQueryClient } from "@tanstack/react-query";
@@ -44,7 +44,8 @@ function SampleHeader() {
 
     const toast = useToast();
 
-    const { isOpen, onToggle } = useDisclosure();
+    const { isOpen: isOpen1, onToggle: onToggle1 } = useDisclosure();
+    const { isOpen: isOpen2, onToggle: onToggle2 } = useDisclosure();
 
     const onLogOut = async () => {
         const toastId = toast({
@@ -75,10 +76,15 @@ function SampleHeader() {
                     WorkSpace For FullStack Developers !!
                 </Text>
             </Box>
-            <Box bg="blue.600">
+            <Box bgColor={"gray.600"}>
                 <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
                     <Box p={2}>
-                        <IconButton icon={isOpen ? <CloseIcon /> : <HamburgerIcon />} size={"md"} onClick={onToggle} aria-label={"Open Menu"} />
+                        <IconButton icon={isOpen1 ? <CloseIcon /> : <HamburgerIcon />} size={"md"} onClick={onToggle1} aria-label={"Open Menu"} colorScheme={"cyan"} />
+                        {!userLoading && user?.admin_level && user?.admin_level > 2 ? (
+                            <IconButton icon={isOpen2? <CloseIcon /> : <HamburgerIcon />} size={"md"} onClick={onToggle2} aria-label={"Open Menu"} colorScheme={"orange"} ml={2} />
+                        ) : (
+                            ""
+                        )}
                     </Box>
 
                     <Box>
@@ -130,9 +136,9 @@ function SampleHeader() {
                                 </Container>
                             ) : (
                                 <Box>
-                                    <HStack>
+                                    <HStack mr={2}>
                                         <Text color={"orange.500"} fontSize={"2xl"}>
-                                            {user?.username} 님
+                                            {user?.username} ({user?.admin_level}) 님
                                         </Text>
                                         <Menu>
                                             <MenuButton>
@@ -148,13 +154,23 @@ function SampleHeader() {
                         ) : null}
                     </HStack>
                 </Flex>
-                <Collapse in={isOpen} animateOpacity>
+                <Collapse in={isOpen1} animateOpacity>
                     <Box pb={4}>
                         <Stack direction={"row"} spacing={4} align="center" mb={4} mt={4}>
                             <Link to="/">유저</Link>
                             <Link to="/">설문</Link>
                             <Link to="/">QA</Link>
                             <Link to="/">채팅</Link>
+                        </Stack>
+                    </Box>
+                </Collapse>
+                <Collapse in={isOpen2} animateOpacity>
+                    <Box pb={4}>
+                        <Stack direction={"row"} spacing={4} align="center" mb={4} mt={4}>
+                            <Link to="/">tutorial admin</Link>
+                            <Link to="/">survey admin</Link>
+                            <Link to="/">qa admin</Link>
+                            <Link to="/">task admin</Link>
                         </Stack>
                     </Box>
                 </Collapse>

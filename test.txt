@@ -1,22 +1,9 @@
-자신 있는 언어: js, ts, python, java, dart
-
-프레임 워크: cra, next js, nest js, django(drf), 
-
-orm: tjango orm, ypeorm, prisma, mongoose 등등
-
-db: my sql, postgre, mongodb 등등
-
-취미 및 특이 사항:프리미어리그, nba 좋아함
-
-it 학습 및 공유 좋아함, 최신 기술 관심 많음
-주요 프레임 워크를 모두 잘다루고 싶음
-
-portfolio:
-http://skilnote-for-react-master.shop
-http://skilnote-for-starter.shop (각종 참고 )
-http://skilnote-for-react-native.shop (airbnb clone )
-http://skllnote-for-mes.shopdjango drf + react + chakra ui (crud) :
-http://github.com/hyunsokstar/scgs-backendhttps://github.com/hyunsokstar/scgs_front.git
-
-홈페이지:
-http://13.125.214.210
+export interface ITutorialListType {
+    pk: string;
+    title: string;
+    description: string;
+    tutorial_url: string;
+    open_chat_url: string;
+    backend_framework_option: string;
+    // skill_for_frameWork: [{ pk: number; frame_work_name: string }];
+}

@@ -2,7 +2,6 @@ import axios from "axios";
 import Cookie from "js-cookie";
 
 import { QueryFunctionContext } from "@tanstack/react-query";
-import { EstimateRequire, EstimateRequireForm, IUsersForUserList } from "../types";
 import { backendApi } from "./common_api";
 
 const instance = axios.create({
@@ -40,7 +39,6 @@ export const getProfile = ({ queryKey }: QueryFunctionContext) => {
     console.log("userPk : ", userPk);
     return instance.get(`users/${userPk}`).then((response) => response.data);
 };
-
 
 
 export const createProfilePhoto = ({ file, userPk }: ICreateProfilePhotoVariables) => {

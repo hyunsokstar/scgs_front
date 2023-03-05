@@ -1,7 +1,7 @@
 import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import LoginModal from "./LoginModal";
-import SignUpModal from "./SignUpModal";
+import LoginModal from "../components/LoginModal";
+import SignUpModal from "../components/SignUpModal";
 
 import {
     Box,
@@ -24,7 +24,7 @@ import {
 import useUser from "../lib/useUser";
 import { logOut } from "../api";
 import { useQueryClient } from "@tanstack/react-query";
-import HeadMenus from "./HeadMenus";
+import HeadMenus from "../components/HeadMenus";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 // HeadMenus
 
@@ -127,6 +127,7 @@ export default function Header() {
                         </>
                     ) : (
                         <Menu>
+                            <Box>use level : {user?.admin_level}</Box>
                             <MenuButton>
                                 <Avatar name={user?.name} src={user?.profileImages[0].file} size={"md"} />
                             </MenuButton>

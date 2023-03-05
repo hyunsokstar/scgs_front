@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
+import Header from "../backup/Header";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import SampleHeader from "./SampleHeader";
 

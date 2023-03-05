@@ -51,6 +51,7 @@ function Estimates({}: Props): ReactElement {
     } = useQuery<IEstimateRequire>(["estimates", currentPageNum], getEstimates, {
         enabled: true,
     });
+    
     // console.log("estimateList at front : ", estimateList);
     // console.log("estimateList.data at front : ", estimateList?.data);
 

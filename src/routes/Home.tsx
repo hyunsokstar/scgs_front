@@ -1,5 +1,5 @@
 import { Box, Container, Grid, Image } from "@chakra-ui/react";
-import ImageSlider from "../components/ImageSlider";
+import TutorialList from "../components/TutorialList";
 // import PhotoUploadButton from "../components/PhotoUploadButton";
 // import RoomsList from "../components/RoomsList";
 // import UsersList from "../components/UsersList";
@@ -15,7 +15,7 @@ const image_array = [
 export default function Home() {
     return (
         <Container maxW={"80%"} >
-            <ImageSlider />
+            <TutorialList />
         </Container>
     );
 }

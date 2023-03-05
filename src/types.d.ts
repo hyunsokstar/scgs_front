@@ -89,10 +89,11 @@ export interface IReview {
 export interface IUser {
     username: string;
     email: string;
-    date_joined: string;
     name: string;
-    profileImages: [{ pk: string; file?: string }];
     last_login: string;
+    admin_level: number;
+    date_joined: string;
+    profileImages: [{ pk: string; file?: string }];
 }
 
 interface IUsersForUserList {
