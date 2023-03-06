@@ -18,7 +18,9 @@ import {
     useToast,
     Spinner,
     VisuallyHidden,
+    Icon,
 } from "@chakra-ui/react";
+import { FaEdit, FaTimes } from "react-icons/fa";
 
 // 11. react-hook-form 사용
 import { useForm } from "react-hook-form";
@@ -59,9 +61,6 @@ const alt_image = "https://a0.muscache.com/im/pictures/21b7c945-10c9-481d-9e8e-0
 
 // function ModalButtonForUpdateTutorialCard({ tutorialpk, refetchTutorialList }: ITypeForProps) {
 const ModalButtonForUpdateTutorialCard = ({ tutorialPk, refetchTutorialList }: ITypeForProps) => {
-
-    // const { isLoading:userLoading, data: userProfileData } = useQuery<IUserProfile>([`user_profile`, 1], getProfile
-    // );
 
     const { isLoading: loadingFortutorialDataForUpdate, data: dataFortutorialUpdate } = useQuery<ITypeForTutorialUpdate>([`tutorial_update`, tutorialPk], getOneTutorialData);
 
@@ -164,8 +163,8 @@ const ModalButtonForUpdateTutorialCard = ({ tutorialPk, refetchTutorialList }: I
 
     const onSubmit = (data: IFormData) => {
         console.log("watch() ", watch());
-            mutation.mutate();
-            setSubmitLoading(true);
+        mutation.mutate();
+        setSubmitLoading(true);
     };
 
     const validateUrl = (value: string | URL) => {
@@ -177,11 +176,42 @@ const ModalButtonForUpdateTutorialCard = ({ tutorialPk, refetchTutorialList }: I
         }
     }
 
+    // 1122
+    // const deleteHandelr = (pk: number) => {
+    //     console.log("pk :", pk);
+    //     // const response = deleteMutation.mutate(pk);
+
+    //     toast({
+    //         title: `delete 성공! for ${pk}`,
+    //         status: "success",
+    //     });
+    // };
+
     return (
-        <>
-            <Flex width="100%" border="0px solid red" justifyContent={"flex-start"}>
-                <Button bg="#ffcc00" color="black" _hover={{ bg: "#ff9900" }} onClick={onOpen} size={"xs"}>수정</Button>
+        <Box mt={2}>
+            <Flex width="82%" border="0px solid red" justifyContent={"flex-end"}>
+                {/* <Button bg="#ffcc00" color="black" _hover={{ bg: "#ff9900" }} onClick={onOpen} size={"xs"}>수정</Button> */}
+                {/* <Button bg="red.200" color="black" _hover={{ bg: "red" }} size={"xs"}>삭제</Button> */}
+                <Box
+                    as="button"
+                    bg="transparent"
+                    border="none"
+                    cursor="pointer"
+                    display="inline-flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    transition="all 0.2s"
+                    _hover={{ bg: "red.500", color: "white" }}
+                    _active={{ bg: "red.600", color: "white" }}
+                    _focus={{ boxShadow: "outline" }}
+                >
+                    <Icon as={FaEdit} onClick={onOpen} boxSize="25px" mb={1}/>
+                </Box>
+
+                {/* tutorial delete */}
+
             </Flex>
+
 
             <Modal isOpen={isOpen} onClose={onClose} size={"md"}>
                 <ModalOverlay />
@@ -194,7 +224,7 @@ const ModalButtonForUpdateTutorialCard = ({ tutorialPk, refetchTutorialList }: I
                                 <Flex gap={2}>
                                     <Box maxW="100%" borderWidth="0px" borderRadius="lg" overflow="hidden" boxShadow="md" w="100%">
                                         <Box border={"0px solid blue"}>
-                                            <Image src={tutorialImage  ? URL.createObjectURL(tutorialImage) : dataFortutorialUpdate?.tutorial_image} w="100%" height={210} objectFit={"cover"} />
+                                            <Image src={tutorialImage ? URL.createObjectURL(tutorialImage) : dataFortutorialUpdate?.tutorial_image} w="100%" height={210} objectFit={"cover"} />
                                         </Box>
 
                                         <VisuallyHidden>
@@ -276,7 +306,7 @@ const ModalButtonForUpdateTutorialCard = ({ tutorialPk, refetchTutorialList }: I
                     </ModalBody>
                 </ModalContent>
             </Modal>
-        </>
+        </Box>
     );
 }
 

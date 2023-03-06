@@ -9,30 +9,15 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-// export const updateEstimateRequire = ({ estimatePk, title, product, manager, email, phone_number, content, estimate_require_completion, memo }: EstimateRequireForm) => {
-//   console.log("api estimate_require_completion : ", estimate_require_completion);
+export const deleteOneTutorial = (tutorialPk: number) => {
+  console.log("tutorial : ", tutorialPk);
+  return instance.delete(`tutorials/${tutorialPk}`, {
+    headers: {
+      "X-CSRFToken": Cookie.get("csrftoken") || "",
+    },
+  }).then((response) => response.data);
+};
 
-//   return instance
-//       .put(
-//           `/estimates/${estimatePk}`,
-//           {
-//               title,
-//               product,
-//               manager,
-//               email,
-//               phone_number,
-//               content,
-//               estimate_require_completion,
-//               memo,
-//           },
-//           {
-//               headers: {
-//                   "X-CSRFToken": Cookie.get("csrftoken") || "",
-//               },
-//           }
-//       )
-//       .then((response) => response.data);
-// };
 
 interface ITypeForTutorialUpdate {
   pk: number;

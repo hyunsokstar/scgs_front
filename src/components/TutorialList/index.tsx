@@ -1,4 +1,4 @@
-import { Box, Text, Image, Flex, Button, IconButton, Container, Badge, HStack, VStack } from "@chakra-ui/react";
+import { Box, Text, Image, Flex, Button, IconButton, Container, Badge, HStack, VStack, Icon } from "@chakra-ui/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,7 +10,11 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import useUser from "../../lib/useUser";
 import ModalForCreateTutorial from "../modal/ModalForCreateTutorial";
 import ModalButtonForUpdateTutorialCard from "../modal/ModalButtonForUpdateTutorialCard";
+import DeleteButtonForTutorial from "../DeleteButtonForTutorial";
+
+
 const alt_image = "https://a0.muscache.com/im/pictures/21b7c945-10c9-481d-9e8e-04df36c6ec2c.jpg?im_w=1200";
+
 
 const NextArrow = (props: any) => {
     const { className, style, onClick } = props;
@@ -85,6 +89,7 @@ const TutorialList = () => {
                 {user && user.admin_level > 0 ? (
                     <Box border={"0px solid green"} width="97%" mx={"auto"} mt={1} mr={0}>
                         <ModalForCreateTutorial refetchTutorialList={refetchTutorialList} />
+
                     </Box>
                 ) : (
                     ""
@@ -94,12 +99,19 @@ const TutorialList = () => {
                     <Slider {...settings}>
                         {tutorialListData?.map((tutorial) => (
                             <HStack>
-                                <Box ml={1.5} mb={1}>
-                                    {/* <Button bgColor={"orange.100"} size={"xs"}>수정</Button> */}
-                                    <ModalButtonForUpdateTutorialCard
-                                        tutorialPk={tutorial.pk}
-                                        refetchTutorialList={refetchTutorialList}
-                                    />
+
+                                <Box ml={1.5} mb={1} border={"0px solid blue"} width={"80%"}>
+                                    <Flex justifyContent={"flex-end"}>
+                                        <ModalButtonForUpdateTutorialCard
+                                            tutorialPk={tutorial.pk}
+                                            refetchTutorialList={refetchTutorialList}
+                                        />
+                                        <DeleteButtonForTutorial
+                                            tutorialPk={tutorial.pk}
+                                            refetchTutorialList={refetchTutorialList}
+                                        />
+                                    </Flex>
+
                                 </Box>
                                 <Box borderWidth="1px" borderRadius="lg" width={"80%"} height={"100%"} border="1px solid black" >
                                     <Box border={"1px solid green"}>
