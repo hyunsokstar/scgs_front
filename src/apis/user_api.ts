@@ -26,12 +26,6 @@ export interface ICreateProfilePhotoVariables {
     userPk: string;
 }
 
-// export const getRoom = ({ queryKey }: QueryFunctionContext) => {
-//     const [_, roomPk] = queryKey;
-//     console.log("roomPk : ", roomPk);
-//     return instance.get(`rooms/${roomPk}`).then((response) => response.data);
-// };
-
 export const getUsersList = () => instance.get(`users`).then((response) => response.data);
 
 export const getProfile = ({ queryKey }: QueryFunctionContext) => {

@@ -1,4 +1,4 @@
-import { Box, Text, Image, Flex, Button, IconButton, Container, Badge } from "@chakra-ui/react";
+import { Box, Text, Image, Flex, Button, IconButton, Container, Badge, HStack, VStack } from "@chakra-ui/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -9,6 +9,7 @@ import { ITutorialListType } from "../../types/tutorial_type";
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import useUser from "../../lib/useUser";
 import ModalForCreateTutorial from "../modal/ModalForCreateTutorial";
+import ModalButtonForUpdateTutorialCard from "../modal/ModalButtonForUpdateTutorialCard";
 const alt_image = "https://a0.muscache.com/im/pictures/21b7c945-10c9-481d-9e8e-04df36c6ec2c.jpg?im_w=1200";
 
 const NextArrow = (props: any) => {
@@ -32,9 +33,34 @@ const settings = {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToShow: 4,
+    slidesToScroll: 4,
     dotsClass: "slick-dots my-dots-class",
+
+    responsive: [
+        {
+            breakpoint: 1500,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3
+            }
+        },
+        {
+            breakpoint: 1224,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+            }
+        },
+        {
+            breakpoint: 700,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+            }
+        }
+    ],
+
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
 };
@@ -53,64 +79,76 @@ const TutorialList = () => {
     console.log("tutorialListData : ", tutorialListData);
 
     return (
-        <Container maxW={"100%"} height={540} bgColor={"gray.300"} border="0px solid red" mx={"auto"}>
-            {user && user.admin_level > 2 ? (
-                <Box border={"1px solid green"} width="100%" display="flex" justifyContent="flex-end">
-                    {/* <Button variant="solid" colorScheme="red" mr={3} mt={2}>
-                        tutorial 추가
-                    </Button> */}
-                    <ModalForCreateTutorial />
-                </Box>
-            ) : (
-                ""
-            )}
+        <Container maxW={"100%"} height={540} bgColor={"gray.100"} border={"2px solid blue"}>
 
-            <Box>
-                {!tutorialListDataLoading ? (
+            <Box border={"0px solid red"} >
+                {user && user.admin_level > 0 ? (
+                    <Box border={"0px solid green"} width="97%" mx={"auto"} mt={1} mr={0}>
+                        <ModalForCreateTutorial refetchTutorialList={refetchTutorialList} />
+                    </Box>
+                ) : (
+                    ""
+                )}
+
+                {!tutorialListDataLoading && tutorialListData && tutorialListData.length ? (
                     <Slider {...settings}>
                         {tutorialListData?.map((tutorial) => (
-                            <Box borderWidth="1px" borderRadius="lg" overflow="hidden" width={"80%"} height={"100%"} border="0px solid black" p={5}>
-                                <Box border={"1px solid green"} position={"relative"}>
-                                    <Box border={"1px solid blue"}>
-                                        <Image
-                                            src={tutorial.tutorial_image ? tutorial.tutorial_image : alt_image}
-                                            alt={tutorial.tutorial_image}
-                                            objectFit={"fill"}
-                                            height={220}
-                                            width={1100}
-                                        />
-                                    </Box>
-                                    <Box p="2" border="0px solid black" height={200}>
-                                        <Flex justify="space-between" align="center">
-                                            <Text fontSize={"20px"} as="h3" fontWeight="bold">
-                                                {tutorial.title}
-                                            </Text>
-                                            <Text fontWeight="bold">$20</Text>
-                                        </Flex>
-                                        <Box overflow="hidden" textOverflow="ellipsis" border="0px solid black" height={20}>
-                                            <Text mt="2" fontSize="md">
-                                                {tutorial.description}
-                                            </Text>
+                            <HStack>
+                                <Box ml={1.5} mb={1}>
+                                    {/* <Button bgColor={"orange.100"} size={"xs"}>수정</Button> */}
+                                    <ModalButtonForUpdateTutorialCard
+                                        tutorialPk={tutorial.pk}
+                                        refetchTutorialList={refetchTutorialList}
+                                    />
+                                </Box>
+                                <Box borderWidth="1px" borderRadius="lg" width={"80%"} height={"100%"} border="1px solid black" >
+                                    <Box border={"1px solid green"}>
+
+                                        <Box border={"1px solid blue"}>
+                                            <Image
+                                                src={tutorial.tutorial_image ? tutorial.tutorial_image : alt_image}
+                                                alt={tutorial.tutorial_image}
+                                                objectFit={"fill"}
+                                                height={220}
+                                                width={1100}
+                                            />
                                         </Box>
-                                        <Flex mt={12}>
-                                            <Box w="50%" border={"0px solid blue"}>
-                                                by {tutorial.teacher}
+                                        <Box border="0px solid black" height={200} position={"relative"}>
+                                            <Flex justify="space-between" align="center" p={1}>
+                                                <Text fontSize={"16px"} as="h3" fontWeight="bold">
+                                                    {tutorial.title}
+                                                </Text>
+                                                <Text fontWeight="bold">{tutorial.price}</Text>
+                                            </Flex>
+                                            <Box overflow="hidden" textOverflow="ellipsis" border="0px solid black" height={20} p={1}>
+                                                <Text mt="2" fontSize="md">
+                                                    {tutorial.description}
+                                                </Text>
                                             </Box>
-                                            <Box w="50%">
-                                                <Badge size="sm" ml={2}>{tutorial.backend_framework_option}</Badge>
-                                                <Badge size="sm" ml={2}>{tutorial.frontend_framework_option}</Badge>
+                                            <Box border={"1px solid blue"} position={"absolute"} bottom={0} width={"100%"}>
+                                                <HStack p={1}>
+                                                    <Box border={"0px solid blue"}>
+                                                        by {tutorial.teacher}
+                                                    </Box>
+                                                    <Box>
+                                                        <Badge size="sm" ml={0}>{tutorial.backend_framework_option}</Badge>
+                                                        <Badge size="sm" ml={0}>{tutorial.frontend_framework_option}</Badge>
+                                                    </Box>
+                                                </HStack>
                                             </Box>
-                                        </Flex>
+                                        </Box>
                                     </Box>
                                 </Box>
-                            </Box>
+                            </HStack>
                         ))}
                     </Slider>
                 ) : (
-                    "Loading"
+                    <Box w="200px" h="100px" bg="blue.500">
+                        "Loading"
+                    </Box>
                 )}
             </Box>
-        </Container>
+        </Container >
     );
 };
 

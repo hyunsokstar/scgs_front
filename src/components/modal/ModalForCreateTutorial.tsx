@@ -18,6 +18,7 @@ import {
     HStack,
     Select,
     useToast,
+    Spinner,
 } from "@chakra-ui/react";
 
 // 11. react-hook-form 사용
@@ -46,16 +47,17 @@ type IFormData = {
     tutorial_url: string;
 };
 
-type Props = {};
+type Props = { refetchTutorialList: any };
 
 const alt_image = "https://a0.muscache.com/im/pictures/21b7c945-10c9-481d-9e8e-04df36c6ec2c.jpg?im_w=1200";
 
-function ModalForCreateTutorial({ }: Props) {
-    
+function ModalForCreateTutorial({ refetchTutorialList }: Props) {
+    const [tutorialImage, setTutorialImage] = useState<File | undefined>();
+    const [submitLoading, setSubmitLoading] = useState<boolean>(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
     const inputRef = useRef<HTMLInputElement>(null);
-    
+
     const {
         register,
         handleSubmit,
@@ -63,7 +65,6 @@ function ModalForCreateTutorial({ }: Props) {
         watch,
         reset
     } = useForm<IFormData>();
-    const [tutorialImage, setTutorialImage] = useState<File | undefined>();
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
@@ -89,7 +90,11 @@ function ModalForCreateTutorial({ }: Props) {
                 isClosable: true,
                 description: "Feel free to upload more images.",
             });
+            refetchTutorialList();
+            setSubmitLoading(false);
             reset();
+            setTutorialImage(undefined)
+            onClose();
         },
     });
 
@@ -128,26 +133,35 @@ function ModalForCreateTutorial({ }: Props) {
         console.log("tutorial_images ", tutorialImage);
         if (tutorialImage) {
             mutation.mutate();
+            setSubmitLoading(true);
         } else {
             alert("파일을 선택하지 않았습니다.");
             return;
         }
     };
 
+    const validateUrl = (value: string | URL) => {
+        try {
+            new URL(value);
+            return true;
+        } catch (_) {
+            return false;
+        }
+    }
+
     return (
         <>
-            <Button onClick={onOpen}>tutorial 추가</Button>
+            <Flex width="100%" border="0px solid red" justifyContent={"flex-end"}>
+                <Button bgColor={"pink.100"} onClick={onOpen} size={"sm"}>tutorial 추가</Button>
+            </Flex>
 
             <Modal isOpen={isOpen} onClose={onClose} size={"md"}>
                 <ModalOverlay />
-                <ModalContent style={{ width: "1200px", height: "85%" }}>
-                    <Text fontSize="22px" mx={"auto"}>
-                        Tutorial 입력
-                    </Text>
-                    <ModalCloseButton />
+                <ModalContent style={{ width: "1200px", height: "620px" }}>
+                    <ModalCloseButton size={"sm"} />
                     <ModalBody>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <Flex gap={3}>
+                            <Flex gap={2}>
                                 <Box maxW="100%" borderWidth="0px" borderRadius="lg" overflow="hidden" boxShadow="md" w="100%">
                                     <Box border={"0px solid blue"}>
                                         <Image src={tutorialImage ? URL.createObjectURL(tutorialImage) : alt_image} w="100%" height={210} objectFit={"cover"} />
@@ -199,12 +213,13 @@ function ModalForCreateTutorial({ }: Props) {
 
                                     <FormControl p="1" border={"0px solid blue"}>
                                         <HStack>
-                                            <Input w="100%" placeholder="tutorial_url..." {...register("tutorial_url")} size="sm" />
+                                            <Input w="100%" placeholder="tutorial_url..." defaultValue={"http://"} {...register("tutorial_url", { required: true, validate: validateUrl })} size="sm" />
+                                            {errors.tutorial_url && <span>tutorial_url 의 형식이 유효하지 않습니다. </span>}
                                         </HStack>
                                     </FormControl>
                                     <FormControl w="100%" mt={2} border={"0px solid green"}>
                                         <Button type="submit" w="100%">
-                                            Submit
+                                            Submit {submitLoading ? <Spinner ml={2} /> : ""}
                                         </Button>
                                     </FormControl>
                                 </Box>

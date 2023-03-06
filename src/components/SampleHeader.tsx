@@ -20,6 +20,7 @@ import {
     MenuList,
     MenuItem,
     HStack,
+    Heading,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import { FaMoon, FaSun } from "react-icons/fa";
@@ -72,16 +73,27 @@ function SampleHeader() {
     return (
         <Container maxW="80%">
             <Box>
-                <Text fontStyle="display" height="50px" fontSize={50} mb={10}>
-                    WorkSpace For FullStack Developers !!
-                </Text>
+                <Box bg="#F6F6F6" py={4}>
+                    <Heading
+                        as="h1"
+                        size="xl"
+                        fontWeight="bold"
+                        letterSpacing="tight"
+                        textAlign="center"
+                        color="blue.500"
+                        mt={3}
+                        mb={3}
+                    >
+                        WorkSpace For FullStack Developers !!
+                    </Heading>
+                </Box>
             </Box>
             <Box bgColor={"gray.600"}>
                 <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
                     <Box p={2}>
                         <IconButton icon={isOpen1 ? <CloseIcon /> : <HamburgerIcon />} size={"md"} onClick={onToggle1} aria-label={"Open Menu"} colorScheme={"cyan"} />
                         {!userLoading && user?.admin_level && user?.admin_level > 2 ? (
-                            <IconButton icon={isOpen2? <CloseIcon /> : <HamburgerIcon />} size={"md"} onClick={onToggle2} aria-label={"Open Menu"} colorScheme={"orange"} ml={2} />
+                            <IconButton icon={isOpen2 ? <CloseIcon /> : <HamburgerIcon />} size={"md"} onClick={onToggle2} aria-label={"Open Menu"} colorScheme={"orange"} ml={2} />
                         ) : (
                             ""
                         )}
@@ -122,7 +134,7 @@ function SampleHeader() {
                         </Stack>
                     </Box>
                     <HStack>
-                        <IconButton onClick={toggleColorMode} variant={"ghost"} aria-label="Toggle dark mode" icon={<Icon />} />
+                        <IconButton onClick={toggleColorMode} variant={"solid"} aria-label="Toggle dark mode" icon={<Icon color="yellow" />} bgColor={"blue.100"} />
 
                         {!userLoading ? (
                             !isLoggedIn ? (

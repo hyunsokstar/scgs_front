@@ -113,7 +113,13 @@ export default function Header() {
 
                 <HeadMenus />
 
-                <IconButton onClick={toggleColorMode} variant={"ghost"} aria-label="Toggle dark mode" icon={<Icon />} />
+                <IconButton
+                    colorScheme="red"
+                    onClick={toggleColorMode}
+                    variant={"outline"}
+                    aria-label="Toggle dark mode"
+                    icon={<Icon />}
+                />
 
                 {!userLoading ? (
                     !isLoggedIn ? (
