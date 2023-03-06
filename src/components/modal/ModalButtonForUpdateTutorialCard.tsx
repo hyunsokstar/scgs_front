@@ -83,6 +83,15 @@ const ModalButtonForUpdateTutorialCard = ({ tutorialPk, refetchTutorialList }: I
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
+
+        if (selectedFile && selectedFile.size > 5 * 1024 * 1024) {
+            alert('파일 크기는 5MB 이하이어야 합니다.');
+            if (inputRef.current != null) {
+                inputRef.current.value = '';
+            }
+            return;
+        }
+
         console.log("watch !! ", watch("tutorial_images"));
 
         if (selectedFile) {
@@ -205,7 +214,7 @@ const ModalButtonForUpdateTutorialCard = ({ tutorialPk, refetchTutorialList }: I
                     _active={{ bg: "red.600", color: "white" }}
                     _focus={{ boxShadow: "outline" }}
                 >
-                    <Icon as={FaEdit} onClick={onOpen} boxSize="25px" mb={1}/>
+                    <Icon as={FaEdit} onClick={onOpen} boxSize="25px" mb={1} />
                 </Box>
 
                 {/* tutorial delete */}

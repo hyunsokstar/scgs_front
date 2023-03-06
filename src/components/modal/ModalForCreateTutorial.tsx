@@ -68,6 +68,13 @@ function ModalForCreateTutorial({ refetchTutorialList }: Props) {
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
+        if (selectedFile && selectedFile.size > 5 * 1024 * 1024) {
+            alert('파일 크기는 5MB 이하이어야 합니다.');
+            if (inputRef.current != null) {
+                inputRef.current.value = '';
+            }
+        }
+
         console.log("watch !! ", watch("tutorial_images"));
 
         if (selectedFile) {
@@ -176,6 +183,7 @@ function ModalForCreateTutorial({ refetchTutorialList }: Props) {
                                                 style={{ display: "none" }}
                                                 onChange={handleFileChange}
                                                 ref={inputRef}
+                                                accept="image/*"
                                             />
 
                                             <Button w={"28%"} size="sm" onClick={handleButtonClick}>

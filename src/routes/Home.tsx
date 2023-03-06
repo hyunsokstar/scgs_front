@@ -14,8 +14,8 @@ const image_array = [
 
 export default function Home() {
     return (
-        <Container maxW={"80%"} >
+        <Box>
             <TutorialList />
-        </Container>
+        </Box>
     );
 }

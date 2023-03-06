@@ -7,7 +7,6 @@ import {
     IconButton,
     Stack,
     Collapse,
-    Icon,
     Button,
     Container,
     useColorMode,
@@ -71,7 +70,7 @@ function SampleHeader() {
     };
 
     return (
-        <Container maxW="80%">
+        <Box>
             <Box>
                 <Box bg="#F6F6F6" py={4}>
                     <Heading
@@ -101,11 +100,19 @@ function SampleHeader() {
 
                     <Box>
                         <Stack direction={"row"} align="center" display={{ base: "none", md: "flex" }} gap={10}>
+
+                            <Link to="/boier_plate">
+                                <Text fontSize="lg" fontWeight="bold" color="white">
+                                    Boiler Plate
+                                </Text>
+                            </Link>
+
                             <Link to="/">
                                 <Text fontSize="lg" fontWeight="bold" color="white">
                                     ToDo
                                 </Text>
                             </Link>
+
                             <Link to="/users">
                                 <Text fontSize="lg" fontWeight="bold" color="white">
                                     유저
@@ -189,7 +196,7 @@ function SampleHeader() {
             </Box>
             <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
             <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
-        </Container>
+        </Box>
     );
 }
 

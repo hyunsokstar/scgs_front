@@ -16,6 +16,7 @@ import EstimateDetail from "./routes/EstimateDetail";
 import UserProfile from "./routes/UserProfile";
 import UsersPage from "./routes/user/UsersPage";
 import TutorialAdmin from "./routes/TutorialAdmin";
+import BoilerPlates from "./routes/BoilerPlates";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: "",
                 element: <Home />,
+            },
+            {
+                path: "boiler_plate",
+                element: <BoilerPlates />,
             },
             {
                 path: "users",
