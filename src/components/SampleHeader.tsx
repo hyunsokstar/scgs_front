@@ -70,7 +70,7 @@ function SampleHeader() {
     };
 
     return (
-        <Box>
+        <Box mb={2}>
             <Box>
                 <Box bg="#F6F6F6" py={4}>
                     <Heading
@@ -101,9 +101,15 @@ function SampleHeader() {
                     <Box>
                         <Stack direction={"row"} align="center" display={{ base: "none", md: "flex" }} gap={10}>
 
-                            <Link to="/boier_plate">
+                            <Link to="/tutorial_study">
                                 <Text fontSize="lg" fontWeight="bold" color="white">
-                                    Boiler Plate
+                                    Tutorial Study
+                                </Text>
+                            </Link>
+
+                            <Link to="/framework_study">
+                                <Text fontSize="lg" fontWeight="bold" color="white">
+                                    Framework Study
                                 </Text>
                             </Link>
 
@@ -112,15 +118,19 @@ function SampleHeader() {
                                     ToDo
                                 </Text>
                             </Link>
-
-                            <Link to="/users">
+                            {/* <Link to="/users">
                                 <Text fontSize="lg" fontWeight="bold" color="white">
                                     유저
+                                </Text>
+                            </Link> */}
+                            <Link to="/">
+                                <Text fontSize="lg" fontWeight="bold" color="white">
+                                    DevOps
                                 </Text>
                             </Link>
                             <Link to="/">
                                 <Text fontSize="lg" fontWeight="bold" color="white">
-                                    채팅
+                                    Q&A
                                 </Text>
                             </Link>
                             <Link to="/">
@@ -131,11 +141,6 @@ function SampleHeader() {
                             <Link to="/">
                                 <Text fontSize="lg" fontWeight="bold" color="white">
                                     쇼핑
-                                </Text>
-                            </Link>
-                            <Link to="/">
-                                <Text fontSize="lg" fontWeight="bold" color="white">
-                                    Team
                                 </Text>
                             </Link>
                         </Stack>

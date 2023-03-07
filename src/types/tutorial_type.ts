@@ -10,6 +10,9 @@
 export type ITutorialListType = [
     {
         pk: number;
+        author: {
+            username: string;
+        };
         tutorial_image: string;
         title: string;
         price: string;
@@ -18,6 +21,8 @@ export type ITutorialListType = [
         description: string;
         teacher: string;
         tutorial_url: string;
+        like_count: number;
+        unlike_count: number;
     }
 ];
 

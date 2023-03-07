@@ -31,6 +31,30 @@ interface ITypeForTutorialUpdate {
   tutorial_url: string;
 }
 
+export const plusTutorialLike = ((tutorialPk: number) => {
+  console.log("updateTutorialLike api 호출 함수 실행 2");
+
+  return instance.put(`/tutorials/${tutorialPk}/like`, {},
+    {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    }).then((response) => response.data);
+
+})
+
+export const minusTutorialLike = ((tutorialPk: number) => {
+  console.log("updateTutorialLike api 호출 함수 실행 2");
+
+  return instance.put(`/tutorials/${tutorialPk}/unlike`, {},
+    {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    }).then((response) => response.data);
+
+})
+
 export const updateTutorial = ({ pk, tutorial_image, title, teacher, price, description, frontend_framework_option, backend_framework_option, tutorial_url }: ITypeForTutorialUpdate) =>
   instance
     .put(

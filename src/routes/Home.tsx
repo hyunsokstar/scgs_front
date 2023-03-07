@@ -1,4 +1,5 @@
-import { Box, Container, Grid, Image } from "@chakra-ui/react";
+import { Box, Container, Grid, Image, Text } from "@chakra-ui/react";
+import CompletedAndPlannedList from "../components/CompletedAndPlannedList";
 import TutorialList from "../components/TutorialList";
 // import PhotoUploadButton from "../components/PhotoUploadButton";
 // import RoomsList from "../components/RoomsList";
@@ -16,6 +17,7 @@ export default function Home() {
     return (
         <Box>
             <TutorialList />
+            <CompletedAndPlannedList />
         </Box>
     );
 }

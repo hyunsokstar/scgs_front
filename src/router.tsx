@@ -29,7 +29,11 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: "boiler_plate",
+                path: "tutorial_study",
+                element: <Home />,
+            },
+            {
+                path: "framework_study",
                 element: <BoilerPlates />,
             },
             {
