@@ -23,7 +23,7 @@ function ProjectProgressList({ }: Props): ReactElement {
         getProjectProgressList, {
         enabled: true,
     });
-    // console.log("pageProgressListData : ", pageProgressListData);
+    console.log("pageProgressListData : ", pageProgressListData);
 
     return (
         <Container maxW={"100%"} border={"1px solid purple"} px={0}>

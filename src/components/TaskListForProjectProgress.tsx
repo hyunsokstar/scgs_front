@@ -66,14 +66,41 @@ function TaskListForProjectProgress({ ProjectProgressList, totalPageCount }: ITy
                                                 <StarRating initialRating={task.importance} />
                                             </Box>
                                             <Box flex={1.5} border={"1px solid blue"}>
-                                                <VStack>
-                                                    <Text>
-                                                        시작: {task.started_at}
-                                                    </Text>
-                                                    <Text>
-                                                        경과: (x시간 y분)
-                                                    </Text>
-                                                </VStack>
+                                                <Flex>
+                                                    <Box flex={1} textAlign={"center"}>
+                                                        <Text>시작</Text>
+                                                    </Box>
+                                                    <Box flex={3}>
+                                                        <Text>
+                                                            {task.started_at_formatted}
+                                                        </Text>
+                                                    </Box>
+                                                </Flex>
+                                                <Flex>
+                                                    <Box flex={1} textAlign={"center"}>
+                                                        <Text>경과</Text>
+                                                    </Box>
+                                                    <Box flex={3}>
+                                                        <Text>
+                                                            {task.elapsed_time_from_started_at}
+                                                        </Text>
+                                                    </Box>
+                                                </Flex>
+
+                                                {/* <VStack>
+                                                    <HStack>
+                                                        <Text>시작</Text>
+                                                        <Text>
+                                                            {task.started_at_formatted}
+                                                        </Text>
+                                                    </HStack>
+                                                    <HStack>
+                                                        <Text>경과</Text>
+                                                        <Text>
+                                                            {task.elapsed_time_from_started_at}
+                                                        </Text>
+                                                    </HStack>
+                                                </VStack> */}
                                             </Box>
                                             <Box flex={0.5} textAlign={"end"} border={"1px solid green"}>
                                                 <SlideToggleButton onChange={() => {

@@ -15,7 +15,9 @@ export interface ITypeForProjectProgressList {
             task: string;
             task_status: string;
             importance: number;
-            started_at:string;
+            started_at: string;
+            started_at_formatted: string;
+            elapsed_time_from_started_at: string;
         }
     ];
 }
