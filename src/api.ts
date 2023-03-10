@@ -38,7 +38,7 @@ export const getEstimates = ({ queryKey }: QueryFunctionContext) => {
     console.log("estimate 요청 확인 at api");
 
     const [_, pageNum] = queryKey;
-    console.log("pageNum : ", pageNum);
+    // console.log("pageNum : ", pageNum);
     return instance.get(`estimates/?page=${pageNum}`).then((response) => {
         console.log("response at api: ", response);
 

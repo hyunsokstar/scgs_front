@@ -64,7 +64,7 @@ const ModalButtonForUpdateTutorialCard = ({ tutorialPk, refetchTutorialList }: I
 
     const { isLoading: loadingFortutorialDataForUpdate, data: dataFortutorialUpdate } = useQuery<ITypeForTutorialUpdate>([`tutorial_update`, tutorialPk], getOneTutorialData);
 
-    console.log("dataFortutorialUpdate : ", dataFortutorialUpdate);
+    // console.log("dataFortutorialUpdate : ", dataFortutorialUpdate);
 
 
     const [tutorialImage, setTutorialImage] = useState<File | undefined>();

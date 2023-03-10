@@ -17,6 +17,7 @@ import UserProfile from "./routes/UserProfile";
 import UsersPage from "./routes/user/UsersPage";
 import TutorialAdmin from "./routes/TutorialAdmin";
 import BoilerPlates from "./routes/BoilerPlates";
+import TutorialList from "./components/TutorialList";
 
 const router = createBrowserRouter([
     {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "tutorial_study",
-                element: <Home />,
+                element: <TutorialList />,
             },
             {
                 path: "framework_study",
@@ -93,6 +94,7 @@ const router = createBrowserRouter([
                 path: "tutorials",
                 element: <TutorialAdmin />,
             },
+
         ],
     },
 ]);

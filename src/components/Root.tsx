@@ -6,7 +6,7 @@ import SampleHeader from "./SampleHeader";
 export default function Root() {
     return (
         <Box>
-            <Box maxW="95%" mx={"auto"}>
+            <Box maxW="80%" mx={"auto"}>
                 <SampleHeader />
                 <Outlet />
             </Box>

@@ -84,7 +84,7 @@ const TutorialList = () => {
     // const bgColor = useColorModeValue("blue.200", "blue.600"); // 밝은 색상과 어두운 색상 모두 사용
     // const textColor = useColorModeValue("red.200", "red.600");
 
-    console.log("tutorialListData : ", tutorialListData);
+    // console.log("tutorialListData : ", tutorialListData);
 
 
 

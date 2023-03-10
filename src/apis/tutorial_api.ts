@@ -79,7 +79,7 @@ export const updateTutorial = ({ pk, tutorial_image, title, teacher, price, desc
 
 export const getOneTutorialData = ({ queryKey }: QueryFunctionContext) => {
   const [_, tutorialPk] = queryKey;
-  console.log("userPk : ", tutorialPk);
+  // console.log("userPk : ", tutorialPk);
   return instance.get(`tutorials/${tutorialPk}`).then((response) => response.data);
 };
 

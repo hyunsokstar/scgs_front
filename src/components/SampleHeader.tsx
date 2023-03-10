@@ -29,6 +29,10 @@ import { logOut } from "../api";
 import { Link } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
+// import './styles/styles.scss'; // SCSS 파일 import
+import styles from "../scss/Header.module.scss";
+import { NavLink, NavLinkProps } from 'react-router-dom';
+
 
 function SampleHeader() {
     const { isOpen: isLoginOpen, onClose: onLoginClose, onOpen: onLoginOpen } = useDisclosure();
@@ -69,6 +73,18 @@ function SampleHeader() {
         }, 0);
     };
 
+    let activeStyle = {
+        fontSize: "lg",
+        fontWeight: "bold",
+        color: "yellow"
+    };
+
+    let unactiveStyle = {
+        fontSize: "lg",
+        fontWeight: "bold",
+        color: "white"
+    };
+
     return (
         <Box mb={2}>
             <Box>
@@ -101,48 +117,83 @@ function SampleHeader() {
                     <Box>
                         <Stack direction={"row"} align="center" display={{ base: "none", md: "flex" }} gap={10}>
 
-                            <Link to="/tutorial_study">
-                                <Text fontSize="lg" fontWeight="bold" color="white">
+                            {/* <Box className={styles.active}>
+                                hi
+                            </Box> */}
+
+                            <NavLink
+                                to="/tutorial_study"
+                                style={({ isActive }) =>
+                                    isActive ? activeStyle : unactiveStyle
+                                }>
+                                <Text >
                                     Tutorial Study
                                 </Text>
-                            </Link>
+                            </NavLink>
 
-                            <Link to="/framework_study">
-                                <Text fontSize="lg" fontWeight="bold" color="white">
+
+                            <NavLink
+                                to="/framework_study"
+                                style={({ isActive }) =>
+                                    isActive ? activeStyle : unactiveStyle
+                                }
+                            >
+                                <Text fontSize="lg" >
                                     Framework Study
                                 </Text>
-                            </Link>
+                            </NavLink>
 
-                            <Link to="/">
-                                <Text fontSize="lg" fontWeight="bold" color="white">
+                            <NavLink to="/todos"
+                                style={({ isActive }) =>
+                                    isActive ? activeStyle : unactiveStyle
+                                }
+                            >
+                                <Text >
                                     ToDo
                                 </Text>
-                            </Link>
-                            {/* <Link to="/users">
-                                <Text fontSize="lg" fontWeight="bold" color="white">
+                            </NavLink>
+                            {/* <NavLink to="/users">
+                                <Text >
                                     유저
                                 </Text>
-                            </Link> */}
-                            <Link to="/">
-                                <Text fontSize="lg" fontWeight="bold" color="white">
+                            </NavLink> */}
+                            <NavLink to="/devops"
+                                style={({ isActive }) =>
+                                    isActive ? activeStyle : unactiveStyle
+                                }
+                            >
+                                <Text >
                                     DevOps
                                 </Text>
-                            </Link>
-                            <Link to="/">
-                                <Text fontSize="lg" fontWeight="bold" color="white">
+                            </NavLink>
+                            <NavLink to="/qa"
+                                style={({ isActive }) =>
+                                    isActive ? activeStyle : unactiveStyle
+                                }
+                            >
+                                <Text >
                                     Q&A
                                 </Text>
-                            </Link>
-                            <Link to="/">
-                                <Text fontSize="lg" fontWeight="bold" color="white">
+                            </NavLink>
+                            <NavLink to="/music"
+                                style={({ isActive }) =>
+                                    isActive ? activeStyle : unactiveStyle
+                                }
+                            >
+                                <Text >
                                     뮤직
                                 </Text>
-                            </Link>
-                            <Link to="/">
-                                <Text fontSize="lg" fontWeight="bold" color="white">
+                            </NavLink
+                            >
+                            <NavLink to="/shopping"
+                                style={({ isActive }) =>
+                                    isActive ? activeStyle : unactiveStyle
+                                }
+                            >
+                                <Text >
                                     쇼핑
                                 </Text>
-                            </Link>
+                            </NavLink>
                         </Stack>
                     </Box>
                     <HStack>
