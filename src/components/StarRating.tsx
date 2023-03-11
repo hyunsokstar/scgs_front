@@ -4,13 +4,18 @@ import { StarIcon } from "@chakra-ui/icons";
 
 type Props = {
     initialRating?: number;
+    taskPk: string;
+    onChangeForStarRatingHandler: ({taskPk, newRating}: any) => void;
 };
 
-const StarRating = ({ initialRating = 0 }: Props) => {
+const StarRating = ({ initialRating = 0, taskPk, onChangeForStarRatingHandler }: Props) => {
     const [rating, setRating] = useState(initialRating);
 
-    const handleClick = (newRating: number) => {
-        setRating(newRating);
+    const handleClick = (star_count: any) => {
+        console.log("taskPk, newRating for handle click", taskPk, star_count);
+        
+        onChangeForStarRatingHandler({taskPk, star_count})
+        setRating(star_count);
     };
 
     return (

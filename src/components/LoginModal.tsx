@@ -52,11 +52,10 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
   const mutation = useMutation(usernameLogIn, {
     onMutate: () => {
-      console.log("mutation starting");
+      // console.log("mutation starting");
     },
     onSuccess: (data) => {
-
-      console.log("data : ", data);
+      // console.log("data : ", data);
 
       toast({
         title: "welcome back!",

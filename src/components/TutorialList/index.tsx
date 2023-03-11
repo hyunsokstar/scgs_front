@@ -103,9 +103,9 @@ const TutorialList = () => {
 
                 {!tutorialListDataLoading && tutorialListData && tutorialListData.length ? (
                     <Slider {...settings}>
-                        {tutorialListData?.map((tutorial) => (
+                        {tutorialListData?.map((tutorial, index) => (
 
-                            <HStack>
+                            <HStack key={index}>
                                 {user && user.username && tutorial.author &&
                                     user.username === tutorial.author.username ?
                                     <Box ml={1.5} mb={0} border={"0px solid blue"} width={"80%"}>

@@ -1,19 +1,22 @@
-// export interface ITypeForProjectProgressList {
-//     pk: string;
-//     writer: string;
-//     task: string;
-//     task_status: string;
-//     importance: string;
-// }
+
+// task_completed update 
+export interface IResponseTypeForProjectTaskUpdate {
+    result: {
+        success: boolean;
+        message: string;
+    }
+}
+
 
 export interface ITypeForProjectProgressList {
+    pageProgressListRefatch?: () => void;
     totalPageCount: number;
     ProjectProgressList: [
         {
             pk: string;
             writer: string;
             task: string;
-            task_status: string;
+            task_completed: boolean;
             importance: number;
             started_at: string;
             started_at_formatted: string;
@@ -26,6 +29,7 @@ export interface IFormTypeForProjectProgress {
     task: string;
     writer: string;
     importance: string;
-    task_status: string;
+    task_completed: boolean;
     password: string;
 }
+

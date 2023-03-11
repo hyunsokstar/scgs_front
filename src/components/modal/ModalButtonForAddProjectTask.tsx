@@ -70,14 +70,14 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({pageProgressListRefatch }) =>
     task,
     writer,
     importance,
-    task_status,
+    task_completed,
     password
   }: IFormTypeForProjectProgress) => {
     createMutationForProjectProgress.mutate({
       task,
       writer,
       importance,
-      task_status,
+      task_completed,
       password
     })
   };
@@ -145,18 +145,8 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({pageProgressListRefatch }) =>
 
 
                 <FormControl>
-                  <FormLabel>task_status</FormLabel>
-                  <RadioGroup name="rating">
-                    <HStack spacing="24px">
-                      <Radio value="uncomplete" {...register("task_status")} size="lg">
-                        uncomplete
-                      </Radio>
-                      <Radio value="complete" {...register("task_status")} size="lg">
-                        complete
-                      </Radio>
-                      
-                    </HStack>
-                  </RadioGroup>
+                  <FormLabel>task_completed</FormLabel>
+                  <Checkbox {...register("task_completed")} />
                 </FormControl>
 
                 <FormControl>

@@ -42,7 +42,7 @@ function SampleHeader() {
     const Icon = useColorModeValue(FaMoon, FaSun);
     const { userLoading, isLoggedIn, user } = useUser();
 
-    console.log("user : ", user);
+    // console.log("user : ", user);
 
     const queryClient = useQueryClient();
 
@@ -194,6 +194,17 @@ function SampleHeader() {
                                     쇼핑
                                 </Text>
                             </NavLink>
+
+                            <NavLink to="/test"
+                                style={({ isActive }) =>
+                                    isActive ? activeStyle : unactiveStyle
+                                }
+                            >
+                                <Text >
+                                    test page
+                                </Text>
+                            </NavLink>
+
                         </Stack>
                     </Box>
                     <HStack>

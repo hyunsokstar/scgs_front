@@ -23,7 +23,7 @@ function ProjectProgressList({ }: Props): ReactElement {
         getProjectProgressList, {
         enabled: true,
     });
-    console.log("pageProgressListData : ", pageProgressListData);
+    // console.log("pageProgressListData : ", pageProgressListData);
 
     return (
         <Container maxW={"100%"} border={"1px solid purple"} px={0}>
@@ -32,7 +32,7 @@ function ProjectProgressList({ }: Props): ReactElement {
             </Box>
             <Box>
                 {!isLoading && pageProgressListData ?
-                    <TaskListForProjectProgress ProjectProgressList={pageProgressListData.ProjectProgressList} totalPageCount={pageProgressListData.totalPageCount} />
+                    <TaskListForProjectProgress ProjectProgressList={pageProgressListData.ProjectProgressList} totalPageCount={pageProgressListData.totalPageCount} pageProgressListRefatch={pageProgressListRefatch} />
                     : ""
                 }
             </Box>

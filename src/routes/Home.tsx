@@ -17,7 +17,7 @@ const image_array = [
 export default function Home() {
     return (
         <Box>
-            <TutorialList />
+            {/* <TutorialList /> */}
             <ProjectProgressList />
             {/* <CompletedAndPlannedList /> */}
         </Box>

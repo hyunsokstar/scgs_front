@@ -18,6 +18,7 @@ import UsersPage from "./routes/user/UsersPage";
 import TutorialAdmin from "./routes/TutorialAdmin";
 import BoilerPlates from "./routes/BoilerPlates";
 import TutorialList from "./components/TutorialList";
+import TestPage from "./routes/TestPage";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             {
                 path: "",
                 element: <Home />,
+            },
+            {
+                path: "test",
+                element: <TestPage />,
             },
             {
                 path: "tutorial_study",
