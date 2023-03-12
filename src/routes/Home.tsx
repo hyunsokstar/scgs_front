@@ -19,8 +19,7 @@ const image_array = [
 export default function Home() {
     return (
         <Box>
-            {/* <TestCard imageUrl={image_array[0].image_url}/> */}
-            {/* <UserProfile /> */}
+
         </Box>
     );
 }

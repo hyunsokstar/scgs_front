@@ -21,6 +21,7 @@ import TutorialList from "./components/TutorialList";
 import TestPageForGayou from "./routes/TestPageForGayou";
 import ProjectAdminPage from "./routes/ProjectAdminPage";
 import TestPage from "./routes/TestPage";
+import TestDataGridPage from "./routes/TestDataGridPage";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path: "",
                 element: <Home />,
+            },
+            {
+                path:"test-data-grid",
+                element:<TestDataGridPage />
             },
             {
                 path: "project-admin",
