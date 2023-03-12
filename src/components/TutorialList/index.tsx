@@ -26,7 +26,7 @@ function PrevArrow(props: any) {
     const { className, style, onClick } = props;
     return (
         <IconButton
-            style={{ backgroundColor: "red", position: "absolute", top: "220px", left: "-39px" }}
+            style={{ backgroundColor: "red", position: "absolute", top: "220px", left: "-39px"}}
             aria-label="previous"
             icon={<ArrowLeftIcon zIndex={5} />}
             onClick={onClick}

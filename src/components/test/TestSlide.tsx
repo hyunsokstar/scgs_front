@@ -11,17 +11,38 @@ type ImageSliderProps = {
 
 const NextArrow = (props: any) => {
     const { className, style, onClick } = props;
-    return <IconButton style={{ backgroundColor: "red", position: "absolute", top: "45%", right: "29px" }} aria-label="previous" icon={<ArrowRightIcon />} onClick={onClick} />;
+    return (
+        // <IconButton
+        //     style={{ backgroundColor: "red", position: "absolute", top: "45%", right: "120px" }}
+        //     aria-label="previous"
+        //     icon={<ArrowRightIcon />}
+        //     onClick={onClick}
+        // />
+        <IconButton
+            aria-label="Arrow Right Icon Button"
+            icon={<ArrowRightIcon />}
+            bg="transparent"
+            fontSize="50px"
+            _hover={{ fontWeight: "bold", color: "blue.500", backgroundColor: "gray.100" }}
+            style={{ position: "absolute", top: "40%", right: "120px", width: "58px", height: "58px" }}
+            onClick={onClick}
+            zIndex={2}
+        />
+    );
 };
 
 function PrevArrow(props: any) {
     const { className, style, onClick } = props;
     return (
         <IconButton
-            style={{ backgroundColor: "red", position: "absolute", top: "45%", left: "29px" }}
-            aria-label="previous"
-            icon={<ArrowLeftIcon zIndex={5} />}
+            aria-label="Arrow Left Icon Button"
+            icon={<ArrowLeftIcon />}
+            bg="transparent"
+            fontSize="50px"
+            _hover={{ fontWeight: "bold", color: "blue.500", backgroundColor: "gray.100" }}
+            style={{ position: "absolute", top: "40%", left: "120px", width: "58px", height: "58px" }}
             onClick={onClick}
+            zIndex={2}
         />
     );
 }
@@ -67,7 +88,8 @@ const TestSlide: React.FC<ImageSliderProps> = ({ images }) => {
 
 
     return (
-        <Box position="relative">
+        <Box position="relative" mt={3}>
+
             <Slider {...settings}>
                 {images && images.map((image, index) => (
                     <Box
@@ -79,6 +101,8 @@ const TestSlide: React.FC<ImageSliderProps> = ({ images }) => {
                             border={"1px solid pink"}
                             width={"717px"}
                             height={"386px"}
+                            borderRadius="xl"
+                            overflow="hidden"
                         >
                             <Img
                                 style={slideStyles(index)}

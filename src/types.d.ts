@@ -94,6 +94,11 @@ export interface IUser {
     admin_level: number;
     date_joined: string;
     profileImages: [{ pk: string; file?: string }];
+    position?: { pk: string; position_name: string };
+    pk?: string;
+    skill_for_frameWork: [{ pk: number; frame_work_name: string }];
+    about_me?: string;
+
 }
 
 interface IUsersForUserList {

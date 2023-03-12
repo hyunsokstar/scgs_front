@@ -38,15 +38,11 @@ function SampleHeader() {
     const { isOpen: isLoginOpen, onClose: onLoginClose, onOpen: onLoginOpen } = useDisclosure();
     const { isOpen: isSignUpOpen, onClose: onSignUpClose, onOpen: onSignUpOpen } = useDisclosure();
     const { toggleColorMode } = useColorMode();
-    const logoColor = useColorModeValue("red.500", "red.200");
     const Icon = useColorModeValue(FaMoon, FaSun);
     const { userLoading, isLoggedIn, user } = useUser();
-
-    // console.log("user : ", user);
-
     const queryClient = useQueryClient();
-
     const toast = useToast();
+    // console.log("user : ", user);
 
     const { isOpen: isOpen1, onToggle: onToggle1 } = useDisclosure();
     const { isOpen: isOpen2, onToggle: onToggle2 } = useDisclosure();
@@ -86,7 +82,7 @@ function SampleHeader() {
     };
 
     return (
-        <Box mb={2}>
+        <Container mb={2} border={"1px solid blue"}>
             <Box>
                 <Box bg="#F6F6F6" py={4}>
                     <Heading
@@ -116,10 +112,6 @@ function SampleHeader() {
 
                     <Box>
                         <Stack direction={"row"} align="center" display={{ base: "none", md: "flex" }} gap={10}>
-
-                            {/* <Box className={styles.active}>
-                                hi
-                            </Box> */}
 
                             <NavLink
                                 to="/tutorial_study"
@@ -223,9 +215,9 @@ function SampleHeader() {
                             ) : (
                                 <Box>
                                     <HStack mr={2}>
-                                        <Text color={"orange.500"} fontSize={"2xl"}>
+                                        {/* <Text color={"orange.500"} fontSize={"2xl"}>
                                             {user?.username} ({user?.admin_level}) 님
-                                        </Text>
+                                        </Text> */}
                                         <Menu>
                                             <MenuButton>
                                                 <Avatar name={user?.name} size={"md"} />
@@ -263,7 +255,7 @@ function SampleHeader() {
             </Box>
             <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
             <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
-        </Box>
+        </Container>
     );
 }
 

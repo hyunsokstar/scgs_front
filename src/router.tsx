@@ -13,11 +13,13 @@ import UploadPhotos from "./routes/UploadPhotos";
 import EstimateRequire from "./routes/EstimateRequire";
 import Estimates from "./routes/Estimates";
 import EstimateDetail from "./routes/EstimateDetail";
-import UserProfile from "./routes/UserProfile";
+import UserProfilePage from "./routes/UserProfilePage";
 import UsersPage from "./routes/user/UsersPage";
 import TutorialAdmin from "./routes/TutorialAdmin";
 import BoilerPlates from "./routes/BoilerPlates";
 import TutorialList from "./components/TutorialList";
+import TestPageForGayou from "./routes/TestPageForGayou";
+import ProjectAdminPage from "./routes/ProjectAdminPage";
 import TestPage from "./routes/TestPage";
 
 const router = createBrowserRouter([
@@ -31,11 +33,23 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: "test",
+                path: "project-admin",
+                element: <ProjectAdminPage />,
+            },
+            {
+                path: "test-component",
                 element: <TestPage />,
             },
             {
-                path: "tutorial_study",
+                path: "gayou",
+                element: <TestPageForGayou />,
+            },
+            {
+                path:"project_admin",
+                element:<ProjectAdminPage />
+            },
+            {
+                path: "tutorials",
                 element: <TutorialList />,
             },
             {
@@ -48,7 +62,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "users/:userPk",
-                element: <UserProfile />,
+                element: <UserProfilePage />,
             },
             {
                 path: "rooms/:roomPk",

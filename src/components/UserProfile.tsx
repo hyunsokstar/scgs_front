@@ -5,16 +5,21 @@ import ModalForUserProfileImageUpdate from "../components/modal/ModalForUserProf
 import { IUserProfile } from "../types/user/user_types";
 import { getProfile } from "../apis/user_api";
 import { useQuery } from "@tanstack/react-query";
+import useUser from "../lib/useUser";
 
 interface IProfileImage {
     file: string | undefined
 }
 
-const ProfilePage = () => {
-    const { userPk } = useParams();
-    const { isLoading, data: userProfileData } = useQuery<IUserProfile>([`user_profile`, userPk], getProfile);
+// type IProps =  {
+//     userPk: number
+// }
+
+const UserProfile = () => {
+    // const { userPk } = useParams();
+    // const { isLoading, data: userProfileData } = useQuery<IUserProfile>([`user_profile`, userPk], getProfile);
     const [profileImage, setProfileImage] = useState<string | undefined>();
-    console.log("userProfileData : ", userProfileData);
+    const { userLoading, isLoggedIn, user } = useUser();
     
     // useEffect(() => {
     //   setProfileImage(userProfileData?.profileImages[0].file)
@@ -23,8 +28,8 @@ const ProfilePage = () => {
 
     return (
         <>
-            {!isLoading && userProfileData ? (
-                <Container maxW="78%" margin="auto" bgColor={"green.100"}>
+            {!userLoading && user ? (
+                <Container maxW="100%" margin="auto" bgColor={"green.100"}>
                     {/* {userProfileData ? userProfileData : ""} */}
                     <Flex
                         direction={{ base: "column", md: "row" }}
@@ -38,17 +43,17 @@ const ProfilePage = () => {
                             <Avatar
                                 size="2xl"
                                 name="John Doe"
-                                src={userProfileData?.profileImages[0] ? userProfileData.profileImages[0].file : "https://bit.ly/broken-link"}
+                                src={user?.profileImages[0] ? user.profileImages[0].file : "https://bit.ly/broken-link"}
                                 mb={4}
                             />
                             <Text fontSize="xl" fontWeight="bold" mb={2}>
-                                {userProfileData?.name}
+                                {user?.name}
                             </Text>
                             <Text fontSize="md" mb={4}>
-                                {userProfileData?.position !== null ? userProfileData?.position.position_name: "default"}
+                                {user?.position !== null ? user?.position?.position_name: "default"}
                             </Text>
                             <Box>
-                                {userProfileData?.skill_for_frameWork.map((row) => {
+                                {user?.skill_for_frameWork.map((row) => {
                                     return (
                                         <Box>
                                             <Badge colorScheme="orange" mb={2}>
@@ -64,22 +69,22 @@ const ProfilePage = () => {
                                 About Me
                             </Text>
                             <Text fontSize="md" mb={4}>
-                                {userProfileData?.about_me}
+                                {user?.about_me}
                             </Text>
                             <Text fontSize="md" mb={4}>
-                                {userProfileData?.email}
+                                {user?.email}
                             </Text>
                         </Box>
                         <Box flex="1" w="100%" p={4} color="white" ml={5}>
-                            <ModalForUserProfileImageUpdate setProfileImage={setProfileImage} userPk={userPk} profile_image={profileImage} />
+                            <ModalForUserProfileImageUpdate setProfileImage={setProfileImage} userPk={user.pk} profile_image={profileImage} />
                         </Box>
                     </Flex>
                 </Container>
             ) : (
-                "loading"
+                "loading2"
             )}
         </>
     );
 };
 
-export default ProfilePage;
+export default UserProfile;

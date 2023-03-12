@@ -1,7 +1,9 @@
 import { Box, Container, Grid, Image, Text } from "@chakra-ui/react";
 import CompletedAndPlannedList from "../components/CompletedAndPlannedList";
 import ProjectProgressList from "../components/ProjectProgressList";
+import TestCard from "../components/TestCard/TestCard";
 import TutorialList from "../components/TutorialList";
+import UserProfile from "../components/UserProfile";
 // import PhotoUploadButton from "../components/PhotoUploadButton";
 // import RoomsList from "../components/RoomsList";
 // import UsersList from "../components/UsersList";
@@ -17,9 +19,8 @@ const image_array = [
 export default function Home() {
     return (
         <Box>
-            {/* <TutorialList /> */}
-            <ProjectProgressList />
-            {/* <CompletedAndPlannedList /> */}
+            {/* <TestCard imageUrl={image_array[0].image_url}/> */}
+            {/* <UserProfile /> */}
         </Box>
     );
 }

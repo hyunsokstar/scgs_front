@@ -1,25 +1,24 @@
-import { Box, Flex } from '@chakra-ui/react'
 import React, { ReactElement } from 'react'
-import TestSlide from '../components/test/TestSlide'
+import TestCard from '../components/TestCard/TestCard'
+
+const image_array = [
+    { image_url: "https://a0.muscache.com/im/pictures/f18bc1db-e914-4931-aa9f-8f3a03bc22c2.jpg?im_w=720" },
+    { image_url: "https://a0.muscache.com/im/pictures/fe92456e-6d0b-4758-a0fa-bb80bf4f4ac1.jpg?im_w=720" },
+    { image_url: "https://a0.muscache.com/im/pictures/miso/Hosting-614812324007668898/original/c4465c6c-e664-4a7d-a313-1282656e423e.jpeg?im_w=720" },
+    { image_url: "https://a0.muscache.com/im/pictures/ad1357d0-306c-41b9-a96b-4934f3966ae5.jpg?im_w=720" },
+    { image_url: "https://a0.muscache.com/im/pictures/8340b03d-6405-4a61-ac8a-fc9d9d445f0f.jpg?im_w=720" },
+];
 
 interface Props {
 
 }
 
-const sampleImages = [
-    "https://gayou.co.kr/data/file/sliders/2039101916_6c8NQ0w3_5eabde665c90a580b6224d30a23add663761a16b.png",
-    "https://gayou.co.kr/data/file/sliders/2039101916_YvEBqTJy_9634dda2f61879adafdc800f2716da8a46e0b451.png",
-    "https://gayou.co.kr/data/file/sliders/2039101916_euIvNYoS_8bcdf096698f9856e7a9776a7445082ca71c157c.png",
-    "https://gayou.co.kr/data/file/sliders/2039121330_Pr4uL7Uq_3d0679f38a9c703a694835458b14bca4f989931f.png",
-    "https://gayou.co.kr/data/file/sliders/2039101916_6c8NQ0w3_5eabde665c90a580b6224d30a23add663761a16b.png",
-    "https://gayou.co.kr/data/file/sliders/2039101916_roxNGWZk_47809c070c777a21f3648c9c72527dee9d483043.png"
-]
-
 function TestPage({ }: Props): ReactElement {
     return (
-        <Box>
-            <TestSlide images={sampleImages} />
-        </Box>
+        <div>
+            <TestCard imageUrl={image_array[0].image_url} />
+
+        </div>
     )
 }
 
