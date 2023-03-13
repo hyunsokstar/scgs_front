@@ -187,7 +187,6 @@ const TestHeader = () => {
 
                         <Select
                             value={selectedValue}
-
                             className={styles.select}
                             onChange={handleChange}
                             width={"150px"}
@@ -202,8 +201,8 @@ const TestHeader = () => {
                             <option value="default">
                                 테스트 컴퍼넌트
                             </option>
-                            <option value="/test-component">
-                                Card Component
+                            <option value="/test-data-grid">
+                                test-data-grid(유저 관리)
                             </option>
 
                         </Select>

@@ -5,8 +5,10 @@ import React, { useState } from "react";
 
 import { faker } from "@faker-js/faker";
 
-import {default as textEditor}  from '../components/Editor/textEditor';
+import { default as textEditor } from "../../components/Editor/textEditor";
 
+import styles from "./grid.module.css";
+import { Box, Button } from "@chakra-ui/react";
 
 interface Row {
   id: number;
@@ -26,7 +28,31 @@ interface Row {
   available: boolean;
 }
 
+// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+const checkboxFormatter = ({ row, column, onRowChange, onClose }: any) => {
+  return (
+    <input
+      type="checkbox"
+      value={row.id}
+      checked={row.selected}
+      onChange={(e) => {
+        // const checked = e.target.checked;
+        onRowChange({ ...row, selected: !row.selected});
+
+      }}
+    />
+  );
+};
+
 const columns = [
+  {
+    key: "checkbox",
+    name: "",
+    width: 50,
+    resizable: false,
+    sortable: false,
+    formatter: checkboxFormatter,
+  },
   { key: "id", name: "ID" },
   { key: "title", name: "Title", editorble: true, editor: textEditor },
   { key: "client", name: "client" },
@@ -34,7 +60,8 @@ const columns = [
   { key: "country", name: "country" },
 ];
 
-function createRows(): readonly Row[] {
+// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+function createRows(): any {
   const now = Date.now();
   const rows: Row[] = [];
 
@@ -62,7 +89,6 @@ function createRows(): readonly Row[] {
 }
 
 function gridElement() {
-  // const [state, setstate] = useState("");
   const [rows, setRows] = useState(createRows);
   const [selectedRows, setSelectedRows] = useState<ReadonlySet<number>>(
     () => new Set()
@@ -72,25 +98,44 @@ function gridElement() {
     return row.id;
   }
 
+  const rowChangeHandler = (rows: Row[]) => {
+    console.log("rows : ", rows);
+    setRows(rows);
+  };
+
+  const handleAddRow = () => {
+    console.log("행 추가 클릭");
+
+    // const newRow = { id: rows.length + 1 , title:""};
+    const newRow = { id: rows.length + 1, selected: true };
+    setRows([newRow, ...rows]);
+  };
+
   return (
-    <DataGrid
-      rowKeyGetter={rowKeyGetter}
-      columns={columns}
-      rows={rows}
-      defaultColumnOptions={{
-        sortable: true,
-        resizable: true,
-      }}
-      className="fill-grid"
-      selectedRows={selectedRows}
-      onSelectedRowsChange={setSelectedRows}
-      onRowsChange={setRows}
-      // sortColumns={sortColumns}
-      // onSortColumnsChange={setSortColumns}
-      // topSummaryRows={summaryRows}
-      // bottomSummaryRows={summaryRows}
-      // direction={direction}
-    />
+    <Box mt={2}>
+      <Button onClick={handleAddRow}>행 추가</Button>
+      <DataGrid
+        columns={columns}
+        rows={rows}
+        rowKeyGetter={rowKeyGetter}
+        defaultColumnOptions={{
+          sortable: true,
+          resizable: true,
+        }}
+        selectedRows={selectedRows}
+        // onRowsChange={setRows}
+        onRowsChange={rowChangeHandler}
+        onSelectedRowsChange={setSelectedRows}
+        className="fill-grid"
+        rowClass={(row: Row) => {
+          if (selectedRows.has(row.id)) {
+            return styles.selected;
+          } else {
+            return "";
+          }
+        }}
+      />
+    </Box>
   );
 }
 

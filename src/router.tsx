@@ -21,7 +21,7 @@ import TutorialList from "./components/TutorialList";
 import TestPageForGayou from "./routes/TestPageForGayou";
 import ProjectAdminPage from "./routes/ProjectAdminPage";
 import TestPage from "./routes/TestPage";
-import TestDataGridPage from "./routes/TestDataGridPage";
+import TestDataGridPage from "./routes/GridPage/TestDataGridPage";
 
 const router = createBrowserRouter([
     {
