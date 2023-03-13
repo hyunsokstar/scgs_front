@@ -37,8 +37,7 @@ const checkboxFormatter = ({ row, column, onRowChange, onClose }: any) => {
       checked={row.selected}
       onChange={(e) => {
         // const checked = e.target.checked;
-        onRowChange({ ...row, selected: !row.selected});
-
+        onRowChange({ ...row, selected: !row.selected });
       }}
     />
   );
@@ -123,12 +122,13 @@ function gridElement() {
           resizable: true,
         }}
         selectedRows={selectedRows}
-        // onRowsChange={setRows}
         onRowsChange={rowChangeHandler}
         onSelectedRowsChange={setSelectedRows}
         className="fill-grid"
-        rowClass={(row: Row) => {
-          if (selectedRows.has(row.id)) {
+        // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+        rowClass={(row: any) => {
+          console.log("row : ", row);
+          if (row.selected) {
             return styles.selected;
           } else {
             return "";

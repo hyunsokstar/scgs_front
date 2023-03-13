@@ -16,12 +16,14 @@ function TextEditor({
   onClose,
 }: // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 any): ReactElement {
+  // console.log("row[column.key].value : ", row[column.key].value);
+
   return (
     <div>
       <Input
         // className={textEditorClassname}
         // ref={autoFocusAndSelect}
-        defaultValue={row[column.key].value}
+        defaultValue={row[column.key]!== undefined ? row[column.key].value : ""}
         onChange={(event) => {
           console.log("row[id] : ", row["id"]);
           onRowChange({ ...row, [column.key]: event.target.value, selected: true});

@@ -202,7 +202,10 @@ const TestHeader = () => {
                                 테스트 컴퍼넌트
                             </option>
                             <option value="/test-data-grid">
-                                test-data-grid(유저 관리)
+                                data-grid 샘플
+                            </option>
+                            <option value="/data-grid/users">
+                                유저 리스트(by data-grid)
                             </option>
 
                         </Select>

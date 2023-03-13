@@ -7,7 +7,7 @@ type Props = {};
 function UsersPage({}: Props) {
     return (
         <>
-            <Container maxW="80%">
+            <Container maxW="100%">
                 <UsersList />
             </Container>
         </>

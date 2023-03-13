@@ -22,105 +22,109 @@ import TestPageForGayou from "./routes/TestPageForGayou";
 import ProjectAdminPage from "./routes/ProjectAdminPage";
 import TestPage from "./routes/TestPage";
 import TestDataGridPage from "./routes/GridPage/TestDataGridPage";
+import UsersByDataGridPage from "./routes/DataGridContainer/UsersByDataGridPage";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <Root />,
-        errorElement: <NotFound />,
-        children: [
-            {
-                path: "",
-                element: <Home />,
-            },
-            {
-                path:"test-data-grid",
-                element:<TestDataGridPage />
-            },
-            {
-                path: "project-admin",
-                element: <ProjectAdminPage />,
-            },
-            {
-                path: "test-component",
-                element: <TestPage />,
-            },
-            {
-                path: "gayou",
-                element: <TestPageForGayou />,
-            },
-            {
-                path:"project_admin",
-                element:<ProjectAdminPage />
-            },
-            {
-                path: "tutorials",
-                element: <TutorialList />,
-            },
-            {
-                path: "framework_study",
-                element: <BoilerPlates />,
-            },
-            {
-                path: "users",
-                element: <UsersPage />,
-            },
-            {
-                path: "users/:userPk",
-                element: <UserProfilePage />,
-            },
-            {
-                path: "rooms/:roomPk",
-                element: <RoomDetail />,
-            },
-            {
-                path: "rooms/upload",
-                element: <UploadRoom />,
-            },
-            {
-                path: "/building_management",
-                element: <BuildingManagement />,
-            },
-            {
-                path: "/test/react-draft",
-                element: <ReactDraft />,
-            },
-            {
-                path: "/test/lexical-editor",
-                element: <LexicalEditorPage />,
-            },
-            {
-                path: "/test/tiptap-editor",
-                element: <TipTabPage />,
-            },
-            {
-                path: "/test/tinymce-editor",
-                element: <TinyMcePage />,
-            },
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "data-grid/users",
+        element: <UsersByDataGridPage />,
+      },
+      {
+        path: "test-data-grid",
+        element: <TestDataGridPage />,
+      },
+      {
+        path: "project-admin",
+        element: <ProjectAdminPage />,
+      },
+      {
+        path: "test-component",
+        element: <TestPage />,
+      },
+      {
+        path: "gayou",
+        element: <TestPageForGayou />,
+      },
+      {
+        path: "project_admin",
+        element: <ProjectAdminPage />,
+      },
+      {
+        path: "tutorials",
+        element: <TutorialList />,
+      },
+      {
+        path: "framework_study",
+        element: <BoilerPlates />,
+      },
+      {
+        path: "users",
+        element: <UsersPage />,
+      },
+      {
+        path: "users/:userPk",
+        element: <UserProfilePage />,
+      },
+      {
+        path: "rooms/:roomPk",
+        element: <RoomDetail />,
+      },
+      {
+        path: "rooms/upload",
+        element: <UploadRoom />,
+      },
+      {
+        path: "/building_management",
+        element: <BuildingManagement />,
+      },
+      {
+        path: "/test/react-draft",
+        element: <ReactDraft />,
+      },
+      {
+        path: "/test/lexical-editor",
+        element: <LexicalEditorPage />,
+      },
+      {
+        path: "/test/tiptap-editor",
+        element: <TipTabPage />,
+      },
+      {
+        path: "/test/tinymce-editor",
+        element: <TinyMcePage />,
+      },
 
-            {
-                path: "rooms/:roomPk/photos",
-                element: <UploadPhotos />,
-            },
-            {
-                path: "estimate_require",
-                element: <EstimateRequire />,
-            },
-            {
-                path: "estimates",
-                element: <Estimates />,
-            },
-            {
-                path: "estimates/:estimatePk",
-                element: <EstimateDetail />,
-            },
-            {
-                path: "tutorials",
-                element: <TutorialAdmin />,
-            },
-
-        ],
-    },
+      {
+        path: "rooms/:roomPk/photos",
+        element: <UploadPhotos />,
+      },
+      {
+        path: "estimate_require",
+        element: <EstimateRequire />,
+      },
+      {
+        path: "estimates",
+        element: <Estimates />,
+      },
+      {
+        path: "estimates/:estimatePk",
+        element: <EstimateDetail />,
+      },
+      {
+        path: "tutorials",
+        element: <TutorialAdmin />,
+      },
+    ],
+  },
 ]);
 
 export default router;

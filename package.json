@@ -20,6 +20,7 @@
     "@tiptap/pm": "^2.0.0-beta.217",
     "@tiptap/react": "^2.0.0-beta.217",
     "@tiptap/starter-kit": "^2.0.0-beta.217",
+    "@types/faker": "^6.6.9",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.27",
