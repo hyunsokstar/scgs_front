@@ -5,10 +5,9 @@ import React, { useState } from "react";
 
 import { faker } from "@faker-js/faker";
 
-import { default as textEditor } from "../../components/Editor/textEditor";
-
 import styles from "./grid.module.css";
 import { Box, Button } from "@chakra-ui/react";
+import TextEditor from "../../components/Editor/textEditor";
 
 interface Row {
   id: number;
@@ -27,6 +26,7 @@ interface Row {
   version: string;
   available: boolean;
 }
+
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 const checkboxFormatter = ({ row, column, onRowChange, onClose }: any) => {
@@ -53,7 +53,7 @@ const columns = [
     formatter: checkboxFormatter,
   },
   { key: "id", name: "ID" },
-  { key: "title", name: "Title", editorble: true, editor: textEditor },
+  { key: "title", name: "Title", editorble: true, editor: TextEditor },
   { key: "client", name: "client" },
   { key: "area", name: "area" },
   { key: "country", name: "country" },

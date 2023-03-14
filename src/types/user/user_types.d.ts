@@ -11,11 +11,30 @@
 // }
 
 export interface IUserProfile {
-    pk: string;
-    name: string;
-    email: string;
-    position: { pk: string; position_name: string };
-    profileImages: [{ pk: string; file?: string }];
-    about_me: string;
-    skill_for_frameWork: [{ pk: number; frame_work_name: string }];
+  pk: string;
+  name: string;
+  email: string;
+  position: { pk: string; position_name: string };
+  profileImages: [{ pk: string; file?: string }];
+  about_me: string;
+  skill_for_frameWork: [{ pk: number; frame_work_name: string }];
+}
+
+export interface IUserRow {
+  pk: number;
+  name: string;
+  username: string;
+  email: string;
+  profileImages?: [
+    {
+      pk: number;
+      file: string;
+    }
+  ];
+  admin_level: number;
+  position: string;
+
+  selected?: boolean;
+  is_new_row?: boolean;
+  profile_image?: string;
 }

@@ -23,10 +23,16 @@ any): ReactElement {
       <Input
         // className={textEditorClassname}
         // ref={autoFocusAndSelect}
-        defaultValue={row[column.key]!== undefined ? row[column.key].value : ""}
+        defaultValue={
+          row[column.key] !== undefined ? row[column.key].value : ""
+        }
         onChange={(event) => {
           console.log("row[id] : ", row["id"]);
-          onRowChange({ ...row, [column.key]: event.target.value, selected: true});
+          onRowChange({
+            ...row,
+            [column.key]: event.target.value,
+            selected: true,
+          });
         }}
         onBlur={() => onClose(true)}
       />{" "}
