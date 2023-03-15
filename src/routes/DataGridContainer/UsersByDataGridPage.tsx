@@ -82,7 +82,16 @@ const columns = [
     },
   },
   { key: "admin_level", name: "Admin Level", editor: TextEditor },
-  { key: "position", name: "Position", editor: SelectBoxEditor },
+  {
+    key: "position",
+    name: "Position",
+    editor: SelectBoxEditor,
+    // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+    formatter: ({ row, column }: any) => {
+      console.log("rows : ", row);
+      return <div>{row[column.key] === 1 ? "frontend" : "backend"}</div>;
+    },
+  },
 ];
 
 const position_names = ["사원", "대리", "과장", "부장", "사장", "회장"];
@@ -225,7 +234,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
             ? row.profileImages[0].file
             : "",
           admin_level: Math.floor(Math.random() * 5) + 1,
-          position: row.position?.position_name,
+          position: row.position?.pk,
           selected: row.selected,
         };
       });
