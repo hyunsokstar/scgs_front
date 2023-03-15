@@ -76,7 +76,7 @@ const UserProfile = () => {
                             </Text>
                         </Box>
                         <Box flex="1" w="100%" p={4} color="white" ml={5}>
-                            <ModalForUserProfileImageUpdate setProfileImage={setProfileImage} userPk={user.pk} profile_image={profileImage} />
+                            <ModalForUserProfileImageUpdate loginUser={user} />
                         </Box>
                     </Flex>
                 </Container>

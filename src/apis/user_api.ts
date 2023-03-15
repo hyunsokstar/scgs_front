@@ -115,13 +115,13 @@ export const saveMultiUserUsingDataGrid = (
 };
 
 
-export const deleteMultiUserListForCheck = (ids_to_delete: number[]) => {
+export const deleteMultiUserListForCheck = (ids_to_delete: number[] | undefined) => {
   console.log("ids_to_delete : ", ids_to_delete);
 
   return axios
-      .delete(`${backendApi}/api/v1/estimates/delete`, {
+      .delete(`${backendApi}/api/v1/users/multi-users/delete`, {
           data: {
-              ids: ids_to_delete,
+              user_ids: ids_to_delete,
           },
       })
       .then((response) => {
@@ -129,6 +129,6 @@ export const deleteMultiUserListForCheck = (ids_to_delete: number[]) => {
           return response;
       })
       .catch((error) => {
-          console.error(error);
+          console.log("axios error : ", error); 
       });
 };

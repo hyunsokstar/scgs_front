@@ -1,5 +1,5 @@
-import React, { ReactElement, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { ReactElement, useEffect, useState } from "react";
 import {
   deleteMultiUserListForCheck,
   getUsersList,
@@ -24,12 +24,13 @@ import button_styles from "./button.module.css";
 import TextEditor from "../../components/Editor/textEditor";
 import { IUserRow } from "../../types/user/user_types";
 import SelectBoxEditor from "../../components/Editor/SelectBox";
-
-// 1122
+import ModalForUserProfileImageUpdate from "../../components/modal/ModalForUserProfileImageUpdate";
+import useUser from "../../lib/useUser";
 
 interface Props {}
 
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+const profileImageDoubleClickHandler = () => {};
+
 const checkboxFormatter = ({ row, column, onRowChange, onClose }: any) => {
   return (
     <input
@@ -37,11 +38,7 @@ const checkboxFormatter = ({ row, column, onRowChange, onClose }: any) => {
       value={row.id}
       checked={row.selected}
       onChange={(e) => {
-        // console.log("check box event 실행", e.target.checked);
-        // console.log("row : ", row);
         const checked = e.target.checked;
-        // console.log("checked : ", checked);
-
         onRowChange({ ...row, selected: checked });
       }}
     />
@@ -66,9 +63,13 @@ const columns = [
     key: "profile_image",
     name: "profile_image",
     // rome-ignore lint/suspicious/noExplicitAny: <explanation>
-    formatter: ({ row }: { row: any }) => {
+    formatter: ({ row, column }: any) => {
+      // console.log("row : ", row);
+
+      // console.log("column : ", column);
+
       return (
-        <>
+        <HStack>
           <Img
             src={
               row.profile_image
@@ -77,8 +78,18 @@ const columns = [
             }
             width={"50px"}
             height={"50px"}
+            onDoubleClick={profileImageDoubleClickHandler}
           />
-        </>
+          {row.username === column.user.username ? (
+            <ModalForUserProfileImageUpdate
+              // userPk={row.pk}
+              // profile_image={row.profile_image}
+              loginUser = {column.user}
+            />
+          ) : (
+            ""
+          )}
+        </HStack>
       );
     },
   },
@@ -89,15 +100,14 @@ const columns = [
     editor: SelectBoxEditor,
     // rome-ignore lint/suspicious/noExplicitAny: <explanation>
     formatter: ({ row, column }: any) => {
-      // console.log("row[column.key] : ", row[column.key]);
       return (
-        <div>
+        <Box>
           {row[column.key].position_name === ""
             ? ""
             : row[column.key] === 1
             ? "frontend"
             : "backend"}
-        </div>
+        </Box>
       );
     },
   },
@@ -105,28 +115,10 @@ const columns = [
 
 const position_names = ["사원", "대리", "과장", "부장", "사장", "회장"];
 
-// 타입 설정, type setting
-// interface Row {
-//   pk: number;
-//   name: string;
-//   username: string;
-//   email: string;
-//   profileImages?: [
-//     {
-//       pk: number;
-//       file: string;
-//     }
-//   ];
-//   admin_level: number;
-//   position: string;
-
-//   selected?: boolean;
-//   is_new_row?: boolean;
-//   profile_image?: string;
-// }
-
 // 1122
 function UsersByDataGridPage({}: Props): ReactElement {
+  const { userLoading, isLoggedIn, user } = useUser();
+
   const toast = useToast();
 
   const [selectedRows, setSelectedRows] = useState<ReadonlySet<number>>(
@@ -189,13 +181,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
           console.log("new row 는 아닙니다.");
         }
       });
-      // const name = "hi"
-      // const username = "hi"
-      // const password = "hi"
-      // const email = "hi"
 
-      // todo data_for_save 를 서버로 보내서 저장
-      // saveMultiUsersMutation
       saveMultiUsersMutation.mutate(data_for_save);
 
       console.log(
@@ -249,6 +235,56 @@ function UsersByDataGridPage({}: Props): ReactElement {
     setGridRows(rowData);
   }, [usersListData]);
 
+  const deleteMutationForCheck = useMutation(
+    (ids_to_delete: number[]) => {
+      return deleteMultiUserListForCheck(ids_to_delete);
+    },
+    {
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["users_list2"]);
+
+        toast({
+          title: "delete for checkbox 성공!",
+          status: "success",
+        });
+      },
+      // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+      onError: (error: any) => {
+        console.log("error : ", error);
+
+        if (error) {
+          const ErrorMessage = error.response.data.detail;
+          toast({
+            title: `에러 발생: ${ErrorMessage}`,
+            status: "error",
+          });
+        }
+      },
+    }
+  );
+
+  const deleteButtonForCheckHandler = () => {
+    let filtered_rows;
+    let filtered_ids;
+    if (gridRows) {
+      filtered_rows = gridRows.filter((row) => {
+        if (row.selected) {
+          return row;
+        }
+      });
+      filtered_ids = filtered_rows.map((row) => {
+        return row.pk;
+      });
+      console.log("filtered_ids : ", filtered_ids);
+      const response = deleteMutationForCheck.mutate(filtered_ids);
+    }
+
+    console.log("삭제 버튼 클릭");
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -256,7 +292,6 @@ function UsersByDataGridPage({}: Props): ReactElement {
   if (error) {
     return <div>Error</div>;
   }
-  // console.log("usersListData => ", usersListData);
 
   const rowKeyGetter = (row: IUserRow) => {
     return row.pk;
@@ -265,31 +300,6 @@ function UsersByDataGridPage({}: Props): ReactElement {
   const rowChangeHandler = (rows: IUserRow[]) => {
     // console.log("changed rows : ", rows);
     setGridRows(rows);
-  };
-
-  const deleteMutationForCheck = useMutation(
-    (ids_to_delete: number[]) => {
-      return deleteMultiUserListForCheck(ids_to_delete);
-    },
-    {
-      onSuccess: (data) => {
-        console.log("data : ", data);
-
-        toast({
-          title: "delete for checkbox 성공!",
-          status: "success",
-        });
-      },
-    }
-  );
-
-  const deleteButtonForCheckHandler = () => {
-    const check_ids = gridRows?.filter((row) => {
-      if (row.selected) {
-        return row.pk;
-      }
-    });
-    console.log("check_ids: ", check_ids);
   };
 
   if (gridRows) {
@@ -344,7 +354,8 @@ function UsersByDataGridPage({}: Props): ReactElement {
 
         <Box>
           <DataGrid
-            columns={columns}
+            // columns={columns}
+            columns={columns.map((col) => ({ ...col, isLoggedIn, user }))}
             rows={gridRows}
             rowKeyGetter={rowKeyGetter}
             rowHeight={50}
@@ -359,8 +370,6 @@ function UsersByDataGridPage({}: Props): ReactElement {
               }
 
               if (row.selected) {
-                // console.log("check selected true");
-
                 return styles.selected;
               } else {
                 return "";

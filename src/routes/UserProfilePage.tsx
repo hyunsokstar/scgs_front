@@ -5,6 +5,7 @@ import ModalForUserProfileImageUpdate from "../components/modal/ModalForUserProf
 import { IUserProfile } from "../types/user/user_types";
 import { getProfile } from "../apis/user_api";
 import { useQuery } from "@tanstack/react-query";
+import { IUser } from "../types";
 
 interface IProfileImage {
     file: string | undefined
@@ -12,7 +13,7 @@ interface IProfileImage {
 
 const UserProfilePage = () => {
     const { userPk } = useParams();
-    const { isLoading, data: userProfileData } = useQuery<IUserProfile>([`user_profile`, userPk], getProfile);
+    const { isLoading, data: userProfileData } = useQuery<IUser>([`user_profile`, userPk], getProfile);
     const [profileImage, setProfileImage] = useState<string | undefined>();
     console.log("userProfileData : ", userProfileData);
     
@@ -45,7 +46,7 @@ const UserProfilePage = () => {
                                 {userProfileData?.name}
                             </Text>
                             <Text fontSize="md" mb={4}>
-                                {userProfileData?.position !== null ? userProfileData?.position.position_name: "default"}
+                                {userProfileData?.position ? userProfileData?.position.position_name: "default"}
                             </Text>
                             <Box>
                                 {userProfileData?.skill_for_frameWork.map((row) => {
@@ -71,7 +72,8 @@ const UserProfilePage = () => {
                             </Text>
                         </Box>
                         <Box flex="1" w="100%" p={4} color="white" ml={5}>
-                            <ModalForUserProfileImageUpdate setProfileImage={setProfileImage} userPk={userPk} profile_image={profileImage} />
+                            {/* <ModalForUserProfileImageUpdate setProfileImage={setProfileImage} userPk={userPk} profile_image={profileImage} /> */}
+                            <ModalForUserProfileImageUpdate loginUser={userProfileData} />
                         </Box>
                     </Flex>
                 </Container>

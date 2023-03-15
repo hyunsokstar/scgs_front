@@ -87,6 +87,7 @@ export interface IReview {
 }
 
 export interface IUser {
+    pk:any;
     username: string;
     email: string;
     name: string;
