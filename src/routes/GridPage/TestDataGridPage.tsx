@@ -98,7 +98,7 @@ function gridElement() {
   }
 
   const rowChangeHandler = (rows: Row[]) => {
-    console.log("rows : ", rows);
+    // console.log("rows : ", rows);
     setRows(rows);
   };
 
@@ -127,7 +127,7 @@ function gridElement() {
         className="fill-grid"
         // rome-ignore lint/suspicious/noExplicitAny: <explanation>
         rowClass={(row: any) => {
-          console.log("row : ", row);
+          // console.log("row : ", row);
           if (row.selected) {
             return styles.selected;
           } else {

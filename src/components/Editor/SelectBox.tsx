@@ -27,7 +27,7 @@ function SelectBoxEditor({
           console.log("row[id] : ", row["id"]);
           onRowChange({
             ...row,
-            [column.key]: event.target.value,
+            [column.key]: parseInt(event.target.value),
             selected: true,
           });
         }}

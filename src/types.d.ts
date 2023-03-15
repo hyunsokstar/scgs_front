@@ -102,7 +102,7 @@ export interface IUser {
 }
 
 interface IUsersForUserList {
-    pk: number;
+    pk?: number;
     username: string;
     profileImages: [{ pk: string; file?: string }];
 }

@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  deleteMultiUserListForCheck,
   getUsersList,
   saveMultiUserUsingDataGrid,
   signUp,
@@ -36,7 +37,7 @@ const checkboxFormatter = ({ row, column, onRowChange, onClose }: any) => {
       value={row.id}
       checked={row.selected}
       onChange={(e) => {
-        console.log("check box event 실행", e.target.checked);
+        // console.log("check box event 실행", e.target.checked);
         // console.log("row : ", row);
         const checked = e.target.checked;
         // console.log("checked : ", checked);
@@ -88,8 +89,16 @@ const columns = [
     editor: SelectBoxEditor,
     // rome-ignore lint/suspicious/noExplicitAny: <explanation>
     formatter: ({ row, column }: any) => {
-      console.log("rows : ", row);
-      return <div>{row[column.key] === 1 ? "frontend" : "backend"}</div>;
+      // console.log("row[column.key] : ", row[column.key]);
+      return (
+        <div>
+          {row[column.key].position_name === ""
+            ? ""
+            : row[column.key] === 1
+            ? "frontend"
+            : "backend"}
+        </div>
+      );
     },
   },
 ];
@@ -128,7 +137,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
     isLoading,
     data: usersListData,
     error,
-  } = useQuery<IUserRow[]>(["users_list"], getUsersList);
+  } = useQuery<IUserRow[]>(["users_list2"], getUsersList);
   const [gridRows, setGridRows] = useState<IUserRow[]>();
   const queryClient = useQueryClient();
 
@@ -152,7 +161,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
       });
 
       setGridRows(rows_for_update);
-      queryClient.refetchQueries(["users_list"]);
+      queryClient.refetchQueries(["users_list2"]);
     },
     // rome-ignore lint/suspicious/noExplicitAny: <explanation>
     onError: (error: any) => {
@@ -218,12 +227,9 @@ function UsersByDataGridPage({}: Props): ReactElement {
     let rowData;
 
     if (usersListData) {
-      console.log("usersListData : ", usersListData);
-
       rowData = usersListData?.map((row) => {
         if (row.profileImages) {
         }
-        // console.log("row.profile_images : ", row);
 
         return {
           pk: row.pk,
@@ -257,8 +263,33 @@ function UsersByDataGridPage({}: Props): ReactElement {
   };
 
   const rowChangeHandler = (rows: IUserRow[]) => {
-    console.log("changed rows : ", rows);
+    // console.log("changed rows : ", rows);
     setGridRows(rows);
+  };
+
+  const deleteMutationForCheck = useMutation(
+    (ids_to_delete: number[]) => {
+      return deleteMultiUserListForCheck(ids_to_delete);
+    },
+    {
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "delete for checkbox 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const deleteButtonForCheckHandler = () => {
+    const check_ids = gridRows?.filter((row) => {
+      if (row.selected) {
+        return row.pk;
+      }
+    });
+    console.log("check_ids: ", check_ids);
   };
 
   if (gridRows) {
@@ -300,11 +331,11 @@ function UsersByDataGridPage({}: Props): ReactElement {
             </Button>
             <Button
               size="md"
-              onClick={handleSaveRow}
               fontWeight="bold"
               colorScheme="red"
               _hover={{ bg: "red.600" }}
               _active={{ bg: "red.700" }}
+              onClick={deleteButtonForCheckHandler}
             >
               삭제
             </Button>
@@ -328,7 +359,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
               }
 
               if (row.selected) {
-                console.log("check selected true");
+                // console.log("check selected true");
 
                 return styles.selected;
               } else {

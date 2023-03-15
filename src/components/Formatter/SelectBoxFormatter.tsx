@@ -5,7 +5,7 @@ interface Props {}
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 function SelectBoxFormatter({ row, column }: any): ReactElement {
-    console.log("row : ", row);
+    // console.log("row : ", row);
     
   return (
     <Box>
