@@ -22,6 +22,7 @@ import styles from "./grid.module.css";
 import button_styles from "./button.module.css";
 import TextEditor from "../../components/Editor/textEditor";
 import { IUserRow } from "../../types/user/user_types";
+import SelectBoxEditor from "../../components/Editor/SelectBox";
 
 // 1122
 
@@ -47,6 +48,7 @@ const checkboxFormatter = ({ row, column, onRowChange, onClose }: any) => {
 };
 
 // 컬럼 설정
+// 2244
 const columns = [
   {
     key: "checkbox",
@@ -56,9 +58,9 @@ const columns = [
     sortable: false,
     formatter: checkboxFormatter,
   },
-  { key: "name", name: "Name", editor: TextEditor },
-  { key: "username", name: "Username", editor: TextEditor },
-  { key: "email", name: "Email", editor: TextEditor },
+  { key: "name", name: "Name", editor: TextEditor, editable: true },
+  { key: "username", name: "Username", editor: TextEditor, editable: true },
+  { key: "email", name: "Email", editor: TextEditor, editable: true },
   {
     key: "profile_image",
     name: "profile_image",
@@ -80,7 +82,7 @@ const columns = [
     },
   },
   { key: "admin_level", name: "Admin Level", editor: TextEditor },
-  { key: "position", name: "Position", editor: TextEditor },
+  { key: "position", name: "Position", editor: SelectBoxEditor },
 ];
 
 const position_names = ["사원", "대리", "과장", "부장", "사장", "회장"];
@@ -119,6 +121,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
     error,
   } = useQuery<IUserRow[]>(["users_list"], getUsersList);
   const [gridRows, setGridRows] = useState<IUserRow[]>();
+  const queryClient = useQueryClient();
 
   const saveMultiUsersMutation = useMutation(saveMultiUserUsingDataGrid, {
     onMutate: () => {
@@ -127,16 +130,30 @@ function UsersByDataGridPage({}: Props): ReactElement {
     onSuccess: (data) => {
       console.log("data : ", data);
       toast({
-        title: "회원 가입 성공!",
+        title: "유저 데이터 저장 성공!",
         status: "success",
       });
-      // queryClient.refetchQueries(["me"]);
+
+      const rows_for_update = gridRows?.map((row) => {
+        return {
+          ...row,
+          selected: false,
+          is_new_row: false,
+        };
+      });
+
+      setGridRows(rows_for_update);
+      queryClient.refetchQueries(["users_list"]);
     },
     // rome-ignore lint/suspicious/noExplicitAny: <explanation>
     onError: (error: any) => {
       if (error) {
-        console.log("회원 가입 에러 : ", error.response.data.detail);
-        // const signUpErrorMessage = error.response.data.detail
+        console.log("회원 가입 에러 : ", error.response.data.error);
+        const signUpErrorMessage = error.response.data.detail;
+        toast({
+          title: `에러 발생: ${signUpErrorMessage}`,
+          status: "error",
+        });
         // setSignUpErrorExists(signUpErrorMessage)
       }
     },
@@ -158,11 +175,10 @@ function UsersByDataGridPage({}: Props): ReactElement {
       // const username = "hi"
       // const password = "hi"
       // const email = "hi"
-      
-      // todo data_for_save 를 서버로 보내서 저장 
+
+      // todo data_for_save 를 서버로 보내서 저장
       // saveMultiUsersMutation
       saveMultiUsersMutation.mutate(data_for_save);
-
 
       console.log(
         `data for save : ${data_for_save} 길이 ${data_for_save.length}`
@@ -179,7 +195,9 @@ function UsersByDataGridPage({}: Props): ReactElement {
         username: "",
         email: "",
         admin_level: 1,
-        position: "",
+        position: {
+          position_name: "",
+        },
         selected: true,
         is_new_row: true,
       };
@@ -191,6 +209,8 @@ function UsersByDataGridPage({}: Props): ReactElement {
     let rowData;
 
     if (usersListData) {
+      console.log("usersListData : ", usersListData);
+
       rowData = usersListData?.map((row) => {
         if (row.profileImages) {
         }
@@ -205,7 +225,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
             ? row.profileImages[0].file
             : "",
           admin_level: Math.floor(Math.random() * 5) + 1,
-          position: position_names[Math.floor(Math.random() * 5) + 1],
+          position: row.position?.position_name,
           selected: row.selected,
         };
       });
@@ -235,39 +255,51 @@ function UsersByDataGridPage({}: Props): ReactElement {
   if (gridRows) {
     return (
       <Box>
-        <Box>
-          {!isLoading && usersListData ? usersListData.length : "loading"}
-        </Box>
+        <Flex
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          p={2}
+          // gap={2}
+          mb={2}
+          border={"1px solid black"}
+        >
+          <Box>
+            총 {!isLoading && usersListData ? usersListData.length : "loading"}{" "}
+            명
+          </Box>
+          <Box display={"flex"} justifyContent={"space-betwwen"} gap={2}>
+            <Button
+              size="md"
+              onClick={handleAddRow}
+              fontWeight="bold"
+              colorScheme="blue"
+              _hover={{ bg: "blue.600" }}
+              _active={{ bg: "blue.700" }}
+            >
+              행추가
+            </Button>
 
-        <Flex justifyContent={"flex-end"} pr={1} gap={2}>
-          {/* <Button
-            className={button_styles.button}
-            onClick={handleAddRow}
-            colorScheme={"blue.200"}
-          >
-            행 추가
-          </Button> */}
-          <Button
-            size="md"
-            onClick={handleAddRow}
-            fontWeight="bold"
-            colorScheme="purple"
-            _hover={{ bg: "purple.700" }}
-            _active={{ bg: "purple.800" }}
-          >
-            행추
-          </Button>
-
-          <Button
-            size="md"
-            onClick={handleSaveRow}
-            fontWeight="bold"
-            colorScheme="purple"
-            _hover={{ bg: "purple.700" }}
-            _active={{ bg: "purple.800" }}
-          >
-            저장
-          </Button>
+            <Button
+              size="md"
+              onClick={handleSaveRow}
+              fontWeight="bold"
+              colorScheme="green"
+              _hover={{ bg: "green.600" }}
+              _active={{ bg: "green.700" }}
+            >
+              저장
+            </Button>
+            <Button
+              size="md"
+              onClick={handleSaveRow}
+              fontWeight="bold"
+              colorScheme="red"
+              _hover={{ bg: "red.600" }}
+              _active={{ bg: "red.700" }}
+            >
+              삭제
+            </Button>
+          </Box>
         </Flex>
 
         <Box>

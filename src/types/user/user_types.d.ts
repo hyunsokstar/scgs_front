@@ -32,8 +32,8 @@ export interface IUserRow {
     }
   ];
   admin_level: number;
-  position: string;
-
+  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+  position?: any;
   selected?: boolean;
   is_new_row?: boolean;
   profile_image?: string;

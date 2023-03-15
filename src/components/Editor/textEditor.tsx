@@ -1,4 +1,4 @@
-import { Input } from "@chakra-ui/react";
+import { Box, Input } from "@chakra-ui/react";
 import React, { ReactElement } from "react";
 // import { CalculatedColumn , TRow, TSummaryRow} from "react-data-grid";
 
@@ -16,16 +16,20 @@ function TextEditor({
   onClose,
 }: // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 any): ReactElement {
-  // console.log("row[column.key].value : ", row[column.key].value);
+  // console.log("column : ", column);
+  // console.log("row : ", row);
+  // console.log("row[column.key] : ", row[column.key]);
 
   return (
-    <div>
+    <Box height={"100%"} border={"1px solid blue"}>
       <Input
         // className={textEditorClassname}
         // ref={autoFocusAndSelect}
+        placeholder={`${column.key}`}
         defaultValue={
-          row[column.key] !== undefined ? row[column.key].value : ""
+          row[column.key] ? row[column.key] : ""
         }
+        height={"100%"}
         onChange={(event) => {
           console.log("row[id] : ", row["id"]);
           onRowChange({
@@ -34,9 +38,10 @@ any): ReactElement {
             selected: true,
           });
         }}
+        autoFocus={true}
         onBlur={() => onClose(true)}
-      />{" "}
-    </div>
+      />
+    </Box>
   );
 }
 

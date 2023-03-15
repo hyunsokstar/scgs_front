@@ -205,7 +205,7 @@ const TestHeader = () => {
                                 data-grid 샘플
                             </option>
                             <option value="/data-grid/users">
-                                유저 리스트(by data-grid)
+                                유저 리스트(by react data-grid)
                             </option>
 
                         </Select>
