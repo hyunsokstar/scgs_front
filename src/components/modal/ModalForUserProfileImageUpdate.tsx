@@ -35,7 +35,7 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
   const [profileImage, setProfileImage] = useState<any>();
 
   const [originalImage, setOriginalImage] = useState<string | undefined>(
-    loginUser?.profileImages[0].file
+    // loginUser?.profileImages[0].file
   );
 
   const [showForProfileUpdateButton, setShowForProfileUpdateButton] =
@@ -204,7 +204,7 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
                     size="2xl"
                     name="John Doe"
                     src={
-                      loginUser
+                      loginUser.profileImages[0]
                         ? loginUser.profileImages[0].file
                         : "https://bit.ly/broken-link"
                     }

@@ -45,6 +45,20 @@ const checkboxFormatter = ({ row, column, onRowChange, onClose }: any) => {
   );
 };
 
+const checkboxFormatter2 = ({ row, column, onRowChange, onClose }: any) => {
+  return (
+    <input
+      type="checkbox"
+      value={row.id}
+      checked={row.selected}
+      onChange={(e) => {
+        // const checked = e.target.checked;
+        // onRowChange({ ...row, selected: checked });
+      }}
+    />
+  );
+};
+
 // 컬럼 설정
 // 2244
 const columns = [
@@ -55,6 +69,15 @@ const columns = [
     resizable: false,
     sortable: false,
     formatter: checkboxFormatter,
+    headerRenderer: ({ column }: any) => (
+      <input
+        type="checkbox"
+        checked={column.allCheckBoxSelected}
+        onClick={column.allCheckHandler}
+        // column={column}
+        // isCellSelected={() => false}
+      />
+    ),
   },
   { key: "name", name: "Name", editor: TextEditor, editable: true },
   { key: "username", name: "Username", editor: TextEditor, editable: true },
@@ -80,11 +103,11 @@ const columns = [
             height={"50px"}
             onDoubleClick={profileImageDoubleClickHandler}
           />
-          {row.username === column.user.username ? (
+          {column.user && row.username === column.user.username ? (
             <ModalForUserProfileImageUpdate
               // userPk={row.pk}
               // profile_image={row.profile_image}
-              loginUser = {column.user}
+              loginUser={column.user}
             />
           ) : (
             ""
@@ -118,6 +141,7 @@ const position_names = ["사원", "대리", "과장", "부장", "사장", "회�
 // 1122
 function UsersByDataGridPage({}: Props): ReactElement {
   const { userLoading, isLoggedIn, user } = useUser();
+  const [allCheckBoxSelected, setAllCheckBoxSelected] = useState(false);
 
   const toast = useToast();
 
@@ -190,25 +214,6 @@ function UsersByDataGridPage({}: Props): ReactElement {
     }
   };
 
-  const handleAddRow = () => {
-    // console.log("행 추가 클릭 : ", gridRows);
-    if (gridRows !== undefined) {
-      const newRow = {
-        pk: gridRows.length + 1,
-        name: "",
-        username: "",
-        email: "",
-        admin_level: 1,
-        position: {
-          position_name: "",
-        },
-        selected: true,
-        is_new_row: true,
-      };
-      setGridRows([newRow, ...gridRows]);
-    }
-  };
-
   useEffect(() => {
     let rowData;
 
@@ -241,6 +246,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
     },
     {
       onSuccess: (data) => {
+        setAllCheckBoxSelected(false);
         console.log("data : ", data);
         queryClient.refetchQueries(["users_list2"]);
 
@@ -283,7 +289,169 @@ function UsersByDataGridPage({}: Props): ReactElement {
     console.log("삭제 버튼 클릭");
   };
 
-  ///////////////////////////////////////////////////////////////////////////////////
+  const allCheckHandler = () => {
+    console.log("hi");
+
+    const new_grid_rows = gridRows?.map((row) => {
+      const isAllSelected = gridRows
+        .map((row) => {
+          if (row.selected === true) {
+            return row.selected;
+          } else {
+            return false;
+          }
+        })
+        .includes(false);
+
+      if (!isAllSelected) {
+        return {
+          ...row,
+          selected: false,
+        };
+      } else {
+        return {
+          ...row,
+          selected: true,
+        };
+      }
+    });
+    setGridRows(new_grid_rows);
+  };
+
+  const handleAddRow = () => {
+    // console.log("행 추가 클릭 : ", gridRows);
+    if (gridRows !== undefined) {
+      const newRow = {
+        pk: gridRows.length + 1,
+        name: "",
+        username: "",
+        email: "",
+        admin_level: 1,
+        position: {
+          position_name: "",
+        },
+        selected: true,
+        is_new_row: true,
+      };
+      setGridRows([newRow, ...gridRows]);
+    }
+  };
+
+  const english_names = [
+    "Abigail",
+    "Alexander",
+    "Amelia",
+    "Andrew",
+    "Annabelle",
+    "Anthony",
+    "Arabella",
+    "Asher",
+    "Ava",
+    "Benjamin",
+    "Brielle",
+    "Caleb",
+    "Camila",
+    "Caroline",
+    "Carter",
+    "Charlotte",
+    "Chloe",
+    "Christopher",
+    "Claire",
+    "Daniel",
+    "David",
+    "Eleanor",
+    "Elijah",
+    "Elizabeth",
+    "Ellie",
+    "Emily",
+    "Emma",
+    "Ethan",
+    "Evelyn",
+    "Finn",
+    "Gabriel",
+    "Grace",
+    "Hannah",
+    "Harper",
+    "Hazel",
+    "Isaac",
+    "Isabella",
+    "Jackson",
+    "Jacob",
+    "James",
+    "Jasmine",
+    "John",
+    "Jonathan",
+    "Joseph",
+    "Julia",
+    "Julian",
+    "Katherine",
+    "Landon",
+    "Lauren",
+    "Leah",
+    "Leo",
+    "Liam",
+    "Lila",
+    "Lillian",
+    "Lily",
+    "Lincoln",
+    "Logan",
+    "Lucas",
+    "Lucy",
+    "Luke",
+    "Madeline",
+    "Maeve",
+    "Mason",
+    "Matthew",
+    "Maya",
+    "Mia",
+    "Michael",
+    "Mila",
+    "Natalie",
+    "Nathan",
+    "Nicholas",
+    "Noah",
+    "Oliver",
+    "Olivia",
+    "Owen",
+    "Penelope",
+    "Peter",
+    "Peyton",
+    "Rebecca",
+    "Riley",
+    "Ryan",
+    "Samantha",
+    "Samuel",
+    "Sara",
+    "Sarah",
+    "Sofia",
+    "Moly",
+    "Melanie",
+    "Maya",
+  ];
+
+  const createRandomUserRowHandler = () => {
+    if (faker && gridRows !== undefined) {
+      const newRow = {
+        pk: gridRows.length + 1,
+        name: `name_${
+          english_names[Math.floor(Math.random() * english_names.length)]
+        }`,
+        username: `user_${
+          english_names[Math.floor(Math.random() * english_names.length)]
+        }_${Math.floor(Math.random() * 100) + 1}`,
+        email: `${`my_${
+          english_names[Math.floor(Math.random() * english_names.length)]
+        }`}@daum.net`,
+        admin_level: 1,
+        position: 1,
+        selected: true,
+        is_new_row: true,
+      };
+      setGridRows([newRow, ...gridRows]);
+    }
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -302,6 +470,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
     setGridRows(rows);
   };
 
+  // 2244 tsx
   if (gridRows) {
     return (
       <Box>
@@ -318,6 +487,17 @@ function UsersByDataGridPage({}: Props): ReactElement {
             명
           </Box>
           <Box display={"flex"} justifyContent={"space-betwwen"} gap={2}>
+            <Button
+              size="md"
+              onClick={createRandomUserRowHandler}
+              fontWeight="bold"
+              colorScheme="purple"
+              _hover={{ bg: "purple.600" }}
+              _active={{ bg: "purple.700" }}
+            >
+              랜덤 행추가
+            </Button>
+
             <Button
               size="md"
               onClick={handleAddRow}
@@ -355,7 +535,13 @@ function UsersByDataGridPage({}: Props): ReactElement {
         <Box>
           <DataGrid
             // columns={columns}
-            columns={columns.map((col) => ({ ...col, isLoggedIn, user }))}
+            columns={columns.map((col) => ({
+              ...col,
+              isLoggedIn,
+              user,
+              allCheckHandler,
+              allCheckBoxSelected,
+            }))}
             rows={gridRows}
             rowKeyGetter={rowKeyGetter}
             rowHeight={50}
@@ -368,7 +554,6 @@ function UsersByDataGridPage({}: Props): ReactElement {
               if (row.is_new_row) {
                 return styles.new_row;
               }
-
               if (row.selected) {
                 return styles.selected;
               } else {
