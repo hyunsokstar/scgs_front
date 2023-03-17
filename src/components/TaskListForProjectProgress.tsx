@@ -30,12 +30,13 @@ import {
   updateProjectTaskCompleted,
 } from "../apis/project_progress_api";
 import { Link } from "react-router-dom";
+import { deleteOneProjectTask } from "../apis/user_api";
 interface IProps {}
 
 function TaskListForProjectProgress({
   ProjectProgressList,
   totalPageCount,
-  pageProgressListRefatch,
+  projectTaskListRefatch,
 }: ITypeForProjectProgressList): ReactElement {
   const completedColor = useColorModeValue("green.500", "green.300");
   const inProgressColor = useColorModeValue("orange.500", "orange.300");
@@ -48,8 +49,8 @@ function TaskListForProjectProgress({
   const updateProjectTaskMutations = useMutation(updateProjectTaskCompleted, {
     onSuccess: (result: any) => {
       console.log("result : ", result);
-      if (pageProgressListRefatch) {
-        pageProgressListRefatch();
+      if (projectTaskListRefatch) {
+        projectTaskListRefatch();
       }
       toast({
         status: "success",
@@ -69,8 +70,8 @@ function TaskListForProjectProgress({
     {
       onSuccess: (result: any) => {
         // console.log("result : ", result);
-        if (pageProgressListRefatch) {
-          pageProgressListRefatch();
+        if (projectTaskListRefatch) {
+          projectTaskListRefatch();
         }
         toast({
           status: "success",
@@ -89,6 +90,40 @@ function TaskListForProjectProgress({
     // console.log("on change parameter : " + taskPk, star_count);
     updateMutationForProjectImportance.mutate({ taskPk, star_count });
   };
+
+  const deleteMutation = useMutation(
+    (pk: number) => {
+        return deleteOneProjectTask(pk);
+    },
+    {
+        onSettled: () => {
+            // setSelectedItems([]);
+        },
+        onSuccess: (data) => {
+          console.log("data : ", data);
+          toast({
+            title: "delete for checkbox 성공!",
+            status: "success",
+        });
+        if(projectTaskListRefatch){
+          projectTaskListRefatch()
+        }
+            // setSelectedItems([]);
+            // estimateListRefatch();
+        },
+    }
+);
+
+  const deleteHandelr = (pk: number) => {
+    const response = deleteMutation.mutate(pk);
+    console.log("response :", response);
+    if (projectTaskListRefatch) {
+      projectTaskListRefatch();
+    }    toast({
+        title: "delete 성공!",
+        status: "success",
+    });
+};
 
   return (
     <Container border={"2px solid blue"} maxWidth={"100%"}>
@@ -118,7 +153,10 @@ function TaskListForProjectProgress({
                       <Box flex={2.5} border={"0px solid blue"}>
                         <VStack>
                           <Text fontSize="sm" fontWeight="bold">
-                            <Link to={`/project_admin/${task.pk}`}>
+                            <Link
+                              to={`/project_admin/${task.pk}`}
+                              style={{ textDecoration: "underline" }}
+                            >
                               {task.task}
                             </Link>{" "}
                           </Text>
@@ -170,6 +208,7 @@ function TaskListForProjectProgress({
                           aria-label="삭제"
                           icon={<FaTrash />}
                           variant="ghost"
+                          onClick={() => deleteHandelr(parseInt(task.pk))}
                         />
                       </Box>
                     </Flex>
@@ -234,7 +273,7 @@ function TaskListForProjectProgress({
                           </Box>
                         </Flex>
                       </Box>
-
+                      {/* deleteOneProjectTask */}
                       {/* 완료 체크 버튼 */}
                       <Box
                         flex={0.5}
@@ -253,6 +292,7 @@ function TaskListForProjectProgress({
                           aria-label="삭제"
                           icon={<FaTrash />}
                           variant="ghost"
+                          onClick={() => deleteHandelr(parseInt(task.pk))}
                         />
                       </Box>
                     </Flex>

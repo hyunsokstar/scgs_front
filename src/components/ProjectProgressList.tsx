@@ -17,7 +17,7 @@ function ProjectProgressList({ }: Props): ReactElement {
     const {
         isLoading,
         data: pageProgressListData,
-        refetch: pageProgressListRefatch,
+        refetch: projectTaskListRefatch,
     } = useQuery<ITypeForProjectProgressList>([
         "project_progress_list", currentPageNum],
         getProjectProgressList, {
@@ -28,11 +28,11 @@ function ProjectProgressList({ }: Props): ReactElement {
     return (
         <Container maxW={"100%"} border={"1px solid purple"} px={0}>
             <Box textAlign={"right"} m={2}>
-                <ModalButtonForAddProjectTask pageProgressListRefatch={pageProgressListRefatch} />
+                <ModalButtonForAddProjectTask projectTaskListRefatch={projectTaskListRefatch} />
             </Box>
             <Box>
                 {!isLoading && pageProgressListData ?
-                    <TaskListForProjectProgress ProjectProgressList={pageProgressListData.ProjectProgressList} totalPageCount={pageProgressListData.totalPageCount} pageProgressListRefatch={pageProgressListRefatch} />
+                    <TaskListForProjectProgress ProjectProgressList={pageProgressListData.ProjectProgressList} totalPageCount={pageProgressListData.totalPageCount} projectTaskListRefatch={projectTaskListRefatch} />
                     : ""
                 }
             </Box>

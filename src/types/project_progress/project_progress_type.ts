@@ -19,7 +19,7 @@ export interface IOneTaskForProjectTaskType {
 }
 
 export interface ITypeForProjectProgressList {
-  pageProgressListRefatch?: () => void;
+  projectTaskListRefatch?: () => void;
   totalPageCount: number;
   ProjectProgressList: [
     {

@@ -23,11 +23,11 @@ import { insertProjectProgressRow } from "../../apis/project_progress_api";
 
 
 interface IProps {
-  pageProgressListRefatch: () => void
+  projectTaskListRefatch: () => void
 }
 
 
-const ModalButtonForAddProjectTask: FC<IProps> = ({pageProgressListRefatch }) => {
+const ModalButtonForAddProjectTask: FC<IProps> = ({projectTaskListRefatch }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     register,
@@ -56,7 +56,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({pageProgressListRefatch }) =>
         title: "welcome back!",
         status: "success",
       });
-      pageProgressListRefatch();
+      projectTaskListRefatch();
       onClose();
 
     },

@@ -10,7 +10,7 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-// 타입 추가 
+// 타입 추가
 
 export interface ISingup {
   name: string;
@@ -29,15 +29,25 @@ export interface ICreateProfilePhotoVariables {
   userPk: string;
 }
 
+export const deleteOneProjectTask = (project_pk: number) => {
+  console.log("estimatePk : ", project_pk);
+  return instance
+    .delete(`project_progress/${project_pk}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 // api 추가 1122
 export const getOneProjectTask = async ({ queryKey }: QueryFunctionContext) => {
   const [_, taskPk] = queryKey;
   console.log("roomPestimatePk : ", taskPk);
-  return await instance.get(`project_progress/${taskPk}`).then((response) => response.data);
+  return await instance
+    .get(`project_progress/${taskPk}`)
+    .then((response) => response.data);
 };
-
-
-
 
 export const getUsersList = () =>
   instance.get(`users`).then((response) => {
@@ -126,21 +136,22 @@ export const saveMultiUserUsingDataGrid = (
     .then((response) => response.data);
 };
 
-
-export const deleteMultiUserListForCheck = (ids_to_delete: number[] | undefined) => {
+export const deleteMultiUserListForCheck = (
+  ids_to_delete: number[] | undefined
+) => {
   console.log("ids_to_delete : ", ids_to_delete);
 
   return axios
-      .delete(`${backendApi}/api/v1/users/multi-users/delete`, {
-          data: {
-              user_ids: ids_to_delete,
-          },
-      })
-      .then((response) => {
-          console.log(response.data);
-          return response;
-      })
-      .catch((error) => {
-          console.log("axios error : ", error); 
-      });
+    .delete(`${backendApi}/api/v1/users/multi-users/delete`, {
+      data: {
+        user_ids: ids_to_delete,
+      },
+    })
+    .then((response) => {
+      console.log(response.data);
+      return response;
+    })
+    .catch((error) => {
+      console.log("axios error : ", error);
+    });
 };
