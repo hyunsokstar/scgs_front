@@ -23,6 +23,7 @@ import ProjectAdminPage from "./routes/ProjectAdminPage";
 import TestPage from "./routes/TestPage";
 import TestDataGridPage from "./routes/GridPage/TestDataGridPage";
 import UsersByDataGridPage from "./routes/DataGridContainer/UsersByDataGridPage";
+import ProjectProgressDetail from "./routes/ProjectProgressDetail";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Home />,
+      },
+      {
+        path: "project_admin",
+        element: <ProjectAdminPage />,
+      },
+      {
+        path: "project_admin/:taskPk",
+        element: <ProjectProgressDetail />,
       },
       {
         path: "data-grid/users",
@@ -53,10 +62,6 @@ const router = createBrowserRouter([
       {
         path: "gayou",
         element: <TestPageForGayou />,
-      },
-      {
-        path: "project_admin",
-        element: <ProjectAdminPage />,
       },
       {
         path: "tutorials",
@@ -112,13 +117,19 @@ const router = createBrowserRouter([
         element: <EstimateRequire />,
       },
       {
-        path: "estimates",
+        path: "estimates/",
         element: <Estimates />,
+        children: [
+          {
+            path: ":estimatePk",
+            element: <EstimateDetail />,
+          },
+        ],
       },
-      {
-        path: "estimates/:estimatePk",
-        element: <EstimateDetail />,
-      },
+      // {
+      //   path: "estimates/:estimatePk",
+      //   element: <EstimateDetail />,
+      // },
       {
         path: "tutorials",
         element: <TutorialAdmin />,

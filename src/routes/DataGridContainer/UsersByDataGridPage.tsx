@@ -120,20 +120,21 @@ const columns = [
   {
     key: "position",
     name: "Position",
-    editor: SelectBoxEditor,
+    editor: SelectBoxEditor
     // rome-ignore lint/suspicious/noExplicitAny: <explanation>
-    formatter: ({ row, column }: any) => {
-      return (
-        <Box>
-          {row[column.key].position_name === ""
-            ? ""
-            : row[column.key] === 1
-            ? "frontend"
-            : "backend"}
-        </Box>
-      );
+    // formatter: ({ row, column }: any) => {
+    //   return (
+    //     <Box>
+    //       {/* {row[column.key].position_name === ""
+    //         ? ""
+    //         : row[column.key] === 1
+    //         ? "frontend"
+    //         : "backend"} */}
+    //         {row.position.position_name}
+    //     </Box>
+      // );
     },
-  },
+  // },
 ];
 
 const position_names = ["사원", "대리", "과장", "부장", "사장", "회장"];
@@ -231,7 +232,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
             ? row.profileImages[0].file
             : "",
           admin_level: Math.floor(Math.random() * 5) + 1,
-          position: row.position?.pk,
+          position: row.position?.position_name,
           selected: row.selected,
         };
       });
@@ -271,19 +272,29 @@ function UsersByDataGridPage({}: Props): ReactElement {
   );
 
   const deleteButtonForCheckHandler = () => {
-    let filtered_rows;
-    let filtered_ids;
+    let selected_rows;
+    let selected_ids;
+    let no_selected_rows;
     if (gridRows) {
-      filtered_rows = gridRows.filter((row) => {
+      selected_rows = gridRows.filter((row) => {
         if (row.selected) {
           return row;
         }
       });
-      filtered_ids = filtered_rows.map((row) => {
+      selected_ids = selected_rows.map((row) => {
         return row.pk;
       });
-      console.log("filtered_ids : ", filtered_ids);
-      const response = deleteMutationForCheck.mutate(filtered_ids);
+      console.log("selected_ids : ", selected_ids);
+      const response = deleteMutationForCheck.mutate(selected_ids);
+    }
+
+    if (gridRows) {
+      no_selected_rows = gridRows.filter((row) => {
+        if (!row.selected) {
+          return row;
+        }
+      });
+      setGridRows(no_selected_rows)
     }
 
     console.log("삭제 버튼 클릭");

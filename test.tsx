@@ -10,7 +10,7 @@ interface Row {
     }
   ];
   admin_level: number;
-  position: string;
+  position: number;
 
   selected?: boolean;
   is_new_row?: boolean;

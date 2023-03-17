@@ -10,6 +10,8 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+// 타입 추가 
+
 export interface ISingup {
   name: string;
   username: string;
@@ -26,6 +28,16 @@ export interface ICreateProfilePhotoVariables {
   file: string;
   userPk: string;
 }
+
+// api 추가 1122
+export const getOneProjectTask = async ({ queryKey }: QueryFunctionContext) => {
+  const [_, taskPk] = queryKey;
+  console.log("roomPestimatePk : ", taskPk);
+  return await instance.get(`project_progress/${taskPk}`).then((response) => response.data);
+};
+
+
+
 
 export const getUsersList = () =>
   instance.get(`users`).then((response) => {
