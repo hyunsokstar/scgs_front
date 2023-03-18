@@ -30,10 +30,13 @@ export interface ITypeForProjectProgressList {
       importance: number;
       started_at: string;
       started_at_formatted: string;
+      due_date_formatted: string;
       elapsed_time_from_started_at: string;
+      time_left_to_due_date?: string;
+      due_date?: string;
     }
   ];
-  currentPageNum?:number | undefined;
+  currentPageNum?: number | undefined;
   setCurrentPageNum?: any;
 }
 

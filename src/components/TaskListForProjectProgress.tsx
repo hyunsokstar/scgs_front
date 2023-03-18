@@ -138,16 +138,16 @@ function TaskListForProjectProgress({
                 key={task.pk}
                 height={14}
                 border={"0px solid blue"}
-                width={"1200px"}
+                width={"1400px"}
               >
                 <HStack>
-                  <Box border={"0px solid yellow"} width={"100px"}>
+                  <Box border={"1px solid yellow"} width={"100px"}>
                     <HStack ml={0}>
                       <Checkbox mr={3} />
                       <Text>{task.writer} </Text>
                     </HStack>
                   </Box>
-                  <Box border={"0px solid blue"} width={"480px"}>
+                  <Box border={"1px solid blue"} width={"480px"}>
                     <VStack>
                       <Text fontSize="sm" fontWeight="bold">
                         <Link
@@ -192,7 +192,24 @@ function TaskListForProjectProgress({
                       </Box>
                     </HStack>
                   </Box>
-
+                  <Box border={"0px solid blue"} width={"240px"}>
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>마감</Text>
+                      </Box>
+                      <Box>
+                        <Text>{task.due_date_formatted}</Text>
+                      </Box>
+                    </HStack>
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>남은 시간</Text>
+                      </Box>
+                      <Box>
+                        <Text>{task.time_left_to_due_date}</Text>
+                      </Box>
+                    </HStack>
+                  </Box>
                   {/* task_completed update */}
                   <Box border={"0px solid green"}>
                     <SlideToggleButton

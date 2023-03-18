@@ -135,7 +135,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                   </RadioGroup>
                 </FormControl>
 
-                <FormControl id="task_completed" isRequired>
+                <FormControl id="task_completed" >
                   <FormLabel>Task Completed</FormLabel>
                   <Checkbox
                     defaultChecked={taskData.task_completed}
