@@ -1,6 +1,6 @@
 import { Box, Container, Grid, Image, Text } from "@chakra-ui/react";
 import CompletedAndPlannedList from "../components/CompletedAndPlannedList";
-import ProjectProgressList from "../components/ProjectProgressList";
+import ProjectProgressList from "../components/CompletedProjectTaskList";
 import TestCard from "../components/TestCard/TestCard";
 import TutorialList from "../components/TutorialList";
 import UserProfile from "../components/UserProfile";

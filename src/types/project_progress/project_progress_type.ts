@@ -33,6 +33,8 @@ export interface ITypeForProjectProgressList {
       elapsed_time_from_started_at: string;
     }
   ];
+  currentPageNum?:number | undefined;
+  setCurrentPageNum?: any;
 }
 
 export interface IFormTypeForProjectProgress {

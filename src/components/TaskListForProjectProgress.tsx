@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   List,
   ListItem,
@@ -23,7 +24,6 @@ import {
 } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
-import { useMutation } from "@tanstack/react-query";
 import SlideToggleButton from "./SlideToggleButton";
 import {
   updateProjectImportance,
@@ -31,15 +31,19 @@ import {
 } from "../apis/project_progress_api";
 import { Link } from "react-router-dom";
 import { deleteOneProjectTask } from "../apis/user_api";
+import PaginationComponent from "./PaginationComponent";
 interface IProps {}
 
 function TaskListForProjectProgress({
   ProjectProgressList,
   totalPageCount,
   projectTaskListRefatch,
+  currentPageNum,
+  setCurrentPageNum,
 }: ITypeForProjectProgressList): ReactElement {
   const completedColor = useColorModeValue("green.500", "green.300");
   const inProgressColor = useColorModeValue("orange.500", "orange.300");
+  const queryClient = useQueryClient();
 
   const handleSlideToggleChange = (checked: boolean) => {
     console.log(`SlideToggle is now ${checked ? "on" : "off"}`);
@@ -49,9 +53,10 @@ function TaskListForProjectProgress({
   const updateProjectTaskMutations = useMutation(updateProjectTaskCompleted, {
     onSuccess: (result: any) => {
       console.log("result : ", result);
-      if (projectTaskListRefatch) {
-        projectTaskListRefatch();
-      }
+
+      queryClient.refetchQueries(["getUncompletedTaskList"]);
+      queryClient.refetchQueries(["getCompletedTaskList"]);
+
       toast({
         status: "success",
         title: "task status update success",
@@ -73,6 +78,8 @@ function TaskListForProjectProgress({
         if (projectTaskListRefatch) {
           projectTaskListRefatch();
         }
+        queryClient.refetchQueries(["getUnompletedTaskList"]);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
         toast({
           status: "success",
           title: "task status update success",
@@ -87,222 +94,158 @@ function TaskListForProjectProgress({
 
   // rome-ignore lint/suspicious/noExplicitAny: <explanation>
   const onChangeForStarRatingHandler = ({ taskPk, star_count }: any) => {
-    // console.log("on change parameter : " + taskPk, star_count);
     updateMutationForProjectImportance.mutate({ taskPk, star_count });
   };
 
   const deleteMutation = useMutation(
     (pk: number) => {
-        return deleteOneProjectTask(pk);
+      return deleteOneProjectTask(pk);
     },
     {
-        onSettled: () => {
-            // setSelectedItems([]);
-        },
-        onSuccess: (data) => {
-          console.log("data : ", data);
-          toast({
-            title: "delete for checkbox 성공!",
-            status: "success",
-        });
-        if(projectTaskListRefatch){
-          projectTaskListRefatch()
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        if (projectTaskListRefatch) {
+          projectTaskListRefatch();
         }
-            // setSelectedItems([]);
-            // estimateListRefatch();
-        },
+        // queryClient.refetchQueries(["getUnompletedTaskList"]);
+        // queryClient.refetchQueries(["getCompletedTaskList"]);
+        toast({
+          title: "delete project task 성공!",
+          status: "success",
+        });
+      },
     }
-);
+  );
 
   const deleteHandelr = (pk: number) => {
     const response = deleteMutation.mutate(pk);
     console.log("response :", response);
-    if (projectTaskListRefatch) {
-      projectTaskListRefatch();
-    }    toast({
-        title: "delete 성공!",
-        status: "success",
-    });
-};
+    // if (projectTaskListRefatch) {
+    //   projectTaskListRefatch();
+    // }
+  };
 
   return (
-    <Container border={"2px solid blue"} maxWidth={"100%"}>
-      <Grid templateColumns="repeat(1, 1fr)" gap={3}>
-        <Box>비완료</Box>
-        <GridItem colSpan={1} border={"1px solid red"}>
-          <List>
-            {ProjectProgressList?.map((task) => {
-              if (!task.task_completed) {
-                // console.log("미완료 task 임");
+    <Container border={"0px solid blue"} maxWidth={"100%"}>
+      <Box overflowX="auto" width="100%">
+        <List>
+          {ProjectProgressList?.map((task) => {
+            return (
+              <ListItem
+                key={task.pk}
+                height={14}
+                border={"0px solid blue"}
+                width={"1200px"}
+              >
+                <HStack>
+                  <Box border={"0px solid yellow"} width={"100px"}>
+                    <HStack ml={0}>
+                      <Checkbox mr={3} />
+                      <Text>{task.writer} </Text>
+                    </HStack>
+                  </Box>
+                  <Box border={"0px solid blue"} width={"480px"}>
+                    <VStack>
+                      <Text fontSize="sm" fontWeight="bold">
+                        <Link
+                          to={`/project_admin/${task.pk}`}
+                          style={{ textDecoration: "underline" }}
+                        >
+                          {task.task}
+                        </Link>
+                      </Text>
+                    </VStack>
+                  </Box>
+                  <Box
+                    border={"0px solid blue"}
+                    width={"190px"}
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <StarRating
+                      initialRating={task.importance}
+                      taskPk={task.pk}
+                      onChangeForStarRatingHandler={
+                        onChangeForStarRatingHandler
+                      }
+                    />
+                  </Box>
+                  <Box border={"0px solid blue"} width={"240px"}>
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>시작</Text>
+                      </Box>
+                      <Box>
+                        <Text>{task.started_at_formatted}</Text>
+                      </Box>
+                    </HStack>
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>경과</Text>
+                      </Box>
+                      <Box>
+                        <Text>{task.elapsed_time_from_started_at}</Text>
+                      </Box>
+                    </HStack>
+                  </Box>
 
-                return (
-                  // 미완료 리스트
-                  <ListItem key={task.pk} height={14}>
-                    <Flex
-                      justifyContent={"space-between"}
-                      alignItems={"center"}
-                      mb={1}
-                      p={1}
-                    >
-                      <Box flex={1} border={"0px solid yellow"}>
-                        <HStack ml={2}>
-                          <Checkbox mr={3} />
-                          <Text>{task.writer} </Text>
-                        </HStack>
-                      </Box>
-                      <Box flex={2.5} border={"0px solid blue"}>
-                        <VStack>
-                          <Text fontSize="sm" fontWeight="bold">
-                            <Link
-                              to={`/project_admin/${task.pk}`}
-                              style={{ textDecoration: "underline" }}
-                            >
-                              {task.task}
-                            </Link>{" "}
-                          </Text>
-                        </VStack>
-                      </Box>
-                      <Box flex={1}>
-                        <StarRating
-                          initialRating={task.importance}
-                          taskPk={task.pk}
-                          onChangeForStarRatingHandler={
-                            onChangeForStarRatingHandler
-                          }
-                        />
-                      </Box>
-                      <Box flex={1.5} border={"0px solid blue"}>
-                        <Flex>
-                          <Box flex={1} textAlign={"center"}>
-                            <Text>시작</Text>
-                          </Box>
-                          <Box flex={3}>
-                            <Text>{task.started_at_formatted}</Text>
-                          </Box>
-                        </Flex>
-                        <Flex>
-                          <Box flex={1} textAlign={"center"}>
-                            <Text>경과</Text>
-                          </Box>
-                          <Box flex={3}>
-                            <Text>{task.elapsed_time_from_started_at}</Text>
-                          </Box>
-                        </Flex>
-                      </Box>
+                  {/* task_completed update */}
+                  <Box border={"0px solid green"}>
+                    <SlideToggleButton
+                      onChange={() => {
+                        updateHandlerForTaskStatus(task.pk);
+                      }}
+                      checked={task.task_completed}
+                    />
+                  </Box>
+                  <Box>
+                    <IconButton
+                      aria-label="삭제"
+                      icon={<FaTrash />}
+                      variant="ghost"
+                      onClick={() => deleteHandelr(parseInt(task.pk))}
+                    />
+                  </Box>
+                </HStack>
+              </ListItem>
+            );
+          })}
+        </List>
+      </Box>
 
-                      {/* task_completed update */}
-                      <Box
-                        flex={0.5}
-                        textAlign={"end"}
-                        border={"0px solid green"}
-                      >
-                        <SlideToggleButton
-                          onChange={() => {
-                            updateHandlerForTaskStatus(task.pk);
-                          }}
-                          checked={task.task_completed}
-                        />
-                      </Box>
-                      <Box flex={0.2} alignItems={"center"}>
-                        <IconButton
-                          aria-label="삭제"
-                          icon={<FaTrash />}
-                          variant="ghost"
-                          onClick={() => deleteHandelr(parseInt(task.pk))}
-                        />
-                      </Box>
-                    </Flex>
-                  </ListItem>
-                );
-              }
-            })}
-          </List>
-        </GridItem>
+      {/* <Box overflowX="auto" width={"300px"}>
+        <List border={"0px solid blue"}>
+          <ListItem width={"500px"}>Item 1</ListItem>
+          <ListItem width={"500px"}>Item 2</ListItem>
+          <ListItem width={"500px"}>Item 3</ListItem>
+          <ListItem width={"500px"}>Item 4</ListItem>
+          <ListItem width={"500px"}>Item 5</ListItem>
+          <ListItem width={"500px"}>Item 6</ListItem>
+          <ListItem width={"500px"}>Item 7</ListItem>
+          <ListItem width={"500px"}>Item 8</ListItem>
+          <ListItem width={"500px"}>Item 9</ListItem>
+          <ListItem width={"500px"}>Item 10</ListItem>
+        </List>
+      </Box> */}
 
-        {/* 완료 리스트 */}
-        <GridItem colSpan={1}>
-          <Box>완료</Box>
-          <List border={"1px solid purple"}>
-            {ProjectProgressList?.map((task) => {
-              if (task.task_completed === true) {
-                return (
-                  <ListItem key={task.pk} height={14}>
-                    <Flex
-                      justifyContent={"space-between"}
-                      alignItems={"center"}
-                      mb={1}
-                      p={1}
-                    >
-                      <Box flex={1} border={"0px solid yellow"}>
-                        <HStack ml={2}>
-                          <Checkbox mr={3} />
-                          <Text>{task.writer} </Text>
-                        </HStack>
-                      </Box>
-                      <Box flex={2.5} border={"0px solid blue"}>
-                        <VStack>
-                          <Text fontSize="sm" fontWeight="bold">
-                            {task.task}
-                          </Text>
-                        </VStack>
-                      </Box>
-                      <Box flex={1}>
-                        <StarRating
-                          taskPk={task.pk}
-                          initialRating={task.importance}
-                          onChangeForStarRatingHandler={
-                            onChangeForStarRatingHandler
-                          }
-                        />
-                      </Box>
-                      <Box flex={1.5} border={"0px solid blue"}>
-                        <Flex>
-                          <Box flex={1} textAlign={"center"}>
-                            <Text>시작</Text>
-                          </Box>
-                          <Box flex={3}>
-                            <Text>{task.started_at_formatted}</Text>
-                          </Box>
-                        </Flex>
-                        <Flex>
-                          <Box flex={1} textAlign={"center"}>
-                            <Text>경과</Text>
-                          </Box>
-                          <Box flex={3}>
-                            <Text>{task.elapsed_time_from_started_at}</Text>
-                          </Box>
-                        </Flex>
-                      </Box>
-                      {/* deleteOneProjectTask */}
-                      {/* 완료 체크 버튼 */}
-                      <Box
-                        flex={0.5}
-                        textAlign={"end"}
-                        border={"0px solid green"}
-                      >
-                        <SlideToggleButton
-                          onChange={() => {
-                            updateHandlerForTaskStatus(task.pk);
-                          }}
-                          checked={task.task_completed}
-                        />
-                      </Box>
-                      <Box flex={0.2} alignItems={"center"}>
-                        <IconButton
-                          aria-label="삭제"
-                          icon={<FaTrash />}
-                          variant="ghost"
-                          onClick={() => deleteHandelr(parseInt(task.pk))}
-                        />
-                      </Box>
-                    </Flex>
-                  </ListItem>
-                );
-              }
-            })}
-          </List>
-        </GridItem>
-      </Grid>
+      {/* 페이지 네이션 영역 */}
+      <Box mt={5}>
+        {ProjectProgressList ? (
+          <Container maxW="100%" bg="blue.50" color="red.500" mt={1}>
+            <PaginationComponent
+              current_page_num={currentPageNum}
+              total_page_num={totalPageCount}
+              setCurrentPageNum={setCurrentPageNum}
+            />
+          </Container>
+        ) : (
+          ""
+        )}
+      </Box>
     </Container>
   );
 }

@@ -1,5 +1,7 @@
+import { Box } from '@chakra-ui/react'
 import React, { ReactElement } from 'react'
-import ProjectProgressList from '../components/ProjectProgressList'
+import CompletedProjectTaskList from '../components/CompletedProjectTaskList'
+import UncompletedProjectTaskList from '../components/UncompletedProjectTaskList'
 
 interface Props {
     
@@ -7,9 +9,10 @@ interface Props {
 
 function ProjectAdminPage({}: Props): ReactElement {
     return (
-        <div>
-            <ProjectProgressList />
-        </div>
+        <Box>
+            <UncompletedProjectTaskList />            
+            <CompletedProjectTaskList />
+        </Box>
     )
 }
 

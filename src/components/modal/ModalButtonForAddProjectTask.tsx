@@ -85,6 +85,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({projectTaskListRefatch }) => 
   return (
     <>
       <Button
+        size={"sm"}
         colorScheme="green"
         onClick={onOpen}
         _hover={{ bg: "green.700" }}
