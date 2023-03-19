@@ -34,7 +34,7 @@ import { deleteOneProjectTask } from "../apis/user_api";
 import PaginationComponent from "./PaginationComponent";
 interface IProps {}
 
-function TaskListForProjectProgress({
+function CompletedTaskRow({
   ProjectProgressList,
   totalPageCount,
   projectTaskListRefatch,
@@ -195,18 +195,18 @@ function TaskListForProjectProgress({
                   <Box border={"0px solid blue"} width={"240px"}>
                     <HStack>
                       <Box textAlign={"center"}>
-                        <Text>마감</Text>
+                        <Text>완료</Text>
                       </Box>
                       <Box>
-                        <Text>{task.due_date_formatted}</Text>
+                        <Text>{task.completed_at_formatted}</Text>
                       </Box>
                     </HStack>
                     <HStack>
                       <Box textAlign={"center"}>
-                        <Text>남은 시간</Text>
+                        <Text>소요 시간</Text>
                       </Box>
                       <Box>
-                        <Text>{task.time_left_to_due_date}</Text>
+                        <Text>{task.time_consumed_from_start_to_complete}</Text>
                       </Box>
                     </HStack>
                   </Box>
@@ -267,4 +267,4 @@ function TaskListForProjectProgress({
   );
 }
 
-export default TaskListForProjectProgress;
+export default CompletedTaskRow;

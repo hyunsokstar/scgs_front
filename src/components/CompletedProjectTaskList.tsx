@@ -5,7 +5,7 @@ import { getCompletedTaskList } from "../apis/project_progress_api";
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import ModalForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
-import TaskListForProjectProgress from "./TaskListForProjectProgress";
+import CompletedTaskRow from "./CompletedTaskRow";
 
 interface Props {}
 
@@ -36,7 +36,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
       </Box>
       <Box>
         {pageProgressListData ? (
-          <TaskListForProjectProgress
+          <CompletedTaskRow
             ProjectProgressList={pageProgressListData.ProjectProgressList}
             totalPageCount={pageProgressListData.totalPageCount}
             projectTaskListRefatch={projectTaskListRefatch}

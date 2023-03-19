@@ -170,3 +170,25 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
       return response_data;
     });
 };
+
+
+export const updateProjectDueDate = ({ taskPk, due_date }: any) => {
+  console.log("updateProjectImportance 실행 check");
+
+  return instance
+    .put(
+      `/project_progress/${taskPk}/due_date/update`,
+      {
+        due_date: due_date,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
