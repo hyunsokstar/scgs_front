@@ -36,11 +36,13 @@ const image_array = [
 export default function Home() {
   return (
     <Flex justifyContent={"center"}>
-      <SampleCard
-        imageSrc={image_array[0].image_url}
-        title={"My Task"}
-        description={"My Task"}
-      />
+      <NavLink to="/my_task">
+        <SampleCard
+          imageSrc={image_array[0].image_url}
+          title={"My Task"}
+          description={"My Task"}
+        />
+      </NavLink>
       <NavLink
         to="/project_admin"
         // onClick={() => handleItemClick("project_admin")}

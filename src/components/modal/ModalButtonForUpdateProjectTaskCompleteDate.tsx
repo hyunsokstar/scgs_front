@@ -15,7 +15,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { CalendarIcon } from "@chakra-ui/icons";
-// import Calendar from "react-calendar";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 
@@ -75,7 +74,6 @@ function ModalButtonForUpdateProjectTaskCompleteDate({
   };
 
   const invalidDate = (current: { isSameOrAfter: (arg0: Date, arg1: string) => any; }) => {
-    // 현재 날짜 이전의 모든 날짜를 선택 불가능하도록 설정
     return current.isSameOrAfter(new Date(started_at), 'day');
   }
 

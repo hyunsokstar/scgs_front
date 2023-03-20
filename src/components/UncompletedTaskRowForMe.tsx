@@ -44,7 +44,7 @@ interface IProps {
   projectTaskListRefatch: () => void;
 }
 
-function UncompletedTaskRow({
+function UncompletedTaskRowForMe({
   ProjectProgressList,
   totalPageCount,
   currentPageNum,
@@ -64,8 +64,8 @@ function UncompletedTaskRow({
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getUncompletedTaskList"]);
-      queryClient.refetchQueries(["getCompletedTaskList"]);
+      queryClient.refetchQueries(["getUncompletedTaskListForMe"]);
+      queryClient.refetchQueries(["getCompletedTaskListForMe"]);
 
       toast({
         status: "success",
@@ -305,4 +305,4 @@ function UncompletedTaskRow({
   );
 }
 
-export default UncompletedTaskRow;
+export default UncompletedTaskRowForMe;

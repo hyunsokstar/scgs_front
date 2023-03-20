@@ -14,6 +14,7 @@ export interface IOneTaskForProjectTaskType {
   importance: number;
   started_at: string;
   due_date: string;
+  task_manager?: { pk: number; username: string };
   started_at_formatted: string;
   elapsed_time_from_started_at: string;
 }
@@ -24,7 +25,11 @@ export interface ITypeForProjectProgressList {
   ProjectProgressList: [
     {
       pk: string;
-      writer: string;
+      writer?: string;
+      task_manager: {
+        pk: number;
+        username: string;
+      };
       task: string;
       task_completed: boolean;
       importance: number;

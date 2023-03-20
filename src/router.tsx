@@ -24,6 +24,7 @@ import TestPage from "./routes/TestPage";
 import TestDataGridPage from "./routes/GridPage/TestDataGridPage";
 import UsersByDataGridPage from "./routes/DataGridContainer/UsersByDataGridPage";
 import ProjectProgressDetail from "./routes/ProjectProgressDetail";
+import MyTaskPage from "./routes/MyTaskPage";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,9 @@ const router = createBrowserRouter([
         path: "",
         element: <Home />,
       },
+
+      { path: "my_task", element: <MyTaskPage /> },
+
       {
         path: "project_admin",
         element: <ProjectAdminPage />,

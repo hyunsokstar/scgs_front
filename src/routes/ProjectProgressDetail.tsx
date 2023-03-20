@@ -20,8 +20,13 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+// import Calendar from "react-calendar";
+// import "react-calendar/dist/Calendar.css";
+
+// 달력 관련
+import Datetime from "react-datetime";
+import "react-datetime/css/react-datetime.css";
+
 import { updateProjectApiByPk } from "../apis/project_progress_api";
 
 interface Props {}
@@ -40,7 +45,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
   const [submitting, setSubmitting] = useState(false);
   const { register, handleSubmit, watch, reset } = useForm();
 
-  const [started_at, set_started_at] = useState<Date>();
+  const [started_at, set_started_at] = useState<any>();
   const [due_date, set_due_date] = useState<Date>();
 
   // updateProjectApiByPk, updateProjectApiByPk
@@ -51,8 +56,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
     onSuccess: (data) => {
       console.log("success : ", data);
       toast({
-          title: "project task update success",
-          status: "success",
+        title: "project task update success",
+        status: "success",
       });
       // navigate("/estimates");
     },
@@ -78,6 +83,27 @@ function ProjectProgressDetail({}: Props): ReactElement {
     setSubmitting(false);
   };
 
+  const handleChangeForStartedAt = (newDate: any) => {
+    set_started_at(newDate);
+  };
+
+  const invalidDateForStartedAt = (current: {
+    isBefore: (arg0: Date, arg1: string) => any;
+  }) => {
+    // 현재 날짜 이전의 모든 날짜를 선택 불가능하도록 설정
+    console.log("orginal_due_date : ", due_date);
+
+    if (due_date) {
+      return current.isBefore(new Date(due_date), "day");
+    } else {
+      return true;
+    }
+  };
+
+  const invalidDateForCompletedAt = (current: { isSameOrAfter: (arg0: Date, arg1: string) => any; }) => {
+    return current.isSameOrAfter(new Date(started_at), 'day');
+  }
+
   if (isLoadingForTaskData) {
     return <Box>Loading</Box>;
   }
@@ -87,17 +113,18 @@ function ProjectProgressDetail({}: Props): ReactElement {
   } else {
     return (
       <div>
-        <Box display="flex">
-          <Box flex="1" bg="#E8D1CF">
-            1구역
-          </Box>
-          <Box flex="4" bg="#B2D8D8">
+        <Flex>
+          <Box flex="6" bg="#B2D8D8" p={5}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <VStack gap={2} w={"80%"}>
                 <FormControl id="writer" isRequired>
                   <FormLabel>Writer</FormLabel>
                   <Input
-                    defaultValue={taskData.writer}
+                    defaultValue={
+                      taskData.task_manager
+                        ? taskData.task_manager.username
+                        : taskData.writer
+                    }
                     {...register("writer")}
                     size="md"
                   />
@@ -135,7 +162,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                   </RadioGroup>
                 </FormControl>
 
-                <FormControl id="task_completed" >
+                <FormControl id="task_completed">
                   <FormLabel>Task Completed</FormLabel>
                   <Checkbox
                     defaultChecked={taskData.task_completed}
@@ -146,35 +173,27 @@ function ProjectProgressDetail({}: Props): ReactElement {
                 <Box display={"flex"} justifyContent={"center"} gap={5}>
                   <VStack>
                     <Text>시작</Text>
-                    <Calendar
-                      defaultValue={new Date(taskData.started_at)}
-                      onChange={set_started_at}
-                      // value={value}
-                      prev2Label={null} // 년도 앞으로 버튼 없애기
-                      next2Label={null} // 년도 뒤로 버튼 없애기
-                      minDetail="month" // 년도 선택 금지
-                      minDate={new Date(taskData.started_at)} // 현시점 이후 선택 가능 하도록 하기
-                      maxDate={
-                        new Date(Date.now() + 60 * 60 * 24 * 7 * 4 * 6 * 1000)
-                      } // 선택 가능 범위 제한 하기 (밀리 세컨즈 단위로 계산, 현시점에서 6개월 정도)
-                      selectRange={false} // 하루 선택 or 범위 선택
+                    <Datetime
+                      isValidDate={invalidDateForStartedAt}
+                      onChange={handleChangeForStartedAt}
+                      initialValue={
+                        taskData.started_at
+                          ? new Date(taskData.started_at)
+                          : new Date()
+                      }
                     />
                   </VStack>
 
                   <VStack>
                     <Text>마감 날짜</Text>
-                    <Calendar
-                      defaultValue={new Date(taskData.due_date)}
-                      onChange={set_due_date}
-                      // value={value}
-                      prev2Label={null} // 년도 앞으로 버튼 없애기
-                      next2Label={null} // 년도 뒤로 버튼 없애기
-                      minDetail="month" // 년도 선택 금지
-                      minDate={new Date(taskData.started_at)} // 현시점 이후 선택 가능 하도록 하기
-                      maxDate={
-                        new Date(Date.now() + 60 * 60 * 24 * 7 * 4 * 6 * 1000)
-                      } // 선택 가능 범위 제한 하기 (밀리 세컨즈 단위로 계산, 현시점에서 6개월 정도)
-                      selectRange={false} // 하루 선택 or 범위 선택
+                    <Datetime
+                      isValidDate={invalidDateForCompletedAt}
+                      onChange={handleChangeForStartedAt}
+                      initialValue={
+                        taskData.started_at
+                          ? new Date(taskData.started_at)
+                          : new Date()
+                      }
                     />
                   </VStack>
                 </Box>
@@ -191,7 +210,11 @@ function ProjectProgressDetail({}: Props): ReactElement {
               </VStack>
             </form>
           </Box>
-        </Box>
+
+          <Box flex="4" bg="#E8D1CF">
+            2구역
+          </Box>
+        </Flex>
       </div>
     );
   }

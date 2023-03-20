@@ -8,7 +8,10 @@ import {
   ModalFooter,
   ModalBody,
   useDisclosure,
-  VStack, Box, Input, Checkbox,
+  VStack,
+  Box,
+  Input,
+  Checkbox,
   FormControl,
   FormLabel,
   RadioGroup,
@@ -21,19 +24,19 @@ import { IFormTypeForProjectProgress } from "../../types/project_progress/projec
 import { useMutation } from "@tanstack/react-query";
 import { insertProjectProgressRow } from "../../apis/project_progress_api";
 
-
 interface IProps {
-  projectTaskListRefatch: () => void
+  projectTaskListRefatch: () => void;
 }
 
-
-const ModalButtonForAddProjectTask: FC<IProps> = ({projectTaskListRefatch }) => {
+const ModalButtonForAddProjectTask: FC<IProps> = ({
+  projectTaskListRefatch,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch
+    watch,
   } = useForm<IFormTypeForProjectProgress>();
 
   const toast = useToast();
@@ -45,41 +48,43 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({projectTaskListRefatch }) => 
   // insertProjectProgressRow
   // console.log(watch())
 
-  const createMutationForProjectProgress = useMutation(insertProjectProgressRow, {
-    onMutate: () => {
-      console.log("mutation starting");
-    },
-    onSuccess: (data) => {
-      console.log("data : ", data);
+  const createMutationForProjectProgress = useMutation(
+    insertProjectProgressRow,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
 
-      toast({
-        title: "welcome back!",
-        status: "success",
-      });
-      projectTaskListRefatch();
-      onClose();
-
-    },
-    onError: (error:any) => {
-      console.log("error.response : ", error.response);
-      console.log("mutation has an error", error.response.data);
-    },
-  });
+        toast({
+          title: "welcome back!",
+          status: "success",
+        });
+        projectTaskListRefatch();
+        onClose();
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
 
   const onSubmit = ({
     task,
     writer,
     importance,
     task_completed,
-    password
+    password,
   }: IFormTypeForProjectProgress) => {
     createMutationForProjectProgress.mutate({
       task,
       writer,
       importance,
       task_completed,
-      password
-    })
+      password,
+    });
   };
 
   return (
@@ -144,7 +149,6 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({projectTaskListRefatch }) => 
                   </RadioGroup>
                 </FormControl>
 
-
                 <FormControl>
                   <FormLabel>task_completed</FormLabel>
                   <Checkbox {...register("task_completed")} />
@@ -158,15 +162,15 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({projectTaskListRefatch }) => 
                     placeholder="Password"
                     {...register("password", { required: true })}
                   />
-                  {errors.password && <Box color="red">Password is required</Box>}
+                  {errors.password && (
+                    <Box color="red">Password is required</Box>
+                  )}
                 </FormControl>
 
                 <Button type="submit">Submit</Button>
               </VStack>
             </form>
-
           </ModalBody>
-
         </ModalContent>
       </Modal>
     </>
@@ -174,4 +178,3 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({projectTaskListRefatch }) => 
 };
 
 export default ModalButtonForAddProjectTask;
-

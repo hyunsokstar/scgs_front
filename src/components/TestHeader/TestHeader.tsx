@@ -58,6 +58,9 @@ const TestHeader = () => {
     const { userLoading, isLoggedIn, user } = useUser();
     const [selectedValue, setSelectedValue] = useState("en");
 
+    console.log("isLoggedIn : ", isLoggedIn);
+    
+
     // 컴퍼넌트 함수
     const onLogOut = async () => {
         const toastId = toast({

@@ -134,12 +134,29 @@ export const insertProjectProgressRow = ({
     .then((response) => response.data);
 
 export const getCompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
-  // console.log("getProjectProgressList 요청 확인 at api");
 
   const [_, pageNum] = queryKey;
   // console.log("pageNum : ", pageNum);
   return instance
     .get(`project_progress/completed?page=${pageNum}`)
+    .then((response) => {
+      console.log("api result for completed task list: ", response);
+
+      const response_data = {
+        totalPageCount: response.data.totalPageCount,
+        ProjectProgressList: response.data.ProjectProgressList,
+      };
+
+      return response_data;
+    });
+};
+
+export const getCompletedTaskListForMe = ({ queryKey }: QueryFunctionContext) => {
+
+  const [_, pageNum] = queryKey;
+  // console.log("pageNum : ", pageNum);
+  return instance
+    .get(`project_progress/completed/for-me?page=${pageNum}`)
     .then((response) => {
       console.log("api result for completed task list: ", response);
 
@@ -159,6 +176,26 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
   // console.log("pageNum : ", pageNum);
   return instance
     .get(`project_progress/uncompleted?page=${pageNum}`)
+    .then((response) => {
+      console.log("api result for uncompleted task list: ", response);
+
+      const response_data = {
+        totalPageCount: response.data.totalPageCount,
+        ProjectProgressList: response.data.ProjectProgressList,
+      };
+
+      return response_data;
+    });
+};
+
+
+export const getUncompletedTaskListForMe = ({ queryKey }: QueryFunctionContext) => {
+  // console.log("getProjectProgressList 요청 확인 at api");
+
+  const [_, pageNum] = queryKey;
+  // console.log("pageNum : ", pageNum);
+  return instance
+    .get(`project_progress/uncompleted/for-me?page=${pageNum}`)
     .then((response) => {
       console.log("api result for uncompleted task list: ", response);
 

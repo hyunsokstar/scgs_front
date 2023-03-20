@@ -34,7 +34,7 @@ import { deleteOneProjectTask } from "../apis/user_api";
 import PaginationComponent from "./PaginationComponent";
 interface IProps {}
 
-function CompletedTaskRow({
+function CompletedTaskRowForMe({
   ProjectProgressList,
   totalPageCount,
   projectTaskListRefatch,
@@ -54,8 +54,8 @@ function CompletedTaskRow({
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getUncompletedTaskList"]);
-      queryClient.refetchQueries(["getCompletedTaskList"]);
+      queryClient.refetchQueries(["getUncompletedTaskListForMe"]);
+      queryClient.refetchQueries(["getCompletedTaskListForMe"]);
       // if (projectTaskListRefatch) {
       //   projectTaskListRefatch();
       // }
@@ -277,4 +277,4 @@ function CompletedTaskRow({
   );
 }
 
-export default CompletedTaskRow;
+export default CompletedTaskRowForMe;

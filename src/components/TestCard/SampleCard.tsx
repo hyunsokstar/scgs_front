@@ -25,7 +25,7 @@ const SampleCard = ({ imageSrc, title, description }: SampleCardProps) => {
       boxShadow={isHovered ? "xl" : "none"}
     >
       <Box maxH="xs" overflow="hidden">
-        <Image src={imageSrc} alt={title} objectFit="fill" w={"250px"} h={"200px"}/>
+        <Image src={imageSrc} alt={title} objectFit="fill" w={"280px"} h={"220px"}/>
       </Box>
 
       <Box p="5">
