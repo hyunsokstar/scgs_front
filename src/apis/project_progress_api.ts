@@ -192,3 +192,24 @@ export const updateProjectDueDate = ({ taskPk, due_date }: any) => {
       return response.data;
     });
 };
+
+export const updateProjectStartedAt = ({ taskPk, started_at_for_update }: any) => {
+  console.log("updateProjectImportance 실행 check");
+
+  return instance
+    .put(
+      `/project_progress/${taskPk}/started_at/update`,
+      {
+        started_at_for_update: started_at_for_update,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};

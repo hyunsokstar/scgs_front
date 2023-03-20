@@ -34,6 +34,7 @@ import { Link } from "react-router-dom";
 import { deleteOneProjectTask } from "../apis/user_api";
 import PaginationComponent from "./PaginationComponent";
 import ModalButtonForUpdateProjectTaskCompleteDate from "./modal/ModalButtonForUpdateProjectTaskCompleteDate";
+import ModalButtonForUpdateProjectTaskStartedAt from "./modal/ModalButtonForUpdateProjectTaskStartedAt";
 
 interface IProps {
   ProjectProgressList: any;
@@ -184,14 +185,22 @@ function UncompletedTaskRow({
                         }
                       />
                     </Box>
-                    <Box border={"0px solid blue"} width={"240px"}>
+                    <Box border={"0px solid blue"} width={"280px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>시작</Text>
                         </Box>
-                        <Box>
+                        <HStack>
                           <Text>{task.started_at_formatted}</Text>
-                        </Box>
+                          <ModalButtonForUpdateProjectTaskStartedAt
+                            taskPk={task.pk}
+                            original_due_date={
+                              task.due_date ? task.due_date : ""
+                            }
+                            started_at={task.started_at ? task.started_at : ""}
+                            projectTaskListRefatch={projectTaskListRefatch}
+                          />
+                        </HStack>
                       </HStack>
                       <HStack>
                         <Box textAlign={"center"}>
@@ -202,7 +211,7 @@ function UncompletedTaskRow({
                         </Box>
                       </HStack>
                     </Box>
-                    <Box border={"0px solid blue"} width={"260px"}>
+                    <Box border={"0px solid blue"} width={"280px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>마감</Text>
@@ -213,7 +222,7 @@ function UncompletedTaskRow({
                           taskPk={task.pk}
                           original_due_date={task.due_date ? task.due_date : ""}
                           started_at={task.started_at ? task.started_at : ""}
-                          projectTaskListRefatch = {projectTaskListRefatch}
+                          projectTaskListRefatch={projectTaskListRefatch}
                         />
                       </HStack>
                       <HStack>

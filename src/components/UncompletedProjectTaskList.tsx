@@ -9,7 +9,7 @@ import UncompletedTaskRow from "./UncompletedTaskRow";
 
 interface Props {}
 
-function CompletedProjectTaskList({}: Props): ReactElement {
+function UncompletedProjectTaskList({}: Props): ReactElement {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
   // const queryClient = useQueryClient();
 
@@ -53,4 +53,4 @@ function CompletedProjectTaskList({}: Props): ReactElement {
   );
 }
 
-export default CompletedProjectTaskList;
+export default UncompletedProjectTaskList;

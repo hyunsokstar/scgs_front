@@ -125,16 +125,16 @@ const TestHeader = () => {
                             _hover={{
                                 bg: "blue.200"
                             }}
-                            color={active === "home" ? "blue.500" : "blue.500"}
+                            color={active === "home" ? "red.500" : "red.500"}
                             onClick={homeButtonHandler}
                         >
-                            Home
+                            Team Task Admin Tool
                         </Text>
                     </Box>
 
                     <HStack>
 
-                        <Select
+                        {/* <Select
                             value={selectedValue}
                             className={styles.select}
                             onChange={handleChange}
@@ -208,23 +208,20 @@ const TestHeader = () => {
                                 유저 리스트(by react data-grid)
                             </option>
 
-                        </Select>
+                        </Select> */}
 
                     </HStack>
 
                 </Box>
                 <Box>
-                    <NavLink
+                    {/* <NavLink
                         to="/project_admin"
-                        // style={({ isActive }) =>
-                        //     isActive ? activeStyle : unactiveStyle
-                        // }
                         onClick={() => handleItemClick("project_admin")}
                     >
                         <Text fontWeight={active === "project_admin" ? "bold" : "normal"}>
                             project_admin
                         </Text>
-                    </NavLink>
+                    </NavLink> */}
                 </Box>
                 <Box py={1}>
                     <HStack>

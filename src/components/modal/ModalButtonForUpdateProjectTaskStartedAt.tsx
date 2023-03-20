@@ -19,25 +19,27 @@ import { CalendarIcon } from "@chakra-ui/icons";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 
-import { updateProjectDueDate } from "../../apis/project_progress_api";
+import {
+  updateProjectDueDate,
+  updateProjectStartedAt,
+} from "../../apis/project_progress_api";
 
 interface IProps {
   taskPk: string;
   original_due_date: string;
   started_at: string;
-  projectTaskListRefatch : () => void;
+  projectTaskListRefatch: () => void;
 }
 
 function ModalButtonForUpdateProjectTaskCompleteDate({
   taskPk,
   original_due_date,
   started_at,
-  projectTaskListRefatch
-  
+  projectTaskListRefatch,
 }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
-  const [due_date, set_due_date] = useState<Date>();
+  const [started_at_for_update, set_started_at_for_update] = useState<Date>();
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -48,17 +50,17 @@ function ModalButtonForUpdateProjectTaskCompleteDate({
   };
 
   // updateDueDateByPkMutation
-  const updateDueDateByPkMutation = useMutation(updateProjectDueDate, {
+  const updateStratedAtByPkMutation = useMutation(updateProjectStartedAt, {
     onMutate: () => {
       console.log("mutation starting");
     },
     onSuccess: (data) => {
       console.log("success : ", data);
       toast({
-        title: "project due_date update success",
+        title: data.message,
         status: "success",
       });
-      projectTaskListRefatch()
+      projectTaskListRefatch();
       setIsOpen(false);
     },
     onError: (error) => {
@@ -67,17 +69,25 @@ function ModalButtonForUpdateProjectTaskCompleteDate({
   });
 
   const handleUpdateDueDate = () => {
-    updateDueDateByPkMutation.mutate({ taskPk, due_date });
+    updateStratedAtByPkMutation.mutate({ taskPk, started_at_for_update });
   };
 
   const handleChange = (newDate: any) => {
-    set_due_date(newDate);
+    set_started_at_for_update(newDate);
   };
 
-  const invalidDate = (current: { isSameOrAfter: (arg0: Date, arg1: string) => any; }) => {
+  const invalidDate = (current: {
+    isBefore: (arg0: Date, arg1: string) => any;
+  }) => {
     // 현재 날짜 이전의 모든 날짜를 선택 불가능하도록 설정
-    return current.isSameOrAfter(new Date(started_at), 'day');
-  }
+    console.log("orginal_due_date : " , original_due_date);
+
+    if (original_due_date !== "") {
+      return current.isBefore(new Date(original_due_date), "day");
+    } else {
+        return true
+    }
+  };
 
   return (
     <>
@@ -92,30 +102,16 @@ function ModalButtonForUpdateProjectTaskCompleteDate({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            update due_date (선택한 날짜: {due_date?.toString()})
+            시작 날짜 선택 (선택 날짜: {started_at_for_update?.toString()}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Box mb={4}>
-              {/* <Calendar
-                defaultValue={new Date(original_due_date)}
-                prev2Label={null} // 년도 앞으로 버튼 없애기
-                next2Label={null} // 년도 뒤로 버튼 없애기
-                minDate={new Date(started_at)}// 시작 시점 이후 선택 가능
-                maxDate={new Date(Date.now() + 60 * 60 * 24 * 7 * 4 * 6 * 1000)} // 선택 가능 범위 제한
-                selectRange={false} // 하루 선택
-                calendarType="US"
-                // timeIntervals={15}
-                onChange={set_due_date}
-              /> */}
-
-
-
               <Datetime
                 // minDate={new Date(started_at)}// 시작 시점 이후 선택 가능
                 isValidDate={invalidDate}
                 onChange={handleChange}
-                initialValue={original_due_date ? new Date(original_due_date) : new Date()}
+                initialValue={new Date(started_at)}
               />
               {/* <p>Selected date and time: {due_date.toString()}</p> */}
             </Box>
