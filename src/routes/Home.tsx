@@ -35,7 +35,7 @@ const image_array = [
 
 export default function Home() {
   return (
-    <Flex>
+    <Flex justifyContent={"center"}>
       <SampleCard
         imageSrc={image_array[0].image_url}
         title={"My Task"}
