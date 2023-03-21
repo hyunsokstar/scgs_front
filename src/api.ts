@@ -53,7 +53,6 @@ export const getEstimates = ({ queryKey }: QueryFunctionContext) => {
 
 export const getOneEstimate = async ({ queryKey }: QueryFunctionContext) => {
     const [_, estimatePk] = queryKey;
-    console.log("roomPestimatePk : ", estimatePk);
     return await instance.get(`estimates/${estimatePk}`).then((response) => response.data);
 };
 

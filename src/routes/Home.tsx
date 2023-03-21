@@ -35,34 +35,36 @@ const image_array = [
 
 export default function Home() {
   return (
-    <Flex justifyContent={"center"}>
-      <NavLink to="/my_task">
+    <Box width={"100%"} border={"1px solid green"}>
+      <Flex justifyContent={"center"}>
+        <NavLink to="/my_task">
+          <SampleCard
+            imageSrc={image_array[0].image_url}
+            title={"My Task"}
+            description={"My Task"}
+          />
+        </NavLink>
+        <NavLink
+          to="/project_admin"
+          // onClick={() => handleItemClick("project_admin")}
+        >
+          <SampleCard
+            imageSrc={image_array[1].image_url}
+            title={"Project Task"}
+            description={"Project Task"}
+          />
+        </NavLink>
         <SampleCard
-          imageSrc={image_array[0].image_url}
-          title={"My Task"}
-          description={"My Task"}
+          imageSrc={image_array[2].image_url}
+          title={"project Status"}
+          description={"project Status"}
         />
-      </NavLink>
-      <NavLink
-        to="/project_admin"
-        // onClick={() => handleItemClick("project_admin")}
-      >
         <SampleCard
-          imageSrc={image_array[1].image_url}
-          title={"Project Task"}
-          description={"Project Task"}
+          imageSrc={image_array[3].image_url}
+          title={"팀 관리"}
+          description={"팀 관리"}
         />
-      </NavLink>
-      <SampleCard
-        imageSrc={image_array[2].image_url}
-        title={"project Status"}
-        description={"project Status"}
-      />
-      <SampleCard
-        imageSrc={image_array[3].image_url}
-        title={"팀 관리"}
-        description={"팀 관리"}
-      />
-    </Flex>
+      </Flex>
+    </Box>
   );
 }

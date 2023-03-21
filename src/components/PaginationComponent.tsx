@@ -23,7 +23,7 @@ function PaginationComponent({
   //   );
 
   return (
-    <Flex height={12}>
+    <Flex height={10}>
       <Spacer />
       <HStack>
         <Pagination

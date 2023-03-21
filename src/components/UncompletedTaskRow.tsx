@@ -140,14 +140,10 @@ function UncompletedTaskRow({
 
   return (
     <Container border={"0px solid blue"} maxWidth={"100%"}>
-      <Box overflowX="auto" width="100%">
+      <Box overflowX="auto" width="100%" bgColor={"green.50"}>
         {ProjectProgressList ? (
           <List>
             {ProjectProgressList?.map((task: any) => {
-
-              console.log("task.task_manager : ", task.taskmanager);
-              
-
               return (
                 <ListItem
                   key={task.pk}
@@ -156,38 +152,35 @@ function UncompletedTaskRow({
                   width={"1400px"}
                 >
                   <HStack border={"0px solid green"}>
-                    <Box border={"0px solid yellow"} width={"100px"}>
-                      <HStack ml={0}>
-                        <Checkbox mr={3} />
-                        {task.task_manager !== null ? (
-                          <Text color={"blue.600"}>
-                            {task.task_manager.username}
-                          </Text>
-                        ) : (
-                          <Text color={"tomato"}>
-                            {task.writer}
-                          </Text>
-                        )}
-                      </HStack>
+                    <Box border={"0px solid yellow"} width={"50px"}>
+                      <Checkbox mx={3} />
                     </Box>
-                    <Box border={"0px solid blue"} width={"480px"}>
-                      <VStack>
-                        <Text fontSize="sm" fontWeight="bold">
-                          <Link
-                            to={`/project_admin/${task.pk}`}
-                            style={{ textDecoration: "underline" }}
-                          >
-                            {task.task}
-                          </Link>
+                    <Box border={"0px solid green"} width={"120px"}>
+                      {task.task_manager !== null ? (
+                        <Text color={"blue.600"}>
+                          {task.task_manager.username}
                         </Text>
-                      </VStack>
+                      ) : (
+                        <Text color={"tomato"}>{task.writer}</Text>
+                      )}
+                    </Box>
+                    <Box border={"0px solid blue"} width={"480px"} pl={5}>
+                      <Text fontSize="sm" fontWeight="bold">
+                        <Link
+                          to={`/project_admin/${task.pk}`}
+                          style={{ textDecoration: "underline" }}
+                        >
+                          {task.task}
+                        </Link>
+                      </Text>
                     </Box>
                     <Box
                       border={"0px solid blue"}
-                      width={"190px"}
+                      width={"200px"}
                       display={"flex"}
                       justifyContent={"center"}
                       alignItems={"center"}
+                      pr={20}
                     >
                       <StarRating
                         initialRating={task.importance}
@@ -197,10 +190,16 @@ function UncompletedTaskRow({
                         }
                       />
                     </Box>
-                    <Box border={"0px solid blue"} width={"280px"}>
+                    <Box border={"0px solid blue"} width={"320px"}>
                       <HStack>
                         <Box textAlign={"center"}>
-                          <Text>시작</Text>
+                          <Text
+                            fontWeight="bold"
+                            fontFamily="Arial, sans-serif"
+                            color="orange.500"
+                          >
+                            시작
+                          </Text>
                         </Box>
                         <HStack>
                           <Text>{task.started_at_formatted}</Text>
@@ -216,17 +215,29 @@ function UncompletedTaskRow({
                       </HStack>
                       <HStack>
                         <Box textAlign={"center"}>
-                          <Text>경과</Text>
+                          <Text
+                            fontWeight="bold"
+                            fontFamily="Arial, sans-serif"
+                            color="orange.500"
+                          >
+                            경과
+                          </Text>
                         </Box>
                         <Box>
                           <Text>{task.elapsed_time_from_started_at}</Text>
                         </Box>
                       </HStack>
                     </Box>
-                    <Box border={"0px solid blue"} width={"280px"}>
+                    <Box border={"0px solid blue"} width={"320px"}>
                       <HStack>
                         <Box textAlign={"center"}>
-                          <Text>마감</Text>
+                          <Text
+                            fontWeight="bold"
+                            fontFamily="Arial, sans-serif"
+                            color="orange.500"
+                          >
+                            마감
+                          </Text>
                         </Box>
                         <Text>{task.due_date_formatted}</Text>
 
@@ -239,7 +250,13 @@ function UncompletedTaskRow({
                       </HStack>
                       <HStack>
                         <Box textAlign={"center"}>
-                          <Text>남은 시간</Text>
+                          <Text
+                            fontWeight="bold"
+                            fontFamily="Arial, sans-serif"
+                            color="orange.500"
+                          >
+                            남은 시간
+                          </Text>
                         </Box>
                         <Box>
                           <Text>{task.time_left_to_due_date}</Text>
@@ -288,7 +305,7 @@ function UncompletedTaskRow({
         </Box> */}
 
       {/* 페이지 네이션 영역 */}
-      <Box mt={5}>
+      <Box mt={0}>
         {ProjectProgressList ? (
           <Container maxW="100%" bg="blue.50" color="red.500" mt={1}>
             <PaginationComponent

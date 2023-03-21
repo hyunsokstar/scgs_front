@@ -58,7 +58,6 @@ const TestHeader = () => {
     const { userLoading, isLoggedIn, user } = useUser();
     const [selectedValue, setSelectedValue] = useState("en");
 
-    console.log("isLoggedIn : ", isLoggedIn);
     
 
     // 컴퍼넌트 함수
@@ -119,19 +118,19 @@ const TestHeader = () => {
     };
 
     return (
-        <Box maxW={"100%"}>
-
-            <Flex as="header" align="center" justify="space-between" p="1rem" bg="blue.300">
-                <Box display={"flex"} gap={6} alignItems={"center"}>
-                    <Box fontWeight={active === "home" ? "bold" : "normal"} fontSize="2xl" color="teal.500">
+        <Box maxW={"100%"} my={2}>
+            <Flex as="header" align="center" justify="space-between" py={2} bg="blue.200">
+                <Box display={"flex"} gap={5} alignItems={"center"}>
+                    <Box fontWeight={active === "home" ? "bold" : "normal"} fontSize="xl">
                         <Text
                             _hover={{
                                 bg: "blue.200"
                             }}
-                            color={active === "home" ? "red.500" : "red.500"}
+                            color={active === "home" ? "red.500" : "brown.300"}
                             onClick={homeButtonHandler}
+                            ml={2}
                         >
-                            Team Task Admin Tool
+                            Home
                         </Text>
                     </Box>
 
@@ -226,7 +225,7 @@ const TestHeader = () => {
                         </Text>
                     </NavLink> */}
                 </Box>
-                <Box py={1}>
+                <Box py={0}>
                     <HStack>
                         <IconButton
                             onClick={toggleColorMode}

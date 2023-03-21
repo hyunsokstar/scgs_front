@@ -7,7 +7,7 @@ import TestHeader from "./TestHeader/TestHeader";
 export default function Root() {
     return (
         <Box>
-            <Box maxW="80%" mx={"auto"}>
+            <Box maxW="90%" mx={"auto"} px={2}>
                 {/* <SampleHeader /> */}
                 <TestHeader />
                 <Outlet />

@@ -25,12 +25,9 @@ function CompletedProjectTaskList({}: Props): ReactElement {
   );  
 
   return (
-    <Container maxW={"100%"} border={"0px solid purple"} p={1} mt={1}>
+    <Container maxW={"100%"} border={"1px solid purple"} p={0} mt={0}>
       <Text>완료 리스트</Text>
       <Box textAlign={"right"} >
-        {/* <ModalButtonForAddProjectTask
-          projectTaskListRefatch={projectTaskListRefatch}
-        /> */}
       </Box>
       <Box>
         {pageProgressListData ? (

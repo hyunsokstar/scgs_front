@@ -80,7 +80,6 @@ function ModalButtonForUpdateProjectTaskCompleteDate({
     isBefore: (arg0: Date, arg1: string) => any;
   }) => {
     // 현재 날짜 이전의 모든 날짜를 선택 불가능하도록 설정
-    console.log("orginal_due_date : " , original_due_date);
 
     if (original_due_date !== "") {
       return current.isBefore(new Date(original_due_date), "day");

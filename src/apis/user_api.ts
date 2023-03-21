@@ -43,7 +43,7 @@ export const deleteOneProjectTask = (project_pk: number) => {
 // api 추가 1122
 export const getOneProjectTask = async ({ queryKey }: QueryFunctionContext) => {
   const [_, taskPk] = queryKey;
-  console.log("roomPestimatePk : ", taskPk);
+  // console.log("roomPestimatePk : ", taskPk);
   return await instance
     .get(`project_progress/${taskPk}`)
     .then((response) => response.data);

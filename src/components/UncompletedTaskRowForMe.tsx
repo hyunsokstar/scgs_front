@@ -139,65 +139,47 @@ function UncompletedTaskRowForMe({
   };
 
   return (
-    <Container border={"0px solid blue"} maxWidth={"100%"}>
+    <Box border={"0px solid blue"} maxWidth={"100%"}>
       <Box overflowX="auto" width="100%">
         {ProjectProgressList ? (
           <List>
             {ProjectProgressList?.map((task: any) => {
-
               console.log("task.task_manager : ", task.taskmanager);
-              
 
               return (
                 <ListItem
                   key={task.pk}
-                  height={14}
+                  height={16}
                   border={"0px solid blue"}
                   width={"1400px"}
+                  my={1}
+                  display={"flex"}
+                  alignItems={"center"}
                 >
                   <HStack border={"0px solid green"}>
                     <Box border={"0px solid yellow"} width={"100px"}>
                       <HStack ml={0}>
-                        <Checkbox mr={3} />
+                        <Checkbox mx={2} />
                         {task.task_manager !== null ? (
                           <Text color={"blue.600"}>
                             {task.task_manager.username}
                           </Text>
                         ) : (
-                          <Text color={"tomato"}>
-                            {task.writer}
-                          </Text>
+                          <Text color={"tomato"}>{task.writer}</Text>
                         )}
                       </HStack>
                     </Box>
-                    <Box border={"0px solid blue"} width={"480px"}>
-                      <VStack>
-                        <Text fontSize="sm" fontWeight="bold">
-                          <Link
-                            to={`/project_admin/${task.pk}`}
-                            style={{ textDecoration: "underline" }}
-                          >
-                            {task.task}
-                          </Link>
-                        </Text>
-                      </VStack>
+                    <Box border={"0px solid blue"} width={"340px"}>
+                      <Text fontSize="sm" fontWeight="bold">
+                        <Link
+                          to={`/project_admin/${task.pk}`}
+                          style={{ textDecoration: "underline" }}
+                        >
+                          {task.task}
+                        </Link>
+                      </Text>
                     </Box>
-                    <Box
-                      border={"0px solid blue"}
-                      width={"190px"}
-                      display={"flex"}
-                      justifyContent={"center"}
-                      alignItems={"center"}
-                    >
-                      <StarRating
-                        initialRating={task.importance}
-                        taskPk={task.pk}
-                        onChangeForStarRatingHandler={
-                          onChangeForStarRatingHandler
-                        }
-                      />
-                    </Box>
-                    <Box border={"0px solid blue"} width={"280px"}>
+                    <Box border={"0px solid blue"} width={"310px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>시작</Text>
@@ -223,7 +205,7 @@ function UncompletedTaskRowForMe({
                         </Box>
                       </HStack>
                     </Box>
-                    <Box border={"0px solid blue"} width={"280px"}>
+                    <Box border={"0px solid blue"} width={"310px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>마감</Text>
@@ -246,7 +228,24 @@ function UncompletedTaskRowForMe({
                         </Box>
                       </HStack>
                     </Box>
-                    <Box border={"0px solid green"}>
+
+                    <Box
+                      border={"0px solid blue"}
+                      width={"200px"}
+                      display={"flex"}
+                      justifyContent={"flex-start"}
+                      alignItems={"center"}
+                    >
+                      <StarRating
+                        initialRating={task.importance}
+                        taskPk={task.pk}
+                        onChangeForStarRatingHandler={
+                          onChangeForStarRatingHandler
+                        }
+                      />
+                    </Box>
+
+                    <Box border={"0px solid green"} width={"100px"}>
                       <SlideToggleButton
                         onChange={() => {
                           updateHandlerForTaskStatus(task.pk);
@@ -254,6 +253,7 @@ function UncompletedTaskRowForMe({
                         checked={task.task_completed}
                       />
                     </Box>
+
                     <Box>
                       <IconButton
                         aria-label="삭제"
@@ -290,18 +290,18 @@ function UncompletedTaskRowForMe({
       {/* 페이지 네이션 영역 */}
       <Box mt={5}>
         {ProjectProgressList ? (
-          <Container maxW="100%" bg="blue.50" color="red.500" mt={1}>
+          <Box maxW="100%" bg="blue.50" color="red.500" mt={-3.5}>
             <PaginationComponent
               current_page_num={currentPageNum}
               total_page_num={totalPageCount}
               setCurrentPageNum={setCurrentPageNum}
             />
-          </Container>
+          </Box>
         ) : (
           ""
         )}
       </Box>
-    </Container>
+    </Box>
   );
 }
 

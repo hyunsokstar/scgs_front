@@ -17,12 +17,14 @@ const SampleCard = ({ imageSrc, title, description }: SampleCardProps) => {
       borderRadius="lg"
       overflow="hidden"
       position="relative"
-      m={5}
+      mx={8}
+      my={5}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       transform={isHovered ? "translateY(-5px)" : "translateY(0)"}
       transition="transform 0.2s ease-out"
       boxShadow={isHovered ? "xl" : "none"}
+      bg={"#ECECEC"}
     >
       <Box maxH="xs" overflow="hidden">
         <Image src={imageSrc} alt={title} objectFit="fill" w={"280px"} h={"220px"}/>
@@ -55,7 +57,7 @@ const SampleCard = ({ imageSrc, title, description }: SampleCardProps) => {
           transform="scale(1.2)"
         >
           <Text color="white" fontWeight="bold">
-            Hovered!
+            Click !
           </Text>
         </Box>
       )}

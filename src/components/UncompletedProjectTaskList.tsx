@@ -27,7 +27,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   // console.log("pageProgressListData : ", pageProgressListData);
 
   return (
-    <Container maxW={"100%"} border={"0px solid purple"} p={1} mt={1}>
+    <Container maxW={"100%"} border={"1px solid purple"} p={0} mt={0}>
       <Flex justifyContent={"space-between"}>
       <Text>비완료 리스트</Text>
       <Box textAlign={"right"} m={0}>

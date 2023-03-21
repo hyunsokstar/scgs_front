@@ -1,4 +1,4 @@
-import { Box, Button, Container, Text } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import React, { ReactElement, useState } from "react";
 import { getCompletedTaskListForMe } from "../apis/project_progress_api";
@@ -23,20 +23,37 @@ function CompletedProjectTaskListForMe({}: Props): ReactElement {
     {
       enabled: true,
     }
-  );  
+  );
 
   return (
-    <Container maxW={"100%"} border={"0px solid purple"} p={1} mt={1}>
-      <Text>완료 리스트</Text>
+    <Container maxW={"100%"} border={"0px solid purple"} p={0} mt={0}>
+      <Flex
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        mx={0}
+        py={2}
+        px={1}
+        bg={"orange.200"}
+        border={"1px solid green"}
+      >
+        <Text>완료 리스트</Text>
+        <Box textAlign={"right"} m={0}>
+          <ModalButtonForAddProjectTask
+            projectTaskListRefatch={projectTaskListRefatch}
+          />
+        </Box>
+      </Flex>{" "}
       <Box>
         {pageProgressListData ? (
+          <Box>
           <CompletedTaskRowForMe
-            ProjectProgressList={pageProgressListData.ProjectProgressList}
-            totalPageCount={pageProgressListData.totalPageCount}
-            projectTaskListRefatch={projectTaskListRefatch}
-            currentPageNum = {currentPageNum}
-            setCurrentPageNum = {setCurrentPageNum}            
-          />
+              ProjectProgressList={pageProgressListData.ProjectProgressList}
+              totalPageCount={pageProgressListData.totalPageCount}
+              projectTaskListRefatch={projectTaskListRefatch}
+              currentPageNum={currentPageNum}
+              setCurrentPageNum={setCurrentPageNum}
+            />
+          </Box>
         ) : (
           ""
         )}

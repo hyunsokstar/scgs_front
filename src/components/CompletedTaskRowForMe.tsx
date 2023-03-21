@@ -133,57 +133,44 @@ function CompletedTaskRowForMe({
   };
 
   return (
-    <Container border={"0px solid blue"} maxWidth={"100%"}>
+    <Box border={"0px solid blue"} maxWidth={"100%"}>
       <Box overflowX="auto" width="100%">
         <List>
           {ProjectProgressList?.map((task) => {
             return (
               <ListItem
                 key={task.pk}
-                height={14}
+                height={16}
                 border={"0px solid blue"}
                 width={"1400px"}
+                my={1}
+                display={"flex"}
+                alignItems={"center"}
               >
                 <HStack>
                   <Box border={"0px solid yellow"} width={"100px"}>
                     <HStack ml={0}>
-                      <Checkbox mr={3} />
+                      <Checkbox mx={2} />
                       {task.task_manager !== null ? (
                         <Text color={"blue.600"}>
                           {task.task_manager.username}
                         </Text>
                       ) : (
                         <Text color={"tomato"}>{task.writer}</Text>
-                      )}{" "}
+                      )}
                     </HStack>
                   </Box>
-                  <Box border={"0px solid blue"} width={"480px"}>
-                    <VStack>
-                      <Text fontSize="sm" fontWeight="bold">
-                        <Link
-                          to={`/project_admin/${task.pk}`}
-                          style={{ textDecoration: "underline" }}
-                        >
-                          {task.task}
-                        </Link>
-                      </Text>
-                    </VStack>
+                  <Box border={"0px solid blue"} width={"340px"}>
+                    <Text fontSize="sm" fontWeight="bold">
+                      <Link
+                        to={`/project_admin/${task.pk}`}
+                        style={{ textDecoration: "underline" }}
+                      >
+                        {task.task}
+                      </Link>
+                    </Text>
                   </Box>
-                  <Box
-                    border={"0px solid blue"}
-                    width={"190px"}
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                  >
-                    <StarRating
-                      initialRating={task.importance}
-                      taskPk={task.pk}
-                      onChangeForStarRatingHandler={
-                        onChangeForStarRatingHandler
-                      }
-                    />
-                  </Box>
+
                   <Box border={"0px solid blue"} width={"240px"}>
                     <HStack>
                       <Box textAlign={"center"}>
@@ -220,8 +207,25 @@ function CompletedTaskRowForMe({
                       </Box>
                     </HStack>
                   </Box>
+
+                  <Box
+                    border={"0px solid blue"}
+                    width={"190px"}
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <StarRating
+                      initialRating={task.importance}
+                      taskPk={task.pk}
+                      onChangeForStarRatingHandler={
+                        onChangeForStarRatingHandler
+                      }
+                    />
+                  </Box>
+
                   {/* task_completed update */}
-                  <Box border={"0px solid green"}>
+                  <Box border={"0px solid green"} width={"100px"}>
                     <SlideToggleButton
                       onChange={() => {
                         updateHandlerForTaskStatus(task.pk);
@@ -273,7 +277,7 @@ function CompletedTaskRowForMe({
           ""
         )}
       </Box>
-    </Container>
+    </Box>
   );
 }
 

@@ -134,7 +134,7 @@ function CompletedTaskRow({
 
   return (
     <Container border={"0px solid blue"} maxWidth={"100%"}>
-      <Box overflowX="auto" width="100%">
+      <Box overflowX="auto" width="100%" bgColor={"green.50"}>
         <List>
           {ProjectProgressList?.map((task) => {
             return (
@@ -144,21 +144,20 @@ function CompletedTaskRow({
                 border={"0px solid blue"}
                 width={"1400px"}
               >
-                <HStack>
-                  <Box border={"0px solid yellow"} width={"100px"}>
-                    <HStack ml={0}>
-                      <Checkbox mr={3} />
+                <HStack border={"0px solid green"}>
+                    <Box border={"0px solid yellow"} width={"50px"}>
+                      <Checkbox mx={3} />
+                    </Box>
+                    <Box border={"0px solid green"} width={"120px"}>
                       {task.task_manager !== null ? (
                         <Text color={"blue.600"}>
                           {task.task_manager.username}
                         </Text>
                       ) : (
                         <Text color={"tomato"}>{task.writer}</Text>
-                      )}{" "}
-                    </HStack>
-                  </Box>
-                  <Box border={"0px solid blue"} width={"480px"}>
-                    <VStack>
+                      )}
+                    </Box>
+                    <Box border={"0px solid blue"} width={"480px"} pl={5}>
                       <Text fontSize="sm" fontWeight="bold">
                         <Link
                           to={`/project_admin/${task.pk}`}
@@ -167,24 +166,24 @@ function CompletedTaskRow({
                           {task.task}
                         </Link>
                       </Text>
-                    </VStack>
-                  </Box>
-                  <Box
-                    border={"0px solid blue"}
-                    width={"190px"}
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                  >
-                    <StarRating
-                      initialRating={task.importance}
-                      taskPk={task.pk}
-                      onChangeForStarRatingHandler={
-                        onChangeForStarRatingHandler
-                      }
-                    />
-                  </Box>
-                  <Box border={"0px solid blue"} width={"240px"}>
+                    </Box>
+                    <Box
+                      border={"0px solid blue"}
+                      width={"200px"}
+                      display={"flex"}
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                      pr={20}
+                    >
+                      <StarRating
+                        initialRating={task.importance}
+                        taskPk={task.pk}
+                        onChangeForStarRatingHandler={
+                          onChangeForStarRatingHandler
+                        }
+                      />
+                    </Box>
+                  <Box border={"0px solid blue"} width={"300px"}>
                     <HStack>
                       <Box textAlign={"center"}>
                         <Text>시작</Text>
@@ -202,7 +201,7 @@ function CompletedTaskRow({
                       </Box>
                     </HStack>
                   </Box>
-                  <Box border={"0px solid blue"} width={"240px"}>
+                  <Box border={"0px solid blue"} width={"300px"}>
                     <HStack>
                       <Box textAlign={"center"}>
                         <Text>완료</Text>
@@ -260,7 +259,7 @@ function CompletedTaskRow({
       </Box> */}
 
       {/* 페이지 네이션 영역 */}
-      <Box mt={5}>
+      <Box mt={0}>
         {ProjectProgressList ? (
           <Container maxW="100%" bg="blue.50" color="red.500" mt={1}>
             <PaginationComponent

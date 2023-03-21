@@ -17,6 +17,13 @@ export interface IOneTaskForProjectTaskType {
   task_manager?: { pk: number; username: string };
   started_at_formatted: string;
   elapsed_time_from_started_at: string;
+  task_images: [
+    {
+      pk: number,
+      task: number;
+      image_url: string;
+    }
+  ]
 }
 
 export interface ITypeForProjectProgressList {

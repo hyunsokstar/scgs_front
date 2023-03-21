@@ -134,7 +134,6 @@ export const insertProjectProgressRow = ({
     .then((response) => response.data);
 
 export const getCompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
-
   const [_, pageNum] = queryKey;
   // console.log("pageNum : ", pageNum);
   return instance
@@ -151,8 +150,9 @@ export const getCompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
     });
 };
 
-export const getCompletedTaskListForMe = ({ queryKey }: QueryFunctionContext) => {
-
+export const getCompletedTaskListForMe = ({
+  queryKey,
+}: QueryFunctionContext) => {
   const [_, pageNum] = queryKey;
   // console.log("pageNum : ", pageNum);
   return instance
@@ -177,7 +177,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
   return instance
     .get(`project_progress/uncompleted?page=${pageNum}`)
     .then((response) => {
-      console.log("api result for uncompleted task list: ", response);
+      // console.log("api result for uncompleted task list: ", response);
 
       const response_data = {
         totalPageCount: response.data.totalPageCount,
@@ -188,8 +188,9 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
     });
 };
 
-
-export const getUncompletedTaskListForMe = ({ queryKey }: QueryFunctionContext) => {
+export const getUncompletedTaskListForMe = ({
+  queryKey,
+}: QueryFunctionContext) => {
   // console.log("getProjectProgressList 요청 확인 at api");
 
   const [_, pageNum] = queryKey;
@@ -197,7 +198,7 @@ export const getUncompletedTaskListForMe = ({ queryKey }: QueryFunctionContext) 
   return instance
     .get(`project_progress/uncompleted/for-me?page=${pageNum}`)
     .then((response) => {
-      console.log("api result for uncompleted task list: ", response);
+      // console.log("api result for uncompleted task list: ", response);
 
       const response_data = {
         totalPageCount: response.data.totalPageCount,
@@ -207,7 +208,6 @@ export const getUncompletedTaskListForMe = ({ queryKey }: QueryFunctionContext) 
       return response_data;
     });
 };
-
 
 export const updateProjectDueDate = ({ taskPk, due_date }: any) => {
   console.log("updateProjectImportance 실행 check");
@@ -230,7 +230,10 @@ export const updateProjectDueDate = ({ taskPk, due_date }: any) => {
     });
 };
 
-export const updateProjectStartedAt = ({ taskPk, started_at_for_update }: any) => {
+export const updateProjectStartedAt = ({
+  taskPk,
+  started_at_for_update,
+}: any) => {
   console.log("updateProjectImportance 실행 check");
 
   return instance
@@ -247,6 +250,42 @@ export const updateProjectStartedAt = ({ taskPk, started_at_for_update }: any) =
     )
     .then((response): any => {
       console.log("response : ", response);
+      return response.data;
+    });
+};
+
+// interface ICreateProfilePhotoVariables {
+//   file: string;
+//   userPk: string;
+// }
+
+export const deleteOneRefImageForTask = (ref_image_pk: number) => {
+  console.log("ref_image_pk : ", ref_image_pk);
+  return instance
+    .delete(`medias/ref-image-for-task/${ref_image_pk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+export const createRefImageForTask = ({ image_url, taskPk }: any) => {
+  console.log("createProfilePhoto check !!!!!");
+
+  return instance
+    .post(
+      "medias/ref-image-for-task/upload",
+      { taskPk, image_url },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => {
+      console.log("response for createRefImageForTask api: ", response.data);
+
       return response.data;
     });
 };
