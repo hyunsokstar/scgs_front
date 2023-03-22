@@ -25,6 +25,7 @@ import TestDataGridPage from "./routes/GridPage/TestDataGridPage";
 import UsersByDataGridPage from "./routes/DataGridContainer/UsersByDataGridPage";
 import ProjectProgressDetail from "./routes/ProjectProgressDetail";
 import MyTaskPage from "./routes/MyTaskPage";
+import KakaoLoginPage from "./routes/KaKaoLoginPage";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,10 @@ const router = createBrowserRouter([
         path: "",
         element: <Home />,
       },
-
+      {
+        path:"kaka-login",
+        element: <KakaoLoginPage />
+      },
       { path: "my_task", element: <MyTaskPage /> },
 
       {

@@ -69,6 +69,11 @@ const TestHeader = () => {
   const [selectedValue, setSelectedValue] = useState("en");
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(login(user));
+    }
+  }, []);
 
   // 컴퍼넌트 함수
   const onLogOut = async () => {
@@ -80,7 +85,7 @@ const TestHeader = () => {
     });
 
     const data = await logOutApi();
-    dispatch(logout())
+    dispatch(logout());
     queryClient.refetchQueries(["me"]);
 
     console.log(data);
@@ -127,15 +132,13 @@ const TestHeader = () => {
   };
 
   return (
-    <Box maxW={"100%"} my={2}>
+    <Box w={"100%"} py={3} my={0} border={"1px solid green"} bg="blue.200">
       <Flex
-        as="header"
         align="center"
         justify="space-between"
-        py={2}
-        bg="blue.200"
+        py={1}
       >
-        <Box display={"flex"} gap={5} alignItems={"center"}>
+        <Box display={"flex"} gap={0} alignItems={"center"}>
           <Box fontWeight={active === "home" ? "bold" : "normal"} fontSize="xl">
             <Text
               _hover={{

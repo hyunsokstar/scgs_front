@@ -26,7 +26,7 @@ function CompletedProjectTaskListForMe({}: Props): ReactElement {
   );
 
   return (
-    <Container maxW={"100%"} border={"0px solid purple"} p={0} mt={0}>
+    <Container maxW={"100%"} border={"0px solid black"} p={0} mt={2}>
       <Flex
         justifyContent={"space-between"}
         alignItems={"center"}
@@ -34,13 +34,13 @@ function CompletedProjectTaskListForMe({}: Props): ReactElement {
         py={2}
         px={1}
         bg={"orange.200"}
-        border={"1px solid green"}
+        border={"0px solid green"}
       >
         <Text>완료 리스트</Text>
         <Box textAlign={"right"} m={0}>
-          <ModalButtonForAddProjectTask
+          {/* <ModalButtonForAddProjectTask
             projectTaskListRefatch={projectTaskListRefatch}
-          />
+          /> */}
         </Box>
       </Flex>{" "}
       <Box>

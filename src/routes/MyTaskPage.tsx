@@ -3,14 +3,27 @@ import React, { ReactElement } from "react";
 import CompletedProjectTaskListForMe from "../components/CompletedProjectTaskListForMe";
 import UncompletedProjectTaskListForMe from "../components/UncompletedProjectTaskListForMe";
 
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store";
+
 interface Props {}
 
 function MyTaskPage({}: Props): ReactElement {
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
+
   return (
-    <Box width={"100%"}>
-      <Flex direction={"column"} gap={5} mt={0} border={"1px solid blue"}>
-        <UncompletedProjectTaskListForMe />
-        <CompletedProjectTaskListForMe />
+    <Box width={"100%"} border={"0px solid blue"}>
+      <Flex direction={"column"} mt={0} width="100%">
+        {isLoggedIn ? (
+          <VStack mt={2} gap={2}>
+            <UncompletedProjectTaskListForMe />
+            <CompletedProjectTaskListForMe />
+          </VStack>
+        ) : (
+          "로그인이 필요 합니다"
+        )}
       </Flex>
     </Box>
   );

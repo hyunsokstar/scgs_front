@@ -34,7 +34,7 @@ const image_array = [
 
 export default function Home() {
   return (
-    <Box width={"100%"} border={"1px solid green"}>
+    <Box width={"100%"} border={"0px solid green"}>
       <Flex justifyContent={"center"}>
         <NavLink to="/my_task">
           <SampleCard
