@@ -40,7 +40,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
         bg={"green.200"}
         border={"0px solid green"}
       >
-        <Text>비완료 리스트</Text>
+        <Text py={1}>비완료 리스트</Text>
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
             projectTaskListRefatch={projectTaskListRefatch}

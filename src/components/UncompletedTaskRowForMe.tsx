@@ -150,11 +150,12 @@ function UncompletedTaskRowForMe({
                 <ListItem
                   key={task.pk}
                   height={16}
-                  border={"0px solid blue"}
-                  width={"1400px"}
-                  my={1}
+                  border={"1px solid lightgray"}
+                  width={"1414px"}
+                  my={0}
                   display={"flex"}
                   alignItems={"center"}
+                  _hover={{backgroundColor:"gray.100"}}
                 >
                   <HStack border={"0px solid green"}>
                     <Box border={"0px solid yellow"} width={"100px"}>
@@ -231,7 +232,7 @@ function UncompletedTaskRowForMe({
 
                     <Box
                       border={"0px solid blue"}
-                      width={"200px"}
+                      width={"120px"}
                       display={"flex"}
                       justifyContent={"flex-start"}
                       alignItems={"center"}

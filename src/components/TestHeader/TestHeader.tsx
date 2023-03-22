@@ -132,7 +132,7 @@ const TestHeader = () => {
   };
 
   return (
-    <Box w={"100%"} py={3} my={0} border={"1px solid green"} bg="blue.200">
+    <Box w={"100%"} py={0} my={0} mt={2} border={"1px solid green"} bg="blue.200">
       <Flex
         align="center"
         justify="space-between"
