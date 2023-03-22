@@ -73,7 +73,7 @@ export const getRoomReviews = ({ queryKey }: QueryFunctionContext) => {
 
 export const getMe = () => instance.get(`users/me`).then((response) => response.data);
 
-export const logOut = () =>
+export const logOutApi = () =>
     instance
         .post(`users/log-out`, null, {
             headers: {

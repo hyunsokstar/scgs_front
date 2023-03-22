@@ -1,142 +1,156 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-    Spacer,
-    Box,
-    Flex,
-    Text,
-    useDisclosure,
-    IconButton,
-    Stack,
-    Collapse,
-    Button,
-    Container,
-    useColorMode,
-    useColorModeValue,
-    useToast,
-    LightMode,
-    Menu,
-    MenuButton,
-    Avatar,
-    MenuList,
-    MenuItem,
-    HStack,
-    Heading,
-    Select,
+  Spacer,
+  Box,
+  Flex,
+  Text,
+  useDisclosure,
+  IconButton,
+  Stack,
+  Collapse,
+  Button,
+  Container,
+  useColorMode,
+  useColorModeValue,
+  useToast,
+  LightMode,
+  Menu,
+  MenuButton,
+  Avatar,
+  MenuList,
+  MenuItem,
+  HStack,
+  Heading,
+  Select,
 } from "@chakra-ui/react";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useQueryClient } from "@tanstack/react-query";
 
 import useUser from "../../lib/useUser";
-import { logOut } from "../../api";
+import { logOutApi } from "../../api";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import LoginModal from "../LoginModal";
 import SignUpModal from "../SignUpModal";
 
+import { useSelector, useDispatch } from "react-redux";
+import { login, logout } from "../../reducers/userSlice";
+
 import styles from "./SelectBox.module.css";
 
 const TestHeader = () => {
-    const [active, setActive] = useState("home");
-    const { toggleColorMode } = useColorMode();
-    const Icon = useColorModeValue(FaMoon, FaSun);
-    const toast = useToast();
-    const navigate = useNavigate();
+  const [active, setActive] = useState("home");
+  const { toggleColorMode } = useColorMode();
+  const Icon = useColorModeValue(FaMoon, FaSun);
+  const toast = useToast();
+  const navigate = useNavigate();
 
-    const { isOpen: isLoginOpen, onClose: onLoginClose, onOpen: onLoginOpen } = useDisclosure();
-    const { isOpen: isSignUpOpen, onClose: onSignUpClose, onOpen: onSignUpOpen } = useDisclosure();
+  const {
+    isOpen: isLoginOpen,
+    onClose: onLoginClose,
+    onOpen: onLoginOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isSignUpOpen,
+    onClose: onSignUpClose,
+    onOpen: onSignUpOpen,
+  } = useDisclosure();
 
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-    const handleItemClick = (itemName: string) => {
+  const handleItemClick = (itemName: string) => {
+    if (itemName === "project_admin") {
+      setSelectedValue("/");
+    }
+    setActive(itemName);
+  };
 
-        if (itemName === "project_admin") {
-            setSelectedValue("/")
-        }
-        setActive(itemName);
-    };
-
-    const { userLoading, isLoggedIn, user } = useUser();
-    const [selectedValue, setSelectedValue] = useState("en");
-
-    
-
-    // 컴퍼넌트 함수
-    const onLogOut = async () => {
-        const toastId = toast({
-            title: "Login out...",
-            description: "Sad to see you go...",
-            status: "loading",
-            position: "bottom-right",
-        });
-
-        const data = await logOut();
-        queryClient.refetchQueries(["me"]);
-
-        console.log(data);
-
-        setTimeout(() => {
-            toast.update(toastId, {
-                status: "success",
-                title: "Done!",
-                description: "See you later!",
-            });
-        }, 0);
-    };
-
-    let activeStyle = {
-        fontSize: "lg",
-        fontWeight: "bold",
-        color: "black"
-    };
-
-    let unactiveStyle = {
-        fontSize: "lg",
-        fontWeight: "bold",
-        color: "gray"
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(`Selected value: ${e.target.value}`);
-        const url = e.target.value
-
-        if (url == "default") {
-            setSelectedValue(url)
-            return;
-        } else {
-            setSelectedValue(url)
-            navigate(url)
-        }
+  const { userLoading, isLoggedIn, user } = useUser();
+  const [selectedValue, setSelectedValue] = useState("en");
+  const dispatch = useDispatch();
 
 
-    };
+  // 컴퍼넌트 함수
+  const onLogOut = async () => {
+    const toastId = toast({
+      title: "Login out...",
+      description: "Sad to see you go...",
+      status: "loading",
+      position: "bottom-right",
+    });
 
-    const homeButtonHandler = () => {
-        console.log("home button 클릭");
-        handleItemClick("home")
-        setSelectedValue("/")
-        navigate("/");
-    };
+    const data = await logOutApi();
+    dispatch(logout())
+    queryClient.refetchQueries(["me"]);
 
-    return (
-        <Box maxW={"100%"} my={2}>
-            <Flex as="header" align="center" justify="space-between" py={2} bg="blue.200">
-                <Box display={"flex"} gap={5} alignItems={"center"}>
-                    <Box fontWeight={active === "home" ? "bold" : "normal"} fontSize="xl">
-                        <Text
-                            _hover={{
-                                bg: "blue.200"
-                            }}
-                            color={active === "home" ? "red.500" : "brown.300"}
-                            onClick={homeButtonHandler}
-                            ml={2}
-                        >
-                            Home
-                        </Text>
-                    </Box>
+    console.log(data);
 
-                    <HStack>
+    setTimeout(() => {
+      toast.update(toastId, {
+        status: "success",
+        title: "Done!",
+        description: "See you later!",
+      });
+    }, 0);
+  };
 
-                        {/* <Select
+  let activeStyle = {
+    fontSize: "lg",
+    fontWeight: "bold",
+    color: "black",
+  };
+
+  let unactiveStyle = {
+    fontSize: "lg",
+    fontWeight: "bold",
+    color: "gray",
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(`Selected value: ${e.target.value}`);
+    const url = e.target.value;
+
+    if (url == "default") {
+      setSelectedValue(url);
+      return;
+    } else {
+      setSelectedValue(url);
+      navigate(url);
+    }
+  };
+
+  const homeButtonHandler = () => {
+    console.log("home button 클릭");
+    handleItemClick("home");
+    setSelectedValue("/");
+    navigate("/");
+  };
+
+  return (
+    <Box maxW={"100%"} my={2}>
+      <Flex
+        as="header"
+        align="center"
+        justify="space-between"
+        py={2}
+        bg="blue.200"
+      >
+        <Box display={"flex"} gap={5} alignItems={"center"}>
+          <Box fontWeight={active === "home" ? "bold" : "normal"} fontSize="xl">
+            <Text
+              _hover={{
+                bg: "blue.200",
+              }}
+              color={active === "home" ? "red.500" : "brown.300"}
+              onClick={homeButtonHandler}
+              ml={2}
+            >
+              Home
+            </Text>
+          </Box>
+
+          <HStack>
+            {/* <Select
                             value={selectedValue}
                             className={styles.select}
                             onChange={handleChange}
@@ -211,12 +225,10 @@ const TestHeader = () => {
                             </option>
 
                         </Select> */}
-
-                    </HStack>
-
-                </Box>
-                <Box>
-                    {/* <NavLink
+          </HStack>
+        </Box>
+        <Box>
+          {/* <NavLink
                         to="/project_admin"
                         onClick={() => handleItemClick("project_admin")}
                     >
@@ -224,54 +236,54 @@ const TestHeader = () => {
                             project_admin
                         </Text>
                     </NavLink> */}
-                </Box>
-                <Box py={0}>
-                    <HStack>
-                        <IconButton
-                            onClick={toggleColorMode}
-                            variant={"outline"}
-                            aria-label="Toggle dark mode"
-                            icon={<Icon color="yellow" />}
-                            bgColor={"green.500"}
-                            _hover={{ bg: "teal.200" }}
-                            size={"sm"}
-                        />
-
-                        {!userLoading ? (
-                            !isLoggedIn ? (
-                                <Container p={2}>
-                                    <Button onClick={onLoginOpen}>로그인</Button>
-                                    <LightMode>
-                                        <Button ml={2} colorScheme={"red"} onClick={onSignUpOpen}>
-                                            회원 가입
-                                        </Button>
-                                    </LightMode>
-                                </Container>
-                            ) : (
-                                <Box>
-                                    <HStack mr={2}>
-                                        <Text color={"orange.500"} fontSize={"2xl"}>
-                                            {user?.username} ({user?.admin_level}) 님
-                                        </Text>
-                                        <Menu>
-                                            <MenuButton>
-                                                <Avatar name={user?.name} size={"sm"} />
-                                            </MenuButton>
-                                            <MenuList>
-                                                <MenuItem onClick={onLogOut}>Log out</MenuItem>
-                                            </MenuList>
-                                        </Menu>
-                                    </HStack>
-                                </Box>
-                            )
-                        ) : null}
-                    </HStack>
-                </Box>
-            </Flex>
-            <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
-            <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
         </Box>
-    );
+        <Box py={0}>
+          <HStack>
+            <IconButton
+              onClick={toggleColorMode}
+              variant={"outline"}
+              aria-label="Toggle dark mode"
+              icon={<Icon color="yellow" />}
+              bgColor={"green.500"}
+              _hover={{ bg: "teal.200" }}
+              size={"sm"}
+            />
+
+            {!userLoading ? (
+              !isLoggedIn ? (
+                <Container p={2}>
+                  <Button onClick={onLoginOpen}>로그인</Button>
+                  <LightMode>
+                    <Button ml={2} colorScheme={"red"} onClick={onSignUpOpen}>
+                      회원 가입
+                    </Button>
+                  </LightMode>
+                </Container>
+              ) : (
+                <Box>
+                  <HStack mr={2}>
+                    <Text color={"orange.500"} fontSize={"2xl"}>
+                      {user?.username} ({user?.admin_level}) 님
+                    </Text>
+                    <Menu>
+                      <MenuButton>
+                        <Avatar name={user?.name} size={"sm"} />
+                      </MenuButton>
+                      <MenuList>
+                        <MenuItem onClick={onLogOut}>Log out</MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </HStack>
+                </Box>
+              )
+            ) : null}
+          </HStack>
+        </Box>
+      </Flex>
+      <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
+      <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
+    </Box>
+  );
 };
 
 export default TestHeader;

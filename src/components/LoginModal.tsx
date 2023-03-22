@@ -27,6 +27,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //
 import { usernameLogIn } from "../apis/user_api";
+import { login } from "../reducers/userSlice";
+import { useDispatch } from "react-redux";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -41,6 +43,7 @@ interface IForm {
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const toast = useToast();
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const [loginErrorExist, setloginErrorExist] = useState<string>("")
 
@@ -55,7 +58,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       // console.log("mutation starting");
     },
     onSuccess: (data) => {
-      // console.log("data : ", data);
+      console.log("login data : ", data);
       toast({
         title: "welcome back!",
         status: "success",
@@ -63,6 +66,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       setloginErrorExist("")
       onClose();
       queryClient.refetchQueries(["me"]);
+      dispatch(login(data))
     },
     onError: (error: any) => {
       console.log("error : ", error);

@@ -2,12 +2,29 @@ import { useQuery } from "@tanstack/react-query";
 import { getMe } from "../api";
 import { IUser } from "../types";
 
+import { useSelector, useDispatch } from "react-redux";
+import { login, logout } from "../reducers/userSlice";
+import { RootState } from "../store";
+
 
 export default function useUser() {
-    // const { isLoading, data, isError } = useQuery(["me"], getMe, {
+    const dispatch = useDispatch();
+    const {loginUser, isLoggedIn} = useSelector(
+        (state: RootState) => state.loginInfo
+      );
+
     const { isLoading, data, isError } = useQuery<IUser>(["me"], getMe, {
         retry: false,
     });
+
+    console.log("get user data : ", data);
+
+    if(isLoggedIn) {
+        dispatch(login(data))
+    } else {
+        dispatch(logout())
+    }
+
     return {
         userLoading: isLoading,
         user: data,

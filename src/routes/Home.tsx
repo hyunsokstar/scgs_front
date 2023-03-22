@@ -7,9 +7,7 @@ import SampleCard from "../components/TestCard/SampleCard";
 import TestCard from "../components/TestCard/TestCard";
 import TutorialList from "../components/TutorialList";
 import UserProfile from "../components/UserProfile";
-// import PhotoUploadButton from "../components/PhotoUploadButton";
-// import RoomsList from "../components/RoomsList";
-// import UsersList from "../components/UsersList";
+
 
 const image_array = [
   {

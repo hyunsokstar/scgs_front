@@ -25,7 +25,7 @@ import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import { FaMoon, FaSun } from "react-icons/fa";
 import useUser from "../lib/useUser";
 import { useQueryClient } from "@tanstack/react-query";
-import { logOut } from "../api";
+import { logOutApi } from "../api";
 import { Link } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
@@ -55,7 +55,7 @@ function SampleHeader() {
             position: "bottom-right",
         });
 
-        const data = await logOut();
+        const data = await logOutApi();
         queryClient.refetchQueries(["me"]);
 
         console.log(data);
