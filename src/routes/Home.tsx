@@ -2,6 +2,7 @@ import { Box, Container, Flex, Grid, Image, Text } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import CompletedAndPlannedList from "../components/CompletedAndPlannedList";
 import ProjectProgressList from "../components/CompletedProjectTaskList";
+import Counter from "../components/Counter";
 import SampleCard from "../components/TestCard/SampleCard";
 import TestCard from "../components/TestCard/TestCard";
 import TutorialList from "../components/TutorialList";
@@ -65,6 +66,8 @@ export default function Home() {
           description={"팀 관리"}
         />
       </Flex>
+
+      <Counter />
     </Box>
   );
 }

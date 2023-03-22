@@ -11,7 +11,6 @@ const instance = axios.create({
 });
 
 // 타입 추가
-
 export interface ISingup {
   name: string;
   username: string;

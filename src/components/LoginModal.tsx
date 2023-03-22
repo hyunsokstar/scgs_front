@@ -56,7 +56,6 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     },
     onSuccess: (data) => {
       // console.log("data : ", data);
-
       toast({
         title: "welcome back!",
         status: "success",
