@@ -159,7 +159,7 @@ function ModalForCreateTutorial({ refetchTutorialList }: Props) {
     return (
         <>
             <Flex width="100%" border="0px solid red" justifyContent={"flex-end"}>
-                <Button bgColor={"pink.100"} onClick={onOpen} size={"sm"}>tutorial 추가</Button>
+                <Button bgColor={"red.300"} onClick={onOpen} size={"lg"} mt={3} mr={6}>tutorial 추가</Button>
             </Flex>
 
             <Modal isOpen={isOpen} onClose={onClose} size={"md"}>

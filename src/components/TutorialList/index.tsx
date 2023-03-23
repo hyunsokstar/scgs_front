@@ -19,14 +19,14 @@ const alt_image = "https://a0.muscache.com/im/pictures/21b7c945-10c9-481d-9e8e-0
 
 const NextArrow = (props: any) => {
     const { className, style, onClick } = props;
-    return <IconButton style={{ backgroundColor: "red", position: "absolute", top: "220px", right: "-39px" }} aria-label="previous" icon={<ArrowRightIcon />} onClick={onClick} />;
+    return <IconButton style={{ backgroundColor: "orange", position: "absolute", top: "210px", right: "-36px" }} aria-label="previous" icon={<ArrowRightIcon />} onClick={onClick} />;
 };
 
 function PrevArrow(props: any) {
     const { className, style, onClick } = props;
     return (
         <IconButton
-            style={{ backgroundColor: "red", position: "absolute", top: "220px", left: "-39px"}}
+            style={{ backgroundColor: "orange", position: "absolute", top: "210px", left: "-36px"}}
             aria-label="previous"
             icon={<ArrowLeftIcon zIndex={5} />}
             onClick={onClick}
@@ -36,7 +36,7 @@ function PrevArrow(props: any) {
 
 const settings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
@@ -89,13 +89,12 @@ const TutorialList = () => {
 
 
     return (
-        <Container maxW={"100%"} height={540} bgColor={"gray.100"} border={"0px solid blue"}>
+        <Box pl={"0px"} maxW={"100%"} height={560} bgColor={"gray.100"} border={"1px solid blue"}>
 
             <Box border={"0px solid red"} >
                 {user && user.admin_level > 0 ? (
-                    <Box border={"0px solid green"} width="97%" mx={"auto"} mt={1} mr={0}>
+                    <Box border={"px solid green"} width="97%" mx={"auto"} mr={0}>
                         <ModalForCreateTutorial refetchTutorialList={refetchTutorialList} />
-
                     </Box>
                 ) : (
                     ""
@@ -104,11 +103,10 @@ const TutorialList = () => {
                 {!tutorialListDataLoading && tutorialListData && tutorialListData.length ? (
                     <Slider {...settings}>
                         {tutorialListData?.map((tutorial, index) => (
-
-                            <HStack key={index}>
+                            <Box key={index} ml={"28px"} border={"0px solid red"}>
                                 {user && user.username && tutorial.author &&
                                     user.username === tutorial.author.username ?
-                                    <Box ml={1.5} mb={0} border={"0px solid blue"} width={"80%"}>
+                                    <Box ml={1.5} mb={0} border={"1px solid blue"} width={"80%"}>
                                         <Flex justifyContent={"flex-end"}>
                                             <ModalButtonForUpdateTutorialCard
                                                 tutorialPk={tutorial.pk}
@@ -122,7 +120,7 @@ const TutorialList = () => {
                                     </Box>
                                     : <Box visibility="hidden" mt={4}>12</Box>
                                 }
-                                <Box borderWidth="0px" borderRadius="lg" width={"80%"} height={"100%"} border="0px solid black" >
+                                <Box borderWidth="0px" borderRadius="lg" width={"84%"} height={"100%"} border="0px solid green" >
                                     <Box border={"1px solid black"}>
 
                                         <Box border={"0px solid blue"}>
@@ -174,7 +172,7 @@ const TutorialList = () => {
                                         </Box>
                                     </Box>
                                 </Box>
-                            </HStack>
+                            </Box>
                         ))}
                     </Slider>
                 ) : (
@@ -183,7 +181,7 @@ const TutorialList = () => {
                     </Box>
                 )}
             </Box>
-        </Container >
+        </Box >
     );
 };
 
