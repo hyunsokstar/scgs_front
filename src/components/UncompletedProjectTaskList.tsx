@@ -28,13 +28,21 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
   return (
     <Container maxW={"100%"} border={"1px solid purple"} p={0} mt={0}>
-      <Flex justifyContent={"space-between"}>
-      <Text>비완료 리스트</Text>
-      <Box textAlign={"right"} m={0}>
-        <ModalButtonForAddProjectTask
-          projectTaskListRefatch={projectTaskListRefatch}
-        />
-      </Box>
+      <Flex
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        mx={0}
+        py={2}
+        px={1}
+        bg={"green.200"}
+        border={"0px solid green"}
+      >
+        <Text py={1}>비완료 리스트</Text>
+        <Box textAlign={"right"} m={0}>
+          <ModalButtonForAddProjectTask
+            projectTaskListRefatch={projectTaskListRefatch}
+          />
+        </Box>
       </Flex>
       <Box>
         {pageProgressListData ? (
@@ -43,7 +51,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             totalPageCount={pageProgressListData.totalPageCount}
             currentPageNum={currentPageNum}
             setCurrentPageNum={setCurrentPageNum}
-            projectTaskListRefatch = {projectTaskListRefatch}
+            projectTaskListRefatch={projectTaskListRefatch}
           />
         ) : (
           ""

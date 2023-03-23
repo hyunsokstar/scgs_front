@@ -64,8 +64,8 @@ function UncompletedTaskRow({
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getUncompletedTaskList"]);
-      queryClient.refetchQueries(["getCompletedTaskList"]);
+      queryClient.refetchQueries(["getUncompletedTaskListForMe"]);
+      queryClient.refetchQueries(["getCompletedTaskListForMe"]);
 
       toast({
         status: "success",
@@ -139,32 +139,38 @@ function UncompletedTaskRow({
   };
 
   return (
-    <Container border={"0px solid blue"} maxWidth={"100%"}>
-      <Box overflowX="auto" width="100%" bgColor={"green.50"}>
+    <Box border={"0px solid blue"} maxWidth={"100%"}>
+      <Box overflowX="auto" width="100%">
         {ProjectProgressList ? (
           <List>
             {ProjectProgressList?.map((task: any) => {
+              console.log("task.task_manager : ", task.taskmanager);
+
               return (
                 <ListItem
                   key={task.pk}
-                  height={14}
-                  border={"0px solid blue"}
-                  width={"1400px"}
+                  height={16}
+                  border={"1px solid lightgray"}
+                  width={"1414px"}
+                  my={0}
+                  display={"flex"}
+                  alignItems={"center"}
+                  _hover={{backgroundColor:"gray.100"}}
                 >
                   <HStack border={"0px solid green"}>
-                    <Box border={"0px solid yellow"} width={"50px"}>
-                      <Checkbox mx={3} />
+                    <Box border={"0px solid yellow"} width={"100px"}>
+                      <HStack ml={0}>
+                        <Checkbox mx={2} />
+                        {task.task_manager !== null ? (
+                          <Text color={"blue.600"}>
+                            {task.task_manager.username}
+                          </Text>
+                        ) : (
+                          <Text color={"tomato"}>{task.writer}</Text>
+                        )}
+                      </HStack>
                     </Box>
-                    <Box border={"0px solid green"} width={"120px"}>
-                      {task.task_manager !== null ? (
-                        <Text color={"blue.600"}>
-                          {task.task_manager.username}
-                        </Text>
-                      ) : (
-                        <Text color={"tomato"}>{task.writer}</Text>
-                      )}
-                    </Box>
-                    <Box border={"0px solid blue"} width={"480px"} pl={5}>
+                    <Box border={"0px solid blue"} width={"340px"}>
                       <Text fontSize="sm" fontWeight="bold">
                         <Link
                           to={`/project_admin/${task.pk}`}
@@ -174,32 +180,10 @@ function UncompletedTaskRow({
                         </Link>
                       </Text>
                     </Box>
-                    <Box
-                      border={"0px solid blue"}
-                      width={"200px"}
-                      display={"flex"}
-                      justifyContent={"center"}
-                      alignItems={"center"}
-                      pr={20}
-                    >
-                      <StarRating
-                        initialRating={task.importance}
-                        taskPk={task.pk}
-                        onChangeForStarRatingHandler={
-                          onChangeForStarRatingHandler
-                        }
-                      />
-                    </Box>
-                    <Box border={"0px solid blue"} width={"320px"}>
+                    <Box border={"0px solid blue"} width={"310px"}>
                       <HStack>
                         <Box textAlign={"center"}>
-                          <Text
-                            fontWeight="bold"
-                            fontFamily="Arial, sans-serif"
-                            color="orange.500"
-                          >
-                            시작
-                          </Text>
+                          <Text>시작</Text>
                         </Box>
                         <HStack>
                           <Text>{task.started_at_formatted}</Text>
@@ -215,29 +199,17 @@ function UncompletedTaskRow({
                       </HStack>
                       <HStack>
                         <Box textAlign={"center"}>
-                          <Text
-                            fontWeight="bold"
-                            fontFamily="Arial, sans-serif"
-                            color="orange.500"
-                          >
-                            경과
-                          </Text>
+                          <Text>경과</Text>
                         </Box>
                         <Box>
                           <Text>{task.elapsed_time_from_started_at}</Text>
                         </Box>
                       </HStack>
                     </Box>
-                    <Box border={"0px solid blue"} width={"320px"}>
+                    <Box border={"0px solid blue"} width={"310px"}>
                       <HStack>
                         <Box textAlign={"center"}>
-                          <Text
-                            fontWeight="bold"
-                            fontFamily="Arial, sans-serif"
-                            color="orange.500"
-                          >
-                            마감
-                          </Text>
+                          <Text>마감</Text>
                         </Box>
                         <Text>{task.due_date_formatted}</Text>
 
@@ -250,20 +222,31 @@ function UncompletedTaskRow({
                       </HStack>
                       <HStack>
                         <Box textAlign={"center"}>
-                          <Text
-                            fontWeight="bold"
-                            fontFamily="Arial, sans-serif"
-                            color="orange.500"
-                          >
-                            남은 시간
-                          </Text>
+                          <Text>남은 시간</Text>
                         </Box>
                         <Box>
                           <Text>{task.time_left_to_due_date}</Text>
                         </Box>
                       </HStack>
                     </Box>
-                    <Box border={"0px solid green"}>
+
+                    <Box
+                      border={"0px solid blue"}
+                      width={"120px"}
+                      display={"flex"}
+                      justifyContent={"flex-start"}
+                      alignItems={"center"}
+                    >
+                      <StarRating
+                        initialRating={task.importance}
+                        taskPk={task.pk}
+                        onChangeForStarRatingHandler={
+                          onChangeForStarRatingHandler
+                        }
+                      />
+                    </Box>
+
+                    <Box border={"0px solid green"} width={"100px"}>
                       <SlideToggleButton
                         onChange={() => {
                           updateHandlerForTaskStatus(task.pk);
@@ -271,6 +254,7 @@ function UncompletedTaskRow({
                         checked={task.task_completed}
                       />
                     </Box>
+
                     <Box>
                       <IconButton
                         aria-label="삭제"
@@ -305,20 +289,20 @@ function UncompletedTaskRow({
         </Box> */}
 
       {/* 페이지 네이션 영역 */}
-      <Box mt={0}>
+      <Box mt={5}>
         {ProjectProgressList ? (
-          <Container maxW="100%" bg="blue.50" color="red.500" mt={1}>
+          <Box maxW="100%" bg="blue.50" color="red.500" mt={-3.5}>
             <PaginationComponent
               current_page_num={currentPageNum}
               total_page_num={totalPageCount}
               setCurrentPageNum={setCurrentPageNum}
             />
-          </Container>
+          </Box>
         ) : (
           ""
         )}
       </Box>
-    </Container>
+    </Box>
   );
 }
 
