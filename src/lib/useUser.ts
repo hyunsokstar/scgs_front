@@ -17,7 +17,7 @@ export default function useUser() {
         retry: false,
     });
 
-    console.log("get user data : ", data);
+    // console.log("get user data : ", data);
 
     if(isLoggedIn) {
         dispatch(login(data))

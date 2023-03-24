@@ -106,7 +106,7 @@ const TutorialList = () => {
                             <Box key={index} ml={"28px"} border={"0px solid red"}>
                                 {user && user.username && tutorial.author &&
                                     user.username === tutorial.author.username ?
-                                    <Box ml={1.5} mb={0} border={"1px solid blue"} width={"80%"}>
+                                    <Box ml={1.5} mb={0} border={"0px solid blue"} width={"82%"}>
                                         <Flex justifyContent={"flex-end"}>
                                             <ModalButtonForUpdateTutorialCard
                                                 tutorialPk={tutorial.pk}

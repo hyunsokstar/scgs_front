@@ -118,21 +118,6 @@ const Header = () => {
         </Box>
 
         <NavLink
-          to="/tutorials"
-          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-        >
-          <Text
-            fontSize="xl"
-            fontWeight="medium"
-            mr={{ base: 0, md: "1rem" }}
-            cursor="pointer"
-            _hover={{ color: "white", transform: "scale(1.1)" }}
-          >
-            Tutorial
-          </Text>
-        </NavLink>
-
-        <NavLink
           to="/my_task"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -163,7 +148,7 @@ const Header = () => {
         </NavLink>
 
         <NavLink
-          to="/tech-note"
+          to="/task-status"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
           <Text
@@ -173,7 +158,7 @@ const Header = () => {
             cursor="pointer"
             _hover={{ color: "white", transform: "scale(1.1)" }}
           >
-            Tech Note
+            Task Status
           </Text>
         </NavLink>
 
@@ -193,6 +178,21 @@ const Header = () => {
         </NavLink>
 
         <NavLink
+          to="/tech-note"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "white", transform: "scale(1.1)" }}
+          >
+            Tech Note
+          </Text>
+        </NavLink>
+
+        <NavLink
           to="/conference"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -208,7 +208,7 @@ const Header = () => {
         </NavLink>
 
         <NavLink
-          to="/history"
+          to="/tutorials"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
           <Text
@@ -218,7 +218,7 @@ const Header = () => {
             cursor="pointer"
             _hover={{ color: "white", transform: "scale(1.1)" }}
           >
-            History
+            Tutorial
           </Text>
         </NavLink>
 

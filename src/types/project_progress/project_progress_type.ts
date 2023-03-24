@@ -19,11 +19,11 @@ export interface IOneTaskForProjectTaskType {
   elapsed_time_from_started_at: string;
   task_images: [
     {
-      pk: number,
+      pk: number;
       task: number;
       image_url: string;
     }
-  ]
+  ];
 }
 
 export interface ITypeForProjectProgressList {
@@ -38,6 +38,8 @@ export interface ITypeForProjectProgressList {
         username: string;
       };
       task: string;
+      in_progress: boolean;
+      is_testing: boolean;
       task_completed: boolean;
       importance: number;
       started_at: string;
@@ -60,4 +62,5 @@ export interface IFormTypeForProjectProgress {
   importance: string;
   task_completed: boolean;
   password: string;
+  task_manager: number;
 }

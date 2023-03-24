@@ -49,7 +49,13 @@ export const getOneProjectTask = async ({ queryKey }: QueryFunctionContext) => {
 };
 
 export const getUsersList = () =>
-  instance.get(`users`).then((response) => {
+  instance.get("users").then((response) => {
+    // console.log("user list response : ", response);
+    return response.data;
+  });
+
+export const getUserNamesForCreate = () =>
+  instance.get("users/only-user-name").then((response) => {
     // console.log("user list response : ", response);
     return response.data;
   });

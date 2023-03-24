@@ -144,7 +144,7 @@ function UncompletedTaskRowForMe({
         {ProjectProgressList ? (
           <List>
             {ProjectProgressList?.map((task: any) => {
-              console.log("task.task_manager : ", task.taskmanager);
+              // console.log("task.task_manager : ", task.taskmanager);
 
               return (
                 <ListItem

@@ -2,15 +2,16 @@ import { Box, Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Switch from "react-switch";
 
-// interface SlideToggleButtonProps {
-//   onChange: (checked: boolean) => void;
-//   checked: boolean;
-// }
+interface SlideToggleButtonProps {
+  onChange: (checked: boolean) => void;
+  checked: boolean;
+}
 
-const SlideToggleButton: React.FC<any> = ({
+const SlideToggleButtonForIsTesting: React.FC<SlideToggleButtonProps> = ({
   onChange,
   checked,
 }) => {
+  
   const [isChecked, setIsChecked] = useState<boolean>(checked);
 
   const handleToggleChange = (checked: boolean) => {
@@ -23,7 +24,7 @@ const SlideToggleButton: React.FC<any> = ({
       <Switch
         onChange={handleToggleChange}
         checked={isChecked}
-        onColor="#86d3ff"
+        onColor="#FFA500" // 스위치가 켜졌을 때 색상 지정
         offColor="#888888"
         uncheckedIcon={false}
         checkedIcon={false}
@@ -32,4 +33,4 @@ const SlideToggleButton: React.FC<any> = ({
   );
 };
 
-export default SlideToggleButton;
+export default SlideToggleButtonForIsTesting;

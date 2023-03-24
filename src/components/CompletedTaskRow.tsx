@@ -54,8 +54,8 @@ function CompletedTaskRow({
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getUncompletedTaskListForMe"]);
-      queryClient.refetchQueries(["getCompletedTaskListForMe"]);
+      queryClient.refetchQueries(["getUncompletedTaskList"]);
+      queryClient.refetchQueries(["getCompletedTaskList"]);
       // if (projectTaskListRefatch) {
       //   projectTaskListRefatch();
       // }

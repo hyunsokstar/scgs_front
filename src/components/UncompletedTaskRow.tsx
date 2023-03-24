@@ -28,6 +28,8 @@ import StarRating from "./StarRating";
 import SlideToggleButton from "./SlideToggleButton";
 import {
   updateProjectImportance,
+  updateProjectInProgress,
+  updateProjectIsTesting,
   updateProjectTaskCompleted,
 } from "../apis/project_progress_api";
 import { Link } from "react-router-dom";
@@ -35,6 +37,8 @@ import { deleteOneProjectTask } from "../apis/user_api";
 import PaginationComponent from "./PaginationComponent";
 import ModalButtonForUpdateProjectTaskCompleteDate from "./modal/ModalButtonForUpdateProjectTaskCompleteDate";
 import ModalButtonForUpdateProjectTaskStartedAt from "./modal/ModalButtonForUpdateProjectTaskStartedAt";
+import SlideToggleButtonForInProgress from "./SlideToggleButton/SlideToggleButtonForInProgress";
+import SlideToggleButtonForIsTesting from "./SlideToggleButton/SlideToggleButtonForIsTesting";
 
 interface IProps {
   ProjectProgressList: any;
@@ -60,12 +64,36 @@ function UncompletedTaskRow({
   };
   const toast = useToast();
 
+  // 2244
+  const updateProjectTaskIsTestingMutations = useMutation(
+    updateProjectIsTesting,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
+
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const updateHandlerForTaskIsTesting = (taskPk: string) => {
+    updateProjectTaskIsTestingMutations.mutate(taskPk);
+    console.log("update 핸들러 for task_status check pk : ", taskPk);
+  };
+
   const updateProjectTaskMutations = useMutation(updateProjectTaskCompleted, {
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getUncompletedTaskListForMe"]);
-      queryClient.refetchQueries(["getCompletedTaskListForMe"]);
+      queryClient.refetchQueries(["getUncompletedTaskList"]);
+      queryClient.refetchQueries(["getCompletedTaskList"]);
 
       toast({
         status: "success",
@@ -77,6 +105,29 @@ function UncompletedTaskRow({
 
   const updateHandlerForTaskStatus = (taskPk: string) => {
     updateProjectTaskMutations.mutate(taskPk);
+    console.log("update 핸들러 for task_status check pk : ", taskPk);
+  };
+
+  const updateProjectTaskInProgressMutations = useMutation(
+    updateProjectInProgress,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
+
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const updateHandlerForTaskInProgress = (taskPk: string) => {
+    updateProjectTaskInProgressMutations.mutate(taskPk);
     console.log("update 핸들러 for task_status check pk : ", taskPk);
   };
 
@@ -133,9 +184,6 @@ function UncompletedTaskRow({
   const deleteHandelr = (pk: number) => {
     const response = deleteMutation.mutate(pk);
     console.log("response :", response);
-    // if (projectTaskListRefatch) {
-    //   projectTaskListRefatch();
-    // }
   };
 
   return (
@@ -144,31 +192,41 @@ function UncompletedTaskRow({
         {ProjectProgressList ? (
           <List>
             {ProjectProgressList?.map((task: any) => {
-              console.log("task.task_manager : ", task.taskmanager);
-
+              // console.log("task.task_manager : ", task.taskmanager);
               return (
                 <ListItem
                   key={task.pk}
                   height={16}
-                  border={"1px solid lightgray"}
+                  border={"0px solid lightgray"}
                   width={"1414px"}
                   my={0}
                   display={"flex"}
                   alignItems={"center"}
-                  _hover={{backgroundColor:"gray.100"}}
+                  backgroundColor={task.in_progress ? "yellow.50" : ""}
+                  _hover={{ backgroundColor: "gray.100" }}
                 >
                   <HStack border={"0px solid green"}>
+                    <Box border={"0px solid yellow"} width={"50px"}>
+                      <Checkbox mx={2} />
+                    </Box>
+
+                    <Box border={"0px solid green"} width={"100px"}>
+                      <SlideToggleButtonForInProgress
+                        onChange={() => {
+                          updateHandlerForTaskInProgress(task.pk);
+                        }}
+                        checked={task.in_progress}
+                      />
+                    </Box>
+
                     <Box border={"0px solid yellow"} width={"100px"}>
-                      <HStack ml={0}>
-                        <Checkbox mx={2} />
-                        {task.task_manager !== null ? (
-                          <Text color={"blue.600"}>
-                            {task.task_manager.username}
-                          </Text>
-                        ) : (
-                          <Text color={"tomato"}>{task.writer}</Text>
-                        )}
-                      </HStack>
+                      <Text color={"blue.600"}>
+                        {task.task_manager?.username}
+                      </Text>{" "}
+                    </Box>
+
+                    <Box border={"0px solid yellow"} width={"100px"}>
+                      <Text color={"tomato"}>{task.writer}</Text>
                     </Box>
                     <Box border={"0px solid blue"} width={"340px"}>
                       <Text fontSize="sm" fontWeight="bold">
@@ -243,6 +301,15 @@ function UncompletedTaskRow({
                         onChangeForStarRatingHandler={
                           onChangeForStarRatingHandler
                         }
+                      />
+                    </Box>
+
+                    <Box border={"0px solid green"} width={"100px"}>
+                      <SlideToggleButtonForIsTesting
+                        onChange={() => {
+                          updateHandlerForTaskIsTesting(task.pk);
+                        }}
+                        checked={task.is_testing}
                       />
                     </Box>
 

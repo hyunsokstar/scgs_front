@@ -108,12 +108,51 @@ export const updateProjectTaskCompleted = (taskPk: string) => {
     });
 };
 
+export const updateProjectInProgress = (taskPk: string) => {
+  console.log("updateProjectTaskCompleted 실행 check");
+
+  return instance
+    .put(
+      `/project_progress/${taskPk}/in_progress/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
+export const updateProjectIsTesting = (taskPk: string) => {
+  console.log("updateProjectTaskCompleted 실행 check");
+
+  return instance
+    .put(
+      `/project_progress/${taskPk}/is_testing/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const insertProjectProgressRow = ({
   task,
   writer,
   importance,
   task_completed,
   password,
+  task_manager
 }: IFormTypeForProjectProgress) =>
   instance
     .post(
@@ -124,6 +163,7 @@ export const insertProjectProgressRow = ({
         importance,
         task_completed,
         password,
+        task_manager
       },
       {
         headers: {
@@ -139,7 +179,7 @@ export const getCompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
   return instance
     .get(`project_progress/completed?page=${pageNum}`)
     .then((response) => {
-      console.log("api result for completed task list: ", response);
+      // console.log("api result for completed task list: ", response);
 
       const response_data = {
         totalPageCount: response.data.totalPageCount,
@@ -158,7 +198,7 @@ export const getCompletedTaskListForMe = ({
   return instance
     .get(`project_progress/completed/for-me?page=${pageNum}`)
     .then((response) => {
-      console.log("api result for completed task list: ", response);
+      // console.log("api result for completed task list: ", response);
 
       const response_data = {
         totalPageCount: response.data.totalPageCount,
@@ -170,14 +210,11 @@ export const getCompletedTaskListForMe = ({
 };
 
 export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
-  // console.log("getProjectProgressList 요청 확인 at api");
 
   const [_, pageNum] = queryKey;
-  // console.log("pageNum : ", pageNum);
   return instance
     .get(`project_progress/uncompleted?page=${pageNum}`)
     .then((response) => {
-      // console.log("api result for uncompleted task list: ", response);
 
       const response_data = {
         totalPageCount: response.data.totalPageCount,

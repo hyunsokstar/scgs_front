@@ -9,7 +9,7 @@ interface Props {
 
 function ProjectAdminPage({}: Props): ReactElement {
     return (
-        <VStack gap={2}>
+        <VStack gap={1}>
             <UncompletedProjectTaskList />         
             <CompletedProjectTaskList />
         </VStack>

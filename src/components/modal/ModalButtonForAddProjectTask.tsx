@@ -18,14 +18,22 @@ import {
   Radio,
   HStack,
   useToast,
+  Select,
+  FormHelperText,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { IFormTypeForProjectProgress } from "../../types/project_progress/project_progress_type";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { insertProjectProgressRow } from "../../apis/project_progress_api";
+import { getUserNamesForCreate } from "../../apis/user_api";
 
 interface IProps {
   projectTaskListRefatch: () => void;
+}
+
+interface IUserNamesForCreate {
+  pk: number;
+  username: string;
 }
 
 const ModalButtonForAddProjectTask: FC<IProps> = ({
@@ -39,14 +47,20 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
     watch,
   } = useForm<IFormTypeForProjectProgress>();
 
+  // user data 가져 오기
+  const {
+    isLoading,
+    data: userNamesData,
+    error,
+  } = useQuery<IUserNamesForCreate[]>(["users_list2"], getUserNamesForCreate);
+
+  // console.log("user names  :: ", userNamesData);
+
   const toast = useToast();
 
   function cancelButtonHandler() {
     onClose();
   }
-
-  // insertProjectProgressRow
-  // console.log(watch())
 
   const createMutationForProjectProgress = useMutation(
     insertProjectProgressRow,
@@ -77,13 +91,17 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
     importance,
     task_completed,
     password,
+    task_manager,
   }: IFormTypeForProjectProgress) => {
+    console.log("task create 체크 :: ", task_manager );
+
     createMutationForProjectProgress.mutate({
       task,
       writer,
       importance,
       task_completed,
       password,
+      task_manager,
     });
   };
 
@@ -117,13 +135,28 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
                 </FormControl>
 
                 <FormControl>
-                  <FormLabel>Writer</FormLabel>
+                  <FormLabel>지시자</FormLabel>
                   <Input
                     size="sm"
                     placeholder="Writer"
                     {...register("writer", { required: true })}
                   />
                   {errors.writer && <Box color="red">Writer is required</Box>}
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel>담당자</FormLabel>
+                  <Select
+                    {...register("task_manager", { required: true })}
+                    placeholder="Choose a task_manager"
+                  >
+                    {userNamesData?.map((user) => (
+                      <option key={user.pk} value={user.pk}>
+                        {user.username}
+                      </option>
+                    ))}
+                  </Select>
+                  <FormHelperText>담당자 선택</FormHelperText>
                 </FormControl>
 
                 <FormControl>
