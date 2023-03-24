@@ -13,6 +13,16 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+// 1122
+// getUncompletedTaskList
+export const getProgectTasksStatusData = () => {
+  return instance.get("project_progress/task-status").then((response) => {
+    // console.log("response : ", response);
+
+    return response;
+  });
+};
+
 // put for pk
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const updateProjectApiByPk = ({
@@ -84,7 +94,7 @@ export const updateProjectImportance = ({ taskPk, star_count }: any) => {
       }
     )
     .then((response): any => {
-      console.log("response : ", response);
+      // console.log("response : ", response);
       return response.data;
     });
 };
@@ -103,7 +113,7 @@ export const updateProjectTaskCompleted = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      console.log("response : ", response);
+      // console.log("response : ", response);
       return response.data;
     });
 };
@@ -122,7 +132,7 @@ export const updateProjectInProgress = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      console.log("response : ", response);
+      // console.log("response : ", response);
       return response.data;
     });
 };
@@ -141,7 +151,7 @@ export const updateProjectIsTesting = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      console.log("response : ", response);
+      // console.log("response : ", response);
       return response.data;
     });
 };
@@ -152,7 +162,7 @@ export const insertProjectProgressRow = ({
   importance,
   task_completed,
   password,
-  task_manager
+  task_manager,
 }: IFormTypeForProjectProgress) =>
   instance
     .post(
@@ -163,7 +173,7 @@ export const insertProjectProgressRow = ({
         importance,
         task_completed,
         password,
-        task_manager
+        task_manager,
       },
       {
         headers: {
@@ -210,12 +220,10 @@ export const getCompletedTaskListForMe = ({
 };
 
 export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
-
   const [_, pageNum] = queryKey;
   return instance
     .get(`project_progress/uncompleted?page=${pageNum}`)
     .then((response) => {
-
       const response_data = {
         totalPageCount: response.data.totalPageCount,
         ProjectProgressList: response.data.ProjectProgressList,
@@ -262,7 +270,7 @@ export const updateProjectDueDate = ({ taskPk, due_date }: any) => {
       }
     )
     .then((response): any => {
-      console.log("response : ", response);
+      // console.log("response : ", response);
       return response.data;
     });
 };
@@ -286,7 +294,7 @@ export const updateProjectStartedAt = ({
       }
     )
     .then((response): any => {
-      console.log("response : ", response);
+      // console.log("response : ", response);
       return response.data;
     });
 };
