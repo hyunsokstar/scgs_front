@@ -62,7 +62,7 @@ export const getUserNamesForCreate = () =>
 
 export const getProfile = ({ queryKey }: QueryFunctionContext) => {
   const [_, userPk] = queryKey;
-  console.log("userPk : ", userPk);
+  // console.log("userPk : ", userPk);
   return instance.get(`users/${userPk}`).then((response) => response.data);
 };
 

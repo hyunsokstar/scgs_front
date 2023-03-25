@@ -115,13 +115,17 @@ function UncompletedTaskRow({
         console.log("result : ", result);
 
         queryClient.refetchQueries(["getUncompletedTaskList"]);
-        queryClient.refetchQueries(["getCompletedTaskList"]);
+        // queryClient.refetchQueries(["getCompletedTaskList"]);
+        // projectTaskListRefatch()
 
         toast({
           status: "success",
           title: "task status update success",
           description: result.message,
         });
+      },
+      onError: (err: any) => {
+        console.log("error : ", err);
       },
     }
   );
@@ -197,26 +201,17 @@ function UncompletedTaskRow({
                 <ListItem
                   key={task.pk}
                   height={16}
-                  border={"0px solid lightgray"}
-                  width={"1414px"}
+                  border={"1px solid lightgray"}
                   my={0}
                   display={"flex"}
                   alignItems={"center"}
                   backgroundColor={task.in_progress ? "yellow.50" : ""}
                   _hover={{ backgroundColor: "gray.100" }}
+                  width={"1900px"}
                 >
                   <HStack border={"0px solid green"}>
                     <Box border={"0px solid yellow"} width={"50px"}>
                       <Checkbox mx={2} />
-                    </Box>
-
-                    <Box border={"0px solid green"} width={"100px"}>
-                      <SlideToggleButtonForInProgress
-                        onChange={() => {
-                          updateHandlerForTaskInProgress(task.pk);
-                        }}
-                        checked={task.in_progress}
-                      />
                     </Box>
 
                     <Box border={"0px solid yellow"} width={"100px"}>
@@ -290,7 +285,7 @@ function UncompletedTaskRow({
 
                     <Box
                       border={"0px solid blue"}
-                      width={"120px"}
+                      width={"180px"}
                       display={"flex"}
                       justifyContent={"flex-start"}
                       alignItems={"center"}
@@ -305,11 +300,22 @@ function UncompletedTaskRow({
                     </Box>
 
                     <Box border={"0px solid green"} width={"100px"}>
+                      <SlideToggleButtonForInProgress
+                        onChange={() => {
+                          updateHandlerForTaskInProgress(task.pk);
+                        }}
+                        checked={task.in_progress}
+                        is_disabled = {task.is_testing}
+                      />
+                    </Box>
+
+                    <Box border={"0px solid green"} width={"100px"}>
                       <SlideToggleButtonForIsTesting
                         onChange={() => {
                           updateHandlerForTaskIsTesting(task.pk);
                         }}
                         checked={task.is_testing}
+                        is_disabled={!task.in_progress}
                       />
                     </Box>
 
@@ -319,6 +325,8 @@ function UncompletedTaskRow({
                           updateHandlerForTaskStatus(task.pk);
                         }}
                         checked={task.task_completed}
+                        in_progress={!task.in_progress}
+                        is_testing={!task.is_testing}
                       />
                     </Box>
 

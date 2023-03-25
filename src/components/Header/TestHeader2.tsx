@@ -97,6 +97,11 @@ const Header = () => {
     }
   }, []);
 
+
+   const goToUserProfile = (userPk:any) => {
+    navigate(`users/${userPk}`);
+  }
+
   return (
     <>
       <Flex
@@ -244,6 +249,7 @@ const Header = () => {
                       <Avatar name={user?.name} size={"sm"} />
                     </MenuButton>
                     <MenuList>
+                      <MenuItem onClick={()=> goToUserProfile(user?.pk)}>유저 프로필</MenuItem>
                       <MenuItem onClick={onLogOut}>Log out</MenuItem>
                     </MenuList>
                   </Menu>

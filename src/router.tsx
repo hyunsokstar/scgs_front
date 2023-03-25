@@ -26,7 +26,7 @@ import UsersByDataGridPage from "./routes/DataGridContainer/UsersByDataGridPage"
 import ProjectProgressDetail from "./routes/ProjectProgressDetail";
 import MyTaskPage from "./routes/MyTaskPage";
 import KakaoLoginPage from "./routes/KaKaoLoginPage";
-import TaskStatusPage from "./routes/TaskStatusPage";
+import TaskStatusPage from "./routes/TaskStatus/TaskStatusPage";
 
 const router = createBrowserRouter([
   {

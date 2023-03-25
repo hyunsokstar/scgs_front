@@ -4,8 +4,8 @@ import { StarIcon } from "@chakra-ui/icons";
 
 type Props = {
   initialRating?: number;
-  taskPk: string;
-  onChangeForStarRatingHandler: ({ taskPk, newRating }: any) => void;
+  taskPk: string | number;
+  onChangeForStarRatingHandler?: ({ taskPk, newRating }: any) => void;
 };
 
 const StarRating = ({
@@ -18,13 +18,15 @@ const StarRating = ({
   const handleClick = (star_count: any) => {
     console.log("taskPk, newRating for handle click", taskPk, star_count);
 
-    onChangeForStarRatingHandler({ taskPk, star_count });
-    setRating(star_count);
+    if (onChangeForStarRatingHandler) {
+      onChangeForStarRatingHandler({ taskPk, star_count });
+      setRating(star_count);
+    }
   };
 
   return (
     <Flex>
-      {[...Array(3)].map((_, index) => {
+      {[...Array(5)].map((_, index) => {
         const starRating = index + 1;
         const isSelected = rating >= starRating;
         return (

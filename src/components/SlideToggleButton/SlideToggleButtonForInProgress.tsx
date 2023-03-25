@@ -5,11 +5,13 @@ import Switch from "react-switch";
 interface SlideToggleButtonProps {
   onChange: (checked: boolean) => void;
   checked: boolean;
+  is_disabled? :boolean;
 }
 
 const SlideToggleButtonForInProgress: React.FC<SlideToggleButtonProps> = ({
   onChange,
   checked,
+  is_disabled
 }) => {
   const [isChecked, setIsChecked] = useState<boolean>(checked);
 
@@ -27,6 +29,7 @@ const SlideToggleButtonForInProgress: React.FC<SlideToggleButtonProps> = ({
         offColor="#888888"
         uncheckedIcon={false}
         checkedIcon={false}
+        disabled={is_disabled}
       />
     </Flex>
   );

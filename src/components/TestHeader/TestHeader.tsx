@@ -273,6 +273,7 @@ const TestHeader = () => {
                         <Avatar name={user?.name} size={"sm"} />
                       </MenuButton>
                       <MenuList>
+                        <MenuItem >유저 프로필</MenuItem>
                         <MenuItem onClick={onLogOut}>Log out</MenuItem>
                       </MenuList>
                     </Menu>
