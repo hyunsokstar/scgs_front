@@ -34,9 +34,8 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [profileImage, setProfileImage] = useState<any>();
 
-  const [originalImage, setOriginalImage] = useState<string | undefined>(
-    // loginUser?.profileImages[0].file
-  );
+  const [originalImage, setOriginalImage] = useState<string | undefined>();
+  // loginUser?.profileImages[0].file
 
   const [showForProfileUpdateButton, setShowForProfileUpdateButton] =
     useState<Boolean>(false);
@@ -185,21 +184,27 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
                 ) : (
                   ""
                 )}
-                {/* {profile_image ? profile_image : "hi"} */}
 
                 {profileImage ? (
-                  <Avatar
-                    size="2xl"
-                    name="John Doe"
-                    src={
-                      profileImage ? profileImage : "https://bit.ly/broken-link"
-                    }
-                    mb={4}
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                    draggable
-                  />
+                  <>
+                    12
+                    <Avatar
+                      size="2xl"
+                      name="John Doe"
+                      src={
+                        profileImage
+                          ? profileImage
+                          : "https://bit.ly/broken-link"
+                      }
+                      mb={4}
+                      onDrop={handleDrop}
+                      onDragOver={handleDragOver}
+                      draggable
+                    />
+                  </>
                 ) : (
+                  <>
+                  23
                   <Avatar
                     size="2xl"
                     name="John Doe"
@@ -213,6 +218,7 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
                     onDragOver={handleDragOver}
                     draggable
                   />
+                  </>
                 )}
 
                 <Text fontSize="xl" fontWeight="bold" mb={2}>

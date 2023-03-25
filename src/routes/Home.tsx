@@ -6,7 +6,6 @@ import Counter from "../components/Counter";
 import SampleCard from "../components/TestCard/SampleCard";
 import TestCard from "../components/TestCard/TestCard";
 import TutorialList from "../components/TutorialList";
-import UserProfile from "../components/UserProfile";
 
 
 const image_array = [
