@@ -132,12 +132,15 @@ const TestHeader = () => {
   };
 
   return (
-    <Box w={"100%"} py={0} my={0} mt={2} border={"1px solid green"} bg="blue.200">
-      <Flex
-        align="center"
-        justify="space-between"
-        py={1}
-      >
+    <Box
+      w={"100%"}
+      py={0}
+      my={0}
+      mt={2}
+      border={"1px solid green"}
+      bg="blue.200"
+    >
+      <Flex align="center" justify="space-between" py={1}>
         <Box display={"flex"} gap={0} alignItems={"center"}>
           <Box fontWeight={active === "home" ? "bold" : "normal"} fontSize="xl">
             <Text
@@ -273,7 +276,7 @@ const TestHeader = () => {
                         <Avatar name={user?.name} size={"sm"} />
                       </MenuButton>
                       <MenuList>
-                        <MenuItem >유저 프로필</MenuItem>
+                        <MenuItem>유저 프로필</MenuItem>
                         <MenuItem onClick={onLogOut}>Log out</MenuItem>
                       </MenuList>
                     </Menu>

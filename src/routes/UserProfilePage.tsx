@@ -27,7 +27,7 @@ interface IProfileImage {
 const UserProfilePage = () => {
   const { userPk } = useParams();
   const { isLoading, data: userProfileData } = useQuery<IUser>(
-    [`user_profile`, userPk],
+    [`user_profile2`, userPk],
     getProfile
   );
   const [profileImage, setProfileImage] = useState<any>();
@@ -81,22 +81,22 @@ const UserProfilePage = () => {
     e.preventDefault();
   };
 
+  // db 등록
   const createProfilePhotoMutation = useMutation(createProfilePhoto, {
     onSuccess: (result) => {
       console.log("result : ", result);
       // setImage(result.file);
-      // setProfileImage(result.file)
+      setProfileImage(result.profile_image);
       setShowForProfileUpdateButton(false);
       toast({
         status: "success",
         title: "Profile Image uploaded!",
         isClosable: true,
-        description: "Feel free to upload more images.",
       });
     },
   });
 
-  // 실제 이미지 업로드 + db 등록
+  // 실제 이미지 업로드
   const uploadImageMutation = useMutation(uploadImage, {
     onSuccess: ({ result }: any) => {
       console.log("result : ", result.variants[0]);
@@ -150,23 +150,18 @@ const UserProfilePage = () => {
             p={8}
           >
             <Box flex="1">
-              {/* <Avatar
-                                size="2xl"
-                                name="John Doe"
-                                src={userProfileData?.profileImages[0] ? userProfileData.profileImages[0].file : "https://bit.ly/broken-link"}
-                                mb={4}
-                            /> */}
-
               <Flex
                 flex={1}
                 bg="green.200"
                 direction={{ base: "column" }}
                 alignItems={"center"}
-                pt={2}
+                // pt={2}
+                p={10}
                 position="relative"
+                border={"1px solid red"}
               >
                 {showForProfileUpdateButton ? (
-                  <Box position="absolute" top={0} right={0}>
+                  <Box position="absolute" top={0} right={0} zIndex={2}>
                     <Button
                       size={"xs"}
                       onClick={() => updateProfileImageToDbAndCloud()}
@@ -185,55 +180,62 @@ const UserProfilePage = () => {
                 ) : (
                   ""
                 )}
-
                 {profileImage ? (
-                  <Avatar
-                    size="2xl"
-                    name="John Doe"
-                    src={
-                      profileImage ? profileImage : "https://bit.ly/broken-link"
-                    }
-                    mb={4}
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                    draggable
-                  />
+                  <Box>
+                    <Avatar
+                      size="2xl"
+                      name="John Doe"
+                      src={
+                        profileImage
+                          ? profileImage
+                          : "https://bit.ly/broken-link"
+                      }
+                      mb={4}
+                      onDrop={handleDrop}
+                      onDragOver={handleDragOver}
+                      draggable
+                    />
+                  </Box>
                 ) : (
-                  <Avatar
-                    size="2xl"
-                    name="John Doe"
-                    src={
-                      userProfileData.profileImages[0]
-                        ? userProfileData.profileImages[0].file
-                        : "https://bit.ly/broken-link"
-                    }
-                    mb={4}
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                    draggable
-                  />
+                  <Box>
+                    <Avatar
+                      size="2xl"
+                      name="John Doe"
+                      src={
+                        userProfileData.profile_image
+                          ? userProfileData.profile_image
+                          : "https://bit.ly/broken-link"
+                      }
+                      mb={4}
+                      onDrop={handleDrop}
+                      onDragOver={handleDragOver}
+                      draggable
+                    />
+                  </Box>
                 )}
-
                 <Text fontSize="xl" fontWeight="bold" mb={2}>
                   {userProfileData.username}
                 </Text>
-                <HStack>
-                  {userProfileData
+                {/* <Box>
+                  {userProfileData.skill_for_frameWork.length
                     ? userProfileData.skill_for_frameWork.map((row) => {
+                        console.log("row", row);
+
                         return <Badge m={2}>{row.frame_work_name}</Badge>;
                       })
-                    : ""}
-                </HStack>
+                    : "no framewok"}
+                </Box>
+                <Text fontSize="xl" fontWeight="bold" mb={2}>
+                  name: {userProfileData?.name}
+                </Text>
+                <Text fontSize="md" mb={4}>
+                  position:
+                  {userProfileData?.position
+                    ? userProfileData?.position.position_name
+                    : "no position"}
+                </Text> */}
               </Flex>
 
-              <Text fontSize="xl" fontWeight="bold" mb={2}>
-                {userProfileData?.name}
-              </Text>
-              <Text fontSize="md" mb={4}>
-                {userProfileData?.position
-                  ? userProfileData?.position.position_name
-                  : "default"}
-              </Text>
               <Box>
                 {userProfileData?.skill_for_frameWork.map((row) => {
                   return (

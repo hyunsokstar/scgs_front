@@ -44,7 +44,7 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
   // console.log("profile_image userPk : ", userPk);
   const [fileToUpload, setFileToUpload] = useState<any>();
 
-  console.log("loginUser : ", loginUser);
+  // console.log("loginUser : ", loginUser);
 
   const toast = useToast();
   // let file_to_upload: any;
@@ -103,16 +103,16 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     // console.log("e : ", e);
     e.preventDefault();
-    console.log("upload 할 파일 정보 : ", e.dataTransfer.files[0]);
+    // console.log("upload 할 파일 정보 : ", e.dataTransfer.files[0]);
 
     setFileToUpload(e.dataTransfer.files[0]);
     const reader = new FileReader();
     reader.onload = () => {
-      console.log("fileToUpload 1111111 : ", fileToUpload);
+      // console.log("fileToUpload 1111111 : ", fileToUpload);
       setProfileImage(reader.result);
       setOriginalImage(profileImage);
       //  setFileToUpload(e.dataTransfer.files[0]); // setState 는 즉시 변경 되는 값이 아니므로 이렇게 하면 안됨
-      console.log("fileToUpload 22222222 : ", fileToUpload);
+      // console.log("fileToUpload 22222222 : ", fileToUpload);
 
       getImageUploadUrlMutation.mutate();
     };
@@ -187,7 +187,6 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
 
                 {profileImage ? (
                   <>
-                    12
                     <Avatar
                       size="2xl"
                       name="John Doe"
@@ -204,13 +203,12 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
                   </>
                 ) : (
                   <>
-                  23
                   <Avatar
                     size="2xl"
                     name="John Doe"
                     src={
-                      loginUser.profileImages[0]
-                        ? loginUser.profileImages[0].file
+                      loginUser.profile_image
+                        ? loginUser.profile_image
                         : "https://bit.ly/broken-link"
                     }
                     mb={4}

@@ -246,7 +246,7 @@ const Header = () => {
                   </Text>
                   <Menu>
                     <MenuButton>
-                      <Avatar name={user?.name} size={"sm"} />
+                      <Avatar src={user?.profile_image}  size={"sm"} />
                     </MenuButton>
                     <MenuList>
                       <MenuItem onClick={()=> goToUserProfile(user?.pk)}>유저 프로필</MenuItem>

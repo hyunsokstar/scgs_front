@@ -240,7 +240,6 @@ const TaskStatusPage = () => {
             flex="1"
             onDragOver={handleDragOver}
             onDrop={(event) => handleDrop(event, column.name)}
-            // backgroundColor={"#EDF2F7"}
             color={"black"}
           >
             <Text fontSize="lg" fontWeight="bold" mb="4">

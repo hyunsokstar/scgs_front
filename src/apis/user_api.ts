@@ -75,7 +75,7 @@ export const createProfilePhoto = ({
   return instance
     .post(
       `users/${userPk}/photos`,
-      { file },
+      { profile_image: file },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",

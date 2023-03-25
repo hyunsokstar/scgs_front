@@ -10,7 +10,7 @@ function Counter() {
   );
   const dispatch = useDispatch();
 
-  console.log("loginUser : ", loginUser);
+  // console.log("loginUser : ", loginUser);
 
   return (
     <div>
