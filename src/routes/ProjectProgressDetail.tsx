@@ -53,7 +53,15 @@ function ProjectProgressDetail({}: Props): ReactElement {
     ["getOneProjectTask", taskPk, "ProjectProgressDetail"],
     getOneProjectTask
   );
-  // console.log("taskData : ", taskData);
+
+  if(taskData?.extra_tasks?.length){
+    console.log("taskData?.extra_tasks : ", taskData?.extra_tasks[0]);
+  } else {
+    console.log("taskData : ", taskData);
+    
+    console.log("extra_tasks 없음");
+    
+  }
 
   const [submitting, setSubmitting] = useState(false);
   const { register, handleSubmit, watch, reset } = useForm();
@@ -412,6 +420,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
         {/* 상단 상자 끝 */}
         <Box bg={"yellow"} width={"100%"} border={"5px solid pink"}>
           관련 업무 추가 
+          <br />
+          {taskData.extra_tasks?.length ?  taskData?.extra_tasks[0]: "없음"} 
         </Box>
       </VStack>
     );

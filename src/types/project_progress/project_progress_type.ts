@@ -24,6 +24,7 @@ export interface IOneTaskForProjectTaskType {
       image_url: string;
     }
   ];
+  extra_tasks?: any[]
 }
 
 export interface ITypeForProjectProgressList {
