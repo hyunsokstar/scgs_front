@@ -35,11 +35,19 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
         alignItems={"center"}
         mx={0}
         py={2}
-        px={1}
+        px={2.5}
         bg={"green.200"}
         border={"1px solid green"}
       >
-        <Text>비완료 리스트 (총: {taskListDataForMe?.totalPageCount})</Text>
+        <Box>
+          <Text>
+            비완료 리스트 (총: {taskListDataForMe?.totalPageCount} &nbsp;&nbsp;
+          ⚪ : {taskListDataForMe?.count_for_ready}
+          &nbsp;&nbsp; 🟡 : {taskListDataForMe?.count_for_in_progress}
+          &nbsp;&nbsp; 🟠 : {taskListDataForMe?.count_for_in_testing} )
+          </Text>
+        </Box>
+
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
             projectTaskListRefatch={projectTaskListRefatch}

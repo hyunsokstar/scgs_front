@@ -54,6 +54,9 @@ export interface ITypeForProjectProgressList {
   ];
   currentPageNum?: number | undefined;
   setCurrentPageNum?: any;
+  count_for_ready?: number;
+  count_for_in_progress?: number;
+  count_for_in_testing?: number;
 }
 
 export interface IFormTypeForProjectProgress {

@@ -99,7 +99,10 @@ export const updateProjectImportance = ({ taskPk, star_count }: any) => {
 };
 
 export const updateProjectStatusByDrag = ({ taskPk, status_to_move }: any) => {
-  console.log("updateProjectStatusByDrag 실행 status_to_move check : ", status_to_move);
+  console.log(
+    "updateProjectStatusByDrag 실행 status_to_move check : ",
+    status_to_move
+  );
 
   return instance
     .put(
@@ -266,6 +269,9 @@ export const getUncompletedTaskListForMe = ({
       // console.log("api result for uncompleted task list: ", response);
 
       const response_data = {
+        count_for_ready: response.data.count_for_ready,
+        count_for_in_progress: response.data.count_for_in_progress,
+        count_for_in_testing: response.data.count_for_in_testing,
         totalPageCount: response.data.totalPageCount,
         ProjectProgressList: response.data.ProjectProgressList,
       };
