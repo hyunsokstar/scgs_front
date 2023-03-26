@@ -238,9 +238,9 @@ function ProjectProgressDetail({}: Props): ReactElement {
     return (
       <VStack width={"80%"} mx={"auto"}>
         {/* 상단 상자 추가 */}
-        <Box border={"5px solid blue"} width={"100%"}>
+        <Box border={"1px solid blue"} width={"100%"}>
           <Flex>
-            <Box flex="5" bg="#B2D8D8" p={10} border="5px solid orange">
+            <Box flex="5" bg="white" p={10} border="1px solid black" color={"black"}>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <VStack gap={2} w={"80%"}>
                   <FormControl id="writer" isRequired>
@@ -251,6 +251,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                           ? taskData.task_manager.username
                           : taskData.writer
                       }
+                      width="50%" // width를 50%로 설정하여 너비 반으로 줄임
                       {...register("writer")}
                       size="md"
                     />
