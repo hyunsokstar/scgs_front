@@ -7,13 +7,18 @@ import {
   HStack,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { ITypeForProjectProgressList } from "../../types/project_progress/project_progress_type";
-import { getProgectTasksStatusData } from "../../apis/project_progress_api";
+import {
+  getProgectTasksStatusData,
+  updateProjectStatusByDrag,
+} from "../../apis/project_progress_api";
 import { AxiosResponse } from "axios";
 import "./styles.scss";
 import StarRating from "../../components/StarRating";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type Task = {
   pk: number;
@@ -60,6 +65,9 @@ const initialColumns: Column[] = [
 ];
 
 const TaskStatusPage = () => {
+  const toast = useToast();
+
+  const queryClient = useQueryClient();
   const [columns, setColumns] = useState<Column[]>(initialColumns);
   const [total_tasks, set_total_tasks] = useState<Task[]>([]);
 
@@ -73,7 +81,7 @@ const TaskStatusPage = () => {
     () => getProgectTasksStatusData()
   );
 
-  console.log("taskStatusData : ", taskStatusData);
+  // console.log(" ", taskStatusData);
 
   useEffect(() => {
     let new_columns;
@@ -135,7 +143,7 @@ const TaskStatusPage = () => {
         tasks: tasks_for_in_progress,
       },
       {
-        name: "testing",
+        name: "is_testing",
         tasks: tasks_for_in_testing,
       },
       {
@@ -161,6 +169,36 @@ const TaskStatusPage = () => {
     event.preventDefault();
   };
 
+  const updateMutationForProjectStatusByDrag = useMutation(
+    updateProjectStatusByDrag,
+    {
+      onSuccess: (result: any) => {
+        // console.log("result : ", result);
+        if (refetchForGetProgectTasksStatus) {
+          refetchForGetProgectTasksStatus();
+        }
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const updateTaskStatusByDragHandler = (
+    taskPk: number,
+    status_to_move: string
+  ) => {
+    // console.log("status_to_move : ", status_to_move);
+
+    updateMutationForProjectStatusByDrag.mutate({ taskPk, status_to_move });
+  };
+
   const handleDrop = (
     event: React.DragEvent<HTMLDivElement>,
     columnName: string
@@ -169,20 +207,8 @@ const TaskStatusPage = () => {
 
     console.log("drop event data(columnName, taskPk) : ", columnName, taskPk);
 
-    // ColumnName: ready, in_progress, testing, complete
-    // UpdateTaskStatusHandlerByDragHandelr(taskPk, ColumnName)
-
-    // const total_tasks: Task[] = [];
-    // column 들을 재구성
     // 해당 pk가 아닌것만 필터링하되 column.name 이 columnName(옮긴 영역) 일 경우 push
     const newColumns = columns.map((column) => {
-      // total_tasks.push(...column.tasks);
-
-      // const tasks_for_column = [...column.tasks];
-      // set_total_tasks((prev) => [...prev, ...tasks_for_column]);
-
-      console.log("total_tasks : ", total_tasks);
-
       // 모든 컬럼에서 제거후
       const tasks = column.tasks.filter((task) => task.pk !== taskPk);
 
@@ -196,6 +222,11 @@ const TaskStatusPage = () => {
           task_manager: task_to_move?.task_manager,
           importance: task_to_move?.importance,
         });
+
+        // taskPk 에 해당하는 task 의 상태를 이동한 칼럼에 맞게 업데이트
+        // 1122
+        // alert(columnName);
+        updateTaskStatusByDragHandler(taskPk, columnName);
       }
       return {
         ...column,

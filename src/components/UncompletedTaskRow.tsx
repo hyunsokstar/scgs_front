@@ -305,7 +305,7 @@ function UncompletedTaskRow({
                           updateHandlerForTaskInProgress(task.pk);
                         }}
                         checked={task.in_progress}
-                        is_disabled = {task.is_testing}
+                        is_disabled={task.is_testing}
                       />
                     </Box>
 
@@ -347,21 +347,6 @@ function UncompletedTaskRow({
           "loading"
         )}
       </Box>
-
-      {/* <Box overflowX="auto" width={"300px"}>
-          <List border={"0px solid blue"}>
-            <ListItem width={"500px"}>Item 1</ListItem>
-            <ListItem width={"500px"}>Item 2</ListItem>
-            <ListItem width={"500px"}>Item 3</ListItem>
-            <ListItem width={"500px"}>Item 4</ListItem>
-            <ListItem width={"500px"}>Item 5</ListItem>
-            <ListItem width={"500px"}>Item 6</ListItem>
-            <ListItem width={"500px"}>Item 7</ListItem>
-            <ListItem width={"500px"}>Item 8</ListItem>
-            <ListItem width={"500px"}>Item 9</ListItem>
-            <ListItem width={"500px"}>Item 10</ListItem>
-          </List>
-        </Box> */}
 
       {/* 페이지 네이션 영역 */}
       <Box mt={5}>

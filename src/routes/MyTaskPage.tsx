@@ -14,10 +14,10 @@ function MyTaskPage({}: Props): ReactElement {
   );
 
   return (
-    <Box width={"100%"} border={"0px solid blue"}>
+    <Box width={"100%"} border={"5px solid blue"}>
       <Flex direction={"column"} mt={0} width="100%">
         {isLoggedIn ? (
-          <VStack mt={2} gap={2}>
+          <VStack mt={2}>
             <UncompletedProjectTaskListForMe />
             <CompletedProjectTaskListForMe />
           </VStack>

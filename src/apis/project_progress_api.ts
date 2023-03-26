@@ -18,7 +18,6 @@ const instance = axios.create({
 export const getProgectTasksStatusData = () => {
   return instance.get("project_progress/task-status").then((response) => {
     // console.log("response : ", response);
-
     return response;
   });
 };
@@ -86,6 +85,27 @@ export const updateProjectImportance = ({ taskPk, star_count }: any) => {
       `/project_progress/${taskPk}/importance/update`,
       {
         star_count: star_count,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
+export const updateProjectStatusByDrag = ({ taskPk, status_to_move }: any) => {
+  console.log("updateProjectStatusByDrag 실행 status_to_move check : ", status_to_move);
+
+  return instance
+    .put(
+      `/project_progress/${taskPk}/update_project_status_page/update`,
+      {
+        status_to_move: status_to_move,
       },
       {
         headers: {

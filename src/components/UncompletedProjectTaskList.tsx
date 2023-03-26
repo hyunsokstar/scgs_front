@@ -11,7 +11,6 @@ interface Props {}
 
 function UncompletedProjectTaskList({}: Props): ReactElement {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
-  // const queryClient = useQueryClient();
 
   const {
     isLoading,
@@ -37,7 +36,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
         bg={"green.200"}
         border={"0px solid green"}
       >
-        <Text py={1}>비완료 리스트</Text>
+        <Text py={1}>비완료 리스트 total: {pageProgressListData?.totalPageCount} </Text>
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
             projectTaskListRefatch={projectTaskListRefatch}

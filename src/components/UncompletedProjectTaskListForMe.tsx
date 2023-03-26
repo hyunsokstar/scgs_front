@@ -30,7 +30,8 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
 
 
   return (
-    <Box w={"100%"} border={"0px solid black"} p={0} mt={2}>
+    <Container maxW={"100%"} border={"1px solid purple"} p={0} mt={0}>  
+
       <Flex
         justifyContent={"space-between"}
         alignItems={"center"}
@@ -38,9 +39,9 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
         py={2}
         px={1}
         bg={"green.200"}
-        border={"0px solid green"}
+        border={"1px solid green"}
       >
-        <Text py={1}>비완료 리스트</Text>
+        <Text>비완료 리스트</Text>
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
             projectTaskListRefatch={projectTaskListRefatch}
@@ -62,7 +63,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
           ""
         )}
       </Box>
-    </Box>
+    </Container>
   );
 }
 

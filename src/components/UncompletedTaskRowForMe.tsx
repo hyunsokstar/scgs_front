@@ -232,7 +232,7 @@ function UncompletedTaskRowForMe({
 
                     <Box
                       border={"0px solid blue"}
-                      width={"120px"}
+                      width={"200px"}
                       display={"flex"}
                       justifyContent={"flex-start"}
                       alignItems={"center"}
