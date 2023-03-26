@@ -21,6 +21,7 @@ import {
   Image,
   IconButton,
   Spinner,
+  Container,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 // import Calendar from "react-calendar";
@@ -130,7 +131,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
     // 드래그 오버 시 Box 배경색을 투명 회색으로 설정
     if (!event.currentTarget.textContent.includes("drag image")) {
       event.currentTarget.style.zIndex = "1";
-      event.currentTarget.style.opacity = 0.5;
+      // event.currentTarget.style.opacity = 0.5;
       event.currentTarget.style.textAlign = "center";
       event.currentTarget.style.backgroundColor = "rgba(128, 128, 128, 0.5)";
     }
@@ -146,6 +147,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
     onSuccess: (result) => {
       console.log("result : ", result);
       setIsUploadingForRefImage(false);
+      taskDetailRefatch();
 
       toast({
         status: "success",
@@ -234,176 +236,183 @@ function ProjectProgressDetail({}: Props): ReactElement {
     return <Box>Loading..</Box>;
   } else {
     return (
-      <div>
-        <Flex>
-          <Box flex="5" bg="#B2D8D8" p={10}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <VStack gap={2} w={"80%"}>
-                <FormControl id="writer" isRequired>
-                  <FormLabel>Writer</FormLabel>
-                  <Input
-                    defaultValue={
-                      taskData.task_manager
-                        ? taskData.task_manager.username
-                        : taskData.writer
-                    }
-                    {...register("writer")}
-                    size="md"
-                  />
-                </FormControl>
-
-                <FormControl id="task" isRequired>
-                  <FormLabel>Task</FormLabel>
-                  <Input
-                    {...register("task")}
-                    size="md"
-                    defaultValue={taskData.task}
-                  />
-                </FormControl>
-
-                <FormControl id="importance" isRequired>
-                  <FormLabel>Importance</FormLabel>
-                  <RadioGroup defaultValue={taskData.importance.toString()}>
-                    <HStack spacing="24px">
-                      <Radio value="1" {...register("importance")} size="lg">
-                        1
-                      </Radio>
-                      <Radio value="2" {...register("importance")} size="lg">
-                        2
-                      </Radio>
-                      <Radio value="3" {...register("importance")} size="lg">
-                        3
-                      </Radio>
-                      <Radio value="4" {...register("importance")} size="lg">
-                        4
-                      </Radio>
-                      <Radio value="5" {...register("importance")} size="lg">
-                        5
-                      </Radio>
-                    </HStack>
-                  </RadioGroup>
-                </FormControl>
-
-                <FormControl id="task_completed">
-                  <FormLabel>Task Completed</FormLabel>
-                  <Checkbox
-                    defaultChecked={taskData.task_completed}
-                    {...register("task_completed")}
-                  />
-                </FormControl>
-
-                <Box display={"flex"} justifyContent={"center"} gap={5}>
-                  <VStack>
-                    <Text>시작</Text>
-                    <Datetime
-                      isValidDate={invalidDateForStartedAt}
-                      onChange={handleChangeForStartedAt}
-                      initialValue={
-                        taskData.started_at
-                          ? new Date(taskData.started_at)
-                          : new Date()
+      <VStack width={"80%"} mx={"auto"}>
+        {/* 상단 상자 추가 */}
+        <Box border={"5px solid blue"} width={"100%"}>
+          <Flex>
+            <Box flex="5" bg="#B2D8D8" p={10} border="5px solid orange">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <VStack gap={2} w={"80%"}>
+                  <FormControl id="writer" isRequired>
+                    <FormLabel>Writer</FormLabel>
+                    <Input
+                      defaultValue={
+                        taskData.task_manager
+                          ? taskData.task_manager.username
+                          : taskData.writer
                       }
+                      {...register("writer")}
+                      size="md"
                     />
-                  </VStack>
+                  </FormControl>
 
-                  <VStack>
-                    <Text>마감 날짜</Text>
-                    <Datetime
-                      isValidDate={invalidDateForCompletedAt}
-                      onChange={handleChangeForStartedAt}
-                      initialValue={
-                        taskData.started_at
-                          ? new Date(taskData.started_at)
-                          : new Date()
-                      }
+                  <FormControl id="task" isRequired>
+                    <FormLabel>Task</FormLabel>
+                    <Input
+                      {...register("task")}
+                      size="md"
+                      defaultValue={taskData.task}
                     />
-                  </VStack>
-                </Box>
+                  </FormControl>
 
-                <Button
-                  type="submit"
-                  isLoading={submitting}
-                  loadingText="Submitting..."
-                  size="md"
-                  mt={4}
-                >
-                  Submit
-                </Button>
-              </VStack>
-            </form>
-          </Box>
+                  <FormControl id="importance" isRequired>
+                    <FormLabel>Importance</FormLabel>
+                    <RadioGroup defaultValue={taskData.importance.toString()}>
+                      <HStack spacing="24px">
+                        <Radio value="1" {...register("importance")} size="lg">
+                          1
+                        </Radio>
+                        <Radio value="2" {...register("importance")} size="lg">
+                          2
+                        </Radio>
+                        <Radio value="3" {...register("importance")} size="lg">
+                          3
+                        </Radio>
+                        <Radio value="4" {...register("importance")} size="lg">
+                          4
+                        </Radio>
+                        <Radio value="5" {...register("importance")} size="lg">
+                          5
+                        </Radio>
+                      </HStack>
+                    </RadioGroup>
+                  </FormControl>
 
-          <Box
-            flex="3"
-            bg="#E8D1CF"
-            overflowY="scroll"
-            height={"600px"}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            {refer_images && refer_images.length ? (
-              refer_images.map((row: any) => {
-                // console.log("row : ", row);
-                // return <Image src={row.image_url} height={"200px"} width={"100%"}/>;
-                return (
-                  <a href={row.image_url} target="_blank" rel="noreferrer">
-                    <Box
-                      position="relative"
-                      zIndex="1"
-                      paddingY={1}
-                      _hover={{ bg: "gray", opacity: 0.5 }}
-                      onMouseEnter={() => setIsHovering(true)}
-                      onMouseLeave={() => setIsHovering(false)}
-                    >
-                      {/* {isHovering ? "호버중" : "떠남"} */}
-                      <IconButton
-                        icon={
-                          <Box display="flex" justifyContent="center">
-                            <FaTimes />
-                          </Box>
+                  <FormControl id="task_completed">
+                    <FormLabel>Task Completed</FormLabel>
+                    <Checkbox
+                      defaultChecked={taskData.task_completed}
+                      {...register("task_completed")}
+                    />
+                  </FormControl>
+
+                  <Box display={"flex"} justifyContent={"center"} gap={5}>
+                    <VStack>
+                      <Text>시작</Text>
+                      <Datetime
+                        isValidDate={invalidDateForStartedAt}
+                        onChange={handleChangeForStartedAt}
+                        initialValue={
+                          taskData.started_at
+                            ? new Date(taskData.started_at)
+                            : new Date()
                         }
-                        position="absolute"
-                        top={"8px"}
-                        mt={1}
-                        mr={2}
-                        right={0}
-                        size="sm"
-                        bg="transparent"
-                        zIndex={5}
-                        _hover={{ bg: "red" }}
-                        _active={{ bg: "transparent" }}
-                        _focus={{ outline: "none" }}
-                        display={isHovering ? "block" : "none"} // display 속성을 이용하여 보이기/숨기기를 조작합니다.
-                        onClick={(e) => {
-                          e.preventDefault();
-                          // alert("삭제 버튼 클릭 : "+ row.pk);
-                          delete_lef_image_handler(row.pk);
-                        }}
-                        aria-label={""}
                       />
-                      {isUploadingForRefImage ? (
-                        <Spinner size="md" color="blue.500" />
-                      ) : (
-                        ""
-                      )}
-                      <Image
-                        src={row.image_url}
-                        height={"200px"}
-                        width={"100%"}
+                    </VStack>
+
+                    <VStack>
+                      <Text>마감 날짜</Text>
+                      <Datetime
+                        isValidDate={invalidDateForCompletedAt}
+                        onChange={handleChangeForStartedAt}
+                        initialValue={
+                          taskData.started_at
+                            ? new Date(taskData.started_at)
+                            : new Date()
+                        }
                       />
-                    </Box>
-                  </a>
-                );
-              })
-            ) : (
-              <Box>
-                <Text>참고 이미지(드래그앤 드롭 가능)</Text>
-              </Box>
-            )}
-          </Box>
-        </Flex>
-      </div>
+                    </VStack>
+                  </Box>
+
+                  <Button
+                    type="submit"
+                    isLoading={submitting}
+                    loadingText="Submitting..."
+                    size="md"
+                    mt={4}
+                  >
+                    Submit
+                  </Button>
+                </VStack>
+              </form>
+            </Box>
+
+            <Box
+              flex="3"
+              // bg="#E8D1CF"
+              overflowY="scroll"
+              height={"600px"}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              {refer_images && refer_images.length ? (
+                refer_images.map((row: any) => {
+                  // console.log("row : ", row);
+                  // return <Image src={row.image_url} height={"200px"} width={"100%"}/>;
+                  return (
+                    <a href={row.image_url} target="_blank" rel="noreferrer">
+                      <Box
+                        position="relative"
+                        zIndex="1"
+                        paddingY={1}
+                        _hover={{ border: "skyblue", opacity: 0.7 }}
+                        // onMouseEnter={() => setIsHovering(true)}
+                        // onMouseLeave={() => setIsHovering(false)}
+                      >
+                        {/* {isHovering ? "호버중" : "떠남"} */}
+                        <IconButton
+                          icon={
+                            <Box display="flex" justifyContent="center">
+                              <FaTimes />
+                            </Box>
+                          }
+                          position="absolute"
+                          top={"8px"}
+                          mt={1}
+                          mr={2}
+                          right={0}
+                          size="sm"
+                          // bg="transparent"
+                          zIndex={5}
+                          // _hover={{ bg: "lightblue" }}
+                          // _active={{ bg: "transparent" }}
+                          // _focus={{ outline: "none" }}
+                          display={isHovering ? "block" : "none"} // display 속성을 이용하여 보이기/숨기기를 조작합니다.
+                          onClick={(e) => {
+                            e.preventDefault();
+                            // alert("삭제 버튼 클릭 : "+ row.pk);
+                            delete_lef_image_handler(row.pk);
+                          }}
+                          aria-label={""}
+                        />
+                        {isUploadingForRefImage ? (
+                          <Spinner size="md" color="blue.500" />
+                        ) : (
+                          ""
+                        )}
+                        <Image
+                          src={row.image_url}
+                          height={"200px"}
+                          width={"100%"}
+                        />
+                      </Box>
+                    </a>
+                  );
+                })
+              ) : (
+                <Box>
+                  <Text>참고 이미지(드래그앤 드롭 가능)</Text>
+                </Box>
+              )}
+            </Box>
+          </Flex>
+        </Box>{" "}
+        {/* 상단 상자 끝 */}
+        <Box bg={"yellow"} width={"100%"} border={"5px solid pink"}>
+          관련 업무 추가 
+        </Box>
+      </VStack>
     );
   }
 }
