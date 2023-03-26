@@ -28,6 +28,8 @@ import StarRating from "./StarRating";
 import SlideToggleButton from "./SlideToggleButton";
 import {
   updateProjectImportance,
+  updateProjectInProgress,
+  updateProjectIsTesting,
   updateProjectTaskCompleted,
 } from "../apis/project_progress_api";
 import { Link } from "react-router-dom";
@@ -35,6 +37,8 @@ import { deleteOneProjectTask } from "../apis/user_api";
 import PaginationComponent from "./PaginationComponent";
 import ModalButtonForUpdateProjectTaskCompleteDate from "./modal/ModalButtonForUpdateProjectTaskCompleteDate";
 import ModalButtonForUpdateProjectTaskStartedAt from "./modal/ModalButtonForUpdateProjectTaskStartedAt";
+import SlideToggleButtonForInProgress from "./SlideToggleButton/SlideToggleButtonForInProgress";
+import SlideToggleButtonForIsTesting from "./SlideToggleButton/SlideToggleButtonForIsTesting";
 
 interface IProps {
   ProjectProgressList: any;
@@ -138,6 +142,56 @@ function UncompletedTaskRowForMe({
     // }
   };
 
+  const updateProjectTaskInProgressMutations = useMutation(
+    updateProjectInProgress,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        projectTaskListRefatch()
+        // queryClient.refetchQueries(["getUncompletedTaskList"]);
+        // queryClient.refetchQueries(["getCompletedTaskList"]);
+        // projectTaskListRefatch()
+
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
+      },
+      onError: (err: any) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+  const updateHandlerForTaskInProgress = (taskPk: string) => {
+    updateProjectTaskInProgressMutations.mutate(taskPk);
+    console.log("update 핸들러 for task_status check pk : ", taskPk);
+  };
+
+  const updateProjectTaskIsTestingMutations = useMutation(
+    updateProjectIsTesting,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        projectTaskListRefatch()
+
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const updateHandlerForTaskIsTesting = (taskPk: string) => {
+    updateProjectTaskIsTestingMutations.mutate(taskPk);
+    console.log("update 핸들러 for task_status check pk : ", taskPk);
+  };
+
   return (
     <Box border={"0px solid blue"} maxWidth={"100%"}>
       <Box overflowX="auto" width="100%">
@@ -145,30 +199,31 @@ function UncompletedTaskRowForMe({
           <List>
             {ProjectProgressList?.map((task: any) => {
               // console.log("task.task_manager : ", task.taskmanager);
-
               return (
                 <ListItem
                   key={task.pk}
                   height={16}
                   border={"1px solid lightgray"}
-                  width={"1414px"}
                   my={0}
                   display={"flex"}
                   alignItems={"center"}
-                  _hover={{backgroundColor:"gray.100"}}
+                  backgroundColor={task.in_progress ? "yellow.50" : ""}
+                  _hover={{ backgroundColor: "gray.100" }}
+                  width={"1900px"}
                 >
                   <HStack border={"0px solid green"}>
+                    <Box border={"0px solid yellow"} width={"50px"}>
+                      <Checkbox mx={2} />
+                    </Box>
+
                     <Box border={"0px solid yellow"} width={"100px"}>
-                      <HStack ml={0}>
-                        <Checkbox mx={2} />
-                        {task.task_manager !== null ? (
-                          <Text color={"blue.600"}>
-                            {task.task_manager.username}
-                          </Text>
-                        ) : (
-                          <Text color={"tomato"}>{task.writer}</Text>
-                        )}
-                      </HStack>
+                      <Text color={"blue.600"}>
+                        {task.task_manager?.username}
+                      </Text>{" "}
+                    </Box>
+
+                    <Box border={"0px solid yellow"} width={"100px"}>
+                      <Text color={"tomato"}>{task.writer}</Text>
                     </Box>
                     <Box border={"0px solid blue"} width={"340px"}>
                       <Text fontSize="sm" fontWeight="bold">
@@ -232,7 +287,7 @@ function UncompletedTaskRowForMe({
 
                     <Box
                       border={"0px solid blue"}
-                      width={"200px"}
+                      width={"180px"}
                       display={"flex"}
                       justifyContent={"flex-start"}
                       alignItems={"center"}
@@ -247,11 +302,34 @@ function UncompletedTaskRowForMe({
                     </Box>
 
                     <Box border={"0px solid green"} width={"100px"}>
+                      <SlideToggleButtonForInProgress
+                      
+                        onChange={() => {
+                          updateHandlerForTaskInProgress(task.pk);
+                        }}
+                        checked={task.in_progress}
+                        is_disabled={task.is_testing}
+                      />
+                    </Box>
+
+                    <Box border={"0px solid green"} width={"100px"}>
+                      <SlideToggleButtonForIsTesting
+                        onChange={() => {
+                          updateHandlerForTaskIsTesting(task.pk);
+                        }}
+                        checked={task.is_testing}
+                        is_disabled={!task.in_progress}
+                      />
+                    </Box>
+
+                    <Box border={"0px solid green"} width={"100px"}>
                       <SlideToggleButton
                         onChange={() => {
                           updateHandlerForTaskStatus(task.pk);
                         }}
                         checked={task.task_completed}
+                        in_progress={!task.in_progress} // 진행중이 아니면 disabled true
+                        is_testing={!task.is_testing} //  testing 중이 아니면
                       />
                     </Box>
 
@@ -272,21 +350,6 @@ function UncompletedTaskRowForMe({
           "loading"
         )}
       </Box>
-
-      {/* <Box overflowX="auto" width={"300px"}>
-          <List border={"0px solid blue"}>
-            <ListItem width={"500px"}>Item 1</ListItem>
-            <ListItem width={"500px"}>Item 2</ListItem>
-            <ListItem width={"500px"}>Item 3</ListItem>
-            <ListItem width={"500px"}>Item 4</ListItem>
-            <ListItem width={"500px"}>Item 5</ListItem>
-            <ListItem width={"500px"}>Item 6</ListItem>
-            <ListItem width={"500px"}>Item 7</ListItem>
-            <ListItem width={"500px"}>Item 8</ListItem>
-            <ListItem width={"500px"}>Item 9</ListItem>
-            <ListItem width={"500px"}>Item 10</ListItem>
-          </List>
-        </Box> */}
 
       {/* 페이지 네이션 영역 */}
       <Box mt={5}>

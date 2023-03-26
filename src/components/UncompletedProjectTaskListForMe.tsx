@@ -17,7 +17,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
 
   const {
     isLoading,
-    data: pageProgressListData,
+    data: taskListDataForMe,
     refetch: projectTaskListRefatch,
   } = useQuery<ITypeForProjectProgressList>(
     ["getUncompletedTaskListForMe", currentPageNum],
@@ -26,12 +26,10 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
       enabled: true,
     }
   );
-  // console.log("pageProgressListData : ", pageProgressListData);
-
+  console.log("taskListDataForMe : ", taskListDataForMe);
 
   return (
-    <Container maxW={"100%"} border={"1px solid purple"} p={0} mt={0}>  
-
+    <Container maxW={"100%"} border={"1px solid purple"} p={0} mt={0}>
       <Flex
         justifyContent={"space-between"}
         alignItems={"center"}
@@ -41,7 +39,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
         bg={"green.200"}
         border={"1px solid green"}
       >
-        <Text>비완료 리스트</Text>
+        <Text>비완료 리스트 (총: {taskListDataForMe?.totalPageCount})</Text>
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
             projectTaskListRefatch={projectTaskListRefatch}
@@ -49,11 +47,11 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
         </Box>
       </Flex>
       <Box>
-        {pageProgressListData ? (
+        {taskListDataForMe ? (
           <Box>
             <UncompletedTaskRowForMe
-              ProjectProgressList={pageProgressListData.ProjectProgressList}
-              totalPageCount={pageProgressListData.totalPageCount}
+              ProjectProgressList={taskListDataForMe.ProjectProgressList}
+              totalPageCount={taskListDataForMe.totalPageCount}
               currentPageNum={currentPageNum}
               setCurrentPageNum={setCurrentPageNum}
               projectTaskListRefatch={projectTaskListRefatch}
