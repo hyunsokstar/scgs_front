@@ -2,7 +2,9 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
 import { useNavigate, useParams } from "react-router-dom";
 import { getOneProjectTask } from "../apis/user_api";
-import { IOneTaskForProjectTaskType } from "../types/project_progress/project_progress_type";
+import {
+  IOneTaskForProjectTaskType,
+} from "../types/project_progress/project_progress_type";
 
 import {
   Box,
@@ -22,7 +24,12 @@ import {
   IconButton,
   Spinner,
   Container,
+  List,
+  ListItem,
+  ListIcon,
 } from "@chakra-ui/react";
+import { CheckCircleIcon } from "@chakra-ui/icons";
+
 import { useForm } from "react-hook-form";
 // import Calendar from "react-calendar";
 // import "react-calendar/dist/Calendar.css";
@@ -38,6 +45,7 @@ import {
 } from "../apis/project_progress_api";
 import { getUploadURL, uploadImage } from "../api";
 import { FaTimes } from "react-icons/fa";
+import ExtraTasksTable from "../components/ExtraTasksTable";
 
 interface Props {}
 
@@ -54,13 +62,10 @@ function ProjectProgressDetail({}: Props): ReactElement {
     getOneProjectTask
   );
 
-  if(taskData?.extra_tasks?.length){
-    console.log("taskData?.extra_tasks : ", taskData?.extra_tasks[0]);
+  if (taskData) {
+    console.log("taskData.extra_tasks: ", taskData.extra_tasks);
   } else {
-    console.log("taskData : ", taskData);
-    
     console.log("extra_tasks 없음");
-    
   }
 
   const [submitting, setSubmitting] = useState(false);
@@ -248,7 +253,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
         {/* 상단 상자 추가 */}
         <Box border={"1px solid blue"} width={"100%"}>
           <Flex>
-            <Box flex="5" bg="white" p={10} border="1px solid black" color={"black"}>
+            <Box
+              flex="5"
+              bg="white"
+              p={10}
+              border="1px solid black"
+              color={"black"}
+            >
               <form onSubmit={handleSubmit(onSubmit)}>
                 <VStack gap={2} w={"80%"}>
                   <FormControl id="writer" isRequired>
@@ -418,10 +429,11 @@ function ProjectProgressDetail({}: Props): ReactElement {
           </Flex>
         </Box>{" "}
         {/* 상단 상자 끝 */}
-        <Box bg={"yellow"} width={"100%"} border={"5px solid pink"}>
-          관련 업무 추가 
+        
+        <Box bg={"white"} width={"100%"} border={"5px solid pink"}>
+          관련 업무 추가
           <br />
-          {taskData.extra_tasks?.length ?  taskData?.extra_tasks[0]: "없음"} 
+          <ExtraTasksTable extra_tasks={taskData.extra_tasks} />
         </Box>
       </VStack>
     );

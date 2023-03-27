@@ -1,4 +1,19 @@
 // task_completed update
+
+export interface extra_task_row_type {
+  pk: number;
+  task: string;
+  task_status: string;
+  task_manager: {
+    pk: number,
+    username: string;
+    profile_image: string;
+  };
+  importance: string;
+  started_at: string;
+  completed_at: string;
+}
+
 export interface IResponseTypeForProjectTaskUpdate {
   result: {
     success: boolean;
@@ -24,7 +39,7 @@ export interface IOneTaskForProjectTaskType {
       image_url: string;
     }
   ];
-  extra_tasks?: any[]
+  extra_tasks?: extra_task_row_type[] | undefined;
 }
 
 export interface ITypeForProjectProgressList {
