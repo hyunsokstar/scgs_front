@@ -13,9 +13,9 @@ import {
   HStack,
   Button,
   Flex,
+  Select,
 } from "@chakra-ui/react";
 import { extra_task_row_type } from "../types/project_progress/project_progress_type";
-import ModalButtonForExtraTask from "./modal/ModalButtonForExtraTask";
 
 interface ExtraTasksTableProps {
   extra_tasks: extra_task_row_type[] | undefined;
@@ -26,16 +26,7 @@ const ExtraTasksTable = ({
 }: ExtraTasksTableProps): ReactElement => {
   return (
     <Box overflowX="scroll" width={"100%"}>
-      {/* <Flex justifyContent={"flex-end"} pr={1} mb={2}>
-        <Button
-          variant="outline"
-          colorScheme="blue"
-          css={{ "&:hover": { backgroundColor: "blue", color: "white" } }}
-        >
-          부가 업무 추가
-        </Button>{" "}
-      </Flex> */}
-      <ModalButtonForExtraTask />
+
 
       <Table
         variant="simple"
@@ -47,7 +38,7 @@ const ExtraTasksTable = ({
           td: { border: "2px solid green", textAlign: "center" },
           th: { border: "2px solid green", textAlign: "center" },
         }} // 각 셀의 패딩을 0으로 설정
-        width="1600px"
+        width="1900px"
       >
         <Thead border="2px solid green">
           <Tr>
@@ -56,7 +47,7 @@ const ExtraTasksTable = ({
             </Th>
             <Th width="30px">Task Manager</Th>
             <Th width="200px">Task</Th>
-            <Th width="30px">Task Status</Th>
+            <Th width="100px">Task Status</Th>
             <Th width="30px">Task importance</Th>
             <Th width="30px">Started At</Th>
             <Th width="30px">Completed At</Th>
@@ -82,7 +73,18 @@ const ExtraTasksTable = ({
                     </HStack>
                   </Td>
                   <Td>{row.task}</Td>
-                  <Td>{row.task_status}</Td>
+                  <Td>
+                    <Select
+                      //   {...register("task_status_option")}
+                      defaultValue={row.task_status}
+                      placeholder="Select an option"
+                    >
+                      <option value="ready">Ready</option>
+                      <option value="in_progress">In Progress</option>
+                      <option value="testing">Testing</option>
+                      <option value="completed">Completed</option>
+                    </Select>
+                  </Td>
                   <Td>{row.importance}</Td>
                   <Td>{row.started_at}</Td>
                   <Td>{row.completed_at ? row.completed_at : "미정"}</Td>

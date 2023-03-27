@@ -24,20 +24,28 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { IFormTypeForProjectProgress } from "../../types/project_progress/project_progress_type";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { insertProjectProgressRow } from "../../apis/project_progress_api";
+import {
+  FormTypeForExtraTask,
+  IFormTypeForProjectProgress,
+} from "../../types/project_progress/project_progress_type";
 import { getUserNamesForCreate } from "../../apis/user_api";
+import { insertExtraTaskByModal } from "../../apis/project_progress_api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-interface IProps {}
+
+interface IProps {
+  taskPk: number | string | undefined;
+}
 
 interface IUserNamesForCreate {
   pk: number;
   username: string;
 }
 
-const ModalButtonForAddProjectTask: FC<IProps> = ({}) => {
+const ModalButtonForAddProjectTask: FC<IProps> = ({ taskPk }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const queryClient = useQueryClient();
+
   const {
     register,
     handleSubmit,
@@ -60,45 +68,40 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({}) => {
     onClose();
   }
 
-  const createMutationForProjectProgress = useMutation(
-    insertProjectProgressRow,
-    {
-      onMutate: () => {
-        console.log("mutation starting");
-      },
-      onSuccess: (data) => {
-        console.log("data : ", data);
+  const createMutationForExtraTask = useMutation(insertExtraTaskByModal, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
 
-        toast({
-          title: "welcome back!",
-          status: "success",
-        });
-        // projectTaskListRefatch();
-        onClose();
-      },
-      onError: (error: any) => {
-        console.log("error.response : ", error.response);
-        console.log("mutation has an error", error.response.data);
-      },
-    }
-  );
+      toast({
+        title: "welcome back!",
+        status: "success",
+      });
+      //   requery getOneProjectTask
+      queryClient.refetchQueries(["getOneProjectTask"]);
+      onClose();
+    },
+    onError: (error: any) => {
+      console.log("error.response : ", error.response);
+      console.log("mutation has an error", error.response.data);
+    },
+  });
 
   const onSubmit = ({
+    task_manager,
     task,
     importance,
-    task_completed,
-    password,
-    task_manager,
-  }: IFormTypeForProjectProgress) => {
+  }: FormTypeForExtraTask) => {
     console.log("task create 체크 :: ", task_manager);
 
-    // createMutationForProjectProgress.mutate({
-    //   task,
-    //   importance,
-    //   task_completed,
-    //   password,
-    //   task_manager,
-    // });
+    createMutationForExtraTask.mutate({
+      taskPk,
+      task_manager,
+      task,
+      importance,
+    });
   };
 
   return (
@@ -186,11 +189,6 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({}) => {
                       </Radio>
                     </HStack>
                   </RadioGroup>
-                </FormControl>
-
-                <FormControl>
-                  <FormLabel>task_completed</FormLabel>
-                  <Checkbox {...register("task_completed")} />
                 </FormControl>
 
                 <FormControl>

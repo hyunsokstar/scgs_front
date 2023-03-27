@@ -1,11 +1,18 @@
 // task_completed update
 
+export interface FormTypeForExtraTask {
+  taskPk?: string | number | undefined;
+  task_manager: number;
+  task: string;
+  importance: string;
+}
+
 export interface extra_task_row_type {
   pk: number;
   task: string;
   task_status: string;
   task_manager: {
-    pk: number,
+    pk: number;
     username: string;
     profile_image: string;
   };

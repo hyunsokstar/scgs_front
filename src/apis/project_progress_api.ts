@@ -4,6 +4,7 @@ import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { backendApi } from "../apis/common_api";
 import {
+  FormTypeForExtraTask,
   IFormTypeForProjectProgress,
   IResponseTypeForProjectTaskUpdate,
 } from "../types/project_progress/project_progress_type";
@@ -178,6 +179,29 @@ export const updateProjectIsTesting = (taskPk: string) => {
       return response.data;
     });
 };
+
+export const insertExtraTaskByModal = ({
+  taskPk,
+  task_manager,
+  task,
+  importance,
+}: FormTypeForExtraTask) =>
+  instance
+    .post(
+      `/project_progress/extra_tasks`,
+      {
+        taskPk,
+        task_manager,
+        task,
+        importance,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
 
 export const insertProjectProgressRow = ({
   task,

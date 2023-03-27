@@ -2,9 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
 import { useNavigate, useParams } from "react-router-dom";
 import { getOneProjectTask } from "../apis/user_api";
-import {
-  IOneTaskForProjectTaskType,
-} from "../types/project_progress/project_progress_type";
+import { IOneTaskForProjectTaskType } from "../types/project_progress/project_progress_type";
 
 import {
   Box,
@@ -46,6 +44,7 @@ import {
 import { getUploadURL, uploadImage } from "../api";
 import { FaTimes } from "react-icons/fa";
 import ExtraTasksTable from "../components/ExtraTasksTable";
+import ModalButtonForExtraTask from "../components/modal/ModalButtonForExtraTask";
 
 interface Props {}
 
@@ -429,10 +428,10 @@ function ProjectProgressDetail({}: Props): ReactElement {
           </Flex>
         </Box>{" "}
         {/* 상단 상자 끝 */}
-        
         <Box bg={"white"} width={"100%"} border={"5px solid pink"}>
           관련 업무 추가
           <br />
+          <ModalButtonForExtraTask taskPk={taskPk} />
           <ExtraTasksTable extra_tasks={taskData.extra_tasks} />
         </Box>
       </VStack>
