@@ -15,6 +15,30 @@ const instance = axios.create({
 });
 
 // 1122
+// original updateProjectStatusByDrag to updateExtraTaskStatusUsingSelectBox
+export const updateExtraTaskStatusUsingSelectBox = ({
+  taskPk,
+  task_status,
+}: any) => {
+  console.log("param : ", taskPk, task_status);
+
+  return instance
+    .put(
+      `/project_progress/extra_tasks/${taskPk}`,
+      {
+        task_status: task_status,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
 
 export const deleteOneExtraTaskForPk = (extraTaskPk: number) => {
   console.log("estimatePk : ", extraTaskPk);
@@ -26,7 +50,6 @@ export const deleteOneExtraTaskForPk = (extraTaskPk: number) => {
     })
     .then((response) => response.data);
 };
-
 
 export const getProgectTasksStatusData = () => {
   return instance.get("project_progress/task-status").then((response) => {

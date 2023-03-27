@@ -20,12 +20,16 @@ import {
 import { extra_task_row_type } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteOneExtraTaskForPk } from "../apis/project_progress_api";
+import {
+  deleteOneExtraTaskForPk,
+  updateExtraTaskStatusUsingSelectBox,
+} from "../apis/project_progress_api";
 
 interface ExtraTasksTableProps {
   extra_tasks: extra_task_row_type[] | undefined;
 }
 
+// 1122
 const ExtraTasksTable = ({
   extra_tasks,
 }: ExtraTasksTableProps): ReactElement => {
@@ -55,6 +59,37 @@ const ExtraTasksTable = ({
     console.log("response :", response);
   };
 
+  const updateForExtasTaskStatusMutation = useMutation(
+    updateExtraTaskStatusUsingSelectBox,
+    {
+      onSuccess: (result: any) => {
+        toast({
+          status: "success",
+          title: "extra task update success !",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+  const selectHandlerForExtraTaskStatusUpdate = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    pk: number
+  ) => {
+    const selectedValue = event.target.value;
+    console.log("selectedValue : ", selectedValue);
+    console.log("pk : ", pk);
+
+    const taskPk = pk;
+    const task_status = selectedValue;
+
+    updateForExtasTaskStatusMutation.mutate({ taskPk, task_status });
+  };
+
+  //2244
   return (
     <Box overflowX="scroll" width={"100%"}>
       <Table
@@ -104,9 +139,11 @@ const ExtraTasksTable = ({
                   <Td>{row.task}</Td>
                   <Td>
                     <Select
-                      //   {...register("task_status_option")}
                       defaultValue={row.task_status}
                       placeholder="Select an option"
+                      onChange={(e) =>
+                        selectHandlerForExtraTaskStatusUpdate(e, row.pk)
+                      }
                     >
                       <option value="ready">Ready</option>
                       <option value="in_progress">In Progress</option>
