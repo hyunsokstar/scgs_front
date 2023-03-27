@@ -15,6 +15,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { extra_task_row_type } from "../types/project_progress/project_progress_type";
+import ModalButtonForExtraTask from "./modal/ModalButtonForExtraTask";
 
 interface ExtraTasksTableProps {
   extra_tasks: extra_task_row_type[] | undefined;
@@ -25,7 +26,7 @@ const ExtraTasksTable = ({
 }: ExtraTasksTableProps): ReactElement => {
   return (
     <Box overflowX="scroll" width={"100%"}>
-      <Flex justifyContent={"flex-end"} pr={1} mb={2}>
+      {/* <Flex justifyContent={"flex-end"} pr={1} mb={2}>
         <Button
           variant="outline"
           colorScheme="blue"
@@ -33,7 +34,8 @@ const ExtraTasksTable = ({
         >
           부가 업무 추가
         </Button>{" "}
-      </Flex>
+      </Flex> */}
+      <ModalButtonForExtraTask />
 
       <Table
         variant="simple"
@@ -55,9 +57,10 @@ const ExtraTasksTable = ({
             <Th width="30px">Task Manager</Th>
             <Th width="200px">Task</Th>
             <Th width="30px">Task Status</Th>
+            <Th width="30px">Task importance</Th>
             <Th width="30px">Started At</Th>
             <Th width="30px">Completed At</Th>
-            <Th width="20px">Completed At</Th>
+            <Th width="30px"> 삭제 </Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -80,6 +83,7 @@ const ExtraTasksTable = ({
                   </Td>
                   <Td>{row.task}</Td>
                   <Td>{row.task_status}</Td>
+                  <Td>{row.importance}</Td>
                   <Td>{row.started_at}</Td>
                   <Td>{row.completed_at ? row.completed_at : "미정"}</Td>
                   <Td>
