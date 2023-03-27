@@ -15,7 +15,19 @@ const instance = axios.create({
 });
 
 // 1122
-// getUncompletedTaskList
+
+export const deleteOneExtraTaskForPk = (extraTaskPk: number) => {
+  console.log("estimatePk : ", extraTaskPk);
+  return instance
+    .delete(`project_progress/extra_tasks/${extraTaskPk}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+
 export const getProgectTasksStatusData = () => {
   return instance.get("project_progress/task-status").then((response) => {
     // console.log("response : ", response);

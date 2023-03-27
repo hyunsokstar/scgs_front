@@ -14,8 +14,13 @@ import {
   Button,
   Flex,
   Select,
+  IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import { extra_task_row_type } from "../types/project_progress/project_progress_type";
+import { FaTrash } from "react-icons/fa";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteOneExtraTaskForPk } from "../apis/project_progress_api";
 
 interface ExtraTasksTableProps {
   extra_tasks: extra_task_row_type[] | undefined;
@@ -24,10 +29,34 @@ interface ExtraTasksTableProps {
 const ExtraTasksTable = ({
   extra_tasks,
 }: ExtraTasksTableProps): ReactElement => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation(
+    (extraTaskPk: number) => {
+      return deleteOneExtraTaskForPk(extraTaskPk);
+    },
+    {
+      onSettled: () => {},
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["getOneProjectTask"]);
+        // queryClient.refetchQueries(["getCompletedTaskList"]);
+        toast({
+          title: "extra task 삭제 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const deleteHandelr = (extraTaskPk: any) => {
+    const response = deleteMutation.mutate(extraTaskPk);
+    console.log("response :", response);
+  };
+
   return (
     <Box overflowX="scroll" width={"100%"}>
-
-
       <Table
         variant="simple"
         colorScheme="blue"
@@ -86,10 +115,15 @@ const ExtraTasksTable = ({
                     </Select>
                   </Td>
                   <Td>{row.importance}</Td>
-                  <Td>{row.started_at}</Td>
+                  <Td>{row.started_at ? row.started_at : "미정"}</Td>
                   <Td>{row.completed_at ? row.completed_at : "미정"}</Td>
                   <Td>
-                    <Button>삭제</Button>
+                    <IconButton
+                      aria-label="삭제"
+                      icon={<FaTrash />}
+                      variant="ghost"
+                      onClick={() => deleteHandelr(row.pk)}
+                    />{" "}
                   </Td>
                 </Tr>
               );

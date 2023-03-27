@@ -62,7 +62,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
   );
 
   if (taskData) {
-    console.log("taskData.extra_tasks: ", taskData.extra_tasks);
+    // console.log("taskData.extra_tasks: ", taskData.extra_tasks);
   } else {
     console.log("extra_tasks 없음");
   }
@@ -231,6 +231,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
         toast({
           title: "delete project task 성공!",
           status: "success",
+        });
+      },
+      onError: (error) => {
+        console.log("delete mutation has an error ", error);
+        toast({
+          title: `delete mutation has an error :  ${error}`,
+          status: "error",
         });
       },
     }
@@ -428,7 +435,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           </Flex>
         </Box>{" "}
         {/* 상단 상자 끝 */}
-        <Box bg={"white"} width={"100%"} border={"5px solid pink"}>
+        <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
           관련 업무 추가
           <br />
           <ModalButtonForExtraTask taskPk={taskPk} />
