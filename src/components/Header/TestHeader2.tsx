@@ -168,7 +168,7 @@ const Header = () => {
         </NavLink>
 
         <NavLink
-          to="/qa"
+          to="/qa-page"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
           <Text
@@ -198,21 +198,6 @@ const Header = () => {
         </NavLink>
 
         <NavLink
-          to="/conference"
-          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-        >
-          <Text
-            fontSize="xl"
-            fontWeight="medium"
-            mr={{ base: 0, md: "1rem" }}
-            cursor="pointer"
-            _hover={{ color: "white", transform: "scale(1.1)" }}
-          >
-            Conference
-          </Text>
-        </NavLink>
-
-        <NavLink
           to="/tutorials"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -224,6 +209,21 @@ const Header = () => {
             _hover={{ color: "white", transform: "scale(1.1)" }}
           >
             Tutorial
+          </Text>
+        </NavLink>
+
+        <NavLink
+          to="/site-manual"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "white", transform: "scale(1.1)" }}
+          >
+            Site Manual
           </Text>
         </NavLink>
 

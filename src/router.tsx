@@ -27,6 +27,9 @@ import ProjectProgressDetail from "./routes/ProjectProgressDetail";
 import MyTaskPage from "./routes/MyTaskPage";
 import KakaoLoginPage from "./routes/KaKaoLoginPage";
 import TaskStatusPage from "./routes/TaskStatus/TaskStatusPage";
+import SiteManualPage from "./routes/SiteManualPage";
+import QAPage from "./routes/QAPage";
+import TechNote from "./routes/TechNote";
 
 const router = createBrowserRouter([
   {
@@ -39,12 +42,28 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path:"task-status",
-        element:<TaskStatusPage />
+        path: "tech-note",
+        element: <TechNote />,
       },
       {
-        path:"kaka-login",
-        element: <KakaoLoginPage />
+        path: "qa-page",
+        element: <QAPage />,
+      },
+      {
+        path: "site-manual",
+        element: <SiteManualPage />,
+      },
+      {
+        path: "qa-page",
+        element: <QAPage />,
+      },
+      {
+        path: "task-status",
+        element: <TaskStatusPage />,
+      },
+      {
+        path: "kaka-login",
+        element: <KakaoLoginPage />,
       },
       { path: "my_task", element: <MyTaskPage /> },
 
