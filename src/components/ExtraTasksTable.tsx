@@ -145,14 +145,14 @@ const ExtraTasksTable = ({
                         selectHandlerForExtraTaskStatusUpdate(e, row.pk)
                       }
                     >
-                      <option value="ready">Ready</option>
-                      <option value="in_progress">In Progress</option>
-                      <option value="testing">Testing</option>
-                      <option value="completed">Completed</option>
+                      <option value="ready">대기증 ⚪</option>
+                      <option value="in_progress">진행중 🟡</option>
+                      <option value="testing">테스팅 🟠</option>
+                      <option value="completed">완료됨 🔵</option>
                     </Select>
                   </Td>
                   <Td>{row.importance}</Td>
-                  <Td>{row.started_at ? row.started_at : "미정"}</Td>
+                  <Td>{row.started_at ? row.started_at_formatted : "미정"}</Td>
                   <Td>{row.completed_at ? row.completed_at : "미정"}</Td>
                   <Td>
                     <IconButton

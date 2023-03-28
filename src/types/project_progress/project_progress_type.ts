@@ -19,6 +19,7 @@ export interface extra_task_row_type {
   importance: string;
   started_at: string;
   completed_at: string;
+  started_at_formatted?: string;
 }
 
 export interface IResponseTypeForProjectTaskUpdate {
