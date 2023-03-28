@@ -30,6 +30,7 @@ import TaskStatusPage from "./routes/TaskStatus/TaskStatusPage";
 import SiteManualPage from "./routes/SiteManualPage";
 import QAPage from "./routes/QAPage";
 import TechNote from "./routes/TechNote";
+import MyTechNote from "./routes/MyTechNote";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Home />,
+      },
+      {
+        path: "my-tech-note",
+        element: <MyTechNote />
       },
       {
         path: "tech-note",

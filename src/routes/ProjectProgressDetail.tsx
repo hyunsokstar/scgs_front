@@ -25,6 +25,7 @@ import {
   List,
   ListItem,
   ListIcon,
+  Textarea,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
@@ -45,6 +46,7 @@ import { getUploadURL, uploadImage } from "../api";
 import { FaTimes } from "react-icons/fa";
 import ExtraTasksTable from "../components/ExtraTasksTable";
 import ModalButtonForExtraTask from "../components/modal/ModalButtonForExtraTask";
+import TestListForTaskDetail from "../components/TestList/TestListForTaskDetail";
 
 interface Props {}
 
@@ -255,19 +257,18 @@ function ProjectProgressDetail({}: Props): ReactElement {
     return <Box>Loading..</Box>;
   } else {
     return (
-      <VStack width={"80%"} mx={"auto"}>
+      <VStack width={"60%"} height="630px" border={"1px solid black"}>
         {/* 상단 상자 추가 */}
-        <Box border={"1px solid blue"} width={"100%"}>
+        <Box width={"100%"} border="2px solid orange">
           <Flex>
             <Box
               flex="5"
               bg="white"
-              p={10}
               border="1px solid black"
-              color={"black"}
+              p={2}
             >
               <form onSubmit={handleSubmit(onSubmit)}>
-                <VStack gap={2} w={"80%"}>
+                <VStack w={"80%"}>
                   <FormControl id="writer" isRequired>
                     <FormLabel>Writer</FormLabel>
                     <Input
@@ -288,6 +289,16 @@ function ProjectProgressDetail({}: Props): ReactElement {
                       {...register("task")}
                       size="md"
                       defaultValue={taskData.task}
+                    />
+                  </FormControl>
+
+                  <FormControl id="task" isRequired>
+                    <FormLabel>Task Description</FormLabel>
+                    <Textarea
+                      // {...register("task_description")}
+                      size="md"
+                      height={"100px"}
+                      defaultValue={taskData.task_description}
                     />
                   </FormControl>
 
@@ -367,10 +378,11 @@ function ProjectProgressDetail({}: Props): ReactElement {
               flex="3"
               // bg="#E8D1CF"
               overflowY="scroll"
-              height={"600px"}
+              height={"620px"}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
+              border={"1px solid green"}
             >
               {refer_images && refer_images.length ? (
                 refer_images.map((row: any) => {
@@ -435,6 +447,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
           </Flex>
         </Box>{" "}
         {/* 상단 상자 끝 */}
+        {/* 중간 Box test check list */}
+        <Box bg={"white"} width={"100%"} border={"2px solid orange"}>
+          <Box bgColor={"yellow.200"} p={2} textAlign="center">
+            테스트 리스트
+          </Box>
+          <TestListForTaskDetail />
+        </Box>
         <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
           관련 업무 추가
           <br />

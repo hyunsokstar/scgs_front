@@ -148,7 +148,7 @@ const Header = () => {
             cursor="pointer"
             _hover={{ color: "white", transform: "scale(1.1)" }}
           >
-            Task Admin
+            Project Task
           </Text>
         </NavLink>
 

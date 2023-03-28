@@ -16,6 +16,7 @@ import {
   Select,
   IconButton,
   useToast,
+  Spacer,
 } from "@chakra-ui/react";
 import { extra_task_row_type } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";
@@ -131,7 +132,7 @@ const ExtraTasksTable = ({
       >
         <Thead border="2px solid green">
           <Tr>
-            <Th width="20px">
+            <Th width="10px">
               <input type="checkbox" />
             </Th>
             <Th width="30px">Task Manager</Th>
@@ -169,11 +170,14 @@ const ExtraTasksTable = ({
                       onChange={(e) =>
                         selectHandlerForExtraTaskStatusUpdate(e, row.pk)
                       }
+                      border="1px solid green"
                     >
-                      <option value="ready">대기증 ⚪</option>
-                      <option value="in_progress">진행중 🟡</option>
-                      <option value="testing">테스팅 🟠</option>
-                      <option value="completed">완료됨 🔵</option>
+                      <option value="ready">
+                        대기중&nbsp;&nbsp; ⚪
+                      </option>
+                      <option value="in_progress">진행중&nbsp;&nbsp; 🟡</option>
+                      <option value="testing">테스팅&nbsp;&nbsp; 🟠</option>
+                      <option value="completed">완료됨&nbsp;&nbsp; 🔵</option>
                     </Select>
                   </Td>
                   {/* <Td>{row.importance}</Td> */}

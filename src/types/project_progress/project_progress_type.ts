@@ -33,6 +33,7 @@ export interface IOneTaskForProjectTaskType {
   pk: string;
   writer: string;
   task: string;
+  task_description: string;
   task_completed: boolean;
   importance: number;
   started_at: string;

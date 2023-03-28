@@ -58,15 +58,8 @@ const TestHeader = () => {
 
   const queryClient = useQueryClient();
 
-  const handleItemClick = (itemName: string) => {
-    if (itemName === "project_admin") {
-      setSelectedValue("/");
-    }
-    setActive(itemName);
-  };
-
   const { userLoading, isLoggedIn, user } = useUser();
-  const [selectedValue, setSelectedValue] = useState("en");
+  // const [selectedValue, setSelectedValue] = useState("en");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -111,23 +104,16 @@ const TestHeader = () => {
     color: "gray",
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(`Selected value: ${e.target.value}`);
-    const url = e.target.value;
 
-    if (url == "default") {
-      setSelectedValue(url);
-      return;
-    } else {
-      setSelectedValue(url);
-      navigate(url);
-    }
+
+  const handleItemClick = (itemName: string) => {
+
+    setActive(itemName);
   };
 
   const homeButtonHandler = () => {
     console.log("home button 클릭");
     handleItemClick("home");
-    setSelectedValue("/");
     navigate("/");
   };
 
@@ -154,6 +140,19 @@ const TestHeader = () => {
               Home
             </Text>
           </Box>
+
+          <Box fontWeight={active === "home" ? "bold" : "normal"} fontSize="xl">
+            <Text
+              _hover={{
+                bg: "blue.200",
+              }}
+              color={active === "home" ? "red.500" : "brown.300"}
+              onClick={homeButtonHandler}
+              ml={2}
+            >
+              Home
+            </Text>
+          </Box>          
 
           <HStack>
             {/* <Select

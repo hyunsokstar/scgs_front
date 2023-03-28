@@ -64,7 +64,7 @@ export default function Home() {
         />
       </Flex>
 
-      <Counter />
+      {/* <Counter /> */}
     </Box>
   );
 }
