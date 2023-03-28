@@ -3,7 +3,7 @@ import { Flex, IconButton, Icon } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 
 type Props = {
-  initialRating?: number;
+  initialRating?: number | string;
   taskPk: string | number;
   onChangeForStarRatingHandler?: ({ taskPk, newRating }: any) => void;
 };

@@ -22,8 +22,10 @@ import { FaTrash } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   deleteOneExtraTaskForPk,
+  updateExtraTaskImportance,
   updateExtraTaskStatusUsingSelectBox,
 } from "../apis/project_progress_api";
+import StarRating from "./StarRating";
 
 interface ExtraTasksTableProps {
   extra_tasks: extra_task_row_type[] | undefined;
@@ -89,6 +91,29 @@ const ExtraTasksTable = ({
     updateForExtasTaskStatusMutation.mutate({ taskPk, task_status });
   };
 
+  const updateMutationForProjectImportance = useMutation(
+    updateExtraTaskImportance,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        // queryClient.refetchQueries(["getOneProjectTask"]);
+
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+  const onChangeForStarRatingHandler = ({ taskPk, star_count }: any) => {
+    updateMutationForProjectImportance.mutate({ taskPk, star_count });
+  };
+
   //2244
   return (
     <Box overflowX="scroll" width={"100%"}>
@@ -151,7 +176,16 @@ const ExtraTasksTable = ({
                       <option value="completed">완료됨 🔵</option>
                     </Select>
                   </Td>
-                  <Td>{row.importance}</Td>
+                  {/* <Td>{row.importance}</Td> */}
+                  <Td>
+                    <StarRating
+                      initialRating={row.importance}
+                      taskPk={row.pk}
+                      onChangeForStarRatingHandler={
+                        onChangeForStarRatingHandler
+                      }
+                    />
+                  </Td>
                   <Td>{row.started_at ? row.started_at_formatted : "미정"}</Td>
                   <Td>{row.completed_at ? row.completed_at : "미정"}</Td>
                   <Td>

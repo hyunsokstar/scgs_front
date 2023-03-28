@@ -15,6 +15,28 @@ const instance = axios.create({
 });
 
 // 1122
+
+export const updateExtraTaskImportance = ({ taskPk, star_count }: any) => {
+  console.log("updateProjectImportance 실행 check");
+
+  return instance
+    .put(
+      `/project_progress/extra_taks/${taskPk}/importance/update`,
+      {
+        star_count: star_count,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 // original updateProjectStatusByDrag to updateExtraTaskStatusUsingSelectBox
 export const updateExtraTaskStatusUsingSelectBox = ({
   taskPk,
@@ -39,6 +61,8 @@ export const updateExtraTaskStatusUsingSelectBox = ({
       return response.data;
     });
 };
+
+
 
 export const deleteOneExtraTaskForPk = (extraTaskPk: number) => {
   console.log("estimatePk : ", extraTaskPk);
