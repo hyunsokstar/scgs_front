@@ -4,6 +4,7 @@ import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { backendApi } from "../apis/common_api";
 import {
+  FormTypeForCreateTest,
   FormTypeForExtraTask,
   IFormTypeForProjectProgress,
   IResponseTypeForProjectTaskUpdate,
@@ -15,6 +16,28 @@ const instance = axios.create({
 });
 
 // 1122
+
+export const insertTestForTask = ({
+  taskPk,
+  test_description,
+  test_method,
+  test_passed
+}: FormTypeForCreateTest) =>
+  instance
+    .post(
+      `/project_progress/${taskPk}/TestForTasks`,
+      {
+        test_description,
+        test_method,
+        test_passed
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
 
 export const updateExtraTaskImportance = ({ taskPk, star_count }: any) => {
   console.log("updateProjectImportance 실행 check");

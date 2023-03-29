@@ -47,6 +47,7 @@ import { FaTimes } from "react-icons/fa";
 import ExtraTasksTable from "../components/ExtraTasksTable";
 import ModalButtonForExtraTask from "../components/modal/ModalButtonForExtraTask";
 import TestListForTaskDetail from "../components/TestList/TestListForTaskDetail";
+import ModalButtonForCreateTest from "../components/modal/ModalButtonForCreateTest";
 
 interface Props {}
 
@@ -64,7 +65,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
   );
 
   if (taskData) {
-    // console.log("taskData.extra_tasks: ", taskData.extra_tasks);
+    console.log("taskData: ", taskData);
   } else {
     console.log("extra_tasks 없음");
   }
@@ -249,6 +250,10 @@ function ProjectProgressDetail({}: Props): ReactElement {
     deleteRefImageMutation.mutate(lef_image_pk);
   };
 
+  const createTestHandler = () => {
+    console.log("create test button click");
+  };
+
   if (isLoadingForTaskData) {
     return <Box>Loading</Box>;
   }
@@ -257,16 +262,11 @@ function ProjectProgressDetail({}: Props): ReactElement {
     return <Box>Loading..</Box>;
   } else {
     return (
-      <VStack width={"60%"} height="630px" border={"1px solid black"}>
+      <VStack width={"50%"} height="630px" border={"1px solid black"}>
         {/* 상단 상자 추가 */}
         <Box width={"100%"} border="2px solid orange">
           <Flex>
-            <Box
-              flex="5"
-              bg="white"
-              border="1px solid black"
-              p={2}
-            >
+            <Box flex="5" bg="white" border="1px solid black" p={2}>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <VStack w={"80%"}>
                   <FormControl id="writer" isRequired>
@@ -333,32 +333,34 @@ function ProjectProgressDetail({}: Props): ReactElement {
                     />
                   </FormControl>
 
-                  <Box display={"flex"} justifyContent={"center"} gap={5}>
-                    <VStack>
-                      <Text>시작</Text>
-                      <Datetime
-                        isValidDate={invalidDateForStartedAt}
-                        onChange={handleChangeForStartedAt}
-                        initialValue={
-                          taskData.started_at
-                            ? new Date(taskData.started_at)
-                            : new Date()
-                        }
-                      />
-                    </VStack>
+                  <Box pl={5} border="0px solid blue">
+                    <HStack>
+                      <VStack>
+                        <Text>시작</Text>
+                        <Datetime
+                          isValidDate={invalidDateForStartedAt}
+                          onChange={handleChangeForStartedAt}
+                          initialValue={
+                            taskData.started_at
+                              ? new Date(taskData.started_at)
+                              : new Date()
+                          }
+                        />
+                      </VStack>
 
-                    <VStack>
-                      <Text>마감 날짜</Text>
-                      <Datetime
-                        isValidDate={invalidDateForCompletedAt}
-                        onChange={handleChangeForStartedAt}
-                        initialValue={
-                          taskData.started_at
-                            ? new Date(taskData.started_at)
-                            : new Date()
-                        }
-                      />
-                    </VStack>
+                      <VStack>
+                        <Text>마감</Text>
+                        <Datetime
+                          isValidDate={invalidDateForCompletedAt}
+                          onChange={handleChangeForStartedAt}
+                          initialValue={
+                            taskData.started_at
+                              ? new Date(taskData.started_at)
+                              : new Date()
+                          }
+                        />
+                      </VStack>
+                    </HStack>
                   </Box>
 
                   <Button
@@ -449,10 +451,17 @@ function ProjectProgressDetail({}: Props): ReactElement {
         {/* 상단 상자 끝 */}
         {/* 중간 Box test check list */}
         <Box bg={"white"} width={"100%"} border={"2px solid orange"}>
-          <Box bgColor={"yellow.200"} p={2} textAlign="center">
-            테스트 리스트
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            bgColor={"yellow.200"}
+            p={2}
+            textAlign="center"
+          >
+            테스트 리스트 ({taskData?.pk})
+            {! isLoadingForTaskData && taskData ? <ModalButtonForCreateTest taskPk={taskData?.pk} /> : ""}
           </Box>
-          <TestListForTaskDetail />
+          <TestListForTaskDetail testData={taskData?.tests_for_tasks} />
         </Box>
         <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
           관련 업무 추가
