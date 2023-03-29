@@ -16,6 +16,24 @@ const instance = axios.create({
 });
 
 // 1122
+export const updateTestPassedForTestForTask = (taskPk: string | number) => {
+  console.log("updateProjectTaskCompleted 실행 check");
+
+  return instance
+    .put(
+      `/project_progress/TestForTasks/${taskPk}/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
 
 export const deleteOneTestForTask = (testPk: string | number) => {
   console.log("testPk : ", testPk);

@@ -12,8 +12,9 @@ import {
 import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 import { ItypeFortestRow } from "../../types/project_progress/project_progress_type";
-import { deleteOneTestForTask } from "../../apis/project_progress_api";
+import { deleteOneTestForTask, updateTestPassedForTestForTask } from "../../apis/project_progress_api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import SlideToggleButtonForUpateTestPassed from "../SlideToggleButton/SlideToggleButtonForUpateTestPassed";
 
 interface IPropsForTestListForTaskDetail {
   testData: ItypeFortestRow[];
@@ -62,6 +63,29 @@ function DataItem({
     console.log("response :", response);
   };
 
+  const updateProjectTaskIsTestingMutations = useMutation(
+    updateTestPassedForTestForTask,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        queryClient.refetchQueries(["getOneProjectTask"]);
+
+        toast({
+          status: "success",
+          title: "test passed update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const updateHandlerForTestPassed = (taskPk: string | number) => {
+    updateProjectTaskIsTestingMutations.mutate(taskPk);
+    console.log("update 핸들러 for task_status check pk : ", taskPk);
+  };
+
+
   return (
     <ListItem
       key={pk}
@@ -79,7 +103,10 @@ function DataItem({
           {test_description}
         </Text>
         <Box border="1px solid purple" width="130px">
-          {test_passed ? "완료" : "비완료"}
+          <SlideToggleButtonForUpateTestPassed
+            onChange={() => updateHandlerForTestPassed(pk)}
+            checked={test_passed}
+          />
         </Box>
         <Box
           border="1px solid purple"

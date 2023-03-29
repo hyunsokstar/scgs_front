@@ -8,7 +8,7 @@ interface SlideToggleButtonProps {
   is_disabled?: boolean;
 }
 
-const SlideToggleButtonForIsTesting: React.FC<SlideToggleButtonProps> = ({
+const SlideToggleButtonForUpateTestPassed: React.FC<SlideToggleButtonProps> = ({
   onChange,
   checked,
   is_disabled,
@@ -35,4 +35,4 @@ const SlideToggleButtonForIsTesting: React.FC<SlideToggleButtonProps> = ({
   );
 };
 
-export default SlideToggleButtonForIsTesting;
+export default SlideToggleButtonForUpateTestPassed;

@@ -64,7 +64,6 @@ function UncompletedTaskRow({
   };
   const toast = useToast();
 
-  // 2244
   const updateProjectTaskIsTestingMutations = useMutation(
     updateProjectIsTesting,
     {
