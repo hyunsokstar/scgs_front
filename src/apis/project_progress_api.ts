@@ -17,11 +17,22 @@ const instance = axios.create({
 
 // 1122
 
+export const deleteOneTestForTask = (testPk: string | number) => {
+  console.log("testPk : ", testPk);
+  return instance
+    .delete(`project_progress/TestForTasks/${testPk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const insertTestForTask = ({
   taskPk,
   test_description,
   test_method,
-  test_passed
+  test_passed,
 }: FormTypeForCreateTest) =>
   instance
     .post(
@@ -29,7 +40,7 @@ export const insertTestForTask = ({
       {
         test_description,
         test_method,
-        test_passed
+        test_passed,
       },
       {
         headers: {
@@ -84,8 +95,6 @@ export const updateExtraTaskStatusUsingSelectBox = ({
       return response.data;
     });
 };
-
-
 
 export const deleteOneExtraTaskForPk = (extraTaskPk: number) => {
   console.log("estimatePk : ", extraTaskPk);

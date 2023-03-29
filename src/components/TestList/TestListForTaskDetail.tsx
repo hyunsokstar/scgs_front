@@ -7,10 +7,13 @@ import {
   Checkbox,
   IconButton,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 import { ItypeFortestRow } from "../../types/project_progress/project_progress_type";
+import { deleteOneTestForTask } from "../../apis/project_progress_api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface IPropsForTestListForTaskDetail {
   testData: ItypeFortestRow[];
@@ -31,6 +34,34 @@ function DataItem({
   test_method,
   test_result_image,
 }: ItypeFortestRow) {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
+  const deleteTestMutation = useMutation(
+    (pk: string | number) => {
+      return deleteOneTestForTask(pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["getOneProjectTask"]);
+        toast({
+          title: "delete test 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const deleteTestHandler = (pk: string | number) => {
+    const response = deleteTestMutation.mutate(pk);
+    console.log("response :", response);
+  };
+
   return (
     <ListItem
       key={pk}
@@ -50,7 +81,12 @@ function DataItem({
         <Box border="1px solid purple" width="130px">
           {test_passed ? "완료" : "비완료"}
         </Box>
-        <Box border="1px solid purple" width="30px" textAlign={"center"}>
+        <Box
+          border="1px solid purple"
+          width="30px"
+          textAlign={"center"}
+          onClick={() => deleteTestHandler(pk)}
+        >
           <DeleteIcon />
         </Box>
       </Box>

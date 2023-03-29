@@ -458,7 +458,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
             p={2}
             textAlign="center"
           >
-            테스트 리스트 ({taskData?.pk})
+            테스트 리스트
             {! isLoadingForTaskData && taskData ? <ModalButtonForCreateTest taskPk={taskData?.pk} /> : ""}
           </Box>
           <TestListForTaskDetail testData={taskData?.tests_for_tasks} />
