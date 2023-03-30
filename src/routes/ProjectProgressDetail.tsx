@@ -498,10 +498,10 @@ function ProjectProgressDetail({}: Props): ReactElement {
           </Box>
         </VStack>
 
-        <VStack width="50%" border={"5px solid red"}>
-          <Heading as="h2" size="lg" mb={4}>
-            chakra-ui로 테이블 컴퍼넌트 출력 for tech note list
-          </Heading>{" "}
+        <VStack width="50%" border={"5px solid red"} height="630px" mb={2}>
+          <Box>
+            <Text fontSize={"2xl"} mb={2}>chakra-ui로 테이블 컴퍼넌트 출력 for tech note list</Text>
+          </Box>{" "}
           <Box>
             <TableForTechNote />
           </Box>

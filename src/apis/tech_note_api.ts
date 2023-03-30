@@ -12,11 +12,14 @@ const instance = axios.create({
 export const getTechNoteList = ({ queryKey }: QueryFunctionContext) => {
   const [_, pageNum] = queryKey;
   return instance
-    .get(`project_progress/uncompleted?page=${pageNum}`)
+    .get(`tech_note?page=${pageNum}`)
     .then((response) => {
-      console.log("response : ", response);
+      console.log("response : ", response)
+      const response_data = {
+        total_count_for_tech_note_table_rows: response.data.total_count_for_tech_note_table_rows,
+        tech_note_list_for_page: response.data.tech_note_list_for_page
+      }
     
-    
-      return response;
+      return response_data;
     });
 };

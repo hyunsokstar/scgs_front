@@ -1,5 +1,5 @@
 export type ITechNote = {
-  id: number;
+  pk: number;
   author: string | null;
   title: string;
   category: string;
