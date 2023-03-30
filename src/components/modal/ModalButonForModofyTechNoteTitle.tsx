@@ -16,19 +16,43 @@ import {
 } from "@chakra-ui/react";
 import { EditIcon, CloseIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { IUpdateFormTypeForTechNoteInfo } from "../../types/tech_note_type";
+import { updateTechNoteInfoByPk } from "../../apis/tech_note_api";
 
-type FormData = {
-  tech_note_description: string;
-  category_option: string;
-};
+// IUpdateFormTypeForTechNoteInfo
+// type FormData = {
+//   tech_note_description: string;
+//   category_option: string;
+// };
 
 const ModalButonForModofyTechNoteTitle: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { handleSubmit, register } = useForm<FormData>();
+  const { handleSubmit, register } = useForm<IUpdateFormTypeForTechNoteInfo>();
 
-  const onSubmit = (data: FormData) => {
+  const updateMutationForTechNoteInfo = useMutation(updateTechNoteInfoByPk, {
+    onSuccess: (result: any) => {
+      // console.log("result : ", result);
+      //   if (refetchForGetProgectTasksStatus) {
+      //     refetchForGetProgectTasksStatus();
+      //   }
+      //   toast({
+      //     status: "success",
+      //     title: "task status update success",
+      //     description: result.message,
+      //   });
+    },
+    onError: (err) => {
+      console.log("error : ", err);
+    },
+  });
+
+  const onSubmit = ( data : IUpdateFormTypeForTechNoteInfo) => {
     console.log("data : ", data);
-    // onClose();
+    // category_option,
+    // tech_note_description
+
+    updateMutationForTechNoteInfo.mutate({});
   };
 
   return (
@@ -49,12 +73,12 @@ const ModalButonForModofyTechNoteTitle: FC = () => {
         <ModalContent>
           <ModalHeader>기술 노트 수정</ModalHeader>
           <ModalBody>
-            <FormControl>
+            <FormControl mb={2}>
               <FormLabel>title</FormLabel>
               <Input
                 type="text"
                 {...register("tech_note_description", {
-                  required: "tech_note_description is required",
+                  required: true,
                   maxLength: {
                     value: 50,
                     message:
@@ -69,7 +93,7 @@ const ModalButonForModofyTechNoteTitle: FC = () => {
               <Select
                 defaultValue={"create"}
                 {...register("category_option", {
-                  required: "category_option is required",
+                  required: true,
                 })}
               >
                 <option value="create">Create</option>

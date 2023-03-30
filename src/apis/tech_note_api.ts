@@ -23,3 +23,27 @@ export const getTechNoteList = ({ queryKey }: QueryFunctionContext) => {
       return response_data;
     });
 };
+
+export const updateTechNoteInfoByPk = ({ taskPk, status_to_move }: any) => {
+    console.log(
+      "updateProjectStatusByDrag 실행 status_to_move check : ",
+      status_to_move
+    );
+  
+    return instance
+      .put(
+        `/project_progress/${taskPk}/update_project_status_page/update`,
+        {
+          status_to_move: status_to_move,
+        },
+        {
+          headers: {
+            "X-CSRFToken": Cookie.get("csrftoken") || "",
+          },
+        }
+      )
+      .then((response): any => {
+        // console.log("response : ", response);
+        return response.data;
+      });
+  };
