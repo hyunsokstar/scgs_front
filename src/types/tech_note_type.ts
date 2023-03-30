@@ -15,6 +15,7 @@ export type ITechNoteListResponse = {
 
 // IUpdateFormTypeForTechNoteInfo
 export type IUpdateFormTypeForTechNoteInfo = {
+  techNotePk: number;
   tech_note_description?: string;
   category_option?: string;
 };

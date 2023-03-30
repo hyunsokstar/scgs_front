@@ -17,7 +17,7 @@ import { getTechNoteList } from "../../apis/tech_note_api";
 import PaginationComponent from "../PaginationComponent";
 import PaginationComponentForTechNote from "../Pagination/PaginationComponentForTechNote";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import ModalButonForModofyTechNoteTitle from "../modal/ModalButonForModofyTechNoteTitle";
+import ModalButonForModofyTechNoteTitle from "../modal/ModalButtonForModofyTechNoteTitle";
 
 // import { faker } from "@faker-js/faker";
 
@@ -57,7 +57,7 @@ const TableForTechNote = () => {
     data: tech_note_list_data,
     refetch: refetch_for_tech_note_list,
   } = useQuery<ITechNoteListResponse>(
-    ["getUncompletedTaskList", currentPageNum],
+    ["getTechNoteList", currentPageNum],
     getTechNoteList,
     {
       enabled: true,
@@ -106,7 +106,7 @@ const TableForTechNote = () => {
                         _active={{ bg: "green.200" }}
                         size="xs"
                       /> */}
-                      <ModalButonForModofyTechNoteTitle />
+                      <ModalButonForModofyTechNoteTitle techNotePk={row.pk} />
                       <IconButton
                         icon={<DeleteIcon />}
                         aria-label="삭제"

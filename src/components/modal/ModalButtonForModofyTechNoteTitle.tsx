@@ -13,6 +13,7 @@ import {
   FormLabel,
   Input,
   Select,
+  useToast,
 } from "@chakra-ui/react";
 import { EditIcon, CloseIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
@@ -26,33 +27,43 @@ import { updateTechNoteInfoByPk } from "../../apis/tech_note_api";
 //   category_option: string;
 // };
 
-const ModalButonForModofyTechNoteTitle: FC = () => {
+type IProps = {
+  techNotePk: number;
+};
+
+const ModalButonForModofyTechNoteTitle = ({ techNotePk }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   const { handleSubmit, register } = useForm<IUpdateFormTypeForTechNoteInfo>();
+  const queryClient = useQueryClient();
+
 
   const updateMutationForTechNoteInfo = useMutation(updateTechNoteInfoByPk, {
     onSuccess: (result: any) => {
-      // console.log("result : ", result);
-      //   if (refetchForGetProgectTasksStatus) {
-      //     refetchForGetProgectTasksStatus();
-      //   }
-      //   toast({
-      //     status: "success",
-      //     title: "task status update success",
-      //     description: result.message,
-      //   });
+      console.log("result : ", result);
+      queryClient.refetchQueries(["getTechNoteList"]);
+
+      toast({
+        status: "success",
+        title: "task status update success",
+        description: result.message,
+      });
     },
     onError: (err) => {
       console.log("error : ", err);
     },
   });
 
-  const onSubmit = ( data : IUpdateFormTypeForTechNoteInfo) => {
+  const onSubmit = (data: IUpdateFormTypeForTechNoteInfo) => {
     console.log("data : ", data);
     // category_option,
     // tech_note_description
 
-    updateMutationForTechNoteInfo.mutate({});
+    updateMutationForTechNoteInfo.mutate({
+      techNotePk: data.techNotePk,
+      category_option: data.category_option,
+      tech_note_description: data.tech_note_description,
+    });
   };
 
   return (
@@ -73,6 +84,14 @@ const ModalButonForModofyTechNoteTitle: FC = () => {
         <ModalContent>
           <ModalHeader>기술 노트 수정</ModalHeader>
           <ModalBody>
+            <FormControl>
+              <Input
+                type="hidden"
+                value={techNotePk}
+                {...register("techNotePk")}
+              />
+            </FormControl>
+
             <FormControl mb={2}>
               <FormLabel>title</FormLabel>
               <Input
