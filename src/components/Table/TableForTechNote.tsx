@@ -17,6 +17,7 @@ import { getTechNoteList } from "../../apis/tech_note_api";
 import PaginationComponent from "../PaginationComponent";
 import PaginationComponentForTechNote from "../Pagination/PaginationComponentForTechNote";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import ModalButonForModofyTechNoteTitle from "../modal/ModalButonForModofyTechNoteTitle";
 
 // import { faker } from "@faker-js/faker";
 
@@ -96,7 +97,7 @@ const TableForTechNote = () => {
                     <Td>{row.like_count}</Td>
                     <Td>{row.view_count}</Td>
                     <Td>
-                      <IconButton
+                      {/* <IconButton
                         icon={<EditIcon />}
                         aria-label="수정"
                         variant="outline"
@@ -104,7 +105,8 @@ const TableForTechNote = () => {
                         _hover={{ bg: "green.100" }}
                         _active={{ bg: "green.200" }}
                         size="xs"
-                      />
+                      /> */}
+                      <ModalButonForModofyTechNoteTitle />
                       <IconButton
                         icon={<DeleteIcon />}
                         aria-label="삭제"
