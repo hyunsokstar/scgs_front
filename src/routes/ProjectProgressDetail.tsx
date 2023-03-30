@@ -295,7 +295,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                       />
                     </FormControl>
 
-                    <FormControl id="task" isRequired>
+                    <FormControl id="task" isRequired border="1px solid green" width={"100%"}>
                       <FormLabel>Task Description</FormLabel>
                       <Textarea
                         // {...register("task_description")}
@@ -399,76 +399,83 @@ function ProjectProgressDetail({}: Props): ReactElement {
                 </form>
               </Box>
 
-              <Box
-                flex="3"
-                // bg="#E8D1CF"
-                overflowY="scroll"
-                height={"620px"}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-                border={"1px solid green"}
-              >
-                {refer_images && refer_images.length ? (
-                  refer_images.map((row: any) => {
-                    // console.log("row : ", row);
-                    // return <Image src={row.image_url} height={"200px"} width={"100%"}/>;
-                    return (
-                      <a href={row.image_url} target="_blank" rel="noreferrer">
-                        <Box
-                          position="relative"
-                          zIndex="1"
-                          paddingY={1}
-                          _hover={{ border: "skyblue", opacity: 0.7 }}
-                          // onMouseEnter={() => setIsHovering(true)}
-                          // onMouseLeave={() => setIsHovering(false)}
+              <VStack flex="3">
+                <Box
+                  width={"100%"}
+                  overflowY="scroll"
+                  height={"620px"}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  border={"1px solid green"}
+                >
+                  {refer_images && refer_images.length ? (
+                    refer_images.map((row: any) => {
+                      // console.log("row : ", row);
+                      // return <Image src={row.image_url} height={"200px"} width={"100%"}/>;
+                      return (
+                        <a
+                          href={row.image_url}
+                          target="_blank"
+                          rel="noreferrer"
                         >
-                          {/* {isHovering ? "호버중" : "떠남"} */}
-                          <IconButton
-                            icon={
-                              <Box display="flex" justifyContent="center">
-                                <FaTimes />
-                              </Box>
-                            }
-                            position="absolute"
-                            top={"8px"}
-                            mt={1}
-                            mr={2}
-                            right={0}
-                            size="sm"
-                            // bg="transparent"
-                            zIndex={5}
-                            // _hover={{ bg: "lightblue" }}
-                            // _active={{ bg: "transparent" }}
-                            // _focus={{ outline: "none" }}
-                            display={isHovering ? "block" : "none"} // display 속성을 이용하여 보이기/숨기기를 조작합니다.
-                            onClick={(e) => {
-                              e.preventDefault();
-                              // alert("삭제 버튼 클릭 : "+ row.pk);
-                              delete_lef_image_handler(row.pk);
-                            }}
-                            aria-label={""}
-                          />
-                          {isUploadingForRefImage ? (
-                            <Spinner size="md" color="blue.500" />
-                          ) : (
-                            ""
-                          )}
-                          <Image
-                            src={row.image_url}
-                            height={"200px"}
-                            width={"100%"}
-                          />
-                        </Box>
-                      </a>
-                    );
-                  })
-                ) : (
-                  <Box>
-                    <Text>참고 이미지(드래그앤 드롭 가능)</Text>
-                  </Box>
-                )}
-              </Box>
+                          <Box
+                            position="relative"
+                            zIndex="1"
+                            paddingY={1}
+                            _hover={{ border: "skyblue", opacity: 0.7 }}
+                            // onMouseEnter={() => setIsHovering(true)}
+                            // onMouseLeave={() => setIsHovering(false)}
+                          >
+                            {/* {isHovering ? "호버중" : "떠남"} */}
+                            <IconButton
+                              icon={
+                                <Box display="flex" justifyContent="center">
+                                  <FaTimes />
+                                </Box>
+                              }
+                              position="absolute"
+                              top={"8px"}
+                              mt={1}
+                              mr={2}
+                              right={0}
+                              size="sm"
+                              // bg="transparent"
+                              zIndex={5}
+                              // _hover={{ bg: "lightblue" }}
+                              // _active={{ bg: "transparent" }}
+                              // _focus={{ outline: "none" }}
+                              display={isHovering ? "block" : "none"} // display 속성을 이용하여 보이기/숨기기를 조작합니다.
+                              onClick={(e) => {
+                                e.preventDefault();
+                                // alert("삭제 버튼 클릭 : "+ row.pk);
+                                delete_lef_image_handler(row.pk);
+                              }}
+                              aria-label={""}
+                            />
+                            <Image
+                              src={row.image_url}
+                              height={"200px"}
+                              width={"100%"}
+                            />
+                          </Box>
+                        </a>
+                      );
+                    })
+                  ) : (
+                    <Box>
+                      <Text>참고 이미지(드래그앤 드롭 가능)</Text>
+                    </Box>
+                  )}
+                </Box>
+                <Box>
+                  {isUploadingForRefImage ? (
+                    <Spinner size="md" color="blue.500" />
+                  ) : (
+                    ""
+                  )}
+                </Box>
+              </VStack>
             </Flex>
           </Box>{" "}
           {/* 상단 상자 끝 */}
@@ -500,7 +507,9 @@ function ProjectProgressDetail({}: Props): ReactElement {
 
         <VStack width="50%" border={"5px solid red"} height="630px" mb={2}>
           <Box>
-            <Text fontSize={"2xl"} mb={2}>chakra-ui로 테이블 컴퍼넌트 출력 for tech note list</Text>
+            <Text fontSize={"2xl"} mb={2}>
+              chakra-ui로 테이블 컴퍼넌트 출력 for tech note list
+            </Text>
           </Box>{" "}
           <Box>
             <TableForTechNote />

@@ -9,12 +9,14 @@ import {
   Checkbox,
   VStack,
   Box,
+  IconButton,
 } from "@chakra-ui/react";
 import { ITechNote, ITechNoteListResponse } from "../../types/tech_note_type";
 import { useQuery } from "@tanstack/react-query";
 import { getTechNoteList } from "../../apis/tech_note_api";
 import PaginationComponent from "../PaginationComponent";
 import PaginationComponentForTechNote from "../Pagination/PaginationComponentForTechNote";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
 // import { faker } from "@faker-js/faker";
 
@@ -76,11 +78,12 @@ const TableForTechNote = () => {
             <Th>분류</Th>
             <Th>평점</Th>
             <Th>조회수</Th>
+            <Th>수정/삭제</Th>
           </Tr>
         </Thead>
 
         <Tbody>
-          {tech_note_list_data
+          {tech_note_list_data?.tech_note_list_for_page
             ? tech_note_list_data.tech_note_list_for_page.map(
                 (row: ITechNote) => (
                   <Tr key={row.pk}>
@@ -92,6 +95,27 @@ const TableForTechNote = () => {
                     <Td>{row.category}</Td>
                     <Td>{row.like_count}</Td>
                     <Td>{row.view_count}</Td>
+                    <Td>
+                      <IconButton
+                        icon={<EditIcon />}
+                        aria-label="수정"
+                        variant="outline"
+                        borderColor="green.500"
+                        _hover={{ bg: "green.100" }}
+                        _active={{ bg: "green.200" }}
+                        size="xs"
+                      />
+                      <IconButton
+                        icon={<DeleteIcon />}
+                        aria-label="삭제"
+                        variant="outline"
+                        borderColor="red.500"
+                        _hover={{ bg: "red.100" }}
+                        _active={{ bg: "red.200" }}
+                        size="xs"
+                        ml={1}
+                      />
+                    </Td>
                   </Tr>
                 )
               )
