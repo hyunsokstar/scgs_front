@@ -35,7 +35,7 @@ const [isOpen, setIsOpen] = useState(false);
 const queryClient = useQueryClient();
 const toast = useToast();
 
-console.log("taskPk : ", taskPk);
+// console.log("taskPk : ", taskPk);
 
 const { loginUser, isLoggedIn } = useSelector(
 (state: RootState) => state.loginInfo
@@ -93,7 +93,7 @@ test_description,
 test_method,
 test_passed,
 }: FormTypeForCreateTest) => {
-console.log("taskPk : ", taskPk);
+// console.log("taskPk : ", taskPk);
 console.log("test_description :: ", test_description);
 console.log("test_method :: ", test_method);
 console.log("test_passed :: ", test_passed);

@@ -1,0 +1,14 @@
+export type ITechNote = {
+  id: number;
+  author: string | null;
+  title: string;
+  category: string;
+  like_count: number;
+  view_count: number;
+  created_at: string;
+};
+
+export type ITechNoteListResponse = {
+  total_count_for_tech_note_table_rows: number;
+  tech_note_list_for_page: ITechNote[];
+};
