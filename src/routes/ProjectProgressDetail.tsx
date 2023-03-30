@@ -26,6 +26,7 @@ import {
   ListItem,
   ListIcon,
   Textarea,
+  Heading,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
@@ -48,6 +49,7 @@ import ExtraTasksTable from "../components/ExtraTasksTable";
 import ModalButtonForExtraTask from "../components/modal/ModalButtonForExtraTask";
 import TestListForTaskDetail from "../components/TestList/TestListForTaskDetail";
 import ModalButtonForCreateTest from "../components/modal/ModalButtonForCreateTest";
+import TableForTechNote from "../components/Table/TableForTechNote";
 
 interface Props {}
 
@@ -262,214 +264,249 @@ function ProjectProgressDetail({}: Props): ReactElement {
     return <Box>Loading..</Box>;
   } else {
     return (
-      <VStack width={"50%"} height="630px" border={"1px solid black"}>
-        {/* 상단 상자 추가 */}
-        <Box width={"100%"} border="2px solid orange">
-          <Flex>
-            <Box flex="5" bg="white" border="1px solid black" p={2}>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <VStack w={"80%"}>
-                  <FormControl id="writer" isRequired>
-                    <FormLabel>Writer</FormLabel>
-                    <Input
-                      defaultValue={
-                        taskData.task_manager
-                          ? taskData.task_manager.username
-                          : taskData.writer
-                      }
-                      width="50%" // width를 50%로 설정하여 너비 반으로 줄임
-                      {...register("writer")}
-                      size="md"
-                    />
-                  </FormControl>
+      <HStack border={"1px solid purple"} width="100%">
+        <VStack width={"50%"} height="630px" border={"1px solid black"}>
+          {/* 상단 상자 추가 */}
+          <Box width={"100%"} border="2px solid orange">
+            <Flex>
+              <Box flex="5" bg="white" border="1px solid black" p={2}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <VStack w={"80%"}>
+                    <FormControl id="writer" isRequired>
+                      <FormLabel>Writer</FormLabel>
+                      <Input
+                        defaultValue={
+                          taskData.task_manager
+                            ? taskData.task_manager.username
+                            : taskData.writer
+                        }
+                        width="50%" // width를 50%로 설정하여 너비 반으로 줄임
+                        {...register("writer")}
+                        size="md"
+                      />
+                    </FormControl>
 
-                  <FormControl id="task" isRequired>
-                    <FormLabel>Task</FormLabel>
-                    <Input
-                      {...register("task")}
-                      size="md"
-                      defaultValue={taskData.task}
-                    />
-                  </FormControl>
+                    <FormControl id="task" isRequired>
+                      <FormLabel>Task</FormLabel>
+                      <Input
+                        {...register("task")}
+                        size="md"
+                        defaultValue={taskData.task}
+                      />
+                    </FormControl>
 
-                  <FormControl id="task" isRequired>
-                    <FormLabel>Task Description</FormLabel>
-                    <Textarea
-                      // {...register("task_description")}
-                      size="md"
-                      height={"100px"}
-                      defaultValue={taskData.task_description}
-                    />
-                  </FormControl>
+                    <FormControl id="task" isRequired>
+                      <FormLabel>Task Description</FormLabel>
+                      <Textarea
+                        // {...register("task_description")}
+                        size="md"
+                        height={"100px"}
+                        defaultValue={taskData.task_description}
+                      />
+                    </FormControl>
 
-                  <FormControl id="importance" isRequired>
-                    <FormLabel>Importance</FormLabel>
-                    <RadioGroup defaultValue={taskData.importance.toString()}>
-                      <HStack spacing="24px">
-                        <Radio value="1" {...register("importance")} size="lg">
-                          1
-                        </Radio>
-                        <Radio value="2" {...register("importance")} size="lg">
-                          2
-                        </Radio>
-                        <Radio value="3" {...register("importance")} size="lg">
-                          3
-                        </Radio>
-                        <Radio value="4" {...register("importance")} size="lg">
-                          4
-                        </Radio>
-                        <Radio value="5" {...register("importance")} size="lg">
-                          5
-                        </Radio>
+                    <FormControl id="importance" isRequired>
+                      <FormLabel>Importance</FormLabel>
+                      <RadioGroup defaultValue={taskData.importance.toString()}>
+                        <HStack spacing="24px">
+                          <Radio
+                            value="1"
+                            {...register("importance")}
+                            size="lg"
+                          >
+                            1
+                          </Radio>
+                          <Radio
+                            value="2"
+                            {...register("importance")}
+                            size="lg"
+                          >
+                            2
+                          </Radio>
+                          <Radio
+                            value="3"
+                            {...register("importance")}
+                            size="lg"
+                          >
+                            3
+                          </Radio>
+                          <Radio
+                            value="4"
+                            {...register("importance")}
+                            size="lg"
+                          >
+                            4
+                          </Radio>
+                          <Radio
+                            value="5"
+                            {...register("importance")}
+                            size="lg"
+                          >
+                            5
+                          </Radio>
+                        </HStack>
+                      </RadioGroup>
+                    </FormControl>
+
+                    <FormControl id="task_completed">
+                      <FormLabel>Task Completed</FormLabel>
+                      <Checkbox
+                        defaultChecked={taskData.task_completed}
+                        {...register("task_completed")}
+                      />
+                    </FormControl>
+
+                    <Box pl={5} border="0px solid blue">
+                      <HStack>
+                        <VStack>
+                          <Text>시작</Text>
+                          <Datetime
+                            isValidDate={invalidDateForStartedAt}
+                            onChange={handleChangeForStartedAt}
+                            initialValue={
+                              taskData.started_at
+                                ? new Date(taskData.started_at)
+                                : new Date()
+                            }
+                          />
+                        </VStack>
+
+                        <VStack>
+                          <Text>마감</Text>
+                          <Datetime
+                            isValidDate={invalidDateForCompletedAt}
+                            onChange={handleChangeForStartedAt}
+                            initialValue={
+                              taskData.started_at
+                                ? new Date(taskData.started_at)
+                                : new Date()
+                            }
+                          />
+                        </VStack>
                       </HStack>
-                    </RadioGroup>
-                  </FormControl>
+                    </Box>
 
-                  <FormControl id="task_completed">
-                    <FormLabel>Task Completed</FormLabel>
-                    <Checkbox
-                      defaultChecked={taskData.task_completed}
-                      {...register("task_completed")}
-                    />
-                  </FormControl>
+                    <Button
+                      type="submit"
+                      isLoading={submitting}
+                      loadingText="Submitting..."
+                      size="md"
+                      mt={4}
+                    >
+                      Submit
+                    </Button>
+                  </VStack>
+                </form>
+              </Box>
 
-                  <Box pl={5} border="0px solid blue">
-                    <HStack>
-                      <VStack>
-                        <Text>시작</Text>
-                        <Datetime
-                          isValidDate={invalidDateForStartedAt}
-                          onChange={handleChangeForStartedAt}
-                          initialValue={
-                            taskData.started_at
-                              ? new Date(taskData.started_at)
-                              : new Date()
-                          }
-                        />
-                      </VStack>
-
-                      <VStack>
-                        <Text>마감</Text>
-                        <Datetime
-                          isValidDate={invalidDateForCompletedAt}
-                          onChange={handleChangeForStartedAt}
-                          initialValue={
-                            taskData.started_at
-                              ? new Date(taskData.started_at)
-                              : new Date()
-                          }
-                        />
-                      </VStack>
-                    </HStack>
+              <Box
+                flex="3"
+                // bg="#E8D1CF"
+                overflowY="scroll"
+                height={"620px"}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                border={"1px solid green"}
+              >
+                {refer_images && refer_images.length ? (
+                  refer_images.map((row: any) => {
+                    // console.log("row : ", row);
+                    // return <Image src={row.image_url} height={"200px"} width={"100%"}/>;
+                    return (
+                      <a href={row.image_url} target="_blank" rel="noreferrer">
+                        <Box
+                          position="relative"
+                          zIndex="1"
+                          paddingY={1}
+                          _hover={{ border: "skyblue", opacity: 0.7 }}
+                          // onMouseEnter={() => setIsHovering(true)}
+                          // onMouseLeave={() => setIsHovering(false)}
+                        >
+                          {/* {isHovering ? "호버중" : "떠남"} */}
+                          <IconButton
+                            icon={
+                              <Box display="flex" justifyContent="center">
+                                <FaTimes />
+                              </Box>
+                            }
+                            position="absolute"
+                            top={"8px"}
+                            mt={1}
+                            mr={2}
+                            right={0}
+                            size="sm"
+                            // bg="transparent"
+                            zIndex={5}
+                            // _hover={{ bg: "lightblue" }}
+                            // _active={{ bg: "transparent" }}
+                            // _focus={{ outline: "none" }}
+                            display={isHovering ? "block" : "none"} // display 속성을 이용하여 보이기/숨기기를 조작합니다.
+                            onClick={(e) => {
+                              e.preventDefault();
+                              // alert("삭제 버튼 클릭 : "+ row.pk);
+                              delete_lef_image_handler(row.pk);
+                            }}
+                            aria-label={""}
+                          />
+                          {isUploadingForRefImage ? (
+                            <Spinner size="md" color="blue.500" />
+                          ) : (
+                            ""
+                          )}
+                          <Image
+                            src={row.image_url}
+                            height={"200px"}
+                            width={"100%"}
+                          />
+                        </Box>
+                      </a>
+                    );
+                  })
+                ) : (
+                  <Box>
+                    <Text>참고 이미지(드래그앤 드롭 가능)</Text>
                   </Box>
-
-                  <Button
-                    type="submit"
-                    isLoading={submitting}
-                    loadingText="Submitting..."
-                    size="md"
-                    mt={4}
-                  >
-                    Submit
-                  </Button>
-                </VStack>
-              </form>
-            </Box>
-
+                )}
+              </Box>
+            </Flex>
+          </Box>{" "}
+          {/* 상단 상자 끝 */}
+          {/* 중간 Box test check list */}
+          <Box bg={"white"} width={"100%"} border={"2px solid orange"}>
             <Box
-              flex="3"
-              // bg="#E8D1CF"
-              overflowY="scroll"
-              height={"620px"}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-              border={"1px solid green"}
+              display={"flex"}
+              justifyContent={"space-between"}
+              bgColor={"yellow.200"}
+              p={2}
+              textAlign="center"
             >
-              {refer_images && refer_images.length ? (
-                refer_images.map((row: any) => {
-                  // console.log("row : ", row);
-                  // return <Image src={row.image_url} height={"200px"} width={"100%"}/>;
-                  return (
-                    <a href={row.image_url} target="_blank" rel="noreferrer">
-                      <Box
-                        position="relative"
-                        zIndex="1"
-                        paddingY={1}
-                        _hover={{ border: "skyblue", opacity: 0.7 }}
-                        // onMouseEnter={() => setIsHovering(true)}
-                        // onMouseLeave={() => setIsHovering(false)}
-                      >
-                        {/* {isHovering ? "호버중" : "떠남"} */}
-                        <IconButton
-                          icon={
-                            <Box display="flex" justifyContent="center">
-                              <FaTimes />
-                            </Box>
-                          }
-                          position="absolute"
-                          top={"8px"}
-                          mt={1}
-                          mr={2}
-                          right={0}
-                          size="sm"
-                          // bg="transparent"
-                          zIndex={5}
-                          // _hover={{ bg: "lightblue" }}
-                          // _active={{ bg: "transparent" }}
-                          // _focus={{ outline: "none" }}
-                          display={isHovering ? "block" : "none"} // display 속성을 이용하여 보이기/숨기기를 조작합니다.
-                          onClick={(e) => {
-                            e.preventDefault();
-                            // alert("삭제 버튼 클릭 : "+ row.pk);
-                            delete_lef_image_handler(row.pk);
-                          }}
-                          aria-label={""}
-                        />
-                        {isUploadingForRefImage ? (
-                          <Spinner size="md" color="blue.500" />
-                        ) : (
-                          ""
-                        )}
-                        <Image
-                          src={row.image_url}
-                          height={"200px"}
-                          width={"100%"}
-                        />
-                      </Box>
-                    </a>
-                  );
-                })
+              테스트 리스트
+              {!isLoadingForTaskData && taskData ? (
+                <ModalButtonForCreateTest taskPk={taskData?.pk} />
               ) : (
-                <Box>
-                  <Text>참고 이미지(드래그앤 드롭 가능)</Text>
-                </Box>
+                ""
               )}
             </Box>
-          </Flex>
-        </Box>{" "}
-        {/* 상단 상자 끝 */}
-        {/* 중간 Box test check list */}
-        <Box bg={"white"} width={"100%"} border={"2px solid orange"}>
-          <Box
-            display={"flex"}
-            justifyContent={"space-between"}
-            bgColor={"yellow.200"}
-            p={2}
-            textAlign="center"
-          >
-            테스트 리스트
-            {! isLoadingForTaskData && taskData ? <ModalButtonForCreateTest taskPk={taskData?.pk} /> : ""}
+            <TestListForTaskDetail testData={taskData?.tests_for_tasks} />
           </Box>
-          <TestListForTaskDetail testData={taskData?.tests_for_tasks} />
-        </Box>
-        <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
-          관련 업무 추가
-          <br />
-          <ModalButtonForExtraTask taskPk={taskPk} />
-          <ExtraTasksTable extra_tasks={taskData.extra_tasks} />
-        </Box>
-      </VStack>
+          <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
+            관련 업무 추가
+            <br />
+            <ModalButtonForExtraTask taskPk={taskPk} />
+            <ExtraTasksTable extra_tasks={taskData.extra_tasks} />
+          </Box>
+        </VStack>
+
+        <VStack width="50%" border={"5px solid red"}>
+          <Heading as="h2" size="lg" mb={4}>
+            chakra-ui로 테이블 컴퍼넌트 출력 for tech note list
+          </Heading>{" "}
+          <Box>
+            <TableForTechNote />
+          </Box>
+        </VStack>
+      </HStack>
     );
   }
 }
