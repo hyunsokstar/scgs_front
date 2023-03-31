@@ -89,3 +89,20 @@ export const createApiForTechNoteList = ({
       return response.data;
     });
 };
+
+// 1122
+export const updateLikeForTechNote = (techNotePk: number) => {
+  return instance
+    .put(
+      `/tech_note/${techNotePk}/like`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      return response.data;
+    });
+};

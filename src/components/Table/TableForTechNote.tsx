@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   deleteTechNoteListByPk,
   getTechNoteList,
+  updateLikeForTechNote,
 } from "../../apis/tech_note_api";
 import PaginationComponent from "../PaginationComponent";
 import PaginationComponentForTechNote from "../Pagination/PaginationComponentForTechNote";
@@ -102,6 +103,23 @@ const TableForTechNote = () => {
     deleteMutationForTechNoteListByPk.mutate(techNotePk);
   };
 
+  const updateLikeForTechNoteMutation = useMutation(updateLikeForTechNote, {
+    onSuccess: (result: any) => {
+      console.log("result : ", result);
+      queryClient.refetchQueries(["getTechNoteList"]);
+
+      toast({
+        status: "success",
+        title: "task status update success",
+        description: result.message,
+      });
+    },
+  });
+
+  const techNoteButtonHandlerForLike = (techNotePk: number) => {
+    updateLikeForTechNoteMutation.mutate(techNotePk);
+  };
+
   return (
     <VStack>
       <Box
@@ -157,6 +175,7 @@ const TableForTechNote = () => {
                             _hover={{ bg: "orange.100" }}
                             _active={{ bg: "orange.200" }}
                             size="xs"
+                            onClick={() => techNoteButtonHandlerForLike(row.pk)}
                           />
                         </Box>
                         <Box>{row.like_count}</Box>
