@@ -50,3 +50,14 @@ export const updateTechNoteInfoByPk = ({
       return response.data;
     });
 };
+
+export const deleteTechNoteListByPk = (techNotePk: number) => {
+    // console.log("testPk : ", testPk);
+    return instance
+      .delete(`tech_note/${techNotePk}/delete`, {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      })
+      .then((response) => response.data);
+  };

@@ -10,14 +10,18 @@ import {
   VStack,
   Box,
   IconButton,
+  useToast
 } from "@chakra-ui/react";
 import { ITechNote, ITechNoteListResponse } from "../../types/tech_note_type";
 import { useQuery } from "@tanstack/react-query";
-import { getTechNoteList } from "../../apis/tech_note_api";
+import { deleteTechNoteListByPk, getTechNoteList } from "../../apis/tech_note_api";
 import PaginationComponent from "../PaginationComponent";
 import PaginationComponentForTechNote from "../Pagination/PaginationComponentForTechNote";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import ModalButonForModofyTechNoteTitle from "../modal/ModalButtonForModofyTechNoteTitle";
+import ModalButtonForDeleteTechNoteList from "../modal/ModalButtonForDeleteTechNoteList";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // import { faker } from "@faker-js/faker";
 
@@ -50,6 +54,9 @@ import ModalButonForModofyTechNoteTitle from "../modal/ModalButtonForModofyTechN
 // ];
 
 const TableForTechNote = () => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
 
   const {
@@ -65,6 +72,31 @@ const TableForTechNote = () => {
   );
 
   console.log("tech_note_list_data : ", tech_note_list_data);
+
+  const deleteMutationForTechNoteListByPk = useMutation(
+    (techNotePk: number) => {
+      return deleteTechNoteListByPk(techNotePk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["getTechNoteList"]);
+
+        toast({
+          title: "delete tech note 성공 !",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const handleTechNoteListDelete = (techNotePk: number) => {
+
+    deleteMutationForTechNoteListByPk.mutate(techNotePk)
+  };
 
   return (
     <VStack>
@@ -107,15 +139,9 @@ const TableForTechNote = () => {
                         size="xs"
                       /> */}
                       <ModalButonForModofyTechNoteTitle techNotePk={row.pk} />
-                      <IconButton
-                        icon={<DeleteIcon />}
-                        aria-label="삭제"
-                        variant="outline"
-                        borderColor="red.500"
-                        _hover={{ bg: "red.100" }}
-                        _active={{ bg: "red.200" }}
-                        size="xs"
-                        ml={1}
+
+                      <ModalButtonForDeleteTechNoteList
+                        onDelete={() => handleTechNoteListDelete(row.pk)}
                       />
                     </Td>
                   </Tr>
