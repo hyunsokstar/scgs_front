@@ -24,3 +24,16 @@ export type IFormTypeForCreateTechNoteList = {
   tech_note_description?: string;
   category_option?: string;
 };
+
+export interface TechNoteContentRowType {
+  tech_note: number;
+  title: string;
+  file: string;
+  content: string;
+  created_at: string;
+}
+
+export interface TechNoteContentListType {
+  success: string;
+  data: TechNoteContentRowType[];
+}

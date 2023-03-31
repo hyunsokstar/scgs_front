@@ -106,3 +106,12 @@ export const updateLikeForTechNote = (techNotePk: number) => {
       return response.data;
     });
 };
+
+export const getTechNoteContentList = async ({ queryKey }: QueryFunctionContext) => {
+  const [_, notePk] = queryKey;
+  // console.log("roomPestimatePk : ", taskPk);
+
+  return await instance
+    .get(`tech_note/${notePk}`)
+    .then((response) => response.data);
+};
