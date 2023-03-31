@@ -28,6 +28,7 @@ import ModalButtonForDeleteTechNoteList from "../modal/ModalButtonForDeleteTechN
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ModalButtonForCreateTechNoteList from "../modal/ModalButtonForCreateTechNoteList";
+import { Link } from "react-router-dom";
 
 // import { faker } from "@faker-js/faker";
 
@@ -162,7 +163,9 @@ const TableForTechNote = () => {
                       <Checkbox />
                     </Td>
                     <Td>{row.author}</Td>
-                    <Td>{row.title}</Td>
+                    <Td>
+                      <Link to={`/tech-note/${row.pk}`}>{row.title}</Link>
+                    </Td>
                     <Td>{row.category}</Td>
                     <Td>
                       <HStack gap={1}>

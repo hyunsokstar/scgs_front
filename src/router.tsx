@@ -31,6 +31,7 @@ import SiteManualPage from "./routes/SiteManualPage";
 import QAPage from "./routes/QAPage";
 import TechNote from "./routes/TechNote";
 import MyTechNote from "./routes/MyTechNote";
+import TechNoteContent from "./routes/TechNoteContent";
 
 const router = createBrowserRouter([
   {
@@ -44,11 +45,15 @@ const router = createBrowserRouter([
       },
       {
         path: "my-tech-note",
-        element: <MyTechNote />
+        element: <MyTechNote />,
       },
       {
         path: "tech-note",
         element: <TechNote />,
+      },
+      {
+        path: "tech-note/:notePk",
+        element: <TechNoteContent />,
       },
       {
         path: "qa-page",
