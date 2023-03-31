@@ -10,11 +10,14 @@ import {
   VStack,
   Box,
   IconButton,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import { ITechNote, ITechNoteListResponse } from "../../types/tech_note_type";
 import { useQuery } from "@tanstack/react-query";
-import { deleteTechNoteListByPk, getTechNoteList } from "../../apis/tech_note_api";
+import {
+  deleteTechNoteListByPk,
+  getTechNoteList,
+} from "../../apis/tech_note_api";
 import PaginationComponent from "../PaginationComponent";
 import PaginationComponentForTechNote from "../Pagination/PaginationComponentForTechNote";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
@@ -22,6 +25,7 @@ import ModalButonForModofyTechNoteTitle from "../modal/ModalButtonForModofyTechN
 import ModalButtonForDeleteTechNoteList from "../modal/ModalButtonForDeleteTechNoteList";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ModalButtonForCreateTechNoteList from "../modal/ModalButtonForCreateTechNoteList";
 
 // import { faker } from "@faker-js/faker";
 
@@ -94,13 +98,28 @@ const TableForTechNote = () => {
   );
 
   const handleTechNoteListDelete = (techNotePk: number) => {
-
-    deleteMutationForTechNoteListByPk.mutate(techNotePk)
+    deleteMutationForTechNoteListByPk.mutate(techNotePk);
   };
 
   return (
     <VStack>
-      <Table variant="simple" size={"sm"}>
+      <Box
+        display={"flex"}
+        justifyContent="space-between"
+        border={"0px solid green"}
+        width="100%"
+        pr={9}
+        pl={2}
+      >
+        <Box>
+          총 {tech_note_list_data?.total_count_for_tech_note_table_rows} 개
+        </Box>
+        <Box>
+          <ModalButtonForCreateTechNoteList />
+        </Box>
+      </Box>
+
+      <Table variant="simple" size={"sm"} width="100%">
         <Thead>
           <Tr>
             <Th>

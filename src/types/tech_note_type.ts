@@ -19,3 +19,8 @@ export type IUpdateFormTypeForTechNoteInfo = {
   tech_note_description?: string;
   category_option?: string;
 };
+
+export type IFormTypeForCreateTechNoteList = {
+  tech_note_description?: string;
+  category_option?: string;
+};

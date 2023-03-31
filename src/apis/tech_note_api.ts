@@ -3,7 +3,10 @@ import Cookie from "js-cookie";
 
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { backendApi } from "../apis/common_api";
-import { IUpdateFormTypeForTechNoteInfo } from "../types/tech_note_type";
+import {
+  IFormTypeForCreateTechNoteList,
+  IUpdateFormTypeForTechNoteInfo,
+} from "../types/tech_note_type";
 
 const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
@@ -52,12 +55,37 @@ export const updateTechNoteInfoByPk = ({
 };
 
 export const deleteTechNoteListByPk = (techNotePk: number) => {
-    // console.log("testPk : ", testPk);
-    return instance
-      .delete(`tech_note/${techNotePk}/delete`, {
+  // console.log("testPk : ", testPk);
+  return instance
+    .delete(`tech_note/${techNotePk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+export const createApiForTechNoteList = ({
+  category_option,
+  tech_note_description,
+}: IFormTypeForCreateTechNoteList) => {
+  console.log("createForTechNoteList 실행");
+
+  return instance
+    .post(
+      "tech_note/",
+      {
+        title: tech_note_description,
+        category: category_option,
+      },
+      {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
         },
-      })
-      .then((response) => response.data);
-  };
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};

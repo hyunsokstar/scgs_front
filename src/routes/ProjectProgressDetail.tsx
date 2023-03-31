@@ -50,6 +50,7 @@ import ModalButtonForExtraTask from "../components/modal/ModalButtonForExtraTask
 import TestListForTaskDetail from "../components/TestList/TestListForTaskDetail";
 import ModalButtonForCreateTest from "../components/modal/ModalButtonForCreateTest";
 import TableForTechNote from "../components/Table/TableForTechNote";
+import ModalButtonForCreateTechNoteList from "../components/modal/ModalButtonForCreateTechNoteList";
 
 interface Props {}
 
@@ -271,7 +272,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
             <Flex>
               <Box flex="5" bg="white" border="1px solid black" p={2}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <VStack w={"80%"}>
+                  <VStack w={"100%"}>
                     <FormControl id="writer" isRequired>
                       <FormLabel>Writer</FormLabel>
                       <Input
@@ -295,7 +296,12 @@ function ProjectProgressDetail({}: Props): ReactElement {
                       />
                     </FormControl>
 
-                    <FormControl id="task" isRequired border="1px solid green" width={"100%"}>
+                    <FormControl
+                      id="task"
+                      isRequired
+                      border="1px solid green"
+                      width={"100%"}
+                    >
                       <FormLabel>Task Description</FormLabel>
                       <Textarea
                         // {...register("task_description")}
@@ -505,12 +511,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
           </Box>
         </VStack>
 
-        <VStack width="50%" border={"5px solid red"} height="630px" mb={2}>
+        <VStack width="50%" border={"2px solid gray"} height="630px" mb={2}>
           <Box>
-            <Text fontSize={"2xl"} mb={2}>
-              chakra-ui로 테이블 컴퍼넌트 출력 for tech note list
+            <Text fontSize={"2xl"} mb={0}>
+              Tech Note List
             </Text>
           </Box>{" "}
+
           <Box>
             <TableForTechNote />
           </Box>
