@@ -405,7 +405,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                 </form>
               </Box>
 
-              <VStack flex="3">
+              <VStack flex="3" border="5px solid green">
                 <Box
                   width={"100%"}
                   overflowY="scroll"
@@ -427,13 +427,12 @@ function ProjectProgressDetail({}: Props): ReactElement {
                         >
                           <Box
                             position="relative"
-                            zIndex="1"
+                            zIndex="2"
                             paddingY={1}
                             _hover={{ border: "skyblue", opacity: 0.7 }}
-                            // onMouseEnter={() => setIsHovering(true)}
-                            // onMouseLeave={() => setIsHovering(false)}
+                            onMouseEnter={() => setIsHovering(true)}
+                            onMouseLeave={() => setIsHovering(false)}
                           >
-                            {/* {isHovering ? "호버중" : "떠남"} */}
                             <IconButton
                               icon={
                                 <Box display="flex" justifyContent="center">
@@ -447,7 +446,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                               right={0}
                               size="sm"
                               // bg="transparent"
-                              zIndex={5}
+                              zIndex={10}
                               // _hover={{ bg: "lightblue" }}
                               // _active={{ bg: "transparent" }}
                               // _focus={{ outline: "none" }}
