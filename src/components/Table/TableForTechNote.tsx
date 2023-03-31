@@ -11,6 +11,7 @@ import {
   Box,
   IconButton,
   useToast,
+  HStack,
 } from "@chakra-ui/react";
 import { ITechNote, ITechNoteListResponse } from "../../types/tech_note_type";
 import { useQuery } from "@tanstack/react-query";
@@ -20,7 +21,7 @@ import {
 } from "../../apis/tech_note_api";
 import PaginationComponent from "../PaginationComponent";
 import PaginationComponentForTechNote from "../Pagination/PaginationComponentForTechNote";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { IoThumbsUpSharp } from "react-icons/io5";
 import ModalButonForModofyTechNoteTitle from "../modal/ModalButtonForModofyTechNoteTitle";
 import ModalButtonForDeleteTechNoteList from "../modal/ModalButtonForDeleteTechNoteList";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -145,7 +146,22 @@ const TableForTechNote = () => {
                     <Td>{row.author}</Td>
                     <Td>{row.title}</Td>
                     <Td>{row.category}</Td>
-                    <Td>{row.like_count}</Td>
+                    <Td>
+                      <HStack gap={1}>
+                        <Box>
+                          <IconButton
+                            icon={<IoThumbsUpSharp />}
+                            aria-label="수정"
+                            variant="outline"
+                            borderColor="orange.500"
+                            _hover={{ bg: "orange.100" }}
+                            _active={{ bg: "orange.200" }}
+                            size="xs"
+                          />
+                        </Box>
+                        <Box>{row.like_count}</Box>
+                      </HStack>
+                    </Td>
                     <Td>{row.view_count}</Td>
                     <Td>
                       {/* <IconButton
