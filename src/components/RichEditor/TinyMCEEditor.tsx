@@ -33,9 +33,28 @@ const TinyMCEEditor: React.FC<Props> = ({
       console.log("base64data : ", base64data);
       console.log("blobInfo.blob() : ", blobInfo.blob());
 
-
+      //   fetch('https://example.com/upload', {
+      //     method: 'POST',
+      //     body: JSON.stringify({ image: base64data }),
+      //     headers: {
+      //       'Content-Type': 'application/json'
+      //     },
+      //   })
+      //   .then(response => {
+      //     if (!response.ok) {
+      //       throw new Error('Network response was not ok');
+      //     }
+      //     return response.json();
+      //   })
+      //   .then(data => {
+      //     success(data.url);
+      //   })
+      //   .catch(error => {
+      //     console.error('Error:', error);
+      //     failure();
+      //   });
     };
-    // reader.readAsDataURL(blobInfo.blob());
+    reader.readAsDataURL(blobInfo.blob());
   };
 
   return (
