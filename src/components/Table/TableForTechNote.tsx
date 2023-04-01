@@ -12,6 +12,8 @@ import {
   IconButton,
   useToast,
   HStack,
+  useDisclosure,
+  LinkBox,
 } from "@chakra-ui/react";
 import { ITechNote, ITechNoteListResponse } from "../../types/tech_note_type";
 import { useQuery } from "@tanstack/react-query";
@@ -29,6 +31,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ModalButtonForCreateTechNoteList from "../modal/ModalButtonForCreateTechNoteList";
 import { Link } from "react-router-dom";
+import ModalForTechNoteContentList from "../modal/ModalForTechNoteContentList";
 
 // import { faker } from "@faker-js/faker";
 
@@ -63,8 +66,13 @@ import { Link } from "react-router-dom";
 const TableForTechNote = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+  const [
+    isOpenForTechNoteContentListModal,
+    setIsOpenForTechNoteContentListModal,
+  ] = useState(false);
 
   const {
     isLoading: LoadingForTechNoteList,
@@ -117,6 +125,11 @@ const TableForTechNote = () => {
     },
   });
 
+  const openModalForTechNoteContentListForPk = () => {
+    // alert("클릭 확인");
+    onOpen();
+  };
+
   const techNoteButtonHandlerForLike = (techNotePk: number) => {
     updateLikeForTechNoteMutation.mutate(techNotePk);
   };
@@ -164,7 +177,10 @@ const TableForTechNote = () => {
                     </Td>
                     <Td>{row.author}</Td>
                     <Td>
-                      <Link to={`/tech-note/${row.pk}`}>{row.title}</Link>
+                      {/* <Link to={`/tech-note/${row.pk}`}>{row.title}</Link> */}
+                      <LinkBox onClick={openModalForTechNoteContentListForPk}>
+                        {row.title}
+                      </LinkBox>
                     </Td>
                     <Td>{row.category}</Td>
                     <Td>
@@ -200,6 +216,16 @@ const TableForTechNote = () => {
                       <ModalButtonForDeleteTechNoteList
                         onDelete={() => handleTechNoteListDelete(row.pk)}
                       />
+                    </Td>
+                    <Td>
+                      <Box width={"80%"}>
+                        <ModalForTechNoteContentList
+                          techNotePk={row.pk}
+                          isOpen={isOpen}
+                          onOpen={onOpen}
+                          onClose={onClose}
+                        />
+                      </Box>
                     </Td>
                   </Tr>
                 )

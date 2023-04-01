@@ -5,10 +5,6 @@ import Home from "./routes/Home";
 import NotFound from "./routes/NotFound";
 import RoomDetail from "./routes/RoomDetail";
 import UploadRoom from "./routes/UploadRoom";
-import ReactDraft from "./routes/ReactDraft";
-import LexicalEditorPage from "./routes/LexicalEditorPage";
-import TipTabPage from "./routes/TipTabPage";
-import TinyMcePage from "./routes/TinyMcePage";
 import UploadPhotos from "./routes/UploadPhotos";
 import EstimateRequire from "./routes/EstimateRequire";
 import Estimates from "./routes/Estimates";
@@ -32,6 +28,7 @@ import QAPage from "./routes/QAPage";
 import TechNote from "./routes/TechNote";
 import MyTechNote from "./routes/MyTechNote";
 import TechNoteContent from "./routes/TechNoteContent";
+import ReactEditor from "./components/ReactEditor";
 
 const router = createBrowserRouter([
   {
@@ -134,22 +131,9 @@ const router = createBrowserRouter([
         element: <BuildingManagement />,
       },
       {
-        path: "/test/react-draft",
-        element: <ReactDraft />,
+        path: "/editor",
+        element: <ReactEditor />,
       },
-      {
-        path: "/test/lexical-editor",
-        element: <LexicalEditorPage />,
-      },
-      {
-        path: "/test/tiptap-editor",
-        element: <TipTabPage />,
-      },
-      {
-        path: "/test/tinymce-editor",
-        element: <TinyMcePage />,
-      },
-
       {
         path: "rooms/:roomPk/photos",
         element: <UploadPhotos />,

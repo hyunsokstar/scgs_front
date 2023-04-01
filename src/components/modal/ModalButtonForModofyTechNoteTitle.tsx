@@ -35,19 +35,16 @@ const ModalButonForModofyTechNoteTitle = ({ techNotePk }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const { handleSubmit, register } = useForm<IUpdateFormTypeForTechNoteInfo>();
-  const queryClient = useQueryClient();
-
 
   const updateMutationForTechNoteInfo = useMutation(updateTechNoteInfoByPk, {
     onSuccess: (result: any) => {
       console.log("result : ", result);
-      queryClient.refetchQueries(["getTechNoteList"]);
 
-      toast({
-        status: "success",
-        title: "task status update success",
-        description: result.message,
-      });
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
     },
     onError: (err) => {
       console.log("error : ", err);

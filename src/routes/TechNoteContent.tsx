@@ -2,8 +2,12 @@ import React, { ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
 import { getTechNoteContentList } from "../apis/tech_note_api";
-import { TechNoteContentListType, TechNoteContentRowType } from "../types/tech_note_type";
+import {
+  TechNoteContentListType,
+  TechNoteContentRowType,
+} from "../types/tech_note_type";
 import { Box } from "@chakra-ui/react";
+import CardForTechNoteContent from "../components/CardForTechNoteContent";
 
 interface Props {}
 
@@ -26,7 +30,16 @@ function TechNoteContent({}: Props): ReactElement {
     <Box>
       {techNoteContentListData
         ? techNoteContentListData.data.map((row: TechNoteContentRowType) => {
-            return <Box>{row.title}</Box>;
+            return (
+              <Box>
+                <CardForTechNoteContent
+                  title={row.title}
+                  file={row.file}
+                  content={row.content}
+                  created_at={row.created_at}
+                />
+              </Box>
+            );
           })
         : "no techNoteContentListData"}
     </Box>
