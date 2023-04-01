@@ -75,7 +75,7 @@ const TinyMCEEditor: React.FC<Props> = ({
           "bold italic backcolor | alignleft aligncenter " +
           "alignright alignjustify | bullist numlist outdent indent | " +
           "removeformat | help",
-        language: "ko_KR", // 사용할 언어를 설정합니다. 한국어로 설정하려면 'ko_KR'로 설정합니다.
+        // language: "ko_KR", // 사용할 언어를 설정합니다. 한국어로 설정하려면 'ko_KR'로 설정합니다.
         images_upload_handler,
         paste_data_images: true,
 

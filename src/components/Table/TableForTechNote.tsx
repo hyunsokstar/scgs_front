@@ -67,6 +67,7 @@ const TableForTechNote = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  
 
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
   const [

@@ -1,4 +1,14 @@
-import { Box, Flex, Heading, Text, Textarea, Input, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Textarea,
+  Input,
+  HStack,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import TinyMCEEditor from "./RichEditor/TinyMCEEditor";
 
 type CardProps = {
   title: string;
@@ -15,6 +25,12 @@ const CardForTechNoteContent = ({
   created_at,
   backgroundColor = "skyblue",
 }: CardProps) => {
+  const [content2, setContent] = useState<string>(content);
+
+  const handleContentChange = (value: string) => {
+    setContent(value);
+  };
+
   return (
     <Box
       backgroundColor={backgroundColor}
@@ -27,10 +43,15 @@ const CardForTechNoteContent = ({
         <Input defaultValue={title} />
         <Input defaultValue={file} />
       </HStack>
-      <Textarea
+      {/* <Textarea
         defaultValue={content}
         _focus={{ boxShadow: "none" }}
         height="300px"
+      /> */}
+      <TinyMCEEditor
+        initialValue={content2}
+        onChange={handleContentChange}
+        apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
       />
     </Box>
   );

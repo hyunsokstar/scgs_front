@@ -19,7 +19,6 @@ function ReactEditor({}: Props): ReactElement {
         onChange={handleContentChange}
         apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
       />
-      hi
     </div>
   );
 }
