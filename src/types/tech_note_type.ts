@@ -26,6 +26,7 @@ export type IFormTypeForCreateTechNoteList = {
 };
 
 export interface TechNoteContentRowType {
+  pk: number;
   tech_note: number;
   title: string;
   file: string;

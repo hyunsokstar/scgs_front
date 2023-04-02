@@ -67,7 +67,6 @@ const TableForTechNote = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
 
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
   const [
@@ -87,7 +86,10 @@ const TableForTechNote = () => {
     }
   );
 
-  console.log("tech_note_list_data : ", tech_note_list_data);
+  const [tech_note_pk, set_tech_note_pk] = useState<number | string>();
+  // let tech_note_pk;
+
+  // console.log("tech_note_list_data : ", tech_note_list_data);
 
   const deleteMutationForTechNoteListByPk = useMutation(
     (techNotePk: number) => {
@@ -126,8 +128,9 @@ const TableForTechNote = () => {
     },
   });
 
-  const openModalForTechNoteContentListForPk = () => {
-    // alert("클릭 확인");
+  const openModalForTechNoteContentListForPk = async (pk: number | string) => {
+    // alert(pk);
+    set_tech_note_pk(pk);
     onOpen();
   };
 
@@ -179,9 +182,13 @@ const TableForTechNote = () => {
                     <Td>{row.author}</Td>
                     <Td>
                       {/* <Link to={`/tech-note/${row.pk}`}>{row.title}</Link> */}
-                      <LinkBox onClick={openModalForTechNoteContentListForPk}>
+                      <Box
+                        onClick={() =>
+                          openModalForTechNoteContentListForPk(row.pk)
+                        }
+                      >
                         {row.title}
-                      </LinkBox>
+                      </Box>
                     </Td>
                     <Td>{row.category}</Td>
                     <Td>
@@ -218,16 +225,6 @@ const TableForTechNote = () => {
                         onDelete={() => handleTechNoteListDelete(row.pk)}
                       />
                     </Td>
-                    <Td>
-                      <Box width={"80%"}>
-                        <ModalForTechNoteContentList
-                          techNotePk={row.pk}
-                          isOpen={isOpen}
-                          onOpen={onOpen}
-                          onClose={onClose}
-                        />
-                      </Box>
-                    </Td>
                   </Tr>
                 )
               )
@@ -243,6 +240,14 @@ const TableForTechNote = () => {
             }
             setCurrentPageNum={setCurrentPageNum}
           />
+          <Box width={"80%"}>
+            <ModalForTechNoteContentList
+              techNotePk={tech_note_pk}
+              isOpen={isOpen}
+              onOpen={onOpen}
+              onClose={onClose}
+            />
+          </Box>
         </Box>
       ) : (
         ""

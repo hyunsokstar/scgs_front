@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
-import { getTechNoteContentList } from "../apis/tech_note_api";
+import { getTechNoteContentListByPk } from "../apis/tech_note_api";
 import {
   TechNoteContentListType,
   TechNoteContentRowType,
@@ -21,7 +21,7 @@ function TechNoteContent({}: Props): ReactElement {
     refetch: RefetchFortechNoteContentList,
   } = useQuery<TechNoteContentListType>(
     ["getOneProjectTask", notePk, "ProjectProgressDetail"],
-    getTechNoteContentList
+    getTechNoteContentListByPk
   );
 
   console.log("techNoteContentListData : ", techNoteContentListData);
@@ -33,6 +33,7 @@ function TechNoteContent({}: Props): ReactElement {
             return (
               <Box>
                 <CardForTechNoteContent
+                  pk={row.pk}
                   title={row.title}
                   file={row.file}
                   content={row.content}
