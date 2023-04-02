@@ -13,6 +13,8 @@ import {
   Spacer,
   HStack,
   Image,
+  Text,
+  Flex,
 } from "@chakra-ui/react";
 import CardForTechNoteContent from "../CardForTechNoteContent";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
@@ -54,8 +56,7 @@ const ModalForTechNoteContentList = ({
         <ModalContent bg="white" height={"80%"}>
           {/* tech_note_title */}
           <ModalHeader>
-            Note Title:
-            {/* {tech_note_content_list_data?.tech_note_title} */}
+            노트 주제 : {tech_note_content_list_data?.tech_note_title}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody overflowY="auto" maxHeight="60vh">
@@ -90,7 +91,9 @@ const ModalForTechNoteContentList = ({
                 />
               </Box>
             </Box>
-            {!tech_note_content_list_data && tech_note_content_list_data?.data ? (
+            {/* rome-ignore lint/complexity/useOptionalChain: <explanation> */}
+            {tech_note_content_list_data?.data &&
+            tech_note_content_list_data?.data.length ? (
               tech_note_content_list_data.data.map(
                 (row: TechNoteContentRowType) => {
                   return (
@@ -107,16 +110,20 @@ const ModalForTechNoteContentList = ({
                 }
               )
             ) : (
-              <Box border="1px dotted green">
+              <Flex border="1px dotted green">
                 <Image
                   /* 데이터가 없음을 나타내는 이미지 파일 경로 */
                   src="https://img.freepik.com/premium-vector/no-result-found-concept_637684-8.jpg?w=740"
                   alt="no data"
                   boxSize="350px"
                   objectFit="contain"
-                  mt="5px"
+                  mt="0px"
                 />
-              </Box>
+                <Text fontSize={20} p={2}>
+                  {tech_note_content_list_data?.tech_note_title} 에 대해 content
+                  List 가 없습니다. create button 을 이용해 등록해 주세요
+                </Text>
+              </Flex>
             )}
           </ModalBody>
           <ModalFooter>
