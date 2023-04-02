@@ -34,9 +34,9 @@ function TechNoteContent({}: Props): ReactElement {
               <Box>
                 <CardForTechNoteContent
                   pk={row.pk}
-                  title={row.title}
-                  file={row.file}
-                  content={row.content}
+                  title={row.note_content_title}
+                  file={row.note_content_file}
+                  content={row.note_content_content}
                   created_at={row.created_at}
                 />
               </Box>

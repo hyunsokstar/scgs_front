@@ -5,6 +5,7 @@ import { QueryFunctionContext } from "@tanstack/react-query";
 import { backendApi } from "../apis/common_api";
 import {
   IFormTypeForCreateTechNoteList,
+  ITypeForCreateTechNoteContent,
   IUpdateFormTypeForTechNoteInfo,
 } from "../types/tech_note_type";
 
@@ -13,10 +14,34 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+// 1122
+export const createNoteContent = ({
+  note_content_fk,
+  note_content_title,
+  note_content_file,
+  note_content_content,
+}: ITypeForCreateTechNoteContent) =>
+  instance
+    .post(
+      `/tech_note/${note_content_fk}`,
+      {
+        tech_note: note_content_fk,
+        note_content_title:note_content_title,
+        note_content_file:note_content_file,
+        note_content_content:note_content_content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const getTechNoteList = ({ queryKey }: QueryFunctionContext) => {
   const [_, pageNum] = queryKey;
   return instance.get(`tech_note?page=${pageNum}`).then((response) => {
-    console.log("response : ", response);
+    // console.log("response : ", response);
     const response_data = {
       total_count_for_tech_note_table_rows:
         response.data.total_count_for_tech_note_table_rows,

@@ -1,18 +1,9 @@
-interface Row {
-  pk: number;
-  name: string;
-  username: string;
-  email: string;
-  profileImages?: [
-    {
-      pk: number;
-      file: string;
-    }
-  ];
-  admin_level: number;
-  position: number;
+import React from "react";
 
-  selected?: boolean;
-  is_new_row?: boolean;
-  profile_image?: string;
-}
+type Props = {};
+
+const test = (props: Props) => {
+  return <div></div>;
+};
+
+export default test;

@@ -60,7 +60,7 @@ const CardForTechNoteContent = ({
   };
 
   return (
-    <Box display={"flex"} border="1px solid green" width={"100%"} p={2}>
+    <Box display={"flex"} border="1px solid green" width={"100%"}>
       <Box width={"96%"}>
         <HStack mb={2}>
           <Checkbox
@@ -86,7 +86,7 @@ const CardForTechNoteContent = ({
           </InputGroup>
 
           <Input defaultValue={file} border={"1px solid black"} />
-          
+
           <Button
             variant="outline"
             colorScheme="red"
@@ -94,16 +94,11 @@ const CardForTechNoteContent = ({
           >
             <DeleteIcon />
           </Button>
-
         </HStack>
-        <Box border={"1px solid blue"} padding={0} height="300px">
-          {content}
+        <Box border={"1px solid blue"} padding={0} height="300px" overflowY="scroll">
+          {/* rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
+          <div dangerouslySetInnerHTML={{ __html: content }} />
         </Box>
-        {/* <TinyMCEEditor
-        initialValue={content2}
-        onChange={handleContentChange}
-        apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
-      /> */}
       </Box>
       <Box border={"1px solid red"} width="4%" ml={2}>
         {pk} ab

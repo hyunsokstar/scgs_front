@@ -28,13 +28,20 @@ export type IFormTypeForCreateTechNoteList = {
 export interface TechNoteContentRowType {
   pk: number;
   tech_note: number;
-  title: string;
-  file: string;
-  content: string;
+  note_content_title: string;
+  note_content_file: string;
+  note_content_content: string;
   created_at: string;
 }
 
 export interface TechNoteContentListType {
   success: string;
   data: TechNoteContentRowType[];
+}
+
+export interface ITypeForCreateTechNoteContent {
+  note_content_fk: string | number | undefined;
+  note_content_title: string;
+  note_content_file: string;
+  note_content_content: string;
 }
