@@ -87,6 +87,7 @@ const CardForTechNoteContent = ({
 
           <Input defaultValue={file} />
 
+          {/* 0403 삭제 구현 하기 */}
           <Button
             variant="outline"
             colorScheme="red"
@@ -94,6 +95,7 @@ const CardForTechNoteContent = ({
           >
             <DeleteIcon />
           </Button>
+
         </HStack>
         <Box border={"1px solid blue"} padding={0} height="300px" overflowY="scroll">
           {/* rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}

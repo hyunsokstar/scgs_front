@@ -1,5 +1,6 @@
 import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import { Box } from "@chakra-ui/react";
 
 interface Props {
   initialValue?: string;
@@ -58,30 +59,32 @@ const TinyMCEEditor: React.FC<Props> = ({
   };
 
   return (
-    <Editor
-      apiKey={apiKey}
-      value={initialValue}
-      onEditorChange={handleEditorChange}
-      init={{
-        height: 500,
-        menubar: true,
-        plugins: [
-          "advlist autolink lists link image charmap print preview anchor",
-          "searchreplace visualblocks code fullscreen",
-          "insertdatetime media table paste code help wordcount",
-        ],
-        toolbar:
-          "undo redo | formatselect | " +
-          "bold italic backcolor | alignleft aligncenter " +
-          "alignright alignjustify | bullist numlist outdent indent | " +
-          "removeformat | help",
-        // language: "ko_KR", // 사용할 언어를 설정합니다. 한국어로 설정하려면 'ko_KR'로 설정합니다.
-        images_upload_handler,
-        paste_data_images: true,
+    <Box>
+      <Editor
+        apiKey={apiKey}
+        value={initialValue}
+        onEditorChange={handleEditorChange}
+        init={{
+          height: 500,
+          menubar: true,
+          plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table paste code help wordcount",
+          ],
+          toolbar:
+            "undo redo | formatselect | " +
+            "bold italic backcolor | alignleft aligncenter " +
+            "alignright alignjustify | bullist numlist outdent indent | " +
+            "removeformat | help",
+          // language: "ko_KR", // 사용할 언어를 설정합니다. 한국어로 설정하려면 'ko_KR'로 설정합니다.
+          images_upload_handler,
+          paste_data_images: true,
 
-        ...init,
-      }}
-    />
+          ...init,
+        }}
+      />
+    </Box>
   );
 };
 

@@ -78,7 +78,7 @@ const ModalButtonForCreateTechNoteContent = ({ note_content_fk }: IPropsType) =>
   };
 
   return (
-    <Box>
+    <Box zIndex={"100000"}>
       <Box border="0px solid orange">
         <Button
           variant="outline"
@@ -91,10 +91,10 @@ const ModalButtonForCreateTechNoteContent = ({ note_content_fk }: IPropsType) =>
       </Box>
 
       <Modal isOpen={isOpen} onClose={onClose} size={"6xl"}>
-        <ModalOverlay />
+        {/* <ModalOverlay /> */}
         <ModalContent>
           <ModalHeader>기술 노트 Content 추가</ModalHeader>
-          <ModalBody>
+          <Box>
             <VStack gap={2}>
               <FormControl>
                 <FormLabel>title</FormLabel>
@@ -130,7 +130,7 @@ const ModalButtonForCreateTechNoteContent = ({ note_content_fk }: IPropsType) =>
                 />
               </Box>
             </VStack>
-          </ModalBody>
+          </Box>
 
           <ModalFooter>
             <Box width={"100%"}>
