@@ -60,7 +60,7 @@ const CardForTechNoteContent = ({
   };
 
   return (
-    <Box display={"flex"} border="1px solid green" width={"100%"}>
+    <Box display={"flex"} border="0px solid green" width={"100%"}>
       <Box width={"96%"}>
         <HStack mb={2}>
           <Checkbox
@@ -85,7 +85,7 @@ const CardForTechNoteContent = ({
             </InputRightElement>
           </InputGroup>
 
-          <Input defaultValue={file} border={"1px solid black"} />
+          <Input defaultValue={file} />
 
           <Button
             variant="outline"
@@ -100,8 +100,8 @@ const CardForTechNoteContent = ({
           <div dangerouslySetInnerHTML={{ __html: content }} />
         </Box>
       </Box>
-      <Box border={"1px solid red"} width="4%" ml={2}>
-        {pk} ab
+      <Box border={"1px solid blue"} width="4%" ml={2}>
+        {/* {pk} ab */}
       </Box>
     </Box>
   );

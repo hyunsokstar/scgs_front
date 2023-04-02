@@ -175,7 +175,7 @@ const TableForTechNote = () => {
           {tech_note_list_data?.tech_note_list_for_page
             ? tech_note_list_data.tech_note_list_for_page.map(
                 (row: ITechNote) => (
-                  <Tr key={row.pk}>
+                  <Tr key={row.pk} _hover={{ background: "gray.200" }}>
                     <Td>
                       <Checkbox />
                     </Td>
@@ -183,6 +183,9 @@ const TableForTechNote = () => {
                     <Td>
                       {/* <Link to={`/tech-note/${row.pk}`}>{row.title}</Link> */}
                       <Box
+                        _hover={{ textDecoration: "underline" }} // 호버 시 밑줄 표시
+                        _active={{ color: "red" }} // 클릭 시 색상 변경
+                        cursor="pointer" // 호버 시 포인터 커서로 변경
                         onClick={() =>
                           openModalForTechNoteContentListForPk(row.pk)
                         }

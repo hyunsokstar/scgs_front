@@ -12,6 +12,7 @@ import {
   Box,
   Spacer,
   HStack,
+  Image,
 } from "@chakra-ui/react";
 import CardForTechNoteContent from "../CardForTechNoteContent";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
@@ -41,24 +42,28 @@ const ModalForTechNoteContentList = ({
     getTechNoteContentListByPk
   );
 
-  // console.log(
-  //   "tech_note_content_list_data for modal: ",
-  //   tech_note_content_list_data
-  // );
+  console.log(
+    "tech_note_content_list_data for modal: ",
+    tech_note_content_list_data
+  );
 
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="6xl">
         <ModalOverlay bg="rgba(0,0,0,0.5)" />
-        <ModalContent bg="green.50" height={"80%"}>
-          <ModalHeader>Tech Note Content list For {techNotePk}</ModalHeader>
+        <ModalContent bg="white" height={"80%"}>
+          {/* tech_note_title */}
+          <ModalHeader>
+            Note Title:
+            {/* {tech_note_content_list_data?.tech_note_title} */}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody overflowY="auto" maxHeight="60vh">
             <Box
               display="flex"
               justifyContent="space-between"
               width={"100%"}
-              border={"1px solid purple"}
+              border={"0px solid purple"}
               mb={2}
               gap={2}
             >
@@ -71,7 +76,7 @@ const ModalForTechNoteContentList = ({
                   All Check
                 </Button>
               </Box>
-              <Box display={"flex"} border="1px solid purple" gap={2}>
+              <Box display={"flex"} border="0px solid purple" gap={2}>
                 <Button
                   variant="outline"
                   colorScheme="red"
@@ -85,23 +90,34 @@ const ModalForTechNoteContentList = ({
                 />
               </Box>
             </Box>
-            {tech_note_content_list_data
-              ? tech_note_content_list_data.data.map(
-                  (row: TechNoteContentRowType) => {
-                    return (
-                      <Box mb={2} width="100%" border={"0px solid red"}>
-                        <CardForTechNoteContent
-                          pk={row.pk}
-                          title={row.note_content_title}
-                          file={row.note_content_file}
-                          content={row.note_content_content}
-                          created_at={row.created_at}
-                        />
-                      </Box>
-                    );
-                  }
-                )
-              : "no techNoteContentListData"}{" "}
+            {!tech_note_content_list_data && tech_note_content_list_data?.data ? (
+              tech_note_content_list_data.data.map(
+                (row: TechNoteContentRowType) => {
+                  return (
+                    <Box mb={2} width="100%" border={"1px solid black"} p={2}>
+                      <CardForTechNoteContent
+                        pk={row.pk}
+                        title={row.note_content_title}
+                        file={row.note_content_file}
+                        content={row.note_content_content}
+                        created_at={row.created_at}
+                      />
+                    </Box>
+                  );
+                }
+              )
+            ) : (
+              <Box border="1px dotted green">
+                <Image
+                  /* 데이터가 없음을 나타내는 이미지 파일 경로 */
+                  src="https://img.freepik.com/premium-vector/no-result-found-concept_637684-8.jpg?w=740"
+                  alt="no data"
+                  boxSize="350px"
+                  objectFit="contain"
+                  mt="5px"
+                />
+              </Box>
+            )}
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>닫기</Button>
