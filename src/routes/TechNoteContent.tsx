@@ -43,7 +43,7 @@ const TechNoteContent = () => {
     isLoading: isLodaingFortechNoteContentList,
     refetch: RefetchFortechNoteContentList,
   } = useQuery<TechNoteContentListType>(
-    ["getOneProjectTask", note_content_fk, "ProjectProgressDetail"],
+    ["getTechNoteContentListByPk", note_content_fk, "getTechNoteContentListByPk"],
     getTechNoteContentListByPk
   );
 
