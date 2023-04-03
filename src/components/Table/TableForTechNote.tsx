@@ -146,8 +146,8 @@ const TableForTechNote = () => {
         justifyContent="space-between"
         border={"0px solid green"}
         width="100%"
-        pr={9}
-        pl={2}
+        // pr={9}
+        px={10}
       >
         <Box>
           총 {tech_note_list_data?.total_count_for_tech_note_table_rows} 개
@@ -235,7 +235,7 @@ const TableForTechNote = () => {
         </Tbody>
       </Table>
       {tech_note_list_data ? (
-        <Box maxW="100%" bg="blue.50" color="red.500" mt={-3.5}>
+        <Box w="100%" bg="blue.50" color="red.500" mt={-3.5}>
           <PaginationComponentForTechNote
             current_page_num={currentPageNum}
             total_page_num={
@@ -250,7 +250,6 @@ const TableForTechNote = () => {
               onOpen={onOpen}
               onClose={onClose}
             /> */}
-            <ModalForTechNoteContentList2 />
           </Box>
         </Box>
       ) : (
