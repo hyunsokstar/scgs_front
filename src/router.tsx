@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "",
+        path: "test-modal",
         element: <TestModal />,
       },
       {

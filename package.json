@@ -38,6 +38,7 @@
     "react-froala-wysiwyg": "^4.0.18",
     "react-hook-form": "^7.43.0",
     "react-icons": "^4.7.1",
+    "react-modal": "^3.16.1",
     "react-redux": "^8.0.5",
     "react-responsive-pagination": "^1.10.1",
     "react-router-dom": "^6.8.0",
@@ -78,6 +79,7 @@
   "devDependencies": {
     "@types/js-cookie": "^3.0.2",
     "@types/react-beautiful-dnd": "^13.1.4",
+    "@types/react-modal": "^3.13.1",
     "@types/react-slick": "^0.23.10",
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^9.0.1",
