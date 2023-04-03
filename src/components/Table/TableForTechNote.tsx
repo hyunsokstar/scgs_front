@@ -32,6 +32,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ModalButtonForCreateTechNoteList from "../modal/ModalButtonForCreateTechNoteList";
 import { Link } from "react-router-dom";
 import ModalForTechNoteContentList from "../modal/ModalForTechNoteContentList";
+import ModalForTechNoteContentList2 from "../modal/ModalForTechNoteContentList2";
 
 // import { faker } from "@faker-js/faker";
 
@@ -181,16 +182,15 @@ const TableForTechNote = () => {
                     </Td>
                     <Td>{row.author}</Td>
                     <Td>
-                      {/* <Link to={`/tech-note/${row.pk}`}>{row.title}</Link> */}
                       <Box
                         _hover={{ textDecoration: "underline" }} // 호버 시 밑줄 표시
                         _active={{ color: "red" }} // 클릭 시 색상 변경
                         cursor="pointer" // 호버 시 포인터 커서로 변경
-                        onClick={() =>
-                          openModalForTechNoteContentListForPk(row.pk)
-                        }
+                        // onClick={() =>
+                        //   openModalForTechNoteContentListForPk(row.pk)
+                        // }
                       >
-                        {row.title}
+                        <Link to={`/tech-note/${row.pk}`}>{row.title}</Link>
                       </Box>
                     </Td>
                     <Td>{row.category}</Td>
@@ -244,12 +244,13 @@ const TableForTechNote = () => {
             setCurrentPageNum={setCurrentPageNum}
           />
           <Box width={"80%"}>
-            <ModalForTechNoteContentList
+            {/* <ModalForTechNoteContentList
               techNotePk={tech_note_pk}
               isOpen={isOpen}
               onOpen={onOpen}
               onClose={onClose}
-            />
+            /> */}
+            <ModalForTechNoteContentList2 />
           </Box>
         </Box>
       ) : (

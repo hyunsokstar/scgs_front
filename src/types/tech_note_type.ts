@@ -36,6 +36,7 @@ export interface TechNoteContentRowType {
 
 export interface TechNoteContentListType {
   success: string;
+  tech_note_title: string;
   data: TechNoteContentRowType[];
 }
 

@@ -60,7 +60,7 @@ const CardForTechNoteContent = ({
   };
 
   return (
-    <Box display={"flex"} border="0px solid green" width={"100%"}>
+    <Box display={"flex"} border="0px solid green" width={"100%"} py={2}>
       <Box width={"96%"}>
         <HStack mb={2}>
           <Checkbox

@@ -30,6 +30,7 @@ import MyTechNote from "./routes/MyTechNote";
 import TechNoteContent from "./routes/TechNoteContent";
 import ReactEditor from "./components/ReactEditor";
 import TestModal from "./components/modal/TestModal";
+import TechNoteContentPage from "./routes/TechNoteContentPage";
 
 const router = createBrowserRouter([
   {
@@ -55,7 +56,7 @@ const router = createBrowserRouter([
       },
       {
         path: "tech-note/:notePk",
-        element: <TechNoteContent />,
+        element: <TechNoteContentPage />,
       },
       {
         path: "qa-page",

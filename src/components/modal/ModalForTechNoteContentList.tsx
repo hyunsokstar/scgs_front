@@ -21,6 +21,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; /
 import { getTechNoteContentListByPk } from "../../apis/tech_note_api";
 import { TechNoteContentRowType } from "../../types/tech_note_type";
 import ModalButtonForCreateTechNoteContent from "./ModalButtonForCreateTechNoteContent";
+import ModalButtonForCreateTechNoteContent2 from "./ModalButtonForCreateTechNoteContent2";
 
 type TechNoteModalProps = {
   techNotePk: string | number | undefined;
@@ -86,9 +87,11 @@ const ModalForTechNoteContentList = ({
                   삭제
                 </Button>
 
-                <ModalButtonForCreateTechNoteContent
+                {/* <ModalButtonForCreateTechNoteContent
                   note_content_fk={techNotePk}
-                />
+                /> */}
+                <ModalButtonForCreateTechNoteContent2 />
+                
               </Box>
             </Box>
             {/* rome-ignore lint/complexity/useOptionalChain: <explanation> */}
