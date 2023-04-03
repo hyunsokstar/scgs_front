@@ -15,6 +15,17 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiFordeleteTechNoteContentByPk = (techNoteContentPk: number | string) => {
+  // console.log("testPk : ", testPk);
+  return instance
+    .delete(`tech_note/tech-note-content/${techNoteContentPk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const createNoteContent = ({
   note_content_fk,
   note_content_title,

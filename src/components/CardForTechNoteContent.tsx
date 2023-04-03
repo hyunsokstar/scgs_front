@@ -12,10 +12,14 @@ import {
   InputGroup,
   InputRightElement,
   IconButton,
+  useToast,
+
 } from "@chakra-ui/react";
 import { useState } from "react";
 import TinyMCEEditor from "./RichEditor/TinyMCEEditor";
 import { CheckIcon, CopyIcon, DeleteIcon } from "@chakra-ui/icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiFordeleteTechNoteContentByPk } from "../apis/tech_note_api";
 
 type CardProps = {
   pk: number;
@@ -26,6 +30,7 @@ type CardProps = {
   backgroundColor?: string;
 };
 
+// component-1122
 const CardForTechNoteContent = ({
   pk,
   title,
@@ -35,6 +40,9 @@ const CardForTechNoteContent = ({
   backgroundColor = "white",
 }: CardProps) => {
   const [content2, setContent] = useState<string>(content);
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
 
   const handleContentChange = (value: string) => {
     setContent(value);
@@ -57,6 +65,31 @@ const CardForTechNoteContent = ({
       // 복사된 내용 출력
       alert(`복사된 내용: ${copiedText}`);
     }
+  };
+
+  const deleteTechNoteByPkMutation = useMutation(
+    (techNoteContentPk: string | number) => {
+      return apiFordeleteTechNoteContentByPk(techNoteContentPk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["getTechNoteContentListByPk"]);
+        toast({
+          title: "delete test 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const deleteTechNoteByPkHandler = (techNoteContentPk: string | number) => {
+    const response = deleteTechNoteByPkMutation.mutate(techNoteContentPk);
+    console.log("response :", response);
   };
 
   return (
@@ -92,12 +125,17 @@ const CardForTechNoteContent = ({
             variant="outline"
             colorScheme="red"
             _hover={{ bg: "red.100" }}
+            onClick={() => deleteTechNoteByPkHandler(pk)}
           >
             <DeleteIcon />
           </Button>
-
         </HStack>
-        <Box border={"1px solid blue"} padding={0} height="300px" overflowY="scroll">
+        <Box
+          border={"1px solid blue"}
+          padding={0}
+          height="300px"
+          overflowY="scroll"
+        >
           {/* rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
           <div dangerouslySetInnerHTML={{ __html: content }} />
         </Box>
