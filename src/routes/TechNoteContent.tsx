@@ -19,12 +19,15 @@ import {
   Input,
   useToast,
   VStack,
+  Text,
+  Image,
 } from "@chakra-ui/react";
 import CardForTechNoteContent from "../components/CardForTechNoteContent";
 import ModalButtonForCreateTechNoteContent2 from "../components/modal/ModalButtonForCreateTechNoteContent2";
 import TinyMCEEditor from "../components/RichEditor/TinyMCEEditor";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import TableForTechNote from "../components/Table/TableForTechNote";
 
 // rome-ignore lint/suspicious/noEmptyInterface: <explanation>
 interface Props {}
@@ -43,7 +46,11 @@ const TechNoteContent = () => {
     isLoading: isLodaingFortechNoteContentList,
     refetch: RefetchFortechNoteContentList,
   } = useQuery<TechNoteContentListType>(
-    ["getTechNoteContentListByPk", note_content_fk, "getTechNoteContentListByPk"],
+    [
+      "getTechNoteContentListByPk",
+      note_content_fk,
+      "getTechNoteContentListByPk",
+    ],
     getTechNoteContentListByPk
   );
 
@@ -93,8 +100,11 @@ const TechNoteContent = () => {
       <Box>tech note 주제: {techNoteContentListData?.tech_note_title}</Box>
       <Box width={"100%"}>
         <Flex>
-          <Box flex={1}>메타 정보</Box>
-          <Box flex={3}>
+          <Box flex={1}>
+            <Text>Tech Note List</Text>
+            <TableForTechNote />
+          </Box>
+          <Box flex={1}>
             <VStack>
               <Flex
                 border="1px solid black"
@@ -107,26 +117,43 @@ const TechNoteContent = () => {
                 </Box>
               </Flex>
               <Box width={"100%"}>
-                {techNoteContentListData
-                  ? techNoteContentListData.data.map(
-                      (row: TechNoteContentRowType) => {
-                        return (
-                          <Box>
-                            <CardForTechNoteContent
-                              pk={row.pk}
-                              title={row.note_content_title}
-                              file={row.note_content_file}
-                              content={row.note_content_content}
-                              created_at={row.created_at}
-                            />
-                          </Box>
-                        );
-                      }
-                    )
-                  : "no techNoteContentListData"}
+                {techNoteContentListData &&
+                techNoteContentListData.data.length !== 0 ? (
+                  techNoteContentListData.data.map(
+                    (row: TechNoteContentRowType) => {
+                      return (
+                        <Box>
+                          <CardForTechNoteContent
+                            pk={row.pk}
+                            title={row.note_content_title}
+                            file={row.note_content_file}
+                            content={row.note_content_content}
+                            created_at={row.created_at}
+                          />
+                        </Box>
+                      );
+                    }
+                  )
+                ) : (
+                  <Box>
+                    <Image src="https://i.pinimg.com/originals/49/e5/8d/49e58d5922019b8ec4642a2e2b9291c2.png" />
+                  </Box>
+                )}
               </Box>
 
               <Box width={"100%"}>
+                <Text
+                  mt={10}
+                  mb={2}
+                  fontSize="xl"
+                  fontWeight="bold"
+                  textAlign="center"
+                  _hover={{ color: "purple.600" }}
+                  fontFamily="CustomHandwritingFont" // Replace with your custom handwriting font
+                >
+                  Note Content 입력
+                </Text>
+
                 <FormControl>
                   <FormLabel>title</FormLabel>
                   <Input
@@ -153,6 +180,7 @@ const TechNoteContent = () => {
                     })}
                   />
                 </FormControl>
+
                 <TinyMCEEditor
                   initialValue={note_content_content}
                   onChange={handleContentChange}
@@ -183,7 +211,6 @@ const TechNoteContent = () => {
               </Box>
             </VStack>
           </Box>
-          <Box flex={1}>버튼 영역</Box>
         </Flex>
       </Box>
     </VStack>
