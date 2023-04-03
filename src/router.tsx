@@ -29,6 +29,7 @@ import TechNote from "./routes/TechNote";
 import MyTechNote from "./routes/MyTechNote";
 import TechNoteContent from "./routes/TechNoteContent";
 import ReactEditor from "./components/ReactEditor";
+import TestModal from "./components/modal/TestModal";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Home />,
+      },
+      {
+        path: "",
+        element: <TestModal />,
       },
       {
         path: "my-tech-note",
