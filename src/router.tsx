@@ -55,7 +55,7 @@ const router = createBrowserRouter([
         element: <TechNote />,
       },
       {
-        path: "tech-note/:notePk",
+        path: "tech-note/:note_content_fk",
         element: <TechNoteContentPage />,
       },
       {
