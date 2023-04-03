@@ -183,7 +183,6 @@ const TechNoteContent = () => {
               </Box>
             </VStack>
           </Box>
-          width={"100%"}
           <Box flex={1}>버튼 영역</Box>
         </Flex>
       </Box>
