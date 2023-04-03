@@ -438,7 +438,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                             <Box
                               position="relative"
                               zIndex="2"
-                              paddingY={1}
+                              paddingY={0}
                               _hover={{ border: "skyblue", opacity: 0.7 }}
                               onMouseEnter={() => setIsHovering(true)}
                               onMouseLeave={() => setIsHovering(false)}
