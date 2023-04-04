@@ -124,7 +124,7 @@ function DataItem({
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
-          border="0px solid purple"
+          border="0 px solid purple"
           width="30px"
           textAlign={"center"}
           onClick={() => deleteTestHandler(pk)}
