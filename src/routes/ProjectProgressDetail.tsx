@@ -415,6 +415,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
                 </Box>
 
                 <VStack flex="3" border="0px solid green">
+                  <Box>
+                    {isUploadingForRefImage ? (
+                      <Spinner size="md" color="blue.500" />
+                    ) : (
+                      ""
+                    )}
+                  </Box>
                   <Box
                     width={"100%"}
                     overflowY="scroll"
@@ -480,13 +487,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
                       <Box>
                         <Text>참고 이미지(드래그앤 드롭 가능)</Text>
                       </Box>
-                    )}
-                  </Box>
-                  <Box>
-                    {isUploadingForRefImage ? (
-                      <Spinner size="md" color="blue.500" />
-                    ) : (
-                      ""
                     )}
                   </Box>
                 </VStack>
