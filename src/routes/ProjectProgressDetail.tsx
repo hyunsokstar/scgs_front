@@ -268,7 +268,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
       <VStack>
         <Flex border={"2px solid purple"} width="100%" height={"620px"}>
           <VStack width={"50%"} border={"1px solid black"} pt={0}>
-
             {/* 상단 상자 추가 */}
             <Box width={"100%"} height={"100%"} border="2px solid orange">
               <Flex>
@@ -493,31 +492,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
                 </VStack>
               </Flex>
             </Box>{" "}
-            {/* 상단 상자 끝 */}
-            {/* 중간 Box test check list */}
-            {/* <Box bg={"white"} width={"100%"} border={"2px solid orange"}>
-            <Box
-              display={"flex"}
-              justifyContent={"space-between"}
-              bgColor={"yellow.200"}
-              p={2}
-              textAlign="center"
-            >
-              테스트 리스트
-              {!isLoadingForTaskData && taskData ? (
-                <ModalButtonForCreateTest taskPk={taskData?.pk} />
-              ) : (
-                ""
-              )}
-            </Box>
-            <TestListForTaskDetail testData={taskData?.tests_for_tasks} />
-          </Box>
-          <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
-            관련 업무 추가
-            <br />
-            <ModalButtonForExtraTask taskPk={taskPk} />
-            <ExtraTasksTable extra_tasks={taskData.extra_tasks} />
-          </Box> */}
           </VStack>
 
           <VStack width="50%" border={"2px solid gray"} height="630px" mb={2}>

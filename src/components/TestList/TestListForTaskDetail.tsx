@@ -9,6 +9,8 @@ import {
   Flex,
   useToast,
   HStack,
+  Avatar,
+  Button,
 } from "@chakra-ui/react";
 import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
@@ -19,6 +21,8 @@ import {
 } from "../../apis/project_progress_api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SlideToggleButtonForUpateTestPassed from "../SlideToggleButton/SlideToggleButtonForUpateTestPassed";
+import { CheckIcon } from "@chakra-ui/icons";
+import { ViewOffIcon } from "@chakra-ui/icons";
 
 interface IPropsForTestListForTaskDetail {
   testData: ItypeFortestRow[];
@@ -36,6 +40,7 @@ function DataItem({
   pk,
   test_description,
   test_passed,
+  testers_for_test,
   test_method,
   test_result_image,
 }: ItypeFortestRow) {
@@ -105,7 +110,7 @@ function DataItem({
         justifyContent={"space-between"}
         alignItems={"center"}
       >
-        <Box display={"flex"} alignItems={"center"}>
+        <Box display={"flex"} alignItems={"center"} flex={1}>
           <Checkbox ml={2} />
         </Box>
         <Box>
@@ -114,12 +119,44 @@ function DataItem({
           </Text>
         </Box>
 
-        <Box>
+        <Box flex={1}>
           <SlideToggleButtonForUpateTestPassed
             onChange={() => updateHandlerForTestPassed(pk)}
             checked={test_passed}
           />
         </Box>
+
+        <Flex justifyContent={"space-between"} flex={1}>
+          <Box flex={2}>
+            {testers_for_test && testers_for_test.length !== 0 ? (
+              testers_for_test.map((row: any) => {
+                return (
+                  <Avatar
+                    name={row.tester.username}
+                    src={row.tester.profile_image}
+                    size="sm"
+                    ml={"0px"}
+                  />
+                );
+              })
+            ) : (
+              <ViewOffIcon boxSize={5} color="gray.500" />
+            )}
+          </Box>
+          <Box flex={1}>
+            <Button
+              variant="outline"
+              colorScheme={"teal"} // colorScheme은 필수가 아닙니다.
+              // borderRadius="full"
+              size={"sm"} // size는 필수가 아닙니다.
+              aria-label={""}
+              ml={2}
+            >
+              <CheckIcon boxSize={5}/>
+            </Button>
+          </Box>
+        </Flex>
+
         <Box
           display={"flex"}
           justifyContent={"center"}
@@ -128,6 +165,7 @@ function DataItem({
           width="30px"
           textAlign={"center"}
           onClick={() => deleteTestHandler(pk)}
+          flex={1}
         >
           <DeleteIcon />
         </Box>
@@ -148,6 +186,7 @@ function TestListForTaskDetail({ testData }: IPropsForTestListForTaskDetail) {
           test_passed={row.test_passed}
           test_method={row.test_method}
           test_result_image={row.test_result_image}
+          testers_for_test={row.testers_for_test}
         />
       ))}
     </List>

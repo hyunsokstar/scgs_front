@@ -57,7 +57,12 @@ export type ItypeFortestRow = {
   test_passed: boolean;
   test_method?: string;
   test_result_image?: string;
+  testers_for_test?: any
 };
+
+// export type type_for_row_for_testers{
+
+// }
 
 export interface IOneTaskForProjectTaskType {
   pk: string;
@@ -79,6 +84,7 @@ export interface IOneTaskForProjectTaskType {
     }
   ];
   extra_tasks?: extra_task_row_type[] | undefined;
+  // testers_for_test?: type_for_row_for_testers[] 
   tests_for_tasks: ItypeFortestRow[];
 }
 
