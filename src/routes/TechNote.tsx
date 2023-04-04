@@ -1,15 +1,14 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement } from "react";
+import TableForTechNote from "../components/Table/TableForTechNote";
 
-interface Props {
-    
-}
+interface Props {}
 
 function TechNote({}: Props): ReactElement {
-    return (
-        <div>
-            테크 노트
-        </div>
-    )
+  return (
+    <div>
+      <TableForTechNote />
+    </div>
+  );
 }
 
-export default TechNote
+export default TechNote;

@@ -523,7 +523,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           <VStack width="50%" border={"2px solid gray"} height="630px" mb={2}>
             <Box>
               <Text fontSize={"2xl"} mb={0}>
-                Tech Note List
+                Tech Note List For Project Task
               </Text>
             </Box>{" "}
             <Box>

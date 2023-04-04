@@ -214,7 +214,7 @@ const TableForTechNote = () => {
                         onClick={() => goToTechNoteContentPage(row.pk)}
                       >
                         {/* <Link to={`/tech-note/${row.pk}`}>{row.title}</Link> */}
-                        {row.title}
+                        {row.title} ({row.note_content_count})
                       </Box>
                     </Td>
                     <Td>{row.category}</Td>

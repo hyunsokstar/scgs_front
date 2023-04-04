@@ -2,6 +2,7 @@ export type ITechNote = {
   pk: number;
   author: string | null;
   title: string;
+  note_content_count: number;
   category: string;
   like_count: number;
   view_count: number;

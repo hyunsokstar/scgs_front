@@ -51,7 +51,7 @@ export const createNoteContent = ({
 
 export const getTechNoteList = ({ queryKey }: QueryFunctionContext) => {
   const [_, pageNum] = queryKey;
-  return instance.get(`tech_note?page=${pageNum}`).then((response) => {
+  return instance.get(`tech_note/?page=${pageNum}`).then((response) => {
     // console.log("response : ", response);
     const response_data = {
       total_count_for_tech_note_table_rows:
@@ -164,6 +164,6 @@ export const getTechNoteContentListByPk = async ({ queryKey }: QueryFunctionCont
   console.log("note_content_fk : ", note_content_fk);
 
   return await instance
-    .get(`tech_note/${note_content_fk}`)
+    .get(`tech_note/tech-note-content/${note_content_fk}`)
     .then((response) => response.data);
 };
