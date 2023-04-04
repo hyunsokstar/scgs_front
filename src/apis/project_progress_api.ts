@@ -35,6 +35,25 @@ export const updateTestPassedForTestForTask = (taskPk: string | number) => {
     });
 };
 
+export const updateTesterListByTestPkApi = (testPk: string | number) => {
+  console.log("updateProjectTaskCompleted 실행 check");
+
+  return instance
+    .put(
+      `/project_progress/TestForTasks/${testPk}/update/testers`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const deleteOneTestForTask = (testPk: string | number) => {
   console.log("testPk : ", testPk);
   return instance

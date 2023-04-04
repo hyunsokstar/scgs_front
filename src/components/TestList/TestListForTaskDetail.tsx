@@ -17,12 +17,15 @@ import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 import { ItypeFortestRow } from "../../types/project_progress/project_progress_type";
 import {
   deleteOneTestForTask,
+  updateTesterListByTestPkApi,
   updateTestPassedForTestForTask,
 } from "../../apis/project_progress_api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SlideToggleButtonForUpateTestPassed from "../SlideToggleButton/SlideToggleButtonForUpateTestPassed";
 import { CheckIcon } from "@chakra-ui/icons";
 import { ViewOffIcon } from "@chakra-ui/icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface IPropsForTestListForTaskDetail {
   testData: ItypeFortestRow[];
@@ -46,6 +49,11 @@ function DataItem({
 }: ItypeFortestRow) {
   const toast = useToast();
   const queryClient = useQueryClient();
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
+
+  console.log("isLoggedIn : ", isLoggedIn);
 
   const deleteTestMutation = useMutation(
     (pk: string | number) => {
@@ -92,6 +100,28 @@ function DataItem({
   const updateHandlerForTestPassed = (taskPk: string | number) => {
     updateProjectTaskIsTestingMutations.mutate(taskPk);
     console.log("update 핸들러 for task_status check pk : ", taskPk);
+  };
+
+  // mutationForUpdateTesterListByTestPk
+  const mutationForUpdateTesterListByTestPk = useMutation(
+    updateTesterListByTestPkApi,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        queryClient.refetchQueries(["getOneProjectTask"]);
+
+        toast({
+          status: "success",
+          title: "test passed update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const updateHandlerForTesterListByTestpK = (testPk: string | number) => {
+    mutationForUpdateTesterListByTestPk.mutate(testPk);
   };
 
   return (
@@ -144,16 +174,22 @@ function DataItem({
             )}
           </Box>
           <Box flex={1}>
-            <Button
-              variant="outline"
-              colorScheme={"teal"} // colorScheme은 필수가 아닙니다.
-              // borderRadius="full"
-              size={"sm"} // size는 필수가 아닙니다.
-              aria-label={""}
-              ml={2}
-            >
-              <CheckIcon boxSize={5}/>
-            </Button>
+            {/* 0404 체크 아이콘 누르면 체커 리스트에 로그인 유저 추가 update */}
+            {isLoggedIn ? (
+              <Button
+                variant="outline"
+                colorScheme={"teal"} // colorScheme은 필수가 아닙니다.
+                size={"sm"} // size는 필수가 아닙니다.
+                aria-label={""}
+                ml={2}
+                onClick={() => updateHandlerForTesterListByTestpK(pk)}
+              >
+                <CheckIcon boxSize={5} />
+                {isLoggedIn ? "true" : "false"}
+              </Button>
+            ) : (
+              <Box>{isLoggedIn ? "true" : "false"}</Box>
+            )}
           </Box>
         </Flex>
 

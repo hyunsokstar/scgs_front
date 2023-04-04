@@ -28,6 +28,6 @@ export default function useUser() {
     return {
         userLoading: isLoading,
         user: data,
-        isLoggedIn: !isError,  // 에러가 없으면 로그인 상태임
+        isLoggedIn: isLoggedIn,  // 에러가 없으면 로그인 상태임
     };
 }

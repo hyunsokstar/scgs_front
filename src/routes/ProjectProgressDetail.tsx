@@ -514,7 +514,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
             p={2}
             textAlign="center"
           >
-            테스트 리스트
+            테스트 리스트 (테스트 체킹은 로그인 필요)
             {!isLoadingForTaskData && taskData ? (
               <ModalButtonForCreateTest taskPk={taskData?.pk} />
             ) : (

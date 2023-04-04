@@ -95,6 +95,7 @@ const Header = () => {
     if (isLoggedIn) {
       dispatch(login(user));
     }
+
   }, []);
 
 
