@@ -18,6 +18,7 @@ import {
 import { ITechNote, ITechNoteListResponse } from "../../types/tech_note_type";
 import { useQuery } from "@tanstack/react-query";
 import {
+  apiForupdateViewCountForTechNote,
   deleteTechNoteListByPk,
   getTechNoteList,
   updateLikeForTechNote,
@@ -30,7 +31,7 @@ import ModalButtonForDeleteTechNoteList from "../modal/ModalButtonForDeleteTechN
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ModalButtonForCreateTechNoteList from "../modal/ModalButtonForCreateTechNoteList";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ModalForTechNoteContentList from "../modal/ModalForTechNoteContentList";
 import ModalForTechNoteContentList2 from "../modal/ModalForTechNoteContentList2";
 
@@ -66,6 +67,8 @@ import ModalForTechNoteContentList2 from "../modal/ModalForTechNoteContentList2"
 
 const TableForTechNote = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -139,6 +142,28 @@ const TableForTechNote = () => {
     updateLikeForTechNoteMutation.mutate(techNotePk);
   };
 
+  const updateViewCountForTechNoteMuetation = useMutation(
+    apiForupdateViewCountForTechNote,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        queryClient.refetchQueries(["getTechNoteList"]);
+
+        // toast({
+        //   status: "success",
+        //   title: "view count update success",
+        //   description: result.message,
+        // });
+
+      },
+    }
+  );
+
+  const goToTechNoteContentPage = (pk: any) => {
+    updateViewCountForTechNoteMuetation.mutate(pk);
+    navigate(`/tech-note/${pk}`);
+  };
+
   return (
     <VStack>
       <Box
@@ -186,11 +211,10 @@ const TableForTechNote = () => {
                         _hover={{ textDecoration: "underline" }} // 호버 시 밑줄 표시
                         _active={{ color: "red" }} // 클릭 시 색상 변경
                         cursor="pointer" // 호버 시 포인터 커서로 변경
-                        // onClick={() =>
-                        //   openModalForTechNoteContentListForPk(row.pk)
-                        // }
+                        onClick={() => goToTechNoteContentPage(row.pk)}
                       >
-                        <Link to={`/tech-note/${row.pk}`}>{row.title}</Link>
+                        {/* <Link to={`/tech-note/${row.pk}`}>{row.title}</Link> */}
+                        {row.title}
                       </Box>
                     </Td>
                     <Td>{row.category}</Td>

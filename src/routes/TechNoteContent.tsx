@@ -136,7 +136,7 @@ const TechNoteContent = () => {
                   )
                 ) : (
                   <Box>
-                    <Image src="https://i.pinimg.com/originals/49/e5/8d/49e58d5922019b8ec4642a2e2b9291c2.png" />
+                    <Image src="https://www.shutterstock.com/image-vector/no-data-empty-concept-illustration-260nw-2134675761.jpg" />
                   </Box>
                 )}
               </Box>

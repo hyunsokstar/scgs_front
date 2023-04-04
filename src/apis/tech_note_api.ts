@@ -143,6 +143,22 @@ export const updateLikeForTechNote = (techNotePk: number) => {
     });
 };
 
+export const apiForupdateViewCountForTechNote = (techNotePk: number) => {
+  return instance
+    .put(
+      `/tech_note/${techNotePk}/view-count/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      return response.data;
+    });
+};
+
 export const getTechNoteContentListByPk = async ({ queryKey }: QueryFunctionContext) => {
   const [_, note_content_fk] = queryKey;
   console.log("note_content_fk : ", note_content_fk);
