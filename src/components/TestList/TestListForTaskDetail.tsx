@@ -8,11 +8,15 @@ import {
   IconButton,
   Flex,
   useToast,
+  HStack,
 } from "@chakra-ui/react";
 import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 import { ItypeFortestRow } from "../../types/project_progress/project_progress_type";
-import { deleteOneTestForTask, updateTestPassedForTestForTask } from "../../apis/project_progress_api";
+import {
+  deleteOneTestForTask,
+  updateTestPassedForTestForTask,
+} from "../../apis/project_progress_api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SlideToggleButtonForUpateTestPassed from "../SlideToggleButton/SlideToggleButtonForUpateTestPassed";
 
@@ -85,38 +89,49 @@ function DataItem({
     console.log("update 핸들러 for task_status check pk : ", taskPk);
   };
 
-
   return (
     <ListItem
       key={pk}
       display="flex"
       alignItems="center"
       overflowX={"auto"}
-      width={"1200px"}
+      width={"100%"}
       my={1}
+      border={"1px solid pink"}
     >
-      <Flex border={"0px solid green"} width="35px">
-        <Checkbox ml={2} />
-      </Flex>
-      <Box display={"flex"} justifyContent="space-between" gap="5">
-        <Text border={"0px solid blue"} width="450px">
-          {test_description}
-        </Text>
-        <Box border="1px solid purple" width="130px">
+      <Flex
+        border={"1px solid green"}
+        width="100%"
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <Box display={"flex"} alignItems={"center"}>
+          <Checkbox ml={2} />
+        </Box>
+        <Box>
+          <Text border={"0px solid blue"} width="450px">
+            {test_description}
+          </Text>
+        </Box>
+
+        <Box>
           <SlideToggleButtonForUpateTestPassed
             onChange={() => updateHandlerForTestPassed(pk)}
             checked={test_passed}
           />
         </Box>
         <Box
-          border="1px solid purple"
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          border="0px solid purple"
           width="30px"
           textAlign={"center"}
           onClick={() => deleteTestHandler(pk)}
         >
           <DeleteIcon />
         </Box>
-      </Box>
+      </Flex>
     </ListItem>
   );
 }
