@@ -222,7 +222,7 @@ function UncompletedTaskRow({
                     <Box border={"0px solid yellow"} width={"100px"}>
                       <Text color={"tomato"}>{task.writer}</Text>
                     </Box>
-                    <Box border={"0px solid blue"} width={"340px"}>
+                    <Box border={"0px solid blue"} width={"360px"}>
                       <Text fontSize="sm" fontWeight="bold">
                         <Link
                           to={`/project_admin/${task.pk}`}
@@ -232,6 +232,46 @@ function UncompletedTaskRow({
                         </Link>
                       </Text>
                     </Box>
+
+                    <Box
+                      display={"flex"}
+                      width="300px"
+                      border="0px solid green"
+                      justifyContent={"flex-start"}
+                      gap={10}
+                    >
+                      <Box border={"0px solid green"} width={"50"}>
+                        <SlideToggleButtonForInProgress
+                          onChange={() => {
+                            updateHandlerForTaskInProgress(task.pk);
+                          }}
+                          checked={task.in_progress}
+                          is_disabled={task.is_testing}
+                        />
+                      </Box>
+
+                      <Box border={"0px solid green"} width={"50"}>
+                        <SlideToggleButtonForIsTesting
+                          onChange={() => {
+                            updateHandlerForTaskIsTesting(task.pk);
+                          }}
+                          checked={task.is_testing}
+                          is_disabled={!task.in_progress}
+                        />
+                      </Box>
+
+                      <Box border={"0px solid green"} width={"50"}>
+                        <SlideToggleButton
+                          onChange={() => {
+                            updateHandlerForTaskStatus(task.pk);
+                          }}
+                          checked={task.task_completed}
+                          in_progress={!task.in_progress}
+                          is_testing={!task.is_testing}
+                        />
+                      </Box>
+                    </Box>
+
                     <Box border={"0px solid blue"} width={"310px"}>
                       <HStack>
                         <Box textAlign={"center"}>
@@ -295,37 +335,6 @@ function UncompletedTaskRow({
                         onChangeForStarRatingHandler={
                           onChangeForStarRatingHandler
                         }
-                      />
-                    </Box>
-
-                    <Box border={"0px solid green"} width={"100px"}>
-                      <SlideToggleButtonForInProgress
-                        onChange={() => {
-                          updateHandlerForTaskInProgress(task.pk);
-                        }}
-                        checked={task.in_progress}
-                        is_disabled={task.is_testing}
-                      />
-                    </Box>
-
-                    <Box border={"0px solid green"} width={"100px"}>
-                      <SlideToggleButtonForIsTesting
-                        onChange={() => {
-                          updateHandlerForTaskIsTesting(task.pk);
-                        }}
-                        checked={task.is_testing}
-                        is_disabled={!task.in_progress}
-                      />
-                    </Box>
-
-                    <Box border={"0px solid green"} width={"100px"}>
-                      <SlideToggleButton
-                        onChange={() => {
-                          updateHandlerForTaskStatus(task.pk);
-                        }}
-                        checked={task.task_completed}
-                        in_progress={!task.in_progress}
-                        is_testing={!task.is_testing}
                       />
                     </Box>
 

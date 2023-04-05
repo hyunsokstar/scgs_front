@@ -31,6 +31,8 @@ import TechNoteContent from "./routes/TechNoteContent";
 import ReactEditor from "./components/ReactEditor";
 import TestModal from "./components/modal/TestModal";
 import TechNoteContentPage from "./routes/TechNoteContentPage";
+import ReactTablePage from "./routes/ReactTablePage";
+import ChakraTablePage from "./routes/ChakraTablePage";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +43,14 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Home />,
+      },
+      {
+        path: "react-table",
+        element: <ReactTablePage />,
+      },
+      {
+        path: "chakra-table",
+        element: <ChakraTablePage />,
       },
       {
         path: "test-modal",

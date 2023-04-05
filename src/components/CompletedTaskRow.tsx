@@ -161,7 +161,7 @@ function CompletedTaskRow({
                       )}
                     </HStack>
                   </Box>
-                  <Box border={"0px solid blue"} width={"340px"}>
+                  <Box border={"0px solid blue"} width={"380px"}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
                         to={`/project_admin/${task.pk}`}
@@ -170,6 +170,16 @@ function CompletedTaskRow({
                         {task.task}
                       </Link>
                     </Text>
+                  </Box>
+
+                  {/* task_completed update */}
+                  <Box display={"flex"} justifyContent={"flex-start"} border={"0px solid green"} width={"120px"}>
+                    <SlideToggleButton
+                      onChange={() => {
+                        updateHandlerForTaskStatus(task.pk);
+                      }}
+                      checked={task.task_completed}
+                    />
                   </Box>
 
                   <Box border={"0px solid blue"} width={"240px"}>
@@ -225,15 +235,6 @@ function CompletedTaskRow({
                     />
                   </Box>
 
-                  {/* task_completed update */}
-                  <Box border={"0px solid green"} width={"100px"}>
-                    <SlideToggleButton
-                      onChange={() => {
-                        updateHandlerForTaskStatus(task.pk);
-                      }}
-                      checked={task.task_completed}
-                    />
-                  </Box>
                   <Box>
                     <IconButton
                       aria-label="삭제"

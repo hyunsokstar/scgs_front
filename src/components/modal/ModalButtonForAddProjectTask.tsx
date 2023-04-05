@@ -45,6 +45,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
     handleSubmit,
     formState: { errors },
     watch,
+    reset 
   } = useForm<IFormTypeForProjectProgress>();
 
   // user data 가져 오기
@@ -69,7 +70,8 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
         console.log("mutation starting");
       },
       onSuccess: (data) => {
-        console.log("data : ", data);
+        // console.log("data : ", data);
+        reset()
 
         toast({
           title: "welcome back!",
@@ -93,7 +95,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
     password,
     task_manager,
   }: IFormTypeForProjectProgress) => {
-    console.log("task create 체크 :: ", task_manager );
+    console.log("task create 체크 :: ", task_manager);
 
     createMutationForProjectProgress.mutate({
       task,
@@ -108,12 +110,16 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
   return (
     <>
       <Button
+        onClick={onOpen}
         size={"xs"}
         colorScheme="green"
-        onClick={onOpen}
         _hover={{ bg: "green.700" }}
         _active={{ bg: "gree.800" }}
         _focus={{ boxShadow: "none" }}
+        fontSize={20}
+        py={5}
+        px={3}
+        mr={1}
       >
         Project Task 추가
       </Button>

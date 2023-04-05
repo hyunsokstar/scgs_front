@@ -34,13 +34,13 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
         justifyContent={"space-between"}
         alignItems={"center"}
         mx={0}
-        py={2}
         px={1}
         bg={"green.200"}
         border={"0px solid green"}
+        height={"60px"}
       >
         <Box>
-          <Text>
+          <Text fontSize={22}>
             비완료 리스트 (총: {taskListData?.totalPageCount} &nbsp;&nbsp;
           ⚪ : {taskListData?.count_for_ready}
           &nbsp;&nbsp; 🟡 : {taskListData?.count_for_in_progress}

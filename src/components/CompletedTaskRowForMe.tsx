@@ -142,7 +142,7 @@ function CompletedTaskRowForMe({
                 key={task.pk}
                 height={16}
                 border={"1px solid lightgray"}
-                width={"1414px"}
+                width={"1500px"}
                 my={0}
                 display={"flex"}
                 alignItems={"center"}
@@ -161,7 +161,7 @@ function CompletedTaskRowForMe({
                       )}
                     </HStack>
                   </Box>
-                  <Box border={"0px solid blue"} width={"340px"}>
+                  <Box border={"0px solid blue"} width={"360px"}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
                         to={`/project_admin/${task.pk}`}
@@ -171,8 +171,23 @@ function CompletedTaskRowForMe({
                       </Link>
                     </Text>
                   </Box>
+                  {/* task_completed update */}
 
-                  <Box border={"0px solid blue"} width={"240px"}>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"flex-start"}
+                    border={"0px solid green"}
+                    width={"120px"}
+                  >
+                    <SlideToggleButton
+                      onChange={() => {
+                        updateHandlerForTaskStatus(task.pk);
+                      }}
+                      checked={task.task_completed}
+                    />
+                  </Box>
+
+                  <Box border={"0px solid blue"} width={"260px"}>
                     <HStack>
                       <Box textAlign={"center"}>
                         <Text>시작</Text>
@@ -190,7 +205,7 @@ function CompletedTaskRowForMe({
                       </Box>
                     </HStack>
                   </Box>
-                  <Box border={"0px solid blue"} width={"240px"}>
+                  <Box border={"0px solid blue"} width={"260px"}>
                     <HStack>
                       <Box textAlign={"center"}>
                         <Text>완료</Text>
@@ -211,9 +226,9 @@ function CompletedTaskRowForMe({
 
                   <Box
                     border={"0px solid blue"}
-                    width={"190px"}
+                    width={"260px"}
                     display={"flex"}
-                    justifyContent={"center"}
+                    justifyContent={"flex-start"}
                     alignItems={"center"}
                   >
                     <StarRating
@@ -225,16 +240,7 @@ function CompletedTaskRowForMe({
                     />
                   </Box>
 
-                  {/* task_completed update */}
-                  <Box border={"0px solid green"} width={"100px"}>
-                    <SlideToggleButton
-                      onChange={() => {
-                        updateHandlerForTaskStatus(task.pk);
-                      }}
-                      checked={task.task_completed}
-                    />
-                  </Box>
-                  <Box>
+                  <Box width={"100px"} border="0px solid green">
                     <IconButton
                       aria-label="삭제"
                       icon={<FaTrash />}

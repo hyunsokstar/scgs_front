@@ -27,6 +27,7 @@ import {
   ListIcon,
   Textarea,
   Heading,
+  Switch,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
@@ -82,6 +83,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
   const [imageToUpload, setImageToUpload] = useState<any>();
   const [isHovering, setIsHovering] = useState(false);
   const [isUploadingForRefImage, setIsUploadingForRefImage] = useState(false);
+
+  // const [isChecked, setIsChecked] = useState(false);
+  const [isCheckedForShowTechNote, setIsCheckedForShowTechNote] =
+    useState(false);
+
+  const handleChange = () =>
+    setIsCheckedForShowTechNote(!isCheckedForShowTechNote);
 
   useEffect(() => {
     set_refer_images(taskData?.task_images);
@@ -269,13 +277,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
         <Flex border={"2px solid purple"} width="100%" height={"620px"}>
           <VStack width={"50%"} border={"1px solid black"} pt={0}>
             {/* 상단 상자 추가 */}
-            <Box width={"100%"} height={"100%"} border="2px solid orange">
+            <Box width={"100%"} height={"100%"} border="0px solid orange">
               <Flex>
                 <Box
                   flex="5"
                   bg="white"
                   border="1px solid black"
-                  height={"610px"}
+                  height={"615px"}
                   px={2}
                 >
                   <form onSubmit={handleSubmit(onSubmit)}>
@@ -414,18 +422,16 @@ function ProjectProgressDetail({}: Props): ReactElement {
                   </form>
                 </Box>
 
-                <VStack flex="3" border="0px solid green">
-                  <Box>
-                    {isUploadingForRefImage ? (
-                      <Spinner size="md" color="blue.500" />
-                    ) : (
-                      ""
-                    )}
-                  </Box>
+                <Box>
+                  {isUploadingForRefImage && (
+                    <Spinner size="md" color="blue.500" />
+                  )}
+                </Box>
+                <VStack flex="3" border="1px solid green">
                   <Box
                     width={"100%"}
                     overflowY="scroll"
-                    height={"610px"}
+                    height={"615px"}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
@@ -457,7 +463,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                                 }
                                 position="absolute"
                                 top={"8px"}
-                                mt={1}
+                                mt={0}
                                 mr={2}
                                 right={0}
                                 size="sm"
@@ -495,18 +501,29 @@ function ProjectProgressDetail({}: Props): ReactElement {
           </VStack>
 
           <VStack width="50%" border={"2px solid gray"} height="630px" mb={2}>
-            <Box>
-              <Text fontSize={"2xl"} mb={0}>
-                Tech Note List For Project Task
-              </Text>
+            <Box my={2}>
+              <FormControl display="flex" alignItems="center">
+                <FormLabel htmlFor="my-switch" mb="0">
+                  Mode Changes(Comment or tech Note)
+                </FormLabel>
+                <Switch
+                  isChecked={isCheckedForShowTechNote}
+                  onChange={handleChange}
+                  size="lg"
+                  colorScheme="green"
+                />{" "}
+              </FormControl>
             </Box>{" "}
             <Box>
               <TableForTechNote />
             </Box>
           </VStack>
         </Flex>
-
-        <Box bg={"white"} width={"100%"} border={"1px solid orange"}>
+        <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
+          <ModalButtonForExtraTask taskPk={taskPk} />
+          <ExtraTasksTable extra_tasks={taskData.extra_tasks} />
+        </Box>
+        <Box bg={"white"} width={"100%"} border={"0px solid orange"}>
           <Box
             display={"flex"}
             justifyContent={"space-between"}
@@ -522,12 +539,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
             )}
           </Box>
           <TestListForTaskDetail testData={taskData?.tests_for_tasks} />
-        </Box>
-        <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
-          관련 업무 추가
-          <br />
-          <ModalButtonForExtraTask taskPk={taskPk} />
-          <ExtraTasksTable extra_tasks={taskData.extra_tasks} />
         </Box>
       </VStack>
     );

@@ -148,7 +148,7 @@ function UncompletedTaskRowForMe({
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        projectTaskListRefatch()
+        projectTaskListRefatch();
         // queryClient.refetchQueries(["getUncompletedTaskList"]);
         // queryClient.refetchQueries(["getCompletedTaskList"]);
         // projectTaskListRefatch()
@@ -176,7 +176,7 @@ function UncompletedTaskRowForMe({
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        projectTaskListRefatch()
+        projectTaskListRefatch();
 
         toast({
           status: "success",
@@ -225,7 +225,7 @@ function UncompletedTaskRowForMe({
                     <Box border={"0px solid yellow"} width={"100px"}>
                       <Text color={"tomato"}>{task.writer}</Text>
                     </Box>
-                    <Box border={"0px solid blue"} width={"340px"}>
+                    <Box border={"0px solid blue"} width={"360px"}>
                       <Text fontSize="sm" fontWeight="bold">
                         <Link
                           to={`/project_admin/${task.pk}`}
@@ -235,6 +235,40 @@ function UncompletedTaskRowForMe({
                         </Link>
                       </Text>
                     </Box>
+
+                    <Box display="flex" border="0px solid green" justifyContent={"flex-start"} width="320px" gap={10}>
+                      <Box border={"0px solid green"} width={"50px"}>
+                        <SlideToggleButtonForInProgress
+                          onChange={() => {
+                            updateHandlerForTaskInProgress(task.pk);
+                          }}
+                          checked={task.in_progress}
+                          is_disabled={task.is_testing}
+                        />
+                      </Box>
+
+                      <Box border={"0px solid green"} width={"50px"}>
+                        <SlideToggleButtonForIsTesting
+                          onChange={() => {
+                            updateHandlerForTaskIsTesting(task.pk);
+                          }}
+                          checked={task.is_testing}
+                          is_disabled={!task.in_progress}
+                        />
+                      </Box>
+
+                      <Box border={"0px solid green"} width={"50px"}>
+                        <SlideToggleButton
+                          onChange={() => {
+                            updateHandlerForTaskStatus(task.pk);
+                          }}
+                          checked={task.task_completed}
+                          in_progress={!task.in_progress} // 진행중이 아니면 disabled true
+                          is_testing={!task.is_testing} //  testing 중이 아니면
+                        />
+                      </Box>
+                    </Box>
+
                     <Box border={"0px solid blue"} width={"310px"}>
                       <HStack>
                         <Box textAlign={"center"}>
@@ -298,38 +332,6 @@ function UncompletedTaskRowForMe({
                         onChangeForStarRatingHandler={
                           onChangeForStarRatingHandler
                         }
-                      />
-                    </Box>
-
-                    <Box border={"0px solid green"} width={"100px"}>
-                      <SlideToggleButtonForInProgress
-                      
-                        onChange={() => {
-                          updateHandlerForTaskInProgress(task.pk);
-                        }}
-                        checked={task.in_progress}
-                        is_disabled={task.is_testing}
-                      />
-                    </Box>
-
-                    <Box border={"0px solid green"} width={"100px"}>
-                      <SlideToggleButtonForIsTesting
-                        onChange={() => {
-                          updateHandlerForTaskIsTesting(task.pk);
-                        }}
-                        checked={task.is_testing}
-                        is_disabled={!task.in_progress}
-                      />
-                    </Box>
-
-                    <Box border={"0px solid green"} width={"100px"}>
-                      <SlideToggleButton
-                        onChange={() => {
-                          updateHandlerForTaskStatus(task.pk);
-                        }}
-                        checked={task.task_completed}
-                        in_progress={!task.in_progress} // 진행중이 아니면 disabled true
-                        is_testing={!task.is_testing} //  testing 중이 아니면
                       />
                     </Box>
 
