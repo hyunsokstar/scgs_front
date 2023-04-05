@@ -52,6 +52,7 @@ import TestListForTaskDetail from "../components/TestList/TestListForTaskDetail"
 import ModalButtonForCreateTest from "../components/modal/ModalButtonForCreateTest";
 import TableForTechNote from "../components/Table/TableForTechNote";
 import ModalButtonForCreateTechNoteList from "../components/modal/ModalButtonForCreateTechNoteList";
+import TableForTaskCommentList from "../components/Table/TableForTaskCommentList";
 
 interface Props {}
 
@@ -515,7 +516,11 @@ function ProjectProgressDetail({}: Props): ReactElement {
               </FormControl>
             </Box>{" "}
             <Box>
-              <TableForTechNote />
+              {!isCheckedForShowTechNote ? (
+                <TableForTaskCommentList />
+              ) : (
+                <TableForTechNote />
+              )}
             </Box>
           </VStack>
         </Flex>

@@ -22,6 +22,7 @@ import {
   FormHelperText,
   Flex,
   Textarea,
+  Text,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import {
@@ -31,7 +32,6 @@ import {
 import { getUserNamesForCreate } from "../../apis/user_api";
 import { insertExtraTaskByModal } from "../../apis/project_progress_api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
 
 interface IProps {
   taskPk: number | string | undefined;
@@ -116,8 +116,8 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({ taskPk }: IProps) => {
       >
         Project Task 추가
       </Button> */}
-
-      <Flex justifyContent={"flex-end"} pr={1} mb={2}>
+      <Flex justifyContent={"space-between"} p={2} mb={2}>
+        <Text fontSize={20}>부가 업무 추가</Text>
         <Button
           variant="outline"
           colorScheme="blue"
@@ -127,7 +127,6 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({ taskPk }: IProps) => {
           부가 업무 추가
         </Button>{" "}
       </Flex>
-
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
