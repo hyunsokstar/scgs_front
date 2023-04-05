@@ -57,12 +57,28 @@ export type ItypeFortestRow = {
   test_passed: boolean;
   test_method?: string;
   test_result_image?: string;
-  testers_for_test?: any
+  testers_for_test?: any;
 };
 
 // export type type_for_row_for_testers{
 
 // }
+
+interface IWriter {
+  pk: number;
+  username: string;
+  profile_image: string;
+}
+
+export interface ITaskComment {
+  id: number;
+  task: number;
+  writer: IWriter;
+  comment: string;
+  like_count: number;
+  created_at: string;
+  created_at_formatted: string;
+}
 
 export interface IOneTaskForProjectTaskType {
   pk: string;
@@ -84,8 +100,8 @@ export interface IOneTaskForProjectTaskType {
     }
   ];
   extra_tasks?: extra_task_row_type[] | undefined;
-  // testers_for_test?: type_for_row_for_testers[] 
   tests_for_tasks: ItypeFortestRow[];
+  task_comments: ITaskComment[];
 }
 
 export interface ITypeForProjectProgressList {

@@ -1,6 +1,17 @@
-import { Box, Checkbox, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import {
+  Box,
+  Checkbox,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  Avatar,
+} from "@chakra-ui/react";
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
+import { ITaskComment } from "../../types/project_progress/project_progress_type";
 
 type Comment = {
   author: string;
@@ -8,8 +19,8 @@ type Comment = {
   created_at: string;
 };
 
-type Props = {
-  comments: Comment[];
+type IProps = {
+  task_comments: ITaskComment[];
 };
 
 const comments_sample = [
@@ -26,20 +37,20 @@ const comments_sample = [
 ];
 
 for (let i = 0; i < 8; i++) {
-    comments_sample.push({
-      author: faker.name.findName(),
-      comment: faker.lorem.sentence(),
-      created_at: faker.date.recent().toISOString(),
-    });
-  }
+  comments_sample.push({
+    author: faker.name.findName(),
+    comment: faker.lorem.sentence(),
+    created_at: faker.date.recent().toISOString(),
+  });
+}
 
-const TableForTaskCommentList = () => {
+const TableForTaskCommentList = ({ task_comments }: IProps) => {
   const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
 
-  const [comments, setComments] = useState(comments_sample);
+  const [comments, setComments] = useState(task_comments);
+  console.log("task_comments : ", task_comments);
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const handleSelectRow = (rowIndex: number) => {
     const newSelectedRows = new Set(selectedRows);
@@ -68,7 +79,7 @@ const TableForTaskCommentList = () => {
                 }}
               />
             </Th>
-            <Th>author</Th>
+            <Th>writers</Th>
             <Th>comment</Th>
             <Th>created_at</Th>
           </Tr>
@@ -85,9 +96,15 @@ const TableForTaskCommentList = () => {
                   onChange={() => handleSelectRow(i)}
                 />
               </Td>
-              <Td>{comment.author}</Td>
+              <Td>
+                <Avatar
+                  size="sm"
+                  src={comment.writer.profile_image}
+                //   alt="Profile Image"
+                />
+              </Td>
               <Td>{comment.comment}</Td>
-              <Td>{comment.created_at}</Td>
+              <Td>{comment.created_at_formatted}</Td>
             </Tr>
           ))}
         </Tbody>
