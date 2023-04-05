@@ -53,6 +53,7 @@ import ModalButtonForCreateTest from "../components/modal/ModalButtonForCreateTe
 import TableForTechNote from "../components/Table/TableForTechNote";
 import ModalButtonForCreateTechNoteList from "../components/modal/ModalButtonForCreateTechNoteList";
 import TableForTaskCommentList from "../components/Table/TableForTaskCommentList";
+import ChatStyleBoard from "../components/ChatStyleBoard";
 
 interface Props {}
 
@@ -438,7 +439,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
                     onDrop={handleDrop}
                     border={"1px solid green"}
                   >
-                    
                     {refer_images && refer_images.length ? (
                       refer_images.map((row: any) => {
                         // console.log("row : ", row);
@@ -516,12 +516,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
                 />{" "}
               </FormControl>
             </Box>{" "}
-            <Box>
+            <Box width={"95%"}>
               {/* 0405 comment list 추가 하기 */}
               {!isCheckedForShowTechNote ? (
-                <TableForTaskCommentList
-                  task_comments={taskData?.task_comments}
-                />
+                // <TableForTaskCommentList
+                //   task_comments={taskData?.task_comments}
+                // />
+                <ChatStyleBoard />
               ) : (
                 <TableForTechNote />
               )}

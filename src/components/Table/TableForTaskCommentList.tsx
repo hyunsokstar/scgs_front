@@ -8,7 +8,12 @@ import {
   Thead,
   Tr,
   Avatar,
+  HStack,
 } from "@chakra-ui/react";
+
+import { Button, ButtonGroup, Flex, Icon } from "@chakra-ui/react";
+import { CheckIcon, AddIcon, DeleteIcon } from "@chakra-ui/icons";
+
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 import { ITaskComment } from "../../types/project_progress/project_progress_type";
@@ -22,27 +27,6 @@ type Comment = {
 type IProps = {
   task_comments: ITaskComment[];
 };
-
-const comments_sample = [
-  {
-    author: "John Doe",
-    comment: "This is a great comment!",
-    created_at: "2022-04-01 09:00:00",
-  },
-  {
-    author: "Jane Smith",
-    comment: "I agree with John, great comment!",
-    created_at: "2022-04-02 10:00:00",
-  },
-];
-
-for (let i = 0; i < 8; i++) {
-  comments_sample.push({
-    author: faker.name.findName(),
-    comment: faker.lorem.sentence(),
-    created_at: faker.date.recent().toISOString(),
-  });
-}
 
 const TableForTaskCommentList = ({ task_comments }: IProps) => {
   const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
@@ -63,52 +47,92 @@ const TableForTaskCommentList = ({ task_comments }: IProps) => {
   };
 
   return (
-    <Box height={"550px"} overflowY={"scroll"} p={5}>
-      <Table variant="striped" colorScheme="gray">
-        <Thead>
-          <Tr>
-            <Th width="50px">
-              <Checkbox
-                isChecked={selectedRows.size === comments.length}
-                onChange={() => {
-                  if (selectedRows.size === comments.length) {
-                    setSelectedRows(new Set());
-                  } else {
-                    setSelectedRows(new Set(comments.map((_, i) => i)));
-                  }
-                }}
-              />
-            </Th>
-            <Th>writers</Th>
-            <Th>comment</Th>
-            <Th>created_at</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {comments.map((comment, i) => (
-            <Tr
-              key={i}
-              backgroundColor={selectedRows.has(i) ? "blue.50" : undefined}
+    <Box>
+      <Box>
+        <ButtonGroup
+          variant="outline"
+          size="md"
+          borderRadius="full"
+          width={"100%"}
+        >
+          <Flex
+            width={"100%"}
+            alignItems="center"
+            justifyContent="space-between"
+            my={2}
+            pl={3}
+          >
+            <Button
+              leftIcon={<Icon as={CheckIcon} boxSize={4} />}
+              _hover={{ bg: "green.100" }}
             >
-              <Td width="50px">
+              All Check
+            </Button>
+            <HStack gap={2}>
+              <Button
+                leftIcon={<Icon as={AddIcon} boxSize={4} />}
+                _hover={{ bg: "purple.100" }}
+              >
+                Create
+              </Button>
+              <Button
+                leftIcon={<Icon as={DeleteIcon} boxSize={4} />}
+                _hover={{ bg: "pink.100" }}
+              >
+                Delete
+              </Button>
+            </HStack>
+          </Flex>
+        </ButtonGroup>
+      </Box>
+
+      <Box height={"550px"} overflowY={"scroll"} p={5}>
+        <Table variant="striped" colorScheme="gray">
+          <Thead>
+            <Tr>
+              <Th width="50px">
                 <Checkbox
-                  isChecked={selectedRows.has(i)}
-                  onChange={() => handleSelectRow(i)}
+                  isChecked={selectedRows.size === comments.length}
+                  onChange={() => {
+                    if (selectedRows.size === comments.length) {
+                      setSelectedRows(new Set());
+                    } else {
+                      setSelectedRows(new Set(comments.map((_, i) => i)));
+                    }
+                  }}
                 />
-              </Td>
-              <Td>
-                <Avatar
-                  size="sm"
-                  src={comment.writer.profile_image}
-                //   alt="Profile Image"
-                />
-              </Td>
-              <Td>{comment.comment}</Td>
-              <Td>{comment.created_at_formatted}</Td>
+              </Th>
+              <Th>writers</Th>
+              <Th>comment</Th>
+              <Th>created_at</Th>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
+          </Thead>
+          <Tbody>
+            {comments.map((comment, i) => (
+              <Tr
+                key={i}
+                backgroundColor={selectedRows.has(i) ? "blue.50" : undefined}
+              >
+                <Td width="50px">
+                  <Checkbox
+                    isChecked={selectedRows.has(i)}
+                    onChange={() => handleSelectRow(i)}
+                  />
+                </Td>
+                <Td>
+                  <Avatar
+                    size="sm"
+                    src={comment.writer.profile_image}
+                    //   alt="Profile Image"
+                  />
+                </Td>
+                <Td>{comment.comment}</Td>
+                <Td>{comment.created_at_formatted}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Box>
     </Box>
   );
 };

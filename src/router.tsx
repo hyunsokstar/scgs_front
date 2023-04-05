@@ -33,6 +33,7 @@ import TestModal from "./components/modal/TestModal";
 import TechNoteContentPage from "./routes/TechNoteContentPage";
 import ReactTablePage from "./routes/ReactTablePage";
 import ChakraTablePage from "./routes/ChakraTablePage";
+import TestBoardPage from "./routes/TestBoardPage";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Home />,
+      },
+      {
+        path:"test-board",
+        element: <TestBoardPage />
       },
       {
         path: "react-table",
