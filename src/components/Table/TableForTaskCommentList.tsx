@@ -52,7 +52,7 @@ const TableForTaskCommentList = () => {
   };
 
   return (
-    <Box height={"563px"} overflowY={"scroll"} p={5}>
+    <Box height={"550px"} overflowY={"scroll"} p={5}>
       <Table variant="striped" colorScheme="gray">
         <Thead>
           <Tr>
