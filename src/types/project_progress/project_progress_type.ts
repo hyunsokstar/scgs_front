@@ -83,13 +83,13 @@ export interface ITaskComment {
 export interface IOneTaskForProjectTaskType {
   pk: string;
   writer: string;
+  task_manager?: { pk: number; username: string; profile_image: string };
   task: string;
   task_description: string;
   task_completed: boolean;
   importance: number;
   started_at: string;
   due_date: string;
-  task_manager?: { pk: number; username: string };
   started_at_formatted: string;
   elapsed_time_from_started_at: string;
   task_images: [

@@ -71,7 +71,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
   );
 
   if (taskData) {
-    // console.log("taskData: ", taskData);
+    console.log("taskData: ", taskData);
   } else {
     // console.log("extra_tasks 없음");
   }
@@ -522,7 +522,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                 // <TableForTaskCommentList
                 //   task_comments={taskData?.task_comments}
                 // />
-                <ChatStyleBoard />
+                <ChatStyleBoard task_manager= {taskData?.task_manager} task_comments={taskData?.task_comments} />
               ) : (
                 <TableForTechNote />
               )}
