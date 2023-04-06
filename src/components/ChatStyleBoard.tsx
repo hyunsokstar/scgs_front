@@ -7,10 +7,13 @@ import {
   Button,
   Box,
   Avatar,
+  Spacer,
 } from "@chakra-ui/react";
 import { ITaskComment } from "../types/project_progress/project_progress_type";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { FaCheckSquare, FaPlus, FaTrash } from "react-icons/fa";
+import ModalButtonForAddCommentForTask from "./modal/ModalButtonForAddCommentForTask";
 
 interface Message {
   writer: any;
@@ -34,7 +37,7 @@ function ListItem({ writer, comment, isUser }: Message) {
       <VStack
         p={3}
         borderRadius="lg"
-        bg={isUser ? "green.100" : "gray.100"}
+        bg={isUser ? "red.100" : "gray.100"}
         alignSelf={isUser ? "flex-start" : "flex-end"}
         border="1px solid black"
         width="300px"
@@ -79,6 +82,7 @@ type IProps = {
   task_manager: User | undefined;
 };
 
+// main
 function ChatStyleBoard({ task_comments, task_manager }: IProps) {
   const [messages, setMessages] = useState<ITaskComment[]>(task_comments);
   const { loginUser, isLoggedIn } = useSelector(
@@ -87,27 +91,69 @@ function ChatStyleBoard({ task_comments, task_manager }: IProps) {
 
   console.log("loginUser : ", loginUser);
 
-  function handleRemoveMessage(id: number) {
-    setMessages(messages.filter((message) => message.id !== id));
-  }
+  const addCommentHandler = () => {
+    console.log("hi");
+  };
 
   return (
-    <VStack
-      p={4}
-      bg="gray.50"
-      borderRadius="lg"
-      border="2px solid black"
-      width="100%"
-    >
-      {task_comments.map((co) => (
-        <ListItem
-          key={co.id}
-          writer={co.writer}
-          comment={co.comment}
-          isUser={co.writer.username === task_manager?.username}
-        />
-      ))}
-    </VStack>
+    <Box>
+      <Box border={"1px solid green"} mb={2}>
+        <HStack spacing={4}>
+          <Button
+            leftIcon={<FaCheckSquare />}
+            size="sm"
+            colorScheme="green"
+            variant="outline"
+            _hover={{ bg: "green.50" }}
+            borderRadius="full"
+          >
+            All Check
+          </Button>
+          <Spacer />
+          <Box>
+            {/* <Button
+              leftIcon={<FaPlus />}
+              size="sm"
+              colorScheme="purple"
+              variant="outline"
+              _hover={{ bg: "purple.50" }}
+              borderRadius="full"
+            >
+              Create
+            </Button> */}
+            <ModalButtonForAddCommentForTask onAddComment={addCommentHandler} />
+            <Button
+              leftIcon={<FaTrash />}
+              size="sm"
+              colorScheme="red"
+              variant="outline"
+              _hover={{ bg: "red.50" }}
+              borderRadius="full"
+              ml={2}
+            >
+              Delete
+            </Button>
+          </Box>
+        </HStack>{" "}
+      </Box>
+
+      <VStack
+        p={4}
+        bg="gray.50"
+        borderRadius="lg"
+        border="2px solid black"
+        width="100%"
+      >
+        {task_comments.map((co) => (
+          <ListItem
+            key={co.id}
+            writer={co.writer}
+            comment={co.comment}
+            isUser={co.writer.username === task_manager?.username}
+          />
+        ))}
+      </VStack>
+    </Box>
   );
 }
 
