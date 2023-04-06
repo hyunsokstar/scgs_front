@@ -24,24 +24,15 @@ const ModalButtonForAddCommentForTask: React.FC<
   const { handleSubmit, register, reset } = useForm<{ comment: string }>();
 
   const onSubmit = (data: { comment: string }) => {
+    console.log("comment : ", data.comment);
+
     onAddComment(data.comment);
     reset();
-    onClose();
+    // onClose();
   };
 
   return (
     <>
-      {/* <Button
-          size="md"
-          variant="outline"
-          colorScheme="pink"
-          borderRadius="full"
-          _hover={{ bg: "pink.100" }}
-          onClick={onOpen}
-        >
-          Add Comment
-        </Button> */}
-
       <Button
         leftIcon={<FaPlus />}
         size="sm"
@@ -60,9 +51,12 @@ const ModalButtonForAddCommentForTask: React.FC<
           <ModalHeader>Add Comment</ModalHeader>
           <ModalBody>
             <Input
-              name="comment"
               placeholder="Enter your comment here"
               mb={4}
+              {...register("comment", {
+                required: false,
+                maxLength: 50,
+              })}
             />
           </ModalBody>
           <ModalFooter>

@@ -522,7 +522,11 @@ function ProjectProgressDetail({}: Props): ReactElement {
                 // <TableForTaskCommentList
                 //   task_comments={taskData?.task_comments}
                 // />
-                <ChatStyleBoard task_manager= {taskData?.task_manager} task_comments={taskData?.task_comments} />
+                <ChatStyleBoard
+                  taskPk={taskData.pk}
+                  task_manager={taskData?.task_manager}
+                  task_comments={taskData?.task_comments}
+                />
               ) : (
                 <TableForTechNote />
               )}

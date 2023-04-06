@@ -80,10 +80,11 @@ interface User {
 type IProps = {
   task_comments: ITaskComment[];
   task_manager: User | undefined;
+  taskPk: number | string;
 };
 
 // main
-function ChatStyleBoard({ task_comments, task_manager }: IProps) {
+function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
   const [messages, setMessages] = useState<ITaskComment[]>(task_comments);
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -92,7 +93,7 @@ function ChatStyleBoard({ task_comments, task_manager }: IProps) {
   console.log("loginUser : ", loginUser);
 
   const addCommentHandler = () => {
-    console.log("hi");
+    console.log("taskPk : ", taskPk);
   };
 
   return (
