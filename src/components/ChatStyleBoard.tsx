@@ -22,6 +22,7 @@ import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  deleteOneCommentForTaskByPkApi,
   updateCommentTextForTaskApi,
   updateMutationForCommentEditModeApi,
 } from "../apis/project_progress_api";
@@ -91,8 +92,34 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
     // pk, commentTextForUpdate 를 이용해서 comment update
     updateMutationForCommentTextForTask.mutate({
       commentPk,
-      commentText: commentTextForUpdate
+      commentText: commentTextForUpdate,
     });
+  };
+
+  const deleteCommentMutationByPk = useMutation(
+    (pk: string | number) => {
+      return deleteOneCommentForTaskByPkApi(pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["getOneProjectTask"]);
+        
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const onDeleteCommentHandler = (commentPk: string | number) => {
+    console.log("onDeleteCommentHandler : ", commentPk);
+    deleteCommentMutationByPk.mutate(commentPk);
   };
 
   return (
@@ -167,7 +194,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
                   <IconButton
                     icon={<DeleteIcon />}
                     aria-label="Delete"
-                    // onClick={onDelete}
+                    onClick={() => onDeleteCommentHandler(pk)}
                     variant="outline"
                     colorScheme="teal"
                     _hover={{ bg: "teal.400" }}

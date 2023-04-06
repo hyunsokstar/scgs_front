@@ -22,6 +22,17 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+export const deleteOneCommentForTaskByPkApi = (commentPk: string | number) => {
+  console.log("commentPk : ", commentPk);
+  return instance
+    .delete(`project_progress/comment/${commentPk}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const updateCommentTextForTaskApi = ({
   commentPk,
   commentText,
