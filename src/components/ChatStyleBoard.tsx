@@ -8,6 +8,7 @@ import {
   Box,
   Avatar,
   Spacer,
+  Flex,
 } from "@chakra-ui/react";
 import { ITaskComment } from "../types/project_progress/project_progress_type";
 import { useSelector } from "react-redux";
@@ -37,32 +38,26 @@ function ListItem({ writer, comment, isUser }: Message) {
       <VStack
         p={3}
         borderRadius="lg"
-        bg={isUser ? "red.100" : "gray.100"}
+        bg={isUser ? "yellow.50" : "blue.50"}
         alignSelf={isUser ? "flex-start" : "flex-end"}
         border="1px solid black"
         width="300px"
       >
-        <HStack>
+        <Flex
+          justifyContent={"flex-start"}
+          alignItems={"center"}
+          border="0px solid green"
+          width={"100%"}
+          gap={2}
+        >
+          <Box>{isUser && <Avatar size="sm" src={writer.profile_image} />}</Box>
           <Box>
-            {isUser && (
-              <Avatar
-                size="sm"
-                src={writer.profile_image}
-                //   alt="Profile Image"
-              />
-            )}
+            <Text fontSize="lg">{comment}</Text>
           </Box>
-          <Text fontSize="lg">{comment}</Text>
           <Box>
-            {!isUser && (
-              <Avatar
-                size="sm"
-                src={writer.profile_image}
-                //   alt="Profile Image"
-              />
-            )}
+            {!isUser && <Avatar size="sm" src={writer.profile_image} />}
           </Box>
-        </HStack>
+        </Flex>
       </VStack>
       {!isUser && (
         <Checkbox isChecked={isChecked} onChange={handleCheckboxChange} />
@@ -90,15 +85,16 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
     (state: RootState) => state.loginInfo
   );
 
-  console.log("loginUser : ", loginUser);
+  // console.log("loginUser : ", loginUser);
 
-  const addCommentHandler = () => {
-    console.log("taskPk : ", taskPk);
-  };
+  // const addCommentHandler = (comment:string) => {
+  //   console.log("taskPk at addCommentHandler : ", taskPk);
+  //   console.log("comment at addCommentHandler : ", comment);
+  // };
 
   return (
     <Box>
-      <Box border={"1px solid green"} mb={2}>
+      <Box border={"0px solid green"} mb={2}>
         <HStack spacing={4}>
           <Button
             leftIcon={<FaCheckSquare />}
@@ -109,6 +105,17 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             borderRadius="full"
           >
             All Check
+          </Button>
+          <Button
+            leftIcon={<FaTrash />}
+            size="sm"
+            colorScheme="red"
+            variant="outline"
+            _hover={{ bg: "red.50" }}
+            borderRadius="full"
+            ml={1}
+          >
+            Delete
           </Button>
           <Spacer />
           <Box>
@@ -122,18 +129,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             >
               Create
             </Button> */}
-            <ModalButtonForAddCommentForTask onAddComment={addCommentHandler} />
-            <Button
-              leftIcon={<FaTrash />}
-              size="sm"
-              colorScheme="red"
-              variant="outline"
-              _hover={{ bg: "red.50" }}
-              borderRadius="full"
-              ml={2}
-            >
-              Delete
-            </Button>
+            <ModalButtonForAddCommentForTask taskPk={taskPk} />
           </Box>
         </HStack>{" "}
       </Box>
@@ -142,8 +138,10 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
         p={4}
         bg="gray.50"
         borderRadius="lg"
-        border="2px solid black"
+        border="2px solid gray"
         width="100%"
+        height={"500px"}
+        overflowY={"scroll"}
       >
         {task_comments.map((co) => (
           <ListItem

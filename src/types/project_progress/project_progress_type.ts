@@ -1,5 +1,10 @@
 // task_completed update
 
+export interface FormTypeForCreateCommentForTask {
+  taskPk: string | number;
+  comment: string;
+}
+
 export interface FormTypeForCreateTest {
   taskPk?: number | string | undefined;
   test_description: string;

@@ -4,6 +4,7 @@ import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { backendApi } from "../apis/common_api";
 import {
+  FormTypeForCreateCommentForTask,
   FormTypeForCreateTest,
   FormTypeForExtraTask,
   IFormTypeForProjectProgress,
@@ -322,6 +323,25 @@ export const insertExtraTaskByModal = ({
         task_manager,
         task,
         importance,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
+export const createCommentForTaskApi = ({
+  taskPk,
+  comment,
+}: FormTypeForCreateCommentForTask) =>
+  instance
+    .post(
+      `/project_progress/${taskPk}/comment`,
+      {
+        task:taskPk,
+        comment,
       },
       {
         headers: {

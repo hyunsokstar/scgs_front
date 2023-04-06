@@ -71,7 +71,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
   );
 
   if (taskData) {
-    console.log("taskData: ", taskData);
+    // console.log("taskData: ", taskData);
   } else {
     // console.log("extra_tasks 없음");
   }
