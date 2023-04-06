@@ -25,14 +25,19 @@ interface Message {
   comment: string;
   isUser: boolean;
   is_edit_mode: boolean;
+  pk: number | string;
 }
 
-function ListItem({ writer, comment, isUser, is_edit_mode }: Message) {
+function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
   const [isChecked, setIsChecked] = useState(false);
 
   function handleCheckboxChange() {
     setIsChecked(!isChecked);
   }
+
+  const EditModeHandler = (pk: number | string) => {
+    console.log("edit mode click check pk : ", pk);
+  };
 
   return (
     <HStack justifyContent={isUser ? "flex-start" : "flex-end"} width="100%">
@@ -94,7 +99,7 @@ function ListItem({ writer, comment, isUser, is_edit_mode }: Message) {
                   <IconButton
                     icon={<EditIcon />}
                     aria-label="modify"
-                    // onClick={onAdd}
+                    onClick={() => EditModeHandler(pk)}
                     variant="outline"
                     colorScheme="teal"
                     _hover={{ bg: "teal.400" }}
@@ -192,6 +197,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
         {task_comments.map((co) => (
           <ListItem
             key={co.id}
+            pk={co.id}
             writer={co.writer}
             comment={co.comment}
             isUser={co.writer.username === task_manager?.username}
