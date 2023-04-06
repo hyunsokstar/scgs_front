@@ -17,7 +17,7 @@ export default function useUser() {
         retry: false,
     });
 
-    // console.log("get user data : ", data);
+    console.log("get user data : ", data);
 
     if(isLoggedIn) {
         dispatch(login(data))
@@ -25,9 +25,12 @@ export default function useUser() {
         dispatch(logout())
     }
 
+    console.log("loginUser : ", loginUser);
+    
+
     return {
         userLoading: isLoading,
         user: data,
-        isLoggedIn: loginUser.username !=="",  // 에러가 없으면 로그인 상태임
+        isLoggedIn: !isError,  // 에러가 없으면 로그인 상태임
     };
 }

@@ -185,7 +185,6 @@ function DataItem({
                 onClick={() => updateHandlerForTesterListByTestpK(pk)}
               >
                 <CheckIcon boxSize={5} />
-                {isLoggedIn ? "true" : "false"}
               </Button>
             ) : (
               <Box>{isLoggedIn ? "true" : "false"}</Box>

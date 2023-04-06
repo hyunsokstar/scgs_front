@@ -229,7 +229,7 @@ const Header = () => {
         </NavLink>
 
         <Box>
-          <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box>
+          {/* <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box> */}
           {!userLoading ? (
             !isLoggedIn ? (
               <Container p={2}>
