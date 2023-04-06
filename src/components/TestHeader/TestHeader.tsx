@@ -155,92 +155,11 @@ const TestHeader = () => {
           </Box>          
 
           <HStack>
-            {/* <Select
-                            value={selectedValue}
-                            className={styles.select}
-                            onChange={handleChange}
-                            width={"140px"}
-                            backgroundColor="blue.200"
-                            _focus={{
-                                boxShadow: "none",
-                            }}
-                        >
-                            <option value="default">업무 관리</option>
-                            <option value="/project-admin">project-admin</option>
-                        </Select>
-
-                        <Select
-                            value={selectedValue}
-                            className={styles.select}
-                            onChange={handleChange}
-                            width={"140px"}
-                            backgroundColor="blue.200"
-                            _focus={{
-                                boxShadow: "none",
-                            }}
-                        >
-                            <option value="default">랭킹</option>
-                            <option value="/tutorials">tutorial</option>
-                        </Select>
-
-                        <Select
-                            value={selectedValue}
-
-                            className={styles.select}
-                            onChange={handleChange}
-                            width={"140px"}
-                            backgroundColor="blue.200"
-                            _focus={{
-                                boxShadow: "none",
-                            }}
-                            _hover={{
-                                bg: "blue.200",
-                            }}
-                        >
-                            <option value="default">
-                                클론 코딩
-                            </option>
-                            <option value="gayou">
-                                gayou clone
-                            </option>
-
-                        </Select>
-
-                        <Select
-                            value={selectedValue}
-                            className={styles.select}
-                            onChange={handleChange}
-                            width={"150px"}
-                            backgroundColor="blue.200"
-                            _focus={{
-                                boxShadow: "none",
-                            }}
-                            _hover={{
-                                bg: "blue.200",
-                            }}
-                        >
-                            <option value="default">
-                                테스트 컴퍼넌트
-                            </option>
-                            <option value="/test-data-grid">
-                                data-grid 샘플
-                            </option>
-                            <option value="/data-grid/users">
-                                유저 리스트(by react data-grid)
-                            </option>
-
-                        </Select> */}
+            12
           </HStack>
         </Box>
         <Box>
-          {/* <NavLink
-                        to="/project_admin"
-                        onClick={() => handleItemClick("project_admin")}
-                    >
-                        <Text fontWeight={active === "project_admin" ? "bold" : "normal"}>
-                            project_admin
-                        </Text>
-                    </NavLink> */}
+          
         </Box>
         <Box py={0}>
           <HStack>

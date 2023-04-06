@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { logOutApi } from "../../api";
+import { getMe, logOutApi } from "../../api";
 import useUser from "../../lib/useUser";
 import { login, logout } from "../../reducers/userSlice";
 import LoginModal from "../LoginModal";
@@ -92,16 +92,16 @@ const Header = () => {
   };
 
   useEffect(() => {
+    queryClient.refetchQueries(["me"]);
     if (isLoggedIn) {
       dispatch(login(user));
+    } else {
     }
-
   }, []);
 
-
-   const goToUserProfile = (userPk:any) => {
+  const goToUserProfile = (userPk: any) => {
     navigate(`users/${userPk}`);
-  }
+  };
 
   return (
     <>
@@ -229,6 +229,7 @@ const Header = () => {
         </NavLink>
 
         <Box>
+          <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box>
           {!userLoading ? (
             !isLoggedIn ? (
               <Container p={2}>
@@ -247,10 +248,12 @@ const Header = () => {
                   </Text>
                   <Menu>
                     <MenuButton>
-                      <Avatar src={user?.profile_image}  size={"sm"} />
+                      <Avatar src={user?.profile_image} size={"sm"} />
                     </MenuButton>
                     <MenuList>
-                      <MenuItem onClick={()=> goToUserProfile(user?.pk)}>유저 프로필</MenuItem>
+                      <MenuItem onClick={() => goToUserProfile(user?.pk)}>
+                        유저 프로필
+                      </MenuItem>
                       <MenuItem onClick={onLogOut}>Log out</MenuItem>
                     </MenuList>
                   </Menu>
