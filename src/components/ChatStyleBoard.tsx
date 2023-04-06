@@ -21,7 +21,10 @@ import ModalButtonForAddCommentForTask from "./modal/ModalButtonForAddCommentFor
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateMutationForCommentEditModeApi } from "../apis/project_progress_api";
+import {
+  updateCommentTextForTaskApi,
+  updateMutationForCommentEditModeApi,
+} from "../apis/project_progress_api";
 
 interface Message {
   writer: any;
@@ -32,9 +35,10 @@ interface Message {
 }
 
 function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
-  const [isChecked, setIsChecked] = useState(false);
   const toast = useToast();
   const queryClient = useQueryClient();
+  const [isChecked, setIsChecked] = useState(false);
+  const [commentTextForUpdate, setcommentTextForUpdate] = useState(comment);
 
   function handleCheckboxChange() {
     setIsChecked(!isChecked);
@@ -45,7 +49,29 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        
+
+        queryClient.refetchQueries(["getOneProjectTask"]);
+
+        // toast({
+        //   status: "success",
+        //   title: "task status update success",
+        //   description: result.message,
+        // });
+      },
+    }
+  );
+
+  const EditModeHandler = (comment_pk: number | string) => {
+    console.log("edit mode click check pk : ", pk);
+    updateMutationForCommentEditMode.mutate(comment_pk);
+  };
+
+  const updateMutationForCommentTextForTask = useMutation(
+    updateCommentTextForTaskApi,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
         queryClient.refetchQueries(["getOneProjectTask"]);
 
         toast({
@@ -54,12 +80,19 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
           description: result.message,
         });
       },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
     }
   );
 
-  const EditModeHandler = (comment_pk: number | string) => {
-    console.log("edit mode click check pk : ", pk);
-    updateMutationForCommentEditMode.mutate(comment_pk);
+  const onEditConfirmHandler = (commentPk: number | string) => {
+    // alert(commentTextForUpdate)
+    // pk, commentTextForUpdate 를 이용해서 comment update
+    updateMutationForCommentTextForTask.mutate({
+      commentPk,
+      commentText: commentTextForUpdate
+    });
   };
 
   return (
@@ -92,13 +125,14 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
                     width={"320px"}
                     bg={"blue.50"}
                     defaultValue={comment}
+                    onChange={(e) => setcommentTextForUpdate(e.target.value)}
                   />
 
                   <Box display={"flex"} justifyContent="flex-end" mt={1}>
                     <IconButton
                       aria-label="Confirm"
                       icon={<FaCheck />}
-                      // onClick={onConfirm}
+                      onClick={() => onEditConfirmHandler(pk)}
                       variant="outline"
                       colorScheme="green"
                       rounded="md"

@@ -16,9 +16,39 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-// 1122
+interface ICommentTextUpdateApiParameter {
+  commentPk: number | string;
+  commentText: string;
+}
 
-export const updateMutationForCommentEditModeApi = (commentPk: string | number) => {
+// 1122
+export const updateCommentTextForTaskApi = ({
+  commentPk,
+  commentText,
+}: ICommentTextUpdateApiParameter) => {
+  console.log("updateCommentForTaskApi 실행 check : ", commentText);
+
+  return instance
+    .put(
+      `/project_progress/comment/${commentPk}/comment/update`,
+      {
+        comment: commentText,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
+export const updateMutationForCommentEditModeApi = (
+  commentPk: string | number
+) => {
   console.log("updateMutationForCommentEditModeApi 실행 check");
 
   return instance
@@ -360,7 +390,7 @@ export const createCommentForTaskApi = ({
     .post(
       `/project_progress/${taskPk}/comment`,
       {
-        task:taskPk,
+        task: taskPk,
         comment,
       },
       {
