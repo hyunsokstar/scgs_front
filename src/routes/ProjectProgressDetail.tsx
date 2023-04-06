@@ -52,7 +52,6 @@ import TestListForTaskDetail from "../components/TestList/TestListForTaskDetail"
 import ModalButtonForCreateTest from "../components/modal/ModalButtonForCreateTest";
 import TableForTechNote from "../components/Table/TableForTechNote";
 import ModalButtonForCreateTechNoteList from "../components/modal/ModalButtonForCreateTechNoteList";
-import TableForTaskCommentList from "../components/Table/TableForTaskCommentList";
 import ChatStyleBoard from "../components/ChatStyleBoard";
 
 interface Props {}

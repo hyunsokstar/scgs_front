@@ -9,12 +9,14 @@ import {
   Avatar,
   Spacer,
   Flex,
+  IconButton,
 } from "@chakra-ui/react";
 import { ITaskComment } from "../types/project_progress/project_progress_type";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { FaCheckSquare, FaPlus, FaTrash } from "react-icons/fa";
 import ModalButtonForAddCommentForTask from "./modal/ModalButtonForAddCommentForTask";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
 interface Message {
   writer: any;
@@ -52,7 +54,31 @@ function ListItem({ writer, comment, isUser }: Message) {
         >
           <Box>{isUser && <Avatar size="sm" src={writer.profile_image} />}</Box>
           <Box>
-            <Text fontSize="lg">{comment}</Text>
+            <Text fontSize="lg">
+              {comment}
+              <IconButton
+                icon={<EditIcon />}
+                aria-label="modify"
+                // onClick={onAdd}
+                variant="outline"
+                colorScheme="teal"
+                _hover={{ bg: "teal.400" }}
+                size="xs"
+                rounded="md"
+                ml={2}
+              />
+              <IconButton
+                icon={<DeleteIcon />}
+                aria-label="Delete"
+                // onClick={onDelete}
+                variant="outline"
+                colorScheme="teal"
+                _hover={{ bg: "teal.400" }}
+                size="xs"
+                rounded="md"
+                ml={1}
+              />
+            </Text>
           </Box>
           <Box>
             {!isUser && <Avatar size="sm" src={writer.profile_image} />}
@@ -85,12 +111,6 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
     (state: RootState) => state.loginInfo
   );
 
-  // console.log("loginUser : ", loginUser);
-
-  // const addCommentHandler = (comment:string) => {
-  //   console.log("taskPk at addCommentHandler : ", taskPk);
-  //   console.log("comment at addCommentHandler : ", comment);
-  // };
 
   return (
     <Box>
@@ -119,16 +139,6 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
           </Button>
           <Spacer />
           <Box>
-            {/* <Button
-              leftIcon={<FaPlus />}
-              size="sm"
-              colorScheme="purple"
-              variant="outline"
-              _hover={{ bg: "purple.50" }}
-              borderRadius="full"
-            >
-              Create
-            </Button> */}
             <ModalButtonForAddCommentForTask taskPk={taskPk} />
           </Box>
         </HStack>{" "}
@@ -149,6 +159,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             writer={co.writer}
             comment={co.comment}
             isUser={co.writer.username === task_manager?.username}
+            
           />
         ))}
       </VStack>
