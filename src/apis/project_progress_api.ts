@@ -17,8 +17,28 @@ const instance = axios.create({
 });
 
 // 1122
+
+export const updateMutationForCommentEditModeApi = (commentPk: string | number) => {
+  console.log("updateMutationForCommentEditModeApi 실행 check");
+
+  return instance
+    .put(
+      `/project_progress/comment/${commentPk}/edit-mode/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const updateTestPassedForTestForTask = (taskPk: string | number) => {
-  console.log("updateProjectTaskCompleted 실행 check");
+  console.log("updateTestPassedForTestForTask 실행 check");
 
   return instance
     .put(

@@ -11,6 +11,7 @@ import {
   Flex,
   IconButton,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { ITaskComment } from "../types/project_progress/project_progress_type";
 import { useSelector } from "react-redux";
@@ -19,6 +20,8 @@ import { FaCheckSquare, FaPlus, FaTrash } from "react-icons/fa";
 import ModalButtonForAddCommentForTask from "./modal/ModalButtonForAddCommentForTask";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaCheck, FaTimes } from "react-icons/fa";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateMutationForCommentEditModeApi } from "../apis/project_progress_api";
 
 interface Message {
   writer: any;
@@ -30,13 +33,33 @@ interface Message {
 
 function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
   const [isChecked, setIsChecked] = useState(false);
+  const toast = useToast();
+  const queryClient = useQueryClient();
 
   function handleCheckboxChange() {
     setIsChecked(!isChecked);
   }
 
-  const EditModeHandler = (pk: number | string) => {
+  const updateMutationForCommentEditMode = useMutation(
+    updateMutationForCommentEditModeApi,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        
+        queryClient.refetchQueries(["getOneProjectTask"]);
+
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const EditModeHandler = (comment_pk: number | string) => {
     console.log("edit mode click check pk : ", pk);
+    updateMutationForCommentEditMode.mutate(comment_pk);
   };
 
   return (
@@ -84,7 +107,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
                     <IconButton
                       aria-label="Cancel"
                       icon={<FaTimes />}
-                      // onClick={onCancel}
+                      onClick={() => EditModeHandler(pk)}
                       variant="outline"
                       colorScheme="pink"
                       rounded="md"
