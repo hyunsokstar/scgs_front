@@ -83,6 +83,7 @@ export interface ITaskComment {
   like_count: number;
   created_at: string;
   created_at_formatted: string;
+  is_edit_mode: boolean
 }
 
 export interface IOneTaskForProjectTaskType {

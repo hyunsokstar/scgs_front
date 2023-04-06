@@ -10,6 +10,7 @@ import {
   Spacer,
   Flex,
   IconButton,
+  Textarea,
 } from "@chakra-ui/react";
 import { ITaskComment } from "../types/project_progress/project_progress_type";
 import { useSelector } from "react-redux";
@@ -17,14 +18,16 @@ import { RootState } from "../store";
 import { FaCheckSquare, FaPlus, FaTrash } from "react-icons/fa";
 import ModalButtonForAddCommentForTask from "./modal/ModalButtonForAddCommentForTask";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { FaCheck, FaTimes } from "react-icons/fa";
 
 interface Message {
   writer: any;
   comment: string;
   isUser: boolean;
+  is_edit_mode: boolean;
 }
 
-function ListItem({ writer, comment, isUser }: Message) {
+function ListItem({ writer, comment, isUser, is_edit_mode }: Message) {
   const [isChecked, setIsChecked] = useState(false);
 
   function handleCheckboxChange() {
@@ -43,7 +46,7 @@ function ListItem({ writer, comment, isUser }: Message) {
         bg={isUser ? "yellow.50" : "blue.50"}
         alignSelf={isUser ? "flex-start" : "flex-end"}
         border="1px solid black"
-        width="300px"
+        maxWidth="380px"
       >
         <Flex
           justifyContent={"flex-start"}
@@ -55,29 +58,63 @@ function ListItem({ writer, comment, isUser }: Message) {
           <Box>{isUser && <Avatar size="sm" src={writer.profile_image} />}</Box>
           <Box>
             <Text fontSize="lg">
-              {comment}
-              <IconButton
-                icon={<EditIcon />}
-                aria-label="modify"
-                // onClick={onAdd}
-                variant="outline"
-                colorScheme="teal"
-                _hover={{ bg: "teal.400" }}
-                size="xs"
-                rounded="md"
-                ml={2}
-              />
-              <IconButton
-                icon={<DeleteIcon />}
-                aria-label="Delete"
-                // onClick={onDelete}
-                variant="outline"
-                colorScheme="teal"
-                _hover={{ bg: "teal.400" }}
-                size="xs"
-                rounded="md"
-                ml={1}
-              />
+              {is_edit_mode ? (
+                <Box>
+                  <Textarea
+                    width={"320px"}
+                    bg={"blue.50"}
+                    defaultValue={comment}
+                  />
+
+                  <Box display={"flex"} justifyContent="flex-end" mt={1}>
+                    <IconButton
+                      aria-label="Confirm"
+                      icon={<FaCheck />}
+                      // onClick={onConfirm}
+                      variant="outline"
+                      colorScheme="green"
+                      rounded="md"
+                      size="xs"
+                    />
+                    <IconButton
+                      aria-label="Cancel"
+                      icon={<FaTimes />}
+                      // onClick={onCancel}
+                      variant="outline"
+                      colorScheme="pink"
+                      rounded="md"
+                      size="xs"
+                      ml={1}
+                    />
+                  </Box>
+                </Box>
+              ) : (
+                <Box>
+                  {comment}
+                  <IconButton
+                    icon={<EditIcon />}
+                    aria-label="modify"
+                    // onClick={onAdd}
+                    variant="outline"
+                    colorScheme="teal"
+                    _hover={{ bg: "teal.400" }}
+                    size="xs"
+                    rounded="md"
+                    ml={2}
+                  />
+                  <IconButton
+                    icon={<DeleteIcon />}
+                    aria-label="Delete"
+                    // onClick={onDelete}
+                    variant="outline"
+                    colorScheme="teal"
+                    _hover={{ bg: "teal.400" }}
+                    size="xs"
+                    rounded="md"
+                    ml={1}
+                  />
+                </Box>
+              )}
             </Text>
           </Box>
           <Box>
@@ -110,7 +147,6 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );
-
 
   return (
     <Box>
@@ -159,7 +195,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             writer={co.writer}
             comment={co.comment}
             isUser={co.writer.username === task_manager?.username}
-            
+            is_edit_mode={co.is_edit_mode}
           />
         ))}
       </VStack>
