@@ -223,7 +223,7 @@ export const uploadImage = ({ file, uploadURL }: IUploadImageVarialbes) => {
       })
       .then((response) => response.data);
   } else {
-    alert("파일이 없습니다 : " + file);
+    alert("파일이 없습니다 ! ");
     return axios
       .post(uploadURL, form, {
         headers: {

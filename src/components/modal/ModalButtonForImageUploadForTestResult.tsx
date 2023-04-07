@@ -10,9 +10,10 @@ import {
   Box,
   Img,
   Text,
+  Spinner,
 } from "@chakra-ui/react";
 import { FaPlus, FaTimes } from "react-icons/fa";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getUploadURL, uploadImage } from "../../api";
 import { createTestResultImageForTest } from "../../apis/project_progress_api";
 
@@ -28,6 +29,8 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
 
   // 0407 st2
   const [imageFileToUpload, setImageFileToUpload] = useState<any>();
+  const [loadingForImageUpload, setLoadingForImageUpload] = useState(false);
+  const queryClient = useQueryClient();
 
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
@@ -52,6 +55,12 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
     {
       onSuccess: (result) => {
         console.log("result : ", result);
+        setLoadingForImageUpload(false);
+        setImageToUpload("");
+        setImageFileToUpload("");
+        setUrlToImageUpload("");
+        queryClient.refetchQueries(["getOneProjectTask"]);
+        onClose();
         //   setIsUploadingForRefImage(false);
         //   taskDetailRefatch();
 
@@ -71,7 +80,7 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
       console.log("result : ", result.variants[0]);
       const uploaded_image = result.variants[0];
 
-      alert(uploaded_image);
+      //   alert(uploaded_image);
 
       mutationForcreateTestResultImageForTest.mutate({
         testPk,
@@ -95,7 +104,12 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
     setIsDragging(false);
 
     // 0407 st1
-    setImageFileToUpload(e.dataTransfer.files[0]);
+    if (e.dataTransfer.files[0]) {
+      setImageFileToUpload(e.dataTransfer.files[0]);
+    } else {
+      alert("파일이 없습니다");
+      return;
+    }
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -108,6 +122,13 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
 
   const saveTestResultImageHandler = () => {
     console.log("testPk for image upload : ", testPk);
+    if (imageFileToUpload) {
+      setLoadingForImageUpload(true);
+    } else {
+      alert("파일을 선택 해주세요");
+      return;
+    }
+
     uploadImageMutation.mutate({
       uploadURL: urlToImageUpload,
       file: imageFileToUpload,
@@ -144,7 +165,7 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
             </Box>
           </ModalHeader>
           <ModalBody>
-            <Box>{urlToImageUpload ? urlToImageUpload : ""}</Box>
+            {/* <Box>{urlToImageUpload ? urlToImageUpload : ""}</Box> */}
             <Box
               onDragEnter={handleDragEnter}
               onDragOver={handleDragOver}
@@ -196,6 +217,7 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
               onClick={() => saveTestResultImageHandler()}
             >
               저장
+              {loadingForImageUpload ? <Spinner ml={2} size={"sm"} /> : ""}
             </Button>
           </ModalFooter>
         </ModalContent>

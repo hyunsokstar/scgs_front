@@ -170,7 +170,7 @@ function DataItem({
           border={"0px solid red"}
           textAlign={"end"}
           mr={10}
-          width={"300px"}
+          width={"420px"}
           alignItems={"center"}
         >
           <Box
@@ -184,8 +184,8 @@ function DataItem({
               ? test_result_images.map((row) => {
                   return (
                     <Box
-                      w={20}
-                      h={20}
+                      w={"80px"}
+                      h={"80px"}
                       border={"0px solid purple"}
                       display="flex"
                       alignItems={"center"}
