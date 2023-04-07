@@ -9,6 +9,7 @@ import {
   ModalFooter,
   Box,
   Img,
+  Text,
 } from "@chakra-ui/react";
 import { FaPlus, FaTimes } from "react-icons/fa";
 
@@ -100,8 +101,14 @@ const ModalButtonForImageUploadForTestResult: React.FC = () => {
                     objectFit={"fill"}
                   />
                 ) : (
-                  <Box>
-                    {isDragging ? "파일 놓아주세요!" : "드래그 앤 드롭"}
+                  <Box
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Text>
+                      {isDragging ? "파일 놓아주세요!" : "드래그 앤 드롭"}
+                    </Text>
                   </Box>
                 )}
               </Box>
