@@ -501,7 +501,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
             </Box>{" "}
           </VStack>
 
-          <VStack width="50%" border={"2px solid gray"} height="630px" mb={2}>
+          <VStack width="50%" border={"2px solid gray"} height="620px" mb={2}>
             <Box my={2}>
               <FormControl display="flex" alignItems="center">
                 <FormLabel htmlFor="my-switch" mb="0">
@@ -536,12 +536,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
           <ModalButtonForExtraTask taskPk={taskPk} />
           <ExtraTasksTable extra_tasks={taskData.extra_tasks} />
         </Box>
-        <Box bg={"white"} width={"100%"} border={"0px solid orange"}>
+        <Box bg={"white"} width={"100%"} border={"1px solid black"}>
           <Box
             display={"flex"}
             justifyContent={"space-between"}
+            alignItems={"center"}
             bgColor={"yellow.200"}
-            p={2}
+            p={1}
             textAlign="center"
           >
             테스트 리스트 (테스트 체킹은 로그인 필요)

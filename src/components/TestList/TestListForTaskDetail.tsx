@@ -22,10 +22,13 @@ import {
 } from "../../apis/project_progress_api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SlideToggleButtonForUpateTestPassed from "../SlideToggleButton/SlideToggleButtonForUpateTestPassed";
-import { CheckIcon } from "@chakra-ui/icons";
-import { ViewOffIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+
+import { CheckIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { FaPlus } from "react-icons/fa";
+import ModalButtonForImageUploadForTestResult from "../modal/ModalButtonForImageUploadForTestResult";
+
 
 interface IPropsForTestListForTaskDetail {
   testData: ItypeFortestRow[];
@@ -140,7 +143,7 @@ function DataItem({
         justifyContent={"space-between"}
         alignItems={"center"}
       >
-        <Box display={"flex"} alignItems={"center"} flex={1}>
+        <Box display={"flex"} alignItems={"center"} width={"50px"}>
           <Checkbox ml={2} />
         </Box>
         <Box>
@@ -149,15 +152,34 @@ function DataItem({
           </Text>
         </Box>
 
-        <Box flex={1}>
+        <Box width={"100px"}>
           <SlideToggleButtonForUpateTestPassed
             onChange={() => updateHandlerForTestPassed(pk)}
             checked={test_passed}
           />
         </Box>
 
-        <Flex justifyContent={"space-between"} flex={1}>
-          <Box flex={2}>
+        {/* 0407 작업중 modal button for image upload */}
+        <Box width={"200px"} border={"1px solid green"} textAlign={"end"} mr={10}>
+          {/* <Button
+            variant="outline"
+            size={"sm"}
+            colorScheme="green"
+            borderRadius="md"
+            _hover={{ bg: "green.200" }}
+          >
+            <FaPlus />
+          </Button> */}
+          <ModalButtonForImageUploadForTestResult />
+        </Box>
+
+        <Flex
+          justifyContent={"flex-start"}
+          alignItems={"center"}
+          width={"280px"}
+          border={"0px solid black"}
+        >
+          <Box>
             {testers_for_test && testers_for_test.length !== 0 ? (
               testers_for_test.map((row: any) => {
                 return (
@@ -170,10 +192,10 @@ function DataItem({
                 );
               })
             ) : (
-              <ViewOffIcon boxSize={5} color="gray.500" />
+              <ViewOffIcon boxSize={3} color="gray.500" />
             )}
           </Box>
-          <Box flex={1}>
+          <Box>
             {/* 0404 체크 아이콘 누르면 체커 리스트에 로그인 유저 추가 update */}
             {isLoggedIn ? (
               <Button

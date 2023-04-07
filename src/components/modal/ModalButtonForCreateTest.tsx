@@ -107,7 +107,7 @@ createTestForTask.mutate({
 return (
 <>
     <Button
-    size="md" // 크기를 중간 크기(md)로 설정
+    size="sm" // 크기를 중간 크기(md)로 설정
     colorScheme="teal" // 색상을 파스텔톤으로 설정
     _hover={{ color: "red", bg: "teal.500" }} // 호버시 어울리는 색깔로 변경
     onClick={handleOpen}
