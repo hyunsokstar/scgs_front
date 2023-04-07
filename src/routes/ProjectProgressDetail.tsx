@@ -275,7 +275,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
   } else {
     return (
       <VStack>
-        <Flex border={"2px solid purple"} width="100%" height={"620px"}>
+        <Flex border={"0px solid purple"} width="100%" height={"620px"}>
           <VStack width={"50%"} border={"1px solid black"} pt={0}>
             {/* 상단 상자 추가 */}
             <Box width={"100%"} height={"100%"} border="0px solid orange">
@@ -284,7 +284,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                   flex="5"
                   bg="white"
                   border="1px solid black"
-                  height={"615px"}
+                  height={"618px"}
                   px={2}
                 >
                   <form onSubmit={handleSubmit(onSubmit)}>
@@ -432,7 +432,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                   <Box
                     width={"100%"}
                     overflowY="scroll"
-                    height={"615px"}
+                    height={"617px"}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}

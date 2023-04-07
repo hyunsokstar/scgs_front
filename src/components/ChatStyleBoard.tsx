@@ -12,7 +12,11 @@ import {
   IconButton,
   Textarea,
   useToast,
+  Input,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
+
 import { ITaskComment } from "../types/project_progress/project_progress_type";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -108,7 +112,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
         console.log("data : ", data);
 
         queryClient.refetchQueries(["getOneProjectTask"]);
-        
+
         toast({
           title: "delete comment 성공!",
           status: "success",
@@ -288,6 +292,41 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             is_edit_mode={co.is_edit_mode}
           />
         ))}
+        <Spacer />
+        <Box
+          display={"flex"}
+          gap={2}
+          width={"100%"}
+          border={"0px solid green"}
+          pt={0}
+        >
+          <Input
+            variant="outline"
+            borderRadius="xl"
+            borderWidth="2px"
+            borderColor="purple.100"
+            _hover={{
+              borderColor: "teal.300",
+            }}
+            _focus={{
+              borderColor: "teal.400",
+            }}
+            // value={value}
+            // onChange={(e) => setValue(e.target.value)}
+            bg={"purple.50"}
+            size="sm"
+            ml="2"
+            placeholder="입력해주세요"
+          />
+          <Button
+            variant="outline"
+            size={"sm"}
+            borderRadius="md"
+            colorScheme={"purple"}
+          >
+            입력
+          </Button>
+        </Box>
       </VStack>
     </Box>
   );
