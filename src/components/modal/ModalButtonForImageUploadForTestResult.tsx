@@ -14,6 +14,7 @@ import {
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
 import { getUploadURL, uploadImage } from "../../api";
+import { createTestResultImageForTest } from "../../apis/project_progress_api";
 
 interface IProps {
   testPk: string | number;
@@ -46,6 +47,24 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
     setIsDragging(false);
   };
 
+  const mutationForcreateTestResultImageForTest = useMutation(
+    createTestResultImageForTest,
+    {
+      onSuccess: (result) => {
+        console.log("result : ", result);
+        //   setIsUploadingForRefImage(false);
+        //   taskDetailRefatch();
+
+        //   toast({
+        //     status: "success",
+        //     title: "Profile Image uploaded!",
+        //     isClosable: true,
+        //     description: "Feel free to upload more images.",
+        //   });
+      },
+    }
+  );
+
   // 0407 st4
   const uploadImageMutation = useMutation(uploadImage, {
     onSuccess: ({ result }: any) => {
@@ -54,17 +73,10 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
 
       alert(uploaded_image);
 
-      // setImage(uploaded_image);
-      //   setProfileImage(uploaded_image);
-      //   const userPk = loginUser.pk;
-      //   if (test.pk) {
-      //     createProfilePhotoMutation.mutate({
-      //       file: `https://imagedelivery.net/GDnsAXwwoW7vpBbDviU8VA/${result.id}/public`,
-      //       userPk,
-      //     });
-      //   } else {
-      //     console.log("userPk 가 없습니다.");
-      //   }
+      mutationForcreateTestResultImageForTest.mutate({
+        testPk,
+        image_url: `https://imagedelivery.net/GDnsAXwwoW7vpBbDviU8VA/${result.id}/public`,
+      });
     },
   });
 
@@ -97,9 +109,9 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
   const saveTestResultImageHandler = () => {
     console.log("testPk for image upload : ", testPk);
     uploadImageMutation.mutate({
-        uploadURL: urlToImageUpload,
-        file: imageFileToUpload,
-    })
+      uploadURL: urlToImageUpload,
+      file: imageFileToUpload,
+    });
   };
 
   return (

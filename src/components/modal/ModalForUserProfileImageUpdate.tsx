@@ -90,7 +90,6 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
       // console.log("data : ", data);
       setShowForProfileUpdateButton(true);
       setUrlToImageUpload(data.uploadURL);
-
     },
   });
 
@@ -195,19 +194,19 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
                   </>
                 ) : (
                   <>
-                  <Avatar
-                    size="2xl"
-                    name="John Doe"
-                    src={
-                      loginUser.profile_image
-                        ? loginUser.profile_image
-                        : "https://bit.ly/broken-link"
-                    }
-                    mb={4}
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                    draggable
-                  />
+                    <Avatar
+                      size="2xl"
+                      name="John Doe"
+                      src={
+                        loginUser.profile_image
+                          ? loginUser.profile_image
+                          : "https://bit.ly/broken-link"
+                      }
+                      mb={4}
+                      onDrop={handleDrop}
+                      onDragOver={handleDragOver}
+                      draggable
+                    />
                   </>
                 )}
 
