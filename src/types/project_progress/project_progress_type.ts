@@ -63,6 +63,7 @@ export type ItypeFortestRow = {
   test_method?: string;
   test_result_image?: string;
   testers_for_test?: any;
+  test_result_images: TestResultImage[];
 };
 
 // export type type_for_row_for_testers{
@@ -83,7 +84,12 @@ export interface ITaskComment {
   like_count: number;
   created_at: string;
   created_at_formatted: string;
-  is_edit_mode: boolean
+  is_edit_mode: boolean;
+}
+
+export default interface TestResultImage {
+  pk: number;
+  image_url: string;
 }
 
 export interface IOneTaskForProjectTaskType {
@@ -105,6 +111,7 @@ export interface IOneTaskForProjectTaskType {
       image_url: string;
     }
   ];
+  test_result_images: TestResultImage[];
   extra_tasks?: extra_task_row_type[] | undefined;
   tests_for_tasks: ItypeFortestRow[];
   task_comments: ITaskComment[];

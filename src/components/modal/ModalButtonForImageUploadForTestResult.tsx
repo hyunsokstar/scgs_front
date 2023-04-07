@@ -91,7 +91,7 @@ const ModalButtonForImageUploadForTestResult: React.FC = () => {
               }}
             >
               {/* 미리보기 이미지 있을 경우 출력 처리 하기 1122*/}
-              <Box width={"700px"} border="1px solid pink">
+              <Box width={"700px"} border="0px solid pink">
                 {imageToUpload ? (
                   <Img
                     width={"100%"}

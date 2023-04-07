@@ -11,10 +11,13 @@ import {
   HStack,
   Avatar,
   Button,
+  Img,
 } from "@chakra-ui/react";
 import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
-import { ItypeFortestRow } from "../../types/project_progress/project_progress_type";
+import TestResultImage, {
+  ItypeFortestRow,
+} from "../../types/project_progress/project_progress_type";
 import {
   deleteOneTestForTask,
   updateTesterListByTestPkApi,
@@ -29,18 +32,18 @@ import { CheckIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { FaPlus } from "react-icons/fa";
 import ModalButtonForImageUploadForTestResult from "../modal/ModalButtonForImageUploadForTestResult";
 
-
 interface IPropsForTestListForTaskDetail {
   testData: ItypeFortestRow[];
 }
 
-interface DataItemProps {
-  id: number;
-  testDescription: string;
-  test_status: boolean;
-  test_passed: string;
-  test_result_image: string;
-}
+// interface DataItemProps {
+//   id: number;
+//   testDescription: string;
+//   test_status: boolean;
+//   test_passed: string;
+//   test_result_image: string;
+//   test_result_images: TestResultImage[];
+// }
 
 function DataItem({
   pk,
@@ -49,6 +52,7 @@ function DataItem({
   testers_for_test,
   test_method,
   test_result_image,
+  test_result_images,
 }: ItypeFortestRow) {
   const toast = useToast();
   const queryClient = useQueryClient();
@@ -160,16 +164,32 @@ function DataItem({
         </Box>
 
         {/* 0407 작업중 modal button for image upload */}
-        <Box width={"200px"} border={"1px solid green"} textAlign={"end"} mr={10}>
-          {/* <Button
-            variant="outline"
-            size={"sm"}
-            colorScheme="green"
-            borderRadius="md"
-            _hover={{ bg: "green.200" }}
+        <Box
+          display={"flex"}
+          justifyContent={"space-between"}
+          border={"0px solid red"}
+          textAlign={"end"}
+          mr={10}
+          width={"300px"}
+          alignItems={"center"}
+        >
+          <Box
+            display={"flex"}
+            justifyContent={"flex-start"}
+            // alignItems={"center"}
+            gap={2}
+            border={"0px solid blue"}
           >
-            <FaPlus />
-          </Button> */}
+            {test_result_images
+              ? test_result_images.map((row) => {
+                  return (
+                    <Box w={20} h={20} border={"0px solid purple"} display="flex" alignItems={"center"}>
+                      <Img src={row.image_url} objectFit={"cover"} />
+                    </Box>
+                  );
+                })
+              : ""}
+          </Box>
           <ModalButtonForImageUploadForTestResult />
         </Box>
 
@@ -244,6 +264,7 @@ function TestListForTaskDetail({ testData }: IPropsForTestListForTaskDetail) {
           test_method={row.test_method}
           test_result_image={row.test_result_image}
           testers_for_test={row.testers_for_test}
+          test_result_images={row.test_result_images}
         />
       ))}
     </List>
