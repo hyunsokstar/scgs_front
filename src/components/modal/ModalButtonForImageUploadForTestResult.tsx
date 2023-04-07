@@ -12,11 +12,21 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FaPlus, FaTimes } from "react-icons/fa";
+import { useMutation } from "@tanstack/react-query";
+import { getUploadURL, uploadImage } from "../../api";
 
-const ModalButtonForImageUploadForTestResult: React.FC = () => {
+interface IProps {
+  testPk: string | number;
+}
+
+const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [imageToUpload, setImageToUpload] = useState<any>("");
+  const [urlToImageUpload, setUrlToImageUpload] = useState<any>();
+
+  // 0407 st2
+  const [imageFileToUpload, setImageFileToUpload] = useState<any>();
 
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
@@ -36,16 +46,60 @@ const ModalButtonForImageUploadForTestResult: React.FC = () => {
     setIsDragging(false);
   };
 
+  // 0407 st4
+  const uploadImageMutation = useMutation(uploadImage, {
+    onSuccess: ({ result }: any) => {
+      console.log("result : ", result.variants[0]);
+      const uploaded_image = result.variants[0];
+
+      alert(uploaded_image);
+
+      // setImage(uploaded_image);
+      //   setProfileImage(uploaded_image);
+      //   const userPk = loginUser.pk;
+      //   if (test.pk) {
+      //     createProfilePhotoMutation.mutate({
+      //       file: `https://imagedelivery.net/GDnsAXwwoW7vpBbDviU8VA/${result.id}/public`,
+      //       userPk,
+      //     });
+      //   } else {
+      //     console.log("userPk 가 없습니다.");
+      //   }
+    },
+  });
+
+  // 0407 st3
+  const getImageUploadUrlMutation = useMutation(getUploadURL, {
+    onSuccess: (data: any) => {
+      // console.log("data : ", data);
+      setUrlToImageUpload(data.uploadURL);
+    },
+  });
+
+  // 0407
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     console.log("File dropped.");
     e.preventDefault();
     setIsDragging(false);
+
+    // 0407 st1
+    setImageFileToUpload(e.dataTransfer.files[0]);
 
     const reader = new FileReader();
     reader.onload = () => {
       setImageToUpload(reader.result);
     };
     reader.readAsDataURL(e.dataTransfer.files[0]);
+
+    getImageUploadUrlMutation.mutate();
+  };
+
+  const saveTestResultImageHandler = () => {
+    console.log("testPk for image upload : ", testPk);
+    uploadImageMutation.mutate({
+        uploadURL: urlToImageUpload,
+        file: imageFileToUpload,
+    })
   };
 
   return (
@@ -78,6 +132,7 @@ const ModalButtonForImageUploadForTestResult: React.FC = () => {
             </Box>
           </ModalHeader>
           <ModalBody>
+            <Box>{urlToImageUpload ? urlToImageUpload : ""}</Box>
             <Box
               onDragEnter={handleDragEnter}
               onDragOver={handleDragOver}
@@ -115,8 +170,19 @@ const ModalButtonForImageUploadForTestResult: React.FC = () => {
             </Box>
           </ModalBody>
           <ModalFooter>
-            <Button variant="outline">취소</Button>
-            <Button colorScheme="blue" ml={3}>
+            <Button
+              variant="outline"
+              colorScheme="teal"
+              ml={3}
+              width="100%"
+              borderRadius="full"
+              _hover={{ bg: "teal.50" }}
+              _active={{ bg: "teal.100" }}
+              _focus={{ boxShadow: "none" }}
+              fontFamily="sans-serif"
+              fontWeight="semibold"
+              onClick={() => saveTestResultImageHandler()}
+            >
               저장
             </Button>
           </ModalFooter>

@@ -183,14 +183,20 @@ function DataItem({
             {test_result_images
               ? test_result_images.map((row) => {
                   return (
-                    <Box w={20} h={20} border={"0px solid purple"} display="flex" alignItems={"center"}>
+                    <Box
+                      w={20}
+                      h={20}
+                      border={"0px solid purple"}
+                      display="flex"
+                      alignItems={"center"}
+                    >
                       <Img src={row.image_url} objectFit={"cover"} />
                     </Box>
                   );
                 })
               : ""}
           </Box>
-          <ModalButtonForImageUploadForTestResult />
+          <ModalButtonForImageUploadForTestResult testPk={pk} />
         </Box>
 
         <Flex

@@ -88,14 +88,9 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
   const getImageUploadUrlMutation = useMutation(getUploadURL, {
     onSuccess: (data: any) => {
       // console.log("data : ", data);
-
       setShowForProfileUpdateButton(true);
       setUrlToImageUpload(data.uploadURL);
 
-      // uploadImageMutation.mutate({
-      //     uploadURL: data.uploadURL,
-      //     file: file_to_upload,
-      // });
     },
   });
 
