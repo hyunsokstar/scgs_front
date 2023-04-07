@@ -101,9 +101,8 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
 
   // drag and drop event
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    // console.log("e : ", e);
-    e.preventDefault();
     // console.log("upload 할 파일 정보 : ", e.dataTransfer.files[0]);
+    e.preventDefault();
 
     setFileToUpload(e.dataTransfer.files[0]);
     const reader = new FileReader();
@@ -111,8 +110,6 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
       // console.log("fileToUpload 1111111 : ", fileToUpload);
       setProfileImage(reader.result);
       setOriginalImage(profileImage);
-      //  setFileToUpload(e.dataTransfer.files[0]); // setState 는 즉시 변경 되는 값이 아니므로 이렇게 하면 안됨
-      // console.log("fileToUpload 22222222 : ", fileToUpload);
 
       getImageUploadUrlMutation.mutate();
     };

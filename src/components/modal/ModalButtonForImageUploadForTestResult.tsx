@@ -8,12 +8,14 @@ import {
   ModalBody,
   ModalFooter,
   Box,
+  Img,
 } from "@chakra-ui/react";
 import { FaPlus, FaTimes } from "react-icons/fa";
 
 const ModalButtonForImageUploadForTestResult: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [imageToUpload, setImageToUpload] = useState<any>("");
 
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
@@ -34,9 +36,15 @@ const ModalButtonForImageUploadForTestResult: React.FC = () => {
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    console.log("File dropped.");
     e.preventDefault();
     setIsDragging(false);
-    console.log("File dropped.");
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageToUpload(reader.result);
+    };
+    reader.readAsDataURL(e.dataTransfer.files[0]);
   };
 
   return (
@@ -51,7 +59,7 @@ const ModalButtonForImageUploadForTestResult: React.FC = () => {
       >
         <FaPlus />
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose} size="2xl">
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader display={"flex"} justifyContent="space-between">
@@ -82,7 +90,21 @@ const ModalButtonForImageUploadForTestResult: React.FC = () => {
                 alignItems: "center",
               }}
             >
-              {isDragging ? "파일 놓아주세요!" : "드래그 앤 드롭"}
+              {/* 미리보기 이미지 있을 경우 출력 처리 하기 1122*/}
+              <Box width={"700px"} border="1px solid pink">
+                {imageToUpload ? (
+                  <Img
+                    width={"100%"}
+                    height={"300px"}
+                    src={imageToUpload}
+                    objectFit={"fill"}
+                  />
+                ) : (
+                  <Box>
+                    {isDragging ? "파일 놓아주세요!" : "드래그 앤 드롭"}
+                  </Box>
+                )}
+              </Box>
             </Box>
           </ModalBody>
           <ModalFooter>
