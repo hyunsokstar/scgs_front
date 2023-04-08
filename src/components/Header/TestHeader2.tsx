@@ -148,7 +148,7 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "white", transform: "scale(1.1)" }}
+            _hover={{ color: "yellow", transform: "scale(1.1)" }}
           >
             My Task
           </Text>
@@ -163,7 +163,7 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "white", transform: "scale(1.1)" }}
+            _hover={{ color: "yellow", transform: "scale(1.1)" }}
           >
             Project Task
           </Text>
@@ -178,9 +178,24 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "white", transform: "scale(1.1)" }}
+            _hover={{ color: "yellow", transform: "scale(1.1)" }}
           >
             Task Status
+          </Text>
+        </NavLink>
+
+        <NavLink
+          to="/api-docu"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "yellow", transform: "scale(1.1)" }}
+          >
+            Api Docu
           </Text>
         </NavLink>
 
@@ -193,7 +208,7 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "white", transform: "scale(1.1)" }}
+            _hover={{ color: "yellow", transform: "scale(1.1)" }}
           >
             Q&A
           </Text>
@@ -208,13 +223,13 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "white", transform: "scale(1.1)" }}
+            _hover={{ color: "yellow", transform: "scale(1.1)" }}
           >
             Tech Note
           </Text>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/tutorials"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -227,7 +242,7 @@ const Header = () => {
           >
             Tutorial
           </Text>
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
           to="/site-manual"
@@ -238,7 +253,7 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "white", transform: "scale(1.1)" }}
+            _hover={{ color: "yellow", transform: "scale(1.1)" }}
           >
             Site Manual
           </Text>

@@ -34,6 +34,7 @@ import TechNoteContentPage from "./routes/TechNoteContentPage";
 import ReactTablePage from "./routes/ReactTablePage";
 import ChakraTablePage from "./routes/ChakraTablePage";
 import TestBoardPage from "./routes/TestBoardPage";
+import ApiDocuPage from "./routes/ApiDocuPage";
 
 const router = createBrowserRouter([
   {
@@ -46,12 +47,16 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path:"test-page",
-        element: <TestPage />
+        path: "api-docu",
+        element: <ApiDocuPage />,
       },
       {
-        path:"test-board",
-        element: <TestBoardPage />
+        path: "test-page",
+        element: <TestPage />,
+      },
+      {
+        path: "test-board",
+        element: <TestBoardPage />,
       },
       {
         path: "react-table",
