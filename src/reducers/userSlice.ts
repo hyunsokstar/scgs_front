@@ -20,7 +20,7 @@ export const loginInfoSlice = createSlice({
       state.loginUser = action.payload;
     },
     logout: (state) => {
-      state.loginUser.username = "";
+      console.log("logout 요청 확인")
       state.isLoggedIn = false;
     },
   },

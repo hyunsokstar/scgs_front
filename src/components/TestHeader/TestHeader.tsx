@@ -104,10 +104,7 @@ const TestHeader = () => {
     color: "gray",
   };
 
-
-
   const handleItemClick = (itemName: string) => {
-
     setActive(itemName);
   };
 
@@ -152,15 +149,11 @@ const TestHeader = () => {
             >
               Home
             </Text>
-          </Box>          
+          </Box>
 
-          <HStack>
-            12
-          </HStack>
+          <HStack>12</HStack>
         </Box>
-        <Box>
-          
-        </Box>
+        <Box></Box>
         <Box py={0}>
           <HStack>
             <IconButton
@@ -173,35 +166,36 @@ const TestHeader = () => {
               size={"sm"}
             />
 
-            {!userLoading ? (
-              !isLoggedIn ? (
-                <Container p={2}>
-                  <Button onClick={onLoginOpen}>로그인</Button>
-                  <LightMode>
-                    <Button ml={2} colorScheme={"red"} onClick={onSignUpOpen}>
-                      회원 가입
-                    </Button>
-                  </LightMode>
-                </Container>
-              ) : (
-                <Box>
-                  <HStack mr={2}>
-                    <Text color={"orange.500"} fontSize={"2xl"}>
-                      {user?.username} ({user?.admin_level}) 님
-                    </Text>
-                    <Menu>
-                      <MenuButton>
-                        <Avatar name={user?.name} size={"sm"} />
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem>유저 프로필</MenuItem>
-                        <MenuItem onClick={onLogOut}>Log out</MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </HStack>
-                </Box>
-              )
-            ) : null}
+            {!isLoggedIn ? (
+              <Container p={2}>
+                <Button onClick={onLoginOpen}>
+                  로그인
+                  {isLoggedIn ? "true" : "false"}
+                </Button>
+                <LightMode>
+                  <Button ml={2} colorScheme={"red"} onClick={onSignUpOpen}>
+                    회원 가입
+                  </Button>
+                </LightMode>
+              </Container>
+            ) : (
+              <Box>
+                <HStack mr={2}>
+                  <Text color={"orange.500"} fontSize={"2xl"}>
+                    {user?.username} ({user?.admin_level}) 님
+                  </Text>
+                  <Menu>
+                    <MenuButton>
+                      <Avatar name={user?.name} size={"sm"} />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem>유저 프로필</MenuItem>
+                      <MenuItem onClick={onLogOut}>Log out</MenuItem>
+                    </MenuList>
+                  </Menu>
+                </HStack>
+              </Box>
+            )}
           </HStack>
         </Box>
       </Flex>

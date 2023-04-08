@@ -5,32 +5,32 @@ import { IUser } from "../types";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../reducers/userSlice";
 import { RootState } from "../store";
-
+import { useState } from "react";
 
 export default function useUser() {
-    const dispatch = useDispatch();
-    const {loginUser, isLoggedIn} = useSelector(
-        (state: RootState) => state.loginInfo
-      );
+  const dispatch = useDispatch();
 
-    const { isLoading, data, isError } = useQuery<IUser>(["me"], getMe, {
-        retry: false,
-    });
+  const [logoutSuccess, setlogoutSuccess] = useState(false);
 
-    console.log("get user data : ", data);
+  const { isLoading, data, isError } = useQuery<IUser>(["me"], getMe, {
+    retry: false,
+  });
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
 
-    if(isLoggedIn) {
-        dispatch(login(data))
-    } else {
-        dispatch(logout())
-    }
+  console.log("get user data : ", data);
+  console.log("isError : ", isError);
 
-    console.log("loginUser : ", loginUser);
-    
+//   if (!isError) {
+//     dispatch(login(data));
+//   } 
 
-    return {
-        userLoading: isLoading,
-        user: data,
-        isLoggedIn: !isError,  // 에러가 없으면 로그인 상태임
-    };
+  console.log("loginUser : ", loginUser);
+
+  return {
+    userLoading: isLoading,
+    user: data,
+    isLoggedIn: isLoggedIn && data?.username !== undefined,
+  };
 }

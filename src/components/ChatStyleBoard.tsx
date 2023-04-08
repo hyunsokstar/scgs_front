@@ -239,6 +239,7 @@ type IProps = {
 function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
   const toast = useToast();
   const queryClient = useQueryClient();
+
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );
@@ -264,9 +265,15 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
     },
   });
 
+  console.log("isLoggedIn for chatstyle board : ", isLoggedIn);
+  
+
   const commentButtonHandler = () => {
+    // alert(isLoggedIn);
     if (!isLoggedIn) {
       alert("로그인 해주세요");
+    }else {
+      alert("로그인 상태입니다")
     }
     createMutationForTaskComment.mutate({
       taskPk,
@@ -370,6 +377,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
           >
             입력
           </Button>
+          {/* {isLoggedIn ? "true" : "false"} */}
         </Box>
       </Box>
     </Box>

@@ -235,7 +235,7 @@ function DataItem({
                 <CheckIcon boxSize={5} />
               </Button>
             ) : (
-              <Box>{isLoggedIn ? "true" : "false"}</Box>
+              ""
             )}
           </Box>
         </Flex>

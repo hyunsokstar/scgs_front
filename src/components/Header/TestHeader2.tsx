@@ -25,6 +25,8 @@ import useUser from "../../lib/useUser";
 import { login, logout } from "../../reducers/userSlice";
 import LoginModal from "../LoginModal";
 import SignUpModal from "../SignUpModal";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -44,30 +46,41 @@ const Header = () => {
     onOpen: onSignUpOpen,
   } = useDisclosure();
 
-  const { userLoading, isLoggedIn, user } = useUser();
+  const { userLoading, user, isLoggedIn } = useUser();
+  const { loginUser } = useSelector((state: RootState) => state.loginInfo);
   const [isHomePage, setIsHomePage] = useState(false);
 
+  // useEffect(()=> {
+  //   getMe()
+  // },[])
+
   const onLogOut = async () => {
-    const toastId = toast({
-      title: "Login out...",
-      description: "Sad to see you go...",
-      status: "loading",
-      position: "bottom-right",
-    });
+    // const toastId = toast({
+    //   title: "Login out...",
+    //   description: "Sad to see you go...",
+    //   status: "loading",
+    //   position: "bottom-right",
+    // });
+    await dispatch(logout());
 
     const data = await logOutApi();
-    dispatch(logout());
-    queryClient.refetchQueries(["me"]);
 
-    console.log(data);
+    if (data) {
+      console.log("data result for logout api: ", data);
+      // alert("로그아웃 성공");
+    } else {
+      console.log("hi");
+    }
 
-    setTimeout(() => {
-      toast.update(toastId, {
-        status: "success",
-        title: "Done!",
-        description: "See you later!",
-      });
-    }, 0);
+    // console.log(data);
+
+    // setTimeout(() => {
+    //   toast.update(toastId, {
+    //     status: "success",
+    //     title: "Done!",
+    //     description: "See you later!",
+    //   });
+    // }, 0);
   };
 
   const homeButtonHandler = () => {
@@ -91,13 +104,13 @@ const Header = () => {
     color: "white",
   };
 
-  useEffect(() => {
-    queryClient.refetchQueries(["me"]);
-    if (isLoggedIn) {
-      dispatch(login(user));
-    } else {
-    }
-  }, []);
+  // useEffect(() => {
+  //   queryClient.refetchQueries(["me"]);
+  //   if (isLoggedIn) {
+  //     dispatch(login(user));
+  //   } else {
+  //   }
+  // }, []);
 
   const goToUserProfile = (userPk: any) => {
     navigate(`users/${userPk}`);
@@ -230,38 +243,43 @@ const Header = () => {
         </NavLink>
 
         <Box>
-          {/* <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box> */}
-          {!userLoading ? (
-            !isLoggedIn ? (
-              <Container p={2}>
-                <Button onClick={onLoginOpen}>로그인</Button>
-                <LightMode>
-                  <Button ml={2} colorScheme={"red"} onClick={onSignUpOpen}>
-                    회원 가입
-                  </Button>
-                </LightMode>
-              </Container>
-            ) : (
-              <Box>
-                <HStack mr={2}>
-                  <Text color={"orange.500"} fontSize={"2xl"}>
-                    {user?.username} ({user?.admin_level}) 님
-                  </Text>
-                  <Menu>
-                    <MenuButton>
-                      <Avatar src={user?.profile_image} size={"sm"} />
-                    </MenuButton>
-                    <MenuList>
-                      <MenuItem onClick={() => goToUserProfile(user?.pk)}>
-                        유저 프로필
-                      </MenuItem>
-                      <MenuItem onClick={onLogOut}>Log out</MenuItem>
-                    </MenuList>
-                  </Menu>
-                </HStack>
-              </Box>
-            )
-          ) : null}
+          <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box>
+          {!isLoggedIn ? (
+            <Container p={2}>
+              {/* <Box color={"white"}>{loginUser.username}</Box> */}
+              <Button onClick={onLoginOpen}>
+                로그인
+                {/* {isLoggedIn ? "true" : "false"} */}
+              </Button>
+              <LightMode>
+                <Button ml={2} colorScheme={"red"} onClick={onSignUpOpen}>
+                  회원 가입
+                </Button>
+              </LightMode>
+            </Container>
+          ) : (
+            <Box>
+              <Box color={"white"}>{loginUser.username}</Box>
+              <Box color={"white"}>{isLoggedIn}</Box>
+
+              <HStack mr={2}>
+                <Text color={"orange.500"} fontSize={"2xl"}>
+                  {user?.username} ({user?.admin_level}) 님
+                </Text>
+                <Menu>
+                  <MenuButton>
+                    <Avatar src={user?.profile_image} size={"sm"} />
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem onClick={() => goToUserProfile(user?.pk)}>
+                      유저 프로필
+                    </MenuItem>
+                    <MenuItem onClick={onLogOut}>Log out</MenuItem>
+                  </MenuList>
+                </Menu>
+              </HStack>
+            </Box>
+          )}
         </Box>
       </Flex>
       <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
