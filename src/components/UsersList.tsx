@@ -16,7 +16,7 @@ function UsersList() {
 
     return (
         <div>
-            <Box bgColor={"blue.50"}>
+            <Box bgColor={"blue.100"}>
                 <TableContainer>
                     <Text fontSize="5xl" mb={5} textAlign={"center"} mt={3}>
                         유저 목록{" "}
@@ -46,7 +46,7 @@ function UsersList() {
                                               <Td>{user.pk}</Td>
                                               <Td>
                                                   <Link to={`/users/${user.pk}`}>
-                                                      <Text fontFamily={"sans-serif"} color={"blue.500"} _hover={{ color: "red" }}>
+                                                      <Text fontFamily={"sans-serif"} color={"blue.1000"} _hover={{ color: "red" }}>
                                                           {user.username}
                                                       </Text>
                                                   </Link>

@@ -426,7 +426,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
 
                 <Box>
                   {isUploadingForRefImage && (
-                    <Spinner size="md" color="blue.500" />
+                    <Spinner size="md" color="blue.1000" />
                   )}
                 </Box>
                 <VStack flex="3" border="0px solid green">

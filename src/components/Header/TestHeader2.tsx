@@ -148,7 +148,7 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "yellow", transform: "scale(1.1)" }}
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             My Task
           </Text>
@@ -163,7 +163,7 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "yellow", transform: "scale(1.1)" }}
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             Project Task
           </Text>
@@ -178,7 +178,7 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "yellow", transform: "scale(1.1)" }}
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             Task Status
           </Text>
@@ -193,7 +193,7 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "yellow", transform: "scale(1.1)" }}
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             Api Docu
           </Text>
@@ -208,7 +208,7 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "yellow", transform: "scale(1.1)" }}
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             Q&A
           </Text>
@@ -223,7 +223,7 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "yellow", transform: "scale(1.1)" }}
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             Tech Note
           </Text>
@@ -253,7 +253,7 @@ const Header = () => {
             fontWeight="medium"
             mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
-            _hover={{ color: "yellow", transform: "scale(1.1)" }}
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             Site Manual
           </Text>

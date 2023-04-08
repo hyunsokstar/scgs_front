@@ -176,7 +176,7 @@ const TutorialList = () => {
                         ))}
                     </Slider>
                 ) : (
-                    <Box w="200px" h="100px" bg="blue.500">
+                    <Box w="200px" h="100px" bg="blue.1000">
                         "Loading"
                     </Box>
                 )}

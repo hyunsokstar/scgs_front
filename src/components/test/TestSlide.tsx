@@ -23,7 +23,7 @@ const NextArrow = (props: any) => {
             icon={<ArrowRightIcon />}
             bg="transparent"
             fontSize="50px"
-            _hover={{ fontWeight: "bold", color: "blue.500", backgroundColor: "gray.100" }}
+            _hover={{ fontWeight: "bold", color: "blue.1000", backgroundColor: "gray.100" }}
             style={{ position: "absolute", top: "40%", right: "120px", width: "58px", height: "58px" }}
             onClick={onClick}
             zIndex={2}
@@ -39,7 +39,7 @@ function PrevArrow(props: any) {
             icon={<ArrowLeftIcon />}
             bg="transparent"
             fontSize="50px"
-            _hover={{ fontWeight: "bold", color: "blue.500", backgroundColor: "gray.100" }}
+            _hover={{ fontWeight: "bold", color: "blue.1000", backgroundColor: "gray.100" }}
             style={{ position: "absolute", top: "40%", left: "120px", width: "58px", height: "58px" }}
             onClick={onClick}
             zIndex={2}

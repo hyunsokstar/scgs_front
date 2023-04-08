@@ -56,7 +56,7 @@ const MyCard = ({ title, description, ranking }: IProps) => {
                     top={0}
                     w="24px"
                     h="24px"
-                    bgColor={"skyblue" || "blue.500"}
+                    bgColor={"skyblue" || "blue.1000"}
                     borderRadius="md"
                     display="flex"
                     alignItems="center"

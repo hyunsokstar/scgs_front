@@ -136,7 +136,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
       <VStack
         p={3}
         borderRadius="lg"
-        bg={isUser ? "yellow.50" : "blue.50"}
+        bg={isUser ? "yellow.50" : "blue.100"}
         alignSelf={isUser ? "flex-start" : "flex-end"}
         border="1px solid black"
         maxWidth="380px"
@@ -155,7 +155,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
                 <Box>
                   <Textarea
                     width={"320px"}
-                    bg={"blue.50"}
+                    bg={"blue.100"}
                     defaultValue={comment}
                     onChange={(e) => setCommentTextForUpdate(e.target.value)}
                   />

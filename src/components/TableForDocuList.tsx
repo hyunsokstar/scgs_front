@@ -1,41 +1,30 @@
 import { useState } from "react";
-import { Table, Tbody, Tr, Td, Checkbox, Input } from "@chakra-ui/react";
-import { v4 as uuid } from "uuid";
-import { faker } from "@faker-js/faker";
+import {
+  Table,
+  Tbody,
+  Tr,
+  Td,
+  Checkbox,
+  Input,
+  InputProps,
+  FormControl,
+  FormLabel,
+  HStack,
+  Box,
+  Text,
+} from "@chakra-ui/react";
 
-type Data = {
-  id: string;
-  url: string;
-  description: string;
-  classification: string;
-};
+import { type_for_docu_list_row } from "../types/api_docu_type";
 
-const generateData = (count: number): Data[] => {
-  const data: Data[] = [];
-  for (let i = 0; i < count; i++) {
-    data.push({
-      id: uuid(),
-      url: faker.internet.url(),
-      description: faker.lorem.sentence(),
-      classification: faker.random.word(),
-    });
-  }
-  return data;
-};
+interface IPropsForApiDocuTable {
+  data_for_api_docu_list: type_for_docu_list_row[];
+}
 
-const initialData = generateData(10);
-
-const TableForDocuList = () => {
-  const [data, setData] = useState(initialData);
-  const [filteredData, setFilteredData] = useState(initialData);
+const TableForDocuList = ({
+  data_for_api_docu_list,
+}: IPropsForApiDocuTable) => {
+  const [filteredData, setFilteredData] = useState(data_for_api_docu_list);
   const [filterValue, setFilterValue] = useState("");
-
-  // const handleCheckboxChange = (id: string) => {
-  //   const updatedData = data.map((item) =>
-  //     item.id === id ? { ...item, isChecked: !item.isChecked } : item
-  //   );
-  //   setData(updatedData);
-  // };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -44,26 +33,32 @@ const TableForDocuList = () => {
   };
 
   const updateFilteredData = (filterValue: string) => {
-    const filteredData = data.filter((item) =>
+    const filteredData = data_for_api_docu_list.filter((item) =>
       item.url.toLowerCase().includes(filterValue.toLowerCase())
     );
     setFilteredData(filteredData);
   };
 
   return (
-    <>
-      <Input
-        size="sm"
-        width="20%"
-        variant="outlined"
-        bg="gray.100"
-        border="1px solid gray"
-        _focus={{ border: "none", boxShadow: "none" }}
-        _hover={{ border: "none", bgColor: "gray.200" }}
-        _placeholder={{ color: "gray.400" }}
-        value={filterValue}
-        onChange={handleFilterChange}
-      />
+    <Box border={"1px solid purple"}>
+      <Text>Api Docu List</Text>
+      <HStack border={"1px solid green"} px={2}>
+        <Text>url</Text>
+        <Input
+          size="sm"
+          variant="outline"
+          bg="blue.100"
+          borderColor="blue.100"
+          _focus={{ border: "none", boxShadow: "none" }}
+          _hover={{ bg: "blue.100", borderColor: "blue.300" }}
+          _placeholder={{ color: "gray.400" }}
+          id="url"
+          w={"300px"}
+          value={filterValue}
+          onChange={handleFilterChange}
+        />
+      </HStack>
+
       <Table variant="simple" size="sm">
         <thead>
           <Tr>
@@ -77,12 +72,17 @@ const TableForDocuList = () => {
         </thead>
         <Tbody>
           {filteredData.map(
-            ({ id, url, description, classification }) => (
+            ({
+              id,
+              url,
+              description,
+              classification,
+            }: type_for_docu_list_row) => (
               <Tr key={id}>
                 <Td>
                   <Checkbox
-                    // isChecked={isChecked}
-                    // onChange={() => handleCheckboxChange(id)}
+                  // isChecked={isChecked}
+                  // onChange={() => handleCheckboxChange(id)}
                   />
                 </Td>
                 <Td>{url}</Td>
@@ -93,7 +93,7 @@ const TableForDocuList = () => {
           )}
         </Tbody>
       </Table>
-    </>
+    </Box>
   );
 };
 

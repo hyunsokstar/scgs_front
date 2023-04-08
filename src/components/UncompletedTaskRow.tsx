@@ -359,7 +359,7 @@ function UncompletedTaskRow({
       {/* 페이지 네이션 영역 */}
       <Box mt={5}>
         {ProjectProgressList ? (
-          <Box maxW="100%" bg="blue.50" color="red.500" mt={-3.5}>
+          <Box maxW="100%" bg="blue.100" color="red.500" mt={-3.5}>
             <PaginationComponent
               current_page_num={currentPageNum}
               total_page_num={totalPageCount}

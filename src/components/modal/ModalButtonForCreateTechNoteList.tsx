@@ -62,7 +62,7 @@ const ModalButtonForCreateTechNoteList = () => {
         icon={<AddIcon  />}
         aria-label="수정"
         variant="outline"
-        borderColor="blue.500"
+        borderColor="blue.1000"
         _hover={{ bg: "blue.100" }}
         _active={{ bg: "blue.200" }}
         size="xs"

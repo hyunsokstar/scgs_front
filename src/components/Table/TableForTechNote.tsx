@@ -35,35 +35,6 @@ import { Link, useNavigate } from "react-router-dom";
 import ModalForTechNoteContentList from "../modal/ModalForTechNoteContentList";
 import ModalForTechNoteContentList2 from "../modal/ModalForTechNoteContentList2";
 
-// import { faker } from "@faker-js/faker";
-
-// interface TableRow {
-//   id: string;
-//   author: string;
-//   title: string;
-//   category1: string;
-//   rating: number;
-//   views: number;
-// }
-
-// const data: TableRow[] = [
-//   {
-//     id: faker.datatype.uuid(),
-//     author: faker.name.fullName(),
-//     title: faker.lorem.words(5),
-//     category1: 'App Name 1',
-//     rating: 4.5,
-//     views: 102,
-//   },
-//   {
-//     id: faker.datatype.uuid(),
-//     author: faker.name.fullName(),
-//     title: faker.lorem.words(4),
-//     category1: 'App Name 2',
-//     rating: 3.2,
-//     views: 76,
-//   },
-// ];
 
 const TableForTechNote = () => {
   const queryClient = useQueryClient();
@@ -92,8 +63,6 @@ const TableForTechNote = () => {
 
   const [tech_note_pk, set_tech_note_pk] = useState<number | string>();
   // let tech_note_pk;
-
-  // console.log("tech_note_list_data : ", tech_note_list_data);
 
   const deleteMutationForTechNoteListByPk = useMutation(
     (techNotePk: number) => {
@@ -260,7 +229,7 @@ const TableForTechNote = () => {
         </Tbody>
       </Table>
       {tech_note_list_data ? (
-        <Box w="100%" bg="blue.50" color="red.500" mt={-3.5}>
+        <Box w="100%" bg="blue.100" color="red.500" mt={-3.5}>
           <PaginationComponentForTechNote
             current_page_num={currentPageNum}
             total_page_num={
