@@ -26,6 +26,7 @@ import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  createCommentForTaskApi,
   deleteOneCommentForTaskByPkApi,
   updateCommentTextForTaskApi,
   updateMutationForCommentEditModeApi,
@@ -43,7 +44,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
   const toast = useToast();
   const queryClient = useQueryClient();
   const [isChecked, setIsChecked] = useState(false);
-  const [commentTextForUpdate, setcommentTextForUpdate] = useState(comment);
+  const [commentTextForUpdate, setCommentTextForUpdate] = useState(comment);
 
   function handleCheckboxChange() {
     setIsChecked(!isChecked);
@@ -156,7 +157,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
                     width={"320px"}
                     bg={"blue.50"}
                     defaultValue={comment}
-                    onChange={(e) => setcommentTextForUpdate(e.target.value)}
+                    onChange={(e) => setCommentTextForUpdate(e.target.value)}
                   />
 
                   <Box display={"flex"} justifyContent="flex-end" mt={0}>
@@ -236,15 +237,43 @@ type IProps = {
 
 // main 1122
 function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
+  const toast = useToast();
+  const queryClient = useQueryClient();
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );
+  const [commentTextToUpload, setCommentTextToUpload] = useState("");
+
+  const createMutationForTaskComment = useMutation(createCommentForTaskApi, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
+
+      toast({
+        title: "welcome back!",
+        status: "success",
+      });
+      //   requery getOneProjectTask
+      queryClient.refetchQueries(["getOneProjectTask"]);
+    },
+    onError: (error: any) => {
+      console.log("error.response : ", error.response);
+      console.log("mutation has an error", error.response.data);
+    },
+  });
 
   const commentButtonHandler = () => {
-    // alert("comment button click")
     if (!isLoggedIn) {
       alert("로그인 해주세요");
     }
+    createMutationForTaskComment.mutate({
+      taskPk,
+      comment: commentTextToUpload,
+    });
+    // alert(taskPk);
+    // alert(commentTextToUpload);
   };
 
   return (
@@ -302,7 +331,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
           />
         ))}
       </Flex>
-      <Box mt={1} px={0} border={"0px solid green"}>
+      <Box mt={"3.6px"} px={0} border={"0px solid green"}>
         <Box
           display={"flex"}
           border={"0px solid green"}
@@ -328,6 +357,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             }}
             bg={"purple.50"}
             mr="1"
+            onChange={(e) => setCommentTextToUpload(e.target.value)}
             placeholder="입력해주세요"
           />
           <Button

@@ -22,6 +22,30 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+
+export const insertCommentForTaskApi = ({
+  taskPk,
+  task_manager,
+  task,
+  importance,
+}: FormTypeForExtraTask) =>
+  instance
+    .post(
+      `/project_progress/extra_tasks`,
+      {
+        taskPk,
+        task_manager,
+        task,
+        importance,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const deleteOneCommentForTaskByPkApi = (commentPk: string | number) => {
   console.log("commentPk : ", commentPk);
   return instance
