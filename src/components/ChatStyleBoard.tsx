@@ -234,7 +234,7 @@ type IProps = {
   taskPk: number | string;
 };
 
-// main
+// main 1122
 function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -250,7 +250,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
   return (
     <Box>
       <Box border={"0px solid green"} mb={2}>
-        <HStack spacing={4}>
+        <HStack spacing={1}>
           <Button
             leftIcon={<FaCheckSquare />}
             size="sm"
@@ -259,18 +259,19 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             _hover={{ bg: "green.50" }}
             borderRadius="full"
           >
-            All Check
+            All
           </Button>
           <Button
+            aria-label={""}
             leftIcon={<FaTrash />}
             size="sm"
             colorScheme="red"
             variant="outline"
             _hover={{ bg: "red.50" }}
             borderRadius="full"
-            ml={1}
+            ml={0}
           >
-            Delete
+            delete
           </Button>
           <Spacer />
           <Box>
@@ -281,12 +282,12 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
 
       <Flex
         flexDirection={"column"}
-        p={4}
+        p={2}
         bg="gray.50"
         borderRadius="lg"
         border="2px solid gray"
         width="100%"
-        height={"522px"}
+        height={"480px"}
         overflowY={"scroll"}
         gap={2}
       >
@@ -300,13 +301,15 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             is_edit_mode={co.is_edit_mode}
           />
         ))}
-
+      </Flex>
+      <Box mt={1} px={0} border={"0px solid green"}>
         <Box
           display={"flex"}
-          gap={2}
-          width={"100%"}
           border={"0px solid green"}
-          mt={5}
+          gap={1}
+          width={"100%"}
+          mt={"2px"}
+          px={"1px"}
         >
           <Input
             variant="outline"
@@ -314,21 +317,23 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             borderWidth="2px"
             borderColor="purple.100"
             size="md"
-            height={"38px"}
+            height={"37px"}
+            border={"1px solid purple"}
+            width={"100%"}
             _hover={{
-              borderColor: "teal.300",
+              borderColor: "purple.300",
             }}
             _focus={{
-              borderColor: "teal.400",
+              borderColor: "purple.400",
             }}
             bg={"purple.50"}
-            ml="2"
+            mr="1"
             placeholder="입력해주세요"
           />
           <Button
             variant="outline"
             size={"md"}
-            height={"35px"}
+            height={"37px"}
             borderRadius="md"
             colorScheme={"purple"}
             onClick={() => commentButtonHandler()}
@@ -336,7 +341,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             입력
           </Button>
         </Box>
-      </Flex>
+      </Box>
     </Box>
   );
 }

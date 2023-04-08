@@ -284,7 +284,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                 <Box
                   flex="5"
                   bg="white"
-                  border="1px solid black"
+                  border="0px solid black"
                   height={"618px"}
                   px={2}
                 >
@@ -316,7 +316,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                       <FormControl
                         id="task"
                         isRequired
-                        border="1px solid green"
+                        border="0px solid green"
                         width={"100%"}
                       >
                         <FormLabel>Task Description</FormLabel>
@@ -429,11 +429,11 @@ function ProjectProgressDetail({}: Props): ReactElement {
                     <Spinner size="md" color="blue.500" />
                   )}
                 </Box>
-                <VStack flex="3" border="1px solid green">
+                <VStack flex="3" border="0px solid green">
                   <Box
                     width={"100%"}
                     overflowY="scroll"
-                    height={"617px"}
+                    height={"618px"}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
