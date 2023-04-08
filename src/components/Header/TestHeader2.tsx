@@ -47,6 +47,7 @@ const Header = () => {
   } = useDisclosure();
 
   const { userLoading, user, isLoggedIn } = useUser();
+  const [logoutSuccess, setLogoutSuccess] = useState(false)  
   const { loginUser } = useSelector((state: RootState) => state.loginInfo);
   const [isHomePage, setIsHomePage] = useState(false);
 
@@ -61,6 +62,7 @@ const Header = () => {
     //   status: "loading",
     //   position: "bottom-right",
     // });
+    setLogoutSuccess(true)
     await dispatch(logout());
 
     const data = await logOutApi();
@@ -243,8 +245,8 @@ const Header = () => {
         </NavLink>
 
         <Box>
-          <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box>
-          {!isLoggedIn ? (
+          {/* <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box> */}
+          {!isLoggedIn || logoutSuccess ? (
             <Container p={2}>
               {/* <Box color={"white"}>{loginUser.username}</Box> */}
               <Button onClick={onLoginOpen}>
