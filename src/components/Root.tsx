@@ -1,7 +1,6 @@
 import { Box, Container } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import SampleHeader from "./SampleHeader";
 import TestHeader2 from "./Header/TestHeader2";
 // import TestHeader from "./TestHeader/TestHeader";
 

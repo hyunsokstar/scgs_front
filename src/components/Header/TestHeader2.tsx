@@ -246,7 +246,7 @@ const Header = () => {
 
         <Box>
           {/* <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box> */}
-          {!isLoggedIn || logoutSuccess ? (
+          {!isLoggedIn || logoutSuccess === true ? (
             <Container p={2}>
               {/* <Box color={"white"}>{loginUser.username}</Box> */}
               <Button onClick={onLoginOpen}>
@@ -284,7 +284,7 @@ const Header = () => {
           )}
         </Box>
       </Flex>
-      <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
+      <LoginModal setLogOutSuccess={setLogoutSuccess} isOpen={isLoginOpen} onClose={onLoginClose} />
       <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
     </>
   );

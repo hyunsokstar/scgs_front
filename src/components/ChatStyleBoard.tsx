@@ -273,7 +273,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
     if (!isLoggedIn) {
       alert("로그인 해주세요");
     }else {
-      alert("로그인 상태입니다")
+      // alert("로그인 상태입니다")
     }
     createMutationForTaskComment.mutate({
       taskPk,

@@ -33,6 +33,7 @@ import { useDispatch } from "react-redux";
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
+  setLogOutSuccess: any;
 }
 
 interface IForm {
@@ -40,12 +41,16 @@ interface IForm {
   password: string;
 }
 
-export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+export default function LoginModal({
+  isOpen,
+  onClose,
+  setLogOutSuccess,
+}: LoginModalProps) {
   const toast = useToast();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
 
-  const [loginErrorExist, setloginErrorExist] = useState<string>("")
+  const [loginErrorExist, setloginErrorExist] = useState<string>("");
 
   const {
     register,
@@ -63,16 +68,17 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         title: "welcome back!",
         status: "success",
       });
-      setloginErrorExist("")
+      setLogOutSuccess(false)
+      setloginErrorExist("");
       onClose();
       queryClient.refetchQueries(["me"]);
-      dispatch(login(data))
+      dispatch(login(data));
     },
     onError: (error: any) => {
       console.log("error : ", error);
       console.log("login 실패 error : ", error?.response.data.detail);
-      const loginErrorMessage = error?.response.data.detail
-      setloginErrorExist(loginErrorMessage)
+      const loginErrorMessage = error?.response.data.detail;
+      setloginErrorExist(loginErrorMessage);
     },
   });
 
@@ -137,7 +143,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           >
             Log in
           </Button>
-          {loginErrorExist ?
+          {loginErrorExist ? (
             <Alert status="error" mt={2} mb={4}>
               <AlertIcon />
               <Box flex="1">
@@ -145,8 +151,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 <AlertDescription>{loginErrorExist}</AlertDescription>
               </Box>
             </Alert>
-
-            : ""}
+          ) : (
+            ""
+          )}
           {/* <SocialLogin /> */}
         </ModalBody>
       </ModalContent>
