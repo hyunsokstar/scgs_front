@@ -1,19 +1,18 @@
-import { Box, HStack, VStack } from '@chakra-ui/react'
-import React, { ReactElement } from 'react'
-import CompletedProjectTaskList from '../components/CompletedProjectTaskList'
-import UncompletedProjectTaskList from '../components/UncompletedProjectTaskList'
+import { Box, HStack, VStack } from "@chakra-ui/react";
+import React, { ReactElement } from "react";
+import CompletedProjectTaskList from "../components/CompletedProjectTaskList";
+import UncompletedProjectTaskList from "../components/UncompletedProjectTaskList";
 
-interface Props {
-    
-}
+type Props = {};
 
+// rome-ignore lint/correctness/noEmptyPattern: <explanation>
 function ProjectAdminPage({}: Props): ReactElement {
-    return (
-        <VStack gap={1}>
-            <UncompletedProjectTaskList />         
-            <CompletedProjectTaskList />
-        </VStack>
-    )
+  return (
+    <VStack gap={1}>
+      <UncompletedProjectTaskList />
+      <CompletedProjectTaskList />
+    </VStack>
+  );
 }
 
-export default ProjectAdminPage
+export default ProjectAdminPage;

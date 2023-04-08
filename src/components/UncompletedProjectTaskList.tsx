@@ -14,7 +14,6 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
 
   const {
-    
     isLoading,
     data: taskListData,
     refetch: projectTaskListRefatch,
