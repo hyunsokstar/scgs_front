@@ -28,6 +28,7 @@ import {
   Textarea,
   Heading,
   Switch,
+  Spacer,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
@@ -501,36 +502,43 @@ function ProjectProgressDetail({}: Props): ReactElement {
             </Box>{" "}
           </VStack>
 
-          <VStack width="50%" border={"2px solid gray"} height="620px" mb={2}>
-            <Box my={2}>
-              <FormControl display="flex" alignItems="center">
-                <FormLabel htmlFor="my-switch" mb="0">
-                  Mode Changes(Comment or tech Note)
-                </FormLabel>
-                <Switch
-                  isChecked={isCheckedForShowTechNote}
-                  onChange={handleChange}
-                  size="lg"
-                  colorScheme="green"
-                />{" "}
-              </FormControl>
-            </Box>{" "}
-            <Box width={"95%"}>
-              {/* 0405 comment list 추가 하기 */}
-              {!isCheckedForShowTechNote ? (
-                // <TableForTaskCommentList
-                //   task_comments={taskData?.task_comments}
-                // />
-                <ChatStyleBoard
-                  taskPk={taskData.pk}
-                  task_manager={taskData?.task_manager}
-                  task_comments={taskData?.task_comments}
-                />
-              ) : (
-                <TableForTechNote />
-              )}
-            </Box>
-          </VStack>
+          <Box width={"50%"}>
+            <Flex
+              flexDirection={"column"}
+              justifyContent={"flex-start"}
+              width="100%"
+              height="620px"
+              mb={2}
+              px={2}
+              border={"1px solid green"}
+            >
+              <Box width={"100%"} mt={1} mb={5}>
+                <FormControl display="flex" alignItems="center">
+                  <FormLabel htmlFor="my-switch" mb="0">
+                    Mode Changes(Comment or tech Note)
+                  </FormLabel>
+                  <Switch
+                    isChecked={isCheckedForShowTechNote}
+                    onChange={handleChange}
+                    size="lg"
+                    colorScheme="green"
+                  />{" "}
+                </FormControl>
+              </Box>{" "}
+              <Box width={"100%"} height={"100%"} border={"0px solid red"}>
+                {/* 0405 comment list 추가 하기 */}
+                {!isCheckedForShowTechNote ? (
+                  <ChatStyleBoard
+                    taskPk={taskData.pk}
+                    task_manager={taskData?.task_manager}
+                    task_comments={taskData?.task_comments}
+                  />
+                ) : (
+                  <TableForTechNote />
+                )}
+              </Box>
+            </Flex>
+          </Box>
         </Flex>
         <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
           <ModalButtonForExtraTask taskPk={taskPk} />

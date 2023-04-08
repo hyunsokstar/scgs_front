@@ -159,7 +159,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
                     onChange={(e) => setcommentTextForUpdate(e.target.value)}
                   />
 
-                  <Box display={"flex"} justifyContent="flex-end" mt={1}>
+                  <Box display={"flex"} justifyContent="flex-end" mt={0}>
                     <IconButton
                       aria-label="Confirm"
                       icon={<FaCheck />}
@@ -236,10 +236,16 @@ type IProps = {
 
 // main
 function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
-  const [messages, setMessages] = useState<ITaskComment[]>(task_comments);
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );
+
+  const commentButtonHandler = () => {
+    // alert("comment button click")
+    if (!isLoggedIn) {
+      alert("로그인 해주세요");
+    }
+  };
 
   return (
     <Box>
@@ -273,14 +279,16 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
         </HStack>{" "}
       </Box>
 
-      <VStack
+      <Flex
+        flexDirection={"column"}
         p={4}
         bg="gray.50"
         borderRadius="lg"
         border="2px solid gray"
         width="100%"
-        height={"500px"}
+        height={"522px"}
         overflowY={"scroll"}
+        gap={2}
       >
         {task_comments.map((co) => (
           <ListItem
@@ -292,42 +300,43 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             is_edit_mode={co.is_edit_mode}
           />
         ))}
-        <Spacer />
+
         <Box
           display={"flex"}
           gap={2}
           width={"100%"}
           border={"0px solid green"}
-          pt={0}
+          mt={5}
         >
           <Input
             variant="outline"
             borderRadius="xl"
             borderWidth="2px"
             borderColor="purple.100"
+            size="md"
+            height={"38px"}
             _hover={{
               borderColor: "teal.300",
             }}
             _focus={{
               borderColor: "teal.400",
             }}
-            // value={value}
-            // onChange={(e) => setValue(e.target.value)}
             bg={"purple.50"}
-            size="sm"
             ml="2"
             placeholder="입력해주세요"
           />
           <Button
             variant="outline"
-            size={"sm"}
+            size={"md"}
+            height={"35px"}
             borderRadius="md"
             colorScheme={"purple"}
+            onClick={() => commentButtonHandler()}
           >
             입력
           </Button>
         </Box>
-      </VStack>
+      </Flex>
     </Box>
   );
 }

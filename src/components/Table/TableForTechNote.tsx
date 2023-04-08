@@ -169,10 +169,11 @@ const TableForTechNote = () => {
       <Box
         display={"flex"}
         justifyContent="space-between"
-        border={"0px solid green"}
+        border={"0px solid orange"}
         width="100%"
-        // pr={9}
-        px={10}
+        height={"100%"}
+        px={1}
+        pr={8}
       >
         <Box>
           총 {tech_note_list_data?.total_count_for_tech_note_table_rows} 개
