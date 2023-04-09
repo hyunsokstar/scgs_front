@@ -22,7 +22,6 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
-
 export const insertCommentForTaskApi = ({
   taskPk,
   task_manager,
