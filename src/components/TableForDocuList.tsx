@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Table,
   Tbody,
@@ -25,10 +25,12 @@ import ModalButtonForInsertToApiDocu from "./modal/ModalButtonForInsertToApiDocu
 
 interface IPropsForApiDocuTable {
   data_for_api_docu_list: type_for_docu_list_row[];
+  refetch_for_api_docu: () => void;
 }
 
 const TableForDocuList = ({
   data_for_api_docu_list,
+  refetch_for_api_docu,
 }: IPropsForApiDocuTable) => {
   const [filteredData, setFilteredData] = useState(data_for_api_docu_list);
   const [filterValueForUrl, setfilterValueForUrl] = useState("");
@@ -36,6 +38,10 @@ const TableForDocuList = ({
     useState("");
   const [filterValueForClassfication, setfilterValueForClassfication] =
     useState("");
+
+  useEffect(() => {
+    setFilteredData(data_for_api_docu_list);
+  }, [data_for_api_docu_list]);
 
   const handleFilterChangeForUrl = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -94,13 +100,15 @@ const TableForDocuList = ({
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"space-between"}
+      alignItems={"center"}
       bgColor={"white.100"}
+      width={"100%"}
     >
       <Box
         bgColor={"gray.50"}
         display="flex"
-        alignItems="center"
         justifyContent="center"
+        alignItems="center"
         height="100px"
         width="100%"
       >
@@ -114,10 +122,18 @@ const TableForDocuList = ({
         </Text>
       </Box>
 
-      <Flex border={"1px solid green"} px={2} py={2} gap={5}>
+      <Flex
+        alignItems={"center"}
+        border={"1px solid green"}
+        px={2}
+        py={2}
+        gap={5}
+        width={"100%"}
+      >
         <Box
           display={"flex"}
           justifyContent={"space-between"}
+          alignItems={"center"}
           border={"0px solid green"}
           gap={1}
         >
@@ -188,7 +204,9 @@ const TableForDocuList = ({
           >
             <AddIcon />
           </Button> */}
-          <ModalButtonForInsertToApiDocu />
+          <ModalButtonForInsertToApiDocu
+            refetch_for_api_docu={refetch_for_api_docu}
+          />
         </Box>
       </Flex>
 

@@ -18,30 +18,42 @@ export const get_api_docu_list = async ({
 }: QueryFunctionContext): Promise<type_for_api_for_api_docu_list> => {
   const [_, pageNum] = queryKey;
   return await instance.get(`api-docu/?page=${pageNum}`).then((response) => {
-    console.log("response.data : ", response.data);
+    // console.log("response.data : ", response.data);
     return response.data;
   });
 };
 
 // create api-docu
 // insertApiDocuApi
-// export const insertToApiDocuApi = ({
-//   url,
-//   description,
-//   classification,
-// }: TypeForInsertToApiDocuApi) =>
-//   instance
-//     .post(
-//       `/project_progress/${taskPk}/TestForTasks`,
-//       {
-//         test_description,
-//         test_method,
-//         test_passed,
-//       },
-//       {
-//         headers: {
-//           "X-CSRFToken": Cookie.get("csrftoken") || "",
-//         },
-//       }
-//     )
-//     .then((response) => response.data);
+export const insertToApiDocuApi = ({
+  classification,
+  description,
+  url,
+}: TypeForInsertToApiDocuApi) => {
+  console.log("classification : ", classification);
+  console.log("description : ", description);
+  console.log("url : ", url);
+
+  // 중간에 다른 리턴값 설정 하면 type 에러 발생함
+  // if (url) {
+  // } else {
+  //   alert("url 이 없습니다");
+  //   return;
+  // }
+
+  return instance
+    .post(
+      `/api-docu/`,
+      {
+        classification,
+        description,
+        url,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};

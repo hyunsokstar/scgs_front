@@ -21,9 +21,12 @@ import {
 import { useForm } from "react-hook-form";
 import { AddIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import { insertToApiDocuApi } from "../../apis/api_docu_api";
+import { insertToApiDocuApi } from "../../apis/api_docu_api";
+interface IProps {
+  refetch_for_api_docu: () => void;
+}
 
-const ModalButtonForInsertToApiDocu = () => {
+const ModalButtonForInsertToApiDocu = ({ refetch_for_api_docu }: IProps) => {
   const toast = useToast();
   const queryClient = useQueryClient();
 
@@ -39,31 +42,39 @@ const ModalButtonForInsertToApiDocu = () => {
   const errorColor = useColorModeValue("red.500", "red.200");
   const colorScheme = useColorModeValue("blue", "purple");
 
-  //   const mutationForInserApiDocu = useMutation(insertToApiDocuApi, {
-  //     onMutate: () => {
-  //       console.log("mutation starting");
-  //     },
-  //     onSuccess: (data) => {
-  //       console.log("data : ", data);
+  const mutationForInserApiDocu = useMutation(insertToApiDocuApi, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
+      refetch_for_api_docu();
+      //   queryClient.refetchQueries(["get_api_docu_list"]);
+      toast({
+        title: "welcome back!",
+        status: "success",
+      });
+      onClose();
+    },
+    onError: (error: any) => {
+      console.log("error.message : ", error.message);
 
-  //       toast({
-  //         title: "welcome back!",
-  //         status: "success",
-  //       });
-  //       //   requery getOneProjectTask
-  //       queryClient.refetchQueries(["getOneProjectTask"]);
-  //       //   onClose();
-  //     },
-  //     onError: (error: any) => {
-  //       console.log("error.response : ", error.response);
-  //       //   console.log("mutation has an error", error.response.data);
-  //     },
-  //   });
+      toast({
+        title: "Error!",
+        description: error.message || "An error occurred.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+  });
 
-  const onSubmit = async (data: any) => {
-    // setSubmitting(true);
-    console.log(data); // do something with the form data
-    // mutationForInserApiDocu.mutate({});
+  const onSubmit = (data: any) => {
+    mutationForInserApiDocu.mutate({
+      url: data.url,
+      description: data.description,
+      classification: data.classification,
+    });
     // onClose();
     // setSubmitting(false);
   };
@@ -95,12 +106,20 @@ const ModalButtonForInsertToApiDocu = () => {
                   <Input
                     type="url"
                     placeholder="Enter URL"
+                    defaultValue="http://"
                     borderColor={errors?.url ? errorColor : borderColor}
-                    {...register("url", { required: true })}
+                    {...register("url", {
+                      required: true,
+                      pattern: {
+                        value:
+                          /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/i,
+                        message: "Invalid URL",
+                      },
+                    })}
                   />
                   {errors?.url && (
                     <span style={{ color: errorColor }}>
-                      This field is required
+                      {"url is invalid"}
                     </span>
                   )}
                 </Box>

@@ -27,8 +27,9 @@ const ApiDocuPage = (props: Props) => {
   }
 
   return (
-    <Box>
+    <Box width={"100%"}>
       <TableForDocuList
+        refetch_for_api_docu={refetch_for_api_docu}
         data_for_api_docu_list={data_for_api_docu_list.api_docu_list}
       />
     </Box>
