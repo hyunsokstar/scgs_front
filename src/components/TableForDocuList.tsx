@@ -38,6 +38,8 @@ const TableForDocuList = ({
   refetch_for_api_docu,
 }: IPropsForApiDocuTable) => {
   const toast = useToast();
+  const queryClient = useQueryClient();
+
   const [filteredData, setFilteredData] = useState(data_for_api_docu_list);
   const [filterValueForUrl, setfilterValueForUrl] = useState("");
   const [filterValueForDescription, setfilterValueForDescription] =
@@ -111,7 +113,9 @@ const TableForDocuList = ({
       onSuccess: (data) => {
         console.log("data : ", data);
 
-        refetch_for_api_docu();
+        // refetch_for_api_docu();
+        queryClient.refetchQueries(["get_api_docu_list"]);
+
 
         toast({
           title: "delete api docu 성공!",
@@ -155,10 +159,10 @@ const TableForDocuList = ({
       </Box>
 
       <Flex
+        justifyContent={"space-between"}
         alignItems={"center"}
         border={"1px solid green"}
         px={2}
-        py={2}
         gap={5}
         width={"100%"}
       >
@@ -227,20 +231,12 @@ const TableForDocuList = ({
           />
         </Box>
         <Spacer />
-        <Box>
-          {/* <Button
-            size="md"
-            colorScheme="teal"
-            variant="outline"
-            _hover={{ borderColor: "teal.800", backgroundColor: "teal.50" }}
-          >
-            <AddIcon />
-          </Button> */}
-          <ModalButtonForInsertToApiDocu
-            refetch_for_api_docu={refetch_for_api_docu}
-          />
-        </Box>
       </Flex>
+      <Box w={"100%"} textAlign={"end"}>
+        <ModalButtonForInsertToApiDocu
+          refetch_for_api_docu={refetch_for_api_docu}
+        />
+      </Box>
 
       <Table variant="simple" size="sm">
         <thead>

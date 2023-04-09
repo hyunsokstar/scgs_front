@@ -83,10 +83,11 @@ const ModalButtonForInsertToApiDocu = ({ refetch_for_api_docu }: IProps) => {
     <>
       {/* <Button variant="outline" onClick={onOpen}>Add to API docu</Button> */}
       <Button
-        size="md"
+        size="sm"
         colorScheme="teal"
         variant="outline"
         _hover={{ borderColor: "teal.800", backgroundColor: "teal.50" }}
+        m={1}
         onClick={onOpen}
       >
         <AddIcon />
@@ -106,13 +107,11 @@ const ModalButtonForInsertToApiDocu = ({ refetch_for_api_docu }: IProps) => {
                   <Input
                     type="url"
                     placeholder="Enter URL"
-                    defaultValue="http://"
                     borderColor={errors?.url ? errorColor : borderColor}
                     {...register("url", {
                       required: true,
                       pattern: {
-                        value:
-                          /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/i,
+                        value: /^(http|https):\/\/[^ "]+$/,
                         message: "Invalid URL",
                       },
                     })}
