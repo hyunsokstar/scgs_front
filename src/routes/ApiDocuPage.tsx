@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { type_for_api_for_api_docu_list } from "../types/api_docu_type";
 import { get_api_docu_list } from "../apis/api_docu_api";
 import { Box } from "@chakra-ui/react";
-import TableForDocuList from "../components/TableForDocuList";
+import TableForDocuList from "../components/Table/TableForDocuList";
 
 type Props = {};
 

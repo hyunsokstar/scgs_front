@@ -23,9 +23,9 @@ import {
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { type_for_docu_list_row } from "../types/api_docu_type";
-import ModalButtonForInsertToApiDocu from "./modal/ModalButtonForInsertToApiDocu";
-import { apiFordeleteOneProjectTask } from "../apis/api_docu_api";
+import { type_for_docu_list_row } from "../../types/api_docu_type";
+import ModalButtonForInsertToApiDocu from "../modal/ModalButtonForInsertToApiDocu";
+import { apiFordeleteOneProjectTask } from "../../apis/api_docu_api";
 
 interface IPropsForApiDocuTable {
   data_for_api_docu_list: type_for_docu_list_row[];
