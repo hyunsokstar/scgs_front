@@ -16,6 +16,7 @@ import {
   HStack,
   VStack,
   Spacer,
+  Avatar,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
@@ -207,12 +208,21 @@ const TableForDocuList = ({
               url,
               description,
               classification,
+              writer,
             }: type_for_docu_list_row) => (
               <Tr key={id}>
                 <Td>
                   <Checkbox
                   // isChecked={isChecked}
                   // onChange={() => handleCheckboxChange(id)}
+                  />
+                </Td>
+                <Td>
+                  <Avatar
+                    size={"sm"}
+                    src={writer.profile_image}
+                    name="user-avatar"
+                    borderRadius="full"
                   />
                 </Td>
                 <Td>{url}</Td>

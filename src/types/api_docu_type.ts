@@ -1,7 +1,14 @@
 import { AxiosResponse } from "axios";
 
+interface IWriter {
+  pk: number;
+  username: string;
+  profile_image: string;
+}
+
 export interface type_for_docu_list_row {
   id: number;
+  writer: IWriter;
   url: string;
   description: string;
   classification: string;
