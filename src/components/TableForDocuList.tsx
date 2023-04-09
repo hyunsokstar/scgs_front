@@ -21,6 +21,7 @@ import {
 import { AddIcon } from "@chakra-ui/icons";
 
 import { type_for_docu_list_row } from "../types/api_docu_type";
+import ModalButtonForInsertToApiDocu from "./modal/ModalButtonForInsertToApiDocu";
 
 interface IPropsForApiDocuTable {
   data_for_api_docu_list: type_for_docu_list_row[];
@@ -179,14 +180,15 @@ const TableForDocuList = ({
         </Box>
         <Spacer />
         <Box>
-          <Button
+          {/* <Button
             size="md"
             colorScheme="teal"
             variant="outline"
             _hover={{ borderColor: "teal.800", backgroundColor: "teal.50" }}
           >
             <AddIcon />
-          </Button>
+          </Button> */}
+          <ModalButtonForInsertToApiDocu />
         </Box>
       </Flex>
 
@@ -196,6 +198,7 @@ const TableForDocuList = ({
             <Td>
               <Checkbox />
             </Td>
+            <Td>WRITER</Td>
             <Td>URL</Td>
             <Td>Description</Td>
             <Td>Classification</Td>
