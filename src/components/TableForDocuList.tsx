@@ -17,21 +17,27 @@ import {
   VStack,
   Spacer,
   Avatar,
+  IconButton,
+  useToast,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { type_for_docu_list_row } from "../types/api_docu_type";
 import ModalButtonForInsertToApiDocu from "./modal/ModalButtonForInsertToApiDocu";
+import { apiFordeleteOneProjectTask } from "../apis/api_docu_api";
 
 interface IPropsForApiDocuTable {
   data_for_api_docu_list: type_for_docu_list_row[];
   refetch_for_api_docu: () => void;
 }
 
+// 1122
 const TableForDocuList = ({
   data_for_api_docu_list,
   refetch_for_api_docu,
 }: IPropsForApiDocuTable) => {
+  const toast = useToast();
   const [filteredData, setFilteredData] = useState(data_for_api_docu_list);
   const [filterValueForUrl, setfilterValueForUrl] = useState("");
   const [filterValueForDescription, setfilterValueForDescription] =
@@ -94,6 +100,32 @@ const TableForDocuList = ({
     setFilteredData(filteredData);
   };
 
+  const mutationForDeleteOneApiDocu = useMutation(
+    (api_docu_pk: number) => {
+      return apiFordeleteOneProjectTask(api_docu_pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        refetch_for_api_docu();
+
+        toast({
+          title: "delete api docu 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const deleteButtonHandler = (pk: number) => {
+    mutationForDeleteOneApiDocu.mutate(pk);
+  };
+
+  // 2244
   return (
     <Box
       border={"1px solid purple"}
@@ -220,6 +252,7 @@ const TableForDocuList = ({
             <Td>URL</Td>
             <Td>Description</Td>
             <Td>Classification</Td>
+            <Td>삭제</Td>
           </Tr>
         </thead>
         <Tbody>
@@ -249,6 +282,17 @@ const TableForDocuList = ({
                 <Td>{url}</Td>
                 <Td>{description}</Td>
                 <Td>{classification}</Td>
+                <Td>
+                  <IconButton
+                    aria-label="Delete"
+                    icon={<DeleteIcon />}
+                    variant="outline"
+                    size="xs"
+                    colorScheme="red"
+                    _hover={{ bg: "red.50", borderColor: "red.400" }}
+                    onClick={() => deleteButtonHandler(id)}
+                  />
+                </Td>
               </Tr>
             )
           )}
