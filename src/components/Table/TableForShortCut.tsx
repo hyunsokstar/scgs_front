@@ -11,6 +11,9 @@ import {
   Box,
   Avatar,
   useToast,
+  Tag,
+  TagLabel,
+  Text,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { DeleteIcon } from "@chakra-ui/icons";
@@ -151,6 +154,9 @@ const TableForShortCut = () => {
             <Th fontFamily="monospace" fontSize="lg" color="teal.500">
               Classification
             </Th>
+            <Th fontFamily="monospace" fontSize="lg" color="teal.500">
+              Tags
+            </Th>
             <Th> </Th>
           </Tr>
         </Thead>
@@ -171,6 +177,23 @@ const TableForShortCut = () => {
               <Td>{shortcut.shortcut}</Td>
               <Td>{shortcut.description}</Td>
               <Td>{shortcut.classification}</Td>
+              <Td>
+                {shortcut.tags && shortcut.tags.length > 0
+                  ? shortcut.tags.map((row) => {
+                      return (
+                        <Tag
+                          size="sm"
+                          colorScheme="green"
+                          variant="outline"
+                          _hover={{ colorScheme: "green", bg: "#C2F1E7" }}
+                          mr={1}
+                        >
+                          <TagLabel>{row.name}</TagLabel>
+                        </Tag>
+                      );
+                    })
+                  : "no tags"}
+              </Td>
               <Td>
                 <IconButton
                   aria-label="Delete"

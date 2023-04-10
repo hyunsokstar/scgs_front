@@ -19,7 +19,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   apiFordeleteShortcut,
 } from "../../apis/api_for_shortcut";
-import { Shortcut, ShortcutListResponse } from "../../types/type_for_shortcut";
+import { Shortcut, ShortcutListResponse } from "../../types/type_for_shortcut2";
 import ModalButtonForInsertShortCut from "../modal/ModalButtonForInsertShortCut";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFordeleteShortcut2, api_for_get_shortcut_list2 } from "../../apis/api_for_shortcut2";
@@ -60,27 +60,6 @@ const TableForShortCut2 = () => {
   useEffect(() => {
     setFilteredData(data_for_shortcut?.shortcut_list);
   }, [data_for_shortcut]);
-
-  // const [shortcuts, setShortcuts] = useState<ShortCut[]>([
-  //   {
-  //     writer: faker.internet.userName(),
-  //     shortcut: faker.random.word(),
-  //     description: faker.random.words(5),
-  //     classification: "frontend",
-  //   },
-  //   {
-  //     writer: faker.internet.userName(),
-  //     shortcut: faker.random.word(),
-  //     description: faker.random.words(5),
-  //     classification: "backend",
-  //   },
-  // ]);
-
-  // const handleDelete = (index: number) => {
-  //   const newShortcuts = [...shortcuts];
-  //   newShortcuts.splice(index, 1);
-  //   setShortcuts(newShortcuts);
-  // };
 
   const mutationForDeleteShortCut = useMutation(
     (shorcut_pk: number) => {
