@@ -200,7 +200,7 @@ const Header = () => {
         </NavLink>
 
         <NavLink
-          to="/qa-page"
+          to="/shortcut"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
           <Text
@@ -210,7 +210,7 @@ const Header = () => {
             cursor="pointer"
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
-            Q&A
+            ShortCut
           </Text>
         </NavLink>
 
@@ -244,7 +244,7 @@ const Header = () => {
           </Text>
         </NavLink> */}
 
-        <NavLink
+        {/* <NavLink
           to="/site-manual"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -257,7 +257,7 @@ const Header = () => {
           >
             Site Manual
           </Text>
-        </NavLink>
+        </NavLink> */}
 
         <Box>
           {/* <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box> */}

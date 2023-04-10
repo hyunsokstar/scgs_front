@@ -16,3 +16,9 @@ export interface ShortcutListResponse {
   success: boolean;
   shortcut_list: Shortcut[];
 }
+
+export interface TypeForInsertToShortcutApi {
+    shortcut: string;
+    description: string;
+    classification: string;
+}

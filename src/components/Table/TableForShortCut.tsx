@@ -11,12 +11,14 @@ import {
   Box,
   Avatar,
 } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { faker } from "@faker-js/faker";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { api_for_get_shortcut_list } from "../../apis/api_for_shortcut";
 import { Shortcut, ShortcutListResponse } from "../../types/type_for_shortcut";
+import ModalButtonForInsertShortCut from "../modal/ModalButtonForInsertShortCut";
 
 // interface ShortCut {
 //   writer: string;
@@ -79,12 +81,24 @@ const TableForShortCut = () => {
 
   return (
     <Box
-      border={"1px solid green"}
       display={"flex"}
+      flexDirection={"column"}
       justifyContent={"center"}
       alignItems={"center"}
       py={2}
+      border={"1px solid green"}
     >
+      <Box display={"flex"} justifyContent={"flex-end"} w={"100%"} pr={2}>
+        {/* <IconButton
+          aria-label="Add post"
+          icon={<AddIcon />}
+          variant="outline"
+          size="sm"
+          _hover={{ backgroundColor: "gray.100" }}
+        /> */}
+        <ModalButtonForInsertShortCut />
+      </Box>
+
       <Table size="sm" variant="simple" colorScheme="teal" w={"90%"}>
         <Thead>
           <Tr>
@@ -113,7 +127,7 @@ const TableForShortCut = () => {
                 <Checkbox />
               </Td>
               <Td>
-                <Avatar 
+                <Avatar
                   size={"sm"}
                   src={shortcut.writer.profile_image}
                   name="user-avatar"
