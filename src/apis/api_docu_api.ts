@@ -13,16 +13,6 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export const apiFordeleteOneProjectTask = (api_docu_pk: number) => {
-  console.log("api_docu_pk : ", api_docu_pk);
-  return instance
-    .delete(`api-docu/${api_docu_pk}`, {
-      headers: {
-        "X-CSRFToken": Cookie.get("csrftoken") || "",
-      },
-    })
-    .then((response) => response.data);
-};
 
 export const get_api_docu_list = async ({
   queryKey,
@@ -32,6 +22,17 @@ export const get_api_docu_list = async ({
     // console.log("response.data : ", response.data);
     return response.data;
   });
+};
+
+export const apiFordeleteOneProjectTask = (api_docu_pk: number) => {
+  console.log("api_docu_pk : ", api_docu_pk);
+  return instance
+    .delete(`api-docu/${api_docu_pk}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
 };
 
 // create api-docu

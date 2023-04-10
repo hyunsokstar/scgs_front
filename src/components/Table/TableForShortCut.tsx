@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Table,
   Thead,
@@ -9,38 +9,73 @@ import {
   Checkbox,
   IconButton,
   Box,
+  Avatar,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { faker } from "@faker-js/faker";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { api_for_get_shortcut_list } from "../../apis/api_for_shortcut";
+import { Shortcut, ShortcutListResponse } from "../../types/type_for_shortcut";
 
-interface ShortCut {
-  writer: string;
-  shortcut: string;
-  description: string;
-  classification?: string;
-}
+// interface ShortCut {
+//   writer: string;
+//   shortcut: string;
+//   description: string;
+//   classification?: string;
+// }
 
 const TableForShortCut = () => {
-  const [shortcuts, setShortcuts] = useState<ShortCut[]>([
-    {
-      writer: faker.internet.userName(),
-      shortcut: faker.random.word(),
-      description: faker.random.words(5),
-      classification: "frontend",
-    },
-    {
-      writer: faker.internet.userName(),
-      shortcut: faker.random.word(),
-      description: faker.random.words(5),
-      classification: "backend",
-    },
-  ]);
+  const queryClient = useQueryClient();
+  const [currentPageNum, setCurrentPageNum] = useState<number>(1);
 
-  const handleDelete = (index: number) => {
-    const newShortcuts = [...shortcuts];
-    newShortcuts.splice(index, 1);
-    setShortcuts(newShortcuts);
-  };
+  const {
+    isLoading: loading_for_shorcut_list,
+    data: data_for_shortcut,
+    refetch: refetch_for_shortcut_data,
+  } = useQuery<ShortcutListResponse>(
+    ["get_shortcut_list", currentPageNum],
+    api_for_get_shortcut_list,
+    {
+      enabled: true,
+    }
+  );
+
+  const [filteredData, setFilteredData] = useState(
+    data_for_shortcut?.shortcut_list
+  );
+
+  console.log("data_for_shortcut : ", data_for_shortcut);
+  console.log("filteredData : ", filteredData);
+
+  useEffect(() => {
+    setFilteredData(data_for_shortcut?.shortcut_list);
+  }, [data_for_shortcut]);
+
+  // const [shortcuts, setShortcuts] = useState<ShortCut[]>([
+  //   {
+  //     writer: faker.internet.userName(),
+  //     shortcut: faker.random.word(),
+  //     description: faker.random.words(5),
+  //     classification: "frontend",
+  //   },
+  //   {
+  //     writer: faker.internet.userName(),
+  //     shortcut: faker.random.word(),
+  //     description: faker.random.words(5),
+  //     classification: "backend",
+  //   },
+  // ]);
+
+  // const handleDelete = (index: number) => {
+  //   const newShortcuts = [...shortcuts];
+  //   newShortcuts.splice(index, 1);
+  //   setShortcuts(newShortcuts);
+  // };
+
+  if (loading_for_shorcut_list || !data_for_shortcut) {
+    return <Box>Loading for shortcut list..</Box>;
+  }
 
   return (
     <Box
@@ -72,12 +107,19 @@ const TableForShortCut = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {shortcuts.map((shortcut, index) => (
+          {filteredData?.map((shortcut: Shortcut, index: number) => (
             <Tr key={index}>
               <Td>
                 <Checkbox />
               </Td>
-              <Td>{shortcut.writer}</Td>
+              <Td>
+                <Avatar 
+                  size={"sm"}
+                  src={shortcut.writer.profile_image}
+                  name="user-avatar"
+                  borderRadius="full"
+                />
+              </Td>
               <Td>{shortcut.shortcut}</Td>
               <Td>{shortcut.description}</Td>
               <Td>{shortcut.classification}</Td>
@@ -87,7 +129,7 @@ const TableForShortCut = () => {
                   icon={<DeleteIcon />}
                   variant="outline"
                   colorScheme="pink"
-                  onClick={() => handleDelete(index)}
+                  // onClick={() => handleDelete(index)}
                 />
               </Td>
             </Tr>

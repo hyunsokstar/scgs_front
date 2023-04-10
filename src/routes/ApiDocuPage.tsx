@@ -9,6 +9,7 @@ type Props = {};
 
 const ApiDocuPage = (props: Props) => {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+  
   const {
     isLoading: loading_for_api_docu_list,
     data: data_for_api_docu_list,
@@ -20,6 +21,7 @@ const ApiDocuPage = (props: Props) => {
       enabled: true,
     }
   );
+
   console.log("data_for_api_docu_list : ", data_for_api_docu_list);
 
   if (loading_for_api_docu_list || !data_for_api_docu_list) {
