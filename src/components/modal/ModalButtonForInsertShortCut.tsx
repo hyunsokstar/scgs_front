@@ -43,7 +43,7 @@ const ModalButtonForInsertToApiDocu = () => {
   const errorColor = useColorModeValue("red.500", "red.200");
   const colorScheme = useColorModeValue("blue", "purple");
 
-  const mutationForInserApiDocu = useMutation(apiForinsertToShortcut, {
+  const mutationForInserShortcut = useMutation(apiForinsertToShortcut, {
     onMutate: () => {
       console.log("mutation starting");
     },
@@ -70,7 +70,7 @@ const ModalButtonForInsertToApiDocu = () => {
   });
 
   const onSubmit = (data: any) => {
-    mutationForInserApiDocu.mutate({
+    mutationForInserShortcut.mutate({
       shortcut: data.shortcut,
       description: data.description,
       classification: data.classification,

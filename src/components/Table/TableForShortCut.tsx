@@ -10,15 +10,19 @@ import {
   IconButton,
   Box,
   Avatar,
+  useToast,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { faker } from "@faker-js/faker";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import { api_for_get_shortcut_list } from "../../apis/api_for_shortcut";
+import {
+  apiFordeleteShortcut,
+  api_for_get_shortcut_list,
+} from "../../apis/api_for_shortcut";
 import { Shortcut, ShortcutListResponse } from "../../types/type_for_shortcut";
 import ModalButtonForInsertShortCut from "../modal/ModalButtonForInsertShortCut";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 // interface ShortCut {
 //   writer: string;
@@ -27,8 +31,11 @@ import ModalButtonForInsertShortCut from "../modal/ModalButtonForInsertShortCut"
 //   classification?: string;
 // }
 
+// 1122
 const TableForShortCut = () => {
   const queryClient = useQueryClient();
+  const toast = useToast();
+
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
 
   const {
@@ -74,6 +81,33 @@ const TableForShortCut = () => {
   //   newShortcuts.splice(index, 1);
   //   setShortcuts(newShortcuts);
   // };
+
+  const mutationForDeleteShortCut = useMutation(
+    (shorcut_pk: number) => {
+      return apiFordeleteShortcut(shorcut_pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        // refetch_for_api_docu();
+        queryClient.refetchQueries(["get_shortcut_list"]);
+
+        toast({
+          title: "delete api docu 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const deleteHandlerForShortCut = (pk: number) => {
+    console.log("hi");
+    mutationForDeleteShortCut.mutate(pk);
+  };
 
   if (loading_for_shorcut_list || !data_for_shortcut) {
     return <Box>Loading for shortcut list..</Box>;
@@ -122,7 +156,7 @@ const TableForShortCut = () => {
         </Thead>
         <Tbody>
           {filteredData?.map((shortcut: Shortcut, index: number) => (
-            <Tr key={index}>
+            <Tr key={shortcut.id}>
               <Td>
                 <Checkbox />
               </Td>
@@ -143,7 +177,7 @@ const TableForShortCut = () => {
                   icon={<DeleteIcon />}
                   variant="outline"
                   colorScheme="pink"
-                  // onClick={() => handleDelete(index)}
+                  onClick={() => deleteHandlerForShortCut(shortcut.id)}
                 />
               </Td>
             </Tr>

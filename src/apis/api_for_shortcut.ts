@@ -20,7 +20,7 @@ export const api_for_get_shortcut_list = async ({
 }: QueryFunctionContext): Promise<ShortcutListResponse> => {
   const [_, pageNum] = queryKey;
   return await instance.get(`shortcut/?page=${pageNum}`).then((response) => {
-    console.log("response.data : ", response.data);
+    // console.log("response.data : ", response.data);
     return response.data;
   });
 };
@@ -55,5 +55,16 @@ export const apiForinsertToShortcut = ({
         },
       }
     )
+    .then((response) => response.data);
+};
+
+export const apiFordeleteShortcut = (shortcut_pk: number) => {
+  console.log("shortcut_pk : ", shortcut_pk);
+  return instance
+    .delete(`shortcut/${shortcut_pk}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
     .then((response) => response.data);
 };
