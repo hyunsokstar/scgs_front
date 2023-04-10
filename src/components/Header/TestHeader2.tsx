@@ -215,6 +215,21 @@ const Header = () => {
         </NavLink>
 
         <NavLink
+          to="/shortcut2"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            ShortCut2
+          </Text>
+        </NavLink>
+
+        <NavLink
           to="/tech-note"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -264,12 +279,12 @@ const Header = () => {
           {!isLoggedIn || logoutSuccess === true ? (
             <Container p={2}>
               {/* <Box color={"white"}>{loginUser.username}</Box> */}
-              <Button onClick={onLoginOpen}>
+              <Button onClick={onLoginOpen} size={"md"}>
                 로그인
                 {/* {isLoggedIn ? "true" : "false"} */}
               </Button>
               <LightMode>
-                <Button ml={2} colorScheme={"red"} onClick={onSignUpOpen}>
+                <Button ml={2} colorScheme={"red"} onClick={onSignUpOpen} size={"md"}>
                   회원 가입
                 </Button>
               </LightMode>

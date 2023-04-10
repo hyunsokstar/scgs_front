@@ -8,25 +8,25 @@ import {
   Shortcut,
   ShortcutListResponse,
   TypeForInsertToShortcutApi,
-} from "../types/type_for_shortcut";
+} from "../types/type_for_shortcut2";
 
 const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
   withCredentials: true,
 });
 
-export const api_for_get_shortcut_list = async ({
+export const api_for_get_shortcut_list2 = async ({
   queryKey,
 }: QueryFunctionContext): Promise<ShortcutListResponse> => {
   const [_, pageNum] = queryKey;
-  return await instance.get(`shortcut/?page=${pageNum}`).then((response) => {
+  return await instance.get(`shortcut2/?page=${pageNum}`).then((response) => {
     // console.log("response.data : ", response.data);
     return response.data;
   });
 };
 
 
-export const apiForinsertToShortcut = ({
+export const apiForinsertToShortcut2 = ({
   shortcut,
   description,
   classification,
@@ -44,7 +44,7 @@ export const apiForinsertToShortcut = ({
 
   return instance
     .post(
-      `/shortcut/`,
+      `/shortcut2/`,
       {
         shortcut,
         description,
@@ -59,10 +59,10 @@ export const apiForinsertToShortcut = ({
     .then((response) => response.data);
 };
 
-export const apiFordeleteShortcut = (shortcut_pk: number) => {
+export const apiFordeleteShortcut2 = (shortcut_pk: number) => {
   console.log("shortcut_pk : ", shortcut_pk);
   return instance
-    .delete(`shortcut/${shortcut_pk}`, {
+    .delete(`shortcut2/${shortcut_pk}`, {
       headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",
       },

@@ -36,6 +36,7 @@ import ChakraTablePage from "./routes/ChakraTablePage";
 import TestBoardPage from "./routes/TestBoardPage";
 import ApiDocuPage from "./routes/ApiDocuPage";
 import ShortCutPage from "./routes/ShortCutPage";
+import ShortCutPage2 from "./routes/ShortCutPage2";
 
 const router = createBrowserRouter([
   {
@@ -48,20 +49,24 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path:"api-docu",
-        element:<ApiDocuPage />
+        path: "api-docu",
+        element: <ApiDocuPage />,
       },
       {
-        path:"shortcut",
-        element:<ShortCutPage />
-      },      
-      {
-        path:"test-page",
-        element: <TestPage />
+        path: "shortcut",
+        element: <ShortCutPage />,
       },
       {
-        path:"test-board",
-        element: <TestBoardPage />
+        path: "shortcut2",
+        element: <ShortCutPage2 />,
+      },
+      {
+        path: "test-page",
+        element: <TestPage />,
+      },
+      {
+        path: "test-board",
+        element: <TestBoardPage />,
       },
       {
         path: "react-table",
