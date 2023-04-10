@@ -1,0 +1,10 @@
+.select-wrapper select {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .select-wrapper option {
+    padding: 0.5rem;
+    text-align: center;
+  }
+  

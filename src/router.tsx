@@ -16,7 +16,7 @@ import BoilerPlates from "./routes/BoilerPlates";
 import TutorialList from "./components/TutorialList";
 import TestPageForGayou from "./routes/TestPageForGayou";
 import ProjectAdminPage from "./routes/ProjectAdminPage";
-import TestPage from "./routes/TestPage";
+import TestPage from "./routes/TestPage/TestPage";
 import TestDataGridPage from "./routes/GridPage/TestDataGridPage";
 import UsersByDataGridPage from "./routes/DataGridContainer/UsersByDataGridPage";
 import ProjectProgressDetail from "./routes/ProjectProgressDetail";
@@ -37,6 +37,7 @@ import TestBoardPage from "./routes/TestBoardPage";
 import ApiDocuPage from "./routes/ApiDocuPage";
 import ShortCutPage from "./routes/ShortCutPage";
 import ShortCutPage2 from "./routes/ShortCutPage2";
+import Test2 from "./routes/TestPage/Test2";
 
 const router = createBrowserRouter([
   {
@@ -61,8 +62,12 @@ const router = createBrowserRouter([
         element: <ShortCutPage2 />,
       },
       {
-        path: "test-page",
+        path: "test1",
         element: <TestPage />,
+      },
+      {
+        path: "test2",
+        element: <Test2 />,
       },
       {
         path: "test-board",

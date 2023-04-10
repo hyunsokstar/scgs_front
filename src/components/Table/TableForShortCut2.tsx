@@ -19,7 +19,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   apiFordeleteShortcut,
 } from "../../apis/api_for_shortcut";
-import { Shortcut, ShortcutListResponse } from "../../types/type_for_shortcut2";
+import { Shortcut, ShortcutListResponse } from "../../types/type_for_shortcut copy";
 import ModalButtonForInsertShortCut from "../modal/ModalButtonForInsertShortCut";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFordeleteShortcut2, api_for_get_shortcut_list2 } from "../../apis/api_for_shortcut2";

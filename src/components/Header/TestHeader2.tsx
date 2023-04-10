@@ -291,12 +291,12 @@ const Header = () => {
             </Container>
           ) : (
             <Box>
-              <Box color={"white"}>{loginUser.username}</Box>
-              <Box color={"white"}>{isLoggedIn}</Box>
+              {/* <Box color={"white"}>{loginUser.username}</Box>
+              <Box color={"white"}>{isLoggedIn}</Box> */}
 
               <HStack mr={2}>
                 <Text color={"orange.500"} fontSize={"2xl"}>
-                  {user?.username} ({user?.admin_level}) 님
+                  {/* {user?.username} ({user?.admin_level}) 님 */}
                 </Text>
                 <Menu>
                   <MenuButton>

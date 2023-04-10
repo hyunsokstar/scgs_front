@@ -15,9 +15,7 @@ import {
   TagLabel,
   Text,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
-import { DeleteIcon } from "@chakra-ui/icons";
-import { faker } from "@faker-js/faker";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useQuery } from "@tanstack/react-query";
 import {
   apiFordeleteShortcut,
@@ -26,13 +24,9 @@ import {
 import { Shortcut, ShortcutListResponse } from "../../types/type_for_shortcut";
 import ModalButtonForInsertShortCut from "../modal/ModalButtonForInsertShortCut";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import ModalButtonForUpdateShortCut from "../modal/ModalButtonForUpdateShortCut";
 
-// interface ShortCut {
-//   writer: string;
-//   shortcut: string;
-//   description: string;
-//   classification?: string;
-// }
+const favorite_color = ["blue", "red", "orange", "red", "purple"];
 
 // 1122
 const TableForShortCut = () => {
@@ -63,27 +57,6 @@ const TableForShortCut = () => {
   useEffect(() => {
     setFilteredData(data_for_shortcut?.shortcut_list);
   }, [data_for_shortcut]);
-
-  // const [shortcuts, setShortcuts] = useState<ShortCut[]>([
-  //   {
-  //     writer: faker.internet.userName(),
-  //     shortcut: faker.random.word(),
-  //     description: faker.random.words(5),
-  //     classification: "frontend",
-  //   },
-  //   {
-  //     writer: faker.internet.userName(),
-  //     shortcut: faker.random.word(),
-  //     description: faker.random.words(5),
-  //     classification: "backend",
-  //   },
-  // ]);
-
-  // const handleDelete = (index: number) => {
-  //   const newShortcuts = [...shortcuts];
-  //   newShortcuts.splice(index, 1);
-  //   setShortcuts(newShortcuts);
-  // };
 
   const mutationForDeleteShortCut = useMutation(
     (shorcut_pk: number) => {
@@ -179,26 +152,33 @@ const TableForShortCut = () => {
               <Td>{shortcut.classification}</Td>
               <Td>
                 {shortcut.tags && shortcut.tags.length > 0
-                  ? shortcut.tags.map((row) => {
+                  ? shortcut.tags.map((row, i) => {
                       return (
-                        <Tag
-                          size="sm"
-                          colorScheme="green"
-                          variant="outline"
-                          _hover={{ colorScheme: "green", bg: "#C2F1E7" }}
-                          mr={1}
-                        >
-                          <TagLabel>{row.name}</TagLabel>
-                        </Tag>
+                        <Box>
+                          <Tag
+                            size="sm"
+                            colorScheme={favorite_color[i]}
+                            variant="outline"
+                            _hover={{ colorScheme: "green", bg: "#C2F1E7" }}
+                            mr={1}
+                            mb={1}
+                          >
+                            <TagLabel>{row.name}</TagLabel>
+                          </Tag>
+                        </Box>
                       );
                     })
                   : "no tags"}
               </Td>
               <Td>
+
+                <ModalButtonForUpdateShortCut />
+
                 <IconButton
                   aria-label="Delete"
-                  icon={<DeleteIcon />}
                   variant="outline"
+                  size="sm"
+                  icon={<DeleteIcon />}
                   colorScheme="pink"
                   onClick={() => deleteHandlerForShortCut(shortcut.id)}
                 />

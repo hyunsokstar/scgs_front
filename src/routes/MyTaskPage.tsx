@@ -13,8 +13,11 @@ function MyTaskPage({}: Props): ReactElement {
     (state: RootState) => state.loginInfo
   );
 
+  console.log("isLoggedIn : ", isLoggedIn);
+
   return (
     <Box width={"100%"} border={"2px solid blue"}>
+      {isLoggedIn ? "로그인중" : "로그아웃 상태"}
       <Flex direction={"column"} mt={0} width="100%">
         {isLoggedIn ? (
           <VStack mt={0}>

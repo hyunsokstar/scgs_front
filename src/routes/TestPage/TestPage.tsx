@@ -1,5 +1,5 @@
 import React from 'react'
-import DynamicInput from '../components/Input/DynamicInput'
+import DynamicInput from '../../components/Input/DynamicInput'
 
 interface Props {
     

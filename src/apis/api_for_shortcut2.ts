@@ -8,7 +8,7 @@ import {
   Shortcut,
   ShortcutListResponse,
   TypeForInsertToShortcutApi,
-} from "../types/type_for_shortcut2";
+} from "../types/type_for_shortcut copy";
 
 const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
