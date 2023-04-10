@@ -28,3 +28,7 @@ export interface TypeForInsertToShortcutApi {
   description: string;
   classification: string;
 }
+
+export interface TagsType {
+  name: string;
+}

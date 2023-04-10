@@ -171,7 +171,6 @@ const TableForShortCut = () => {
                   : "no tags"}
               </Td>
               <Td>
-
                 <ModalButtonForUpdateShortCut />
 
                 <IconButton

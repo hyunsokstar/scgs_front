@@ -22,14 +22,16 @@ import { useForm } from "react-hook-form";
 import { AddIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForinsertToShortcut2 } from "../../apis/api_for_shortcut2";
-// import { insertToApiDocuApi } from "../../apis/api_docu_api";
+import TagInput from "../Input/TagInput";
 
 // interface IProps {
 // }
 
+// 1122
 const ModalButtonForInsertToApiDocu = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
+  const [selected, setSelected] = useState<string[]>();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [submitting, setSubmitting] = useState(false);
@@ -49,7 +51,7 @@ const ModalButtonForInsertToApiDocu = () => {
     },
     onSuccess: (data) => {
       console.log("data : ", data);
-        queryClient.refetchQueries(["get_shortcut_list2"]);
+      queryClient.refetchQueries(["get_shortcut_list2"]);
       toast({
         title: "welcome back!",
         status: "success",
@@ -79,6 +81,16 @@ const ModalButtonForInsertToApiDocu = () => {
     // setSubmitting(false);
   };
 
+  const handleSelectedChange = (newSelected: string[]) => {
+    if (newSelected.length > 3) {
+      // alert("3개 이상은 안되요")
+      return;
+    } else {
+      setSelected(newSelected);
+    }
+  };
+
+  // 2244
   return (
     <>
       {/* <Button variant="outline" onClick={onOpen}>Add to API docu</Button> */}
@@ -143,6 +155,11 @@ const ModalButtonForInsertToApiDocu = () => {
                   </Select>
                 </Box>
               </Flex>
+
+              <TagInput
+                selected={selected ? selected : []}
+                setSelected={handleSelectedChange}
+              />
             </form>
           </ModalBody>
 

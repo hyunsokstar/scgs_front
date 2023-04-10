@@ -18,6 +18,8 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { EditIcon } from "@chakra-ui/icons";
+import TagInput from "../Input/TagInput";
+import { TagsType } from "../../types/type_for_shortcut";
 
 type FormData = {
   shortcut: string;
@@ -25,6 +27,7 @@ type FormData = {
   tags: string;
 };
 
+// 1122
 const ModalButtonForUpdateShortCut = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit, formState } = useForm<FormData>({
@@ -34,6 +37,8 @@ const ModalButtonForUpdateShortCut = () => {
       classification: "frontend",
     },
   });
+  const [selected, setSelected] = useState<string[]>();
+
   const { errors } = formState;
 
   const onOpen = () => setIsOpen(true);
@@ -44,6 +49,11 @@ const ModalButtonForUpdateShortCut = () => {
     onClose();
   };
 
+  const handleSelectedChange = (newSelected: string[]) => {
+    setSelected(newSelected);
+  };
+
+  // 2244
   return (
     <Box>
       <IconButton
@@ -91,6 +101,10 @@ const ModalButtonForUpdateShortCut = () => {
                   {...register("tags", { required: true })}
                 />
               </FormControl>
+              <TagInput
+                selected={selected ? selected : []}
+                setSelected={handleSelectedChange}
+              />
             </VStack>
           </ModalBody>
           <HStack justifyContent="flex-end" p="4">
