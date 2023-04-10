@@ -22,6 +22,8 @@ import { useForm } from "react-hook-form";
 import { AddIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForinsertToShortcut2 } from "../../apis/api_for_shortcut2";
+import TagInput from "../Input/TagInput";
+
 // import { insertToApiDocuApi } from "../../apis/api_docu_api";
 
 // interface IProps {
@@ -30,6 +32,7 @@ import { apiForinsertToShortcut2 } from "../../apis/api_for_shortcut2";
 const ModalButtonForInsertToApiDocu = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
+  const [selectedTags, setSelectedTags] = useState<string[]>();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [submitting, setSubmitting] = useState(false);
@@ -49,7 +52,7 @@ const ModalButtonForInsertToApiDocu = () => {
     },
     onSuccess: (data) => {
       console.log("data : ", data);
-        queryClient.refetchQueries(["get_shortcut_list2"]);
+      queryClient.refetchQueries(["get_shortcut_list2"]);
       toast({
         title: "welcome back!",
         status: "success",
@@ -74,11 +77,22 @@ const ModalButtonForInsertToApiDocu = () => {
       shortcut: data.shortcut,
       description: data.description,
       classification: data.classification,
+      tags: selectedTags ? selectedTags : [],
     });
     // onClose();
     // setSubmitting(false);
   };
 
+  const handleSelectedChange = (newSelected: string[]) => {
+    if (newSelected.length > 3) {
+      // alert("3개 이상은 안되요")
+      return;
+    } else {
+      setSelectedTags(newSelected);
+    }
+  };
+
+  // 2244
   return (
     <>
       {/* <Button variant="outline" onClick={onOpen}>Add to API docu</Button> */}
@@ -142,6 +156,10 @@ const ModalButtonForInsertToApiDocu = () => {
                     <option value="back">Backend</option>
                   </Select>
                 </Box>
+                <TagInput
+                  selected={selectedTags ? selectedTags : []}
+                  setSelected={handleSelectedChange}
+                />
               </Flex>
             </form>
           </ModalBody>

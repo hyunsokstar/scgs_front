@@ -30,10 +30,12 @@ export const apiForinsertToShortcut = ({
   shortcut,
   description,
   classification,
+  tags
 }: TypeForInsertToShortcutApi) => {
   console.log("shortcut : ", shortcut);
   console.log("description : ", description);
   console.log("classification : ", classification);
+  console.log("tags : ", tags);
 
   // 중간에 다른 리턴값 설정 하면 type 에러 발생함
   // if (url) {
@@ -48,7 +50,8 @@ export const apiForinsertToShortcut = ({
       {
         shortcut,
         description,
-        classification
+        classification,
+        tags
       },
       {
         headers: {

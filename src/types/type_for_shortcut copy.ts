@@ -18,7 +18,8 @@ export interface ShortcutListResponse {
 }
 
 export interface TypeForInsertToShortcutApi {
-    shortcut: string;
-    description: string;
-    classification: string;
+  shortcut: string;
+  description: string;
+  classification: string;
+  tags: string[];
 }

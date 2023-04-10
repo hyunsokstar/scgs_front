@@ -58,12 +58,12 @@ const ModalButtonForUpdateShortCut = () => {
     <Box>
       <IconButton
         aria-label="수정"
-        size="sm"
+        size="xs"
         variant="outline"
         colorScheme="green"
         icon={<EditIcon />}
         _hover={{ bg: "green.500", color: "white" }}
-        mr={1}
+        // mr={1}
         onClick={onOpen}
       />
 

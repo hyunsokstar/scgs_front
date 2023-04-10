@@ -27,6 +27,7 @@ export interface TypeForInsertToShortcutApi {
   shortcut: string;
   description: string;
   classification: string;
+  tags: string[]
 }
 
 export interface TagsType {

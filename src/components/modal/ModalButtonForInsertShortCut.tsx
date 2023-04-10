@@ -23,6 +23,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForinsertToShortcut2 } from "../../apis/api_for_shortcut2";
 import TagInput from "../Input/TagInput";
+import { apiForinsertToShortcut } from "../../apis/api_for_shortcut";
 
 // interface IProps {
 // }
@@ -31,7 +32,7 @@ import TagInput from "../Input/TagInput";
 const ModalButtonForInsertToApiDocu = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
-  const [selected, setSelected] = useState<string[]>();
+  const [selectedTags, setSelectedTags] = useState<string[]>();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [submitting, setSubmitting] = useState(false);
@@ -45,13 +46,13 @@ const ModalButtonForInsertToApiDocu = () => {
   const errorColor = useColorModeValue("red.500", "red.200");
   const colorScheme = useColorModeValue("blue", "purple");
 
-  const mutationForInserShortcut = useMutation(apiForinsertToShortcut2, {
+  const mutationForInserShortcut = useMutation(apiForinsertToShortcut, {
     onMutate: () => {
       console.log("mutation starting");
     },
     onSuccess: (data) => {
       console.log("data : ", data);
-      queryClient.refetchQueries(["get_shortcut_list2"]);
+      queryClient.refetchQueries(["get_shortcut_list"]);
       toast({
         title: "welcome back!",
         status: "success",
@@ -76,6 +77,7 @@ const ModalButtonForInsertToApiDocu = () => {
       shortcut: data.shortcut,
       description: data.description,
       classification: data.classification,
+      tags: selectedTags ? selectedTags : [],
     });
     // onClose();
     // setSubmitting(false);
@@ -86,7 +88,7 @@ const ModalButtonForInsertToApiDocu = () => {
       // alert("3개 이상은 안되요")
       return;
     } else {
-      setSelected(newSelected);
+      setSelectedTags(newSelected);
     }
   };
 
@@ -154,12 +156,11 @@ const ModalButtonForInsertToApiDocu = () => {
                     <option value="back">Backend</option>
                   </Select>
                 </Box>
+                <TagInput
+                  selected={selectedTags ? selectedTags : []}
+                  setSelected={handleSelectedChange}
+                />
               </Flex>
-
-              <TagInput
-                selected={selected ? selected : []}
-                setSelected={handleSelectedChange}
-              />
             </form>
           </ModalBody>
 

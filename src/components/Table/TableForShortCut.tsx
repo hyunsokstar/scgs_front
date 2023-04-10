@@ -171,16 +171,18 @@ const TableForShortCut = () => {
                   : "no tags"}
               </Td>
               <Td>
-                <ModalButtonForUpdateShortCut />
+                <Box display={"flex"} gap={1}>
+                  <ModalButtonForUpdateShortCut />
 
-                <IconButton
-                  aria-label="Delete"
-                  variant="outline"
-                  size="sm"
-                  icon={<DeleteIcon />}
-                  colorScheme="pink"
-                  onClick={() => deleteHandlerForShortCut(shortcut.id)}
-                />
+                  <IconButton
+                    aria-label="Delete"
+                    variant="outline"
+                    size="xs"
+                    icon={<DeleteIcon />}
+                    colorScheme="pink"
+                    onClick={() => deleteHandlerForShortCut(shortcut.id)}
+                  />
+                </Box>
               </Td>
             </Tr>
           ))}
