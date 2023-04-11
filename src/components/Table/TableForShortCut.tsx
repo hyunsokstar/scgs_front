@@ -15,6 +15,7 @@ import {
   TagLabel,
   Text,
   Flex,
+  Input,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useQuery } from "@tanstack/react-query";
@@ -52,13 +53,16 @@ const TableForShortCut = () => {
   const [filteredData, setFilteredData] = useState(
     data_for_shortcut?.shortcut_list
   );
+  // filterValueForTag
+  const [filterValueForTag, setFilterValueForTag] = useState<any>();
+  const [filterValueForShortcut, setFilterValueForShortcut] = useState<any>();
 
   console.log("data_for_shortcut : ", data_for_shortcut);
   console.log("filteredData : ", filteredData);
 
   useEffect(() => {
     setFilteredData(data_for_shortcut?.shortcut_list);
-  }, [data_for_shortcut]);
+  }, [data_for_shortcut?.shortcut_list]);
 
   const mutationForDeleteShortCut = useMutation(
     (shorcut_pk: number) => {
@@ -87,6 +91,50 @@ const TableForShortCut = () => {
     mutationForDeleteShortCut.mutate(pk);
   };
 
+  const handleFilterChangeForTag = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setFilterValueForTag(value);
+    updateFilteredDataForTag(value);
+  };
+
+  const updateFilteredDataForTag = (filterValueForTag: string) => {
+    if (filterValueForTag !== "") {
+      const filteredData = data_for_shortcut?.shortcut_list.filter((item) => {
+        const tag_names = item.tags.map((tag) => tag.name);
+        if (tag_names.includes(filterValueForTag)) {
+          return item;
+        }
+      });
+      setFilteredData(filteredData);
+    } else {
+      setFilteredData(data_for_shortcut?.shortcut_list);
+      console.log("filterValueForTag : ", filterValueForTag);
+    }
+  };
+
+  const handleFilterChangeForShortcut = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setFilterValueForShortcut(value);
+    updateFilteredDataForShortcut(value);
+  };
+
+  const updateFilteredDataForShortcut = (filterValueForTag: string) => {
+    if (filterValueForTag !== "") {
+      const filteredData = data_for_shortcut?.shortcut_list.filter((item) =>
+      item.shortcut.toLowerCase().includes(filterValueForShortcut.toLowerCase())
+    );
+      setFilteredData(filteredData);
+    } else {
+      setFilteredData(data_for_shortcut?.shortcut_list);
+      console.log("filterValueForTag : ", filterValueForTag);
+    }
+  };
+
+  // 2244
   if (loading_for_shorcut_list || !data_for_shortcut) {
     return <Box>Loading for shortcut list..</Box>;
   }
@@ -108,6 +156,46 @@ const TableForShortCut = () => {
       >
         Table For Shortcut
       </Text>{" "}
+      {filterValueForTag}
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        border={"0px solid green"}
+        gap={3}
+      >
+        <Box>
+          <Text>shortcut</Text>
+          <Input
+            size="xs"
+            variant="outline"
+            bg="blue.50"
+            borderColor="gray.300"
+            _focus={{ border: "1px solid blue", boxShadow: "none" }}
+            _hover={{ bg: "green.50", borderColor: "black" }}
+            _placeholder={{ color: "black" }}
+            id="url"
+            w={"300px"}
+            value={filterValueForShortcut}
+            onChange={handleFilterChangeForShortcut}
+          />
+        </Box>
+        <Box>
+          <Text>tag</Text>
+          <Input
+            size="xs"
+            variant="outline"
+            bg="blue.50"
+            borderColor="gray.300"
+            _focus={{ border: "1px solid blue", boxShadow: "none" }}
+            _hover={{ bg: "green.50", borderColor: "black" }}
+            _placeholder={{ color: "black" }}
+            id="url"
+            w={"300px"}
+            value={filterValueForTag}
+            onChange={handleFilterChangeForTag}
+          />
+        </Box>
+      </Box>
       <Box display={"flex"} justifyContent={"flex-end"} w={"100%"} pr={2}>
         <ModalButtonForInsertShortCut />
       </Box>
