@@ -14,6 +14,7 @@ import {
   Tag,
   TagLabel,
   Text,
+  Flex,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useQuery } from "@tanstack/react-query";
@@ -25,6 +26,7 @@ import { Shortcut, ShortcutListResponse } from "../../types/type_for_shortcut";
 import ModalButtonForInsertShortCut from "../modal/ModalButtonForInsertShortCut";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ModalButtonForUpdateShortCut from "../modal/ModalButtonForUpdateShortCut";
+import CopyButtonByPropsText from "../Button/CopyButtonByPropsText";
 
 const favorite_color = ["blue", "red", "orange", "red", "purple"];
 
@@ -147,7 +149,12 @@ const TableForShortCut = () => {
                   borderRadius="full"
                 />
               </Td>
-              <Td>{shortcut.shortcut}</Td>
+              <Td>
+                <Flex justifyContent={"space-between"}>
+                  {shortcut.shortcut}
+                  <CopyButtonByPropsText text={shortcut.shortcut} />
+                </Flex>
+              </Td>
               <Td>{shortcut.description}</Td>
               <Td>{shortcut.classification}</Td>
               <Td>
