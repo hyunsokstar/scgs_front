@@ -21,7 +21,7 @@ const Example = ({ selected, setSelected }: ExampleProps) => {
 
   return (
     <Box mt={2}>
-      <h1>Add Fruits</h1>
+      {/* <h1>Add Fruits</h1> */}
       {/* <pre>{JSON.stringify(selected)}</pre> */}
       <TagsInput
         beforeAddValidate={handleBeforeAdd}
