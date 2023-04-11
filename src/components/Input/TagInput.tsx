@@ -1,7 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { TagsInput } from "react-tag-input-component";
-import { TagsType } from "../../types/type_for_shortcut";
 
 interface ExampleProps {
   selected: string[];

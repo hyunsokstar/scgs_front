@@ -15,11 +15,17 @@ import {
   HStack,
   IconButton,
   Box,
+  useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { EditIcon } from "@chakra-ui/icons";
 import TagInput from "../Input/TagInput";
-import { Shortcut, TagsType } from "../../types/type_for_shortcut";
+import {
+  Shortcut,
+  TypeForUpdateFormForShortcut,
+} from "../../types/type_for_shortcut";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiForUpdateShortcut } from "../../apis/api_for_shortcut";
 
 type FormData = {
   shortcut: string;
@@ -34,14 +40,18 @@ interface IProps {
 // 1122
 const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { register, handleSubmit, formState } = useForm<FormData>({
-    mode: "onSubmit",
-    reValidateMode: "onChange",
-    defaultValues: {
-      classification: "frontend",
-    },
-  });
-  const [selected, setSelected] = useState<string[]>();
+  const toast = useToast();
+
+  const { register, handleSubmit, formState } =
+    useForm<TypeForUpdateFormForShortcut>({
+      mode: "onSubmit",
+      reValidateMode: "onChange",
+      // defaultValues: {
+      //   classification: "",
+      // },
+    });
+  const [selectedTags, setSelectedTags] = useState<string[]>();
+
   const tagNames = shortcutObj.tags.map((tag) => {
     return tag.name;
   });
@@ -51,13 +61,46 @@ const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
   const onOpen = () => setIsOpen(true);
   const onClose = () => setIsOpen(false);
 
-  const onSubmit = (data: FormData) => {
+  const mutationForUpdateShortcut = useMutation(apiForUpdateShortcut, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
+      // queryClient.refetchQueries(["get_shortcut_list"]);
+      toast({
+        title: "welcome back!",
+        status: "success",
+      });
+      onClose();
+    },
+    onError: (error: any) => {
+      console.log("error.message : ", error.message);
+
+      toast({
+        title: "Error!",
+        description: error.message || "An error occurred.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+  });
+
+  const onSubmit = (data: TypeForUpdateFormForShortcut) => {
     console.log(data);
+    mutationForUpdateShortcut.mutate({
+      shortcutId: shortcutObj.id,
+      shortcut: data.shortcut,
+      description: data.description,
+      classification: data.classification,
+      tags: selectedTags ? selectedTags : [],
+    });
     onClose();
   };
 
   const handleSelectedChange = (newSelected: string[]) => {
-    setSelected(newSelected);
+    setSelectedTags(newSelected);
   };
 
   // 2244
@@ -91,21 +134,22 @@ const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
                 />
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor="classification">Classification</FormLabel>
+                <FormLabel htmlFor="classification">
+                  Classification
+                </FormLabel>
                 <Select
                   defaultValue={shortcutObj.classification}
-                  id="classification"
                   placeholder="Classification"
                   {...register("classification")}
                 >
-                  <option value="frontend">Frontend</option>
-                  <option value="backend">Backend</option>
+                  <option value="front">Front</option>
+                  <option value="back">Back</option>
                 </Select>
               </FormControl>
               <FormControl isInvalid={!!errors.tags}>
                 <FormLabel htmlFor="tags">Tags</FormLabel>
                 <TagInput
-                  selected={selected?.length ? selected : tagNames}
+                  selected={selectedTags?.length ? selectedTags : tagNames}
                   setSelected={handleSelectedChange}
                 />
               </FormControl>

@@ -98,17 +98,17 @@ const TableForShortCut = () => {
       py={2}
       border={"1px solid green"}
     >
+      <Text
+        fontFamily="heading"
+        fontSize="3xl"
+        // fontWeight="bold"
+        color="black"
+      >
+        Table For Shortcut
+      </Text>{" "}
       <Box display={"flex"} justifyContent={"flex-end"} w={"100%"} pr={2}>
-        {/* <IconButton
-          aria-label="Add post"
-          icon={<AddIcon />}
-          variant="outline"
-          size="sm"
-          _hover={{ backgroundColor: "gray.100" }}
-        /> */}
         <ModalButtonForInsertShortCut />
       </Box>
-
       <Table size="sm" variant="simple" colorScheme="teal" w={"90%"}>
         <Thead>
           <Tr>
@@ -172,6 +172,7 @@ const TableForShortCut = () => {
               </Td>
               <Td>
                 <Box display={"flex"} gap={1}>
+                  {/* {shortcut.classification} */}
                   <ModalButtonForUpdateShortCut shortcutObj={shortcut} />
 
                   <IconButton

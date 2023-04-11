@@ -21,7 +21,6 @@ import {
 import { useForm } from "react-hook-form";
 import { AddIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiForinsertToShortcut2 } from "../../apis/api_for_shortcut2";
 import TagInput from "../Input/TagInput";
 import { apiForinsertToShortcut } from "../../apis/api_for_shortcut";
 

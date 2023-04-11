@@ -27,9 +27,13 @@ export interface TypeForInsertToShortcutApi {
   shortcut: string;
   description: string;
   classification: string;
-  tags: string[]
+  tags: string[];
 }
 
-export interface TagsType {
-  name: string;
+export interface TypeForUpdateFormForShortcut {
+  shortcutId: number;
+  shortcut: string;
+  description: string;
+  classification: string;
+  tags: string[];
 }
