@@ -81,7 +81,7 @@ export const getRoomReviews = ({ queryKey }: QueryFunctionContext) => {
 export const getMe = () =>
   instance.get(`users/me`).then((response) => {
     // console.log("response2 : ", response);
-
+    
     return response.data;
   });
 

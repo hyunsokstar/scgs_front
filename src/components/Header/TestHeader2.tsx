@@ -15,7 +15,6 @@ import {
   MenuItem,
   useToast,
 } from "@chakra-ui/react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { useDispatch } from "react-redux";
@@ -26,6 +25,8 @@ import { login, logout } from "../../reducers/userSlice";
 import LoginModal from "../LoginModal";
 import SignUpModal from "../SignUpModal";
 import { useSelector } from "react-redux";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { RootState } from "../../store";
 
 const Header = () => {
@@ -47,13 +48,42 @@ const Header = () => {
   } = useDisclosure();
 
   const { userLoading, user, isLoggedIn } = useUser();
-  const [logoutSuccess, setLogoutSuccess] = useState(false)  
+  const [logoutSuccess, setLogoutSuccess] = useState(false);
   const { loginUser } = useSelector((state: RootState) => state.loginInfo);
   const [isHomePage, setIsHomePage] = useState(false);
 
   // useEffect(()=> {
   //   getMe()
   // },[])
+
+  const mutationForLogout = useMutation(
+    () => {
+      return logOutApi();
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (res) => {
+        console.log("res for logout: ", res);
+
+        if(res.logout_succes){
+          dispatch(logout())
+        }
+
+        queryClient.refetchQueries(["me"]);
+
+        toast({
+          title: "logout 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  // const logout = () => {
+  //   mutationForLogout.mutate();
+  // };
 
   const onLogOut = async () => {
     // const toastId = toast({
@@ -62,27 +92,11 @@ const Header = () => {
     //   status: "loading",
     //   position: "bottom-right",
     // });
-    setLogoutSuccess(true)
+
+    // logOutApi
+    mutationForLogout.mutate();
+
     await dispatch(logout());
-
-    const data = await logOutApi();
-
-    if (data) {
-      console.log("data result for logout api: ", data);
-      // alert("로그아웃 성공");
-    } else {
-      console.log("hi");
-    }
-
-    // console.log(data);
-
-    // setTimeout(() => {
-    //   toast.update(toastId, {
-    //     status: "success",
-    //     title: "Done!",
-    //     description: "See you later!",
-    //   });
-    // }, 0);
   };
 
   const homeButtonHandler = () => {
@@ -284,7 +298,12 @@ const Header = () => {
                 {/* {isLoggedIn ? "true" : "false"} */}
               </Button>
               <LightMode>
-                <Button ml={2} colorScheme={"red"} onClick={onSignUpOpen} size={"md"}>
+                <Button
+                  ml={2}
+                  colorScheme={"red"}
+                  onClick={onSignUpOpen}
+                  size={"md"}
+                >
                   회원 가입
                 </Button>
               </LightMode>
@@ -314,7 +333,11 @@ const Header = () => {
           )}
         </Box>
       </Flex>
-      <LoginModal setLogOutSuccess={setLogoutSuccess} isOpen={isLoginOpen} onClose={onLoginClose} />
+      <LoginModal
+        setLogOutSuccess={setLogoutSuccess}
+        isOpen={isLoginOpen}
+        onClose={onLoginClose}
+      />
       <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
     </>
   );

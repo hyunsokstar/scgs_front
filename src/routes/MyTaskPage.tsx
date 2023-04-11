@@ -14,6 +14,7 @@ function MyTaskPage({}: Props): ReactElement {
   );
 
   console.log("isLoggedIn : ", isLoggedIn);
+  console.log("loginUser : ", loginUser);
 
   return (
     <Box width={"100%"} border={"2px solid blue"}>

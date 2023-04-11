@@ -10,7 +10,6 @@ import { useState } from "react";
 export default function useUser() {
   const dispatch = useDispatch();
 
-  const [logoutSuccess, setlogoutSuccess] = useState(false);
 
   const { isLoading, data, isError } = useQuery<IUser>(["me"], getMe, {
     retry: false,
@@ -28,15 +27,21 @@ export default function useUser() {
   // console.log("get user data : ", data);
   // console.log("isError : ", isError);
 
-    if (data && isLoggedIn) {
-      dispatch(login(data));
-    }
+  // if (isError) {
+  //   dispatch(logout());
+  // }
 
-  // console.log("loginUser : ", loginUser);
+  if (!isError && !isLoading && data) {
+    dispatch(login(data));
+  } else {
+    dispatch(logout());
+  }
+
+  console.log("loginUser at useuser : ", loginUser);
 
   return {
     userLoading: isLoading,
     user: data,
-    isLoggedIn: !isError,
+    isLoggedIn: !isError && isLoggedIn,
   };
 }
