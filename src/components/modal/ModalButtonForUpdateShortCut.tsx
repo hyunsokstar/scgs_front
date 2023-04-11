@@ -19,7 +19,7 @@ import {
 import { useForm } from "react-hook-form";
 import { EditIcon } from "@chakra-ui/icons";
 import TagInput from "../Input/TagInput";
-import { TagsType } from "../../types/type_for_shortcut";
+import { Shortcut, TagsType } from "../../types/type_for_shortcut";
 
 type FormData = {
   shortcut: string;
@@ -27,8 +27,12 @@ type FormData = {
   tags: string;
 };
 
+interface IProps {
+  shortcutObj: Shortcut;
+}
+
 // 1122
-const ModalButtonForUpdateShortCut = () => {
+const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit, formState } = useForm<FormData>({
     mode: "onSubmit",
@@ -38,6 +42,9 @@ const ModalButtonForUpdateShortCut = () => {
     },
   });
   const [selected, setSelected] = useState<string[]>();
+  const tagNames = shortcutObj.tags.map((tag) => {
+    return tag.name;
+  });
 
   const { errors } = formState;
 
@@ -70,13 +77,14 @@ const ModalButtonForUpdateShortCut = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Update Shorcut</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack spacing="4">
               <FormControl isInvalid={!!errors.shortcut}>
                 <FormLabel htmlFor="shortcut">Shortcut</FormLabel>
                 <Input
+                  defaultValue={shortcutObj.shortcut}
                   id="shortcut"
                   placeholder="Shortcut"
                   {...register("shortcut", { required: true })}
@@ -85,6 +93,7 @@ const ModalButtonForUpdateShortCut = () => {
               <FormControl>
                 <FormLabel htmlFor="classification">Classification</FormLabel>
                 <Select
+                  defaultValue={shortcutObj.classification}
                   id="classification"
                   placeholder="Classification"
                   {...register("classification")}
@@ -95,16 +104,11 @@ const ModalButtonForUpdateShortCut = () => {
               </FormControl>
               <FormControl isInvalid={!!errors.tags}>
                 <FormLabel htmlFor="tags">Tags</FormLabel>
-                <Input
-                  id="tags"
-                  placeholder="Tags"
-                  {...register("tags", { required: true })}
+                <TagInput
+                  selected={selected?.length ? selected : tagNames}
+                  setSelected={handleSelectedChange}
                 />
               </FormControl>
-              <TagInput
-                selected={selected ? selected : []}
-                setSelected={handleSelectedChange}
-              />
             </VStack>
           </ModalBody>
           <HStack justifyContent="flex-end" p="4">

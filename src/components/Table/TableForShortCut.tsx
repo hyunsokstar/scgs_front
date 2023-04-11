@@ -152,7 +152,7 @@ const TableForShortCut = () => {
               <Td>{shortcut.classification}</Td>
               <Td>
                 {shortcut.tags && shortcut.tags.length > 0
-                  ? shortcut.tags.map((row, i) => {
+                  ? shortcut.tags.map((tag, i) => {
                       return (
                         <Box>
                           <Tag
@@ -163,7 +163,7 @@ const TableForShortCut = () => {
                             mr={1}
                             mb={1}
                           >
-                            <TagLabel>{row.name}</TagLabel>
+                            <TagLabel>{tag.name}</TagLabel>
                           </Tag>
                         </Box>
                       );
@@ -172,7 +172,7 @@ const TableForShortCut = () => {
               </Td>
               <Td>
                 <Box display={"flex"} gap={1}>
-                  <ModalButtonForUpdateShortCut />
+                  <ModalButtonForUpdateShortCut shortcutObj={shortcut} />
 
                   <IconButton
                     aria-label="Delete"

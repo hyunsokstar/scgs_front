@@ -28,7 +28,7 @@ const Example = ({ selected, setSelected }: ExampleProps) => {
         value={selected}
         onChange={setSelected}
         name="fruits"
-        placeHolder="enter fruits"
+        // placeHolder="enter fruits"
       />
       <em>press enter or comma to add new tag</em>
     </Box>
