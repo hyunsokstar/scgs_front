@@ -41,6 +41,7 @@ interface IProps {
 const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
+  const queryClient = useQueryClient();
 
   const { register, handleSubmit, formState } =
     useForm<TypeForUpdateFormForShortcut>({
@@ -67,7 +68,8 @@ const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
     },
     onSuccess: (data) => {
       console.log("data : ", data);
-      // queryClient.refetchQueries(["get_shortcut_list"]);
+      queryClient.refetchQueries(["get_shortcut_list"]);
+
       toast({
         title: "welcome back!",
         status: "success",
@@ -134,9 +136,7 @@ const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
                 />
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor="classification">
-                  Classification
-                </FormLabel>
+                <FormLabel htmlFor="classification">Classification</FormLabel>
                 <Select
                   defaultValue={shortcutObj.classification}
                   placeholder="Classification"
@@ -148,6 +148,7 @@ const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
               </FormControl>
               <FormControl isInvalid={!!errors.tags}>
                 <FormLabel htmlFor="tags">Tags</FormLabel>
+                
                 <TagInput
                   selected={selectedTags?.length ? selectedTags : tagNames}
                   setSelected={handleSelectedChange}
