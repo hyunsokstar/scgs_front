@@ -23,11 +23,12 @@ import {
   apiFordeleteShortcut,
   api_for_get_shortcut_list,
 } from "../../apis/api_for_shortcut";
-import { Shortcut, ShortcutListResponse } from "../../types/type_for_shortcut";
 import ModalButtonForInsertShortCut from "../modal/ModalButtonForInsertShortCut";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ModalButtonForUpdateShortCut from "../modal/ModalButtonForUpdateShortCut";
 import CopyButtonByPropsText from "../Button/CopyButtonByPropsText";
+import { Shortcut, ShortcutsResponse } from "../../types/type_for_shortcut";
+import PaginationComponent from "../PaginationComponent";
 
 const favorite_color = ["blue", "red", "orange", "red", "purple"];
 
@@ -42,7 +43,7 @@ const TableForShortCut = () => {
     isLoading: loading_for_shorcut_list,
     data: data_for_shortcut,
     refetch: refetch_for_shortcut_data,
-  } = useQuery<ShortcutListResponse>(
+  } = useQuery<ShortcutsResponse>(
     ["get_shortcut_list", currentPageNum],
     api_for_get_shortcut_list,
     {
@@ -151,7 +152,6 @@ const TableForShortCut = () => {
       <Text
         fontFamily="heading"
         fontSize="3xl"
-        // fontWeight="bold"
         color="black"
       >
         Table For Shortcut
@@ -284,6 +284,16 @@ const TableForShortCut = () => {
           ))}
         </Tbody>
       </Table>
+
+      <Box maxW="100%" bg="blue.100" color="red.500" mt={2}>
+        <PaginationComponent
+        
+          current_page_num={currentPageNum}
+          total_page_num={data_for_shortcut.totalCount}
+          setCurrentPageNum={setCurrentPageNum}
+        />
+      </Box>
+
     </Box>
   );
 };
