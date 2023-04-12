@@ -26,6 +26,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { type_for_docu_list_row } from "../../types/api_docu_type";
 import ModalButtonForInsertToApiDocu from "../modal/ModalButtonForInsertToApiDocu";
 import { apiFordeleteOneProjectTask } from "../../apis/api_docu_api";
+import ButtonForOpenUrl from "../Button/ButtonForOpenUrl";
 
 interface IPropsForApiDocuTable {
   data_for_api_docu_list: type_for_docu_list_row[];
@@ -116,7 +117,6 @@ const TableForDocuList = ({
         // refetch_for_api_docu();
         queryClient.refetchQueries(["get_api_docu_list"]);
 
-
         toast({
           title: "delete api docu 성공!",
           status: "success",
@@ -135,7 +135,7 @@ const TableForDocuList = ({
       border={"1px solid purple"}
       display={"flex"}
       flexDirection={"column"}
-      justifyContent={"space-between"}
+      justifyContent={"space-around"}
       alignItems={"center"}
       bgColor={"white.100"}
       width={"100%"}
@@ -162,7 +162,8 @@ const TableForDocuList = ({
         justifyContent={"space-between"}
         alignItems={"center"}
         border={"1px solid green"}
-        px={2}
+        px={20}
+        py={2}
         gap={5}
         width={"100%"}
       >
@@ -230,9 +231,9 @@ const TableForDocuList = ({
             onChange={handleFilterChangeForClassfication}
           />
         </Box>
-        <Spacer />
+        {/* <Spacer /> */}
       </Flex>
-      
+
       <Box w={"100%"} textAlign={"end"}>
         <ModalButtonForInsertToApiDocu
           refetch_for_api_docu={refetch_for_api_docu}
@@ -247,6 +248,7 @@ const TableForDocuList = ({
             </Td>
             <Td>WRITER</Td>
             <Td>URL</Td>
+            <Td>link open</Td>
             <Td>Description</Td>
             <Td>Classification</Td>
             <Td>삭제</Td>
@@ -276,7 +278,13 @@ const TableForDocuList = ({
                     borderRadius="full"
                   />
                 </Td>
-                <Td>{url}</Td>
+                <Td width={"400px"}>
+                  <Box>{url}</Box>
+                </Td>
+                <Td>
+                  <ButtonForOpenUrl url={url} />{" "}
+                </Td>
+
                 <Td>{description}</Td>
                 <Td>{classification}</Td>
                 <Td>

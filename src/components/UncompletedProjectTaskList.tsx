@@ -7,7 +7,6 @@ import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import ModalForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRow from "./UncompletedTaskRow";
 
-
 interface Props {}
 
 function UncompletedProjectTaskList({}: Props): ReactElement {
@@ -24,8 +23,11 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
       enabled: true,
     }
   );
-  
-  // console.log("taskListData : ", taskListData);
+
+  console.log("taskListData  : ", taskListData?.writers_info);
+  if (!taskListData) {
+    return <Box>..Loading</Box>;
+  }
 
   return (
     <Container maxW={"100%"} border={"1px solid purple"} p={0} mt={2}>
@@ -36,21 +38,45 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
         px={1}
         bg={"green.200"}
         border={"0px solid green"}
-        height={"60px"}
+        height={"auto"}
       >
         <Box>
-          <Text fontSize={22}>
-            비완료 리스트 (총: {taskListData?.totalPageCount} &nbsp;&nbsp;
-          ⚪ : {taskListData?.count_for_ready}
-          &nbsp;&nbsp; 🟡 : {taskListData?.count_for_in_progress}
-          &nbsp;&nbsp; 🟠 : {taskListData?.count_for_in_testing} )
-          </Text>
-        </Box>        <Box textAlign={"right"} m={0}>
+          <Box>
+            <Box mb={2}>비완료 리스트 (총: {taskListData?.totalPageCount})</Box>
+            <Box>
+              <Text>진행별:</Text>
+              <HStack spacing={2} mb={2}>
+                <Text>⚪ :{taskListData?.count_for_ready}</Text>
+                <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
+                <Text>🟠 : {taskListData?.count_for_in_testing}</Text>
+              </HStack>
+              <Box>
+                <Text>담당자별:</Text>
+                <Box display={"flex"} flexDirection={"row"} gap={3}>
+                  {taskListData?.writers_info?.map((writer) => {
+                    return (
+                      <Text
+                        // fontWeight="bold"
+                        fontSize="lg"
+                        color="blue.900"
+                        // textDecor="underline"
+                      >
+                        {writer.username}: {writer.task_count}
+                      </Text>
+                    );
+                  })}
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+        <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
             projectTaskListRefatch={projectTaskListRefatch}
           />
         </Box>
       </Flex>
+
       <Box>
         {taskListData ? (
           <UncompletedTaskRow

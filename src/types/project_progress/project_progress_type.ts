@@ -117,8 +117,15 @@ export interface IOneTaskForProjectTaskType {
   task_comments: ITaskComment[];
 }
 
+interface Writer {
+  username: string;
+  profile_image: string | null;
+  task_count: number;
+}
+
 export interface ITypeForProjectProgressList {
   projectTaskListRefatch?: () => void;
+  writers_info?: Writer[];
   totalPageCount: number;
   ProjectProgressList: [
     {
@@ -157,4 +164,23 @@ export interface IFormTypeForProjectProgress {
   task_completed: boolean;
   password: string;
   task_manager: number;
+}
+
+export interface ITypeForTaskDetailUpdate {
+  taskPk?: string | undefined;
+  writer: string;
+  task: string;
+  task_description: string;
+  importance: string | number;
+  task_completed: boolean;
+  started_at?: string;
+  due_date?: Date | undefined;
+}
+
+export interface ITypeForTaskDetailUpdateForm {
+  writer: string;
+  task: string;
+  task_description: string;
+  importance: string;
+  task_completed: boolean;
 }

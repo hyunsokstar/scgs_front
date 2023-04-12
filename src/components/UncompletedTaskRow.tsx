@@ -272,6 +272,22 @@ function UncompletedTaskRow({
                       </Box>
                     </Box>
 
+                    <Box
+                      border={"0px solid blue"}
+                      width={"220px"}
+                      display={"flex"}
+                      justifyContent={"flex-start"}
+                      alignItems={"center"}
+                    >
+                      <StarRating
+                        initialRating={task.importance}
+                        taskPk={task.pk}
+                        onChangeForStarRatingHandler={
+                          onChangeForStarRatingHandler
+                        }
+                      />
+                    </Box>
+
                     <Box border={"0px solid blue"} width={"310px"}>
                       <HStack>
                         <Box textAlign={"center"}>
@@ -320,22 +336,6 @@ function UncompletedTaskRow({
                           <Text>{task.time_left_to_due_date}</Text>
                         </Box>
                       </HStack>
-                    </Box>
-
-                    <Box
-                      border={"0px solid blue"}
-                      width={"180px"}
-                      display={"flex"}
-                      justifyContent={"flex-start"}
-                      alignItems={"center"}
-                    >
-                      <StarRating
-                        initialRating={task.importance}
-                        taskPk={task.pk}
-                        onChangeForStarRatingHandler={
-                          onChangeForStarRatingHandler
-                        }
-                      />
                     </Box>
 
                     <Box>

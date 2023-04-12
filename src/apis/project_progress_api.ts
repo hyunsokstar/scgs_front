@@ -9,6 +9,7 @@ import {
   FormTypeForExtraTask,
   IFormTypeForProjectProgress,
   IResponseTypeForProjectTaskUpdate,
+  ITypeForTaskDetailUpdate,
 } from "../types/project_progress/project_progress_type";
 
 const instance = axios.create({
@@ -241,26 +242,29 @@ export const getProgectTasksStatusData = () => {
 export const updateProjectApiByPk = ({
   taskPk,
   writer,
+  task_description,
   task,
   importance,
   task_completed,
   started_at,
   due_date,
-}: any) => {
+}: ITypeForTaskDetailUpdate) => {
   console.log(
     "data for api requset : ",
-    taskPk,
-    writer,
-    task,
-    importance,
-    task_completed,
-    started_at,
-    due_date
+    taskPk, // number
+    task_description, // string
+    writer, // string
+    task, // string
+    importance, // number
+    task_completed, // boolean
+    started_at, // string or undefined
+    due_date // string or undefined
   );
 
   console.log(
     "data chekck for api",
     taskPk,
+    task_description,
     writer,
     task,
     importance,
@@ -276,6 +280,7 @@ export const updateProjectApiByPk = ({
         taskPk,
         writer,
         task,
+        task_description,
         importance,
         task_completed,
         started_at,
@@ -504,6 +509,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
     .get(`project_progress/uncompleted?page=${pageNum}`)
     .then((response) => {
       const response_data = {
+        writers_info:response.data.writers_info,
         count_for_ready: response.data.count_for_ready,
         count_for_in_progress: response.data.count_for_in_progress,
         count_for_in_testing: response.data.count_for_in_testing,

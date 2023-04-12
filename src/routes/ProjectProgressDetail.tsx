@@ -2,7 +2,11 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
 import { useNavigate, useParams } from "react-router-dom";
 import { getOneProjectTask } from "../apis/user_api";
-import { IOneTaskForProjectTaskType } from "../types/project_progress/project_progress_type";
+import {
+  IOneTaskForProjectTaskType,
+  ITypeForTaskDetailUpdate,
+  ITypeForTaskDetailUpdateForm,
+} from "../types/project_progress/project_progress_type";
 
 import {
   Box,
@@ -77,7 +81,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
   }
 
   const [submitting, setSubmitting] = useState(false);
-  const { register, handleSubmit, watch, reset } = useForm();
+  const { register, handleSubmit, watch, reset } = useForm<ITypeForTaskDetailUpdateForm>();
 
   const [started_at, set_started_at] = useState<any>();
   const [due_date, set_due_date] = useState<Date>();
@@ -115,18 +119,28 @@ function ProjectProgressDetail({}: Props): ReactElement {
     },
   });
 
-  const onSubmit = ({ writer, task, importance, task_completed }: any) => {
+  const onSubmit = ({
+    writer,
+    task,
+    task_description,
+    importance,
+    task_completed,
+  }: ITypeForTaskDetailUpdateForm) => {
+    // alert("submit 확인");
+
     setSubmitting(true);
     console.log("watch : ", watch(), started_at, due_date);
+    // console.log("data for field values: ", data);
 
     updateMutation.mutate({
-      taskPk: taskPk,
-      writer,
-      task,
-      importance,
-      task_completed,
-      started_at: started_at,
-      due_date: due_date,
+    taskPk: taskPk,
+    writer,
+    task,
+    task_description,
+    importance,
+    task_completed,
+    started_at: started_at,
+    due_date: due_date,
     });
 
     setSubmitting(false);
@@ -321,7 +335,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                       >
                         <FormLabel>Task Description</FormLabel>
                         <Textarea
-                          // {...register("task_description")}
+                          {...register("task_description")}
                           size="md"
                           height={"100px"}
                           defaultValue={taskData.task_description}

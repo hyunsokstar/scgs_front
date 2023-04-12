@@ -38,6 +38,7 @@ import ApiDocuPage from "./routes/ApiDocuPage";
 import ShortCutPage from "./routes/ShortCutPage";
 import ShortCutPage2 from "./routes/ShortCutPage2";
 import Test2 from "./routes/TestPage/Test2";
+import Test3 from "./routes/TestPage/Test3";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: "test2",
         element: <Test2 />,
+      },
+      {
+        path: "test3",
+        element: <Test3 />,
       },
       {
         path: "test-board",
