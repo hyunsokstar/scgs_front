@@ -146,7 +146,7 @@ const TableForDocuList = ({
         justifyContent="center"
         alignItems="center"
         height="100px"
-        width="100%"
+        width="300px"
       >
         <Text
           fontFamily="heading"
@@ -158,25 +158,22 @@ const TableForDocuList = ({
         </Text>
       </Box>
 
-      <Flex
+      <Box
+        display={"flex"}
         justifyContent={"space-between"}
         alignItems={"center"}
         border={"1px solid green"}
         px={20}
         py={2}
         gap={5}
+        flexWrap={"wrap"}
         width={"100%"}
       >
-        <Box
-          display={"flex"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-          border={"0px solid green"}
-          gap={1}
-        >
-          <Text>url</Text>
+        <HStack>
+          <Text>api url</Text>
           <Input
             size="xs"
+            width={"300px"}
             variant="outline"
             bg="blue.50"
             borderColor="gray.300"
@@ -184,20 +181,15 @@ const TableForDocuList = ({
             _hover={{ bg: "green.50", borderColor: "black" }}
             _placeholder={{ color: "black" }}
             id="url"
-            w={"300px"}
             value={filterValueForUrl}
             onChange={handleFilterChangeForUrl}
           />
-        </Box>
-        <Box
-          display={"flex"}
-          justifyContent={"space-between"}
-          border={"0px solid green"}
-          gap={1}
-        >
+        </HStack>
+        <HStack>
           <Text>description</Text>
           <Input
             size="xs"
+            width={"300px"}
             variant="outline"
             bg="blue.50"
             borderColor="gray.300"
@@ -205,20 +197,15 @@ const TableForDocuList = ({
             _hover={{ bg: "green.50", borderColor: "black" }}
             _placeholder={{ color: "black" }}
             id="url"
-            w={"300px"}
             value={filterValueForDescription}
             onChange={handleFilterChangeForDescription}
           />
-        </Box>
-        <Box
-          display={"flex"}
-          justifyContent={"space-between"}
-          border={"0px solid green"}
-          gap={1}
-        >
+        </HStack>
+        <HStack>
           <Text>classfication</Text>
           <Input
             size="xs"
+            width={"300px"}
             variant="outline"
             bg="blue.50"
             borderColor="gray.300"
@@ -226,13 +213,12 @@ const TableForDocuList = ({
             _hover={{ bg: "green.50", borderColor: "black" }}
             _placeholder={{ color: "black" }}
             id="url"
-            w={"300px"}
             value={filterValueForClassfication}
             onChange={handleFilterChangeForClassfication}
           />
-        </Box>
+        </HStack>
         {/* <Spacer /> */}
-      </Flex>
+      </Box>
 
       <Box w={"100%"} textAlign={"end"}>
         <ModalButtonForInsertToApiDocu
