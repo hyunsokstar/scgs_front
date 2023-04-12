@@ -16,6 +16,7 @@ export interface type_for_docu_list_row {
 
 export interface type_for_api_for_api_docu_list {
   success: boolean;
+  totalCount: number;
   api_docu_list: type_for_docu_list_row[];
 }
 
