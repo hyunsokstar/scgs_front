@@ -81,7 +81,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
   }
 
   const [submitting, setSubmitting] = useState(false);
-  const { register, handleSubmit, watch, reset } = useForm<ITypeForTaskDetailUpdateForm>();
+  const { register, handleSubmit, watch, reset } =
+    useForm<ITypeForTaskDetailUpdateForm>();
 
   const [started_at, set_started_at] = useState<any>();
   const [due_date, set_due_date] = useState<Date>();
@@ -133,14 +134,14 @@ function ProjectProgressDetail({}: Props): ReactElement {
     // console.log("data for field values: ", data);
 
     updateMutation.mutate({
-    taskPk: taskPk,
-    writer,
-    task,
-    task_description,
-    importance,
-    task_completed,
-    started_at: started_at,
-    due_date: due_date,
+      taskPk: taskPk,
+      writer,
+      task,
+      task_description,
+      importance,
+      task_completed,
+      started_at: started_at,
+      due_date: due_date,
     });
 
     setSubmitting(false);
@@ -548,7 +549,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                     task_comments={taskData?.task_comments}
                   />
                 ) : (
-                  <TableForTechNote />
+                  <TableForTechNote taskPk = {taskData?.pk} />
                 )}
               </Box>
             </Flex>

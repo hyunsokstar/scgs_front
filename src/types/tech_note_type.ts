@@ -1,6 +1,13 @@
+interface Author {
+  pk: number;
+  username: string;
+  profile_image: string;
+}
+
 export type ITechNote = {
   pk: number;
-  author: string | null;
+  task: number;
+  author: Author | null;
   title: string;
   note_content_count: number;
   category: string;

@@ -14,6 +14,7 @@ import {
   HStack,
   useDisclosure,
   LinkBox,
+  Avatar,
 } from "@chakra-ui/react";
 import { ITechNote, ITechNoteListResponse } from "../../types/tech_note_type";
 import { useQuery } from "@tanstack/react-query";
@@ -35,8 +36,11 @@ import { Link, useNavigate } from "react-router-dom";
 import ModalForTechNoteContentList from "../modal/ModalForTechNoteContentList";
 import ModalForTechNoteContentList2 from "../modal/ModalForTechNoteContentList2";
 
+interface IProps {
+  taskPk?: string | number;
+}
 
-const TableForTechNote = () => {
+const TableForTechNote = ({ taskPk }: IProps) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -123,7 +127,6 @@ const TableForTechNote = () => {
         //   title: "view count update success",
         //   description: result.message,
         // });
-
       },
     }
   );
@@ -171,11 +174,15 @@ const TableForTechNote = () => {
           {tech_note_list_data?.tech_note_list_for_page
             ? tech_note_list_data.tech_note_list_for_page.map(
                 (row: ITechNote) => (
-                  <Tr key={row.pk} _hover={{ background: "gray.200" }}>
+                  <Tr key={row.pk} _hover={{ background: "yellow.50" }} bgColor={row.task === taskPk ? "blue.50" : "white"}>
                     <Td>
                       <Checkbox />
                     </Td>
-                    <Td>{row.author}</Td>
+                    {/* {row.author?.profile_image} */}
+                    <Td>
+                      {/* <Avatar src={row.author?.profile_image} size={"sm"} /> */}
+                      {row.author?.username}
+                    </Td>
                     <Td>
                       <Box
                         _hover={{ textDecoration: "underline" }} // 호버 시 밑줄 표시
