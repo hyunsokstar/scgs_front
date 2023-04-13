@@ -6,9 +6,9 @@ import { QueryFunctionContext } from "@tanstack/react-query";
 
 import {
   Shortcut,
-  ShortcutListResponse,
+  ShortcutsResponse,
   TypeForInsertToShortcutApi,
-} from "../types/type_for_shortcut copy";
+} from "../types/type_for_shortcut2";
 
 const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
@@ -17,10 +17,10 @@ const instance = axios.create({
 
 export const api_for_get_shortcut_list2 = async ({
   queryKey,
-}: QueryFunctionContext): Promise<ShortcutListResponse> => {
+}: QueryFunctionContext): Promise<ShortcutsResponse> => {
   const [_, pageNum] = queryKey;
   return await instance.get(`shortcut2/?page=${pageNum}`).then((response) => {
-    // console.log("response.data : ", response.data);
+    console.log("response.data : ", response.data);
     return response.data;
   });
 };

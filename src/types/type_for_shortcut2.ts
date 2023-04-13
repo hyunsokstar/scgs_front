@@ -4,16 +4,22 @@ export interface Writer {
   profile_image: string;
 }
 
+export interface Tag {
+  id: number;
+  name: string;
+}
+
 export interface Shortcut {
   id: number;
   writer: Writer;
   shortcut: string;
-  description: string | null;
-  classification: "front" | "back";
+  description: string;
+  classification: string;
+  tags: Tag[];
 }
 
-export interface ShortcutListResponse {
-  success: boolean;
+export interface ShortcutsResponse {
+  totalCount: number;
   shortcut_list: Shortcut[];
 }
 

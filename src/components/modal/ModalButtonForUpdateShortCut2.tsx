@@ -38,7 +38,7 @@ interface IProps {
 }
 
 // 1122
-const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
+const ModalButtonForUpdateShortCut2 = ({ shortcutObj }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
   const queryClient = useQueryClient();
@@ -151,7 +151,7 @@ const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
               </FormControl>
               <FormControl isInvalid={!!errors.tags}>
                 <FormLabel htmlFor="tags">Tags</FormLabel>
-                
+
                 <TagInput
                   selected={selectedTags?.length ? selectedTags : tagNames}
                   setSelected={handleSelectedChange}
@@ -175,4 +175,4 @@ const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
   );
 };
 
-export default ModalButtonForUpdateShortCut;
+export default ModalButtonForUpdateShortCut2;
