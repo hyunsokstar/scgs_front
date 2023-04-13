@@ -26,7 +26,7 @@
 export interface Writer {
   pk: number;
   username: string;
-  profile_image: string;
+  profile_image: any;
 }
 
 export interface Tag {

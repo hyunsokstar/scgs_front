@@ -126,8 +126,10 @@ const TableForShortCut = () => {
   const updateFilteredDataForShortcut = (filterValueForTag: string) => {
     if (filterValueForTag !== "") {
       const filteredData = data_for_shortcut?.shortcut_list.filter((item) =>
-      item.shortcut.toLowerCase().includes(filterValueForShortcut.toLowerCase())
-    );
+        item.shortcut
+          .toLowerCase()
+          .includes(filterValueForShortcut.toLowerCase())
+      );
       setFilteredData(filteredData);
     } else {
       setFilteredData(data_for_shortcut?.shortcut_list);
@@ -149,11 +151,7 @@ const TableForShortCut = () => {
       py={2}
       border={"1px solid green"}
     >
-      <Text
-        fontFamily="heading"
-        fontSize="3xl"
-        color="black"
-      >
+      <Text fontFamily="heading" fontSize="3xl" color="black">
         Table For Shortcut
       </Text>{" "}
       {filterValueForTag}
@@ -230,12 +228,16 @@ const TableForShortCut = () => {
                 <Checkbox />
               </Td>
               <Td>
-                <Avatar
-                  size={"sm"}
-                  src={shortcut.writer.profile_image}
-                  name="user-avatar"
-                  borderRadius="full"
-                />
+                {shortcut.writer.profile_image ? (
+                  <Avatar
+                    size={"sm"}
+                    src={shortcut.writer.profile_image}
+                    name="user-avatar"
+                    borderRadius="full"
+                  />
+                ) : (
+                  <Text>{shortcut.writer.profile_image}</Text>
+                )}
               </Td>
               <Td>
                 <Flex justifyContent={"space-between"}>
@@ -284,16 +286,13 @@ const TableForShortCut = () => {
           ))}
         </Tbody>
       </Table>
-
       <Box maxW="100%" bg="blue.100" color="red.500" mt={2}>
         <PaginationComponent
-        
           current_page_num={currentPageNum}
           total_page_num={data_for_shortcut.totalCount}
           setCurrentPageNum={setCurrentPageNum}
         />
       </Box>
-
     </Box>
   );
 };
