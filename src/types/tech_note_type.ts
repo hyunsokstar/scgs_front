@@ -29,6 +29,7 @@ export type IUpdateFormTypeForTechNoteInfo = {
 };
 
 export type IFormTypeForCreateTechNoteList = {
+  taskPk?: string | number
   tech_note_description?: string;
   category_option?: string;
 };

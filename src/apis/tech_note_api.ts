@@ -15,7 +15,9 @@ const instance = axios.create({
 });
 
 // 1122
-export const apiFordeleteTechNoteContentByPk = (techNoteContentPk: number | string) => {
+export const apiFordeleteTechNoteContentByPk = (
+  techNoteContentPk: number | string
+) => {
   // console.log("testPk : ", testPk);
   return instance
     .delete(`tech_note/tech-note-content/${techNoteContentPk}/delete`, {
@@ -37,9 +39,9 @@ export const createNoteContent = ({
       `/tech_note/${note_content_fk}`,
       {
         tech_note: note_content_fk,
-        note_content_title:note_content_title,
-        note_content_file:note_content_file,
-        note_content_content:note_content_content,
+        note_content_title: note_content_title,
+        note_content_file: note_content_file,
+        note_content_content: note_content_content,
       },
       {
         headers: {
@@ -126,6 +128,33 @@ export const createApiForTechNoteList = ({
     });
 };
 
+export const createTechNoteForTask = ({
+  taskPk,
+  category_option,
+  tech_note_description,
+}: IFormTypeForCreateTechNoteList) => {
+  console.log("createForTechNoteList 실행");
+
+  return instance
+    .post(
+      "tech_note/",
+      {
+        task:taskPk,
+        title: tech_note_description,
+        category: category_option,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 // 1122
 export const updateLikeForTechNote = (techNotePk: number) => {
   return instance
@@ -159,7 +188,9 @@ export const apiForupdateViewCountForTechNote = (techNotePk: number) => {
     });
 };
 
-export const getTechNoteContentListByPk = async ({ queryKey }: QueryFunctionContext) => {
+export const getTechNoteContentListByPk = async ({
+  queryKey,
+}: QueryFunctionContext) => {
   const [_, note_content_fk] = queryKey;
   console.log("note_content_fk : ", note_content_fk);
 

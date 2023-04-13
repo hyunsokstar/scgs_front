@@ -33,14 +33,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ModalButtonForCreateTechNoteList from "../modal/ModalButtonForCreateTechNoteList";
 import { Link, useNavigate } from "react-router-dom";
-import ModalForTechNoteContentList from "../modal/ModalForTechNoteContentList";
-import ModalForTechNoteContentList2 from "../modal/ModalForTechNoteContentList2";
+import ModalButtonForCreateTechNoteForTask from "../modal/ModalButtonForCreateTechNoteForTask";
+
 
 interface IProps {
   taskPk?: string | number;
+  isForTask?: boolean;
 }
 
-const TableForTechNote = ({ taskPk }: IProps) => {
+const TableForTechNote = ({ isForTask, taskPk }: IProps) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -151,7 +152,11 @@ const TableForTechNote = ({ taskPk }: IProps) => {
           총 {tech_note_list_data?.total_count_for_tech_note_table_rows} 개
         </Box>
         <Box>
-          <ModalButtonForCreateTechNoteList />
+          {isForTask ? (
+            <ModalButtonForCreateTechNoteForTask taskPk={taskPk} />
+          ) : (
+            <ModalButtonForCreateTechNoteList />
+          )}
         </Box>
       </Box>
 
@@ -174,7 +179,11 @@ const TableForTechNote = ({ taskPk }: IProps) => {
           {tech_note_list_data?.tech_note_list_for_page
             ? tech_note_list_data.tech_note_list_for_page.map(
                 (row: ITechNote) => (
-                  <Tr key={row.pk} _hover={{ background: "yellow.50" }} bgColor={row.task === taskPk ? "blue.50" : "white"}>
+                  <Tr
+                    key={row.pk}
+                    _hover={{ background: "yellow.50" }}
+                    bgColor={row.task === taskPk ? "blue.50" : "white"}
+                  >
                     <Td>
                       <Checkbox />
                     </Td>

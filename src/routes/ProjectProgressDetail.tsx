@@ -549,7 +549,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                     task_comments={taskData?.task_comments}
                   />
                 ) : (
-                  <TableForTechNote taskPk = {taskData?.pk} />
+                  <TableForTechNote isForTask={true} taskPk={taskData?.pk} />
                 )}
               </Box>
             </Flex>
@@ -570,7 +570,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           >
             테스트 리스트 (테스트 체킹은 로그인 필요)
             {!isLoadingForTaskData && taskData ? (
-              <ModalButtonForCreateTest taskPk={taskData?.pk} />
+                <ModalButtonForCreateTest taskPk={taskData?.pk} />
             ) : (
               ""
             )}
