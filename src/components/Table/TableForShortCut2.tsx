@@ -23,7 +23,7 @@ import {
   apiFordeleteShortcut2,
   api_for_get_shortcut_list2,
 } from "../../apis/api_for_shortcut2";
-import ModalButtonForInsertShortCut from "../modal/ModalButtonForInsertShortCut";
+import ModalButtonForInsertShortCut2 from "../modal/ModalButtonForInsertShortCut2";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ModalButtonForUpdateShortCut2 from "../modal/ModalButtonForUpdateShortCut2";
 import CopyButtonByPropsText from "../Button/CopyButtonByPropsText";
@@ -44,7 +44,7 @@ const TableForShortCut = () => {
     data: data_for_shortcut,
     refetch: refetch_for_shortcut_data,
   } = useQuery<ShortcutsResponse>(
-    ["get_shortcut_list", currentPageNum],
+    ["get_shortcut_list2", currentPageNum],
     api_for_get_shortcut_list2,
     {
       enabled: true,
@@ -77,7 +77,7 @@ const TableForShortCut = () => {
         console.log("data : ", data);
 
         // refetch_for_api_docu();
-        queryClient.refetchQueries(["get_shortcut_list"]);
+        queryClient.refetchQueries(["get_shortcut_list2"]);
 
         toast({
           title: "delete api docu 성공!",
@@ -195,7 +195,7 @@ const TableForShortCut = () => {
         </Box>
       </Box>
       <Box display={"flex"} justifyContent={"flex-end"} w={"100%"} pr={2}>
-        {/* <ModalButtonForInsertShortCut /> */}
+        <ModalButtonForInsertShortCut2 />
       </Box>
       <Table size="sm" variant="simple" colorScheme="teal" w={"90%"}>
         <Thead>
@@ -228,15 +228,20 @@ const TableForShortCut = () => {
                 <Checkbox />
               </Td>
               <Td>
-                {shortcut.writer.profile_image ? (
+              {shortcut.writer !== null? (
                   <Avatar
                     size={"sm"}
-                    src={shortcut.writer.profile_image}
+                    // src={shortcut.writer.profile_image}
+                    src={
+                      shortcut.writer.profile_image !== null
+                        ? shortcut.writer.profile_image
+                        : "https://bit.ly/broken-link"
+                    }
                     name="user-avatar"
                     borderRadius="full"
                   />
                 ) : (
-                  <Text>{shortcut.writer.profile_image}</Text>
+                  <Text>no writer</Text>
                 )}
               </Td>
               <Td>

@@ -228,15 +228,22 @@ const TableForShortCut = () => {
                 <Checkbox />
               </Td>
               <Td>
-                {shortcut.writer.profile_image ? (
+              {/* <Text>{shortcut?.writer.username}</Text> */}
+
+                {shortcut.writer !== null? (
                   <Avatar
                     size={"sm"}
-                    src={shortcut.writer.profile_image}
+                    // src={shortcut.writer.profile_image}
+                    src={
+                      shortcut.writer.profile_image !== null
+                        ? shortcut.writer.profile_image
+                        : "https://bit.ly/broken-link"
+                    }
                     name="user-avatar"
                     borderRadius="full"
                   />
                 ) : (
-                  <Text>{shortcut.writer.profile_image}</Text>
+                  <Text>no writer</Text>
                 )}
               </Td>
               <Td>

@@ -25,7 +25,7 @@ import {
   TypeForUpdateFormForShortcut,
 } from "../../types/type_for_shortcut";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiForUpdateShortcut } from "../../apis/api_for_shortcut";
+import { apiForUpdateShortcut2 } from "../../apis/api_for_shortcut2";
 
 type FormData = {
   shortcut: string;
@@ -65,7 +65,7 @@ const ModalButtonForUpdateShortCut2 = ({ shortcutObj }: IProps) => {
   const onOpen = () => setIsOpen(true);
   const onClose = () => setIsOpen(false);
 
-  const mutationForUpdateShortcut = useMutation(apiForUpdateShortcut, {
+  const mutationForUpdateShortcut = useMutation(apiForUpdateShortcut2, {
     onMutate: () => {
       console.log("mutation starting");
     },

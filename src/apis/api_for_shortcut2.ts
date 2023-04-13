@@ -8,6 +8,7 @@ import {
   Shortcut,
   ShortcutsResponse,
   TypeForInsertToShortcutApi,
+  TypeForUpdateFormForShortcut,
 } from "../types/type_for_shortcut2";
 
 const instance = axios.create({
@@ -25,11 +26,11 @@ export const api_for_get_shortcut_list2 = async ({
   });
 };
 
-
 export const apiForinsertToShortcut2 = ({
   shortcut,
   description,
   classification,
+  tags,
 }: TypeForInsertToShortcutApi) => {
   console.log("shortcut : ", shortcut);
   console.log("description : ", description);
@@ -48,7 +49,8 @@ export const apiForinsertToShortcut2 = ({
       {
         shortcut,
         description,
-        classification
+        classification,
+        tags,
       },
       {
         headers: {
@@ -68,4 +70,36 @@ export const apiFordeleteShortcut2 = (shortcut_pk: number) => {
       },
     })
     .then((response) => response.data);
+};
+
+
+export const apiForUpdateShortcut2 = ({
+  shortcutId,
+  shortcut,
+  description,
+  classification,
+  tags,
+}: TypeForUpdateFormForShortcut) => {
+
+  console.log("taga for update :", tags);
+  
+
+  return instance
+    .put(
+      `/shortcut2/${shortcutId}`,
+      {
+        shortcut,
+        description,
+        classification,
+        tags,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      return response.data;
+    });
 };
