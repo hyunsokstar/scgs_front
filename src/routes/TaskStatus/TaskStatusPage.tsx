@@ -112,6 +112,8 @@ const TaskStatusPage = () => {
     getUserNamesForSelectOption
   );
 
+  // const [filteredData, setFilteredData] = useState(taskStatusData);
+
   const handleImportanceChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -193,7 +195,6 @@ const TaskStatusPage = () => {
         tasks: tasks_for_in_completed,
       },
     ];
-
     set_total_tasks(
       taskStatusData ? taskStatusData?.data.all_tasks_in_month : []
     );
