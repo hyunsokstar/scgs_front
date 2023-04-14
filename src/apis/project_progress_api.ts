@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse , AxiosRequestConfig } from "axios";
 import Cookie from "js-cookie";
 
 import { QueryFunctionContext } from "@tanstack/react-query";
@@ -8,7 +8,6 @@ import {
   FormTypeForCreateTest,
   FormTypeForExtraTask,
   IFormTypeForProjectProgress,
-  IOptionForTaskStatus,
   IResponseTypeForProjectTaskUpdate,
   ITypeForTaskDetailUpdate,
 } from "../types/project_progress/project_progress_type";
@@ -231,9 +230,35 @@ export const deleteOneExtraTaskForPk = (extraTaskPk: number) => {
     .then((response) => response.data);
 };
 
-export const getProgectTasksStatusData = ({dateRange, taskManagerForFiltering, importance}:IOptionForTaskStatus) => {
-  return instance.get("project_progress/task-status").then((response) => {
-    // console.log("response : ", response);
+
+interface IOptionForTaskStatus {
+  dateRange: string;
+  taskManagerForFiltering: string | number;
+  importance: number;
+  isRequestedForHelp: boolean;
+  isBountyTask: boolean;
+}
+
+export const getProgectTasksStatusData = ({
+  dateRange,
+  taskManagerForFiltering,
+  importance,
+  isRequestedForHelp,
+  isBountyTask,
+}: IOptionForTaskStatus) => {
+
+  const config: AxiosRequestConfig = {
+    method: 'get',
+    url: 'project_progress/task-status',
+    params: {
+      dateRange,
+      taskManagerForFiltering,
+      importance,
+      isRequestedForHelp,
+      isBountyTask,
+    },
+  };
+  return instance.request(config).then((response) => {
     return response;
   });
 };
@@ -510,7 +535,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
     .get(`project_progress/uncompleted?page=${pageNum}`)
     .then((response) => {
       const response_data = {
-        writers_info:response.data.writers_info,
+        writers_info: response.data.writers_info,
         count_for_ready: response.data.count_for_ready,
         count_for_in_progress: response.data.count_for_in_progress,
         count_for_in_testing: response.data.count_for_in_testing,

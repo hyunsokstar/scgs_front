@@ -1,5 +1,5 @@
 // task_completed update
-import { Switch, SwitchProps } from '@chakra-ui/react';
+import { Switch, SwitchProps } from "@chakra-ui/react";
 
 export interface FormTypeForCreateCommentForTask {
   taskPk: string | number;
@@ -192,14 +192,17 @@ export interface IUserNamesForSelectOption {
 }
 
 export interface IOptionForTaskStatus {
-  dateRange: string, 
-  taskManagerForFiltering: string | number, 
-  importance:number
+  dateRange: string;
+  taskManagerForFiltering: string | number;
+  importance: number;
+  isRequestedForHelp: boolean;
+  isBountyTask: boolean;
 }
 
 export type DeadlineOption = "" | "deadlineSoon" | "deadlinePassed";
 
-export interface SwitchButtonForFilterOptionForWhetherToHelpRequestProps extends Omit<SwitchProps, 'onChange'> {
+export interface SwitchButtonForFilterOptionForWhetherToHelpRequestProps
+  extends Omit<SwitchProps, "onChange"> {
   isChecked: boolean;
   onToggle: (isChecked: boolean) => void;
 }

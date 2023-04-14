@@ -113,6 +113,8 @@ const TaskStatusPage = () => {
         dateRange,
         taskManagerForFiltering,
         importance,
+        isRequestedForHelp,
+        isBountyTask
       })
   );
 
@@ -377,6 +379,8 @@ const TaskStatusPage = () => {
           <Box
             border="4px solid green"
             display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
             flexDirection={"column"}
             p={2}
             borderRadius={5}
