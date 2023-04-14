@@ -8,6 +8,7 @@ import {
   FormTypeForCreateTest,
   FormTypeForExtraTask,
   IFormTypeForProjectProgress,
+  IOptionForTaskStatus,
   IResponseTypeForProjectTaskUpdate,
   ITypeForTaskDetailUpdate,
 } from "../types/project_progress/project_progress_type";
@@ -230,7 +231,7 @@ export const deleteOneExtraTaskForPk = (extraTaskPk: number) => {
     .then((response) => response.data);
 };
 
-export const getProgectTasksStatusData = () => {
+export const getProgectTasksStatusData = ({dateRange, taskManagerForFiltering, importance}:IOptionForTaskStatus) => {
   return instance.get("project_progress/task-status").then((response) => {
     // console.log("response : ", response);
     return response;

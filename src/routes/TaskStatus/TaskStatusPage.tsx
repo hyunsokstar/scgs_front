@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import {
+  DeadlineOption,
   ITypeForProjectProgressList,
   IUserNamesForSelectOption,
 } from "../../types/project_progress/project_progress_type";
@@ -26,6 +27,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import DateRangeSelect from "../../components/DateRangeSelect";
 import SelectStarPointForTaskImportance from "../../components/SelectStarPointForTaskImportance";
 import { getUserNamesForSelectOption } from "../../apis/user_api";
+import DeadLineOptionForTaskStatus from "../../components/DeadLineOptionForTaskStatus";
+import SwitchButtonForFilterOptionForWhetherToHelpRequest from "../../components/Button/SwitchButtonForFilterOption";
+import SwitchButtonForFilterOption from "../../components/Button/SwitchButtonForFilterOption";
 
 type Task = {
   pk: number;
@@ -86,10 +90,16 @@ const StyledBox = ({ children }: StyledBoxProps) => {
 // 1122
 const TaskStatusPage = () => {
   const toast = useToast();
-
   const queryClient = useQueryClient();
   const [columns, setColumns] = useState<Column[]>(initialColumns);
   const [total_tasks, set_total_tasks] = useState<Task[]>([]);
+  const [dateRange, setDateRange] = useState("thisMonth");
+  const [taskManagerForFiltering, setTaskManagerForFiltering] = useState("");
+  const [importance, setImportance] = useState(3);
+  const [taskStatusForDeadLine, setTaskStatusForDeadLine] =
+    useState<DeadlineOption>();
+  const [isRequestedForHelp, setIsRequestedForHelp] = useState(false);
+  const [isBountyTask, setIsBountyTask] = useState(false);
 
   const {
     data: taskStatusData,
@@ -98,10 +108,13 @@ const TaskStatusPage = () => {
     refetch: refetchForGetProgectTasksStatus,
   } = useQuery<AxiosResponse<ITypeForTaskStatus>>(
     ["getProgectTasksStatusData"],
-    () => getProgectTasksStatusData()
+    () =>
+      getProgectTasksStatusData({
+        dateRange,
+        taskManagerForFiltering,
+        importance,
+      })
   );
-  const [dateRange, setDateRange] = useState("thisMonth");
-  const [importance, setImportance] = useState(3);
 
   const {
     isLoading: userNamesLoading,
@@ -112,7 +125,25 @@ const TaskStatusPage = () => {
     getUserNamesForSelectOption
   );
 
-  // const [filteredData, setFilteredData] = useState(taskStatusData);
+  // 2244
+
+  const handleToggleForIsRequestedForHelp = (isChecked: boolean) => {
+    setIsRequestedForHelp(isChecked);
+  };
+
+  const handleToggleForIsBountyTask = (isChecked: boolean) => {
+    setIsBountyTask(isChecked);
+  };
+
+  const handleTaskStatusChange = (value: DeadlineOption) => {
+    setTaskStatusForDeadLine(value);
+  };
+
+  const handleTaskManagerChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setTaskManagerForFiltering(event.target.value);
+  };
 
   const handleImportanceChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -319,13 +350,17 @@ const TaskStatusPage = () => {
             />
           </Box>
           <Box border="4px solid green" p={2} borderRadius={5} my={5} w={"24%"}>
-            <Select placeholder="task_manager">
+            <Select
+              placeholder="task_manager"
+              value={taskManagerForFiltering}
+              onChange={handleTaskManagerChange}
+            >
               {userNamesData?.map((user) => (
                 <option key={user.pk} value={user.pk}>
                   {user.username}
                 </option>
               ))}
-            </Select>{" "}
+            </Select>
           </Box>
           <Box border="4px solid green" p={2} borderRadius={5} my={5} w={"24%"}>
             <SelectStarPointForTaskImportance
@@ -334,12 +369,51 @@ const TaskStatusPage = () => {
             />{" "}
           </Box>
           <Box border="4px solid green" p={2} borderRadius={5} my={5} w={"24%"}>
-            마감 임박, 마감 경과
+            <DeadLineOptionForTaskStatus
+              value={taskStatusForDeadLine ? taskStatusForDeadLine : ""}
+              onChange={handleTaskStatusChange}
+            />
           </Box>
-          <Box border="4px solid green" p={2} borderRadius={5} my={5} w={"24%"}>
-            핼프 요청, 현상금{" "}
+          <Box
+            border="4px solid green"
+            display={"flex"}
+            flexDirection={"column"}
+            p={2}
+            borderRadius={5}
+            my={5}
+            w={"24%"}
+            gap={1}
+          >
+            <HStack>
+              <Text>핼프 요청: </Text>
+              <SwitchButtonForFilterOption
+                isChecked={isRequestedForHelp}
+                onToggle={handleToggleForIsRequestedForHelp}
+                size="sm"
+              />
+            </HStack>
+            <HStack>
+              <Text>상금 여부: </Text>
+              <SwitchButtonForFilterOption
+                isChecked={isBountyTask}
+                onToggle={handleToggleForIsBountyTask}
+                size="sm"
+              />
+            </HStack>
           </Box>
         </Flex>
+        <Box display={"flex"} gap={7}>
+          <Box>검색조건 명시:</Box>
+          <Box>dateRange : {dateRange}</Box>
+          <Box>taskManagerForFiltering: {taskManagerForFiltering}</Box>
+          <Box>importance: {importance}</Box>
+          <Box>
+            taskStatusForDeadLine:{" "}
+            {taskStatusForDeadLine ? taskStatusForDeadLine : "no option"}
+          </Box>
+          <Box>도움 요청 여부: {isRequestedForHelp ? "true" : "false"}</Box>
+          <Box>현상금 여부: {isBountyTask ? "true" : "false"}</Box>
+        </Box>
       </StyledBox>
 
       <Box
