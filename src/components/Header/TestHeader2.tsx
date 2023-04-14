@@ -136,7 +136,7 @@ const Header = () => {
     <>
       <Flex
         as="nav"
-        height={"80px"}
+        height={"60px"}
         bg="gray.800"
         px={1.5}
         align="center"
@@ -319,7 +319,7 @@ const Header = () => {
                 </Text>
                 <Menu>
                   <MenuButton>
-                    <Avatar src={user?.profile_image} size={"sm"} />
+                    <Avatar src={user?.profile_image} height="44px" />
                   </MenuButton>
                   <MenuList>
                     <MenuItem onClick={() => goToUserProfile(user?.pk)}>

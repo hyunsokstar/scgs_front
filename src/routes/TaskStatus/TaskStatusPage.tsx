@@ -19,6 +19,8 @@ import { AxiosResponse } from "axios";
 import "./styles.scss";
 import StarRating from "../../components/StarRating";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import DateRangeSelect from "../../components/DateRangeSelect";
+import SelectStarPointForTaskImportance from "../../components/SelectStarPointForTaskImportance";
 
 type Task = {
   pk: number;
@@ -64,6 +66,19 @@ const initialColumns: Column[] = [
   },
 ];
 
+interface StyledBoxProps {
+  children: React.ReactNode;
+}
+
+const StyledBox = ({ children }: StyledBoxProps) => {
+  return (
+    <Box border="4px solid green" p={4} borderRadius={5} boxShadow="lg" my={5}>
+      {children}
+    </Box>
+  );
+};
+
+// 1122
 const TaskStatusPage = () => {
   const toast = useToast();
 
@@ -80,7 +95,20 @@ const TaskStatusPage = () => {
     ["getProgectTasksStatusData"],
     () => getProgectTasksStatusData()
   );
+  const [dateRange, setDateRange] = useState("thisMonth");
+  const [importance, setImportance] = useState(3);
 
+  const handleImportanceChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setImportance(Number(event.target.value));
+  };
+
+  const handleDateRangeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setDateRange(event.target.value);
+  };
   // console.log(" ", taskStatusData);
 
   useEffect(() => {
@@ -224,7 +252,6 @@ const TaskStatusPage = () => {
         });
 
         // taskPk 에 해당하는 task 의 상태를 이동한 칼럼에 맞게 업데이트
-        // 1122
         // alert(columnName);
         updateTaskStatusByDragHandler(taskPk, columnName);
       }
@@ -252,9 +279,45 @@ const TaskStatusPage = () => {
       border="1px solid black"
       bgColor={"white"}
     >
-      <Flex justifyContent={"center"}>
-        <Heading mb="2">ToDo 목록</Heading>
-      </Flex>
+      <Heading mb="2" textAlign="center">
+        ToDo Status
+      </Heading>
+      {/* 
+      todo: 검색 옵션 추가 : 
+        기간별: 이번달, 이번주, 오늘 (라디오 박스)
+        담당자별 
+        중요도별: 1개 이개 3개 4개 5개 
+        태그로 검색 (핼프 요청, 현상금):
+        옵션 선택하면 모든 조건 다같이 적용 
+      */}
+      {/*
+        기능 추가 : 담당자 바꾸기 
+       */}
+      {/* 기능 수정: 같은 항목으로 이동시 status 업데이트 생략 */}
+
+      <StyledBox>
+        <Flex justify="space-between">
+          <Box border="4px solid green" p={4} borderRadius={5} my={5} w={"24%"}>
+            <DateRangeSelect
+              value={dateRange}
+              onChange={handleDateRangeChange}
+            />
+          </Box>
+          <Box border="4px solid green" p={4} borderRadius={5} my={5} w={"24%"}>
+            담당자별
+          </Box>
+          <Box border="4px solid green" p={4} borderRadius={5} my={5} w={"24%"}>
+            <SelectStarPointForTaskImportance
+              value={importance}
+              onChange={handleImportanceChange}
+            />{" "}
+          </Box>
+          <Box border="4px solid green" p={4} borderRadius={5} my={5} w={"24%"}>
+            핼프 요청, or 현상금
+          </Box>
+        </Flex>
+      </StyledBox>
+
       <Box
         display="flex"
         border={"2px solid blue"}
@@ -307,6 +370,13 @@ const TaskStatusPage = () => {
             </VStack>
           </Box>
         ))}
+      </Box>
+      <Box>
+        {/* todo status 통계  */}
+        {/* 개인별 완료 비완료  */}
+        {/* <Heading as="h2" size="lg" textAlign="center" my={5}>
+          ToDo Status 통계
+        </Heading> */}
       </Box>
     </Box>
   );
