@@ -259,6 +259,7 @@ export const getProgectTasksStatusData = ({
     },
   };
   return instance.request(config).then((response) => {
+    console.log("response for getProgectTasksStatusData: ", response);        
     return response;
   });
 };

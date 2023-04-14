@@ -114,7 +114,7 @@ const TaskStatusPage = () => {
         taskManagerForFiltering,
         importance,
         isRequestedForHelp,
-        isBountyTask
+        isBountyTask,
       })
   );
 
@@ -128,37 +128,6 @@ const TaskStatusPage = () => {
   );
 
   // 2244
-
-  const handleToggleForIsRequestedForHelp = (isChecked: boolean) => {
-    setIsRequestedForHelp(isChecked);
-  };
-
-  const handleToggleForIsBountyTask = (isChecked: boolean) => {
-    setIsBountyTask(isChecked);
-  };
-
-  const handleTaskStatusChange = (value: DeadlineOption) => {
-    setTaskStatusForDeadLine(value);
-  };
-
-  const handleTaskManagerChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setTaskManagerForFiltering(event.target.value);
-  };
-
-  const handleImportanceChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setImportance(Number(event.target.value));
-  };
-
-  const handleDateRangeChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setDateRange(event.target.value);
-  };
-  // console.log(" ", taskStatusData);
 
   useEffect(() => {
     let new_columns;
@@ -233,6 +202,41 @@ const TaskStatusPage = () => {
     );
     setColumns(new_columns);
   }, [taskStatusData]);
+
+  useEffect(() => {
+    refetchForGetProgectTasksStatus();
+  }, [dateRange, importance, taskManagerForFiltering ,refetchForGetProgectTasksStatus]);
+
+  const handleToggleForIsRequestedForHelp = (isChecked: boolean) => {
+    setIsRequestedForHelp(isChecked);
+  };
+
+  const handleToggleForIsBountyTask = (isChecked: boolean) => {
+    setIsBountyTask(isChecked);
+  };
+
+  const handleTaskStatusChange = (value: DeadlineOption) => {
+    setTaskStatusForDeadLine(value);
+  };
+
+  const handleTaskManagerChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setTaskManagerForFiltering(event.target.value);
+  };
+
+  const handleImportanceChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setImportance(Number(event.target.value));
+  };
+
+  const handleDateRangeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setDateRange(event.target.value);
+  };
+  // console.log(" ", taskStatusData);
 
   const handleDragStart = (
     event: React.DragEvent<HTMLDivElement>,
