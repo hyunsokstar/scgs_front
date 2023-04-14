@@ -7,7 +7,6 @@ import SampleCard from "../components/TestCard/SampleCard";
 import TestCard from "../components/TestCard/TestCard";
 import TutorialList from "../components/TutorialList";
 
-
 const image_array = [
   {
     image_url:
@@ -52,16 +51,22 @@ export default function Home() {
             description={"Project Task"}
           />
         </NavLink>
-        <SampleCard
-          imageSrc={image_array[2].image_url}
-          title={"project Status"}
-          description={"project Status"}
-        />
-        <SampleCard
-          imageSrc={image_array[3].image_url}
-          title={"팀 관리"}
-          description={"팀 관리"}
-        />
+
+        <NavLink to="/task-status">
+          <SampleCard
+            imageSrc={image_array[2].image_url}
+            title={"project Status"}
+            description={"project Status"}
+          />
+        </NavLink>
+
+        <NavLink to="/data-grid/users">
+          <SampleCard
+            imageSrc={image_array[3].image_url}
+            title={"팀 관리"}
+            description={"팀 관리"}
+          />
+        </NavLink>
       </Flex>
 
       {/* <Counter /> */}

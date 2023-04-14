@@ -27,7 +27,6 @@ import SiteManualPage from "./routes/SiteManualPage";
 import QAPage from "./routes/QAPage";
 import TechNote from "./routes/TechNote";
 import MyTechNote from "./routes/MyTechNote";
-import TechNoteContent from "./routes/TechNoteContent";
 import ReactEditor from "./components/ReactEditor";
 import TestModal from "./components/modal/TestModal";
 import TechNoteContentPage from "./routes/TechNoteContentPage";
@@ -39,6 +38,8 @@ import ShortCutPage from "./routes/ShortCutPage";
 import ShortCutPage2 from "./routes/ShortCutPage2";
 import Test2 from "./routes/TestPage/Test2";
 import Test3 from "./routes/TestPage/Test3";
+import Test4 from "./routes/TestPage/Test4";
+import Test5 from "./routes/TestPage/Test5";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,14 @@ const router = createBrowserRouter([
         path: "test3",
         element: <Test3 />,
       },
+      {
+        path: "test4",
+        element: <Test4 />,
+      },
+      {
+        path: "test5",
+        element: <Test5 />,
+      },      
       {
         path: "test-board",
         element: <TestBoardPage />,

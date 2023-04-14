@@ -498,7 +498,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
             명
           </Box>
           <Box display={"flex"} justifyContent={"space-betwwen"} gap={2}>
-            <Button
+            {/* <Button
               size="md"
               onClick={createRandomUserRowHandler}
               fontWeight="bold"
@@ -507,7 +507,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
               _active={{ bg: "purple.700" }}
             >
               랜덤 행추가
-            </Button>
+            </Button> */}
 
             <Button
               size="md"
