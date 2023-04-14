@@ -184,3 +184,8 @@ export interface ITypeForTaskDetailUpdateForm {
   importance: string;
   task_completed: boolean;
 }
+
+export interface IUserNamesForSelectOption {
+  pk: number;
+  username: string;
+}

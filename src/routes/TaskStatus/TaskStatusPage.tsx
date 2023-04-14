@@ -8,9 +8,13 @@ import {
   Text,
   VStack,
   useToast,
+  Select,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { ITypeForProjectProgressList } from "../../types/project_progress/project_progress_type";
+import {
+  ITypeForProjectProgressList,
+  IUserNamesForSelectOption,
+} from "../../types/project_progress/project_progress_type";
 import {
   getProgectTasksStatusData,
   updateProjectStatusByDrag,
@@ -21,6 +25,7 @@ import StarRating from "../../components/StarRating";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import DateRangeSelect from "../../components/DateRangeSelect";
 import SelectStarPointForTaskImportance from "../../components/SelectStarPointForTaskImportance";
+import { getUserNamesForSelectOption } from "../../apis/user_api";
 
 type Task = {
   pk: number;
@@ -72,7 +77,7 @@ interface StyledBoxProps {
 
 const StyledBox = ({ children }: StyledBoxProps) => {
   return (
-    <Box border="4px solid green" p={4} borderRadius={5} boxShadow="lg" my={5}>
+    <Box border="4px solid green" px={2} borderRadius={5} boxShadow="lg" my={2}>
       {children}
     </Box>
   );
@@ -97,6 +102,15 @@ const TaskStatusPage = () => {
   );
   const [dateRange, setDateRange] = useState("thisMonth");
   const [importance, setImportance] = useState(3);
+
+  const {
+    isLoading: userNamesLoading,
+    data: userNamesData,
+    error: userNamesError,
+  } = useQuery<IUserNamesForSelectOption[]>(
+    ["users_list_for_select_option"],
+    getUserNamesForSelectOption
+  );
 
   const handleImportanceChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -297,23 +311,32 @@ const TaskStatusPage = () => {
 
       <StyledBox>
         <Flex justify="space-between">
-          <Box border="4px solid green" p={4} borderRadius={5} my={5} w={"24%"}>
+          <Box border="4px solid green" p={2} borderRadius={5} my={5} w={"24%"}>
             <DateRangeSelect
               value={dateRange}
               onChange={handleDateRangeChange}
             />
           </Box>
-          <Box border="4px solid green" p={4} borderRadius={5} my={5} w={"24%"}>
-            담당자별
+          <Box border="4px solid green" p={2} borderRadius={5} my={5} w={"24%"}>
+            <Select placeholder="task_manager">
+              {userNamesData?.map((user) => (
+                <option key={user.pk} value={user.pk}>
+                  {user.username}
+                </option>
+              ))}
+            </Select>{" "}
           </Box>
-          <Box border="4px solid green" p={4} borderRadius={5} my={5} w={"24%"}>
+          <Box border="4px solid green" p={2} borderRadius={5} my={5} w={"24%"}>
             <SelectStarPointForTaskImportance
               value={importance}
               onChange={handleImportanceChange}
             />{" "}
           </Box>
-          <Box border="4px solid green" p={4} borderRadius={5} my={5} w={"24%"}>
-            핼프 요청, or 현상금
+          <Box border="4px solid green" p={2} borderRadius={5} my={5} w={"24%"}>
+            마감 임박, 마감 경과
+          </Box>
+          <Box border="4px solid green" p={2} borderRadius={5} my={5} w={"24%"}>
+            핼프 요청, 현상금{" "}
           </Box>
         </Flex>
       </StyledBox>
