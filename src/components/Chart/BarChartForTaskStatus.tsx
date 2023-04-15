@@ -37,8 +37,9 @@ const BarChartForTaskStatus = ({ data }: Props) => {
           <Tooltip />
           <Legend />
           {/* <Bar dataKey="task_manager" stackId="a" fill="#8884d8" /> */}
-          <Bar dataKey="completed_count_for_task" stackId="a" fill="#D4F1F4" />
+          <Bar dataKey="completed_count_for_task" stackId="a" fill="#6FCF97" />
           <Bar dataKey="uncompleted_count_for_task" stackId="a" fill="#FFC5D9" />
+          <Bar dataKey="count_for_testing_task" stackId="a" fill="#FFDAB9" />
         </BarChart>
       </ResponsiveContainer>
     </Box>

@@ -8,7 +8,6 @@ import {
   FormTypeForCreateTest,
   FormTypeForExtraTask,
   IFormTypeForProjectProgress,
-  IResponseTypeForProjectTaskUpdate,
   ITypeForTaskDetailUpdate,
 } from "../types/project_progress/project_progress_type";
 
