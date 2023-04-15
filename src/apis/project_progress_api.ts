@@ -1,4 +1,4 @@
-import axios, { AxiosResponse , AxiosRequestConfig } from "axios";
+import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 import Cookie from "js-cookie";
 
 import { QueryFunctionContext } from "@tanstack/react-query";
@@ -23,6 +23,19 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+
+export const getDataForTaskStaticsForIsCompleted = () => {
+  const config: AxiosRequestConfig = {
+    method: "get",
+    url: "/project_progress/task-statics",
+    params: {},
+  };
+  return instance.request(config).then((response) => {
+    console.log("response for getProgectTasksStatusData: ", response.data);
+    return response.data;
+  });
+};
+
 export const insertCommentForTaskApi = ({
   taskPk,
   task_manager,
@@ -230,7 +243,6 @@ export const deleteOneExtraTaskForPk = (extraTaskPk: number) => {
     .then((response) => response.data);
 };
 
-
 interface IOptionForTaskStatus {
   dateRange: string;
   taskManagerForFiltering: string | number;
@@ -246,10 +258,9 @@ export const getProgectTasksStatusData = ({
   isRequestedForHelp,
   isBountyTask,
 }: IOptionForTaskStatus) => {
-
   const config: AxiosRequestConfig = {
-    method: 'get',
-    url: 'project_progress/task-status',
+    method: "get",
+    url: "project_progress/task-status",
     params: {
       dateRange,
       taskManagerForFiltering,
@@ -259,7 +270,7 @@ export const getProgectTasksStatusData = ({
     },
   };
   return instance.request(config).then((response) => {
-    console.log("response for getProgectTasksStatusData: ", response);        
+    console.log("response for getProgectTasksStatusData: ", response);
     return response;
   });
 };

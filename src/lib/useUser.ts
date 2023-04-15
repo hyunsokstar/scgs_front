@@ -18,7 +18,7 @@ export default function useUser() {
     (state: RootState) => state.loginInfo
   );
 
-  console.log("data : ", data);
+  // console.log("data : ", data);
 
   // if (!isError) {
   //   dispatch(login(data));
@@ -37,7 +37,7 @@ export default function useUser() {
     dispatch(logout());
   }
 
-  console.log("loginUser at useuser : ", loginUser);
+  // console.log("loginUser at useuser : ", loginUser);
 
   return {
     userLoading: isLoading,
