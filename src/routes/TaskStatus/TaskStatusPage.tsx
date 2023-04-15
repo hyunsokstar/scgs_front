@@ -332,7 +332,7 @@ const TaskStatusPage = () => {
       bgColor={"white"}
     >
       <Heading mb="2" textAlign="center">
-        ToDo Status
+        ToDo Status 
       </Heading>
       {/* 
       todo: 검색 옵션 추가 : 
@@ -348,7 +348,7 @@ const TaskStatusPage = () => {
       {/* 기능 수정: 같은 항목으로 이동시 status 업데이트 생략 */}
 
       <StyledBox>
-        <Flex justify="space-between">
+        <Flex justify="space-between" gap={2}>
           <Box border="4px solid green" p={2} borderRadius={5} my={5} w={"24%"}>
             <DateRangeSelect
               value={dateRange}

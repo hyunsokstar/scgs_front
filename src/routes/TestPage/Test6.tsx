@@ -1,14 +1,8 @@
 import { FC } from "react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { Box } from "@chakra-ui/react";
 import { PieDataForUncompletedTask } from "../../types/project_progress/project_progress_type";
 import PieChartForUncompletedTaskCount from "../../components/Chart/PieChartForUncompletedTaskCount";
-
 
 const data: PieDataForUncompletedTask[] = [
   { name: "Group A", value: 500 },
@@ -48,7 +42,7 @@ const renderCustomizedLabel = ({
 const PieChartExample: FC = () => {
   return (
     <Box width="100%" height={300}>
-      <PieChartForUncompletedTaskCount />
+      <PieChartForUncompletedTaskCount data={data} />
     </Box>
   );
 };

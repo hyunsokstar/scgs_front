@@ -1,8 +1,9 @@
-import { Flex, Box, Text } from "@chakra-ui/react";
+import { Flex, Box, Text, HStack } from "@chakra-ui/react";
 import BarChartForTaskStatus from "./Chart/BarChartForTaskStatus";
 import { ITypeForTaskStaticsDataForPerson } from "../types/project_progress/project_progress_type";
 import { useQuery } from "@tanstack/react-query";
 import { getDataForTaskStaticsForIsCompleted } from "../apis/project_progress_api";
+import PieChartForUncompletedTaskCount from "./Chart/PieChartForUncompletedTaskCount";
 
 // const data: ITypeForTaskStaticsDataForPerson = [
 //   {
@@ -56,11 +57,25 @@ function TaskStaticsPage() {
       <Box border="1px solid black">
         <BarChartForTaskStatus data={dataForTaskStaticsForIsCompleted} />
       </Box>
-      <Text fontSize={"32px"} mx={"auto"}>
-        {" "}
+      <Text fontSize={"32px"} mx={"auto"} mt={3}>
         전체 통계{" "}
       </Text>
-      <Box border="1px solid black">hyun</Box>
+      <Box display={"flex"} border="1px solid black" borderBottom={0} textAlign={"center"} py={2}>
+        <Box width="50%" borderRight="1px solid black">
+          업무 비중 (비완료)
+        </Box>
+        <Box width="50%">
+        업무 비중 (전체)
+        </Box>
+      </Box>
+      <Box border="1px solid black">
+        <Box width="50%" borderRight="1px solid black">
+          <PieChartForUncompletedTaskCount
+            data={data_for_uncompleted_tasks_for_pie_chart}
+          />{" "}
+        </Box>
+        <Box width="50%">내용2</Box>
+      </Box>
     </Flex>
   );
 }

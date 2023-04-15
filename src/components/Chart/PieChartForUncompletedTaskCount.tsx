@@ -1,26 +1,32 @@
-import { FC } from "react";
-import {
-  PieChart,
-  Pie,
-  Sector,
-  Cell,
-  ResponsiveContainer,
-  PieLabelRenderProps,
-} from "recharts";
-import { Box, Text } from "@chakra-ui/react";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { Box, Button, HStack } from "@chakra-ui/react";
 import { PieDataForUncompletedTask } from "../../types/project_progress/project_progress_type";
+import { FaUser } from "react-icons/fa";
 
-
-const data: PieDataForUncompletedTask[] = [
-  { name: "Group A", value: 500 },
-  { name: "Group B", value: 500 },
-  { name: "Group C", value: 500 },
-  { name: "Group D", value: 500 },
+const COLORS = [
+  "#B5EAD7",
+  "#FFC5D9",
+  "#D4F1F4",
+  "#FFDAB9",
+  "#C7CEEA",
+  "#E8D8B6",
+  "#D9C2A9",
+  "#F8B195",
+  "#F67280",
+  "#C06C84",
+  "#6C5B7B",
+  "#355C7D",
+  "#EDBB99",
+  "#9BAAAF",
+  "#EFECCA",
+  "#AAB9B9",
+  "#F6D8AE",
+  "#F7EFC6",
+  "#E2D8B2",
+  "#BFD7EA",
 ];
-
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-
 const RADIAN = Math.PI / 180;
+
 const renderCustomizedLabel = ({
   cx,
   cy,
@@ -46,9 +52,49 @@ const renderCustomizedLabel = ({
   );
 };
 
-const PieChartForUncompletedTaskCount = () => {
+interface IProps {
+  data: PieDataForUncompletedTask[];
+}
+
+// const dummy_task_manageers = [
+//     "terecal1",
+//     "terecal2",
+//     "terecal3",
+//     "terecal4",
+//     "terecal5",
+// ]
+
+const PieChartForUncompletedTaskCount = ({ data }: IProps) => {
+  const dummy_task_manageers = data.map((row) => {
+    return row.name;
+  });
+
   return (
     <Box width="100%" height={300}>
+      <HStack spacing={3} ml={2}>
+        {dummy_task_manageers
+          ? dummy_task_manageers.map((manager, index) => {
+              return (
+                <Box>
+                  <Button
+                    size="xs"
+                    leftIcon={<FaUser />}
+                    variant="outline"
+                    bgColor={COLORS[index]}
+                    _hover={{
+                      bg: "transparent",
+                      borderColor: "teal.500",
+                      color: "teal.500",
+                    }}
+                  >
+                    {manager}
+                  </Button>
+                </Box>
+              );
+            })
+          : ""}
+      </HStack>
+
       <ResponsiveContainer>
         <PieChart>
           <Pie
