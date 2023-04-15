@@ -48,6 +48,7 @@
     "react-slick": "^0.29.0",
     "react-switch": "^7.0.0",
     "react-tag-input-component": "^2.0.2",
+    "recharts": "^2.5.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.6",
     "tinymce": "^6.4.1",

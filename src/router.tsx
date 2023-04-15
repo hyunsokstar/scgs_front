@@ -40,6 +40,7 @@ import Test2 from "./routes/TestPage/Test2";
 import Test3 from "./routes/TestPage/Test3";
 import Test4 from "./routes/TestPage/Test4";
 import Test5 from "./routes/TestPage/Test5";
+import TaskStaticsPage from "./components/TaskStaticsPage";
 
 const router = createBrowserRouter([
   {
@@ -126,6 +127,10 @@ const router = createBrowserRouter([
       {
         path: "task-status",
         element: <TaskStatusPage />,
+      },
+      {
+        path: "task-statics",
+        element: <TaskStaticsPage />,
       },
       {
         path: "kaka-login",
