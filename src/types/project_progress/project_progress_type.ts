@@ -212,7 +212,8 @@ export type TaskManagerInfo = {
   completed_count_for_task: number;
   count_for_testing_task: number;
   uncompleted_count_for_task: number;
-  total_count_for_task: number;
+  total_count_for_uncompleted_task: number;
+  total_count_for_completed_task: number;  
 };
 
 export type ITypeForTaskStaticsDataForPerson = TaskManagerInfo[];

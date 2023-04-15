@@ -44,7 +44,15 @@ function TaskStaticsPage() {
     dataForTaskStaticsForIsCompleted.map((row) => {
       return {
         name: row.task_manager,
-        value: row.total_count_for_task,
+        value: row.total_count_for_uncompleted_task,
+      };
+    });
+
+  const data_for_completed_tasks_for_pie_chart =
+    dataForTaskStaticsForIsCompleted.map((row) => {
+      return {
+        name: row.task_manager,
+        value: row.total_count_for_completed_task,
       };
     });
 
@@ -60,21 +68,29 @@ function TaskStaticsPage() {
       <Text fontSize={"32px"} mx={"auto"} mt={3}>
         전체 통계{" "}
       </Text>
-      <Box display={"flex"} border="1px solid black" borderBottom={0} textAlign={"center"} py={2}>
+      <Box
+        display={"flex"}
+        border="1px solid black"
+        borderBottom={0}
+        textAlign={"center"}
+        py={2}
+      >
         <Box width="50%" borderRight="1px solid black">
           업무 비중 (비완료)
         </Box>
-        <Box width="50%">
-        업무 비중 (전체)
-        </Box>
+        <Box width="50%">업무 비중 (전체)</Box>
       </Box>
-      <Box border="1px solid black">
+      <Box display={"flex"} border="1px solid black">
         <Box width="50%" borderRight="1px solid black">
           <PieChartForUncompletedTaskCount
             data={data_for_uncompleted_tasks_for_pie_chart}
           />{" "}
         </Box>
-        <Box width="50%">내용2</Box>
+        <Box width="50%">
+          <PieChartForUncompletedTaskCount
+            data={data_for_completed_tasks_for_pie_chart}
+          />{" "}
+        </Box>
       </Box>
     </Flex>
   );
