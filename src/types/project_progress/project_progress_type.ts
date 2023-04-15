@@ -206,3 +206,12 @@ export interface SwitchButtonForFilterOptionForWhetherToHelpRequestProps
   isChecked: boolean;
   onToggle: (isChecked: boolean) => void;
 }
+
+
+export type TaskManagerInfo = {
+  task_manager: string;
+  completed_count_for_task: number;
+  uncompleted_count_for_task: number;
+}
+
+export type ITypeForTaskStaticsDataForPerson = TaskManagerInfo[];

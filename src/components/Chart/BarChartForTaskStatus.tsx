@@ -12,16 +12,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Box } from "@chakra-ui/react";
-
-interface Data {
-  name: string;
-  uv: number;
-  pv: number;
-  amt: number;
-}
+import { ITypeForTaskStaticsDataForPerson } from "../../types/project_progress/project_progress_type";
 
 interface Props {
-  data: Data[];
+  data: ITypeForTaskStaticsDataForPerson;
 }
 
 const BarChartForTaskStatus = ({ data }: Props) => {
@@ -38,13 +32,13 @@ const BarChartForTaskStatus = ({ data }: Props) => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="task_manager" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-          <Bar dataKey="uv" stackId="a" fill="#82ca9d" />
-          <Bar dataKey="amt" stackId="a" fill="#FF0000" />
+          {/* <Bar dataKey="task_manager" stackId="a" fill="#8884d8" /> */}
+          <Bar dataKey="completed_count_for_task" stackId="a" fill="#D4F1F4" />
+          <Bar dataKey="uncompleted_count_for_task" stackId="a" fill="#FFC5D9" />
         </BarChart>
       </ResponsiveContainer>
     </Box>
