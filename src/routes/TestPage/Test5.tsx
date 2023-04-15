@@ -10,6 +10,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import BarChartForTaskStatus from '../../components/Chart/BarChartForTaskStatus';
 
 interface Data {
   name: string;
@@ -65,26 +66,27 @@ const data: Data[] = [
 
 const Example: FC = () => {
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <BarChart
-        data={data}
-        margin={{
-          top: 20,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-        <Bar dataKey="uv" stackId="a" fill="#82ca9d" />
-        <Bar dataKey="amt" stackId="a" fill="#FF0000" />
-      </BarChart>
-    </ResponsiveContainer>
+    // <ResponsiveContainer width="100%" height={300}>
+    //   <BarChart
+    //     data={data}
+    //     margin={{
+    //       top: 20,
+    //       right: 30,
+    //       left: 20,
+    //       bottom: 5,
+    //     }}
+    //   >
+    //     <CartesianGrid strokeDasharray="3 3" />
+    //     <XAxis dataKey="name" />
+    //     <YAxis />
+    //     <Tooltip />
+    //     <Legend />
+    //     <Bar dataKey="pv" stackId="a" fill="#8884d8" />
+    //     <Bar dataKey="uv" stackId="a" fill="#82ca9d" />
+    //     <Bar dataKey="amt" stackId="a" fill="#FF0000" />
+    //   </BarChart>
+    // </ResponsiveContainer>
+    <BarChartForTaskStatus data={data} />
   );
 };
 
