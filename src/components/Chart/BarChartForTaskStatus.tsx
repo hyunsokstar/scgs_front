@@ -43,7 +43,7 @@ const BarChartForTaskStatus = ({ data }: Props) => {
             stackId="a"
             fill="#FFC5D9"
           />
-          <Bar dataKey="count_for_testing_task" stackId="a" fill="#FFDAB9" />
+          <Bar dataKey="count_for_testing_task" stackId="a" fill="#FFB347" />
         </BarChart>
       </ResponsiveContainer>
     </Box>

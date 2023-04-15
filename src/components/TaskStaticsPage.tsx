@@ -1,9 +1,6 @@
-import { FC } from "react";
 import { Flex, Box, Text } from "@chakra-ui/react";
 import BarChartForTaskStatus from "./Chart/BarChartForTaskStatus";
 import { ITypeForTaskStaticsDataForPerson } from "../types/project_progress/project_progress_type";
-
-import { AxiosResponse } from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { getDataForTaskStaticsForIsCompleted } from "../apis/project_progress_api";
 
@@ -41,7 +38,14 @@ function TaskStaticsPage() {
   if (!dataForTaskStaticsForIsCompleted) {
     return <Box>Loading..</Box>;
   }
-  // dataForTaskStaticsForIsCompleted
+
+  const data_for_uncompleted_tasks_for_pie_chart =
+    dataForTaskStaticsForIsCompleted.map((row) => {
+      return {
+        name: row.task_manager,
+        value: row.total_count_for_task,
+      };
+    });
 
   return (
     <Flex flexDirection={"column"}>
@@ -56,7 +60,7 @@ function TaskStaticsPage() {
         {" "}
         전체 통계{" "}
       </Text>
-      <Box border="1px solid black">전체 통계 그래프1, 전체 통계 그래프2</Box>
+      <Box border="1px solid black">hyun</Box>
     </Flex>
   );
 }

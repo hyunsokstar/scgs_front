@@ -41,6 +41,7 @@ import Test3 from "./routes/TestPage/Test3";
 import Test4 from "./routes/TestPage/Test4";
 import Test5 from "./routes/TestPage/Test5";
 import TaskStaticsPage from "./components/TaskStaticsPage";
+import Test6 from "./routes/TestPage/Test6";
 
 const router = createBrowserRouter([
   {
@@ -83,7 +84,11 @@ const router = createBrowserRouter([
       {
         path: "test5",
         element: <Test5 />,
-      },      
+      },  
+      {
+        path: "test6",
+        element: <Test6 />,
+      },    
       {
         path: "test-board",
         element: <TestBoardPage />,

@@ -8,12 +8,14 @@ const data: ITypeForTaskStaticsDataForPerson = [
     completed_count_for_task: 0,
     count_for_testing_task: 1,
     uncompleted_count_for_task: 1,
+    total_count_for_task:5
   },
   {
     task_manager: "hyun",
     completed_count_for_task: 4,
     count_for_testing_task: 1,
     uncompleted_count_for_task: 3,
+    total_count_for_task:5
   },
 ];
 
