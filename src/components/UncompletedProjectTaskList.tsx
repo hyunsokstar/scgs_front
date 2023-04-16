@@ -31,51 +31,51 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
   return (
     <Container maxW={"100%"} border={"1px solid purple"} p={0} mt={2}>
-      <Flex
+      <Box
+        border={"0px solid black"}
+        display="flex"
         justifyContent={"space-between"}
+        bgColor={"green.200"}
         alignItems={"center"}
-        mx={0}
-        px={1}
-        bg={"green.200"}
-        border={"0px solid green"}
-        height={"auto"}
+        px={2}
+        py={2}
       >
-        <Box>
-          <Box>
-            <Box mb={2}>비완료 리스트 (총: {taskListData?.totalPageCount})</Box>
-            <Box>
+        <Box border={"0px solid green"}>
+          <Box
+            border={"0px solid blue"}
+            display={"flex"}
+            justifyContent={"flex-start"}
+            alignItems={"center"}
+            gap={2}
+          >
+            <Box border="0px solid red">
+              <Text>비완료 리스트 (총: {taskListData?.totalPageCount})</Text>
+            </Box>
+            <Box display={"flex"}>
               <Text>진행별:</Text>
-              <HStack spacing={2} mb={2}>
-                <Text>⚪ :{taskListData?.count_for_ready}</Text>
-                <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
-                <Text>🟠 : {taskListData?.count_for_in_testing}</Text>
-              </HStack>
-              <Box>
-                <Text>담당자별:</Text>
-                <Box display={"flex"} flexDirection={"row"} gap={3}>
-                  {taskListData?.writers_info?.map((writer) => {
-                    return (
-                      <Text
-                        // fontWeight="bold"
-                        fontSize="lg"
-                        color="blue.900"
-                        // textDecor="underline"
-                      >
-                        {writer.username}: {writer.task_count}
-                      </Text>
-                    );
-                  })}
-                </Box>
-              </Box>
+              <Text>⚪ :{taskListData?.count_for_ready}</Text>
+              <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
+              <Text>🟠 : {taskListData?.count_for_in_testing}</Text>
             </Box>
           </Box>
+          <Text>담당자별:</Text>
+          <Box display={"flex"} flexDirection={"row"} gap={3}>
+            {taskListData?.writers_info?.map((writer) => {
+              return (
+                <Text fontSize="lg" color="blue.900">
+                  {writer.username}: {writer.task_count}
+                </Text>
+              );
+            })}
+          </Box>
         </Box>
+
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
             projectTaskListRefatch={projectTaskListRefatch}
           />
         </Box>
-      </Flex>
+      </Box>
 
       <Box>
         {taskListData ? (

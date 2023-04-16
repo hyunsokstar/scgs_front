@@ -118,8 +118,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
         _focus={{ boxShadow: "none" }}
         fontSize={20}
         py={5}
-        px={3}
-        mr={1}
+        px={2}
       >
         Project Task 추가
       </Button>

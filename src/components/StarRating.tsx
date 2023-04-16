@@ -33,7 +33,7 @@ const StarRating = ({
           <IconButton
             key={index}
             aria-label={`rating-${starRating}`}
-            size="sm"
+            size="xs"
             onClick={() => handleClick(starRating)}
             ml={1}
             bgColor={"green.100"}

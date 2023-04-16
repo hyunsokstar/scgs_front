@@ -206,23 +206,25 @@ function UncompletedTaskRow({
                   alignItems={"center"}
                   backgroundColor={task.in_progress ? "yellow.50" : ""}
                   _hover={{ backgroundColor: "gray.100" }}
-                  width={"1900px"}
+                  width={"1850px"}
                 >
                   <HStack border={"0px solid green"}>
                     <Box border={"0px solid yellow"} width={"50px"}>
                       <Checkbox mx={2} />
                     </Box>
 
-                    <Box border={"0px solid yellow"} width={"100px"}>
-                      <Text color={"blue.600"}>
-                        {task.task_manager?.username}
-                      </Text>{" "}
+                    <Box border={"0px solid yellow"} width={"200px"}>
+                      <VStack>
+                        <Text color={"blue.600"} textAlign={"start"}>
+                          {task.task_manager?.username}
+                        </Text>
+                        <Text color={"tomato"} textAlign={"start"}>
+                          {task.writer}
+                        </Text>
+                      </VStack>
                     </Box>
 
-                    <Box border={"0px solid yellow"} width={"100px"}>
-                      <Text color={"tomato"}>{task.writer}</Text>
-                    </Box>
-                    <Box border={"0px solid blue"} width={"360px"}>
+                    <Box border={"0px solid blue"} width={"440px"}>
                       <Text fontSize="sm" fontWeight="bold">
                         <Link
                           to={`/project_admin/${task.pk}`}
@@ -231,6 +233,22 @@ function UncompletedTaskRow({
                           {task.task}
                         </Link>
                       </Text>
+                    </Box>
+
+                    <Box
+                      border={"0px solid blue"}
+                      width={"220px"}
+                      display={"flex"}
+                      justifyContent={"flex-start"}
+                      alignItems={"center"}
+                    >
+                      <StarRating
+                        initialRating={task.importance}
+                        taskPk={task.pk}
+                        onChangeForStarRatingHandler={
+                          onChangeForStarRatingHandler
+                        }
+                      />
                     </Box>
 
                     <Box
@@ -272,22 +290,6 @@ function UncompletedTaskRow({
                       </Box>
                     </Box>
 
-                    <Box
-                      border={"0px solid blue"}
-                      width={"220px"}
-                      display={"flex"}
-                      justifyContent={"flex-start"}
-                      alignItems={"center"}
-                    >
-                      <StarRating
-                        initialRating={task.importance}
-                        taskPk={task.pk}
-                        onChangeForStarRatingHandler={
-                          onChangeForStarRatingHandler
-                        }
-                      />
-                    </Box>
-
                     <Box border={"0px solid blue"} width={"310px"}>
                       <HStack>
                         <Box textAlign={"center"}>
@@ -307,16 +309,6 @@ function UncompletedTaskRow({
                       </HStack>
                       <HStack>
                         <Box textAlign={"center"}>
-                          <Text>경과</Text>
-                        </Box>
-                        <Box>
-                          <Text>{task.elapsed_time_from_started_at}</Text>
-                        </Box>
-                      </HStack>
-                    </Box>
-                    <Box border={"0px solid blue"} width={"310px"}>
-                      <HStack>
-                        <Box textAlign={"center"}>
                           <Text>마감</Text>
                         </Box>
                         <Text>{task.due_date_formatted}</Text>
@@ -328,6 +320,17 @@ function UncompletedTaskRow({
                           projectTaskListRefatch={projectTaskListRefatch}
                         />
                       </HStack>
+                    </Box>
+                    <Box border={"0px solid blue"} width={"200px"}>
+                      <HStack>
+                        <Box textAlign={"center"}>
+                          <Text>경과</Text>
+                        </Box>
+                        <Box>
+                          <Text>{task.elapsed_time_from_started_at}</Text>
+                        </Box>
+                      </HStack>
+
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>남은 시간</Text>
