@@ -3,15 +3,19 @@ import { useState } from "react";
 
 interface FilterProps {
   changeHandler: (filter: string) => void;
+  selectedPeriodOptionForUncompletedTaskList: string;
 }
 
 const ButtonsForSelectForTeamTaskListPeriod = ({
+  selectedPeriodOptionForUncompletedTaskList,
   changeHandler,
 }: FilterProps) => {
-  const [selected, setSelected] = useState("All");
+  const [selected, setSelected] = useState(
+    selectedPeriodOptionForUncompletedTaskList
+  );
 
-  const handleClick = (filter: string) => {    
-    console.log("filter : ", filter);       
+  const handleClick = (filter: string) => {
+    console.log("filter : ", filter);
     setSelected(filter);
     changeHandler(filter);
   };
@@ -19,24 +23,28 @@ const ButtonsForSelectForTeamTaskListPeriod = ({
   return (
     <Box display={"flex"} gap={2}>
       <Button
+        border={"2px solid black"}
         variant={selected === "all" ? "solid" : "outline"}
         onClick={() => handleClick("all")}
       >
         All
       </Button>
       <Button
+        border={"2px solid black"}
         variant={selected === "within_a_week" ? "solid" : "outline"}
         onClick={() => handleClick("within_a_week")}
       >
         Within a week
       </Button>
       <Button
+        border={"2px solid black"}
         variant={selected === "within_a_month" ? "solid" : "outline"}
         onClick={() => handleClick("within_a_month")}
       >
         Within a month
       </Button>
       <Button
+        border={"2px solid black"}
         variant={selected === "over_a_month_ago" ? "solid" : "outline"}
         onClick={() => handleClick("over_a_month_ago")}
       >

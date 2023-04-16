@@ -62,14 +62,14 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             gap={2}
           >
             <Box border="0px solid red">
-              <Text>비완료 리스트 (총: {taskListData?.totalPageCount})</Text>
+              <Text fontSize={22}>비완료 리스트 (총: {taskListData?.totalPageCount})</Text>
             </Box>
-            <Box display={"flex"}>
-              <Text>진행별:</Text>
-              <Text>⚪ :{taskListData?.count_for_ready}</Text>
-              <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
-              <Text>🟠 : {taskListData?.count_for_in_testing}</Text>
-            </Box>
+          </Box>
+          <Box display={"flex"} gap={2}>
+            <Text>진행별:</Text>
+            <Text>⚪ :{taskListData?.count_for_ready}</Text>
+            <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
+            <Text>🟠 : {taskListData?.count_for_in_testing}</Text>
           </Box>
           <Text>담당자별:</Text>
           <Box display={"flex"} flexDirection={"row"} gap={3}>
@@ -85,6 +85,9 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
         <Box>
           <ButtonsForSelectForTeamTaskListPeriod
+            selectedPeriodOptionForUncompletedTaskList={
+              selectedPeriodOptionForUncompletedTaskList
+            }
             changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
           />
         </Box>
