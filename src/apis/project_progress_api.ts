@@ -541,21 +541,35 @@ export const getCompletedTaskListForMe = ({
 };
 
 export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
-  const [_, pageNum] = queryKey;
-  return instance
-    .get(`project_progress/uncompleted?page=${pageNum}`)
-    .then((response) => {
-      const response_data = {
-        writers_info: response.data.writers_info,
-        count_for_ready: response.data.count_for_ready,
-        count_for_in_progress: response.data.count_for_in_progress,
-        count_for_in_testing: response.data.count_for_in_testing,
-        totalPageCount: response.data.totalPageCount,
-        ProjectProgressList: response.data.ProjectProgressList,
-      };
+  const [_, pageNum, selectedPeriodOptionForUncompletedTaskList] = queryKey;
 
-      return response_data;
-    });
+  console.log(
+    "selectedPeriodOptionForUncompletedTaskList : ",
+    selectedPeriodOptionForUncompletedTaskList
+  );
+
+  return (
+    instance
+      // .get(`project_progress/uncompleted?page=${pageNum}`)
+      .get("project_progress/uncompleted", {
+        params: {
+          page: pageNum,
+          selectedPeriodOptionForUncompletedTaskList,
+        },
+      })
+      .then((response) => {
+        const response_data = {
+          writers_info: response.data.writers_info,
+          count_for_ready: response.data.count_for_ready,
+          count_for_in_progress: response.data.count_for_in_progress,
+          count_for_in_testing: response.data.count_for_in_testing,
+          totalPageCount: response.data.totalPageCount,
+          ProjectProgressList: response.data.ProjectProgressList,
+        };
+
+        return response_data;
+      })
+  );
 };
 
 export const getUncompletedTaskListForMe = ({
@@ -565,6 +579,7 @@ export const getUncompletedTaskListForMe = ({
 
   const [_, pageNum] = queryKey;
   // console.log("pageNum : ", pageNum);
+
   return instance
     .get(`project_progress/uncompleted/for-me?page=${pageNum}`)
     .then((response) => {

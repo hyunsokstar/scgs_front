@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { ReactElement, useState } from "react";
 import { getUncompletedTaskList } from "../apis/project_progress_api";
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
+import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import ModalForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRow from "./UncompletedTaskRow";
@@ -11,13 +12,21 @@ interface Props {}
 
 function UncompletedProjectTaskList({}: Props): ReactElement {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+  const [
+    selectedPeriodOptionForUncompletedTaskList,
+    setSelectedPeriodOptionForUncompletedTaskList,
+  ] = useState("all");
 
   const {
     isLoading,
     data: taskListData,
     refetch: projectTaskListRefatch,
   } = useQuery<ITypeForProjectProgressList>(
-    ["getUncompletedTaskList", currentPageNum],
+    [
+      "getUncompletedTaskList",
+      currentPageNum,
+      selectedPeriodOptionForUncompletedTaskList,
+    ],
     getUncompletedTaskList,
     {
       enabled: true,
@@ -28,6 +37,10 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   if (!taskListData) {
     return <Box>..Loading</Box>;
   }
+
+  const changeHandlerForSelectPeriodOptionForTeamTask = (option: string) => {
+    setSelectedPeriodOptionForUncompletedTaskList(option);
+  };
 
   return (
     <Container maxW={"100%"} border={"1px solid purple"} p={0} mt={2}>
@@ -68,6 +81,12 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
               );
             })}
           </Box>
+        </Box>
+
+        <Box>
+          <ButtonsForSelectForTeamTaskListPeriod
+            changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
+          />
         </Box>
 
         <Box textAlign={"right"} m={0}>
