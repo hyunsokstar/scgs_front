@@ -213,15 +213,18 @@ function UncompletedTaskRow({
                       <Checkbox mx={2} />
                     </Box>
 
-                    <Box border={"0px solid yellow"} width={"200px"}>
-                      <VStack>
-                        <Text color={"blue.600"} textAlign={"start"}>
-                          {task.task_manager?.username}
-                        </Text>
-                        <Text color={"tomato"} textAlign={"start"}>
-                          {task.writer}
-                        </Text>
-                      </VStack>
+                    <Box
+                      display={"flex"}
+                      flexDirection={"column"}
+                      border={"0px solid yellow"}
+                      width={"200px"}
+                    >
+                      <Text color={"blue.600"} textAlign={"start"}>
+                        {task.task_manager?.username}
+                      </Text>
+                      <Text color={"tomato"} textAlign={"start"}>
+                        {task.writer}
+                      </Text>
                     </Box>
 
                     <Box border={"0px solid blue"} width={"440px"}>
