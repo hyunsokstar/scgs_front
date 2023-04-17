@@ -1,11 +1,18 @@
-import { Box, Button, Container, Flex, HStack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  HStack,
+  Text,
+  Input,
+} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
 import { getUncompletedTaskList } from "../apis/project_progress_api";
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
-import ModalForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRow from "./UncompletedTaskRow";
 
 interface Props {}
@@ -33,7 +40,20 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
     }
   );
 
+  const [filteredData, setFilteredData] = useState<any>(
+    taskListData?.ProjectProgressList
+  );
+
+  // filterValueForTask
+  const [filterValueForTaskManager, setFilterValueForTaskManager] = useState<any>();
+  const [filterValueForTask, setFilterValueForTask] = useState<any>();
+
   console.log("taskListData  : ", taskListData);
+  console.log("filteredData  : ", filteredData);
+
+  useEffect(() => {
+    setFilteredData(taskListData?.ProjectProgressList);
+  }, [taskListData?.ProjectProgressList]);
 
   if (!taskListData) {
     return <Box>..Loading</Box>;
@@ -41,6 +61,46 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
   const changeHandlerForSelectPeriodOptionForTeamTask = (option: string) => {
     setSelectedPeriodOptionForUncompletedTaskList(option);
+  };
+
+  const updateFilteredDataForTask = (filterValueForTask: string) => {
+    if (filterValueForTask !== "") {
+      const filteredData = taskListData?.ProjectProgressList.filter((item) =>
+        item.task.toLowerCase().includes(filterValueForTask.toLowerCase())
+      );
+      setFilteredData(filteredData);
+    } else {
+      setFilteredData(taskListData?.ProjectProgressList);
+      console.log("filterValueForTask : ", filterValueForTask);
+    }
+  };
+
+  const handleFilterChangeForTask = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setFilterValueForTask(value);
+    updateFilteredDataForTask(value);
+  };
+
+  const updateFilteredDataForTaskManager = (filterValueForTaskManager: string) => {
+    if (filterValueForTaskManager !== "") {
+      const filteredData = taskListData?.ProjectProgressList.filter((item) =>
+        item.task_manager.username.toLowerCase().includes(filterValueForTaskManager.toLowerCase())
+      );
+      setFilteredData(filteredData);
+    } else {
+      setFilteredData(taskListData?.ProjectProgressList);
+      console.log("filterValueForTaskManager : ", filterValueForTaskManager);
+    }
+  };
+
+  const handleFilterChangeForTaskManager = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setFilterValueForTaskManager(value);
+    updateFilteredDataForTaskManager(value);
   };
 
   return (
@@ -94,6 +154,43 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             }
             changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
           />
+
+
+          <Box mt={2}>
+            <Box>
+              담당 : &nbsp;
+              <Input
+                size="xs"
+                variant="outline"
+                bg="blue.50"
+                borderColor="gray.300"
+                _focus={{ border: "1px solid blue", boxShadow: "none" }}
+                _hover={{ bg: "green.50", borderColor: "black" }}
+                _placeholder={{ color: "black" }}
+                id="url"
+                w={"300px"}
+                value={filterValueForTaskManager}
+                onChange={handleFilterChangeForTaskManager}
+              />
+            </Box>
+
+            <Box>
+              업무 : &nbsp;
+              <Input
+                size="xs"
+                variant="outline"
+                bg="blue.50"
+                borderColor="gray.300"
+                _focus={{ border: "1px solid blue", boxShadow: "none" }}
+                _hover={{ bg: "green.50", borderColor: "black" }}
+                _placeholder={{ color: "black" }}
+                id="url"
+                w={"300px"}
+                value={filterValueForTask}
+                onChange={handleFilterChangeForTask}
+              />
+            </Box>
+          </Box>
         </Box>
 
         <Box textAlign={"right"} m={0}>
@@ -106,7 +203,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
       <Box>
         {taskListData ? (
           <UncompletedTaskRow
-            ProjectProgressList={taskListData.ProjectProgressList}
+            ProjectProgressList={filteredData}
             totalPageCount={taskListData.totalPageCount}
             task_number_for_one_page={taskListData.task_number_for_one_page}
             currentPageNum={currentPageNum}
