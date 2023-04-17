@@ -7,6 +7,8 @@ import {
   Text,
   Input,
 } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+
 import { useQuery } from "@tanstack/react-query";
 import React, { ReactElement, useState, useEffect } from "react";
 import { getUncompletedTaskList } from "../apis/project_progress_api";
@@ -45,7 +47,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   );
 
   // filterValueForTask
-  const [filterValueForTaskManager, setFilterValueForTaskManager] = useState<any>();
+  const [filterValueForTaskManager, setFilterValueForTaskManager] =
+    useState<any>();
   const [filterValueForTask, setFilterValueForTask] = useState<any>();
 
   console.log("taskListData  : ", taskListData);
@@ -83,10 +86,14 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
     updateFilteredDataForTask(value);
   };
 
-  const updateFilteredDataForTaskManager = (filterValueForTaskManager: string) => {
+  const updateFilteredDataForTaskManager = (
+    filterValueForTaskManager: string
+  ) => {
     if (filterValueForTaskManager !== "") {
       const filteredData = taskListData?.ProjectProgressList.filter((item) =>
-        item.task_manager.username.toLowerCase().includes(filterValueForTaskManager.toLowerCase())
+        item.task_manager.username
+          .toLowerCase()
+          .includes(filterValueForTaskManager.toLowerCase())
       );
       setFilteredData(filteredData);
     } else {
@@ -118,18 +125,98 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           <Box
             border={"0px solid blue"}
             display={"flex"}
+            flexDirection={"column"}
             justifyContent={"flex-start"}
             alignItems={"center"}
             gap={2}
           >
             <Box border="0px solid red">
-              <Text fontSize={22}>
-                비완료 리스트 (총: {taskListData?.totalPageCount} 개, per_page:{" "}
-                {taskListData?.task_number_for_one_page} 개){" "}
-              </Text>
+              <Table borderWidth="1px" borderColor="teal.200">
+                <Thead>
+                  <Tr>
+                    <Th colSpan={2}>
+                      {" "}
+                      <Text fontSize={22}>
+                        비완료 리스트 (총: {taskListData?.totalPageCount} 개,
+                        per_page: {taskListData?.task_number_for_one_page} 개){" "}
+                      </Text>
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  <Tr height="30px">
+                    <Td
+                      borderBottomWidth="1px"
+                      borderRightWidth="1px"
+                      borderColor="teal.200"
+                    >
+                      <Text>진행별</Text>
+                    </Td>
+                    <Td
+                      borderBottomWidth="1px"
+                      borderRightWidth="1px"
+                      borderColor="teal.200"
+                      display={"flex"}
+                      justifyContent={"space-between"}
+                      gap={2}
+                    >
+                      <Text>⚪ :{taskListData?.count_for_ready}</Text>
+                      <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
+                      <Text>🟠 : {taskListData?.count_for_in_testing}</Text>
+                    </Td>
+                    {/* <Td borderBottomWidth="1px" borderColor="teal.200">
+                      Row 1, Column 3
+                    </Td> */}
+                  </Tr>
+                  <Tr height="30px">
+                    <Td
+                      borderBottomWidth="1px"
+                      borderRightWidth="1px"
+                      borderColor="teal.200"
+                    >
+                      <Text>담당자별:</Text>
+                    </Td>
+                    <Td
+                      borderBottomWidth="1px"
+                      borderRightWidth="1px"
+                      borderColor="teal.200"
+                    >
+                      {taskListData?.writers_info?.map((writer) => {
+                        return (
+                          <Text fontSize="lg" color="blue.900">
+                            {writer.username}: {writer.task_count}
+                          </Text>
+                        );
+                      })}
+                    </Td>
+                    {/* <Td borderBottomWidth="1px" borderColor="teal.200">
+                      Row 2, Column 3
+                    </Td> */}
+                  </Tr>
+                  {/* <Tr height="30px">
+                    <Td
+                      borderBottomWidth="1px"
+                      borderRightWidth="1px"
+                      borderColor="teal.200"
+                    >
+                      Row 3, Column 1
+                    </Td>
+                    <Td
+                      borderBottomWidth="1px"
+                      borderRightWidth="1px"
+                      borderColor="teal.200"
+                    >
+                      Row 3, Column 2
+                    </Td>
+                    <Td borderBottomWidth="1px" borderColor="teal.200">
+                      Row 3, Column 3
+                    </Td>
+                  </Tr> */}
+                </Tbody>
+              </Table>
             </Box>
           </Box>
-          <Box display={"flex"} gap={2}>
+          {/* <Box display={"flex"} gap={2}>
             <Text>진행별:</Text>
             <Text>⚪ :{taskListData?.count_for_ready}</Text>
             <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
@@ -144,7 +231,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                 </Text>
               );
             })}
-          </Box>
+          </Box> */}
         </Box>
 
         <Box>
@@ -154,7 +241,6 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             }
             changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
           />
-
 
           <Box mt={2}>
             <Box>
