@@ -565,6 +565,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
           count_for_in_testing: response.data.count_for_in_testing,
           totalPageCount: response.data.totalPageCount,
           ProjectProgressList: response.data.ProjectProgressList,
+          task_number_for_one_page: response.data.task_number_for_one_page
         };
 
         return response_data;

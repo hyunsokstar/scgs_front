@@ -128,6 +128,7 @@ export interface ITypeForProjectProgressList {
   projectTaskListRefatch?: () => void;
   writers_info?: Writer[];
   totalPageCount: number;
+  task_number_for_one_page?: number;
   ProjectProgressList: [
     {
       pk: string;

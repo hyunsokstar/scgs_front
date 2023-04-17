@@ -45,12 +45,14 @@ interface IProps {
   totalPageCount: number;
   currentPageNum: number;
   setCurrentPageNum: any;
+  task_number_for_one_page?: number
   projectTaskListRefatch: () => void;
 }
 
 function UncompletedTaskRow({
   ProjectProgressList,
   totalPageCount,
+  task_number_for_one_page,
   currentPageNum,
   setCurrentPageNum,
   projectTaskListRefatch,
@@ -370,6 +372,7 @@ function UncompletedTaskRow({
               current_page_num={currentPageNum}
               total_page_num={totalPageCount}
               setCurrentPageNum={setCurrentPageNum}
+              task_number_for_one_page = {task_number_for_one_page}
             />
           </Box>
         ) : (

@@ -8,12 +8,14 @@ type Props = {
   current_page_num?: number;
   total_page_num?: number | undefined;
   setCurrentPageNum?: any;
+  task_number_for_one_page? : number;
 };
 
 function PaginationComponent({
   current_page_num,
   setCurrentPageNum,
   total_page_num,
+  task_number_for_one_page
 }: Props) {
   //   console.log(
   //     "current_page_num, , total_page_num : ",
@@ -30,7 +32,7 @@ function PaginationComponent({
           selectComponentClass={Select}
           current={current_page_num}
           total={total_page_num}
-          defaultPageSize={5}
+          defaultPageSize={task_number_for_one_page ? task_number_for_one_page : 5}
           onChange={setCurrentPageNum}
           locale={localeInfo}
           showQuickJumper

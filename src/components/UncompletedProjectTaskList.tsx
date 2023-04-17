@@ -33,7 +33,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
     }
   );
 
-  console.log("taskListData  : ", taskListData?.writers_info);
+  console.log("taskListData  : ", taskListData);
+
   if (!taskListData) {
     return <Box>..Loading</Box>;
   }
@@ -62,7 +63,10 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             gap={2}
           >
             <Box border="0px solid red">
-              <Text fontSize={22}>비완료 리스트 (총: {taskListData?.totalPageCount})</Text>
+              <Text fontSize={22}>
+                비완료 리스트 (총: {taskListData?.totalPageCount} 개, per_page:{" "}
+                {taskListData?.task_number_for_one_page} 개){" "}
+              </Text>
             </Box>
           </Box>
           <Box display={"flex"} gap={2}>
@@ -104,6 +108,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           <UncompletedTaskRow
             ProjectProgressList={taskListData.ProjectProgressList}
             totalPageCount={taskListData.totalPageCount}
+            task_number_for_one_page={taskListData.task_number_for_one_page}
             currentPageNum={currentPageNum}
             setCurrentPageNum={setCurrentPageNum}
             projectTaskListRefatch={projectTaskListRefatch}

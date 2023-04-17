@@ -23,6 +23,7 @@ const ButtonsForSelectForTeamTaskListPeriod = ({
   return (
     <Box display={"flex"} gap={2}>
       <Button
+        size={"sm"}
         border={"2px solid black"}
         variant={selected === "all" ? "solid" : "outline"}
         onClick={() => handleClick("all")}
@@ -30,6 +31,7 @@ const ButtonsForSelectForTeamTaskListPeriod = ({
         All
       </Button>
       <Button
+        size={"sm"}
         border={"2px solid black"}
         variant={selected === "within_a_week" ? "solid" : "outline"}
         onClick={() => handleClick("within_a_week")}
@@ -37,6 +39,7 @@ const ButtonsForSelectForTeamTaskListPeriod = ({
         Within a week
       </Button>
       <Button
+        size={"sm"}
         border={"2px solid black"}
         variant={selected === "within_a_month" ? "solid" : "outline"}
         onClick={() => handleClick("within_a_month")}
@@ -44,6 +47,7 @@ const ButtonsForSelectForTeamTaskListPeriod = ({
         Within a month
       </Button>
       <Button
+        size={"sm"}
         border={"2px solid black"}
         variant={selected === "over_a_month_ago" ? "solid" : "outline"}
         onClick={() => handleClick("over_a_month_ago")}

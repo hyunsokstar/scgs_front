@@ -72,7 +72,7 @@ const columns = [
     headerRenderer: ({ column }: any) => (
       <input
         type="checkbox"
-        checked={column.allCheckBoxSelected}
+        // checked={column.allCheckBoxSelected}
         onClick={column.allCheckHandler}
         // column={column}
         // isCellSelected={() => false}
@@ -300,21 +300,13 @@ function UsersByDataGridPage({}: Props): ReactElement {
     console.log("삭제 버튼 클릭");
   };
 
-  const allCheckHandler = () => {
+  const allCheckHandler = (column:any) => {
     console.log("hi");
 
     const new_grid_rows = gridRows?.map((row) => {
-      const isAllSelected = gridRows
-        .map((row) => {
-          if (row.selected === true) {
-            return row.selected;
-          } else {
-            return false;
-          }
-        })
-        .includes(false);
 
-      if (!isAllSelected) {
+
+      if (!column.target.checked) {
         return {
           ...row,
           selected: false,
@@ -498,7 +490,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
             명
           </Box>
           <Box display={"flex"} justifyContent={"space-betwwen"} gap={2}>
-            {/* <Button
+            <Button
               size="md"
               onClick={createRandomUserRowHandler}
               fontWeight="bold"
@@ -507,7 +499,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
               _active={{ bg: "purple.700" }}
             >
               랜덤 행추가
-            </Button> */}
+            </Button>
 
             <Button
               size="md"
