@@ -135,34 +135,6 @@ function CompletedProjectTaskList({}: Props): ReactElement {
                 <Tbody border={"0px solid green"}>
                   <Tr height="30px">
                     <Td
-                      // borderBottomWidth="1px"
-                      // borderRightWidth="1px"
-                      // borderColor="teal.200"
-                    >
-                      <Text>진행별</Text>
-                    </Td>
-                    <Td
-                      // borderBottomWidth="1px"
-                      // borderRightWidth="1px"
-                      // borderColor="teal.200"
-                      display={"flex"}
-                      justifyContent={"space-between"}
-                      gap={2}
-                    >
-                      <Text>⚪ :{pageProgressListData?.count_for_ready}</Text>
-                      <Text>
-                        🟡 : {pageProgressListData?.count_for_in_progress}
-                      </Text>
-                      <Text>
-                        🟠 : {pageProgressListData?.count_for_in_testing}
-                      </Text>
-                    </Td>
-                    {/* <Td borderBottomWidth="1px" borderColor="teal.200">
-                      Row 1, Column 3
-                    </Td> */}
-                  </Tr>
-                  <Tr height="30px">
-                    <Td
                       // borderBottomWidth="0px"
                       // borderRightWidth="1px"
                       // borderColor="teal.200"

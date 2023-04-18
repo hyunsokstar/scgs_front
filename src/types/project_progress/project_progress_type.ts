@@ -150,6 +150,7 @@ export interface ITypeForProjectProgressList {
       time_consumed_from_start_to_complete?: string;
       time_left_to_due_date?: string;
       due_date?: string;
+      current_status?: string;
     }
   ];
   currentPageNum?: number | undefined;

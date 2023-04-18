@@ -45,7 +45,7 @@ interface IProps {
   totalPageCount: number;
   currentPageNum: number;
   setCurrentPageNum: any;
-  task_number_for_one_page?: number
+  task_number_for_one_page?: number;
   projectTaskListRefatch: () => void;
 }
 
@@ -73,7 +73,7 @@ function UncompletedTaskRow({
         console.log("result : ", result);
 
         queryClient.refetchQueries(["getUncompletedTaskList"]);
-        queryClient.refetchQueries(["getCompletedTaskList"]);
+        // queryClient.refetchQueries(["getCompletedTaskList"]);
 
         toast({
           status: "success",
@@ -191,6 +191,21 @@ function UncompletedTaskRow({
     console.log("response :", response);
   };
 
+  const rowColor = (task_status: string) => {
+    console.log("task_staus : ", task_status);
+
+    if (task_status === "ready") {
+      return "white";
+    }
+
+    if (task_status === "in_progress") {
+      return "rgba(255, 255, 0, 0.2)";
+    }
+    if (task_status === "testing") {
+      return "rgba(255, 165, 0, 0.2)";
+    }
+  };
+
   return (
     <Box border={"0px solid blue"} maxWidth={"100%"}>
       <Box overflowX="auto" width="100%">
@@ -206,13 +221,15 @@ function UncompletedTaskRow({
                   my={0}
                   display={"flex"}
                   alignItems={"center"}
-                  backgroundColor={task.in_progress ? "yellow.50" : ""}
+                  //
+
+                  backgroundColor={rowColor(task.current_status)}
                   _hover={{ backgroundColor: "gray.100" }}
                   width={"1850px"}
                 >
                   <HStack border={"0px solid green"}>
                     <Box border={"0px solid yellow"} width={"50px"}>
-                      <Checkbox mx={2} />
+                      <Checkbox mx={2} border={"1px solid black"} />
                     </Box>
 
                     <Box
@@ -228,6 +245,8 @@ function UncompletedTaskRow({
                         {task.writer}
                       </Text>
                     </Box>
+
+                    {/* <Box>{task.current_status}</Box> */}
 
                     <Box border={"0px solid blue"} width={"440px"}>
                       <Text fontSize="sm" fontWeight="bold">
@@ -372,7 +391,7 @@ function UncompletedTaskRow({
               current_page_num={currentPageNum}
               total_page_num={totalPageCount}
               setCurrentPageNum={setCurrentPageNum}
-              task_number_for_one_page = {task_number_for_one_page}
+              task_number_for_one_page={task_number_for_one_page}
             />
           </Box>
         ) : (

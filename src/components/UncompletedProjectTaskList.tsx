@@ -197,6 +197,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
               </Table>
             </Box>
           </Box>
+          
         </Box>
 
         <Box>
