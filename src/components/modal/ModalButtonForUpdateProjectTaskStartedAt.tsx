@@ -28,7 +28,7 @@ interface IProps {
   taskPk: string;
   original_due_date: string;
   started_at: string;
-  projectTaskListRefatch: () => void;
+  projectTaskListRefatch: any;
 }
 
 function ModalButtonForUpdateProjectTaskCompleteDate({

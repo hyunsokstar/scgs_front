@@ -41,7 +41,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
       >
         <Box>
           <Text>
-            비완료 리스트 (총: {taskListDataForMe?.totalPageCount} &nbsp;&nbsp;
+            비완료 리스트 (총: {taskListDataForMe?.totalPageCount} &nbsp; 
           ⚪ : {taskListDataForMe?.count_for_ready}
           &nbsp;&nbsp; 🟡 : {taskListDataForMe?.count_for_in_progress}
           &nbsp;&nbsp; 🟠 : {taskListDataForMe?.count_for_in_testing} )

@@ -294,14 +294,15 @@ function ProjectProgressDetail({}: Props): ReactElement {
         <Flex border={"0px solid purple"} width="100%" height={"620px"}>
           <VStack width={"50%"} border={"1px solid black"} pt={0}>
             {/* 상단 상자 추가 */}
-            <Box width={"100%"} height={"100%"} border="0px solid orange">
+            <Box width={"100%"} height={"100%"} border="1px solid orange">
               <Flex>
                 <Box
                   flex="5"
                   bg="white"
-                  border="0px solid black"
+                  border="5px solid black"
                   height={"618px"}
                   px={2}
+                  overflowY={"scroll"}
                 >
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <VStack w={"100%"}>
@@ -338,7 +339,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                         <Textarea
                           {...register("task_description")}
                           size="md"
-                          height={"100px"}
+                          height={"200px"}
                           defaultValue={taskData.task_description}
                         />
                       </FormControl>

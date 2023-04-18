@@ -32,14 +32,17 @@ import {
 import { Link } from "react-router-dom";
 import { deleteOneProjectTask } from "../apis/user_api";
 import PaginationComponent from "./PaginationComponent";
+import ModalButtonForUpdateProjectTaskCompleteDate from "./modal/ModalButtonForUpdateProjectTaskCompleteDate";
+import ModalButtonForUpdateProjectTaskStartedAt from "./modal/ModalButtonForUpdateProjectTaskStartedAt";
 interface IProps {}
 
 function CompletedTaskRow({
   ProjectProgressList,
   totalPageCount,
-  projectTaskListRefatch,
+  task_number_for_one_page,
   currentPageNum,
   setCurrentPageNum,
+  projectTaskListRefatch,
 }: ITypeForProjectProgressList): ReactElement {
   const completedColor = useColorModeValue("green.500", "green.300");
   const inProgressColor = useColorModeValue("orange.500", "orange.300");
@@ -149,7 +152,7 @@ function CompletedTaskRow({
                 _hover={{ backgroundColor: "gray.100" }}
               >
                 <HStack>
-                  <Box border={"0px solid yellow"} width={"100px"}>
+                  <Box border={"0px solid yellow"} width={"220px"}>
                     <HStack ml={0}>
                       <Checkbox mx={2} />
                       {task.task_manager !== null ? (
@@ -182,58 +185,56 @@ function CompletedTaskRow({
                     />
                   </Box>
 
-                  <Box border={"0px solid blue"} width={"240px"}>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>시작</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.started_at_formatted}</Text>
-                      </Box>
-                    </HStack>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>경과</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.elapsed_time_from_started_at}</Text>
-                      </Box>
-                    </HStack>
-                  </Box>
-                  <Box border={"0px solid blue"} width={"240px"}>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>완료</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.completed_at_formatted}</Text>
-                      </Box>
-                    </HStack>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>소요 시간</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.time_consumed_from_start_to_complete}</Text>
-                      </Box>
-                    </HStack>
-                  </Box>
+                    <Box border={"0px solid blue"} width={"310px"}>
+                      <HStack>
+                        <Box textAlign={"center"}>
+                          <Text>시작</Text>
+                        </Box>
+                        <HStack>
+                          <Text>{task.started_at_formatted}</Text>
+                          <ModalButtonForUpdateProjectTaskStartedAt
+                            taskPk={task.pk}
+                            original_due_date={
+                              task.due_date ? task.due_date : ""
+                            }
+                            started_at={task.started_at ? task.started_at : ""}
+                            projectTaskListRefatch={projectTaskListRefatch}
+                          />
+                        </HStack>
+                      </HStack>
+                      <HStack>
+                        <Box textAlign={"center"}>
+                          <Text>마감</Text>
+                        </Box>
+                        <Text>{task.due_date_formatted}</Text>
 
-                  <Box
-                    border={"0px solid blue"}
-                    width={"190px"}
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                  >
-                    <StarRating
-                      initialRating={task.importance}
-                      taskPk={task.pk}
-                      onChangeForStarRatingHandler={
-                        onChangeForStarRatingHandler
-                      }
-                    />
-                  </Box>
+                        <ModalButtonForUpdateProjectTaskCompleteDate
+                          taskPk={task.pk}
+                          original_due_date={task.due_date ? task.due_date : ""}
+                          started_at={task.started_at ? task.started_at : ""}
+                          projectTaskListRefatch={projectTaskListRefatch}
+                        />
+                      </HStack>
+                    </Box>
+                    <Box border={"0px solid blue"} width={"200px"}>
+                      <HStack>
+                        <Box textAlign={"center"}>
+                          <Text>경과</Text>
+                        </Box>
+                        <Box>
+                          <Text>{task.elapsed_time_from_started_at}</Text>
+                        </Box>
+                      </HStack>
+
+                      <HStack>
+                        <Box textAlign={"center"}>
+                          <Text>남은 시간</Text>
+                        </Box>
+                        <Box>
+                          <Text>{task.time_left_to_due_date}</Text>
+                        </Box>
+                      </HStack>
+                    </Box>
 
                   <Box>
                     <IconButton
@@ -250,20 +251,7 @@ function CompletedTaskRow({
         </List>
       </Box>
 
-      {/* <Box overflowX="auto" width={"300px"}>
-        <List border={"0px solid blue"}>
-          <ListItem width={"500px"}>Item 1</ListItem>
-          <ListItem width={"500px"}>Item 2</ListItem>
-          <ListItem width={"500px"}>Item 3</ListItem>
-          <ListItem width={"500px"}>Item 4</ListItem>
-          <ListItem width={"500px"}>Item 5</ListItem>
-          <ListItem width={"500px"}>Item 6</ListItem>
-          <ListItem width={"500px"}>Item 7</ListItem>
-          <ListItem width={"500px"}>Item 8</ListItem>
-          <ListItem width={"500px"}>Item 9</ListItem>
-          <ListItem width={"500px"}>Item 10</ListItem>
-        </List>
-      </Box> */}
+
 
       {/* 페이지 네이션 영역 */}
       <Box mt={5}>
@@ -272,6 +260,7 @@ function CompletedTaskRow({
             <PaginationComponent
               current_page_num={currentPageNum}
               total_page_num={totalPageCount}
+              task_number_for_one_page = {task_number_for_one_page}
               setCurrentPageNum={setCurrentPageNum}
             />
           </Container>

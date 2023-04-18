@@ -505,16 +505,30 @@ export const insertProjectProgressRow = ({
     .then((response) => response.data);
 
 export const getCompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
-  const [_, pageNum] = queryKey;
+  const [_, pageNum, selectedPeriodOptionForUncompletedTaskList] = queryKey;
   // console.log("pageNum : ", pageNum);
   return instance
-    .get(`project_progress/completed?page=${pageNum}`)
+    .get("project_progress/completed", {
+      params: {
+        page: pageNum,
+        selectedPeriodOptionForUncompletedTaskList,
+      },
+    })
     .then((response) => {
       // console.log("api result for completed task list: ", response);
 
       const response_data = {
-        totalPageCount: response.data.totalPageCount,
         ProjectProgressList: response.data.ProjectProgressList,
+        // totalPageCount: response.data.totalPageCount,
+
+        totalPageCount: response.data.totalPageCount,
+        task_number_for_one_page: response.data.task_number_for_one_page,
+
+        writers_info: response.data.writers_info,
+        count_for_ready: response.data.count_for_ready,
+        count_for_in_progress: response.data.count_for_in_progress,
+        count_for_in_testing: response.data.count_for_in_testing,        
+
       };
 
       return response_data;
@@ -559,13 +573,15 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
       })
       .then((response) => {
         const response_data = {
+          ProjectProgressList: response.data.ProjectProgressList,
+          
+          totalPageCount: response.data.totalPageCount,
+          task_number_for_one_page: response.data.task_number_for_one_page,
+
           writers_info: response.data.writers_info,
           count_for_ready: response.data.count_for_ready,
           count_for_in_progress: response.data.count_for_in_progress,
           count_for_in_testing: response.data.count_for_in_testing,
-          totalPageCount: response.data.totalPageCount,
-          ProjectProgressList: response.data.ProjectProgressList,
-          task_number_for_one_page: response.data.task_number_for_one_page
         };
 
         return response_data;

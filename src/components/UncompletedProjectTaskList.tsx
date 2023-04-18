@@ -131,7 +131,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             gap={2}
           >
             <Box border="0px solid red">
-              <Table borderWidth="1px" borderColor="teal.200">
+              <Table borderWidth="1px" borderColor="blue.200">
                 <Thead>
                   <Tr>
                     <Th colSpan={2}>
@@ -146,8 +146,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                 <Tbody>
                   <Tr height="30px">
                     <Td
-                      borderBottomWidth="1px"
-                      borderRightWidth="1px"
+                      borderBottomWidth="0px"
+                      borderRightWidth="0px"
                       borderColor="teal.200"
                     >
                       <Text>진행별</Text>
@@ -193,45 +193,10 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                       Row 2, Column 3
                     </Td> */}
                   </Tr>
-                  {/* <Tr height="30px">
-                    <Td
-                      borderBottomWidth="1px"
-                      borderRightWidth="1px"
-                      borderColor="teal.200"
-                    >
-                      Row 3, Column 1
-                    </Td>
-                    <Td
-                      borderBottomWidth="1px"
-                      borderRightWidth="1px"
-                      borderColor="teal.200"
-                    >
-                      Row 3, Column 2
-                    </Td>
-                    <Td borderBottomWidth="1px" borderColor="teal.200">
-                      Row 3, Column 3
-                    </Td>
-                  </Tr> */}
                 </Tbody>
               </Table>
             </Box>
           </Box>
-          {/* <Box display={"flex"} gap={2}>
-            <Text>진행별:</Text>
-            <Text>⚪ :{taskListData?.count_for_ready}</Text>
-            <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
-            <Text>🟠 : {taskListData?.count_for_in_testing}</Text>
-          </Box>
-          <Text>담당자별:</Text>
-          <Box display={"flex"} flexDirection={"row"} gap={3}>
-            {taskListData?.writers_info?.map((writer) => {
-              return (
-                <Text fontSize="lg" color="blue.900">
-                  {writer.username}: {writer.task_count}
-                </Text>
-              );
-            })}
-          </Box> */}
         </Box>
 
         <Box>
