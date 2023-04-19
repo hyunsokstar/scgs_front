@@ -527,8 +527,7 @@ export const getCompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         writers_info: response.data.writers_info,
         count_for_ready: response.data.count_for_ready,
         count_for_in_progress: response.data.count_for_in_progress,
-        count_for_in_testing: response.data.count_for_in_testing,        
-
+        count_for_in_testing: response.data.count_for_in_testing,
       };
 
       return response_data;
@@ -547,6 +546,7 @@ export const getCompletedTaskListForMe = ({
 
       const response_data = {
         totalPageCount: response.data.totalPageCount,
+        task_number_for_one_page: response.data.task_number_for_one_page,
         ProjectProgressList: response.data.ProjectProgressList,
       };
 
@@ -574,10 +574,8 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
       .then((response) => {
         const response_data = {
           ProjectProgressList: response.data.ProjectProgressList,
-          
           totalPageCount: response.data.totalPageCount,
           task_number_for_one_page: response.data.task_number_for_one_page,
-
           writers_info: response.data.writers_info,
           count_for_ready: response.data.count_for_ready,
           count_for_in_progress: response.data.count_for_in_progress,
@@ -600,14 +598,15 @@ export const getUncompletedTaskListForMe = ({
   return instance
     .get(`project_progress/uncompleted/for-me?page=${pageNum}`)
     .then((response) => {
-      // console.log("api result for uncompleted task list: ", response);
+      console.log("api result for uncompleted task list: ", response);
 
       const response_data = {
+        ProjectProgressList: response.data.ProjectProgressList,
+        task_number_for_one_page: response.data.task_number_for_one_page,
+        totalPageCount: response.data.totalPageCount,
         count_for_ready: response.data.count_for_ready,
         count_for_in_progress: response.data.count_for_in_progress,
         count_for_in_testing: response.data.count_for_in_testing,
-        totalPageCount: response.data.totalPageCount,
-        ProjectProgressList: response.data.ProjectProgressList,
       };
 
       return response_data;

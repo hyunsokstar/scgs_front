@@ -18,10 +18,10 @@ function MyTaskPage({}: Props): ReactElement {
 
   return (
     <Box width={"100%"} border={"2px solid blue"}>
-      {isLoggedIn ? "로그인중" : "로그아웃 상태"}
+      {/* {isLoggedIn ? "로그인중" : "로그아웃 상태"} */}
       <Flex direction={"column"} mt={0} width="100%">
         {isLoggedIn ? (
-          <VStack mt={0}>
+          <VStack mt={0} spacing={2}>
             <UncompletedProjectTaskListForMe />
             <CompletedProjectTaskListForMe />
           </VStack>

@@ -28,6 +28,10 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
   );
   console.log("taskListDataForMe : ", taskListDataForMe);
 
+  if (!taskListDataForMe) {
+    return <Box>Loading..</Box>;
+  }
+
   return (
     <Container maxW={"100%"} border={"1px solid purple"} p={0} mt={0}>
       <Flex
@@ -41,11 +45,12 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
       >
         <Box>
           <Text>
-            비완료 리스트 (총: {taskListDataForMe?.totalPageCount} &nbsp; 
-          ⚪ : {taskListDataForMe?.count_for_ready}
-          &nbsp;&nbsp; 🟡 : {taskListDataForMe?.count_for_in_progress}
-          &nbsp;&nbsp; 🟠 : {taskListDataForMe?.count_for_in_testing} )
+            비완료 리스트 (총: {taskListDataForMe?.totalPageCount} &nbsp; ⚪ :{" "}
+            {taskListDataForMe?.count_for_ready}
+            &nbsp;&nbsp; 🟡 : {taskListDataForMe?.count_for_in_progress}
+            &nbsp;&nbsp; 🟠 : {taskListDataForMe?.count_for_in_testing} )
           </Text>
+          per page: {taskListDataForMe?.task_number_for_one_page}
         </Box>
 
         <Box textAlign={"right"} m={0}>
@@ -59,6 +64,9 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
           <Box>
             <UncompletedTaskRowForMe
               ProjectProgressList={taskListDataForMe.ProjectProgressList}
+              task_number_for_one_page={
+                taskListDataForMe.task_number_for_one_page
+              }
               totalPageCount={taskListDataForMe.totalPageCount}
               currentPageNum={currentPageNum}
               setCurrentPageNum={setCurrentPageNum}

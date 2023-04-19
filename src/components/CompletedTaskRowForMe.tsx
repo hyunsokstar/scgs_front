@@ -36,6 +36,7 @@ interface IProps {}
 
 function CompletedTaskRowForMe({
   ProjectProgressList,
+  task_number_for_one_page,
   totalPageCount,
   projectTaskListRefatch,
   currentPageNum,
@@ -276,6 +277,7 @@ function CompletedTaskRowForMe({
           <Container maxW="100%" bg="blue.100" color="red.500" mt={1}>
             <PaginationComponent
               current_page_num={currentPageNum}
+              task_number_for_one_page={task_number_for_one_page}
               total_page_num={totalPageCount}
               setCurrentPageNum={setCurrentPageNum}
             />

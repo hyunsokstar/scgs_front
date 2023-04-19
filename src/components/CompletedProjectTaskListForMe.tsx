@@ -26,7 +26,7 @@ function CompletedProjectTaskListForMe({}: Props): ReactElement {
   );
 
   return (
-    <Container maxW={"100%"} border={"0px solid black"} p={0} mt={2}>
+    <Box maxW={"100%"} border={"1px solid black"} p={0} mt={"0px"}>
       <Flex
         justifyContent={"space-between"}
         alignItems={"center"}
@@ -36,18 +36,20 @@ function CompletedProjectTaskListForMe({}: Props): ReactElement {
         bg={"orange.200"}
         border={"0px solid green"}
       >
-        <Text py={1}>완료 리스트</Text>
-        <Box textAlign={"right"} m={0}>
-          {/* <ModalButtonForAddProjectTask
-            projectTaskListRefatch={projectTaskListRefatch}
-          /> */}
-        </Box>
+        <Text py={1}>
+          완료 리스트(총: {pageProgressListData?.totalPageCount} 개 per page:
+          {pageProgressListData?.task_number_for_one_page})
+        </Text>
+        <Box textAlign={"right"} m={0}></Box>
       </Flex>{" "}
       <Box>
         {pageProgressListData ? (
           <Box>
-          <CompletedTaskRowForMe
+            <CompletedTaskRowForMe
               ProjectProgressList={pageProgressListData.ProjectProgressList}
+              task_number_for_one_page={
+                pageProgressListData.task_number_for_one_page
+              }
               totalPageCount={pageProgressListData.totalPageCount}
               projectTaskListRefatch={projectTaskListRefatch}
               currentPageNum={currentPageNum}
@@ -58,7 +60,7 @@ function CompletedProjectTaskListForMe({}: Props): ReactElement {
           ""
         )}
       </Box>
-    </Container>
+    </Box>
   );
 }
 

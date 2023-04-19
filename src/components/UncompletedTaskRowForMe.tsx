@@ -45,11 +45,13 @@ interface IProps {
   totalPageCount: number;
   currentPageNum: number;
   setCurrentPageNum: any;
+  task_number_for_one_page: number | undefined;
   projectTaskListRefatch: () => void;
 }
 
 function UncompletedTaskRowForMe({
   ProjectProgressList,
+  task_number_for_one_page,
   totalPageCount,
   currentPageNum,
   setCurrentPageNum,
@@ -225,7 +227,7 @@ function UncompletedTaskRowForMe({
                     <Box border={"0px solid yellow"} width={"100px"}>
                       <Text color={"tomato"}>{task.writer}</Text>
                     </Box>
-                    <Box border={"0px solid blue"} width={"360px"}>
+                    <Box border={"0px solid blue"} width={"480px"}>
                       <Text fontSize="sm" fontWeight="bold">
                         <Link
                           to={`/project_admin/${task.pk}`}
@@ -236,7 +238,13 @@ function UncompletedTaskRowForMe({
                       </Text>
                     </Box>
 
-                    <Box display="flex" border="0px solid green" justifyContent={"flex-start"} width="320px" gap={10}>
+                    <Box
+                      display="flex"
+                      border="0px solid green"
+                      justifyContent={"flex-start"}
+                      width="320px"
+                      gap={10}
+                    >
                       <Box border={"0px solid green"} width={"50px"}>
                         <SlideToggleButtonForInProgress
                           onChange={() => {
@@ -269,7 +277,7 @@ function UncompletedTaskRowForMe({
                       </Box>
                     </Box>
 
-                    <Box border={"0px solid blue"} width={"310px"}>
+                    {/* <Box border={"0px solid blue"} width={"310px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>시작</Text>
@@ -309,6 +317,57 @@ function UncompletedTaskRowForMe({
                           projectTaskListRefatch={projectTaskListRefatch}
                         />
                       </HStack>
+                      <HStack>
+                        <Box textAlign={"center"}>
+                          <Text>남은 시간</Text>
+                        </Box>
+                        <Box>
+                          <Text>{task.time_left_to_due_date}</Text>
+                        </Box>
+                      </HStack>
+                    </Box> */}
+
+                    <Box border={"0px solid blue"} width={"310px"}>
+                      <HStack>
+                        <Box textAlign={"center"}>
+                          <Text>시작</Text>
+                        </Box>
+                        <HStack>
+                          <Text>{task.started_at_formatted}</Text>
+                          <ModalButtonForUpdateProjectTaskStartedAt
+                            taskPk={task.pk}
+                            original_due_date={
+                              task.due_date ? task.due_date : ""
+                            }
+                            started_at={task.started_at ? task.started_at : ""}
+                            projectTaskListRefatch={projectTaskListRefatch}
+                          />
+                        </HStack>
+                      </HStack>
+                      <HStack>
+                        <Box textAlign={"center"}>
+                          <Text>마감</Text>
+                        </Box>
+                        <Text>{task.due_date_formatted}</Text>
+
+                        <ModalButtonForUpdateProjectTaskCompleteDate
+                          taskPk={task.pk}
+                          original_due_date={task.due_date ? task.due_date : ""}
+                          started_at={task.started_at ? task.started_at : ""}
+                          projectTaskListRefatch={projectTaskListRefatch}
+                        />
+                      </HStack>
+                    </Box>
+                    <Box border={"0px solid blue"} width={"200px"}>
+                      <HStack>
+                        <Box textAlign={"center"}>
+                          <Text>경과</Text>
+                        </Box>
+                        <Box>
+                          <Text>{task.elapsed_time_from_started_at}</Text>
+                        </Box>
+                      </HStack>
+
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>남은 시간</Text>
@@ -359,6 +418,7 @@ function UncompletedTaskRowForMe({
           <Box maxW="100%" bg="blue.100" color="red.500" mt={-3.5}>
             <PaginationComponent
               current_page_num={currentPageNum}
+              task_number_for_one_page={task_number_for_one_page}
               total_page_num={totalPageCount}
               setCurrentPageNum={setCurrentPageNum}
             />
