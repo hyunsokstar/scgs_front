@@ -26,7 +26,7 @@ function CompletedProjectTaskListForMe({}: Props): ReactElement {
   );
 
   return (
-    <Box maxW={"100%"} border={"1px solid black"} p={0} mt={"0px"}>
+    <Box w={"100%"} border={"1px solid black"} p={0} mt={"0px"}>
       <Flex
         justifyContent={"space-between"}
         alignItems={"center"}

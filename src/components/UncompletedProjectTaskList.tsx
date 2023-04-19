@@ -6,10 +6,17 @@ import {
   HStack,
   Text,
   Input,
+  useToast,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  useTheme,
 } from "@chakra-ui/react";
-import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import React, { ReactElement, useState, useEffect } from "react";
 import { getUncompletedTaskList } from "../apis/project_progress_api";
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
@@ -20,11 +27,15 @@ import UncompletedTaskRow from "./UncompletedTaskRow";
 interface Props {}
 
 function UncompletedProjectTaskList({}: Props): ReactElement {
+  const theme = useTheme();
+
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
   const [
     selectedPeriodOptionForUncompletedTaskList,
     setSelectedPeriodOptionForUncompletedTaskList,
   ] = useState("all");
+
+  const [username_for_search, set_username_for_search] = useState<string>();
 
   const {
     isLoading,
@@ -35,6 +46,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
       "getUncompletedTaskList",
       currentPageNum,
       selectedPeriodOptionForUncompletedTaskList,
+      username_for_search,
     ],
     getUncompletedTaskList,
     {
@@ -50,6 +62,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   const [filterValueForTaskManager, setFilterValueForTaskManager] =
     useState<any>();
   const [filterValueForTask, setFilterValueForTask] = useState<any>();
+
+  const toast = useToast();
 
   console.log("taskListData  : ", taskListData);
   console.log("filteredData  : ", filteredData);
@@ -108,6 +122,31 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
     const value = event.target.value;
     setFilterValueForTaskManager(value);
     updateFilteredDataForTaskManager(value);
+  };
+
+  // const mutationForSearchListByUserName = useMutation(
+  //   apiForSelctUncompletedListForUserName(username),
+  //   {
+  //     onSuccess: (result: any) => {
+  //       console.log("result : ", result);
+  //       // queryClient.refetchQueries(["getOneProjectTask"]);
+
+  //       toast({
+  //         status: "success",
+  //         title: "task status update success",
+  //         description: result.message,
+  //       });
+  //     },
+  //     onError: (err) => {
+  //       console.log("error : ", err);
+  //     },
+  //   }
+  // );
+
+  const searchUncompletedListforUserName = (username: string) => {
+    console.log("username : ", username);
+
+    set_username_for_search(username);
   };
 
   return (
@@ -183,9 +222,38 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                     >
                       {taskListData?.writers_info?.map((writer) => {
                         return (
-                          <Text fontSize="lg" color="blue.900">
-                            {writer.username}: {writer.task_count}
-                          </Text>
+                          <Box fontSize="lg" color="blue.900">
+                            <HStack>
+                              <Button
+                                variant={"outline"}
+                                size={"sm"}
+                                border={"1px solid black"}
+                                mb={1}
+                                _hover={{
+                                  bg: "#90CDF4",
+                                  color: "brown",
+                                }}
+                                onClick={() =>
+                                  searchUncompletedListforUserName(
+                                    writer.username
+                                  )
+                                }
+                                bgColor={
+                                  writer.username === username_for_search
+                                    ? "#90CDF4"
+                                    : ""
+                                }
+                                // color={
+                                //   writer.username === username_for_search
+                                //   ? "brown"
+                                //   : "black" 
+                                // }
+                              >
+                                {writer.username}
+                              </Button>{" "}
+                              :<Text>{writer.task_count}</Text>
+                            </HStack>
+                          </Box>
                         );
                       })}
                     </Td>
@@ -197,7 +265,6 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
               </Table>
             </Box>
           </Box>
-          
         </Box>
 
         <Box>

@@ -21,8 +21,18 @@ interface ICommentTextUpdateApiParameter {
   commentText: string;
 }
 
-// 1122
+// export const apiForSearchUncompletedTaskListByUserName = ({ username }: any) => {
+//   return instance
+//     .get(
+//       `/project_progress/search-by-username/?username=${encodeURIComponent(username)}`,
+//     )
+//     .then((response): any => {
+//       console.log("response : ", response);
+//       return response.data;
+//     });
+// };
 
+// 1122
 export const getDataForTaskStaticsForIsCompleted = () => {
   const config: AxiosRequestConfig = {
     method: "get",
@@ -593,7 +603,7 @@ export const getCompletedTaskListForMe = ({
 };
 
 export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
-  const [_, pageNum, selectedPeriodOptionForUncompletedTaskList] = queryKey;
+  const [_, pageNum, selectedPeriodOptionForUncompletedTaskList, username_for_search] = queryKey;
 
   console.log(
     "selectedPeriodOptionForUncompletedTaskList : ",
@@ -607,6 +617,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         params: {
           page: pageNum,
           selectedPeriodOptionForUncompletedTaskList,
+          username_for_search
         },
       })
       .then((response) => {
