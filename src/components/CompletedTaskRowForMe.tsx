@@ -32,6 +32,7 @@ import {
 import { Link } from "react-router-dom";
 import { deleteOneProjectTask } from "../apis/user_api";
 import PaginationComponent from "./PaginationComponent";
+
 interface IProps {}
 
 function CompletedTaskRowForMe({
@@ -143,24 +144,21 @@ function CompletedTaskRowForMe({
                 key={task.pk}
                 height={16}
                 border={"1px solid lightgray"}
-                width={"1500px"}
+                width={"1600px"}
                 my={0}
                 display={"flex"}
                 alignItems={"center"}
                 _hover={{ backgroundColor: "gray.100" }}
               >
                 <HStack>
-                  <Box border={"0px solid yellow"} width={"100px"}>
+                  <Box border={"0px solid yellow"} width={"50px"}>
                     <HStack ml={0}>
                       <Checkbox mx={2} />
-                      {task.task_manager !== null ? (
-                        <Text color={"blue.600"}>
-                          {task.task_manager.username}
-                        </Text>
-                      ) : (
-                        <Text color={"tomato"}>{task.writer}</Text>
-                      )}
                     </HStack>
+                  </Box>
+                  <Box width={"140px"}>
+                    <Text color={"blue.600"}>{task.task_manager.username}</Text>
+                    <Text color={"tomato"}>{task.writer}</Text>
                   </Box>
                   <Box border={"0px solid blue"} width={"360px"}>
                     <Text fontSize="sm" fontWeight="bold">
@@ -223,7 +221,6 @@ function CompletedTaskRowForMe({
                     </HStack>
                   </Box>
                   <Box border={"0px solid blue"} width={"260px"}>
-
                     <HStack>
                       <Box textAlign={"center"}>
                         <Text>경과</Text>
@@ -257,21 +254,6 @@ function CompletedTaskRowForMe({
           })}
         </List>
       </Box>
-
-      {/* <Box overflowX="auto" width={"300px"}>
-        <List border={"0px solid blue"}>
-          <ListItem width={"500px"}>Item 1</ListItem>
-          <ListItem width={"500px"}>Item 2</ListItem>
-          <ListItem width={"500px"}>Item 3</ListItem>
-          <ListItem width={"500px"}>Item 4</ListItem>
-          <ListItem width={"500px"}>Item 5</ListItem>
-          <ListItem width={"500px"}>Item 6</ListItem>
-          <ListItem width={"500px"}>Item 7</ListItem>
-          <ListItem width={"500px"}>Item 8</ListItem>
-          <ListItem width={"500px"}>Item 9</ListItem>
-          <ListItem width={"500px"}>Item 10</ListItem>
-        </List>
-      </Box> */}
 
       {/* 페이지 네이션 영역 */}
       <Box mt={5}>
