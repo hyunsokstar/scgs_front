@@ -221,12 +221,10 @@ function UncompletedTaskRowForMe({
                     <Box border={"0px solid yellow"} width={"100px"}>
                       <Text color={"blue.600"}>
                         {task.task_manager?.username}
-                      </Text>{" "}
-                    </Box>
-
-                    <Box border={"0px solid yellow"} width={"100px"}>
+                      </Text>
                       <Text color={"tomato"}>{task.writer}</Text>
                     </Box>
+
                     <Box border={"0px solid blue"} width={"480px"}>
                       <Text fontSize="sm" fontWeight="bold">
                         <Link
@@ -242,7 +240,7 @@ function UncompletedTaskRowForMe({
                       display="flex"
                       border="0px solid green"
                       justifyContent={"flex-start"}
-                      width="320px"
+                      width="300px"
                       gap={10}
                     >
                       <Box border={"0px solid green"} width={"50px"}>
@@ -277,55 +275,21 @@ function UncompletedTaskRowForMe({
                       </Box>
                     </Box>
 
-                    {/* <Box border={"0px solid blue"} width={"310px"}>
-                      <HStack>
-                        <Box textAlign={"center"}>
-                          <Text>시작</Text>
-                        </Box>
-                        <HStack>
-                          <Text>{task.started_at_formatted}</Text>
-                          <ModalButtonForUpdateProjectTaskStartedAt
-                            taskPk={task.pk}
-                            original_due_date={
-                              task.due_date ? task.due_date : ""
-                            }
-                            started_at={task.started_at ? task.started_at : ""}
-                            projectTaskListRefatch={projectTaskListRefatch}
-                          />
-                        </HStack>
-                      </HStack>
-                      <HStack>
-                        <Box textAlign={"center"}>
-                          <Text>경과</Text>
-                        </Box>
-                        <Box>
-                          <Text>{task.elapsed_time_from_started_at}</Text>
-                        </Box>
-                      </HStack>
+                    <Box
+                      border={"0px solid blue"}
+                      width={"200px"}
+                      display={"flex"}
+                      justifyContent={"flex-start"}
+                      alignItems={"center"}
+                    >
+                      <StarRating
+                        initialRating={task.importance}
+                        taskPk={task.pk}
+                        onChangeForStarRatingHandler={
+                          onChangeForStarRatingHandler
+                        }
+                      />
                     </Box>
-                    <Box border={"0px solid blue"} width={"310px"}>
-                      <HStack>
-                        <Box textAlign={"center"}>
-                          <Text>마감</Text>
-                        </Box>
-                        <Text>{task.due_date_formatted}</Text>
-
-                        <ModalButtonForUpdateProjectTaskCompleteDate
-                          taskPk={task.pk}
-                          original_due_date={task.due_date ? task.due_date : ""}
-                          started_at={task.started_at ? task.started_at : ""}
-                          projectTaskListRefatch={projectTaskListRefatch}
-                        />
-                      </HStack>
-                      <HStack>
-                        <Box textAlign={"center"}>
-                          <Text>남은 시간</Text>
-                        </Box>
-                        <Box>
-                          <Text>{task.time_left_to_due_date}</Text>
-                        </Box>
-                      </HStack>
-                    </Box> */}
 
                     <Box border={"0px solid blue"} width={"310px"}>
                       <HStack>
@@ -376,22 +340,6 @@ function UncompletedTaskRowForMe({
                           <Text>{task.time_left_to_due_date}</Text>
                         </Box>
                       </HStack>
-                    </Box>
-
-                    <Box
-                      border={"0px solid blue"}
-                      width={"180px"}
-                      display={"flex"}
-                      justifyContent={"flex-start"}
-                      alignItems={"center"}
-                    >
-                      <StarRating
-                        initialRating={task.importance}
-                        taskPk={task.pk}
-                        onChangeForStarRatingHandler={
-                          onChangeForStarRatingHandler
-                        }
-                      />
                     </Box>
 
                     <Box>

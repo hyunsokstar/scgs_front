@@ -188,43 +188,6 @@ function CompletedTaskRowForMe({
                     />
                   </Box>
 
-                  <Box border={"0px solid blue"} width={"260px"}>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>시작</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.started_at_formatted}</Text>
-                      </Box>
-                    </HStack>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>경과</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.elapsed_time_from_started_at}</Text>
-                      </Box>
-                    </HStack>
-                  </Box>
-                  <Box border={"0px solid blue"} width={"260px"}>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>완료</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.completed_at_formatted}</Text>
-                      </Box>
-                    </HStack>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>소요 시간</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.time_consumed_from_start_to_complete}</Text>
-                      </Box>
-                    </HStack>
-                  </Box>
-
                   <Box
                     border={"0px solid blue"}
                     width={"260px"}
@@ -239,6 +202,45 @@ function CompletedTaskRowForMe({
                         onChangeForStarRatingHandler
                       }
                     />
+                  </Box>
+
+                  <Box border={"0px solid blue"} width={"260px"}>
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>시작</Text>
+                      </Box>
+                      <Box>
+                        <Text>{task.started_at_formatted}</Text>
+                      </Box>
+                    </HStack>
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>완료</Text>
+                      </Box>
+                      <Box>
+                        <Text>{task.completed_at_formatted}</Text>
+                      </Box>
+                    </HStack>
+                  </Box>
+                  <Box border={"0px solid blue"} width={"260px"}>
+
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>경과</Text>
+                      </Box>
+                      <Box>
+                        <Text>{task.elapsed_time_from_started_at}</Text>
+                      </Box>
+                    </HStack>
+
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>소요 시간</Text>
+                      </Box>
+                      <Box>
+                        <Text>{task.time_consumed_from_start_to_complete}</Text>
+                      </Box>
+                    </HStack>
                   </Box>
 
                   <Box width={"100px"} border="0px solid green">
