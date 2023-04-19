@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ChangeEvent, ReactElement, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   List,
@@ -27,6 +27,7 @@ import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
 import SlideToggleButton from "./SlideToggleButton";
 import {
+  apiForUpdateScoreByTester,
   apiForUpdateTaskCheckResultByTester,
   updateProjectImportance,
   updateProjectTaskCompleted,
@@ -46,9 +47,9 @@ function CompletedTaskRowForTester({
   setCurrentPageNum,
   projectTaskListRefatch,
 }: ITypeForProjectProgressList): ReactElement {
-  const completedColor = useColorModeValue("green.500", "green.300");
-  const inProgressColor = useColorModeValue("orange.500", "orange.300");
   const queryClient = useQueryClient();
+
+  const [scoreByTesterForUpdate, setScoreByTesterForUpdate] = useState<string>();
 
   const handleSlideToggleChange = (checked: boolean) => {
     console.log(`SlideToggle is now ${checked ? "on" : "off"}`);
@@ -159,9 +160,33 @@ function CompletedTaskRowForTester({
   const deleteHandelr = (pk: number) => {
     const response = deleteMutation.mutate(pk);
     console.log("response :", response);
-    // if (projectTaskListRefatch) {
-    //   projectTaskListRefatch();
-    // }
+  };
+
+  const mutationForUpdateScoreByTester = useMutation(
+    apiForUpdateScoreByTester,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        queryClient.refetchQueries(["getCompletedTaskListForTester"]);
+
+        toast({
+          status: "success",
+          title: "task score update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const handleClickForUpdateScoreByTester = (pk:any) => {
+    mutationForUpdateScoreByTester.mutate({pk, scoreByTesterForUpdate});
+  }
+
+  const handleChangeForScoreByTester = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("handleChangeForScoreByTester check");
+    console.log("e : ", e.target.value);
+    
+    setScoreByTesterForUpdate(e.target.value);
   };
 
   return (
@@ -265,19 +290,17 @@ function CompletedTaskRowForTester({
                     <InputGroup size="sm">
                       <Input
                         border={"1px solid black"}
-                        // pr="4.5rem"
-                        // placeholder="세 자리 숫자 입력"
                         defaultValue={task.score_by_tester}
-                        // onChange={handleChange}
+                        onChange={handleChangeForScoreByTester}
                       />
                       <InputRightElement width="60px" mr={-2}>
                         <Button
                           border={"1px solid green"}
                           size="sm"
-                          // onClick={handleClick}
+                          onClick={() => handleClickForUpdateScoreByTester(task.pk)}
                           // disabled={value === undefined || value < 0}
                         >
-                          확인
+                          평가
                         </Button>
                       </InputRightElement>
                     </InputGroup>

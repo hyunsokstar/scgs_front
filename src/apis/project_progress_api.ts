@@ -397,8 +397,33 @@ export const updateProjectTaskCompleted = (taskPk: string) => {
     });
 };
 
-export const apiForUpdateTaskCheckResultByTester = (taskPk: string) => {
+export const apiForUpdateScoreByTester = ({
+  pk,
+  scoreByTesterForUpdate,
+}: any) => {
+  console.log(
+    "parameter check for apiForUpdateScoreByTester : ",
+    pk,
+    scoreByTesterForUpdate
+  );
 
+  return instance
+    .put(
+      `/project_progress/${pk}/score-by-tester/update`,
+      { score_by_tester: scoreByTesterForUpdate },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
+export const apiForUpdateTaskCheckResultByTester = (taskPk: string) => {
   return instance
     .put(
       `/project_progress/${taskPk}/check-result/update`,
@@ -533,7 +558,6 @@ export const getCompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
       },
     })
     .then((response) => {
-
       const response_data = {
         ProjectProgressList: response.data.ProjectProgressList,
         totalPageCount: response.data.totalPageCount,
