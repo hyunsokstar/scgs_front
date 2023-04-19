@@ -151,6 +151,7 @@ export interface ITypeForProjectProgressList {
       time_left_to_due_date?: string;
       due_date?: string;
       current_status?: string;
+      check_result_by_tester: boolean;
     }
   ];
   currentPageNum?: number | undefined;

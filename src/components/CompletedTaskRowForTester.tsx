@@ -26,6 +26,7 @@ import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
 import SlideToggleButton from "./SlideToggleButton";
 import {
+    apiForUpdateTaskCheckResultByTester,
   updateProjectImportance,
   updateProjectTaskCompleted,
 } from "../apis/project_progress_api";
@@ -36,7 +37,7 @@ import ModalButtonForUpdateProjectTaskCompleteDate from "./modal/ModalButtonForU
 import ModalButtonForUpdateProjectTaskStartedAt from "./modal/ModalButtonForUpdateProjectTaskStartedAt";
 interface IProps {}
 
-function CompletedTaskRow({
+function CompletedTaskRowForTester({
   ProjectProgressList,
   totalPageCount,
   task_number_for_one_page,
@@ -73,6 +74,33 @@ function CompletedTaskRow({
 
   const updateHandlerForTaskStatus = (taskPk: string) => {
     updateProjectTaskMutations.mutate(taskPk);
+    console.log("update 핸들러 for task_status check pk : ", taskPk);
+  };
+
+  //   check_result
+  const mutationForUpdateCheckResultByTester = useMutation(
+    apiForUpdateTaskCheckResultByTester,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        // queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getCompletedTaskListForTester"]);
+        // if (projectTaskListRefatch) {
+        //   projectTaskListRefatch();
+        // }
+
+        toast({
+          status: "success",
+          title: "check result update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const updateHandlerForCheckResultByTester = (taskPk: string) => {
+    mutationForUpdateCheckResultByTester.mutate(taskPk);
     console.log("update 핸들러 for task_status check pk : ", taskPk);
   };
 
@@ -145,7 +173,7 @@ function CompletedTaskRow({
                 key={task.pk}
                 height={16}
                 border={"1px solid lightgray"}
-                width={"1414px"}
+                width={"1474px"}
                 my={0}
                 display={"flex"}
                 alignItems={"center"}
@@ -157,12 +185,10 @@ function CompletedTaskRow({
                       <Checkbox mx={2} />
                     </HStack>
                   </Box>
-                    <Box width={"140px"}>
-                      <Text color={"blue.600"}>
-                        {task.task_manager.username}
-                      </Text>
-                      <Text color={"tomato"}>{task.writer}</Text>
-                    </Box>
+                  <Box width={"140px"}>
+                    <Text color={"blue.600"}>{task.task_manager.username}</Text>
+                    <Text color={"tomato"}>{task.writer}</Text>
+                  </Box>
                   <Box border={"0px solid blue"} width={"420px"}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
@@ -186,6 +212,22 @@ function CompletedTaskRow({
                         updateHandlerForTaskStatus(task.pk);
                       }}
                       checked={task.task_completed}
+                    />
+                  </Box>
+
+                  <Box
+                    display={"flex"}
+                    justifyContent={"flex-start"}
+                    border={"0px solid green"}
+                    width={"120px"}
+                  >
+                    <SlideToggleButton
+                      onChange={() => {
+                        updateHandlerForCheckResultByTester(task.pk);
+                      }}
+                      onColor={"#FADADD"}
+                      offColor={"#D3D3D3"}
+                      checked={task.check_result_by_tester}
                     />
                   </Box>
 
@@ -272,4 +314,4 @@ function CompletedTaskRow({
   );
 }
 
-export default CompletedTaskRow;
+export default CompletedTaskRowForTester;

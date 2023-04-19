@@ -1,15 +1,17 @@
-import React from 'react'
+import { Box, HStack, VStack } from "@chakra-ui/react";
+import React, { ReactElement } from "react";
+import CompletedProjectTaskListForTester from "../components/CompletedProjectTaskListForTester";
 
-interface Props {
-  
-}
+type Props = {};
 
-const TestBoardPage = (props: Props) => {
+// rome-ignore lint/correctness/noEmptyPattern: <explanation>
+function TestBoardPage({}: Props): ReactElement {
   return (
-    <div>
-      테스팅 페이지
-    </div>
-  )
+    <VStack gap={1}>
+      <CompletedProjectTaskListForTester />
+    </VStack>
+  );
 }
 
-export default TestBoardPage
+export default TestBoardPage;
+

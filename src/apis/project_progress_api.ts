@@ -397,6 +397,24 @@ export const updateProjectTaskCompleted = (taskPk: string) => {
     });
 };
 
+export const apiForUpdateTaskCheckResultByTester = (taskPk: string) => {
+
+  return instance
+    .put(
+      `/project_progress/${taskPk}/check-result/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const updateProjectInProgress = (taskPk: string) => {
   console.log("updateProjectTaskCompleted 실행 check");
 
