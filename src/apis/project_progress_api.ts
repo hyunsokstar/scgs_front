@@ -533,15 +533,11 @@ export const getCompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
       },
     })
     .then((response) => {
-      // console.log("api result for completed task list: ", response);
 
       const response_data = {
         ProjectProgressList: response.data.ProjectProgressList,
-        // totalPageCount: response.data.totalPageCount,
-
         totalPageCount: response.data.totalPageCount,
         task_number_for_one_page: response.data.task_number_for_one_page,
-
         writers_info: response.data.writers_info,
         count_for_ready: response.data.count_for_ready,
         count_for_in_progress: response.data.count_for_in_progress,

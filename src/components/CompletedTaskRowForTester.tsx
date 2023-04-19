@@ -17,7 +17,8 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
+import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
+
 import {
   IResponseTypeForProjectTaskUpdate,
   ITypeForProjectProgressList,
@@ -26,7 +27,7 @@ import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
 import SlideToggleButton from "./SlideToggleButton";
 import {
-    apiForUpdateTaskCheckResultByTester,
+  apiForUpdateTaskCheckResultByTester,
   updateProjectImportance,
   updateProjectTaskCompleted,
 } from "../apis/project_progress_api";
@@ -185,7 +186,7 @@ function CompletedTaskRowForTester({
                       <Checkbox mx={2} />
                     </HStack>
                   </Box>
-                  <Box width={"140px"}>
+                  <Box width={"160px"}>
                     <Text color={"blue.600"}>{task.task_manager.username}</Text>
                     <Text color={"tomato"}>{task.writer}</Text>
                   </Box>
@@ -260,27 +261,29 @@ function CompletedTaskRowForTester({
                       />
                     </HStack>
                   </Box>
-                  <Box border={"0px solid blue"} width={"200px"}>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>경과</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.elapsed_time_from_started_at}</Text>
-                      </Box>
-                    </HStack>
-
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>남은 시간</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.time_left_to_due_date}</Text>
-                      </Box>
-                    </HStack>
+                  <Box border={"0px solid blue"} width={"140px"}>
+                    <InputGroup size="sm">
+                      <Input
+                        border={"1px solid black"}
+                        // pr="4.5rem"
+                        // placeholder="세 자리 숫자 입력"
+                        defaultValue={task.score_by_tester}
+                        // onChange={handleChange}
+                      />
+                      <InputRightElement width="60px" mr={-2}>
+                        <Button
+                          border={"1px solid green"}
+                          size="sm"
+                          // onClick={handleClick}
+                          // disabled={value === undefined || value < 0}
+                        >
+                          확인
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
                   </Box>
 
-                  <Box>
+                  <Box pl={"40px"}>
                     <IconButton
                       aria-label="삭제"
                       icon={<FaTrash />}

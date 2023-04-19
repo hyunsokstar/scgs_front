@@ -129,8 +129,10 @@ export interface ITypeForProjectProgressList {
   writers_info?: Writer[];
   totalPageCount: number;
   task_number_for_one_page?: number;
+  score_by_tester?: number;
   ProjectProgressList: [
     {
+      score_by_tester?: number;
       pk: string;
       writer?: string;
       task_manager: {
