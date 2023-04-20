@@ -170,11 +170,10 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             gap={2}
           >
             <Box border="0px solid red">
-              <Table borderWidth="1px" borderColor="blue.200">
+              <Table>
                 <Thead>
-                  <Tr>
+                  <Tr borderBottom={"2px solid #9AE6B4"}>
                     <Th colSpan={2}>
-                      {" "}
                       <Text fontSize={22}>
                         비완료 리스트 (총: {taskListData?.totalPageCount} 개,
                         per_page: {taskListData?.task_number_for_one_page} 개){" "}
@@ -183,21 +182,15 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr height="30px">
-                    <Td
-                      borderBottomWidth="0px"
-                      borderRightWidth="0px"
-                      borderColor="teal.200"
-                    >
+                  <Tr borderBottom={"2px solid #9AE6B4"}>
+                    <Td>
                       <Text>진행별</Text>
                     </Td>
                     <Td
-                      borderBottomWidth="1px"
-                      borderRightWidth="1px"
-                      borderColor="teal.200"
                       display={"flex"}
                       justifyContent={"space-between"}
                       gap={2}
+                      borderBottom={"1px solid #9AE6B4"}
                     >
                       <Text>⚪ :{taskListData?.count_for_ready}</Text>
                       <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
@@ -207,19 +200,11 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                       Row 1, Column 3
                     </Td> */}
                   </Tr>
-                  <Tr height="30px">
-                    <Td
-                      borderBottomWidth="1px"
-                      borderRightWidth="1px"
-                      borderColor="teal.200"
-                    >
+                  <Tr height="30px" borderBottom={"2px solid #9AE6B4"}>
+                    <Td>
                       <Text>담당자별:</Text>
                     </Td>
-                    <Td
-                      borderBottomWidth="1px"
-                      borderRightWidth="1px"
-                      borderColor="teal.200"
-                    >
+                    <Td>
                       {taskListData?.writers_info?.map((writer) => {
                         return (
                           <Box fontSize="lg" color="blue.900">
