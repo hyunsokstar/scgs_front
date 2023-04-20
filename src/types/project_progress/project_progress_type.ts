@@ -105,6 +105,10 @@ export interface IOneTaskForProjectTaskType {
   due_date: string;
   started_at_formatted: string;
   elapsed_time_from_started_at: string;
+
+  cash_prize: number;
+  is_urgent_request: boolean;
+
   task_images: [
     {
       pk: number;
@@ -218,7 +222,7 @@ export type TaskManagerInfo = {
   count_for_testing_task: number;
   uncompleted_count_for_task: number;
   total_count_for_uncompleted_task: number;
-  total_count_for_completed_task: number;  
+  total_count_for_completed_task: number;
 };
 
 export type ITypeForTaskStaticsDataForPerson = TaskManagerInfo[];

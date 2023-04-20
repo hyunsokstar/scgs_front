@@ -446,6 +446,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
                                   <Input
                                     type="number"
                                     placeholder=" 상금 입력"
+                                    textAlign={"center"}
+                                    defaultValue={taskData.cash_prize}
                                     // value={value}
                                     // onChange={handleChange}
                                   />
@@ -467,7 +469,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                               <Td w="50%">
                                 <Checkbox
                                   colorScheme="red"
-                                  defaultChecked={false}
+                                  defaultChecked={taskData.is_urgent_request}
                                   size={"lg"}
                                 >
                                   <Text
