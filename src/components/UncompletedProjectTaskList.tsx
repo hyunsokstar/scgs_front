@@ -243,15 +243,9 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                                     ? "#90CDF4"
                                     : ""
                                 }
-                                // color={
-                                //   writer.username === username_for_search
-                                //   ? "brown"
-                                //   : "black" 
-                                // }
                               >
-                                {writer.username}
-                              </Button>{" "}
-                              :<Text>{writer.task_count}</Text>
+                                {writer.username} : {writer.task_count}
+                              </Button>
                             </HStack>
                           </Box>
                         );

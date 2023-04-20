@@ -1,4 +1,12 @@
-import { Box, Button, Container, Flex, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Input,
+  Text,
+  HStack,
+} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import React, { ReactElement, useState, useEffect } from "react";
 import { getCompletedTaskList } from "../apis/project_progress_api";
@@ -19,6 +27,8 @@ function CompletedProjectTaskList({}: Props): ReactElement {
     setSelectedPeriodOptionForUncompletedTaskList,
   ] = useState("all");
 
+  const [username_for_search, set_username_for_search] = useState<string>();
+
   const {
     isLoading,
     data: pageProgressListData,
@@ -28,6 +38,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
       "getCompletedTaskList",
       currentPageNum,
       selectedPeriodOptionForUncompletedTaskList,
+      username_for_search,
     ],
     getCompletedTaskList,
     {
@@ -98,6 +109,12 @@ function CompletedProjectTaskList({}: Props): ReactElement {
     updateFilteredDataForTaskManager(value);
   };
 
+  const searchCompletedListforUserName = (username: string) => {
+    console.log("username : ", username);
+
+    set_username_for_search(username);
+  };
+
   return (
     <Container maxW={"100%"} border={"0px solid purple"} p={0} mt={0}>
       <Box
@@ -119,7 +136,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
             gap={2}
           >
             <Box border="0px solid red">
-              <Table border="0px"variant={"unstyled"}>
+              <Table border="0px" variant={"unstyled"}>
                 <Thead>
                   <Tr>
                     <Th colSpan={2}>
@@ -135,22 +152,48 @@ function CompletedProjectTaskList({}: Props): ReactElement {
                 <Tbody border={"0px solid green"}>
                   <Tr height="30px">
                     <Td
-                      // borderBottomWidth="0px"
-                      // borderRightWidth="1px"
-                      // borderColor="teal.200"
+                    // borderBottomWidth="0px"
+                    // borderRightWidth="1px"
+                    // borderColor="teal.200"
                     >
                       <Text>담당자별:</Text>
                     </Td>
                     <Td
-                      // borderBottomWidth="0px"
-                      // borderRightWidth="1px"
-                      // borderColor="teal.200"
+                    // borderBottomWidth="0px"
+                    // borderRightWidth="1px"
+                    // borderColor="teal.200"
                     >
                       {pageProgressListData?.writers_info?.map((writer) => {
                         return (
-                          <Text fontSize="lg" color="blue.900">
-                            {writer.username}: {writer.task_count}
-                          </Text>
+                          // <Text fontSize="lg" color="blue.900">
+                          //   {writer.username}: {writer.task_count}
+                          // </Text>
+                          <Box fontSize="lg" color="blue.900">
+                            <HStack>
+                              <Button
+                                variant={"outline"}
+                                size={"sm"}
+                                border={"1px solid black"}
+                                mb={1}
+                                _hover={{
+                                  bg: "#90CDF4",
+                                  color: "brown",
+                                }}
+                                onClick={() =>
+                                  searchCompletedListforUserName(
+                                    writer.username
+                                  )
+                                }
+                                bgColor={
+                                  writer.username === username_for_search
+                                    ? "#90CDF4"
+                                    : ""
+                                }
+                              >
+                                {writer.username} : {writer.task_count}
+                              </Button>
+                            </HStack>
+                          </Box>
                         );
                       })}
                     </Td>

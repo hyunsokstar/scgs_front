@@ -558,13 +558,19 @@ export const insertProjectProgressRow = ({
     .then((response) => response.data);
 
 export const getCompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
-  const [_, pageNum, selectedPeriodOptionForUncompletedTaskList] = queryKey;
+  const [
+    _,
+    pageNum,
+    selectedPeriodOptionForUncompletedTaskList,
+    username_for_search,
+  ] = queryKey;
   // console.log("pageNum : ", pageNum);
   return instance
     .get("project_progress/completed", {
       params: {
         page: pageNum,
         selectedPeriodOptionForUncompletedTaskList,
+        username_for_search,
       },
     })
     .then((response) => {
@@ -603,7 +609,12 @@ export const getCompletedTaskListForMe = ({
 };
 
 export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
-  const [_, pageNum, selectedPeriodOptionForUncompletedTaskList, username_for_search] = queryKey;
+  const [
+    _,
+    pageNum,
+    selectedPeriodOptionForUncompletedTaskList,
+    username_for_search,
+  ] = queryKey;
 
   console.log(
     "selectedPeriodOptionForUncompletedTaskList : ",
@@ -617,7 +628,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         params: {
           page: pageNum,
           selectedPeriodOptionForUncompletedTaskList,
-          username_for_search
+          username_for_search,
         },
       })
       .then((response) => {
