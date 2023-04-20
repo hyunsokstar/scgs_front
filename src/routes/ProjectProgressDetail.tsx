@@ -33,8 +33,15 @@ import {
   Heading,
   Switch,
   Spacer,
+  Table,
+  Tbody,
+  Tr,
+  Td,
+  InputGroup,
+  InputRightElement,
+  InputLeftElement,
 } from "@chakra-ui/react";
-import { CheckCircleIcon } from "@chakra-ui/icons";
+import { FaDollarSign } from "react-icons/fa";
 
 import { useForm } from "react-hook-form";
 // import Calendar from "react-calendar";
@@ -398,44 +405,103 @@ function ProjectProgressDetail({}: Props): ReactElement {
                       </FormControl>
 
                       <Box pl={5} border="0px solid blue">
-                        <HStack>
-                          <VStack>
-                            <Text>시작</Text>
-                            <Datetime
-                              isValidDate={invalidDateForStartedAt}
-                              onChange={handleChangeForStartedAt}
-                              initialValue={
-                                taskData.started_at
-                                  ? new Date(taskData.started_at)
-                                  : new Date()
-                              }
-                            />
-                          </VStack>
-
-                          <VStack>
-                            <Text>마감</Text>
-                            <Datetime
-                              isValidDate={invalidDateForCompletedAt}
-                              onChange={handleChangeForStartedAt}
-                              initialValue={
-                                taskData.started_at
-                                  ? new Date(taskData.started_at)
-                                  : new Date()
-                              }
-                            />
-                          </VStack>
-                        </HStack>
+                        <Table w="100%">
+                          <Tbody>
+                            <Tr borderBottom="1px" borderColor="gray.200">
+                              <Td w="50%">
+                                <Text>시작:</Text>
+                                <Datetime
+                                  isValidDate={invalidDateForStartedAt}
+                                  onChange={handleChangeForStartedAt}
+                                  initialValue={
+                                    taskData.started_at
+                                      ? new Date(taskData.started_at)
+                                      : new Date()
+                                  }
+                                />
+                              </Td>
+                              <Td w="50%">
+                                <Text>마감:</Text>
+                                <Datetime
+                                  isValidDate={invalidDateForCompletedAt}
+                                  onChange={handleChangeForStartedAt}
+                                  initialValue={
+                                    taskData.started_at
+                                      ? new Date(taskData.started_at)
+                                      : new Date()
+                                  }
+                                />
+                              </Td>
+                            </Tr>
+                            <Tr>
+                              <Td w="50%">
+                                <InputGroup w="200px">
+                                  <InputLeftElement
+                                    pointerEvents="none"
+                                    children={<FaDollarSign color="gray.300" />}
+                                    fontSize="md"
+                                    bgColor={"rgba(255, 215, 0, 0.5)"}
+                                    px={2}
+                                  />
+                                  <Input
+                                    type="number"
+                                    placeholder=" 상금 입력"
+                                    // value={value}
+                                    // onChange={handleChange}
+                                  />
+                                  <InputRightElement>
+                                    <Button
+                                      variant={"outline"}
+                                      type="submit"
+                                      // h="2.5rem"
+                                      size="md"
+                                      mr={0}
+                                      // bg="blue.500"
+                                      _hover={{ bg: "blue.600" }}
+                                    >
+                                      입력
+                                    </Button>
+                                  </InputRightElement>
+                                </InputGroup>
+                              </Td>
+                              <Td w="50%">
+                                <Checkbox
+                                  colorScheme="red"
+                                  defaultChecked={false}
+                                  size={"lg"}
+                                >
+                                  <Text
+                                    ml="2"
+                                    fontSize="md"
+                                    fontWeight="semibold"
+                                  >
+                                    긴급
+                                  </Text>
+                                </Checkbox>
+                              </Td>
+                            </Tr>
+                          </Tbody>
+                        </Table>
                       </Box>
-
+                      <Spacer />
                       <Button
                         type="submit"
+                        mt={"20px"}
                         isLoading={submitting}
                         loadingText="Submitting..."
                         size="md"
-                        mt={4}
+                        mb={10}
+                        width="100%"
+                        variant="outline"
+                        _hover={{
+                          backgroundColor: "gray.100",
+                          borderColor: "blue.200",
+                        }}
+                        colorScheme="purple"
                       >
                         Submit
                       </Button>
+                      <Spacer />
                     </VStack>
                   </form>
                 </Box>
@@ -571,7 +637,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           >
             테스트 리스트 (테스트 체킹은 로그인 필요)
             {!isLoadingForTaskData && taskData ? (
-                <ModalButtonForCreateTest taskPk={taskData?.pk} />
+              <ModalButtonForCreateTest taskPk={taskData?.pk} />
             ) : (
               ""
             )}
