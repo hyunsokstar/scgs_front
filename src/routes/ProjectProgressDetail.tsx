@@ -133,6 +133,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
     task_description,
     importance,
     task_completed,
+    cash_prize,
+    is_urgent_request,
   }: ITypeForTaskDetailUpdateForm) => {
     // alert("submit 확인");
 
@@ -149,6 +151,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
       task_completed,
       started_at: started_at,
       due_date: due_date,
+      cash_prize,
+      is_urgent_request
     });
 
     setSubmitting(false);
@@ -448,6 +452,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                                     placeholder=" 상금 입력"
                                     textAlign={"center"}
                                     defaultValue={taskData.cash_prize}
+                                    {...register("cash_prize")}
                                     // value={value}
                                     // onChange={handleChange}
                                   />
@@ -471,6 +476,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                                   colorScheme="red"
                                   defaultChecked={taskData.is_urgent_request}
                                   size={"lg"}
+                                  {...register("is_urgent_request")}
                                 >
                                   <Text
                                     ml="2"

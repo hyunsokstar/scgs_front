@@ -44,6 +44,7 @@ import TaskStaticsPage from "./components/TaskStaticsPage";
 import Test6 from "./routes/TestPage/Test6";
 import Test7 from "./routes/TestPage/Test7";
 import { Test8 } from "./routes/TestPage/Test8";
+import WantedPage from "./routes/WantedPage";
 
 const router = createBrowserRouter([
   {
@@ -86,7 +87,7 @@ const router = createBrowserRouter([
       {
         path: "test5",
         element: <Test5 />,
-      },  
+      },
       {
         path: "test6",
         element: <Test6 />,
@@ -98,7 +99,11 @@ const router = createBrowserRouter([
       {
         path: "test8",
         element: <Test8 />,
-      },          
+      },
+      {
+        path: "wanted",
+        element: <WantedPage />,
+      },
       {
         path: "test-board",
         element: <TestBoardPage />,
@@ -231,10 +236,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // {
-      //   path: "estimates/:estimatePk",
-      //   element: <EstimateDetail />,
-      // },
       {
         path: "tutorials",
         element: <TutorialAdmin />,

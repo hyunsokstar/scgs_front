@@ -274,7 +274,7 @@ const Header = () => {
         </NavLink>
 
         <NavLink
-          to="/tech-note"
+          to="/wanted"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
           <Text
@@ -284,7 +284,7 @@ const Header = () => {
             cursor="pointer"
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
-            Tech Note
+            Wanted
           </Text>
         </NavLink>
 

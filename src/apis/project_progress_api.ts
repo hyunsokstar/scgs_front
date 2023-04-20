@@ -295,6 +295,8 @@ export const updateProjectApiByPk = ({
   task_completed,
   started_at,
   due_date,
+  cash_prize,
+  is_urgent_request,
 }: ITypeForTaskDetailUpdate) => {
   console.log(
     "data for api requset : ",
@@ -305,7 +307,9 @@ export const updateProjectApiByPk = ({
     importance, // number
     task_completed, // boolean
     started_at, // string or undefined
-    due_date // string or undefined
+    due_date, // string or undefined
+    cash_prize,
+    is_urgent_request
   );
 
   console.log(
@@ -317,7 +321,9 @@ export const updateProjectApiByPk = ({
     importance,
     task_completed,
     started_at,
-    due_date
+    due_date,
+    cash_prize,
+    is_urgent_request
   );
 
   return instance
@@ -332,6 +338,8 @@ export const updateProjectApiByPk = ({
         task_completed,
         started_at,
         due_date,
+        cash_prize,
+        is_urgent_request,
       },
       {
         headers: {

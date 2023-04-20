@@ -185,6 +185,8 @@ export interface ITypeForTaskDetailUpdate {
   task_completed: boolean;
   started_at?: string;
   due_date?: Date | undefined;
+  cash_prize?: number;
+  is_urgent_request?: boolean;
 }
 
 export interface ITypeForTaskDetailUpdateForm {
@@ -193,6 +195,8 @@ export interface ITypeForTaskDetailUpdateForm {
   task_description: string;
   importance: string;
   task_completed: boolean;
+  cash_prize: number;
+  is_urgent_request: boolean;
 }
 
 export interface IUserNamesForSelectOption {

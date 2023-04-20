@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { useEffect, useState } from "react";
 import {
   Box,
@@ -204,7 +205,12 @@ const TaskStatusPage = () => {
 
   useEffect(() => {
     refetchForGetProgectTasksStatus();
-  }, [dateRange, importance, taskManagerForFiltering ,refetchForGetProgectTasksStatus]);
+  }, [
+    dateRange,
+    importance,
+    taskManagerForFiltering,
+    refetchForGetProgectTasksStatus,
+  ]);
 
   const handleToggleForIsRequestedForHelp = (isChecked: boolean) => {
     setIsRequestedForHelp(isChecked);
@@ -277,24 +283,32 @@ const TaskStatusPage = () => {
 
     updateMutationForProjectStatusByDrag.mutate({ taskPk, status_to_move });
   };
+  
+  let current_status_name: string;
 
   const handleDrop = (
     event: React.DragEvent<HTMLDivElement>,
     columnName: string
   ) => {
     const taskPk = parseInt(event.dataTransfer.getData("text/plain"));
-
     console.log("drop event data(columnName, taskPk) : ", columnName, taskPk);
+
 
     // 해당 pk가 아닌것만 필터링하되 column.name 이 columnName(옮긴 영역) 일 경우 push
     const newColumns = columns.map((column) => {
-      // 모든 컬럼에서 제거후
+      // 기존 coluname 확인
+      column.tasks.map((task) => {
+        if (task.pk === taskPk) {
+          current_status_name = column.name;
+        }
+      });
+
+      // 기존 데이터에서 옮길 데이터 제거
       const tasks = column.tasks.filter((task) => task.pk !== taskPk);
+      // 총데이터에서 pk 로 task 다시 찾은뒤 제거한 tasks 에 추가
 
-      // 추가
-      if (column.name === columnName) {
+      if (column.name === columnName && column.name !== current_status_name) {
         const task_to_move = total_tasks.find((task) => task.pk === taskPk);
-
         tasks.push({
           pk: taskPk,
           task: task_to_move?.task,
@@ -306,11 +320,18 @@ const TaskStatusPage = () => {
         // alert(columnName);
         updateTaskStatusByDragHandler(taskPk, columnName);
       }
+
       return {
         ...column,
         tasks,
       };
     });
+
+    if (current_status_name === columnName) {
+      // alert("hi");
+      return;
+    }
+
     setColumns(newColumns);
   };
 
@@ -331,7 +352,7 @@ const TaskStatusPage = () => {
       bgColor={"white"}
     >
       <Heading mb="2" textAlign="center">
-        ToDo Status 
+        ToDo Status
       </Heading>
       {/* 
       todo: 검색 옵션 추가 : 
