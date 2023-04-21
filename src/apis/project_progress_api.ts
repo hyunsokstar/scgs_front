@@ -35,6 +35,29 @@ interface ICommentTextUpdateApiParameter {
 // 1122
 // is_task_for_cash_prize
 // is_task_for_cash_prize/update
+
+export const updateCashPrizeForTask = ({taskPk, cash_prize_for_update}:any) => {
+  // console.log("updateProjectImportance 실행 check");
+  console.log("updateCashPrizeForTask 실행 check");
+
+  return instance
+    .put(
+      `/project_progress/${taskPk}/cash_prize/update`,
+      {
+        cash_prize_for_update: cash_prize_for_update,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const update_task_for_is_task_for_cash_prize = (taskPk: string) => {
   console.log("update_task_for_is_task_for_cash_prize 실행 check");
 

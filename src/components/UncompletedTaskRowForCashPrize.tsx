@@ -27,7 +27,10 @@ import { CheckCircleIcon, WarningIcon, CalendarIcon } from "@chakra-ui/icons";
 
 import { FaTrash } from "react-icons/fa";
 
-import { update_task_for_is_task_for_cash_prize } from "../apis/project_progress_api";
+import {
+  updateCashPrizeForTask,
+  update_task_for_is_task_for_cash_prize,
+} from "../apis/project_progress_api";
 import { Link } from "react-router-dom";
 import { deleteOneProjectTask } from "../apis/user_api";
 import PaginationComponent from "./PaginationComponent";
@@ -53,6 +56,7 @@ function UncompletedTaskRow({
 }: IProps): ReactElement {
   const toast = useToast();
   const queryClient = useQueryClient();
+  const [cash_prize_for_update, set_cash_prize_for_update] = useState<string>();
 
   const deleteMutation = useMutation(
     (pk: number) => {
@@ -124,6 +128,30 @@ function UncompletedTaskRow({
   const update_For_is_task_for_cash_prize = (taskPk: string) => {
     console.log("taskPk:", taskPk);
     update_mutation_for_is_task_for_cash_prize.mutate(taskPk);
+  };
+
+  const mutationForCashPrizeForTask = useMutation(
+    updateCashPrizeForTask,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        // queryClient.refetchQueries(["getOneProjectTask"]);
+
+        toast({
+          status: "success",
+          title: "cash prize update success",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+  const updateForCashPrize = (taskPk: number) => {
+    console.log("hi", cash_prize_for_update, taskPk);
+    mutationForCashPrizeForTask.mutate({taskPk, cash_prize_for_update});
   };
 
   return (
@@ -226,6 +254,9 @@ function UncompletedTaskRow({
                         placeholder=" 상금 입력"
                         textAlign={"center"}
                         defaultValue={task.cash_prize}
+                        onChange={(e) =>
+                          set_cash_prize_for_update(e.target.value)
+                        }
                       />
 
                       <InputRightElement>
@@ -235,13 +266,13 @@ function UncompletedTaskRow({
                           size="md"
                           mr={0}
                           _hover={{ bg: "blue.600" }}
+                          onClick={() => updateForCashPrize(task.pk)}
                         >
                           입력
                         </Button>
                       </InputRightElement>
                     </InputGroup>
                   </Box>
-
 
                   <Box width={"40px"}>
                     <Checkbox
