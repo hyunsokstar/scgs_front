@@ -29,6 +29,7 @@ import { CheckIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { FaTrash } from "react-icons/fa";
 
 import {
+  api_for_update_check_for_cash_prize,
   updateCashPrizeForTask,
   updateChallengerListByTaskPkApi,
   update_task_for_is_task_for_cash_prize,
@@ -40,6 +41,7 @@ import PaginationComponent from "./PaginationComponent";
 import { FaDollarSign, FaPlus, FaEdit } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import SlideToggleButton from "./SlideToggleButton";
 
 interface IProps {
   ProjectProgressList: any;
@@ -181,6 +183,33 @@ function UncompletedTaskRow({
     mutationForUpdateChallengerListByTaskPk.mutate(testPk);
   };
 
+
+  const mutationForUpdateCheckResultByTester = useMutation(
+    api_for_update_check_for_cash_prize,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        // queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getCompletedTaskListForTester"]);
+        // if (projectTaskListRefatch) {
+        //   projectTaskListRefatch();
+        // }
+
+        toast({
+          status: "success",
+          title: "check result update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const update_for_check_for_cash_prize = (taskPk: string) => {
+    mutationForUpdateCheckResultByTester.mutate(taskPk);
+    console.log("update 핸들러 for task_status check pk : ", taskPk);
+  };
+
   return (
     <Box border={"0px solid blue"} maxWidth={"100%"}>
       <Box overflowX="auto" width="100%">
@@ -247,27 +276,43 @@ function UncompletedTaskRow({
                     </Text>
                   </Box>
 
+                  <Box
+                    display={"flex"}
+                    justifyContent={"flex-start"}
+                    border={"0px solid green"}
+                    width={"80px"}
+                  >
+                    <SlideToggleButton
+                      onChange={() => {
+                        update_for_check_for_cash_prize(task.pk);
+                      }}
+                      onColor={"#FADADD"}
+                      offColor={"#D3D3D3"}
+                      checked={task.check_for_cash_prize}
+                    />
+                  </Box>
+
                   {/* 지원자 목록 출력 */}
                   <Box display={"flex"}>
                     {/* hi */}
                     {task.challegers_for_cach_prize.length !== 0 ? (
                       task.challegers_for_cach_prize.map((row: any) => {
                         console.log("row : ", row);
-                        
+
                         return (
-                          <Box>
+                          <Box w={"40px"}>
                             {/* {row.challenger.username} */}
                             <Avatar
                               name={row.challenger.username}
                               src={row.challenger.profile_image}
                               size="sm"
-                              ml={"0px"}
+                              ml={"2px"}
                             />
                           </Box>
                         );
                       })
                     ) : (
-                      <Box>0 명 지원</Box>
+                      <Box w={"40px"}> 0 명 </Box>
                     )}
                     <Box>
                       {isLoggedIn ? (

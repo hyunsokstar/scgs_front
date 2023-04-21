@@ -148,6 +148,7 @@ export interface IUncompletedTaskListForCashPrize {
       is_task_for_cash_prize: boolean;
       challegers_for_cach_prize: any[]; // 도전자 정보를 담을 배열
       cash_prize: number;
+      check_for_cash_prize : boolean;
     }
   ];
   currentPageNum?: number | undefined;

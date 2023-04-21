@@ -503,6 +503,23 @@ export const apiForUpdateScoreByTester = ({
     });
 };
 
+export const api_for_update_check_for_cash_prize = (taskPk: string) => {
+  return instance
+    .put(
+      `/project_progress/${taskPk}/check_for_cash_prize/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const apiForUpdateTaskCheckResultByTester = (taskPk: string) => {
   return instance
     .put(
