@@ -158,6 +158,7 @@ export interface ITypeForProjectProgressList {
       due_date?: string;
       current_status?: string;
       check_result_by_tester: boolean;
+      cash_prize?: number;
     }
   ];
   currentPageNum?: number | undefined;

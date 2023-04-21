@@ -631,7 +631,6 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
 
   return (
     instance
-      // .get(`project_progress/uncompleted?page=${pageNum}`)
       .get("project_progress/uncompleted", {
         params: {
           page: pageNum,

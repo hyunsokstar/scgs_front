@@ -67,8 +67,8 @@ const Header = () => {
       onSuccess: (res) => {
         console.log("res for logout: ", res);
 
-        if(res.logout_succes){
-          dispatch(logout())
+        if (res.logout_succes) {
+          dispatch(logout());
         }
 
         queryClient.refetchQueries(["me"]);
@@ -184,6 +184,21 @@ const Header = () => {
         </NavLink>
 
         <NavLink
+          to="/wanted"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            Wanted
+          </Text>
+        </NavLink>
+
+        <NavLink
           to="/task-status"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -228,6 +243,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
+
         <NavLink
           to="/api-docu"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
@@ -270,21 +286,6 @@ const Header = () => {
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             ShortCut2
-          </Text>
-        </NavLink>
-
-        <NavLink
-          to="/wanted"
-          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-        >
-          <Text
-            fontSize="xl"
-            fontWeight="medium"
-            mr={{ base: 0, md: "1rem" }}
-            cursor="pointer"
-            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
-          >
-            Wanted
           </Text>
         </NavLink>
 
