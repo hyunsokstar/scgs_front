@@ -616,6 +616,44 @@ export const getCompletedTaskListForMe = ({
     });
 };
 
+export const getUncompletedTasksWithCashPrize = ({ queryKey }: QueryFunctionContext) => {
+  const [
+    _,
+    pageNum,
+    selectedPeriodOptionForUncompletedTaskList,
+    username_for_search,
+  ] = queryKey;
+
+  console.log(
+    "selectedPeriodOptionForUncompletedTaskList : ",
+    selectedPeriodOptionForUncompletedTaskList
+  );
+
+  return (
+    instance
+      .get("project_progress/tasks-with-cash-prize/uncompleted", {
+        params: {
+          page: pageNum,
+          selectedPeriodOptionForUncompletedTaskList,
+          username_for_search,
+        },
+      })
+      .then((response) => {
+        const response_data = {
+          ProjectProgressList: response.data.ProjectProgressList,
+          totalPageCount: response.data.totalPageCount,
+          task_number_for_one_page: response.data.task_number_for_one_page,
+          writers_info: response.data.writers_info,
+          count_for_ready: response.data.count_for_ready,
+          count_for_in_progress: response.data.count_for_in_progress,
+          count_for_in_testing: response.data.count_for_in_testing,
+        };
+
+        return response_data;
+      })
+  );
+};
+
 export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
   const [
     _,

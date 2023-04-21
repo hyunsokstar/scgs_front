@@ -225,7 +225,7 @@ function UncompletedTaskRow({
 
                   backgroundColor={rowColor(task.current_status)}
                   _hover={{ backgroundColor: "gray.100" }}
-                  width={"1850px"}
+                  width={"1900px"}
                 >
                   <HStack border={"0px solid green"}>
                     <Box border={"0px solid yellow"} width={"50px"}>
@@ -345,7 +345,7 @@ function UncompletedTaskRow({
                         />
                       </HStack>
                     </Box>
-                    <Box border={"0px solid blue"} width={"200px"}>
+                    <Box border={"0px solid blue"} width={"180px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>경과</Text>
@@ -363,6 +363,12 @@ function UncompletedTaskRow({
                           <Text>{task.time_left_to_due_date}</Text>
                         </Box>
                       </HStack>
+                    </Box>
+
+                    <Box width={"40px"}>
+                      <Checkbox size="lg" colorScheme="red">
+                        C
+                      </Checkbox>
                     </Box>
 
                     <Box>

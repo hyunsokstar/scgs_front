@@ -24,26 +24,15 @@ import {
   InputLeftElement,
 } from "@chakra-ui/react";
 import { CheckCircleIcon, WarningIcon, CalendarIcon } from "@chakra-ui/icons";
-import {
-  IResponseTypeForProjectTaskUpdate,
-  ITypeForProjectProgressList,
-} from "../types/project_progress/project_progress_type";
+
 import { FaTrash } from "react-icons/fa";
-import StarRating from "./StarRating";
-import SlideToggleButton from "./SlideToggleButton";
+
 import {
-  updateProjectImportance,
-  updateProjectInProgress,
-  updateProjectIsTesting,
-  updateProjectTaskCompleted,
 } from "../apis/project_progress_api";
 import { Link } from "react-router-dom";
 import { deleteOneProjectTask } from "../apis/user_api";
 import PaginationComponent from "./PaginationComponent";
-import ModalButtonForUpdateProjectTaskCompleteDate from "./modal/ModalButtonForUpdateProjectTaskCompleteDate";
-import ModalButtonForUpdateProjectTaskStartedAt from "./modal/ModalButtonForUpdateProjectTaskStartedAt";
-import SlideToggleButtonForInProgress from "./SlideToggleButton/SlideToggleButtonForInProgress";
-import SlideToggleButtonForIsTesting from "./SlideToggleButton/SlideToggleButtonForIsTesting";
+
 import { FaDollarSign, FaPlus, FaEdit } from "react-icons/fa";
 
 interface IProps {
@@ -126,7 +115,7 @@ function UncompletedTaskRow({
                   display={"flex"}
                   alignItems={"center"}
                   justifyContent={"space-between"}
-                  backgroundColor={rowColor(task.current_status)}
+                //   backgroundColor={rowColor(task.current_status)}
                   _hover={{ backgroundColor: "gray.100" }}
                   width={"100%"}
                 >
@@ -177,7 +166,23 @@ function UncompletedTaskRow({
                     </Text>
                   </Box>
 
-                  <Box>지원 신청</Box>
+                  <Box>
+                    지원 신청
+                    <Button
+                      size="xs"
+                      variant="outline"
+                      borderRadius="sm"
+                      colorScheme="green"
+                      _hover={{
+                        bg: "green.200",
+                        borderColor: "green.200",
+                        color: "white",
+                      }}
+                      ml={2}
+                    >
+                      <FaPlus />
+                    </Button>
+                  </Box>
 
                   <Box>
                     <InputGroup w="200px">
@@ -208,9 +213,7 @@ function UncompletedTaskRow({
                     </InputGroup>
                   </Box>
 
-                  <Box>
-                    성공 체크
-                  </Box>
+                  <Box>성공 체크</Box>
 
                   <Box>
                     <IconButton

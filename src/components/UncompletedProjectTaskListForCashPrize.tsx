@@ -18,7 +18,7 @@ import {
   
   import { useQuery, useMutation } from "@tanstack/react-query";
   import React, { ReactElement, useState, useEffect } from "react";
-  import { getUncompletedTaskList } from "../apis/project_progress_api";
+  import { getUncompletedTaskList, getUncompletedTasksWithCashPrize } from "../apis/project_progress_api";
   import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
   import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
   import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
@@ -44,12 +44,12 @@ import UncompletedTaskRowForCashPrize from "./UncompletedTaskRowForCashPrize";
       refetch: projectTaskListRefatch,
     } = useQuery<ITypeForProjectProgressList>(
       [
-        "getUncompletedTaskList",
+        "getUncompletedTasksWithCashPrize",
         currentPageNum,
         selectedPeriodOptionForUncompletedTaskList,
         username_for_search,
       ],
-      getUncompletedTaskList,
+      getUncompletedTasksWithCashPrize,
       {
         enabled: true,
       }
