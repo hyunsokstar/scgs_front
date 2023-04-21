@@ -33,6 +33,27 @@ interface ICommentTextUpdateApiParameter {
 // };
 
 // 1122
+// is_task_for_cash_prize
+// is_task_for_cash_prize/update
+export const update_task_for_is_task_for_cash_prize = (taskPk: string) => {
+  console.log("update_task_for_is_task_for_cash_prize 실행 check");
+
+  return instance
+    .put(
+      `/project_progress/${taskPk}/is_task_for_cash_prize/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const getDataForTaskStaticsForIsCompleted = () => {
   const config: AxiosRequestConfig = {
     method: "get",
@@ -350,7 +371,6 @@ export const updateProjectApiByPk = ({
     .then((response) => response.data);
 };
 
-// export const updateProjectImportance = ((taskPk: any, star_count: any) => {
 export const updateProjectImportance = ({ taskPk, star_count }: any) => {
   console.log("updateProjectImportance 실행 check");
 

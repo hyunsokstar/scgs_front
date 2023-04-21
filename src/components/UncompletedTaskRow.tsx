@@ -31,6 +31,7 @@ import {
   updateProjectInProgress,
   updateProjectIsTesting,
   updateProjectTaskCompleted,
+  update_task_for_is_task_for_cash_prize,
 } from "../apis/project_progress_api";
 import { Link } from "react-router-dom";
 import { deleteOneProjectTask } from "../apis/user_api";
@@ -206,6 +207,33 @@ function UncompletedTaskRow({
     }
   };
 
+  const update_mutation_for_is_task_for_cash_prize = useMutation(
+    update_task_for_is_task_for_cash_prize,
+    {
+      onSuccess: (result: any) => {
+        // console.log("result : ", result);
+        if (projectTaskListRefatch) {
+          projectTaskListRefatch();
+        }
+        queryClient.refetchQueries(["getUnompletedTaskList"]);
+
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+  const update_For_is_task_for_cash_prize = (taskPk: string) => {
+    console.log("taskPk:", taskPk);
+    update_mutation_for_is_task_for_cash_prize.mutate(taskPk)
+  };
+
   return (
     <Box border={"0px solid blue"} maxWidth={"100%"}>
       <Box overflowX="auto" width="100%">
@@ -370,6 +398,9 @@ function UncompletedTaskRow({
                         size="lg"
                         colorScheme="red"
                         defaultChecked={task.is_task_for_cash_prize}
+                        onChange={() =>
+                          update_For_is_task_for_cash_prize(task.pk)
+                        }
                       >
                         C
                       </Checkbox>
