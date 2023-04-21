@@ -453,8 +453,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
                                     textAlign={"center"}
                                     defaultValue={taskData.cash_prize}
                                     {...register("cash_prize")}
-                                    // value={value}
-                                    // onChange={handleChange}
                                   />
                                   <InputRightElement>
                                     <Button
