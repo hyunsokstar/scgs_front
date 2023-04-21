@@ -158,6 +158,7 @@ export interface ITypeForProjectProgressList {
       due_date?: string;
       current_status?: string;
       check_result_by_tester: boolean;
+      is_task_for_cash_prize: boolean;
       cash_prize?: number;
     }
   ];

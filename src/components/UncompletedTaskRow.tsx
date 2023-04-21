@@ -366,7 +366,11 @@ function UncompletedTaskRow({
                     </Box>
 
                     <Box width={"40px"}>
-                      <Checkbox size="lg" colorScheme="red">
+                      <Checkbox
+                        size="lg"
+                        colorScheme="red"
+                        defaultChecked={task.is_task_for_cash_prize}
+                      >
                         C
                       </Checkbox>
                     </Box>
