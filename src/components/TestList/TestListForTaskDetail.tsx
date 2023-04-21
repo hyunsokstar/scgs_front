@@ -218,7 +218,7 @@ function DataItem({
                 );
               })
             ) : (
-              <ViewOffIcon boxSize={3} color="gray.500" />
+              <ViewOffIcon boxSize={5} color="gray.500" />
             )}
           </Box>
           <Box>

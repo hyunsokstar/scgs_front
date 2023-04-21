@@ -22,13 +22,15 @@ import {
   InputGroup,
   InputRightElement,
   InputLeftElement,
+  Avatar,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, WarningIcon, CalendarIcon } from "@chakra-ui/icons";
+import { CheckIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 import { FaTrash } from "react-icons/fa";
 
 import {
   updateCashPrizeForTask,
+  updateChallengerListByTaskPkApi,
   update_task_for_is_task_for_cash_prize,
 } from "../apis/project_progress_api";
 import { Link } from "react-router-dom";
@@ -36,6 +38,8 @@ import { deleteOneProjectTask } from "../apis/user_api";
 import PaginationComponent from "./PaginationComponent";
 
 import { FaDollarSign, FaPlus, FaEdit } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 interface IProps {
   ProjectProgressList: any;
@@ -57,6 +61,10 @@ function UncompletedTaskRow({
   const toast = useToast();
   const queryClient = useQueryClient();
   const [cash_prize_for_update, set_cash_prize_for_update] = useState<string>();
+
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
 
   const deleteMutation = useMutation(
     (pk: number) => {
@@ -130,28 +138,47 @@ function UncompletedTaskRow({
     update_mutation_for_is_task_for_cash_prize.mutate(taskPk);
   };
 
-  const mutationForCashPrizeForTask = useMutation(
-    updateCashPrizeForTask,
+  const mutationForCashPrizeForTask = useMutation(updateCashPrizeForTask, {
+    onSuccess: (result: any) => {
+      console.log("result : ", result);
+      // queryClient.refetchQueries(["getOneProjectTask"]);
+
+      toast({
+        status: "success",
+        title: "cash prize update success",
+        description: result.message,
+      });
+    },
+    onError: (err) => {
+      console.log("error : ", err);
+    },
+  });
+
+  const updateForCashPrize = (taskPk: number) => {
+    console.log("hi", cash_prize_for_update, taskPk);
+    mutationForCashPrizeForTask.mutate({ taskPk, cash_prize_for_update });
+  };
+
+  const mutationForUpdateChallengerListByTaskPk = useMutation(
+    updateChallengerListByTaskPkApi,
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        // queryClient.refetchQueries(["getOneProjectTask"]);
+
+        queryClient.refetchQueries(["getUncompletedTasksWithCashPrize"]);
 
         toast({
           status: "success",
-          title: "cash prize update success",
+          title: "challenger list update success",
           description: result.message,
         });
-      },
-      onError: (err) => {
-        console.log("error : ", err);
       },
     }
   );
 
-  const updateForCashPrize = (taskPk: number) => {
-    console.log("hi", cash_prize_for_update, taskPk);
-    mutationForCashPrizeForTask.mutate({taskPk, cash_prize_for_update});
+  // updateChallengerListByTaskPk
+  const updateChallengerListByTaskPk = (testPk: string | number) => {
+    mutationForUpdateChallengerListByTaskPk.mutate(testPk);
   };
 
   return (
@@ -160,7 +187,7 @@ function UncompletedTaskRow({
         {ProjectProgressList ? (
           <List>
             {ProjectProgressList?.map((task: any) => {
-              // console.log("task.task_manager : ", task.taskmanager);
+              console.log("task : ", task);
               return (
                 <ListItem
                   key={task.pk}
@@ -170,7 +197,6 @@ function UncompletedTaskRow({
                   display={"flex"}
                   alignItems={"center"}
                   justifyContent={"space-between"}
-                  //   backgroundColor={rowColor(task.current_status)}
                   _hover={{ backgroundColor: "gray.100" }}
                   width={"100%"}
                 >
@@ -221,23 +247,47 @@ function UncompletedTaskRow({
                     </Text>
                   </Box>
 
-                  <Box>
-                    지원 신청
-                    <Button
-                      size="xs"
-                      variant="outline"
-                      borderRadius="sm"
-                      colorScheme="green"
-                      _hover={{
-                        bg: "green.200",
-                        borderColor: "green.200",
-                        color: "white",
-                      }}
-                      ml={2}
-                    >
-                      <FaPlus />
-                    </Button>
+                  {/* 지원자 목록 출력 */}
+                  <Box display={"flex"}>
+                    {/* hi */}
+                    {task.challegers_for_cach_prize.length !== 0 ? (
+                      task.challegers_for_cach_prize.map((row: any) => {
+                        console.log("row : ", row);
+                        
+                        return (
+                          <Box>
+                            {/* {row.challenger.username} */}
+                            <Avatar
+                              name={row.challenger.username}
+                              src={row.challenger.profile_image}
+                              size="sm"
+                              ml={"0px"}
+                            />
+                          </Box>
+                        );
+                      })
+                    ) : (
+                      <Box>0 명 지원</Box>
+                    )}
+                    <Box>
+                      {isLoggedIn ? (
+                        <Button
+                          variant="outline"
+                          colorScheme={"teal"} // colorScheme은 필수가 아닙니다.
+                          size={"sm"} // size는 필수가 아닙니다.
+                          aria-label={""}
+                          ml={2}
+                          onClick={() => updateChallengerListByTaskPk(task.pk)}
+                        >
+                          <CheckIcon boxSize={3} />
+                        </Button>
+                      ) : (
+                        ""
+                      )}
+                    </Box>
                   </Box>
+
+                  {/* 지원자 등록 버튼 추가 */}
 
                   <Box>
                     <InputGroup w="200px">

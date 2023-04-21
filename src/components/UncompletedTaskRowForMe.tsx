@@ -18,11 +18,6 @@ import {
   useToast,
   Icon,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, WarningIcon, CalendarIcon } from "@chakra-ui/icons";
-import {
-  IResponseTypeForProjectTaskUpdate,
-  ITypeForProjectProgressList,
-} from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
 import SlideToggleButton from "./SlideToggleButton";

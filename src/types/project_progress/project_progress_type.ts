@@ -128,6 +128,35 @@ interface Writer {
   task_count: number;
 }
 
+export interface IUncompletedTaskListForCashPrize {
+  projectTaskListRefatch?: () => void;
+  writers_info?: Writer[];
+  totalPageCount: number;
+  task_number_for_one_page?: number;
+  score_by_tester?: number;
+  ProjectProgressList: [
+    {
+      pk: number;
+      task: string;
+      task_manager: {
+        pk: number;
+        username: string;
+        profile_image: string;
+      };
+      writer: string;
+      current_status: string;
+      is_task_for_cash_prize: boolean;
+      challegers_for_cach_prize: any[]; // 도전자 정보를 담을 배열
+      cash_prize: number;
+    }
+  ];
+  currentPageNum?: number | undefined;
+  setCurrentPageNum?: any;
+  count_for_ready?: number;
+  count_for_in_progress?: number;
+  count_for_in_testing?: number;
+}
+
 export interface ITypeForProjectProgressList {
   projectTaskListRefatch?: () => void;
   writers_info?: Writer[];
