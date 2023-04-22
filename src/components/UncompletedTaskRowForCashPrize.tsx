@@ -184,17 +184,12 @@ function UncompletedTaskRow({
     mutationForUpdateChallengerListByTaskPk.mutate(testPk);
   };
 
-  const mutationForUpdateCheckResultByTester = useMutation(
+  const mutationForUpdateCheckResultForCashTask = useMutation(
     api_for_update_check_for_cash_prize,
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-
-        // queryClient.refetchQueries(["getUncompletedTaskList"]);
-        queryClient.refetchQueries(["getCompletedTaskListForTester"]);
-        // if (projectTaskListRefatch) {
-        //   projectTaskListRefatch();
-        // }
+        queryClient.refetchQueries(["getUncompletedTasksWithCashPrize"]);
 
         toast({
           status: "success",
@@ -205,17 +200,17 @@ function UncompletedTaskRow({
     }
   );
 
-  const update_for_check_for_cash_prize = (taskPk: string) => {
-    mutationForUpdateCheckResultByTester.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+  const update_for_check_for_cash_prize = (taskPk: string, taskMangerPk: number, cash_prize: number) => {
+    mutationForUpdateCheckResultForCashTask.mutate({taskPk, taskMangerPk, cash_prize});
+    console.log("update 핸들러 for update_for_check_for_cash_prize : ", taskPk, taskMangerPk);
   };
 
   const updateProjectTaskMutations = useMutation(updateProjectTaskCompleted, {
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getUncompletedTaskList"]);
-      queryClient.refetchQueries(["getCompletedTaskList"]);
+      queryClient.refetchQueries(["getUncompletedTasksWithCashPrize"]);
+      // queryClient.refetchQueries(["getCompletedTaskList"]);
       // if (projectTaskListRefatch) {
       //   projectTaskListRefatch();
       // }
@@ -321,16 +316,26 @@ function UncompletedTaskRow({
                     width={"140px"}
                   >
                     통과 : &nbsp;
-                    {/* {task.task_completed ? "true" : "false"} */}
-                    <SlideToggleButton
-                      onChange={() => {
-                        update_for_check_for_cash_prize(task.pk);
-                      }}
-                      onColor={"#FADADD"}
-                      offColor={"#D3D3D3"}
-                      checked={task.check_for_cash_prize}
-                      // in_progress={!task.task_completed}
-                    />
+                    {task.task_completed ? (
+                      <SlideToggleButton
+                        onChange={() => {
+                          update_for_check_for_cash_prize(task.pk, task.task_manager?.pk, task.cash_prize);
+                        }}
+                        onColor={"#FADADD"}
+                        offColor={"#D3D3D3"}
+                        checked={task.check_for_cash_prize}
+                      />
+                    ) : (
+                      <SlideToggleButton
+                        onChange={() => {
+                          update_for_check_for_cash_prize(task.pk, task.task_manager?.pk, task.cash_prize);
+                        }}
+                        onColor={"#FADADD"}
+                        offColor={"#D3D3D3"}
+                        checked={task.check_for_cash_prize}
+                        is_disabled={true}
+                      />
+                    )}
                   </Box>
 
                   {/* 지원자 목록 출력 */}

@@ -36,7 +36,10 @@ interface ICommentTextUpdateApiParameter {
 // is_task_for_cash_prize
 // is_task_for_cash_prize/update
 
-export const updateCashPrizeForTask = ({taskPk, cash_prize_for_update}:any) => {
+export const updateCashPrizeForTask = ({
+  taskPk,
+  cash_prize_for_update,
+}: any) => {
   // console.log("updateProjectImportance 실행 check");
   console.log("updateCashPrizeForTask 실행 check");
 
@@ -503,11 +506,15 @@ export const apiForUpdateScoreByTester = ({
     });
 };
 
-export const api_for_update_check_for_cash_prize = (taskPk: string) => {
+export const api_for_update_check_for_cash_prize = ({
+  taskPk,
+  taskMangerPk,
+  cash_prize,
+}: any) => {
   return instance
     .put(
       `/project_progress/${taskPk}/check_for_cash_prize/update`,
-      {},
+      { taskMangerPk, cash_prize },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
@@ -695,7 +702,9 @@ export const getCompletedTaskListForMe = ({
     });
 };
 
-export const getUncompletedTasksWithCashPrize = ({ queryKey }: QueryFunctionContext) => {
+export const getUncompletedTasksWithCashPrize = ({
+  queryKey,
+}: QueryFunctionContext) => {
   const [
     _,
     pageNum,
@@ -708,29 +717,27 @@ export const getUncompletedTasksWithCashPrize = ({ queryKey }: QueryFunctionCont
     selectedPeriodOptionForUncompletedTaskList
   );
 
-  return (
-    instance
-      .get("project_progress/tasks-with-cash-prize/uncompleted", {
-        params: {
-          page: pageNum,
-          selectedPeriodOptionForUncompletedTaskList,
-          username_for_search,
-        },
-      })
-      .then((response) => {
-        const response_data = {
-          ProjectProgressList: response.data.ProjectProgressList,
-          totalPageCount: response.data.totalPageCount,
-          task_number_for_one_page: response.data.task_number_for_one_page,
-          writers_info: response.data.writers_info,
-          count_for_ready: response.data.count_for_ready,
-          count_for_in_progress: response.data.count_for_in_progress,
-          count_for_in_testing: response.data.count_for_in_testing,
-        };
+  return instance
+    .get("project_progress/tasks-with-cash-prize/uncompleted", {
+      params: {
+        page: pageNum,
+        selectedPeriodOptionForUncompletedTaskList,
+        username_for_search,
+      },
+    })
+    .then((response) => {
+      const response_data = {
+        ProjectProgressList: response.data.ProjectProgressList,
+        totalPageCount: response.data.totalPageCount,
+        task_number_for_one_page: response.data.task_number_for_one_page,
+        writers_info: response.data.writers_info,
+        count_for_ready: response.data.count_for_ready,
+        count_for_in_progress: response.data.count_for_in_progress,
+        count_for_in_testing: response.data.count_for_in_testing,
+      };
 
-        return response_data;
-      })
-  );
+      return response_data;
+    });
 };
 
 export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
@@ -746,29 +753,27 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
     selectedPeriodOptionForUncompletedTaskList
   );
 
-  return (
-    instance
-      .get("project_progress/uncompleted", {
-        params: {
-          page: pageNum,
-          selectedPeriodOptionForUncompletedTaskList,
-          username_for_search,
-        },
-      })
-      .then((response) => {
-        const response_data = {
-          ProjectProgressList: response.data.ProjectProgressList,
-          totalPageCount: response.data.totalPageCount,
-          task_number_for_one_page: response.data.task_number_for_one_page,
-          writers_info: response.data.writers_info,
-          count_for_ready: response.data.count_for_ready,
-          count_for_in_progress: response.data.count_for_in_progress,
-          count_for_in_testing: response.data.count_for_in_testing,
-        };
+  return instance
+    .get("project_progress/uncompleted", {
+      params: {
+        page: pageNum,
+        selectedPeriodOptionForUncompletedTaskList,
+        username_for_search,
+      },
+    })
+    .then((response) => {
+      const response_data = {
+        ProjectProgressList: response.data.ProjectProgressList,
+        totalPageCount: response.data.totalPageCount,
+        task_number_for_one_page: response.data.task_number_for_one_page,
+        writers_info: response.data.writers_info,
+        count_for_ready: response.data.count_for_ready,
+        count_for_in_progress: response.data.count_for_in_progress,
+        count_for_in_testing: response.data.count_for_in_testing,
+      };
 
-        return response_data;
-      })
-  );
+      return response_data;
+    });
 };
 
 export const getUncompletedTaskListForMe = ({
