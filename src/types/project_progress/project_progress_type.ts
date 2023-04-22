@@ -126,6 +126,7 @@ interface Writer {
   username: string;
   profile_image: string | null;
   task_count: number;
+  cash: number;
 }
 
 export interface IUncompletedTaskListForCashPrize {
@@ -146,9 +147,10 @@ export interface IUncompletedTaskListForCashPrize {
       writer: string;
       current_status: string;
       is_task_for_cash_prize: boolean;
+      task_completed: boolean;
       challegers_for_cach_prize: any[]; // 도전자 정보를 담을 배열
       cash_prize: number;
-      check_for_cash_prize : boolean;
+      check_for_cash_prize: boolean;
     }
   ];
   currentPageNum?: number | undefined;

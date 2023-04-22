@@ -32,6 +32,7 @@ import {
   api_for_update_check_for_cash_prize,
   updateCashPrizeForTask,
   updateChallengerListByTaskPkApi,
+  updateProjectTaskCompleted,
   update_task_for_is_task_for_cash_prize,
 } from "../apis/project_progress_api";
 import { Link } from "react-router-dom";
@@ -183,7 +184,6 @@ function UncompletedTaskRow({
     mutationForUpdateChallengerListByTaskPk.mutate(testPk);
   };
 
-
   const mutationForUpdateCheckResultByTester = useMutation(
     api_for_update_check_for_cash_prize,
     {
@@ -207,6 +207,29 @@ function UncompletedTaskRow({
 
   const update_for_check_for_cash_prize = (taskPk: string) => {
     mutationForUpdateCheckResultByTester.mutate(taskPk);
+    console.log("update 핸들러 for task_status check pk : ", taskPk);
+  };
+
+  const updateProjectTaskMutations = useMutation(updateProjectTaskCompleted, {
+    onSuccess: (result: any) => {
+      console.log("result : ", result);
+
+      queryClient.refetchQueries(["getUncompletedTaskList"]);
+      queryClient.refetchQueries(["getCompletedTaskList"]);
+      // if (projectTaskListRefatch) {
+      //   projectTaskListRefatch();
+      // }
+
+      toast({
+        status: "success",
+        title: "task status update success",
+        description: result.message,
+      });
+    },
+  });
+
+  const updateHandlerForTaskStatus = (taskPk: string) => {
+    updateProjectTaskMutations.mutate(taskPk);
     console.log("update 핸들러 for task_status check pk : ", taskPk);
   };
 
@@ -280,8 +303,25 @@ function UncompletedTaskRow({
                     display={"flex"}
                     justifyContent={"flex-start"}
                     border={"0px solid green"}
-                    width={"80px"}
+                    width={"140px"}
                   >
+                    완료 : &nbsp;
+                    <SlideToggleButton
+                      onChange={() => {
+                        updateHandlerForTaskStatus(task.pk);
+                      }}
+                      checked={task.task_completed}
+                    />
+                  </Box>
+
+                  <Box
+                    display={"flex"}
+                    justifyContent={"flex-start"}
+                    border={"0px solid green"}
+                    width={"140px"}
+                  >
+                    통과 : &nbsp;
+                    {/* {task.task_completed ? "true" : "false"} */}
                     <SlideToggleButton
                       onChange={() => {
                         update_for_check_for_cash_prize(task.pk);
@@ -289,6 +329,7 @@ function UncompletedTaskRow({
                       onColor={"#FADADD"}
                       offColor={"#D3D3D3"}
                       checked={task.check_for_cash_prize}
+                      // in_progress={!task.task_completed}
                     />
                   </Box>
 

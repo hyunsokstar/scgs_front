@@ -8,7 +8,7 @@ interface SlideToggleButtonProps {
   in_progress?: boolean;
   is_testing?: boolean;
   onColor?: string;
-  offColor?: string; 
+  offColor?: string;
 }
 
 const SlideToggleButton: React.FC<SlideToggleButtonProps> = ({
@@ -17,18 +17,26 @@ const SlideToggleButton: React.FC<SlideToggleButtonProps> = ({
   in_progress,
   is_testing,
   onColor,
-  offColor
+  offColor,
 }) => {
   const [isChecked, setIsChecked] = useState<boolean>(checked);
-  const [is_disabled_option ,set_is_disabled_option] = useState(false)
+  const [is_disabled_option, set_is_disabled_option] = useState(false);
 
   useEffect(() => {
-  if(in_progress === true || is_testing === true){
-    set_is_disabled_option(true)
-  } else {
-    set_is_disabled_option(false)
-  }
-  }, [in_progress, is_testing])
+    // if (is_completed === true) {
+    //   console.log("is_completed 1: ", is_completed);
+    //   set_is_disabled_option(false);
+    // } else {
+    //   console.log("is_completed 2: ", is_completed);
+    //   set_is_disabled_option(true);
+    // }
+
+    if (in_progress === true || is_testing === true) {
+      set_is_disabled_option(true);
+    } else {
+      set_is_disabled_option(false);
+    }
+  }, [in_progress, is_testing]);
 
   const handleToggleChange = (checked: boolean) => {
     setIsChecked(checked);
@@ -40,8 +48,8 @@ const SlideToggleButton: React.FC<SlideToggleButtonProps> = ({
       <Switch
         onChange={handleToggleChange}
         checked={isChecked}
-        onColor={onColor ? onColor: "#86d3ff"}
-        offColor={offColor ? offColor: "#888888"}
+        onColor={onColor ? onColor : "#86d3ff"}
+        offColor={offColor ? offColor : "#888888"}
         uncheckedIcon={false}
         checkedIcon={false}
         disabled={is_disabled_option}
