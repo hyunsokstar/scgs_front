@@ -28,7 +28,6 @@ import {
 } from "../types/project_progress/project_progress_type";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
-import UncompletedTaskRow from "./UncompletedTaskRow";
 import UncompletedTaskRowForCashPrize from "./UncompletedTaskRowForCashPrize";
 
 interface Props {}

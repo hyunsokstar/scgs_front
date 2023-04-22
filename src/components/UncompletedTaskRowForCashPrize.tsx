@@ -144,7 +144,7 @@ function UncompletedTaskRow({
   const mutationForCashPrizeForTask = useMutation(updateCashPrizeForTask, {
     onSuccess: (result: any) => {
       console.log("result : ", result);
-      // queryClient.refetchQueries(["getOneProjectTask"]);
+      queryClient.refetchQueries(["getUncompletedTasksWithCashPrize"]);
 
       toast({
         status: "success",
@@ -200,9 +200,21 @@ function UncompletedTaskRow({
     }
   );
 
-  const update_for_check_for_cash_prize = (taskPk: string, taskMangerPk: number, cash_prize: number) => {
-    mutationForUpdateCheckResultForCashTask.mutate({taskPk, taskMangerPk, cash_prize});
-    console.log("update 핸들러 for update_for_check_for_cash_prize : ", taskPk, taskMangerPk);
+  const update_for_check_for_cash_prize = (
+    taskPk: string,
+    taskMangerPk: number,
+    cash_prize: number
+  ) => {
+    mutationForUpdateCheckResultForCashTask.mutate({
+      taskPk,
+      taskMangerPk,
+      cash_prize,
+    });
+    console.log(
+      "update 핸들러 for update_for_check_for_cash_prize : ",
+      taskPk,
+      taskMangerPk
+    );
   };
 
   const updateProjectTaskMutations = useMutation(updateProjectTaskCompleted, {
@@ -229,35 +241,29 @@ function UncompletedTaskRow({
   };
 
   return (
-    <Box border={"0px solid blue"} maxWidth={"100%"}>
-      <Box overflowX="auto" width="100%">
+    <Box border={"0px solid blue"}>
+      <Box overflowX="auto" border={"0px solid green"}>
         {ProjectProgressList ? (
           <List>
             {ProjectProgressList?.map((task: any) => {
               console.log("task : ", task);
               return (
                 <ListItem
+                  width={"1600px"}
                   key={task.pk}
                   height={16}
-                  border={"px solid lightgray"}
+                  border={"0px solid lightgray"}
                   my={0}
                   display={"flex"}
                   alignItems={"center"}
-                  justifyContent={"space-between"}
+                  h={"60px"}
                   _hover={{ backgroundColor: "gray.100" }}
-                  width={"100%"}
                 >
                   <Box border={"0px solid yellow"} width={"50px"}>
-                    <Checkbox mx={2} border={"1px solid black"} />
+                    <Checkbox mx={2} border={"0px solid black"} />
                   </Box>
 
-                  <Box
-                    display={"flex"}
-                    flexDirection={"column"}
-                    border={"0px solid yellow"}
-                    justifyContent={"flex-start"}
-                    width={"180px"}
-                  >
+                  <Box width={"240px"}>
                     <Text color={"blue.600"}>
                       {task.task_manager?.username}
                       <Button
@@ -294,13 +300,17 @@ function UncompletedTaskRow({
                     </Text>
                   </Box>
 
+                  <Box width={"140px"}>{task.current_status}</Box>
+
                   <Box
+                    width={"160px"}
                     display={"flex"}
-                    justifyContent={"flex-start"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
                     border={"0px solid green"}
-                    width={"140px"}
+                    mr={5}
                   >
-                    완료 : &nbsp;
+                    <Text>완료 : &nbsp;</Text>
                     <SlideToggleButton
                       onChange={() => {
                         updateHandlerForTaskStatus(task.pk);
@@ -310,16 +320,22 @@ function UncompletedTaskRow({
                   </Box>
 
                   <Box
+                    width={"160px"}
                     display={"flex"}
-                    justifyContent={"flex-start"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
                     border={"0px solid green"}
-                    width={"140px"}
+                    mr={5}
                   >
                     통과 : &nbsp;
                     {task.task_completed ? (
                       <SlideToggleButton
                         onChange={() => {
-                          update_for_check_for_cash_prize(task.pk, task.task_manager?.pk, task.cash_prize);
+                          update_for_check_for_cash_prize(
+                            task.pk,
+                            task.task_manager?.pk,
+                            task.cash_prize
+                          );
                         }}
                         onColor={"#FADADD"}
                         offColor={"#D3D3D3"}
@@ -328,7 +344,11 @@ function UncompletedTaskRow({
                     ) : (
                       <SlideToggleButton
                         onChange={() => {
-                          update_for_check_for_cash_prize(task.pk, task.task_manager?.pk, task.cash_prize);
+                          update_for_check_for_cash_prize(
+                            task.pk,
+                            task.task_manager?.pk,
+                            task.cash_prize
+                          );
                         }}
                         onColor={"#FADADD"}
                         offColor={"#D3D3D3"}
@@ -339,14 +359,19 @@ function UncompletedTaskRow({
                   </Box>
 
                   {/* 지원자 목록 출력 */}
-                  <Box display={"flex"}>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"flex-end"}                    
+                    width={"280px"}
+                    border={"0px solid green"}
+                  >
                     {/* hi */}
                     {task.challegers_for_cach_prize.length !== 0 ? (
                       task.challegers_for_cach_prize.map((row: any) => {
                         console.log("row : ", row);
 
                         return (
-                          <Box w={"40px"}>
+                          <Box w={"40px"} border={"0px solid blue"}>
                             {/* {row.challenger.username} */}
                             <Avatar
                               name={row.challenger.username}
@@ -360,12 +385,12 @@ function UncompletedTaskRow({
                     ) : (
                       <Box w={"40px"}> 0 명 </Box>
                     )}
-                    <Box>
+                    <Box width={"50px"} border={"0px solid green"}>
                       {isLoggedIn ? (
                         <Button
                           variant="outline"
-                          colorScheme={"teal"} // colorScheme은 필수가 아닙니다.
-                          size={"sm"} // size는 필수가 아닙니다.
+                          colorScheme={"teal"}
+                          size={"sm"}
                           aria-label={""}
                           ml={2}
                           onClick={() => updateChallengerListByTaskPk(task.pk)}
@@ -380,8 +405,8 @@ function UncompletedTaskRow({
 
                   {/* 지원자 등록 버튼 추가 */}
 
-                  <Box>
-                    <InputGroup w="200px">
+                  <Box width={"240px"} border={"0px solid green"} mx={10}>
+                    <InputGroup>
                       <InputLeftElement
                         pointerEvents="none"
                         children={<FaDollarSign color="gray.300" />}
@@ -416,16 +441,30 @@ function UncompletedTaskRow({
                   </Box>
 
                   <Box width={"40px"}>
-                    <Checkbox
-                      size="lg"
-                      colorScheme="red"
-                      defaultChecked={task.is_task_for_cash_prize}
-                      onChange={() =>
-                        update_For_is_task_for_cash_prize(task.pk)
-                      }
-                    >
-                      C
-                    </Checkbox>
+                    {!task.check_for_cash_prize ? (
+                      <Checkbox
+                        size="lg"
+                        colorScheme="red"
+                        defaultChecked={task.is_task_for_cash_prize}
+                        onChange={() =>
+                          update_For_is_task_for_cash_prize(task.pk)
+                        }
+                      >
+                        C
+                      </Checkbox>
+                    ) : (
+                      <Checkbox
+                        size="lg"
+                        colorScheme="red"
+                        defaultChecked={task.is_task_for_cash_prize}
+                        disabled={true}
+                        onChange={() =>
+                          update_For_is_task_for_cash_prize(task.pk)
+                        }
+                      >
+                        C
+                      </Checkbox>
+                    )}
                   </Box>
 
                   <Box>
