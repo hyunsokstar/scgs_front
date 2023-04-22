@@ -161,7 +161,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
         border={"0px solid black"}
         display="flex"
         justifyContent={"space-between"}
-        bgColor={"green.200"}
+        bgColor={"#fafad2"}
         alignItems={"center"}
         px={2}
         py={2}
@@ -178,17 +178,17 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             <Box border="0px solid red">
               <Table>
                 <Thead>
-                  <Tr borderBottom={"2px solid #9AE6B4"}>
+                  <Tr borderBottom={"2px solid #fafad2"}>
                     <Th colSpan={2}>
                       <Text fontSize={22}>
-                        비완료 리스트 (총: {taskListData?.totalPageCount} 개,
+                        Tasks For Cash Prize (총: {taskListData?.totalPageCount} 개,
                         per_page: {taskListData?.task_number_for_one_page} 개){" "}
                       </Text>
                     </Th>
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr borderBottom={"2px solid #9AE6B4"}>
+                  <Tr borderBottom={"2px solid #fafad2"}>
                     <Td>
                       <Text>진행별</Text>
                     </Td>
@@ -196,7 +196,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                       display={"flex"}
                       justifyContent={"space-between"}
                       gap={2}
-                      borderBottom={"1px solid #9AE6B4"}
+                      borderBottom={"1px solid #fafad2"}
                     >
                       <Text>⚪ :{taskListData?.count_for_ready}</Text>
                       <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
@@ -206,7 +206,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                         Row 1, Column 3
                       </Td> */}
                   </Tr>
-                  <Tr height="30px" borderBottom={"2px solid #9AE6B4"}>
+                  <Tr height="30px" borderBottom={"2px solid #fafad2"}>
                     <Td>
                       <Text>담당자별:</Text>
                     </Td>

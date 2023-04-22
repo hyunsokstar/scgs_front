@@ -8,16 +8,6 @@ interface Props {}
 const WantedPage = (props: Props) => {
   return (
     <Box>
-      <Text
-        fontSize="3xl"
-        fontWeight="bold"
-        color="pink.500"
-        textAlign="center"
-        textTransform="uppercase"
-      >
-        Task For Cash Prize
-      </Text>
-
       <UncompletedProjectTaskListForCashPrize />
     </Box>
   );
