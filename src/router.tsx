@@ -46,6 +46,8 @@ import Test7 from "./routes/TestPage/Test7";
 import { Test8 } from "./routes/TestPage/Test8";
 import WantedPage from "./routes/WantedPage";
 import LongTermPlan from "./routes/LongTermPlan";
+import LongTermPlanDetail from "./routes/LongTermPlanDetail";
+import StudyNotePage from "./routes/StudyNotePage";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "api-docu",
         element: <ApiDocuPage />,
+      },
+      {
+        path: "study-note",
+        element: <StudyNotePage />,
       },
       {
         path: "shortcut",
@@ -244,6 +250,10 @@ const router = createBrowserRouter([
       {
         path: "long-term-plan",
         element: <LongTermPlan />,
+      },
+      {
+        path: "long-term-plan/:planPk",
+        element: <LongTermPlanDetail />,
       },
     ],
   },

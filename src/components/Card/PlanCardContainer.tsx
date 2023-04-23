@@ -1,8 +1,6 @@
+import { Box, Text } from "@chakra-ui/react";
 import React from "react";
-import { Box, Flex, Text } from "@chakra-ui/react";
-import PlanCard from "../components/Card/PlanCard";
-import PlanCardContainer from "../components/Card/PlanCardContainer";
-
+import PlanCard from "./PlanCard";
 
 const cardData = [
   {
@@ -57,16 +55,40 @@ const cardData = [
   },
 ];
 
-interface Props {}
+interface ITypeForPlanCard {
+  title: string;
+  description: string;
+  writer: string;
+}
 
-const LongTermPlan = (props: Props) => {
+interface Props {
+  topic: string;
+  cardDataArray: ITypeForPlanCard[];
+}
+
+const PlanCardContainer = ({ topic, cardDataArray }: Props) => {
   return (
-    <Box border={"1px solid purple"} display={"flex"} flexDirection={"column"} gap={3}>
-      <PlanCardContainer topic={"일별 계획"} cardDataArray={cardData} />
-      <PlanCardContainer topic={"주간 계획"} cardDataArray={cardData} />
-      <PlanCardContainer topic={"월간 계획"} cardDataArray={cardData} />
+    <Box border={"2px solid red"}>
+      <Box px={"auto"}>
+        <Text align={"center"}>{topic}</Text>
+      </Box>
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        border={"1px solid green"}
+        flexWrap={"wrap"}
+        width={"92%"}
+        gap={3}
+        mx={"auto"}
+      >
+        {cardDataArray.map((card, index) => (
+          <Box key={index} mb={1}>
+            <PlanCard {...card} />
+          </Box>
+        ))}{" "}
+      </Box>
     </Box>
   );
 };
 
-export default LongTermPlan;
+export default PlanCardContainer;

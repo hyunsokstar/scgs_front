@@ -243,8 +243,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
-
-        <NavLink
+        {/* <NavLink
           to="/api-docu"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -257,7 +256,7 @@ const Header = () => {
           >
             Api Docu
           </Text>
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
           to="/shortcut"
@@ -271,6 +270,21 @@ const Header = () => {
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             ShortCut
+          </Text>
+        </NavLink>
+
+        <NavLink
+          to="/study-note"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            Study Note
           </Text>
         </NavLink>
 
