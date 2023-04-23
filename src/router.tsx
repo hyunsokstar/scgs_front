@@ -45,6 +45,7 @@ import Test6 from "./routes/TestPage/Test6";
 import Test7 from "./routes/TestPage/Test7";
 import { Test8 } from "./routes/TestPage/Test8";
 import WantedPage from "./routes/WantedPage";
+import LongTermPlan from "./routes/LongTermPlan";
 
 const router = createBrowserRouter([
   {
@@ -239,6 +240,10 @@ const router = createBrowserRouter([
       {
         path: "tutorials",
         element: <TutorialAdmin />,
+      },
+      {
+        path: "long-term-plan",
+        element: <LongTermPlan />,
       },
     ],
   },

@@ -274,7 +274,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/shortcut2"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -286,6 +286,21 @@ const Header = () => {
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             ShortCut2
+          </Text>
+        </NavLink> */}
+
+        <NavLink
+          to="/long-term-plan"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            long term plan
           </Text>
         </NavLink>
 
