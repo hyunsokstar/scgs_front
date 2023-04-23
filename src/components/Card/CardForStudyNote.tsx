@@ -1,13 +1,19 @@
-import { Box, IconButton, Flex, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  IconButton,
+  Flex,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
+import { type_for_study_note_list_row } from "../../types/study_note_type";
 
-interface CardForStudyNoteProps {
-  title: string;
-  description: string;
-  writer: string;
-}
-
-export const CardForStudyNote: React.FC<CardForStudyNoteProps> = ({ title, description, writer }) => {
+export const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
+  pk,
+  title,
+  description,
+  writer,
+}) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
   const headerBgColor = useColorModeValue("gray.200", "gray.600");
   const bodyBgColor = useColorModeValue("gray.100", "gray.700");
@@ -49,7 +55,7 @@ export const CardForStudyNote: React.FC<CardForStudyNoteProps> = ({ title, descr
       </Box>
       <Box position={"absolute"} p="2" bg={footerBgColor} bottom={0} w={"100%"}>
         <Text fontSize="sm" textAlign="right">
-          {writer}
+          {writer ? writer.username : "no user"}
         </Text>
       </Box>
     </Box>

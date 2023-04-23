@@ -1,8 +1,27 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
-import React from "react";
-import CardForStudyNote from "../components/Card/CardForStudyNote";
+import { Box, Flex, Text, Button } from "@chakra-ui/react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
-const StudyNotePage: React.FC = () => {
+import React from "react";
+import { getStudyNoteList } from "../apis/study_note_api";
+import CardForStudyNote from "../components/Card/CardForStudyNote";
+import ModalButtonForAddStudyNote from "../components/modal/ModalButtonForAddStudyNote";
+import { type_for_study_note_list_row } from "../types/study_note_type";
+
+const StudyNotePage = () => {
+  const {
+    isLoading: studyNoteLoading,
+    data: studyNoteData,
+    refetch: studyNoteRefatch,
+  } = useQuery<type_for_study_note_list_row[]>(
+    ["getUncompletedTaskList"],
+    getStudyNoteList,
+    {
+      enabled: true,
+    }
+  );
+
+  console.log("studyNoteData : ", studyNoteData);
+
   const notes = [
     {
       title: "Note 1",
@@ -56,13 +75,24 @@ const StudyNotePage: React.FC = () => {
     },
   ];
 
+  if (studyNoteLoading || !studyNoteData) {
+    return <div>Loading study notes...</div>;
+  }
+
   return (
     <Box>
-      <Text align={"center"} fontSize={"5xl"}>Study Note For Library</Text>
+      <Text align={"center"} fontSize={"5xl"}>
+        Study Note For Library
+      </Text>
+
+      <Box display="flex" justifyContent="flex-end">
+        <ModalButtonForAddStudyNote />
+      </Box>
 
       <Flex wrap="wrap">
-        {notes.map((note) => (
+        {studyNoteData.map((note: type_for_study_note_list_row) => (
           <CardForStudyNote
+            pk={note.pk}
             key={note.title}
             title={note.title}
             description={note.description}
@@ -70,7 +100,6 @@ const StudyNotePage: React.FC = () => {
           />
         ))}
       </Flex>
-      
     </Box>
   );
 };
