@@ -13,28 +13,60 @@ import {
   FormLabel,
   Input,
   Textarea,
+  useToast
 } from "@chakra-ui/react";
 import { useState } from "react";
 
 import { useForm } from "react-hook-form";
+import { type_for_insert_study_note } from "../../types/study_note_type";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiForCreateStudyNote } from "../../apis/study_note_api";
 
-interface FormValues {
-  title: string;
-  description: string;
-//   writer: string;
-}
+
+// interface FormValues {
+//   title: string;
+//   description: string;
+// }
 
 function ModalButtonForAddStudyNote() {
   const [isOpen, setIsOpen] = useState(false);
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<type_for_insert_study_note>();
 
-  const onSubmit = (data: FormValues) => {
+  const mutationForCreateStudyNote = useMutation(apiForCreateStudyNote, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
+
+      toast({
+        title: "welcome back!",
+        status: "success",
+      });
+      queryClient.refetchQueries(["getStudyNoteList"]);
+      reset()
+      setIsOpen(false);
+    },
+    onError: (error: any) => {
+      console.log("error.response : ", error.response);
+      console.log("mutation has an error", error.response.data);
+    },
+  });
+
+  const onSubmit = (data: type_for_insert_study_note) => {
     console.log(data);
+
+    mutationForCreateStudyNote.mutate(data);
+
   };
 
   const onClose = () => setIsOpen(false);

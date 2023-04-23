@@ -13,7 +13,7 @@ const StudyNotePage = () => {
     data: studyNoteData,
     refetch: studyNoteRefatch,
   } = useQuery<type_for_study_note_list_row[]>(
-    ["getUncompletedTaskList"],
+    ["getStudyNoteList"],
     getStudyNoteList,
     {
       enabled: true,

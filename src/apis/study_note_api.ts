@@ -3,7 +3,10 @@ import { backendApi } from "../apis/common_api";
 
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
-import { type_for_study_note_list_row } from "../types/study_note_type";
+import {
+  type_for_insert_study_note,
+  type_for_study_note_list_row,
+} from "../types/study_note_type";
 
 const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
@@ -19,3 +22,22 @@ export const getStudyNoteList = async ({
     return response.data;
   });
 };
+
+export const apiForCreateStudyNote = ({
+  title,
+  description,
+}: type_for_insert_study_note) =>
+  instance
+    .post(
+      `/study-note/`,
+      {
+        title,
+        description,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
