@@ -20,7 +20,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import React, { ReactElement, useState, useEffect } from "react";
 import {
   getUncompletedTaskList,
-  getUncompletedTasksWithCashPrize,
+  getTasksWithCashPrize,
 } from "../apis/project_progress_api";
 import {
   ITypeForProjectProgressList,
@@ -49,12 +49,12 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
     refetch: projectTaskListRefatch,
   } = useQuery<IUncompletedTaskListForCashPrize>(
     [
-      "getUncompletedTasksWithCashPrize",
+      "getTasksWithCashPrize",
       currentPageNum,
       selectedPeriodOptionForUncompletedTaskList,
       username_for_search,
     ],
-    getUncompletedTasksWithCashPrize,
+    getTasksWithCashPrize,
     {
       enabled: true,
     }

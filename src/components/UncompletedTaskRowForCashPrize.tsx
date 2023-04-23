@@ -3,20 +3,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   List,
   ListItem,
-  ListIcon,
-  Flex,
   Checkbox,
   Text,
-  useColorModeValue,
-  Container,
-  Grid,
-  GridItem,
   Box,
   IconButton,
-  HStack,
-  VStack,
   useToast,
-  Icon,
   Input,
   Button,
   InputGroup,
@@ -144,7 +135,7 @@ function UncompletedTaskRow({
   const mutationForCashPrizeForTask = useMutation(updateCashPrizeForTask, {
     onSuccess: (result: any) => {
       console.log("result : ", result);
-      queryClient.refetchQueries(["getUncompletedTasksWithCashPrize"]);
+      queryClient.refetchQueries(["getTasksWithCashPrize"]);
 
       toast({
         status: "success",
@@ -168,7 +159,7 @@ function UncompletedTaskRow({
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        queryClient.refetchQueries(["getUncompletedTasksWithCashPrize"]);
+        queryClient.refetchQueries(["getTasksWithCashPrize"]);
 
         toast({
           status: "success",
@@ -189,7 +180,7 @@ function UncompletedTaskRow({
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        queryClient.refetchQueries(["getUncompletedTasksWithCashPrize"]);
+        queryClient.refetchQueries(["getTasksWithCashPrize"]);
 
         toast({
           status: "success",
@@ -221,7 +212,7 @@ function UncompletedTaskRow({
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getUncompletedTasksWithCashPrize"]);
+      queryClient.refetchQueries(["getTasksWithCashPrize"]);
       // queryClient.refetchQueries(["getCompletedTaskList"]);
       // if (projectTaskListRefatch) {
       //   projectTaskListRefatch();
@@ -258,6 +249,7 @@ function UncompletedTaskRow({
                   alignItems={"center"}
                   h={"60px"}
                   _hover={{ backgroundColor: "gray.100" }}
+                  bg={task.check_for_cash_prize ? "green.100" : "white"}
                 >
                   <Box border={"0px solid yellow"} width={"50px"}>
                     <Checkbox mx={2} border={"0px solid black"} />
@@ -361,7 +353,7 @@ function UncompletedTaskRow({
                   {/* 지원자 목록 출력 */}
                   <Box
                     display={"flex"}
-                    justifyContent={"flex-end"}                    
+                    justifyContent={"flex-end"}
                     width={"280px"}
                     border={"0px solid green"}
                   >

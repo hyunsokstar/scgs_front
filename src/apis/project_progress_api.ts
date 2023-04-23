@@ -702,7 +702,7 @@ export const getCompletedTaskListForMe = ({
     });
 };
 
-export const getUncompletedTasksWithCashPrize = ({
+export const getTasksWithCashPrize = ({
   queryKey,
 }: QueryFunctionContext) => {
   const [
@@ -718,7 +718,7 @@ export const getUncompletedTasksWithCashPrize = ({
   );
 
   return instance
-    .get("project_progress/tasks-with-cash-prize/uncompleted", {
+    .get("project_progress/tasks-with-cash-prize", {
       params: {
         page: pageNum,
         selectedPeriodOptionForUncompletedTaskList,
