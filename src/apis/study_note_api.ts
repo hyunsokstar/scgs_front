@@ -13,6 +13,17 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+export const apiFordeleteOneStudyNote = (pk: number) => {
+  console.log("pk : ", pk);
+  return instance
+    .delete(`study-note/${pk}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const getStudyNoteList = async ({
   queryKey,
 }: QueryFunctionContext): Promise<type_for_study_note_list_row[]> => {

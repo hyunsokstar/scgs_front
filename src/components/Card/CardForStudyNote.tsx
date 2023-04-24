@@ -4,11 +4,14 @@ import {
   Flex,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { type_for_study_note_list_row } from "../../types/study_note_type";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiFordeleteOneStudyNote } from "../../apis/study_note_api";
 
-export const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
+const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
   pk,
   title,
   description,
@@ -19,6 +22,34 @@ export const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
   const bodyBgColor = useColorModeValue("gray.100", "gray.700");
   const footerBgColor = useColorModeValue("gray.200", "gray.600");
   const borderColor = useColorModeValue("gray.400", "gray.500");
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  const mutationForDeleteStudyNote = useMutation(
+    (pk: number) => {
+      return apiFordeleteOneStudyNote(pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        // refetch_for_api_docu();
+        queryClient.refetchQueries(["getStudyNoteList"]);
+
+        toast({
+          title: "delete api docu 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const deleteStudyNoteButtonHandler = (pk: any) => {
+    mutationForDeleteStudyNote.mutate(pk);
+  };
 
   return (
     <Box
@@ -44,7 +75,7 @@ export const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
         </Text>
         <IconButton
           aria-label="Close"
-          icon={<CloseIcon />}
+          icon={<CloseIcon onClick={() => deleteStudyNoteButtonHandler(pk)} />}
           variant="outline"
           size="sm"
           colorScheme="pink"
