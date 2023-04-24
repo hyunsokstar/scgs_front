@@ -48,6 +48,7 @@ import WantedPage from "./routes/WantedPage";
 import LongTermPlan from "./routes/LongTermPlan";
 import LongTermPlanDetail from "./routes/LongTermPlanDetail";
 import StudyNotePage from "./routes/StudyNotePage";
+import StudyNoteDetail from "./routes/StudyNoteDetail";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "study-note",
         element: <StudyNotePage />,
+      },
+      {
+        path: "study-note/:study_note_pk",
+        element: <StudyNoteDetail />,
       },
       {
         path: "shortcut",

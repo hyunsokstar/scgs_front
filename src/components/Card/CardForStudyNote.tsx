@@ -10,6 +10,8 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { type_for_study_note_list_row } from "../../types/study_note_type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFordeleteOneStudyNote } from "../../apis/study_note_api";
+import { Button } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
 
 const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
   pk,
@@ -24,6 +26,7 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
   const borderColor = useColorModeValue("gray.400", "gray.500");
   const queryClient = useQueryClient();
   const toast = useToast();
+  const navigate = useNavigate();
 
   const mutationForDeleteStudyNote = useMutation(
     (pk: number) => {
@@ -49,6 +52,10 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
 
   const deleteStudyNoteButtonHandler = (pk: any) => {
     mutationForDeleteStudyNote.mutate(pk);
+  };
+
+  const goToStudyNoteDetail = (pk: any) => {
+    navigate(`/study-note/${pk}`);
   };
 
   return (
@@ -81,8 +88,25 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
           colorScheme="pink"
         />
       </Flex>
-      <Box p="2" bg={bodyBgColor}>
+      <Box
+        p="2"
+        bg={bodyBgColor}
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"space-between"}
+        height={"170px"}
+        border={"0px solid green"}
+      >
         <Text fontSize="sm">{description}</Text>
+        <Button
+          size="sm"
+          colorScheme="green"
+          variant="outline"
+          _hover={{ bg: "green.400" }}
+          onClick={() => goToStudyNoteDetail(pk)}
+        >
+          detail
+        </Button>
       </Box>
       <Box position={"absolute"} p="2" bg={footerBgColor} bottom={0} w={"100%"}>
         <Text fontSize="sm" textAlign="right">
