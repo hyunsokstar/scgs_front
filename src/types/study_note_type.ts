@@ -17,7 +17,7 @@ export type type_for_insert_study_note = {
 };
 
 export interface type_for_study_note_content {
-  id: number;
+  pk: number;
   title: string;
   file_name: string | null;
   content: string;
