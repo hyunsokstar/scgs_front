@@ -13,6 +13,20 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+// apiForGetStuyNoteContentList
+export const apiForGetStuyNoteContentList = async ({
+  queryKey,
+}: QueryFunctionContext) => {
+
+  const [_, study_note_pk] = queryKey;
+  console.log("study_note_pk : ", study_note_pk);
+
+  return await instance
+    .get(`study-note/${study_note_pk}`)
+    .then((response) => response.data);
+    
+};
+
 export const apiFordeleteOneStudyNote = (pk: number) => {
   console.log("pk : ", pk);
   return instance

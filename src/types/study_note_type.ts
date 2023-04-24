@@ -15,3 +15,13 @@ export type type_for_insert_study_note = {
   title: string;
   description: string;
 };
+
+export interface type_for_study_note_content {
+  id: number;
+  title: string;
+  file_name: string | null;
+  content: string;
+  writer: number | null;
+  created_at: string;
+}
+
