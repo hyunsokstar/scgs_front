@@ -4,61 +4,76 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  Text,
 } from "@chakra-ui/react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
-import { selectButton } from "../../reducers/studyNoteSlice";
+import {
+  selectButton,
+  initalizeSelctButtons,
+  initializeCurrentPage,
+} from "../../reducers/studyNoteSlice";
+import ButtonForEditorMode from "../Button/ButtonForEditorMode";
 
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
   currentPage: number;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
+  exist_page_numbers: number[];
+  selectedButtonsData: number[];
 }
-// const pagesData = Array.from({ length: 50 }, (_, i) => i + 1);
 
+// 1122
 const ButtonsForPageNumbersForStudyNoteContents: React.FC<
-  ButtonsForPageNumbersForStudyNoteContentsProps & ButtonProps
-> = ({ currentPage, setCurrentPage }) => {
-  // state
+  ButtonsForPageNumbersForStudyNoteContentsProps
+> = ({ currentPage, selectedButtonsData, exist_page_numbers }) => {
   const dispatch = useDispatch();
-
-  // const [selectedButtons, setSelectedButtons] = useState<number[]>([]);
-  const selectedButtons = useSelector(
-    (state: RootState) => state.studyNote.selectedButtons
-  );
-
   const [pagesData, setpagesData] = useState(
     Array.from({ length: 50 }, (_, i) => i + 1)
   );
-
+  const [editMode, setEditMode] = useState(false);
   const clickHandlerForPageButton = (buttonNumber: number) => {
-    if (selectedButtons.includes(buttonNumber)) {
-      dispatch(selectButton(buttonNumber));
-    } else {
-      dispatch(selectButton(buttonNumber));
-    }
-    setCurrentPage(buttonNumber);
+    dispatch(selectButton({ buttonNumber, editMode }));
+  };
+
+  const handlerForApply = () => {
+    console.log("handlerForApply : ", selectedButtonsData);
+    exist_page_numbers.map((number) => {
+      dispatch(selectButton({ buttonNumber: number, editMode }));
+    });
   };
 
   return (
-    <Box display={"flex"} flexWrap={"wrap"} gap={1}>
-      {/* <Input type="text" value={selectedButtons.join(",")} readOnly /> */}
+    <Box
+      display={"flex"}
+      flexWrap={"wrap"}
+      gap={1}
+      width={"100%"}
+      border={"1px solid green"}
+    >
+      <Box width={"100%"} pt={1}>
+        <ButtonForEditorMode
+          editMode={editMode}
+          setEditMode={setEditMode}
+          onClick={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+      </Box>
 
       <InputGroup>
-        {/* <InputLeftElement>
-          <Button>pagenums</Button>
-        </InputLeftElement> */}
-        <Input placeholder="Input" value={selectedButtons.join(",")} readOnly />
+        <Input
+          placeholder="Input"
+          defaultValue={exist_page_numbers?.join(",")}
+        />
         <InputRightElement width="auto">
-          <Button>-</Button>
-          <Button>+</Button>
+          <Button onClick={() => handlerForApply()}>apply</Button>
         </InputRightElement>
       </InputGroup>
 
-      <Box>
+      {/* 페이지 넘버 출력 start */}
+      <Box px={"auto"} border={"1px solid green"}>
         {pagesData.map((page) => {
           console.log("currentPage, page", typeof currentPage, typeof page);
-
           return (
             <Button
               key={page}
@@ -68,12 +83,12 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
               borderColor={currentPage == page ? "red" : "blue"}
               onClick={() => clickHandlerForPageButton(page)}
               style={{
-                width: "25px",
-                height: "25px",
+                width: "30px",
+                height: "30px",
                 margin: "5px",
-                backgroundColor: selectedButtons.includes(page)
-                  ? "#ffcdd2"
-                  : "#e0e0e0",
+                backgroundColor: selectedButtonsData?.includes(page)
+                  ? "rgba(46, 204, 113, 1)"
+                  : "white",
               }}
               borderRadius="0"
             >
@@ -82,8 +97,12 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           );
         })}
       </Box>
+      {/* 페이지 넘버 출력 end */}
     </Box>
   );
 };
 
 export default ButtonsForPageNumbersForStudyNoteContents;
+function num(value: number, index: number, array: number[]): unknown {
+  throw new Error("Function not implemented.");
+}

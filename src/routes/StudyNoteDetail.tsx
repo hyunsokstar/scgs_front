@@ -1,24 +1,40 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { type_for_study_note_content } from "../types/study_note_type";
+import {
+  DataForStudyNoteContent,
+  StudyNoteData,
+} from "../types/study_note_type";
 import { apiForGetStuyNoteContentList } from "../apis/study_note_api";
 import { Box, Input, VStack, HStack, Text, Button } from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
 import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/ButtonsForPageNumbersForStudyNoteContents";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store";
+
+import { initializeCurrentPage } from "../reducers/studyNoteSlice";
 
 interface Props {}
 
 const StudyNoteDetail = (props: Props) => {
+  const dispatch = useDispatch();
+
+  const selectedButtonsData = useSelector(
+    (state: RootState) => state.studyNote.selectedButtons
+  );
+
   const { study_note_pk } = useParams();
-  //   const queryClient = useQueryClient();
-  const [currentPage, setCurrentPage] = useState(1);
+
+  const currentPage = useSelector(
+    (state: RootState) => state.studyNote.currentPage
+  );
+
   const [pageToMove, setPageToMove] = useState<any>();
   const {
-    data: data_for_study_note_content_list,
+    data: response_data_for_api,
     isLoading: logind_for_study_note_content_list,
     refetch: refetch_for_study_note_content_list,
-  } = useQuery<type_for_study_note_content[]>(
+  } = useQuery<StudyNoteData>(
     [
       "apiForGetStuyNoteContentList",
       study_note_pk,
@@ -28,10 +44,7 @@ const StudyNoteDetail = (props: Props) => {
     apiForGetStuyNoteContentList
   );
 
-  console.log(
-    "data_for_study_note_content_list : ",
-    data_for_study_note_content_list
-  );
+  console.log("response_data_for_api : ", response_data_for_api);
 
   if (logind_for_study_note_content_list) {
     return <Box>"loading.."</Box>;
@@ -48,8 +61,7 @@ const StudyNoteDetail = (props: Props) => {
   };
 
   const handlerForPageMoveButton = (pageToMove: any) => {
-    // alert()
-    setCurrentPage(pageToMove);
+    dispatch(initializeCurrentPage(currentPage));
   };
 
   return (
@@ -57,9 +69,9 @@ const StudyNoteDetail = (props: Props) => {
       <Box flex={4}>
         <Box>Study Note Content</Box>
         <Box border={"1px solid green"} height={"600px"} overflowY={"scroll"}>
-          {data_for_study_note_content_list
-            ? data_for_study_note_content_list.map(
-                (row: type_for_study_note_content, i) => {
+          {response_data_for_api
+            ? response_data_for_api.data_for_study_note_contents.map(
+                (row: DataForStudyNoteContent, i) => {
                   return (
                     <CardForStudyNoteContent
                       pk={row.pk}
@@ -80,11 +92,17 @@ const StudyNoteDetail = (props: Props) => {
         <VStack>
           <Text width={"100%"}>현재: {currentPage}</Text>
 
-          <ButtonsForPageNumbersForStudyNoteContents
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
           
+
+          {response_data_for_api ? (
+            <ButtonsForPageNumbersForStudyNoteContents
+              exist_page_numbers={response_data_for_api.exist_page_numbers}
+              currentPage={currentPage}
+              selectedButtonsData={selectedButtonsData}
+            />
+          ) : (
+            ""
+          )}
         </VStack>
 
         <HStack mt={2}>
@@ -100,6 +118,10 @@ const StudyNoteDetail = (props: Props) => {
         </HStack>
       </Box>
     </Box>
+
+    // <Box>
+    //   12
+    // </Box>
   );
 };
 

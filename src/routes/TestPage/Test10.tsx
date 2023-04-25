@@ -1,8 +1,8 @@
 import { Box, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-import { useSelector, useDispatch } from "react-redux";
 import { selectButton } from "../../reducers/studyNoteSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 
 interface Props {

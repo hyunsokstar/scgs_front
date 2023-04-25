@@ -16,12 +16,26 @@ export type type_for_insert_study_note = {
   description: string;
 };
 
-export interface type_for_study_note_content {
+// export interface type_for_study_note_content {
+//   pk: number;
+//   title: string;
+//   file_name: string | null;
+//   content: string;
+//   writer: number | null;
+//   created_at: string;
+// }
+
+export interface DataForStudyNoteContent {
   pk: number;
   title: string;
   file_name: string | null;
   content: string;
   writer: number | null;
   created_at: string;
+  page: number;
 }
 
+export interface StudyNoteData {
+  exist_page_numbers: number[];
+  data_for_study_note_contents: DataForStudyNoteContent[];
+}
