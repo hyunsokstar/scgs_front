@@ -10,8 +10,6 @@ function Counter() {
   );
   const dispatch = useDispatch();
 
-  // console.log("loginUser : ", loginUser);
-
   return (
     <div>
       <div>{isLoggedIn ? "true" :  "false"}</div>

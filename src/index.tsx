@@ -19,14 +19,12 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={client}>
-      <ChakraProvider>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
-      </ChakraProvider>
-    </QueryClientProvider>
-    ,
-  </React.StrictMode>
+  <QueryClientProvider client={client}>
+    <ChakraProvider>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </ChakraProvider>
+  </QueryClientProvider>,
+
 );

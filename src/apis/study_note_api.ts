@@ -13,18 +13,51 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+// export const getCompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
+//   const [
+//     _,
+//     pageNum,
+//     selectedPeriodOptionForUncompletedTaskList,
+//     username_for_search,
+//   ] = queryKey;
+//   // console.log("pageNum : ", pageNum);
+//   return instance
+//     .get("project_progress/completed", {
+//       params: {
+//         page: pageNum,
+//         selectedPeriodOptionForUncompletedTaskList,
+//         username_for_search,
+//       },
+//     })
+//     .then((response) => {
+//       const response_data = {
+//         ProjectProgressList: response.data.ProjectProgressList,
+//         totalPageCount: response.data.totalPageCount,
+//         task_number_for_one_page: response.data.task_number_for_one_page,
+//         writers_info: response.data.writers_info,
+//         count_for_ready: response.data.count_for_ready,
+//         count_for_in_progress: response.data.count_for_in_progress,
+//         count_for_in_testing: response.data.count_for_in_testing,
+//       };
+
+//       return response_data;
+//     });
+// };
+
 // apiForGetStuyNoteContentList
 export const apiForGetStuyNoteContentList = async ({
   queryKey,
 }: QueryFunctionContext) => {
-
-  const [_, study_note_pk] = queryKey;
+  const [_, study_note_pk, currentPage] = queryKey;
   console.log("study_note_pk : ", study_note_pk);
 
   return await instance
-    .get(`study-note/${study_note_pk}`)
+    .get(`study-note/${study_note_pk}`, {
+      params: {
+        currentPage
+      },
+    })
     .then((response) => response.data);
-    
 };
 
 export const apiFordeleteOneStudyNote = (pk: number) => {

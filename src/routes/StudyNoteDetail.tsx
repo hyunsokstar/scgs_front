@@ -11,7 +11,7 @@ interface Props {}
 
 const StudyNoteDetail = (props: Props) => {
   const { study_note_pk } = useParams();
-  const queryClient = useQueryClient();
+  //   const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageToMove, setPageToMove] = useState<any>();
   const {
@@ -22,6 +22,7 @@ const StudyNoteDetail = (props: Props) => {
     [
       "apiForGetStuyNoteContentList",
       study_note_pk,
+      currentPage,
       "apiForGetStuyNoteContentList",
     ],
     apiForGetStuyNoteContentList
@@ -46,7 +47,7 @@ const StudyNoteDetail = (props: Props) => {
     setPageToMove(e.target.value);
   };
 
-  const handlerForPageMoveButton = (pageToMove:any) => {
+  const handlerForPageMoveButton = (pageToMove: any) => {
     // alert()
     setCurrentPage(pageToMove);
   };
@@ -78,31 +79,25 @@ const StudyNoteDetail = (props: Props) => {
       <Box flex={1} border={"1px solid green"} p={2}>
         <VStack>
           <Text width={"100%"}>현재: {currentPage}</Text>
-          {/* <HStack width={"100%"} p={2}>
-            <Text>current page : </Text>
-            <Input
-              size="sm"
-              maxWidth="80px"
-              //   type="number"
-              value={currentPage}
-              onChange={(e) => inputHandlerForCurrentPage(e)}
-            />
-          </HStack> */}
-          {/* <Box>{currentPage} hi</Box> */}
+
           <ButtonsForPageNumbersForStudyNoteContents
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
+          
         </VStack>
-        <Box>
-          <Text>current Page:</Text>
+
+        <HStack mt={2}>
+          {/* <Text>current Page:</Text> */}
           <Input
             width={20}
-            value={pageToMove}
+            placeholder={""}
             onChange={(e) => onChangeForInputHandlerForCurrentPage(e)}
           />
-        </Box>
-        <Button onClick={() => handlerForPageMoveButton(pageToMove)}>click</Button>
+          <Button onClick={() => handlerForPageMoveButton(pageToMove)}>
+            click
+          </Button>
+        </HStack>
       </Box>
     </Box>
   );

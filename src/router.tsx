@@ -49,6 +49,8 @@ import LongTermPlan from "./routes/LongTermPlan";
 import LongTermPlanDetail from "./routes/LongTermPlanDetail";
 import StudyNotePage from "./routes/StudyNotePage";
 import StudyNoteDetail from "./routes/StudyNoteDetail";
+import Test9 from "./routes/TestPage/Test9";
+import Test10 from "./routes/TestPage/Test10";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +113,14 @@ const router = createBrowserRouter([
       {
         path: "test8",
         element: <Test8 />,
+      },
+      {
+        path: "test9",
+        element: <Test9 />,
+      },
+      {
+        path: "test10",
+        element: <Test10 buttonNumbers={10} />,
       },
       {
         path: "wanted",

@@ -12,7 +12,6 @@ import {
   Tr,
   Text
 } from "@chakra-ui/react";
-import { type_for_study_note_content } from "../../types/study_note_type";
 
 const CardForStudyNoteContent = ({
   pk,

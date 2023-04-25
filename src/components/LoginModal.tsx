@@ -19,7 +19,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FaUserNinja, FaLock } from "react-icons/fa";
-import SocialLogin from "./SocialLogin";
 import { useForm } from "react-hook-form";
 
 //
