@@ -91,9 +91,6 @@ const StudyNoteDetail = (props: Props) => {
       <Box flex={1} border={"1px solid green"} p={2}>
         <VStack>
           <Text width={"100%"}>현재: {currentPage}</Text>
-
-          
-
           {response_data_for_api ? (
             <ButtonsForPageNumbersForStudyNoteContents
               exist_page_numbers={response_data_for_api.exist_page_numbers}
@@ -104,18 +101,6 @@ const StudyNoteDetail = (props: Props) => {
             ""
           )}
         </VStack>
-
-        <HStack mt={2}>
-          {/* <Text>current Page:</Text> */}
-          <Input
-            width={20}
-            placeholder={""}
-            onChange={(e) => onChangeForInputHandlerForCurrentPage(e)}
-          />
-          <Button onClick={() => handlerForPageMoveButton(pageToMove)}>
-            click
-          </Button>
-        </HStack>
       </Box>
     </Box>
 

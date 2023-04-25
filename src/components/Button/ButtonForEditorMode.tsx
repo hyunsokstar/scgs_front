@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { Box, Button } from "@chakra-ui/react";
 
 type Props = {
-  onClick: () => void;
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
   editMode: boolean;
 };
 
-const ButtonForEditorMode = ({ editMode, setEditMode, onClick }: Props) => {
+const ButtonForEditorMode = ({ editMode, setEditMode }: Props) => {
   //   const [isToggledOn, setIsToggledOn] = useState(editMode);
 
   const handleClick = () => {

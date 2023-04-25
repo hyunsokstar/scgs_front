@@ -1,4 +1,12 @@
-import { Box, Button, ButtonProps, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  ButtonProps,
+  HStack,
+  Input,
+  Spacer,
+  IconButton,
+} from "@chakra-ui/react";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   InputGroup,
@@ -6,15 +14,22 @@ import {
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
+import {
+  FaTrashAlt,
+  FaChevronLeft,
+  FaChevronRight,
+  FaTimes,
+} from "react-icons/fa";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import {
   selectButton,
-  initalizeSelctButtons,
-  initializeCurrentPage,
+  moveToBeforPage,
+  moveToNextPage
 } from "../../reducers/studyNoteSlice";
 import ButtonForEditorMode from "../Button/ButtonForEditorMode";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
   currentPage: number;
@@ -42,6 +57,16 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     });
   };
 
+  const pageMoveButtonHandler = (direction: string) => {
+    if (direction === "left") {
+      dispatch(moveToBeforPage(currentPage - 1));
+    }
+    
+    if (direction === "right") {
+      dispatch(moveToNextPage(currentPage + 1));
+    }
+  };
+
   return (
     <Box
       display={"flex"}
@@ -50,26 +75,93 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       width={"100%"}
       border={"1px solid green"}
     >
-      <Box width={"100%"} pt={1}>
-        <ButtonForEditorMode
-          editMode={editMode}
-          setEditMode={setEditMode}
-          onClick={function (): void {
-            throw new Error("Function not implemented.");
-          }}
+      {/* {exist_page_numbers} */}
+      <HStack width={"100%"} pt={1} px={1}>
+        <IconButton
+          aria-label="Previous"
+          icon={<ChevronLeftIcon />}
+          variant="outline"
+          colorScheme="teal"
+          size="md"
+          mr={2}
+          _hover={{ bg: "teal.100", color: "white" }}
+          onClick={() => pageMoveButtonHandler("left")}
         />
-      </Box>
+        <IconButton
+          aria-label="Next"
+          icon={<ChevronRightIcon />}
+          variant="outline"
+          colorScheme="teal"
+          size="md"
+          _hover={{ bg: "teal.100", color: "white" }}
+          onClick={() => pageMoveButtonHandler("right")}
 
-      <InputGroup>
+        />
+
+        <Button
+          onClick={() => handlerForApply()}
+          variant="outline"
+          size="md"
+          colorScheme="teal"
+          borderWidth="2px"
+          borderColor="teal.300"
+          _hover={{ bg: "teal.100", color: "white" }}
+        >
+          Apply
+        </Button>
+        <ButtonForEditorMode editMode={editMode} setEditMode={setEditMode} />
+      </HStack>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        border={"1px solid blue"}
+        mt={0}
+        w={"100%"}
+        p={1}
+      >
+        <Button
+          variant="outline"
+          size="md"
+          colorScheme="purple"
+          borderColor="purple.500"
+          _hover={{ bg: "purple.50", borderColor: "purple.300" }}
+        >
+          -1
+        </Button>
+        <Button
+          variant="outline"
+          size="md"
+          colorScheme="purple"
+          borderColor="purple.500"
+          _hover={{ bg: "purple.50", borderColor: "purple.300" }}
+        >
+          +1
+        </Button>
+        <Button
+          variant="outline"
+          size="md"
+          colorScheme="red"
+          borderColor="red.500"
+          _hover={{ bg: "red.50", borderColor: "red.300" }}
+        >
+          <FaTrashAlt />
+        </Button>
+        <Button
+          variant="outline"
+          size="md"
+          colorScheme="red"
+          borderColor="red.500"
+          _hover={{ bg: "red.50", borderColor: "red.300" }}
+        >
+          Cancle
+        </Button>
+      </Box>{" "}
+      {/* <InputGroup>
         <Input
           placeholder="Input"
           defaultValue={exist_page_numbers?.join(",")}
         />
-        <InputRightElement width="auto">
-          <Button onClick={() => handlerForApply()}>apply</Button>
-        </InputRightElement>
-      </InputGroup>
-
+      </InputGroup> */}
       {/* 페이지 넘버 출력 start */}
       <Box px={"auto"} border={"1px solid green"}>
         {pagesData.map((page) => {
@@ -83,8 +175,8 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
               borderColor={currentPage == page ? "red" : "blue"}
               onClick={() => clickHandlerForPageButton(page)}
               style={{
-                width: "30px",
-                height: "30px",
+                width: "25px",
+                height: "25px",
                 margin: "5px",
                 backgroundColor: selectedButtonsData?.includes(page)
                   ? "rgba(46, 204, 113, 1)"

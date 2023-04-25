@@ -31,10 +31,9 @@ export const studyNoteSlice = createSlice({
             (a, b) => a - b
           );
         }
-      } 
-      
-      state.currentPage = buttonNumber;
+      }
 
+      state.currentPage = buttonNumber;
     },
     initalizeSelctButtons: (state, action: PayloadAction<number[]>) => {
       console.log("action.payload : ", action.payload);
@@ -43,11 +42,23 @@ export const studyNoteSlice = createSlice({
     initializeCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
+
+    moveToBeforPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
+    moveToNextPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
   },
 });
 
-export const { selectButton, initializeCurrentPage, initalizeSelctButtons } =
-  studyNoteSlice.actions;
+export const {
+  selectButton,
+  initializeCurrentPage,
+  initalizeSelctButtons,
+  moveToBeforPage,
+  moveToNextPage,
+} = studyNoteSlice.actions;
 
 export const selectedButtons = (state: RootState) =>
   state.studyNote.selectedButtons;
