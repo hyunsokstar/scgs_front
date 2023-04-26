@@ -49,6 +49,10 @@ export const studyNoteSlice = createSlice({
     moveToNextPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
+
+    cancle_for_all_selected_pages: (state) => {
+      state.selectedButtons = [];
+    },
   },
 });
 
@@ -58,6 +62,7 @@ export const {
   initalizeSelctButtons,
   moveToBeforPage,
   moveToNextPage,
+  cancle_for_all_selected_pages
 } = studyNoteSlice.actions;
 
 export const selectedButtons = (state: RootState) =>

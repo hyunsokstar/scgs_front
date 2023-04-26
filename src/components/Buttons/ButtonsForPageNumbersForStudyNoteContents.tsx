@@ -28,6 +28,7 @@ import {
   selectButton,
   moveToBeforPage,
   moveToNextPage,
+  cancle_for_all_selected_pages,
 } from "../../reducers/studyNoteSlice";
 import ButtonForEditorMode from "../Button/ButtonForEditorMode";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
@@ -103,7 +104,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           title: "delete api docu 성공!",
           status: "success",
           description: data.message,
-
         });
       },
     }
@@ -115,6 +115,10 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       study_note_pk,
       selectedButtonsData,
     });
+  };
+  const cancleAllSeletedPage = () => {
+    alert("cancle_for_all_selected_pages")
+    dispatch(cancle_for_all_selected_pages());
   };
 
   // 2244
@@ -133,7 +137,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           icon={<ChevronLeftIcon />}
           variant="outline"
           colorScheme="teal"
-          size="md"
+          size="sm"
           mr={2}
           _hover={{ bg: "teal.100", color: "white" }}
           onClick={() => pageMoveButtonHandler("left")}
@@ -143,7 +147,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           icon={<ChevronRightIcon />}
           variant="outline"
           colorScheme="teal"
-          size="md"
+          size="sm"
           _hover={{ bg: "teal.100", color: "white" }}
           onClick={() => pageMoveButtonHandler("right")}
         />
@@ -151,7 +155,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         <Button
           onClick={() => handlerForApply()}
           variant="outline"
-          size="md"
+          size="sm"
           colorScheme="teal"
           borderWidth="2px"
           borderColor="teal.300"
@@ -171,7 +175,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       >
         <Button
           variant="outline"
-          size="md"
+          size="sm"
           colorScheme="purple"
           borderColor="purple.500"
           _hover={{ bg: "purple.50", borderColor: "purple.300" }}
@@ -180,7 +184,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         </Button>
         <Button
           variant="outline"
-          size="md"
+          size="sm"
           colorScheme="purple"
           borderColor="purple.500"
           _hover={{ bg: "purple.50", borderColor: "purple.300" }}
@@ -189,10 +193,11 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         </Button>
         <Button
           variant="outline"
-          size="md"
+          size="sm"
           colorScheme="red"
           borderColor="red.500"
           _hover={{ bg: "red.50", borderColor: "red.300" }}
+          onClick={() => cancleAllSeletedPage()}
         >
           Cancle
         </Button>
@@ -200,7 +205,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         {/* 삭제 버튼 delete button */}
         <Button
           variant="outline"
-          size="md"
+          size="sm"
           colorScheme="red"
           borderColor="red.500"
           _hover={{ bg: "red.50", borderColor: "red.300" }}
