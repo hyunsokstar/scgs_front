@@ -96,7 +96,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        // alert(data.message)
         // refetch_for_api_docu();
         // queryClient.refetchQueries(["getStudyNoteList"]);
 
@@ -116,9 +115,14 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       selectedButtonsData,
     });
   };
+
   const cancleAllSeletedPage = () => {
-    alert("cancle_for_all_selected_pages")
     dispatch(cancle_for_all_selected_pages());
+    toast({
+      title: "page select 모두 취소",
+      status: "success",
+      position: "top",
+    });
   };
 
   // 2244
