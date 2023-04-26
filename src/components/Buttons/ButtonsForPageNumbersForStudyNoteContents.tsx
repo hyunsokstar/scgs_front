@@ -33,7 +33,7 @@ import {
 import ButtonForEditorMode from "../Button/ButtonForEditorMode";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiFordeleteStudyNoteContentsForSelectedPages } from "../../apis/study_note_api";
+import { apiFordeleteStudyNoteContentsForSelectedPages, apiForPlusOnePageForSelectedPagesForStudyNoteContents } from "../../apis/study_note_api";
 import { type_for_parameter_for_delete_pages_for_study_note } from "../../types/study_note_type";
 
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
@@ -125,6 +125,47 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     });
   };
 
+  const mutationForPlusOnePageForSelectedPageds= useMutation(
+    ({
+      study_note_pk,
+      selectedButtonsData,
+    }: type_for_parameter_for_delete_pages_for_study_note) => {
+      return apiForPlusOnePageForSelectedPagesForStudyNoteContents({
+        study_note_pk,
+        selectedButtonsData,
+      });
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "page plu 성공!",
+          status: "success",
+          // description: data.message,
+        });
+      },
+    }
+  );
+
+  const plusOnePageForSelectedPageds = () => {
+    console.log("plusOnePageForSelectedPageds check");
+
+    if(selectedButtonsData.length === 0){
+      alert("페이지를 하나라도 선택 해주세요")
+      return;
+    }
+
+    mutationForPlusOnePageForSelectedPageds.mutate({
+      study_note_pk,
+      selectedButtonsData,
+    });
+  }
+  
+
   // 2244
   return (
     <Box
@@ -192,6 +233,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           colorScheme="purple"
           borderColor="purple.500"
           _hover={{ bg: "purple.50", borderColor: "purple.300" }}
+          onClick={() => plusOnePageForSelectedPageds()}
         >
           +1
         </Button>

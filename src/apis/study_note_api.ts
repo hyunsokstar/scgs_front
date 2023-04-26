@@ -14,36 +14,28 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-// export const getCompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
-//   const [
-//     _,
-//     pageNum,
-//     selectedPeriodOptionForUncompletedTaskList,
-//     username_for_search,
-//   ] = queryKey;
-//   // console.log("pageNum : ", pageNum);
-//   return instance
-//     .get("project_progress/completed", {
-//       params: {
-//         page: pageNum,
-//         selectedPeriodOptionForUncompletedTaskList,
-//         username_for_search,
-//       },
-//     })
-//     .then((response) => {
-//       const response_data = {
-//         ProjectProgressList: response.data.ProjectProgressList,
-//         totalPageCount: response.data.totalPageCount,
-//         task_number_for_one_page: response.data.task_number_for_one_page,
-//         writers_info: response.data.writers_info,
-//         count_for_ready: response.data.count_for_ready,
-//         count_for_in_progress: response.data.count_for_in_progress,
-//         count_for_in_testing: response.data.count_for_in_testing,
-//       };
+export const apiForPlusOnePageForSelectedPagesForStudyNoteContents = ({
+  study_note_pk,
+  selectedButtonsData,
+}: type_for_parameter_for_delete_pages_for_study_note) => {
+  console.log(
+    "study_note_pk , selectedButtonsData : ",
+    study_note_pk,
+    selectedButtonsData
+  );
 
-//       return response_data;
-//     });
-// };
+  return instance
+    .put(
+      `study-note/${study_note_pk}/contents/plun-one-page-for-selected-page`,
+      { selectedButtonsData },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
 
 // apiForGetStuyNoteContentList
 export const apiForGetStuyNoteContentList = async ({
