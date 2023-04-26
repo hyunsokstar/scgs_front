@@ -15,6 +15,17 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+export const apiFordeleteOneStudyNoteContent = (pk: number) => {
+  console.log("pk : ", pk);
+  return instance
+    .delete(`study-note/contents/${pk}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForCreateStudyNoteContents = ({
   study_note_pk,
   current_page_number,
@@ -113,7 +124,7 @@ export const apiFordeleteStudyNoteContentsForSelectedPages = ({
   );
 
   return instance
-    .delete(`study-note/contents/${study_note_pk}`, {
+    .delete(`study-note/${study_note_pk}/contents/delete-page`, {
       data: selectedButtonsData, // 요청 본문에 selectedButtonsData 추가
       headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",

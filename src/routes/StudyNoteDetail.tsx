@@ -25,6 +25,7 @@ import { SearchIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaSort } from "react-icons/fa";
 import ModalButtonForInsertStudyNoteContent from "../components/modal/ModalButtonForInsertStudyNoteContent";
 
+
 interface Props {}
 
 const StudyNoteDetail = (props: Props) => {

@@ -10,9 +10,13 @@ import {
   Th,
   Thead,
   Tr,
-  Text
+  Text,
+  useToast,
 } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiFordeleteOneStudyNoteContent } from "../../apis/study_note_api";
 
+// 1122
 const CardForStudyNoteContent = ({
   pk,
   title,
@@ -21,6 +25,34 @@ const CardForStudyNoteContent = ({
   writer,
   index,
 }: any) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  const mutationForDeleteStudyNoteContent = useMutation(
+    (pk: number) => {
+      return apiFordeleteOneStudyNoteContent(pk);
+    },
+    {
+      onSettled: () => {
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+
+        toast({
+          title: "delete study note content 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const deleteStudyNoteContentByPk = (pk: number) => {
+    console.log("pk check for delete : ", pk);
+    mutationForDeleteStudyNoteContent.mutate(pk);
+  };
+
   return (
     <Box borderRadius="lg" p="4" border={"2px solid red"} mb={2}>
       <Box
@@ -31,7 +63,12 @@ const CardForStudyNoteContent = ({
         px={2}
       >
         <Text>step {index + 1}</Text>
-        <CloseButton size="sm" colorScheme="teal" />
+        {/* delete button for study note content */}
+        <CloseButton
+          size="sm"
+          colorScheme="teal"
+          onClick={() => deleteStudyNoteContentByPk(pk)}
+        />
       </Box>
       <Box my="4">
         <Table variant="simple">
