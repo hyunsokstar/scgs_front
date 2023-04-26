@@ -4,6 +4,7 @@ import { backendApi } from "../apis/common_api";
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import {
+  StudyNoteContentFormData,
   type_for_insert_study_note,
   type_for_parameter_for_delete_pages_for_study_note,
   type_for_study_note_list_row,
@@ -13,6 +14,31 @@ const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
   withCredentials: true,
 });
+
+export const apiForCreateStudyNoteContents = ({
+  study_note_pk,
+  current_page_number,
+  title,
+  file,
+  content,
+}: StudyNoteContentFormData) =>
+  instance
+    .post(
+      `/study-note/${study_note_pk}/contents`,
+      {
+        study_note_pk,
+        current_page_number,
+        title,
+        file,
+        content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
 
 export const apiForPlusOnePageForSelectedPagesForStudyNoteContents = ({
   study_note_pk,
@@ -26,7 +52,30 @@ export const apiForPlusOnePageForSelectedPagesForStudyNoteContents = ({
 
   return instance
     .put(
-      `study-note/${study_note_pk}/contents/plun-one-page-for-selected-page`,
+      `study-note/${study_note_pk}/contents/plus-one-page-for-selected-page`,
+      { selectedButtonsData },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
+export const apiForMinusOnePageForSelectedPagesForStudyNoteContents = ({
+  study_note_pk,
+  selectedButtonsData,
+}: type_for_parameter_for_delete_pages_for_study_note) => {
+  console.log(
+    "study_note_pk , selectedButtonsData : ",
+    study_note_pk,
+    selectedButtonsData
+  );
+
+  return instance
+    .put(
+      `study-note/${study_note_pk}/contents/minus-one-page-for-selected-page`,
       { selectedButtonsData },
       {
         headers: {

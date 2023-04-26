@@ -33,7 +33,7 @@ import {
 import ButtonForEditorMode from "../Button/ButtonForEditorMode";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiFordeleteStudyNoteContentsForSelectedPages, apiForPlusOnePageForSelectedPagesForStudyNoteContents } from "../../apis/study_note_api";
+import { apiFordeleteStudyNoteContentsForSelectedPages, apiForMinusOnePageForSelectedPagesForStudyNoteContents, apiForPlusOnePageForSelectedPagesForStudyNoteContents } from "../../apis/study_note_api";
 import { type_for_parameter_for_delete_pages_for_study_note } from "../../types/study_note_type";
 
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
@@ -53,6 +53,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   study_note_pk,
 }) => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const toast = useToast();
 
   const [pagesData, setpagesData] = useState(
@@ -97,7 +98,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       onSuccess: (data) => {
         console.log("data : ", data);
         // refetch_for_api_docu();
-        // queryClient.refetchQueries(["getStudyNoteList"]);
+        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
 
         toast({
           title: "delete api docu 성공!",
@@ -125,7 +126,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     });
   };
 
-  const mutationForPlusOnePageForSelectedPageds= useMutation(
+  const mutationForPlusOnePageForSelectedPages= useMutation(
     ({
       study_note_pk,
       selectedButtonsData,
@@ -141,9 +142,9 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-
+        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
         toast({
-          title: "page plu 성공!",
+          title: "선택된 페이지들 +1 success !",
           status: "success",
           // description: data.message,
         });
@@ -159,7 +160,47 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       return;
     }
 
-    mutationForPlusOnePageForSelectedPageds.mutate({
+    mutationForPlusOnePageForSelectedPages.mutate({
+      study_note_pk,
+      selectedButtonsData,
+    });
+  }
+
+  const mutationForMinusOnePageForSelectedPages= useMutation(
+    ({
+      study_note_pk,
+      selectedButtonsData,
+    }: type_for_parameter_for_delete_pages_for_study_note) => {
+      return apiForMinusOnePageForSelectedPagesForStudyNoteContents({
+        study_note_pk,
+        selectedButtonsData,
+      });
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        toast({
+          title: "선택된 페이지들 -1 success !",
+          status: "success",
+          // description: data.message,
+        });
+      },
+    }
+  );
+
+  const minusOnePageForSelectedPageds = () => {
+    console.log("plusOnePageForSelectedPageds check");
+
+    if(selectedButtonsData.length === 0){
+      alert("페이지를 하나라도 선택 해주세요")
+      return;
+    }
+
+    mutationForMinusOnePageForSelectedPages.mutate({
       study_note_pk,
       selectedButtonsData,
     });
@@ -224,6 +265,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           colorScheme="purple"
           borderColor="purple.500"
           _hover={{ bg: "purple.50", borderColor: "purple.300" }}
+          onClick={() => minusOnePageForSelectedPageds()}
         >
           -1
         </Button>
