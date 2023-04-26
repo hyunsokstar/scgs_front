@@ -96,6 +96,7 @@ const StudyNoteDetail = (props: Props) => {
               exist_page_numbers={response_data_for_api.exist_page_numbers}
               currentPage={currentPage}
               selectedButtonsData={selectedButtonsData}
+              study_note_pk={study_note_pk}
             />
           ) : (
             ""

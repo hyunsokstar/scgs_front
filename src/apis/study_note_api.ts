@@ -5,6 +5,7 @@ import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import {
   type_for_insert_study_note,
+  type_for_parameter_for_delete_pages_for_study_note,
   type_for_study_note_list_row,
 } from "../types/study_note_type";
 
@@ -54,7 +55,27 @@ export const apiForGetStuyNoteContentList = async ({
   return await instance
     .get(`study-note/${study_note_pk}`, {
       params: {
-        currentPage
+        currentPage,
+      },
+    })
+    .then((response) => response.data);
+};
+
+export const apiFordeleteStudyNoteContentsForSelectedPages = ({
+  study_note_pk,
+  selectedButtonsData,
+}: type_for_parameter_for_delete_pages_for_study_note) => {
+  console.log(
+    "study_note_pk , selectedButtonsData : ",
+    study_note_pk,
+    selectedButtonsData
+  );
+
+  return instance
+    .delete(`study-note/contents/${study_note_pk}`, {
+      data: selectedButtonsData, // 요청 본문에 selectedButtonsData 추가
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
       },
     })
     .then((response) => response.data);

@@ -6,6 +6,7 @@ import {
   Input,
   Spacer,
   IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
@@ -26,26 +27,37 @@ import { RootState } from "../../store";
 import {
   selectButton,
   moveToBeforPage,
-  moveToNextPage
+  moveToNextPage,
 } from "../../reducers/studyNoteSlice";
 import ButtonForEditorMode from "../Button/ButtonForEditorMode";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiFordeleteStudyNoteContentsForSelectedPages } from "../../apis/study_note_api";
+import { type_for_parameter_for_delete_pages_for_study_note } from "../../types/study_note_type";
 
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
   currentPage: number;
   exist_page_numbers: number[];
   selectedButtonsData: number[];
+  study_note_pk: string | undefined;
 }
 
 // 1122
 const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   ButtonsForPageNumbersForStudyNoteContentsProps
-> = ({ currentPage, selectedButtonsData, exist_page_numbers }) => {
+> = ({
+  currentPage,
+  selectedButtonsData,
+  exist_page_numbers,
+  study_note_pk,
+}) => {
   const dispatch = useDispatch();
+  const toast = useToast();
+
   const [pagesData, setpagesData] = useState(
     Array.from({ length: 50 }, (_, i) => i + 1)
   );
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(true);
   const clickHandlerForPageButton = (buttonNumber: number) => {
     dispatch(selectButton({ buttonNumber, editMode }));
   };
@@ -61,12 +73,51 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     if (direction === "left") {
       dispatch(moveToBeforPage(currentPage - 1));
     }
-    
+
     if (direction === "right") {
       dispatch(moveToNextPage(currentPage + 1));
     }
   };
 
+  const mutationForDeleteSelectedPages = useMutation(
+    ({
+      study_note_pk,
+      selectedButtonsData,
+    }: type_for_parameter_for_delete_pages_for_study_note) => {
+      return apiFordeleteStudyNoteContentsForSelectedPages({
+        study_note_pk,
+        selectedButtonsData,
+      });
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        // alert(data.message)
+        // refetch_for_api_docu();
+        // queryClient.refetchQueries(["getStudyNoteList"]);
+
+        toast({
+          title: "delete api docu 성공!",
+          status: "success",
+          description: data.message,
+
+        });
+      },
+    }
+  );
+
+  const deleteSelectedPagesHandler = () => {
+    // study_note_pk
+    mutationForDeleteSelectedPages.mutate({
+      study_note_pk,
+      selectedButtonsData,
+    });
+  };
+
+  // 2244
   return (
     <Box
       display={"flex"}
@@ -95,9 +146,8 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           size="md"
           _hover={{ bg: "teal.100", color: "white" }}
           onClick={() => pageMoveButtonHandler("right")}
-
         />
-
+        <Spacer />
         <Button
           onClick={() => handlerForApply()}
           variant="outline"
@@ -144,16 +194,19 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           borderColor="red.500"
           _hover={{ bg: "red.50", borderColor: "red.300" }}
         >
-          <FaTrashAlt />
+          Cancle
         </Button>
+
+        {/* 삭제 버튼 delete button */}
         <Button
           variant="outline"
           size="md"
           colorScheme="red"
           borderColor="red.500"
           _hover={{ bg: "red.50", borderColor: "red.300" }}
+          onClick={() => deleteSelectedPagesHandler()}
         >
-          Cancle
+          <FaTrashAlt />
         </Button>
       </Box>{" "}
       {/* <InputGroup>
@@ -195,6 +248,3 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
 };
 
 export default ButtonsForPageNumbersForStudyNoteContents;
-function num(value: number, index: number, array: number[]): unknown {
-  throw new Error("Function not implemented.");
-}
