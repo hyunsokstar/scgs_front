@@ -15,6 +15,36 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+export const apiForOrderPlusOneForNoteContent = (order_pk: number) => {
+  console.log("order_pk : ", order_pk);
+  return instance
+    .put(
+      `study-note/contents/${order_pk}/order-plus-one-for-note-content`,
+      { },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
+export const apiForOrderMinusOneForNoteContent = (order_pk: number) => {
+  console.log("order_pk : ", order_pk);
+  return instance
+    .put(
+      `study-note/contents/${order_pk}/order-minus-one-for-note-content`,
+      { },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 export const apiFordeleteOneStudyNoteContent = (pk: number) => {
   console.log("pk : ", pk);
   return instance
@@ -97,7 +127,6 @@ export const apiForMinusOnePageForSelectedPagesForStudyNoteContents = ({
     .then((response) => response.data);
 };
 
-// apiForGetStuyNoteContentList
 export const apiForGetStuyNoteContentList = async ({
   queryKey,
 }: QueryFunctionContext) => {

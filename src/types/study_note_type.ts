@@ -33,6 +33,7 @@ export interface DataForStudyNoteContent {
   writer: number | null;
   created_at: string;
   page: number;
+  order: number;
 }
 
 export interface StudyNoteData {

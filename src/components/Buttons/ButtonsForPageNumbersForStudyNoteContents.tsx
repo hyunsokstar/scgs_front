@@ -33,7 +33,11 @@ import {
 import ButtonForEditorMode from "../Button/ButtonForEditorMode";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiFordeleteStudyNoteContentsForSelectedPages, apiForMinusOnePageForSelectedPagesForStudyNoteContents, apiForPlusOnePageForSelectedPagesForStudyNoteContents } from "../../apis/study_note_api";
+import {
+  apiFordeleteStudyNoteContentsForSelectedPages,
+  apiForMinusOnePageForSelectedPagesForStudyNoteContents,
+  apiForPlusOnePageForSelectedPagesForStudyNoteContents,
+} from "../../apis/study_note_api";
 import { type_for_parameter_for_delete_pages_for_study_note } from "../../types/study_note_type";
 
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
@@ -126,7 +130,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     });
   };
 
-  const mutationForPlusOnePageForSelectedPages= useMutation(
+  const mutationForPlusOnePageForSelectedPages = useMutation(
     ({
       study_note_pk,
       selectedButtonsData,
@@ -155,8 +159,8 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const plusOnePageForSelectedPageds = () => {
     console.log("plusOnePageForSelectedPageds check");
 
-    if(selectedButtonsData.length === 0){
-      alert("페이지를 하나라도 선택 해주세요")
+    if (selectedButtonsData.length === 0) {
+      alert("페이지를 하나라도 선택 해주세요");
       return;
     }
 
@@ -164,9 +168,9 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       study_note_pk,
       selectedButtonsData,
     });
-  }
+  };
 
-  const mutationForMinusOnePageForSelectedPages= useMutation(
+  const mutationForMinusOnePageForSelectedPages = useMutation(
     ({
       study_note_pk,
       selectedButtonsData,
@@ -195,8 +199,8 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const minusOnePageForSelectedPageds = () => {
     console.log("plusOnePageForSelectedPageds check");
 
-    if(selectedButtonsData.length === 0){
-      alert("페이지를 하나라도 선택 해주세요")
+    if (selectedButtonsData.length === 0) {
+      alert("페이지를 하나라도 선택 해주세요");
       return;
     }
 
@@ -204,8 +208,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       study_note_pk,
       selectedButtonsData,
     });
-  }
-  
+  };
 
   // 2244
   return (
@@ -217,14 +220,14 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       border={"1px solid green"}
     >
       {/* {exist_page_numbers} */}
-      <HStack width={"100%"} pt={1} px={1}>
+      <Box display={"flex"} width={"100%"} pt={1} px={1} gap={1}>
         <IconButton
           aria-label="Previous"
           icon={<ChevronLeftIcon />}
           variant="outline"
           colorScheme="teal"
           size="sm"
-          mr={2}
+          mr={0}
           _hover={{ bg: "teal.100", color: "white" }}
           onClick={() => pageMoveButtonHandler("left")}
         />
@@ -250,7 +253,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           Apply
         </Button>
         <ButtonForEditorMode editMode={editMode} setEditMode={setEditMode} />
-      </HStack>
+      </Box>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -258,6 +261,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         mt={0}
         w={"100%"}
         p={1}
+        gap={1}
       >
         <Button
           variant="outline"
@@ -279,6 +283,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         >
           +1
         </Button>
+        <Spacer />
         <Button
           variant="outline"
           size="sm"
@@ -301,7 +306,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         >
           <FaTrashAlt />
         </Button>
-      </Box>{" "}
+      </Box>
       {/* <InputGroup>
         <Input
           placeholder="Input"

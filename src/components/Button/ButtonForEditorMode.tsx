@@ -14,10 +14,10 @@ const ButtonForEditorMode = ({ editMode, setEditMode }: Props) => {
   };
 
   return (
-    <Box display={"flex"} justifyContent={"flex-end"} pr={1} border={"0px solid blue"}>
+    <Box display={"flex"} justifyContent={"flex-end"} border={"0px solid blue"}>
       <Button
         variant="outline"
-        size="md"
+        size="sm"
         colorScheme={editMode ? "green" : "pink"}
         borderColor={editMode ? "green.400" : "pink.400"}
         _hover={{

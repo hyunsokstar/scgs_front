@@ -12,9 +12,22 @@ import {
   Tr,
   Text,
   useToast,
+  IconButton,
+  Flex,
+  Spacer,
 } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiFordeleteOneStudyNoteContent } from "../../apis/study_note_api";
+import {
+  apiFordeleteOneStudyNoteContent,
+  apiForOrderMinusOneForNoteContent,
+  apiForOrderPlusOneForNoteContent,
+} from "../../apis/study_note_api";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+
+const PastelColor = {
+  bg: "#C7E5F0",
+  hoverBg: "#A6D8E7",
+};
 
 // 1122
 const CardForStudyNoteContent = ({
@@ -24,6 +37,8 @@ const CardForStudyNoteContent = ({
   content,
   writer,
   index,
+  order,
+  card_width,
 }: any) => {
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -33,8 +48,7 @@ const CardForStudyNoteContent = ({
       return apiFordeleteOneStudyNoteContent(pk);
     },
     {
-      onSettled: () => {
-      },
+      onSettled: () => {},
       onSuccess: (data) => {
         console.log("data : ", data);
 
@@ -53,8 +67,68 @@ const CardForStudyNoteContent = ({
     mutationForDeleteStudyNoteContent.mutate(pk);
   };
 
+  const mutation_for_order_plus_1_for_note_content = useMutation(
+    (order_pk: number) => {
+      return apiForOrderPlusOneForNoteContent(order_pk);
+    },
+    {
+      onSettled: () => {},
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        window.location.reload();
+
+        // queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+
+        toast({
+          title: "order update 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const mutation_for_order_minus_1_for_note_content = useMutation(
+    (order_pk: number) => {
+      return apiForOrderMinusOneForNoteContent(order_pk);
+    },
+    {
+      onSettled: () => {},
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        window.location.reload();
+
+        // queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+
+        toast({
+          title: "order update 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const order_plus_1_for_note_content = (order_pk: number) => {
+    console.log("hi");
+    mutation_for_order_plus_1_for_note_content.mutate(order_pk);
+  };
+
+  const order_minus_1_for_note_content = (order_pk: number) => {
+    console.log("hi");
+    mutation_for_order_minus_1_for_note_content.mutate(order_pk);
+  };
+
+  // 2244
   return (
-    <Box borderRadius="lg" p="4" border={"2px solid red"} mb={2}>
+    <Box
+      borderRadius="lg"
+      p="4"
+      border={"2px solid red"}
+      mb={2}
+      w={card_width}
+      id={`card-${order}`}
+    >
       <Box
         display="flex"
         justifyContent="space-between"
@@ -62,7 +136,37 @@ const CardForStudyNoteContent = ({
         bgColor={"red.100"}
         px={2}
       >
-        <Text>step {index + 1}</Text>
+        <Text>step ({order})</Text>
+        <Flex gap={1} ml={2} my={1}>
+          {order !== 1 ? (
+            <IconButton
+              aria-label="up"
+              variant="outline"
+              icon={<FaChevronUp />}
+              border={"1px solid blue"}
+              // colorScheme="gray"
+              // bg={PastelColor.bg}
+              _hover={{ bg: PastelColor.hoverBg }}
+              size={"sm"}
+              onClick={() => order_minus_1_for_note_content(pk)}
+            />
+          ) : (
+            ""
+          )}
+          <IconButton
+            aria-label="up"
+            variant="outline"
+            icon={<FaChevronDown />}
+            border={"1px solid blue"}
+            // colorScheme="gray"
+            // bg={PastelColor.bg}
+            _hover={{ bg: PastelColor.hoverBg }}
+            size={"sm"}
+            onClick={() => order_plus_1_for_note_content(pk)}
+          />
+        </Flex>
+        <Text ml={2}>title: {title}</Text>
+        <Spacer />
         {/* delete button for study note content */}
         <CloseButton
           size="sm"
@@ -73,12 +177,12 @@ const CardForStudyNoteContent = ({
       <Box my="4">
         <Table variant="simple">
           <Tbody>
-            <Tr>
+            {/* <Tr>
               <Td w={"3%"}>title:</Td>
               <Td>
-                <Input defaultValue={file_name} />
+                <Input defaultValue={title} />
               </Td>
-            </Tr>
+            </Tr> */}
             <Tr>
               <Td w={"3%"}>file:</Td>
               <Td>
@@ -95,10 +199,10 @@ const CardForStudyNoteContent = ({
       </Box>
       <Box display="flex" justifyContent="space-between">
         <Button variant="outline" colorScheme="teal">
-          Update
+          Comment
         </Button>
         <Button variant="outline" colorScheme="teal">
-          Comment
+          Update
         </Button>
       </Box>
     </Box>

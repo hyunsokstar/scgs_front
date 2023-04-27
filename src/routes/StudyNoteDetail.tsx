@@ -6,15 +6,7 @@ import {
   StudyNoteData,
 } from "../types/study_note_type";
 import { apiForGetStuyNoteContentList } from "../apis/study_note_api";
-import {
-  Box,
-  Input,
-  VStack,
-  HStack,
-  Text,
-  Button,
-  Flex,
-} from "@chakra-ui/react";
+import { Box, VStack, Text, Button, HStack } from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
 import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/ButtonsForPageNumbersForStudyNoteContents";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,7 +16,7 @@ import { initializeCurrentPage } from "../reducers/studyNoteSlice";
 import { SearchIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaSort } from "react-icons/fa";
 import ModalButtonForInsertStudyNoteContent from "../components/modal/ModalButtonForInsertStudyNoteContent";
-
+import ButtonsForFindToContentWithOrderNum from "../components/Button/ButtonsForFindToContentWithOrderNum";
 
 interface Props {}
 
@@ -57,14 +49,12 @@ const StudyNoteDetail = (props: Props) => {
   );
 
   console.log("response_data_for_api : ", response_data_for_api);
+  const [filtered_data_for_content_list, set_filtered_data_for_content_list] =
+    useState(response_data_for_api);
 
   if (logind_for_study_note_content_list) {
     return <Box>"loading.."</Box>;
   }
-
-  //   const inputHandlerForCurrentPage = (e: any) => {
-  //     setCurrentPage(e.target.value);
-  //   };
 
   const onChangeForInputHandlerForCurrentPage = (e: any) => {
     // if (e.target.value == "") {
@@ -94,6 +84,17 @@ const StudyNoteDetail = (props: Props) => {
 
   const handleSearchClick = () => {
     // Search 버튼 클릭 시 실행되는 함수
+  };
+
+  const handleMoveToClick = (order: number) => {
+    const targetElement = document.getElementById(`card-${order}`);
+    if (targetElement) {
+      const targetOffsetTop = targetElement.offsetTop;
+      document.getElementById("card-container")?.scrollTo({
+        top: targetOffsetTop,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
@@ -153,7 +154,7 @@ const StudyNoteDetail = (props: Props) => {
               study_note_pk={study_note_pk}
             />
 
-            <Button
+            {/* <Button
               size="sm"
               colorScheme="purple"
               variant="outline"
@@ -161,33 +162,76 @@ const StudyNoteDetail = (props: Props) => {
               onClick={handleDeleteClick}
             >
               Delete
-            </Button>
+            </Button> */}
           </Box>
         </Box>
 
         <Box
+          id="card-container"
           border={"1px solid green"}
           height={"600px"}
           overflowY={"scroll"}
           mr={1}
+          position={"relative"}
+          display={"flex"}
+          justifyContent={"center"}
         >
-          {response_data_for_api
-            ? response_data_for_api.data_for_study_note_contents.map(
-                (row: DataForStudyNoteContent, i) => {
-                  return (
-                    <CardForStudyNoteContent
-                      pk={row.pk}
-                      title={row.title}
-                      file_name={row.file_name}
-                      content={row.content}
-                      writer={row.writer}
-                      created_at={row.created_at}
-                      index={i}
-                    />
-                  );
-                }
-              )
-            : "no data"}
+          <Box
+            id={"navi-box"}
+            // position={"absolute"}
+            top={"140"}
+            left={"88"}
+            width={"67%"}
+            border={"1px solid green"}
+            p={3}
+            position={"fixed"}
+            zIndex={1} 
+          >
+            {/* 카드 개수 :{" "}
+            {response_data_for_api?.data_for_study_note_contents.length} {" "} */}
+            {/* <Button onClick={() => handleMoveToClick(3)}>3</Button> */}
+            <ButtonsForFindToContentWithOrderNum
+              numCards={
+                response_data_for_api?.data_for_study_note_contents.length
+              }
+              handleMoveToClick={handleMoveToClick}
+            />
+          </Box>
+
+          <Box
+            position={"absolute"}
+            top={"80px"}
+            w={"100%"}
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            flexDirection={"column"}
+          >
+            {response_data_for_api
+              ? response_data_for_api.data_for_study_note_contents.map(
+                  (row: DataForStudyNoteContent, i) => {
+                    return (
+                      <CardForStudyNoteContent
+                        pk={row.pk}
+                        card_width={"90%"}
+                        title={row.title}
+                        file_name={row.file_name}
+                        content={row.content}
+                        writer={row.writer}
+                        created_at={row.created_at}
+                        order={row.order}
+                        index={i}
+                        currentPage={currentPage}
+                        study_note_pk={study_note_pk}
+                        refetch_for_study_note_content_list={
+                          refetch_for_study_note_content_list
+                        }
+                      />
+                    );
+                  }
+                )
+              : "no data"}
+          </Box>
         </Box>
       </Box>
       <Box flex={1} border={"1px solid green"} p={2}>
