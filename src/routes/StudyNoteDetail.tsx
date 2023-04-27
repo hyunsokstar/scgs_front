@@ -179,11 +179,11 @@ const StudyNoteDetail = (props: Props) => {
           <Box
             id={"navi-box"}
             // position={"absolute"}
-            top={"140"}
+            top={"150"}
             left={"88"}
             width={"67%"}
-            border={"1px solid green"}
-            p={3}
+            border={"0px solid green"}
+            p={2}
             position={"fixed"}
             zIndex={1} 
           >
