@@ -148,7 +148,6 @@ const StudyNoteDetail = (props: Props) => {
             >
               Ordering(already)
             </Button>
-
           </Box>
           <Box display={"flex"} gap={2} mr={1}>
             {/* <Button
@@ -238,7 +237,7 @@ const StudyNoteDetail = (props: Props) => {
           </Box>
         </Box>
       </Box>
-      <Box flex={1} border={"1px solid green"} p={2}>
+      <Box flex={1} border={"1px solid green"} px={"auto"}>
         <VStack>
           <Text width={"100%"}>현재: {currentPage}</Text>
           {response_data_for_api ? (

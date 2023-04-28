@@ -63,7 +63,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const [pagesData, setpagesData] = useState(
     Array.from({ length: 50 }, (_, i) => i + 1)
   );
-  const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(false);
   const clickHandlerForPageButton = (buttonNumber: number) => {
     dispatch(selectButton({ buttonNumber, editMode }));
   };
@@ -252,7 +252,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         >
           Check For Not Empty
         </Button>
-          <ButtonForEditorMode editMode={editMode} setEditMode={setEditMode} />
+        <ButtonForEditorMode editMode={editMode} setEditMode={setEditMode} />
       </Box>
       <Box
         display="flex"
@@ -307,14 +307,8 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           <FaTrashAlt />
         </Button>
       </Box>
-      {/* <InputGroup>
-        <Input
-          placeholder="Input"
-          defaultValue={exist_page_numbers?.join(",")}
-        />
-      </InputGroup> */}
-      {/* 페이지 넘버 출력 start */}
-      <Box px={"auto"} border={"1px solid green"}>
+
+      <Box px={"auto"} border={"0px solid green"} mx={"auto"} width={"86%"}>
         {pagesData.map((page) => {
           console.log("currentPage, page", typeof currentPage, typeof page);
           return (
