@@ -87,12 +87,14 @@ const TechNoteContent = () => {
 
   const onSubmit = (data: ITypeForCreateTechNoteContent) => {
     console.log("data : ", data);
+
     createMutationForTechNoteContent.mutate({
       note_content_fk: note_content_fk,
       note_content_title: data.note_content_title,
       note_content_file: data.note_content_file,
       note_content_content: note_content_content,
     });
+    
   };
 
   return (
@@ -186,6 +188,7 @@ const TechNoteContent = () => {
                   onChange={handleContentChange}
                   apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
                 />
+                
                 <Button
                   variant="outline"
                   colorScheme="pink"

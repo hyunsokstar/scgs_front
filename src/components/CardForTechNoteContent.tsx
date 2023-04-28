@@ -13,13 +13,13 @@ import {
   InputRightElement,
   IconButton,
   useToast,
-
 } from "@chakra-ui/react";
 import { useState } from "react";
 import TinyMCEEditor from "./RichEditor/TinyMCEEditor";
 import { CheckIcon, CopyIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFordeleteTechNoteContentByPk } from "../apis/tech_note_api";
+import IconButtonForCopyText from "./IconButtonForCopyText";
 
 type CardProps = {
   pk: number;
@@ -42,7 +42,6 @@ const CardForTechNoteContent = ({
   const [content2, setContent] = useState<string>(content);
   const queryClient = useQueryClient();
   const toast = useToast();
-
 
   const handleContentChange = (value: string) => {
     setContent(value);
@@ -118,7 +117,14 @@ const CardForTechNoteContent = ({
             </InputRightElement>
           </InputGroup>
 
-          <Input defaultValue={file} />
+          <InputGroup>
+            <Input defaultValue={file} />
+            <InputRightElement>
+              <IconButtonForCopyText text={file} />
+            </InputRightElement>
+          </InputGroup>
+
+          {/* <Input defaultValue={file} /> */}
 
           {/* 0403 삭제 구현 하기 */}
           <Button

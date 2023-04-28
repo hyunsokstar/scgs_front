@@ -33,10 +33,14 @@ export const createNoteContent = ({
   note_content_title,
   note_content_file,
   note_content_content,
-}: ITypeForCreateTechNoteContent) =>
-  instance
+}: ITypeForCreateTechNoteContent) =>{
+
+  console.log("테크 노트 내용 입력 확인");
+  
+
+  return instance
     .post(
-      `/tech_note/${note_content_fk}`,
+      `/tech_note/tech-note-content/${note_content_fk}`,
       {
         tech_note: note_content_fk,
         note_content_title: note_content_title,
@@ -50,6 +54,7 @@ export const createNoteContent = ({
       }
     )
     .then((response) => response.data);
+}
 
 export const getTechNoteList = ({ queryKey }: QueryFunctionContext) => {
   const [_, pageNum] = queryKey;

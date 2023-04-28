@@ -15,6 +15,10 @@ import {
   IconButton,
   Flex,
   Spacer,
+  InputGroup,
+  InputRightElement,
+  Icon,
+  Checkbox,
 } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -23,6 +27,10 @@ import {
   apiForOrderPlusOneForNoteContent,
 } from "../../apis/study_note_api";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import IconButtonForCopyText from "../IconButtonForCopyText";
+import { CheckIcon } from "@chakra-ui/icons";
+import CheckboxComponentForList from "../CheckBox/CheckboxComponentForList";
+import { useState } from "react";
 
 const PastelColor = {
   bg: "#C7E5F0",
@@ -39,6 +47,7 @@ const CardForStudyNoteContent = ({
   index,
   order,
   card_width,
+  setCheckedValues
 }: any) => {
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -136,6 +145,16 @@ const CardForStudyNoteContent = ({
         bgColor={"red.100"}
         px={2}
       >
+        <CheckboxComponentForList
+          value={pk}
+          setCheckedValues={setCheckedValues}
+          defaultChecked={false}
+          size={"lg"}
+          border={"green"}
+          colorScheme={"green"}
+          mr={1}
+        />
+
         <Text>step ({order})</Text>
         <Flex gap={1} ml={2} my={1}>
           {order !== 1 ? (
@@ -168,6 +187,7 @@ const CardForStudyNoteContent = ({
         <Text ml={2}>title: {title}</Text>
         <Spacer />
         {/* delete button for study note content */}
+
         <CloseButton
           size="sm"
           colorScheme="teal"
@@ -186,11 +206,20 @@ const CardForStudyNoteContent = ({
             <Tr>
               <Td w={"3%"}>file:</Td>
               <Td>
-                <Input defaultValue={file_name} />
+                {/* <Input defaultValue={file_name} /> */}
+                <InputGroup>
+                  <Input defaultValue={file_name} />
+                  <InputRightElement>
+                    <IconButtonForCopyText text={file_name} />
+                  </InputRightElement>
+                </InputGroup>
               </Td>
             </Tr>
             <Tr>
-              <Td colSpan={2}>
+              <Td colSpan={2} position={"relative"}>
+                <Box position={"absolute"} right={6} top={4} zIndex={1}>
+                  <IconButtonForCopyText text={content} />
+                </Box>
                 <Textarea defaultValue={content} h="300px" />
               </Td>
             </Tr>

@@ -162,6 +162,23 @@ export const apiFordeleteStudyNoteContentsForSelectedPages = ({
     .then((response) => response.data);
 };
 
+export const apiFordeleteStudyNoteContentsForChecked = (
+  selectedButtonsData:number[]) => {
+  console.log(
+    "study_note_pk , selectedButtonsData : ",
+    selectedButtonsData
+  );
+
+  return instance
+    .delete("study-note/contents/delete-for-checked", {
+      data: selectedButtonsData, // [1,2,3,5]
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiFordeleteOneStudyNote = (pk: number) => {
   console.log("pk : ", pk);
   return instance

@@ -1,22 +1,15 @@
-import React, { useState } from "react";
-import { TagsInput } from "react-tag-input-component";
+import React from 'react'
 
-const Example = () => {
-  const [selected, setSelected] = useState(["papaya"]);
+interface Props {
+  
+}
 
+const Test2 = (props: Props) => {
   return (
     <div>
-      <h1>Add Fruits</h1>
-      <pre>{JSON.stringify(selected)}</pre>
-      <TagsInput
-        value={selected}
-        onChange={setSelected}
-        name="fruits"
-        placeHolder="enter fruits"
-      />
-      <em>press enter or comma to add new tag</em>
+      
     </div>
-  );
-};
+  )
+}
 
-export default Example;
+export default Test2

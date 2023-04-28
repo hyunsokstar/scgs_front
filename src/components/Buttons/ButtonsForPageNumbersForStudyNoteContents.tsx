@@ -250,9 +250,9 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           borderColor="teal.300"
           _hover={{ bg: "teal.100", color: "white" }}
         >
-          Apply
+          Check For Not Empty
         </Button>
-        <ButtonForEditorMode editMode={editMode} setEditMode={setEditMode} />
+          <ButtonForEditorMode editMode={editMode} setEditMode={setEditMode} />
       </Box>
       <Box
         display="flex"

@@ -5,8 +5,11 @@ import {
   DataForStudyNoteContent,
   StudyNoteData,
 } from "../types/study_note_type";
-import { apiForGetStuyNoteContentList } from "../apis/study_note_api";
-import { Box, VStack, Text, Button, HStack } from "@chakra-ui/react";
+import {
+  apiFordeleteStudyNoteContentsForChecked,
+  apiForGetStuyNoteContentList,
+} from "../apis/study_note_api";
+import { Box, VStack, Text, Button, HStack, useToast } from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
 import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/ButtonsForPageNumbersForStudyNoteContents";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,8 +23,12 @@ import ButtonsForFindToContentWithOrderNum from "../components/Button/ButtonsFor
 
 interface Props {}
 
+// 1122
 const StudyNoteDetail = (props: Props) => {
   const dispatch = useDispatch();
+  const [checkedValues, setCheckedValues] = useState<number[]>([]);
+  const queryClient = useQueryClient();
+  const toast = useToast();
 
   const selectedButtonsData = useSelector(
     (state: RootState) => state.studyNote.selectedButtons
@@ -49,33 +56,33 @@ const StudyNoteDetail = (props: Props) => {
   );
 
   console.log("response_data_for_api : ", response_data_for_api);
-  const [filtered_data_for_content_list, set_filtered_data_for_content_list] =
-    useState(response_data_for_api);
+  // 2244 function area
 
-  if (logind_for_study_note_content_list) {
-    return <Box>"loading.."</Box>;
-  }
+  const mutationForDeleteContentsForChecked = useMutation(
+    (selectedButtonsData: number[]) => {
+      return apiFordeleteStudyNoteContentsForChecked(selectedButtonsData);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        // refetch_for_api_docu();
+        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
 
-  const onChangeForInputHandlerForCurrentPage = (e: any) => {
-    // if (e.target.value == "") {
-    // }
-    setPageToMove(e.target.value);
-  };
+        toast({
+          title: "delete note contnet for checked 성공!",
+          status: "success",
+          description: data.message,
+        });
+      },
+    }
+  );
 
-  const handlerForPageMoveButton = (pageToMove: any) => {
-    dispatch(initializeCurrentPage(currentPage));
-  };
-
-  const handleCreateClick = () => {
-    // Create 버튼 클릭 시 실행되는 함수
-  };
-
-  const handleDeleteClick = () => {
-    // Delete 버튼 클릭 시 실행되는 함수
-  };
-
-  const handleDeleteCheckClick = () => {
-    // Delete for check 버튼 클릭 시 실행되는 함수
+  // 체크한 노트 내용 삭제
+  const deleteContentsForChecked = () => {
+    mutationForDeleteContentsForChecked.mutate(checkedValues);
   };
 
   const handleOrderingClick = () => {
@@ -97,6 +104,10 @@ const StudyNoteDetail = (props: Props) => {
     }
   };
 
+  if (logind_for_study_note_content_list) {
+    return <Box>"loading.."</Box>;
+  }
+
   return (
     <Box display={"flex"}>
       <Box flex={4}>
@@ -109,21 +120,10 @@ const StudyNoteDetail = (props: Props) => {
               colorScheme="red"
               variant="outline"
               _hover={{ backgroundColor: "red.50" }}
-              onClick={handleDeleteCheckClick}
+              onClick={deleteContentsForChecked}
               leftIcon={<DeleteIcon />}
             >
               Delete for check
-            </Button>
-            <Button
-              ml={2}
-              size="sm"
-              colorScheme="blue"
-              variant="outline"
-              _hover={{ backgroundColor: "blue.50" }}
-              onClick={handleOrderingClick}
-              leftIcon={<FaSort />}
-            >
-              Ordering
             </Button>
             <Button
               ml={2}
@@ -134,8 +134,21 @@ const StudyNoteDetail = (props: Props) => {
               onClick={handleSearchClick}
               leftIcon={<SearchIcon />}
             >
-              Search
+              Search(already)
             </Button>
+
+            <Button
+              ml={2}
+              size="sm"
+              colorScheme="blue"
+              variant="outline"
+              _hover={{ backgroundColor: "blue.50" }}
+              onClick={handleOrderingClick}
+              leftIcon={<FaSort />}
+            >
+              Ordering(already)
+            </Button>
+
           </Box>
           <Box display={"flex"} gap={2} mr={1}>
             {/* <Button
@@ -153,16 +166,6 @@ const StudyNoteDetail = (props: Props) => {
               currentPage={currentPage}
               study_note_pk={study_note_pk}
             />
-
-            {/* <Button
-              size="sm"
-              colorScheme="purple"
-              variant="outline"
-              _hover={{ backgroundColor: "purple.50" }}
-              onClick={handleDeleteClick}
-            >
-              Delete
-            </Button> */}
           </Box>
         </Box>
 
@@ -185,7 +188,7 @@ const StudyNoteDetail = (props: Props) => {
             border={"0px solid green"}
             p={2}
             position={"fixed"}
-            zIndex={1} 
+            zIndex={1}
           >
             {/* 카드 개수 :{" "}
             {response_data_for_api?.data_for_study_note_contents.length} {" "} */}
@@ -226,6 +229,7 @@ const StudyNoteDetail = (props: Props) => {
                         refetch_for_study_note_content_list={
                           refetch_for_study_note_content_list
                         }
+                        setCheckedValues={setCheckedValues}
                       />
                     );
                   }
@@ -256,10 +260,5 @@ const StudyNoteDetail = (props: Props) => {
     // </Box>
   );
 };
-
-// description
-// pk
-// title
-// writer
 
 export default StudyNoteDetail;
