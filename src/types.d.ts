@@ -100,6 +100,7 @@ export interface IUser {
     skill_for_frameWork: [{ pk: number; frame_work_name: string }];
     about_me?: string;
     profile_image? : string
+    is_edit_mode_for_study_note_contents? : boolean;
 }
 
 interface IUsersForUserList {

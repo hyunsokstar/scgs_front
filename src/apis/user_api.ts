@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import Cookie from "js-cookie";
 
 import { QueryFunctionContext } from "@tanstack/react-query";
@@ -9,6 +9,25 @@ const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
   withCredentials: true,
 });
+
+export const apiForUpdateEditModeForStudyNoteContent = (userPk: string | number) => {
+  console.log("apiForUpdateEditModeForStudyNoteForContent 실행 check");
+
+  return instance
+    .put(
+      `/users/${userPk}/EditModeForStudyNoteForContent/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
 
 // 타입 추가
 export interface ISingup {

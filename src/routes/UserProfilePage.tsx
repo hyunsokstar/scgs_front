@@ -13,19 +13,26 @@ import {
 import { useParams } from "react-router-dom";
 import ModalForUserProfileImageUpdate from "../components/modal/ModalForUserProfileImageUpdate";
 import { IUserProfile } from "../types/user/user_types";
-import { getProfile } from "../apis/user_api";
+import {
+  apiForUpdateEditModeForStudyNoteContent,
+  getProfile,
+} from "../apis/user_api";
 import { useQuery } from "@tanstack/react-query";
 import { IUser } from "../types";
-import { useMutation } from "@tanstack/react-query";
 import { createPhoto, getUploadURL, uploadImage } from "../api";
 import { createProfilePhoto } from "../apis/user_api";
+import ToggleButtonForUpdate from "../components/Button/ToggleButtonForUpdate";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface IProfileImage {
   file: string | undefined;
 }
 
+// 1122
 const UserProfilePage = () => {
   const { userPk } = useParams();
+  const queryClient = useQueryClient();
+
   const { isLoading, data: userProfileData } = useQuery<IUser>(
     [`user_profile2`, userPk],
     getProfile
@@ -37,6 +44,8 @@ const UserProfilePage = () => {
     useState<Boolean>(false);
   const [urlToImageUpload, setUrlToImageUpload] = useState<string>();
   const toast = useToast();
+  const [editModeForStudyNoteContent, setEditModeForStudyNoteContent] =
+    useState(false);
 
   console.log("userProfileData : ", userProfileData);
 
@@ -135,6 +144,33 @@ const UserProfilePage = () => {
     setShowForProfileUpdateButton(false);
     setProfileImage(originalImage);
   }
+
+  const mutationForUpdateEditModeForStudyNoteForContent = useMutation(
+    apiForUpdateEditModeForStudyNoteContent,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        queryClient.refetchQueries(["getOneProjectTask"]);
+
+        toast({
+          status: "success",
+          title: "UpdateEditMode Success !",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const onChangeHandlerForEditModeForStudyNoteContent = (option: boolean) => {
+    setEditModeForStudyNoteContent(option);
+    const userPk = userProfileData?.pk;
+
+    mutationForUpdateEditModeForStudyNoteForContent.mutate(userPk);
+    console.log("option : ", option);
+  };
+
+  // 2244
 
   return (
     <>
@@ -258,9 +294,19 @@ const UserProfilePage = () => {
               <Text fontSize="md" mb={4}>
                 {userProfileData?.email}
               </Text>
+              <Box>
+                study note content ediotr mode:{" "}
+                <ToggleButtonForUpdate
+                  currentState={
+                    userProfileData?.is_edit_mode_for_study_note_contents
+                  }
+                  onChangeHandler={
+                    onChangeHandlerForEditModeForStudyNoteContent
+                  }
+                />
+              </Box>
             </Box>
             <Box flex="1" w="100%" p={4} color="white" ml={5}>
-              {/* <ModalForUserProfileImageUpdate setProfileImage={setProfileImage} userPk={userPk} profile_image={profileImage} /> */}
               <ModalForUserProfileImageUpdate loginUser={userProfileData} />
             </Box>
           </Flex>

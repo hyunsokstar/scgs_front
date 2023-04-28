@@ -60,10 +60,22 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const queryClient = useQueryClient();
   const toast = useToast();
 
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
+
   const [pagesData, setpagesData] = useState(
     Array.from({ length: 50 }, (_, i) => i + 1)
   );
-  const [editMode, setEditMode] = useState(false);
+
+  const [editMode, setEditMode] = useState<boolean | undefined>();
+
+  useEffect(() => {
+    if (loginUser.is_edit_mode_for_study_note_contents) {
+      setEditMode(true);
+    }
+  }, []);
+
   const clickHandlerForPageButton = (buttonNumber: number) => {
     dispatch(selectButton({ buttonNumber, editMode }));
   };
@@ -254,59 +266,64 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         </Button>
         <ButtonForEditorMode editMode={editMode} setEditMode={setEditMode} />
       </Box>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        border={"1px solid blue"}
-        mt={0}
-        w={"100%"}
-        p={1}
-        gap={1}
-      >
-        <Button
-          variant="outline"
-          size="sm"
-          colorScheme="purple"
-          borderColor="purple.500"
-          _hover={{ bg: "purple.50", borderColor: "purple.300" }}
-          onClick={() => minusOnePageForSelectedPageds()}
-        >
-          -1
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          colorScheme="purple"
-          borderColor="purple.500"
-          _hover={{ bg: "purple.50", borderColor: "purple.300" }}
-          onClick={() => plusOnePageForSelectedPageds()}
-        >
-          +1
-        </Button>
-        <Spacer />
-        <Button
-          variant="outline"
-          size="sm"
-          colorScheme="red"
-          borderColor="red.500"
-          _hover={{ bg: "red.50", borderColor: "red.300" }}
-          onClick={() => cancleAllSeletedPage()}
-        >
-          Cancle
-        </Button>
 
-        {/* 삭제 버튼 delete button */}
-        <Button
-          variant="outline"
-          size="sm"
-          colorScheme="red"
-          borderColor="red.500"
-          _hover={{ bg: "red.50", borderColor: "red.300" }}
-          onClick={() => deleteSelectedPagesHandler()}
+      {loginUser.is_edit_mode_for_study_note_contents ? (
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          border={"1px solid blue"}
+          mt={0}
+          w={"100%"}
+          p={1}
+          gap={1}
         >
-          <FaTrashAlt />
-        </Button>
-      </Box>
+          <Button
+            variant="outline"
+            size="sm"
+            colorScheme="purple"
+            borderColor="purple.500"
+            _hover={{ bg: "purple.50", borderColor: "purple.300" }}
+            onClick={() => minusOnePageForSelectedPageds()}
+          >
+            -1
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            colorScheme="purple"
+            borderColor="purple.500"
+            _hover={{ bg: "purple.50", borderColor: "purple.300" }}
+            onClick={() => plusOnePageForSelectedPageds()}
+          >
+            +1
+          </Button>
+          <Spacer />
+          <Button
+            variant="outline"
+            size="sm"
+            colorScheme="red"
+            borderColor="red.500"
+            _hover={{ bg: "red.50", borderColor: "red.300" }}
+            onClick={() => cancleAllSeletedPage()}
+          >
+            Cancle
+          </Button>
+
+          {/* 삭제 버튼 delete button */}
+          <Button
+            variant="outline"
+            size="sm"
+            colorScheme="red"
+            borderColor="red.500"
+            _hover={{ bg: "red.50", borderColor: "red.300" }}
+            onClick={() => deleteSelectedPagesHandler()}
+          >
+            <FaTrashAlt />
+          </Button>
+        </Box>
+      ) : (
+        ""
+      )}
 
       <Box px={"auto"} border={"0px solid green"} mx={"auto"} width={"86%"}>
         {pagesData.map((page) => {

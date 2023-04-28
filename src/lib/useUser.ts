@@ -14,6 +14,7 @@ export default function useUser() {
   const { isLoading, data, isError } = useQuery<IUser>(["me"], getMe, {
     retry: false,
   });
+  
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );

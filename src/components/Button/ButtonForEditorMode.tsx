@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Box, Button } from "@chakra-ui/react";
 
 type Props = {
-  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
-  editMode: boolean;
+  setEditMode: any;
+  editMode: boolean | undefined;
 };
 
 const ButtonForEditorMode = ({ editMode, setEditMode }: Props) => {
