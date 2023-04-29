@@ -77,7 +77,6 @@ const ModalButtonForSearchStudyNoteContent = ({ study_note_pk }: IProps) => {
   return (
     <>
       <Button
-        ml={2}
         size="sm"
         colorScheme="yellow"
         variant="outline"
@@ -85,7 +84,7 @@ const ModalButtonForSearchStudyNoteContent = ({ study_note_pk }: IProps) => {
         onClick={onOpen}
         leftIcon={<SearchIcon />}
       >
-        Search(already)
+        Search
       </Button>
 
       <Modal size="6xl" isOpen={isOpen} onClose={onClose}>

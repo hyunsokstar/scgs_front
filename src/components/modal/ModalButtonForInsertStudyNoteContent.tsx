@@ -21,7 +21,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForCreateStudyNoteContents } from "../../apis/study_note_api";
 import { StudyNoteContentFormData } from "../../types/study_note_type";
 
-
 // type StudyNoteContentFormData = {
 //   title: string;
 //   file: string;

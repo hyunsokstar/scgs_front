@@ -21,6 +21,7 @@ import { FaSort } from "react-icons/fa";
 import ModalButtonForInsertStudyNoteContent from "../components/modal/ModalButtonForInsertStudyNoteContent";
 import ButtonsForFindToContentWithOrderNum from "../components/Button/ButtonsForFindToContentWithOrderNum";
 import ModalButtonForSearchStudyNoteContent from "../components/Button/ModalButtonForSearchStudyNoteContent";
+import ModalButtonForStudyNoteContentOrdering from "../components/modal/ModalButtonForStudyNoteContentOrdering";
 
 interface Props {}
 
@@ -114,8 +115,13 @@ const StudyNoteDetail = (props: Props) => {
       <Box flex={4}>
         <Box>Study Note Content</Box>
 
-        <Box display="flex" alignItems="center" my={2}>
-          <Box flex="1" pr={2} justifyContent="flex-start">
+        <Box
+          display="flex"
+          justifyContent={"space-between"}
+          alignItems="center"
+          my={2}
+        >
+          <Box display={"flex"} border={"1px solid green"} gap={2}>
             <Button
               size="sm"
               colorScheme="red"
@@ -123,49 +129,26 @@ const StudyNoteDetail = (props: Props) => {
               _hover={{ backgroundColor: "red.50" }}
               onClick={deleteContentsForChecked}
               leftIcon={<DeleteIcon />}
+              mr={2}
             >
               Delete for check
             </Button>
-
-            {/* <Button
-              ml={2}
-              size="sm"
-              colorScheme="yellow"
-              variant="outline"
-              _hover={{ backgroundColor: "yellow.50" }}
-              onClick={handleSearchClick}
-              leftIcon={<SearchIcon />}
-            >
-              Search(already)
-            </Button> */}
-
-            <ModalButtonForSearchStudyNoteContent
-              study_note_pk={study_note_pk}
-            />
-
-            <Button
-              ml={2}
-              size="sm"
-              colorScheme="blue"
-              variant="outline"
-              _hover={{ backgroundColor: "blue.50" }}
-              onClick={handleOrderingClick}
-              leftIcon={<FaSort />}
-            >
-              Ordering(already)
-            </Button>
+            <Box mr={2}>
+              <ModalButtonForSearchStudyNoteContent
+                study_note_pk={study_note_pk}
+              />
+            </Box>
+            <Box>
+              <ModalButtonForStudyNoteContentOrdering
+                data_for_study_note_contents={
+                  response_data_for_api
+                    ? response_data_for_api?.data_for_study_note_contents
+                    : []
+                }
+              />
+            </Box>
           </Box>
           <Box display={"flex"} gap={2} mr={1}>
-            {/* <Button
-              size="sm"
-              colorScheme="red"
-              variant="outline"
-              _hover={{ backgroundColor: "red.50" }}
-              onClick={handleCreateClick}
-            >
-              Create
-            </Button> */}
-
             <ModalButtonForInsertStudyNoteContent
               buttonText={"create"}
               currentPage={currentPage}
