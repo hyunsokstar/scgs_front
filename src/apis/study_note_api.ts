@@ -4,6 +4,7 @@ import { backendApi } from "../apis/common_api";
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import {
+  parameterForSearchContentListForStudynote,
   StudyNoteContentFormData,
   type_for_insert_study_note,
   type_for_parameter_for_delete_pages_for_study_note,
@@ -15,12 +16,26 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+export const ForSearchContentListForStudyNote = ({
+  study_note_pk,
+  searchTerm,
+}: parameterForSearchContentListForStudynote) => {
+  return instance
+    .get("study-note/content/search", {
+      params: {
+        study_note_pk: study_note_pk,
+        searchTerm: searchTerm,
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForOrderPlusOneForNoteContent = (order_pk: number) => {
   console.log("order_pk : ", order_pk);
   return instance
     .put(
       `study-note/contents/${order_pk}/order-plus-one-for-note-content`,
-      { },
+      {},
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
@@ -35,7 +50,7 @@ export const apiForOrderMinusOneForNoteContent = (order_pk: number) => {
   return instance
     .put(
       `study-note/contents/${order_pk}/order-minus-one-for-note-content`,
-      { },
+      {},
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
@@ -163,11 +178,9 @@ export const apiFordeleteStudyNoteContentsForSelectedPages = ({
 };
 
 export const apiFordeleteStudyNoteContentsForChecked = (
-  selectedButtonsData:number[]) => {
-  console.log(
-    "study_note_pk , selectedButtonsData : ",
-    selectedButtonsData
-  );
+  selectedButtonsData: number[]
+) => {
+  console.log("study_note_pk , selectedButtonsData : ", selectedButtonsData);
 
   return instance
     .delete("study-note/contents/delete-for-checked", {

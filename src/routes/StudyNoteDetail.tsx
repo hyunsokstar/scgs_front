@@ -20,6 +20,7 @@ import { SearchIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaSort } from "react-icons/fa";
 import ModalButtonForInsertStudyNoteContent from "../components/modal/ModalButtonForInsertStudyNoteContent";
 import ButtonsForFindToContentWithOrderNum from "../components/Button/ButtonsForFindToContentWithOrderNum";
+import ModalButtonForSearchStudyNoteContent from "../components/Button/ModalButtonForSearchStudyNoteContent";
 
 interface Props {}
 
@@ -125,7 +126,8 @@ const StudyNoteDetail = (props: Props) => {
             >
               Delete for check
             </Button>
-            <Button
+
+            {/* <Button
               ml={2}
               size="sm"
               colorScheme="yellow"
@@ -135,7 +137,11 @@ const StudyNoteDetail = (props: Props) => {
               leftIcon={<SearchIcon />}
             >
               Search(already)
-            </Button>
+            </Button> */}
+
+            <ModalButtonForSearchStudyNoteContent
+              study_note_pk={study_note_pk}
+            />
 
             <Button
               ml={2}

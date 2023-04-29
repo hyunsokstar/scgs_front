@@ -53,3 +53,18 @@ export interface StudyNoteContentFormData {
   study_note_pk: number | string | undefined;
   current_page_number: number | string | undefined;
 }
+
+export interface parameterForSearchContentListForStudynote {
+  study_note_pk: string | undefined;
+  searchTerm: string;
+}
+
+export interface type_for_content_list_from_search_result {
+  pk: number;
+  title: string;
+  content: string;
+  order: number;
+  page: number;
+  file_name: string;
+  created_at: string;
+}
