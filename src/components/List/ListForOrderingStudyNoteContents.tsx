@@ -1,34 +1,28 @@
-import {
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  useDisclosure,
-  IconButton,
-  Box,
-  HStack,
-  Spacer,
-  Flex,
-  Text,
-} from "@chakra-ui/react";
+import { Box, HStack, Spacer, useToast, Flex, Text } from "@chakra-ui/react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import React, { useState } from "react";
+import { apiForReOrderForStudyNoteContentsForSpecificNoteAndPage } from "../../apis/study_note_api";
 
 interface ListItemProps {
   order: number;
   title: string;
-  content_pk: number
+  content_pk: number;
 }
 
 interface ListProps {
+  study_note_pk: string | undefined;
+  currentPage: number;
   items: ListItemProps[];
 }
 
-function ListItem({ content_pk, title,order, index }: ListItemProps & { index: number }) {
+function ListItem({
+  content_pk,
+  title,
+  order,
+  index,
+}: ListItemProps & { index: number }) {
   return (
     <Draggable draggableId={content_pk.toString()} index={index}>
       {(provided) => (
@@ -50,26 +44,63 @@ function ListItem({ content_pk, title,order, index }: ListItemProps & { index: n
   );
 }
 
-function ListForOrderingStudyNoteContents({ items }: ListProps) {
+// 1122
+function ListForOrderingStudyNoteContents({
+  study_note_pk,
+  currentPage,
+  items,
+}: ListProps) {
   const [listItems, setListItems] = useState(items);
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  //   const mutationForReOrderForStudyNoteContent =
+
+  const mutationForReOrderForStudyNoteContentsForSpecificNoteAndPage =
+    useMutation(apiForReOrderForStudyNoteContentsForSpecificNoteAndPage, {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+
+        toast({
+          status: "success",
+          title:
+            "ReOrder For StudyNoteContents For SpecificNoteAndPage success",
+          description: result.message,
+        });
+      },
+    });
 
   const handleDragEnd = (result: any) => {
-
     console.log("contentPk : ", result.draggableId);
     console.log("destination : ", result.destination.index + 1);
     console.log("listItems : ", listItems);
-    
 
     if (!result.destination) {
       return;
-    }   
+    }
 
     const itemsCopy = [...listItems];
-    const [reorderedItem] = itemsCopy.splice(result.source.index, 1);
-    itemsCopy.splice(result.destination.index, 0, reorderedItem);
+    let [reorderedItem] = itemsCopy.splice(result.source.index, 1);
+    let reorderedItem_for_update = itemsCopy.splice(
+      result.destination.index,
+      0,
+      reorderedItem
+    );
 
     console.log("itemsCopy : ", itemsCopy); // 이거 그대로 보내서 order 만 수정하면 됨
-    
+
+    const itmes_for_update = itemsCopy.map((row: any, index: number) => {
+      const rowCopy = { ...row };
+      row.order = index + 1;
+      return rowCopy;
+    });
+
+    mutationForReOrderForStudyNoteContentsForSpecificNoteAndPage.mutate({
+      study_note_pk,
+      currentPage,
+      items: itemsCopy,
+    });
 
     setListItems(itemsCopy);
   };

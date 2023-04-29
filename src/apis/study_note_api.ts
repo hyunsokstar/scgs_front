@@ -4,6 +4,7 @@ import { backendApi } from "../apis/common_api";
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import {
+  ListPropsForContentOrdering,
   parameterForSearchContentListForStudynote,
   StudyNoteContentFormData,
   type_for_insert_study_note,
@@ -27,6 +28,29 @@ export const ForSearchContentListForStudyNote = ({
         searchTerm: searchTerm,
       },
     })
+    .then((response) => response.data);
+};
+
+export const apiForReOrderForStudyNoteContentsForSpecificNoteAndPage = ({
+  study_note_pk,
+  currentPage,
+  items,
+}: ListPropsForContentOrdering) => {
+  console.log("hi");
+
+  return instance
+    .put(
+      `study-note/${study_note_pk}/contents/update/re-order-for-contents`,
+      {
+        currentPage,
+        reordered_contents_list:items,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
     .then((response) => response.data);
 };
 

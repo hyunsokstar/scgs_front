@@ -68,3 +68,16 @@ export interface type_for_content_list_from_search_result {
   file_name: string;
   created_at: string;
 }
+
+
+export interface ListItemPropsForContentOrdering {
+  order: number;
+  title: string;
+  content_pk: number;
+}
+
+export interface ListPropsForContentOrdering {
+  study_note_pk: string | undefined;
+  currentPage: number;
+  items: any;
+}

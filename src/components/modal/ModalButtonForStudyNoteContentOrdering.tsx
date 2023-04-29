@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import {
   Button,
@@ -83,10 +83,14 @@ function ListItem({ order, title, index }: ListItemProps & { index: number }) {
 }
 
 interface ModalButtonProps {
+  study_note_pk: string | undefined;
+  currentPage: number;
   data_for_study_note_contents: DataForStudyNoteContent[];
 }
 
 function ModalButtonForStudyNoteContentOrdering({
+  study_note_pk,
+  currentPage,
   data_for_study_note_contents,
 }: ModalButtonProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -98,6 +102,17 @@ function ModalButtonForStudyNoteContentOrdering({
     }))
   );
 
+  useEffect(() => {
+    const items_for_update = data_for_study_note_contents.map(
+      (data, index) => ({
+        content_pk: data.pk,
+        order: data.order,
+        title: data.title,
+      })
+    );
+    setItems(items_for_update);
+  }, [data_for_study_note_contents]);
+
   const handleSaveOrdering = () => {
     const newOrdering = items.map((item, index) => {
       return {
@@ -105,11 +120,7 @@ function ModalButtonForStudyNoteContentOrdering({
         order: item.order,
       };
     });
-
     console.log("New Ordering: ", newOrdering);
-
-    // Perform action with new ordering here
-
     onClose();
   };
 
@@ -148,9 +159,11 @@ function ModalButtonForStudyNoteContentOrdering({
           </ModalHeader>
           <ModalBody bg="white" p={4}>
             {/* <List items={items} /> */}
-
-            <ListForOrderingStudyNoteContents items={items}/>
-
+            <ListForOrderingStudyNoteContents
+              study_note_pk={study_note_pk}
+              currentPage={currentPage}
+              items={items}
+            />
           </ModalBody>
           <ModalFooter bg="pink.50" borderTop="1px" borderColor="gray.100">
             <Button colorScheme="blue" onClick={handleSaveOrdering}>

@@ -121,7 +121,7 @@ const StudyNoteDetail = (props: Props) => {
           alignItems="center"
           my={2}
         >
-          <Box display={"flex"} border={"1px solid green"} gap={2}>
+          <Box display={"flex"} border={"0px solid green"} gap={2}>
             <Button
               size="sm"
               colorScheme="red"
@@ -140,6 +140,8 @@ const StudyNoteDetail = (props: Props) => {
             </Box>
             <Box>
               <ModalButtonForStudyNoteContentOrdering
+                study_note_pk={study_note_pk}
+                currentPage = {currentPage}
                 data_for_study_note_contents={
                   response_data_for_api
                     ? response_data_for_api?.data_for_study_note_contents
