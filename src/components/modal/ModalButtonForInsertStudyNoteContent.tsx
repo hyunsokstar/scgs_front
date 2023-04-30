@@ -1,6 +1,7 @@
+import React, { useState } from "react";
+import Modal from "react-modal";
 import {
   Button,
-  Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
@@ -14,18 +15,13 @@ import {
   useDisclosure,
   CloseButton,
   useToast,
+  Box,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForCreateStudyNoteContents } from "../../apis/study_note_api";
 import { StudyNoteContentFormData } from "../../types/study_note_type";
-
-// type StudyNoteContentFormData = {
-//   title: string;
-//   file: string;
-//   content: string;
-// };
+import TinyMCEEditor from "../RichEditor/TinyMCEEditor";
 
 type Props = {
   buttonText: string;
@@ -34,13 +30,21 @@ type Props = {
   //   onSubmit: (formData: StudyNoteContentFormData) => void;
 };
 
-// 1122
-const ModalButtonForInsertStudyNoteContent = ({
+function ModalButtonForInsertStudyNoteContent({
   buttonText,
   currentPage,
   study_note_pk,
-}: Props) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+}: Props) {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -52,8 +56,8 @@ const ModalButtonForInsertStudyNoteContent = ({
     reValidateMode: "onBlur",
   });
   const toast = useToast();
-
   const queryClient = useQueryClient();
+  const [note_content_content, set_note_content_content] = useState<string>("");
 
   const mutationForCreateStudyNote = useMutation(
     apiForCreateStudyNoteContents,
@@ -70,7 +74,7 @@ const ModalButtonForInsertStudyNoteContent = ({
         });
         queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
         reset();
-        onClose();
+        setModalIsOpen(false);
       },
       onError: (error: any) => {
         console.log("error.response : ", error.response);
@@ -82,104 +86,119 @@ const ModalButtonForInsertStudyNoteContent = ({
   const handleFormSubmit = async (formData: StudyNoteContentFormData) => {
     setIsLoading(true);
     console.log("formData : ", formData);
-    mutationForCreateStudyNote.mutate(formData);
+    mutationForCreateStudyNote.mutate({
+      title: formData.title,
+      file: formData.file,
+      content: note_content_content,
+      study_note_pk: formData.study_note_pk,
+      current_page_number: formData.current_page_number,
+    });
 
     setIsLoading(false);
-    onClose();
+    setModalIsOpen(false);
+  };
+
+  const handleContentChange = (value: string) => {
+    set_note_content_content(value);
+  };
+
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      backgroundColor: "#FCEEC7", // 배경색 설정
+      zIndex: 100000, // z-index 설정
+      border: "none", // 테두리 제거
+      borderRadius: "10px", // 모서리 둥글게
+      padding: "20px", // 내부 여백 추가
+      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)", // 그림자 효과 추가
+    },
   };
 
   return (
-    <>
-      <Button
-        size="sm"
-        colorScheme="red"
-        variant="outline"
-        _hover={{ backgroundColor: "red.50" }}
-        onClick={onOpen}
+    <div>
+      <button onClick={openModal}>Open Modal</button>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
       >
-        {buttonText}
-      </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent bg="white" color="gray.800">
-          <ModalHeader>Insert Study Note Content</ModalHeader>
-          <ModalBody>
-            <FormControl display="none">
-              <Input
-                type="hidden"
-                {...register("study_note_pk")}
-                value={study_note_pk}
-              />
-              <Input
-                type="hidden"
-                {...register("current_page_number")}
-                value={currentPage}
-              />
-            </FormControl>
+        <h2>Hello, I am a Modal!</h2>
 
-            <FormControl>
-              <FormLabel>Title</FormLabel>
-              <Input
-                type="text"
-                placeholder="Enter the title"
-                {...register("title", { required: true })}
-                isInvalid={errors.title != null}
+        <Box>
+          <FormControl display="none">
+            <Input
+              type="hidden"
+              {...register("study_note_pk")}
+              value={study_note_pk}
+            />
+            <Input
+              type="hidden"
+              {...register("current_page_number")}
+              value={currentPage}
+            />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Title</FormLabel>
+            <Input
+              type="text"
+              placeholder="Enter the title"
+              {...register("title", { required: true })}
+              isInvalid={errors.title != null}
+            />
+          </FormControl>
+          <FormControl mt={4}>
+            <FormLabel>File</FormLabel>
+            <Input
+              type="text"
+              placeholder="Enter the file name"
+              {...register("file", { required: true })}
+              isInvalid={errors.file != null}
+            />
+          </FormControl>
+          <FormControl mt={4}>
+            <FormLabel>Content</FormLabel>
+            <Box zIndex={9999}>
+              <TinyMCEEditor
+                onChange={handleContentChange}
+                apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
               />
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>File</FormLabel>
-              <Input
-                type="text"
-                placeholder="Enter the file name"
-                {...register("file", { required: true })}
-                isInvalid={errors.file != null}
-              />
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Content</FormLabel>
-              <Textarea
-                placeholder="Enter the content"
-                {...register("content", { required: true })}
-                isInvalid={errors.content != null}
-              />
-            </FormControl>
-          </ModalBody>
-          <ModalFooter>
-            <Flex justify="space-between" w="100%">
-              <Button
-                variant="outline"
-                colorScheme="teal"
-                mr={2}
-                _hover={{ backgroundColor: "teal.100" }}
-                onClick={handleSubmit(handleFormSubmit)}
-                isLoading={isLoading}
-              >
-                Submit
-              </Button>
-              <Button
-                variant="outline"
-                colorScheme="teal"
-                ml={2}
-                _hover={{ backgroundColor: "teal.100" }}
-                onClick={onClose}
-              >
-                Cancel
-              </Button>
-            </Flex>
-          </ModalFooter>
-          <CloseButton
-            size="lg"
-            colorScheme="teal"
-            position="absolute"
-            right="8px"
-            top="8px"
-            _hover={{ backgroundColor: "teal.100" }}
-            onClick={onClose}
-          />
-        </ModalContent>
+            </Box>
+          </FormControl>
+        </Box>
+        <Box>
+          <Flex justify="space-between" w="100%">
+            <Button
+              variant="outline"
+              colorScheme="teal"
+              mr={2}
+              _hover={{ backgroundColor: "teal.100" }}
+              onClick={handleSubmit(handleFormSubmit)}
+              isLoading={isLoading}
+            >
+              Submit
+            </Button>
+            <Button
+              variant="outline"
+              colorScheme="teal"
+              ml={2}
+              _hover={{ backgroundColor: "teal.100" }}
+              // onClick={onClose}
+            >
+              Cancel
+            </Button>
+          </Flex>
+        </Box>
+
+        <button onClick={closeModal}>Close Modal</button>
       </Modal>
-    </>
+    </div>
   );
-};
+}
 
 export default ModalButtonForInsertStudyNoteContent;

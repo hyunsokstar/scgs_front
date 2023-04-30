@@ -17,6 +17,32 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+// 1122
+export const apiForUpdateStudyNoteContent = ({
+  pk,
+  title,
+  file_name,
+  content,
+}: any) => {
+  return instance
+    .put(
+      `/study-note/contents/${pk}`,
+      {
+        title: title,
+        file_name: file_name,
+        content: content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      return response.data;
+    });
+};
+
 export const ForSearchContentListForStudyNote = ({
   study_note_pk,
   searchTerm,
@@ -43,7 +69,7 @@ export const apiForReOrderForStudyNoteContentsForSpecificNoteAndPage = ({
       `study-note/${study_note_pk}/contents/update/re-order-for-contents`,
       {
         currentPage,
-        reordered_contents_list:items,
+        reordered_contents_list: items,
       },
       {
         headers: {

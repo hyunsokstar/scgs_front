@@ -30,7 +30,8 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import IconButtonForCopyText from "../IconButtonForCopyText";
 import { CheckIcon } from "@chakra-ui/icons";
 import CheckboxComponentForList from "../CheckBox/CheckboxComponentForList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ModalButtonForUpdateStudyNoteContent from "../Button/ModalButtonForUpdateStudyNoteContent";
 
 const PastelColor = {
   bg: "#C7E5F0",
@@ -47,7 +48,7 @@ const CardForStudyNoteContent = ({
   index,
   order,
   card_width,
-  setCheckedValues
+  setCheckedValues,
 }: any) => {
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -205,22 +206,27 @@ const CardForStudyNoteContent = ({
             </Tr> */}
             <Tr>
               <Td w={"3%"}>file:</Td>
-              <Td>
+              <Td position={"relative"}>
                 {/* <Input defaultValue={file_name} /> */}
                 <InputGroup>
-                  <Input defaultValue={file_name} />
+                  {/* <Input defaultValue={file_name} /> */}
+                  <Text>{file_name}</Text>
                   <InputRightElement>
-                    <IconButtonForCopyText text={file_name} />
+                    <Box position={"absolute"} right={-6} top={-7} zIndex={1}>
+                      <IconButtonForCopyText text={file_name} />
+                    </Box>
                   </InputRightElement>
                 </InputGroup>
               </Td>
             </Tr>
             <Tr>
               <Td colSpan={2} position={"relative"}>
-                <Box position={"absolute"} right={6} top={4} zIndex={1}>
+                <Box position={"absolute"} right={0} top={0} zIndex={1}>
                   <IconButtonForCopyText text={content} />
                 </Box>
-                <Textarea defaultValue={content} h="300px" />
+                {/* <Textarea defaultValue={content} h="300px" /> */}
+                {/* <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
+                <Box dangerouslySetInnerHTML={{ __html: content }} />
               </Td>
             </Tr>
           </Tbody>
@@ -230,9 +236,12 @@ const CardForStudyNoteContent = ({
         <Button variant="outline" colorScheme="teal">
           Comment
         </Button>
-        <Button variant="outline" colorScheme="teal">
-          Update
-        </Button>
+        <ModalButtonForUpdateStudyNoteContent
+          pk={pk}
+          title={title}
+          file_name={file_name}
+          content={content}
+        />
       </Box>
     </Box>
   );

@@ -127,7 +127,6 @@ function ModalButtonForStudyNoteContentOrdering({
   return (
     <>
       <Button
-        ml={2}
         size="sm"
         colorScheme="blue"
         variant="outline"

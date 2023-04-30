@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   DataForStudyNoteContent,
@@ -17,7 +17,7 @@ import { RootState } from "../store";
 
 import { initializeCurrentPage } from "../reducers/studyNoteSlice";
 import { SearchIcon, DeleteIcon } from "@chakra-ui/icons";
-import { FaSort } from "react-icons/fa";
+import { FaSort, FaListUl } from "react-icons/fa";
 import ModalButtonForInsertStudyNoteContent from "../components/modal/ModalButtonForInsertStudyNoteContent";
 import ButtonsForFindToContentWithOrderNum from "../components/Button/ButtonsForFindToContentWithOrderNum";
 import ModalButtonForSearchStudyNoteContent from "../components/Button/ModalButtonForSearchStudyNoteContent";
@@ -28,6 +28,8 @@ interface Props {}
 // 1122
 const StudyNoteDetail = (props: Props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [checkedValues, setCheckedValues] = useState<number[]>([]);
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -54,7 +56,10 @@ const StudyNoteDetail = (props: Props) => {
       currentPage,
       "apiForGetStuyNoteContentList",
     ],
-    apiForGetStuyNoteContentList
+    apiForGetStuyNoteContentList,
+    {
+      cacheTime: 0, // cacheTime을 0으로 설정하여 캐싱을 해제
+    }
   );
 
   console.log("response_data_for_api : ", response_data_for_api);
@@ -84,6 +89,11 @@ const StudyNoteDetail = (props: Props) => {
 
   // 체크한 노트 내용 삭제
   const deleteContentsForChecked = () => {
+    if (checkedValues.length === 0) {
+      alert("Note를 하나 이상 체크 해주세요");
+      return;
+    }
+
     mutationForDeleteContentsForChecked.mutate(checkedValues);
   };
 
@@ -106,6 +116,10 @@ const StudyNoteDetail = (props: Props) => {
     }
   };
 
+  const listButtonHandler = () => {
+    navigate(`/study-note`);
+  };
+
   if (logind_for_study_note_content_list) {
     return <Box>"loading.."</Box>;
   }
@@ -126,14 +140,24 @@ const StudyNoteDetail = (props: Props) => {
               size="sm"
               colorScheme="red"
               variant="outline"
+              _hover={{ backgroundColor: "purple.50" }}
+              leftIcon={<FaListUl />}
+              onClick={() => listButtonHandler()}
+            >
+              목록
+            </Button>
+
+            <Button
+              size="sm"
+              colorScheme="red"
+              variant="outline"
               _hover={{ backgroundColor: "red.50" }}
               onClick={deleteContentsForChecked}
               leftIcon={<DeleteIcon />}
-              mr={2}
             >
               Delete for check
             </Button>
-            <Box mr={2}>
+            <Box >
               <ModalButtonForSearchStudyNoteContent
                 study_note_pk={study_note_pk}
               />
@@ -141,7 +165,7 @@ const StudyNoteDetail = (props: Props) => {
             <Box>
               <ModalButtonForStudyNoteContentOrdering
                 study_note_pk={study_note_pk}
-                currentPage = {currentPage}
+                currentPage={currentPage}
                 data_for_study_note_contents={
                   response_data_for_api
                     ? response_data_for_api?.data_for_study_note_contents
@@ -150,7 +174,7 @@ const StudyNoteDetail = (props: Props) => {
               />
             </Box>
           </Box>
-          <Box display={"flex"} gap={2} mr={1}>
+          <Box>
             <ModalButtonForInsertStudyNoteContent
               buttonText={"create"}
               currentPage={currentPage}

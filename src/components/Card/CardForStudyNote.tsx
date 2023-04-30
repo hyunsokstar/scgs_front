@@ -59,59 +59,72 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
   };
 
   return (
-    <Box
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      width="220px"
-      height="250px"
-      margin="10px"
-      bg={cardBgColor}
-      boxShadow="md"
-      transition="box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out"
-      _hover={{
-        borderColor: borderColor,
-        boxShadow: "xl",
-        transform: "translateY(-4px)",
-      }}
-      position={"relative"}
-    >
-      <Flex justify="space-between" bg={headerBgColor} px="2" py="1">
-        <Text fontSize="xl" fontWeight="bold">
-          {title}
-        </Text>
-        <IconButton
-          aria-label="Close"
-          icon={<CloseIcon onClick={() => deleteStudyNoteButtonHandler(pk)} />}
-          variant="outline"
-          size="sm"
-          colorScheme="pink"
-        />
-      </Flex>
+    <Box>
       <Box
-        p="2"
-        bg={bodyBgColor}
-        display={"flex"}
-        flexDirection={"column"}
-        justifyContent={"space-between"}
-        height={"170px"}
-        border={"0px solid green"}
+        borderWidth="1px"
+        borderRadius="lg"
+        overflow="hidden"
+        width="220px"
+        height="250px"
+        margin="10px"
+        bg={cardBgColor}
+        boxShadow="md"
+        transition="box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out"
+        _hover={{
+          borderColor: borderColor,
+          boxShadow: "xl",
+          transform: "translateY(-4px)",
+        }}
+        position={"relative"}
       >
-        <Text fontSize="sm">{description}</Text>
-        <Button
-          size="sm"
-          colorScheme="green"
-          variant="outline"
-          _hover={{ bg: "green.400" }}
+        <Box
+          display={"flex"}
+          justifyContent="space-between"
+          bg={headerBgColor}
+          px="2"
+          py="1"
+        >
+          <Text fontSize="xl" fontWeight="bold">
+            {title}
+          </Text>
+          <IconButton
+            aria-label="Close"
+            icon={
+              <CloseIcon onClick={() => deleteStudyNoteButtonHandler(pk)} />
+            }
+            variant="outline"
+            size="sm"
+            colorScheme="pink"
+          />
+        </Box>
+        <Box
+          p="2"
+          bg={bodyBgColor}
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent={"space-between"}
+          height={"100%"}
+          border={"0px solid green"}
+          _hover={{ bg: "#0ABAB5" }}
           onClick={() => goToStudyNoteDetail(pk)}
         >
-          detail
-        </Button>
-      </Box>
-      <Box position={"absolute"} p="2" bg={footerBgColor} bottom={0} w={"100%"}>
-        <Text fontSize="sm" textAlign="right">
-          {writer ? writer.username : "no user"}
-        </Text>
+          <Text fontSize="sm">{description}</Text>
+
+          <Text fontSize="sm" textAlign="right">
+            {writer ? writer.username : "no user"}
+          </Text>
+        </Box>
+        <Box
+          position={"absolute"}
+          p="2"
+          bg={footerBgColor}
+          bottom={0}
+          w={"100%"}
+        >
+          <Text fontSize="sm" textAlign="right">
+            {writer ? writer.username : "no user"}
+          </Text>
+        </Box>
       </Box>
     </Box>
   );
