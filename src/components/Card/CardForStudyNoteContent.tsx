@@ -225,8 +225,8 @@ const CardForStudyNoteContent = ({
                   <IconButtonForCopyText text={content} />
                 </Box>
                 {/* <Textarea defaultValue={content} h="300px" /> */}
-                {/* <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
-                <Box dangerouslySetInnerHTML={{ __html: content }} />
+                <div dangerouslySetInnerHTML={{ __html: content }}></div>
+                {/* <Box dangerouslySetInnerHTML={{ __html: content }} /> */}
               </Td>
             </Tr>
           </Tbody>

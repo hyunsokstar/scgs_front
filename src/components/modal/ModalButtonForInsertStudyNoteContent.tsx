@@ -110,24 +110,49 @@ function ModalButtonForInsertStudyNoteContent({
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      backgroundColor: "#FCEEC7", // 배경색 설정
+      backgroundColor: "rgb(255, 204, 153)", // 배경색 설정
       zIndex: 100000, // z-index 설정
       border: "none", // 테두리 제거
       borderRadius: "10px", // 모서리 둥글게
       padding: "20px", // 내부 여백 추가
       boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)", // 그림자 효과 추가
+      width: "80%",
+    },
+    overlay: {
+      zIndex: 500, // 모달보다 작은 z-index 값을 지정합니다.
     },
   };
 
   return (
-    <div>
-      <button onClick={openModal}>Open Modal</button>
+    <Box pr={1}>
+      <Button
+        variant="outline"
+        onClick={openModal}
+        _hover={{ bg: "teal.500", color: "white" }}
+      >
+        Add Note Content
+      </Button>{" "}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <h2>Hello, I am a Modal!</h2>
+        <h2>modal for insert study note content</h2>
+        <Box display={"flex"} justifyContent={"flex-end"}>
+          <Button
+            variant="outline"
+            bg="pink.100"
+            color="gray.700"
+            size="sm"
+            _hover={{
+              bg: "pink.200",
+              color: "gray.900",
+            }}
+            onClick={closeModal}
+          >
+            X
+          </Button>{" "}
+        </Box>
 
         <Box>
           <FormControl display="none">
@@ -171,7 +196,7 @@ function ModalButtonForInsertStudyNoteContent({
             </Box>
           </FormControl>
         </Box>
-        <Box>
+        <Box mt={2}>
           <Flex justify="space-between" w="100%">
             <Button
               variant="outline"
@@ -180,6 +205,7 @@ function ModalButtonForInsertStudyNoteContent({
               _hover={{ backgroundColor: "teal.100" }}
               onClick={handleSubmit(handleFormSubmit)}
               isLoading={isLoading}
+              w={"50%"}
             >
               Submit
             </Button>
@@ -188,16 +214,15 @@ function ModalButtonForInsertStudyNoteContent({
               colorScheme="teal"
               ml={2}
               _hover={{ backgroundColor: "teal.100" }}
-              // onClick={onClose}
+              onClick={closeModal}
+              w={"50%"}
             >
               Cancel
             </Button>
           </Flex>
         </Box>
-
-        <button onClick={closeModal}>Close Modal</button>
       </Modal>
-    </div>
+    </Box>
   );
 }
 
