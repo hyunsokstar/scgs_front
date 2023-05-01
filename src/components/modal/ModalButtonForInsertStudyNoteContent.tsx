@@ -16,6 +16,7 @@ import {
   CloseButton,
   useToast,
   Box,
+  HStack,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -104,13 +105,13 @@ function ModalButtonForInsertStudyNoteContent({
 
   const customStyles = {
     content: {
-      top: "50%",
+      top: "49%",
       left: "50%",
       right: "auto",
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      backgroundColor: "rgb(255, 204, 153)", // 배경색 설정
+      backgroundColor: "#A6D8F0", // 배경색 설정
       zIndex: 100000, // z-index 설정
       border: "none", // 테두리 제거
       borderRadius: "10px", // 모서리 둥글게
@@ -137,7 +138,6 @@ function ModalButtonForInsertStudyNoteContent({
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <h2>modal for insert study note content</h2>
         <Box display={"flex"} justifyContent={"flex-end"}>
           <Button
             variant="outline"
@@ -168,24 +168,27 @@ function ModalButtonForInsertStudyNoteContent({
             />
           </FormControl>
 
-          <FormControl>
-            <FormLabel>Title</FormLabel>
-            <Input
-              type="text"
-              placeholder="Enter the title"
-              {...register("title", { required: true })}
-              isInvalid={errors.title != null}
-            />
-          </FormControl>
-          <FormControl mt={4}>
-            <FormLabel>File</FormLabel>
-            <Input
-              type="text"
-              placeholder="Enter the file name"
-              {...register("file", { required: true })}
-              isInvalid={errors.file != null}
-            />
-          </FormControl>
+          <HStack>
+            <FormControl>
+              <FormLabel>Title</FormLabel>
+              <Input
+                type="text"
+                placeholder="Enter the title"
+                {...register("title", { required: true })}
+                isInvalid={errors.title != null}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>File</FormLabel>
+              <Input
+                type="text"
+                placeholder="Enter the file name"
+                {...register("file", { required: true })}
+                isInvalid={errors.file != null}
+              />
+            </FormControl>
+          </HStack>
+
           <FormControl mt={4}>
             <FormLabel>Content</FormLabel>
             <Box zIndex={9999}>
@@ -196,7 +199,7 @@ function ModalButtonForInsertStudyNoteContent({
             </Box>
           </FormControl>
         </Box>
-        <Box mt={2}>
+        <Box mt={5}>
           <Flex justify="space-between" w="100%">
             <Button
               variant="outline"

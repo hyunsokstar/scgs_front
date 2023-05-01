@@ -47,7 +47,9 @@ interface IProps {
   currentPageNum: number;
   setCurrentPageNum: any;
   task_number_for_one_page?: number;
+  handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   projectTaskListRefatch: () => void;
+  checkedRowPks: number[];
 }
 
 function UncompletedTaskRow({
@@ -56,7 +58,9 @@ function UncompletedTaskRow({
   task_number_for_one_page,
   currentPageNum,
   setCurrentPageNum,
+  handleCheckboxChange,
   projectTaskListRefatch,
+  checkedRowPks,
 }: IProps): ReactElement {
   const completedColor = useColorModeValue("green.500", "green.300");
   const inProgressColor = useColorModeValue("orange.500", "orange.300");
@@ -231,7 +235,7 @@ function UncompletedTaskRow({
 
   const update_For_is_task_for_cash_prize = (taskPk: string) => {
     console.log("taskPk:", taskPk);
-    update_mutation_for_is_task_for_cash_prize.mutate(taskPk)
+    update_mutation_for_is_task_for_cash_prize.mutate(taskPk);
   };
 
   return (
@@ -249,15 +253,19 @@ function UncompletedTaskRow({
                   my={0}
                   display={"flex"}
                   alignItems={"center"}
-                  //
-
                   backgroundColor={rowColor(task.current_status)}
                   _hover={{ backgroundColor: "gray.100" }}
                   width={"1900px"}
                 >
                   <HStack border={"0px solid green"}>
                     <Box border={"0px solid yellow"} width={"50px"}>
-                      <Checkbox mx={2} border={"1px solid black"} />
+                      <Checkbox
+                        mx={2}
+                        border={"1px solid black"}
+                        value={task.pk}
+                        isChecked={checkedRowPks.includes(task.pk)}
+                        onChange={handleCheckboxChange}
+                      />
                     </Box>
 
                     <Box
@@ -342,7 +350,7 @@ function UncompletedTaskRow({
                       </Box>
                     </Box>
 
-                    <Box border={"0px solid blue"} width={"310px"}>
+                    <Box border={"0px solid blue"} width={"320px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>시작</Text>
@@ -373,7 +381,7 @@ function UncompletedTaskRow({
                         />
                       </HStack>
                     </Box>
-                    <Box border={"0px solid blue"} width={"180px"}>
+                    <Box border={"0px solid blue"} width={"220px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>경과</Text>

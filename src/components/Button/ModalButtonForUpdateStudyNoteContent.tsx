@@ -110,7 +110,7 @@ const ModalButtonForUpdateStudyNoteContent: React.FC<
 
   const customStyles = {
     content: {
-      top: "50%",
+      top: "48%",
       left: "50%",
       right: "auto",
       bottom: "auto",

@@ -21,20 +21,35 @@ interface ICommentTextUpdateApiParameter {
   commentText: string;
 }
 
-// export const apiForSearchUncompletedTaskListByUserName = ({ username }: any) => {
-//   return instance
-//     .get(
-//       `/project_progress/search-by-username/?username=${encodeURIComponent(username)}`,
-//     )
-//     .then((response): any => {
-//       console.log("response : ", response);
-//       return response.data;
-//     });
-// };
+export const apiForUpdateTaskDueDateForChecked = (
+  checkedRowPks: number[]
+) => {
+  console.log("checkedRowPks: ", checkedRowPks);
 
-// 1122
-// is_task_for_cash_prize
-// is_task_for_cash_prize/update
+  return instance
+    .put("project_progress/update-task-due-date-for-checked", checkedRowPks, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+
+export const apiForDeleteTasksForChecked = (
+  checkedRowPks: number[]
+) => {
+  console.log("study_note_pk , selectedButtonsData : ", checkedRowPks);
+
+  return instance
+    .delete("project_progress/delete-for-checked", {
+      data: checkedRowPks, // [1,2,3,5]
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
 
 export const updateCashPrizeForTask = ({
   taskPk,
