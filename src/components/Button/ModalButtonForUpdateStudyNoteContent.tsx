@@ -9,6 +9,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   IconButton,
   Input,
   ModalBody,
@@ -162,39 +163,41 @@ const ModalButtonForUpdateStudyNoteContent: React.FC<
 
         <Box>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl isInvalid={!!formState.errors.title}>
-              <FormLabel htmlFor="title">Title</FormLabel>
+            <HStack>
+              <FormControl isInvalid={!!formState.errors.title}>
+                <FormLabel htmlFor="title">Title</FormLabel>
 
-              <Input
-                type="hidden"
-                id="pk"
-                value={pk}
-                {...register("pk", { required: true })}
-              />
+                <Input
+                  type="hidden"
+                  id="pk"
+                  value={pk}
+                  {...register("pk", { required: true })}
+                />
 
-              <Input
-                id="title"
-                placeholder="Title"
-                defaultValue={title}
-                {...register("title", { required: true })}
-              />
-              <FormErrorMessage>
-                {formState.errors.title?.message}
-              </FormErrorMessage>
-            </FormControl>
+                <Input
+                  id="title"
+                  placeholder="Title"
+                  defaultValue={title}
+                  {...register("title", { required: true })}
+                />
+                <FormErrorMessage>
+                  {formState.errors.title?.message}
+                </FormErrorMessage>
+              </FormControl>
 
-            <FormControl isInvalid={!!formState.errors.file_name}>
-              <FormLabel htmlFor="file">File</FormLabel>
-              <Input
-                id="file"
-                type="text"
-                defaultValue={file_name}
-                {...register("file_name", { required: true })}
-              />
-              <FormErrorMessage>
-                {formState.errors.file_name?.message}
-              </FormErrorMessage>
-            </FormControl>
+              <FormControl isInvalid={!!formState.errors.file_name}>
+                <FormLabel htmlFor="file">File</FormLabel>
+                <Input
+                  id="file"
+                  type="text"
+                  defaultValue={file_name}
+                  {...register("file_name", { required: true })}
+                />
+                <FormErrorMessage>
+                  {formState.errors.file_name?.message}
+                </FormErrorMessage>
+              </FormControl>
+            </HStack>
 
             <FormControl isInvalid={!!formState.errors.content}>
               <FormLabel htmlFor="content">Content</FormLabel>
