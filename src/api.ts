@@ -209,7 +209,6 @@ export interface IUploadImageVarialbes {
 export const uploadImage = ({ file, uploadURL }: IUploadImageVarialbes) => {
   console.log("uploadURL:", uploadURL);
   console.log("file:", file);
-  // console.log("file[0] : ", file[0]);
 
   const form = new FormData();
   form.append("file", file);
