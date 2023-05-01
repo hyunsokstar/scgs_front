@@ -19,12 +19,23 @@ const TinyMCEEditor: React.FC<Props> = ({
   init,
 }) => {
   const handleEditorChange = (content: string) => {
-    console.log("content : ", content);
+    console.log('content : ', content);
 
     if (onChange) {
       onChange(content);
     }
   };
+
+  const uploadImageMutation = useMutation(uploadImage, {
+    onSuccess: ({ result }: any) => {
+      alert('파일 업로드 성공');
+    },
+    onError: () => {
+      console.error('파일 업로드 실패');
+    },
+  });
+
+  const getImageUploadUrlMutation = useMutation(getUploadURL);
 
   const images_upload_handler = (
     blobInfo: any,
@@ -34,40 +45,32 @@ const TinyMCEEditor: React.FC<Props> = ({
     const reader = new FileReader();
     reader.onload = () => {
       const base64data = reader.result;
-      console.log("blobInfo.blob() : ", blobInfo.blob());
+      console.log('blobInfo.blob() : ', blobInfo.blob());
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const uploadImageMutation = useMutation(uploadImage, {
-        onSuccess: ({ result }: any) => {
-          success(result.variants[0].url);
-          alert("파일 업로드 성공")
-        },
-        onError: () => {
-          failure();
-        }
-      });
-
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const getImageUploadUrlMutation = useMutation(getUploadURL, {
+      getImageUploadUrlMutation.mutate(undefined, {
         onSuccess: (result: any) => {
-          console.log("result : ", result);
-          console.log("file to upload", blobInfo.blob());
-    
-          uploadImageMutation.mutate({
-            uploadURL: result.uploadURL,
-            file: blobInfo.blob(),
-          });
+          console.log('result : ', result);
+          console.log('file to upload', blobInfo.blob());
+
+          uploadImageMutation.mutate(
+            {
+              uploadURL: result.uploadURL,
+              file: blobInfo.blob(),
+            },
+            {
+              onSuccess: ({ result }: any) => {
+                success(result.variants[0].url);
+              },
+            }
+          );
         },
       });
-
-      getImageUploadUrlMutation.mutate();
-
     };
     reader.readAsDataURL(blobInfo.blob());
   };
 
   return (
-    <Box sx={{ height: 450, overflowY: 'scroll' }}>
+    <Box sx={{ height: "450px", overflowY: 'scroll' }}>
       <Editor
         apiKey={apiKey}
         value={initialValue}
@@ -76,36 +79,13 @@ const TinyMCEEditor: React.FC<Props> = ({
           height: 500,
           menubar: true,
           plugins: [
-            "advlist",
-            "autolink",
-            "lists",
-            "link",
-            "image",
-            "charmap",
-            "print",
-            "preview",
-            "anchor",
-            "searchreplace",
-            "visualblocks",
-            "code",
-            "fullscreen",
-            "insertdatetime",
-            "media",
-            "table",
-            "paste",
-            "code",
-            "help",
-            "wordcount",
+            // ...
           ],
           toolbar:
-            "undo redo | formatselect | " +
-            "bold italic backcolor | alignleft aligncenter " +
-            "alignright alignjustify | bullist numlist outdent indent | " +
-            "removeformat | help",
-          // language: "ko_KR", // 사용할 언어를 설정합니다. 한국어로 설정하려면 'ko_KR'로 설정합니다.
+            // ...
           images_upload_handler,
           paste_data_images: true,
-          content_style: ".mce-menu { z-index: 9999; }",
+          content_style: '.mce-menu { z-index: 9999; }',
           ...init,
         }}
       />
