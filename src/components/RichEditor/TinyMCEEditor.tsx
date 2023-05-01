@@ -36,27 +36,6 @@ const TinyMCEEditor: React.FC<Props> = ({
       const base64data = reader.result;
       console.log("blobInfo.blob() : ", blobInfo.blob());
 
-      //   fetch('https://example.com/upload', {
-      //     method: 'POST',
-      //     body: JSON.stringify({ image: base64data }),
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     },
-      //   })
-      //   .then(response => {
-      //     if (!response.ok) {
-      //       throw new Error('Network response was not ok');
-      //     }
-      //     return response.json();
-      //   })
-      //   .then(data => {
-      //     success(data.url);
-      //   })
-      //   .catch(error => {
-      //     console.error('Error:', error);
-      //     failure();
-      //   });
-
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const uploadImageMutation = useMutation(uploadImage, {
         onSuccess: ({ result }: any) => {
