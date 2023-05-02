@@ -22,7 +22,10 @@ import {
   apiForUpdateTaskDueDateForChecked,
   getUncompletedTaskList,
 } from "../apis/project_progress_api";
-import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
+import {
+  ITypeForProjectProgressList,
+  typeForDueDateUpdateForChecked,
+} from "../types/project_progress/project_progress_type";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRow from "./UncompletedTaskRow";
@@ -194,8 +197,11 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   };
 
   const mutationForUpdateTaskDueDateForChecked = useMutation(
-    (checkedRowPks: number[]) => {
-      return apiForUpdateTaskDueDateForChecked(checkedRowPks);
+    ({ duration_option, checkedRowPks }: typeForDueDateUpdateForChecked) => {
+      return apiForUpdateTaskDueDateForChecked({
+        duration_option,
+        checkedRowPks,
+      });
     },
     {
       onSettled: () => {
@@ -214,18 +220,20 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
         });
 
         // window.location.reload(); // 새로고침
-
       },
     }
   );
 
   // due_date update
-  const handlerForUpdateTaskDuedateForChecked = () => {
+  const handlerForUpdateTaskDuedateForChecked = (duration_option: "until-noon" | "until-evening") => {
     if (checkedRowPks.length === 0) {
       alert("Note를 하나 이상 체크 해주세요");
       return;
     }
-    mutationForUpdateTaskDueDateForChecked.mutate(checkedRowPks);
+
+    alert(duration_option);
+
+    mutationForUpdateTaskDueDateForChecked.mutate({duration_option,checkedRowPks});
   };
 
   if (!taskListData) {
@@ -234,7 +242,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
   // 2244
   return (
-    <Box maxW={"100%"} border={"1px solid purple"} p={0} mt={2}>
+    <Box w={"100%"} border={"1px solid purple"} p={0} mt={2}>
       <Box
         border={"1px solid black"}
         display="flex"
@@ -387,9 +395,20 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           backgroundColor="red.50"
           _hover={{ backgroundColor: "red.100" }}
           mr={2}
-          onClick={handlerForUpdateTaskDuedateForChecked}
+          onClick={() => handlerForUpdateTaskDuedateForChecked("until-noon")}
         >
-          마감 날짜 오늘
+          마감 날짜 정오
+        </Button>
+
+        <Button
+          variant="outline"
+          size="sm"
+          backgroundColor="red.50"
+          _hover={{ backgroundColor: "red.100" }}
+          mr={2}
+          onClick={() => handlerForUpdateTaskDuedateForChecked("until-evening")}
+        >
+          마감 날짜 오후
         </Button>
 
         <Button
@@ -412,7 +431,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             setCurrentPageNum={setCurrentPageNum}
             projectTaskListRefatch={projectTaskListRefatch}
             handleCheckboxChange={handleCheckboxChange}
-            checkedRowPks = {checkedRowPks}
+            checkedRowPks={checkedRowPks}
           />
         ) : (
           ""

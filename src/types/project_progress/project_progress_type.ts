@@ -269,3 +269,8 @@ export interface PieDataForUncompletedTask {
   name: string;
   value: number;
 }
+
+export interface typeForDueDateUpdateForChecked {
+  duration_option: "until-noon" | "until-evening",
+  checkedRowPks: number[],
+}

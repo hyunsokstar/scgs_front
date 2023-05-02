@@ -9,6 +9,7 @@ import {
   FormTypeForExtraTask,
   IFormTypeForProjectProgress,
   ITypeForTaskDetailUpdate,
+  typeForDueDateUpdateForChecked,
 } from "../types/project_progress/project_progress_type";
 
 const instance = axios.create({
@@ -21,24 +22,29 @@ interface ICommentTextUpdateApiParameter {
   commentText: string;
 }
 
-export const apiForUpdateTaskDueDateForChecked = (
-  checkedRowPks: number[]
-) => {
+export const apiForUpdateTaskDueDateForChecked = ({
+  duration_option,
+  checkedRowPks,
+}: typeForDueDateUpdateForChecked) => {
   console.log("checkedRowPks: ", checkedRowPks);
 
   return instance
-    .put("project_progress/update-task-due-date-for-checked", checkedRowPks, {
-      headers: {
-        "X-CSRFToken": Cookie.get("csrftoken") || "",
+    .put(
+      "project_progress/update-task-due-date-for-checked",
+      {
+        duration_option,
+        checkedRowPks,
       },
-    })
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
     .then((response) => response.data);
 };
 
-
-export const apiForDeleteTasksForChecked = (
-  checkedRowPks: number[]
-) => {
+export const apiForDeleteTasksForChecked = (checkedRowPks: number[]) => {
   console.log("study_note_pk , selectedButtonsData : ", checkedRowPks);
 
   return instance
@@ -717,9 +723,7 @@ export const getCompletedTaskListForMe = ({
     });
 };
 
-export const getTasksWithCashPrize = ({
-  queryKey,
-}: QueryFunctionContext) => {
+export const getTasksWithCashPrize = ({ queryKey }: QueryFunctionContext) => {
   const [
     _,
     pageNum,
