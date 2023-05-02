@@ -274,3 +274,38 @@ export interface typeForDueDateUpdateForChecked {
   duration_option: "until-noon" | "until-evening",
   checkedRowPks: number[],
 }
+
+
+export interface TaskManager {
+  pk: number;
+  username: string;
+}
+
+export interface ProjectProgress {
+  pk: number;
+  task: string;
+  writer: string;
+  task_manager: TaskManager;
+  importance: number;
+  in_progress: boolean;
+  is_testing: boolean;
+  task_completed: boolean;
+  current_status: string;
+  started_at: string;
+  due_date: string | null;
+  started_at_formatted: string;
+  completed_at_formatted: string;
+  due_date_formatted: string;
+  elapsed_time_from_started_at: string;
+  time_consumed_from_start_to_complete: string;
+  time_left_to_due_date: string | null;
+  check_result_by_tester: boolean;
+  score_by_tester: number;
+  is_task_for_cash_prize: boolean;
+  cash_prize: number;
+}
+
+export interface typeForTaskListForChecked {
+  total_count: number;
+  ProjectProgressList: ProjectProgress[];
+}

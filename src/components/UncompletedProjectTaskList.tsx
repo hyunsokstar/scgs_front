@@ -29,6 +29,7 @@ import {
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRow from "./UncompletedTaskRow";
+import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
 
 interface Props {}
 
@@ -225,7 +226,9 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   );
 
   // due_date update
-  const handlerForUpdateTaskDuedateForChecked = (duration_option: "until-noon" | "until-evening") => {
+  const handlerForUpdateTaskDuedateForChecked = (
+    duration_option: "until-noon" | "until-evening"
+  ) => {
     if (checkedRowPks.length === 0) {
       alert("Note를 하나 이상 체크 해주세요");
       return;
@@ -233,7 +236,10 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
     alert(duration_option);
 
-    mutationForUpdateTaskDueDateForChecked.mutate({duration_option,checkedRowPks});
+    mutationForUpdateTaskDueDateForChecked.mutate({
+      duration_option,
+      checkedRowPks,
+    });
   };
 
   if (!taskListData) {
@@ -411,14 +417,12 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           마감 날짜 오후
         </Button>
 
-        <Button
-          variant="outline"
-          size="sm"
-          backgroundColor="red.50"
-          _hover={{ backgroundColor: "red.100" }}
-        >
-          담당자 변경
-        </Button>
+        {/* 230502 */}
+        <ModalButtonForUpdateTaskManagerForChecked
+          button_text="담당자 변경 for check"
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+        />
       </Box>
 
       <Box>

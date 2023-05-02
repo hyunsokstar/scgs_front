@@ -22,6 +22,29 @@ interface ICommentTextUpdateApiParameter {
   commentText: string;
 }
 
+export const apiForGetTaskListForCheckedPks = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, checkedRowPks] = queryKey;
+  console.log("체크 pks for task list : ", checkedRowPks);
+
+  return instance
+    .get("project_progress/task-list-for-checked", {
+      params: {
+        checkedRowPks, // 이름이 동일하게 맞춰짐
+      },
+      
+    })
+    .then((response) => {
+      const response_data = {
+        total_count: response.data.total_count,
+        ProjectProgressList: response.data.ProjectProgressList,
+      };
+
+      return response_data;
+    });
+};
+
 export const apiForUpdateTaskDueDateForChecked = ({
   duration_option,
   checkedRowPks,
