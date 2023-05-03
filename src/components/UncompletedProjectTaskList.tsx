@@ -227,14 +227,19 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
   // due_date update
   const handlerForUpdateTaskDuedateForChecked = (
-    duration_option: "until-noon" | "until-evening"
+    duration_option:
+      | "noon"
+      | "evening"
+      | "tomorrow"
+      | "day-after-tomorrow"
+      | "this-week"
+      | "this-month"
   ) => {
     if (checkedRowPks.length === 0) {
       alert("Note를 하나 이상 체크 해주세요");
       return;
     }
-
-    alert(duration_option);
+    // alert(duration_option);
 
     mutationForUpdateTaskDueDateForChecked.mutate({
       duration_option,
@@ -399,7 +404,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           backgroundColor="red.50"
           _hover={{ backgroundColor: "red.100" }}
           mr={2}
-          onClick={() => handlerForUpdateTaskDuedateForChecked("until-noon")}
+          onClick={() => handlerForUpdateTaskDuedateForChecked("noon")}
         >
           마감 날짜 정오
         </Button>
@@ -410,10 +415,63 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           backgroundColor="red.50"
           _hover={{ backgroundColor: "red.100" }}
           mr={2}
-          onClick={() => handlerForUpdateTaskDuedateForChecked("until-evening")}
+          onClick={() => handlerForUpdateTaskDuedateForChecked("evening")}
         >
           마감 날짜 오후
         </Button>
+
+        <Button
+          variant="outline"
+          size="sm"
+          backgroundColor="red.50"
+          _hover={{ backgroundColor: "red.100" }}
+          mr={2}
+          onClick={() =>
+            handlerForUpdateTaskDuedateForChecked("tomorrow")
+          }
+        >
+          마감 날짜 내일
+        </Button>
+
+        <Button
+          variant="outline"
+          size="sm"
+          backgroundColor="red.50"
+          _hover={{ backgroundColor: "red.100" }}
+          mr={2}
+          onClick={() =>
+            handlerForUpdateTaskDuedateForChecked("day-after-tomorrow")
+          }
+        >
+          마감 날짜 모레
+        </Button>
+
+        <Button
+          variant="outline"
+          size="sm"
+          backgroundColor="red.50"
+          _hover={{ backgroundColor: "red.100" }}
+          mr={2}
+          onClick={() =>
+            handlerForUpdateTaskDuedateForChecked("this-week")
+          }
+        >
+          마감 날짜 이번주
+        </Button>
+
+
+        <Button
+          variant="outline"
+          size="sm"
+          backgroundColor="red.50"
+          _hover={{ backgroundColor: "red.100" }}
+          mr={2}
+          onClick={() =>
+            handlerForUpdateTaskDuedateForChecked("this-month")
+          }
+        >
+          마감 날짜 이번달
+        </Button>                
 
         {/* 230502 */}
         <ModalButtonForUpdateTaskManagerForChecked

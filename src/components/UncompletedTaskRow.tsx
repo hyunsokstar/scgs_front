@@ -381,7 +381,7 @@ function UncompletedTaskRow({
                         />
                       </HStack>
                     </Box>
-                    <Box border={"0px solid blue"} width={"220px"}>
+                    <Box border={"0px solid blue"} width={"260px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>경과</Text>
