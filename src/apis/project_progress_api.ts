@@ -10,6 +10,7 @@ import {
   IFormTypeForProjectProgress,
   ITypeForTaskDetailUpdate,
   typeForDueDateUpdateForChecked,
+  typeForParameterForUpdateTaskMangerForChecked,
 } from "../types/project_progress/project_progress_type";
 
 const instance = axios.create({
@@ -33,7 +34,6 @@ export const apiForGetTaskListForCheckedPks = ({
       params: {
         checkedRowPks, // 이름이 동일하게 맞춰짐
       },
-      
     })
     .then((response) => {
       const response_data = {
@@ -538,6 +538,28 @@ export const apiForUpdateScoreByTester = ({
     .put(
       `/project_progress/${pk}/score-by-tester/update`,
       { score_by_tester: scoreByTesterForUpdate },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
+export const apiForUpdateTaskManagerForCheckedTasks = ({
+  checkedRowPks,
+  selectedManagerPk,
+}: typeForParameterForUpdateTaskMangerForChecked) => {
+  console.log(checkedRowPks, selectedManagerPk);
+
+  return instance
+    .put(
+      "/project_progress/update-task-manager-for-checked",
+      { checkedRowPks, task_manager: selectedManagerPk },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",

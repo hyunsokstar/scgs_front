@@ -1,3 +1,4 @@
+import React, { useState, ChangeEvent } from "react";
 import {
   Box,
   Button,
@@ -10,14 +11,17 @@ import {
   IconButton,
   Select,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
-import { useState } from "react";
 import { getUserNamesForCreate } from "../../apis/user_api";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { typeForTaskListForChecked } from "../../types/project_progress/project_progress_type";
-import { apiForGetTaskListForCheckedPks } from "../../apis/project_progress_api";
+import {
+  apiForGetTaskListForCheckedPks,
+  apiForUpdateTaskManagerForCheckedTasks,
+} from "../../apis/project_progress_api";
 import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 interface IUserNamesForCreate {
   pk: number;
@@ -30,12 +34,21 @@ interface IPropTypes {
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
+// 1122
 const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
   button_text,
   checkedRowPks,
   setCheckedRowPks,
 }: IPropTypes) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedManager, setSelectedManager] = useState("");
+  const toast = useToast();
+
+  const handleChangeForSelectedManager = (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedManager(event.target.value);
+  };
 
   const {
     isLoading,
@@ -58,10 +71,39 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
 
   console.log("checkedRowPks : ", checkedRowPks);
   console.log("dataForTaskListForCheckedPks : ", dataForTaskListForCheckedPks);
+  const queryClient = useQueryClient();
 
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
 
+  const mutationForUpdateTaskManagerForCheckedTasks = useMutation(
+    apiForUpdateTaskManagerForCheckedTasks,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        queryClient.refetchQueries(["getTaskListForCheckedPks"]);
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
+
+        toast({
+          status: "success",
+          title: "task manager update for check success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const updateTaskManagerForCheckedTasks = () => {
+    console.log("checkedRowPks : ", checkedRowPks);
+    console.log("selectedManager : ", selectedManager);
+
+    mutationForUpdateTaskManagerForCheckedTasks.mutate({
+      checkedRowPks,
+      selectedManagerPk: parseInt(selectedManager),
+    });
+  };
+
+  // 2244
   return (
     <Box>
       <Button
@@ -79,7 +121,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
         <ModalOverlay />
         <ModalContent bg="gray.100">
           <ModalHeader bg="red.200">
-            Modal Header
+            Modal For Update Task Manger For Checked
             <IconButton
               aria-label="Close modal"
               icon={<CloseIcon />}
@@ -112,15 +154,34 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
                 )}
               </Box>
 
-              <Box>
-                <Select placeholder="Choose a task_manager" w={"50%"} m={2}>
+              <Box display={"flex"} alignItems={"center"} gap={2}>
+                <Select
+                  placeholder="Choose a task_manager"
+                  w={"50%"}
+                  m={2}
+                  onChange={handleChangeForSelectedManager}
+                >
                   {userNamesData?.map((user) => (
                     <option key={user.pk} value={user.pk}>
                       {user.username}
                     </option>
                   ))}
                 </Select>
+                <Button
+                  name="confirm"
+                  onClick={updateTaskManagerForCheckedTasks}
+                  variant="outline"
+                  borderColor="pastelOutlineColor" // 실제 파스텔 색상 코드로 변경해주세요
+                  _hover={{
+                    backgroundColor: "#32CD32", // 실제 파스텔 색상 코드로 변경해주세요
+                    borderColor: "#008000", // 실제 파스텔 색상 코드로 변경해주세요
+                  }}
+                  size="md"
+                >
+                  Confirm
+                </Button>
               </Box>
+              {/* 업데이트 버튼 추가 */}
             </Box>
           </ModalBody>
           <ModalFooter bg="blue.200">Modal Footer</ModalFooter>

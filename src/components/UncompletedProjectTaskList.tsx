@@ -379,9 +379,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
       </Box>
 
       {/* 0501 */}
-
-      <Box>{checkedRowPks}</Box>
-
+      {/* <Box>{checkedRowPks}</Box> */}
       <Box display={"flex"} border={"1px solid blue"} p={2} gap={2}>
         <Checkbox size="lg" colorScheme="blue" />
         <Button

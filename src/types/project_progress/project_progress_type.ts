@@ -271,10 +271,9 @@ export interface PieDataForUncompletedTask {
 }
 
 export interface typeForDueDateUpdateForChecked {
-  duration_option: "until-noon" | "until-evening",
-  checkedRowPks: number[],
+  duration_option: "until-noon" | "until-evening";
+  checkedRowPks: number[];
 }
-
 
 export interface TaskManager {
   pk: number;
@@ -308,4 +307,9 @@ export interface ProjectProgress {
 export interface typeForTaskListForChecked {
   total_count: number;
   ProjectProgressList: ProjectProgress[];
+}
+
+export interface typeForParameterForUpdateTaskMangerForChecked {
+  checkedRowPks: number[];
+  selectedManagerPk: number;
 }
