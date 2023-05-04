@@ -52,7 +52,7 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.6",
     "tinymce": "^6.4.1",
-    "typescript": "^4.9.4",
+    "typescript": "^5.0.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

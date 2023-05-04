@@ -9,13 +9,19 @@ import { ITypeForProjectProgressList } from "../types/project_progress/project_p
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRowForMe from "./UncompletedTaskRowForMe";
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
+import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskForDueDate";
 
 interface Props {}
+
+
 
 // 1122
 function UncompletedProjectTaskListForMe({}: Props): ReactElement {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
   const [task_status_for_search, set_task_status_for_search] =
+    useState<string>("");
+
+  const [due_date_option_for_filtering, set_due_date_option_for_filtering] =
     useState<string>("");
 
   // const queryClient = useQueryClient();
@@ -25,7 +31,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
     data: taskListDataForMe,
     refetch: projectTaskListRefatch,
   } = useQuery<ITypeForProjectProgressList>(
-    ["getUncompletedTaskListForMe", currentPageNum, task_status_for_search],
+    ["getUncompletedTaskListForMe", currentPageNum, task_status_for_search, due_date_option_for_filtering],
     getUncompletedTaskListForMe,
     {
       enabled: true,
@@ -38,8 +44,9 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
   }
 
   return (
-    <Container maxW={"100%"} border={"1px solid purple"} p={0} mt={0}>
-      <Flex
+    <Box w={"100%"} border={"1px solid purple"} p={0} mt={0}>
+      <Box
+        display={"flex"}
         justifyContent={"space-between"}
         alignItems={"center"}
         mx={0}
@@ -49,10 +56,10 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
         border={"1px solid green"}
       >
         <Box>
-          <Text mb={1} fontSize={"20px"}>
+          <Box mb={1} fontSize={"20px"}>
             My Task 비완료 리스트 (총: {taskListDataForMe?.totalPageCount} per
             page: {taskListDataForMe?.task_number_for_one_page} )
-          </Text>
+          </Box>
           <Box display={"flex"} gap={2}>
             <ButtonForShowCountForTaskStatus
               task_status={"ready"}
@@ -81,12 +88,71 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
           </Box>
         </Box>
 
+        <Box>
+          마감 기한:
+          <Box display={"flex"} gap={2}>
+            <ButtonForFilteringTaskForDueDate
+              button_text="정오"
+              due_date_option="until-noon"
+              due_date_option_for_filtering={due_date_option_for_filtering}
+              set_due_date_option_for_filtering={
+                set_due_date_option_for_filtering
+              }
+            />
+            <ButtonForFilteringTaskForDueDate
+              button_text="오후"
+              due_date_option="until-evening"
+              due_date_option_for_filtering={due_date_option_for_filtering}
+              set_due_date_option_for_filtering={
+                set_due_date_option_for_filtering
+              }
+            />
+            <ButtonForFilteringTaskForDueDate
+              button_text="내일"
+              due_date_option="until-tomorrow"
+              due_date_option_for_filtering={due_date_option_for_filtering}
+              set_due_date_option_for_filtering={
+                set_due_date_option_for_filtering
+              }
+            />
+            <ButtonForFilteringTaskForDueDate
+              button_text="내일 모레"
+              due_date_option="until-the-day-after-tomorrow"
+              due_date_option_for_filtering={due_date_option_for_filtering}
+              set_due_date_option_for_filtering={
+                set_due_date_option_for_filtering
+              }
+            />
+            <ButtonForFilteringTaskForDueDate
+              button_text="이번주"
+              due_date_option="until-this-week"
+              due_date_option_for_filtering={due_date_option_for_filtering}
+              set_due_date_option_for_filtering={
+                set_due_date_option_for_filtering
+              }
+            />
+            <ButtonForFilteringTaskForDueDate
+              button_text="이번달"
+              due_date_option="until-this-month"
+              due_date_option_for_filtering={due_date_option_for_filtering}
+              set_due_date_option_for_filtering={
+                set_due_date_option_for_filtering
+              }
+            />
+            {/* <ButtonForFilteringTaskForDueDate button_text="오후" />
+            <ButtonForFilteringTaskForDueDate button_text="내일" />
+            <ButtonForFilteringTaskForDueDate button_text="내일 모레" />
+            <ButtonForFilteringTaskForDueDate button_text="이번주" />
+            <ButtonForFilteringTaskForDueDate button_text="이번달" /> */}
+          </Box>
+        </Box>
+
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
             projectTaskListRefatch={projectTaskListRefatch}
           />
         </Box>
-      </Flex>
+      </Box>
       <Box>
         {taskListDataForMe ? (
           <Box>
@@ -105,7 +171,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
           ""
         )}
       </Box>
-    </Container>
+    </Box>
   );
 }
 
