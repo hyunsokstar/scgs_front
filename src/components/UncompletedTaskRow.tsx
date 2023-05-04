@@ -22,6 +22,7 @@ import { CheckCircleIcon, WarningIcon, CalendarIcon } from "@chakra-ui/icons";
 import {
   IResponseTypeForProjectTaskUpdate,
   ITypeForProjectProgressList,
+  taskRowForUncompleted,
 } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
@@ -42,7 +43,7 @@ import SlideToggleButtonForInProgress from "./SlideToggleButton/SlideToggleButto
 import SlideToggleButtonForIsTesting from "./SlideToggleButton/SlideToggleButtonForIsTesting";
 
 interface IProps {
-  ProjectProgressList: any;
+  ProjectProgressList: taskRowForUncompleted[];
   totalPageCount: number;
   currentPageNum: number;
   setCurrentPageNum: any;
@@ -65,6 +66,8 @@ function UncompletedTaskRow({
   const completedColor = useColorModeValue("green.500", "green.300");
   const inProgressColor = useColorModeValue("orange.500", "orange.300");
   const queryClient = useQueryClient();
+
+  console.log("ProjectProgressList : ", ProjectProgressList);
 
   const handleSlideToggleChange = (checked: boolean) => {
     console.log(`SlideToggle is now ${checked ? "on" : "off"}`);
@@ -119,11 +122,9 @@ function UncompletedTaskRow({
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-
         queryClient.refetchQueries(["getUncompletedTaskList"]);
         // queryClient.refetchQueries(["getCompletedTaskList"]);
         // projectTaskListRefatch()
-
         toast({
           status: "success",
           title: "task status update success",
@@ -237,6 +238,14 @@ function UncompletedTaskRow({
     console.log("taskPk:", taskPk);
     update_mutation_for_is_task_for_cash_prize.mutate(taskPk);
   };
+
+  if (ProjectProgressList && ProjectProgressList.length === 0) {
+    return (
+      <Box textAlign="center">
+        <Text fontSize={"50px"}>No Data Available</Text>
+      </Box>
+    );
+  }
 
   return (
     <Box border={"0px solid blue"} maxWidth={"100%"}>

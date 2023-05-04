@@ -160,40 +160,40 @@ export interface IUncompletedTaskListForCashPrize {
   count_for_in_testing?: number;
 }
 
+export interface taskRowForUncompleted {
+  score_by_tester?: number;
+  pk: string;
+  writer?: string;
+  task_manager: {
+    pk: number;
+    username: string;
+  };
+  task: string;
+  in_progress: boolean;
+  is_testing: boolean;
+  task_completed: boolean;
+  importance: number;
+  started_at: string;
+  started_at_formatted: string;
+  completed_at_formatted?: string;
+  due_date_formatted: string;
+  elapsed_time_from_started_at: string;
+  time_consumed_from_start_to_complete?: string;
+  time_left_to_due_date?: string;
+  due_date?: string;
+  current_status?: string;
+  check_result_by_tester: boolean;
+  is_task_for_cash_prize: boolean;
+  cash_prize?: number;
+}
+
 export interface ITypeForProjectProgressList {
   projectTaskListRefatch?: () => void;
   writers_info?: Writer[];
   totalPageCount: number;
   task_number_for_one_page?: number;
   score_by_tester?: number;
-  ProjectProgressList: [
-    {
-      score_by_tester?: number;
-      pk: string;
-      writer?: string;
-      task_manager: {
-        pk: number;
-        username: string;
-      };
-      task: string;
-      in_progress: boolean;
-      is_testing: boolean;
-      task_completed: boolean;
-      importance: number;
-      started_at: string;
-      started_at_formatted: string;
-      completed_at_formatted?: string;
-      due_date_formatted: string;
-      elapsed_time_from_started_at: string;
-      time_consumed_from_start_to_complete?: string;
-      time_left_to_due_date?: string;
-      due_date?: string;
-      current_status?: string;
-      check_result_by_tester: boolean;
-      is_task_for_cash_prize: boolean;
-      cash_prize?: number;
-    }
-  ];
+  ProjectProgressList: taskRowForUncompleted[];
   currentPageNum?: number | undefined;
   setCurrentPageNum?: any;
   count_for_ready?: number;
@@ -310,6 +310,12 @@ export interface typeForParameterForUpdateTaskMangerForChecked {
 }
 
 export interface typeForDueDateUpdateForChecked {
-  duration_option: "noon" | "evening" | "tomorrow" | "day-after-tomorrow" | "this-week" | "this-month";
+  duration_option:
+    | "noon"
+    | "evening"
+    | "tomorrow"
+    | "day-after-tomorrow"
+    | "this-week"
+    | "this-month";
   checkedRowPks: number[];
 }

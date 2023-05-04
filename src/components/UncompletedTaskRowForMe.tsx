@@ -189,6 +189,14 @@ function UncompletedTaskRowForMe({
     console.log("update 핸들러 for task_status check pk : ", taskPk);
   };
 
+  if (ProjectProgressList && ProjectProgressList.length === 0) {
+    return (
+      <Box textAlign="center">
+        <Text fontSize={"48px"} my={3}>No Data Available!</Text>
+      </Box>
+    );
+  }
+
   return (
     <Box border={"0px solid blue"} maxWidth={"100%"}>
       <Box overflowX="auto" width="100%">

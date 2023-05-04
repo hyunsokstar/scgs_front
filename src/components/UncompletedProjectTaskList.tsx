@@ -30,6 +30,7 @@ import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForT
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRow from "./UncompletedTaskRow";
 import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
+import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
 
 interface Props {}
 
@@ -45,6 +46,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
     setSelectedPeriodOptionForUncompletedTaskList,
   ] = useState("all");
   const [username_for_search, set_username_for_search] = useState<string>();
+  const [task_status_for_search, set_task_status_for_search] =
+    useState<string>("");
 
   const {
     isLoading,
@@ -56,6 +59,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
       currentPageNum,
       selectedPeriodOptionForUncompletedTaskList,
       username_for_search,
+      task_status_for_search,
     ],
     getUncompletedTaskList,
     {
@@ -282,9 +286,32 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                 gap={2}
                 borderBottom={"1px solid #9AE6B4"}
               >
-                <Text>⚪ :{taskListData?.count_for_ready}</Text>
-                <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
-                <Text>🟠 : {taskListData?.count_for_in_testing}</Text>
+                <ButtonForShowCountForTaskStatus
+                  task_status={"ready"}
+                  status_imoge={"⚪"}
+                  status_count={taskListData?.count_for_ready}
+                  button_size={"md"}
+                  task_status_for_search={task_status_for_search}
+                  set_task_status_for_search={set_task_status_for_search}
+                />
+
+                <ButtonForShowCountForTaskStatus
+                  task_status={"in_progress"}
+                  status_imoge={"🟡"}
+                  status_count={taskListData?.count_for_in_progress}
+                  button_size={"md"}
+                  task_status_for_search={task_status_for_search}
+                  set_task_status_for_search={set_task_status_for_search}
+                />
+
+                <ButtonForShowCountForTaskStatus
+                  task_status={"testing"}
+                  status_imoge={"🟠"}
+                  status_count={taskListData?.count_for_in_testing}
+                  button_size={"md"}
+                  task_status_for_search={task_status_for_search}
+                  set_task_status_for_search={set_task_status_for_search}
+                />
               </Td>
               {/* <Td borderBottomWidth="1px" borderColor="teal.200">
                       Row 1, Column 3
@@ -426,9 +453,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           backgroundColor="red.50"
           _hover={{ backgroundColor: "red.100" }}
           mr={2}
-          onClick={() =>
-            handlerForUpdateTaskDuedateForChecked("tomorrow")
-          }
+          onClick={() => handlerForUpdateTaskDuedateForChecked("tomorrow")}
         >
           마감 날짜 내일
         </Button>
@@ -452,13 +477,10 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           backgroundColor="red.50"
           _hover={{ backgroundColor: "red.100" }}
           mr={2}
-          onClick={() =>
-            handlerForUpdateTaskDuedateForChecked("this-week")
-          }
+          onClick={() => handlerForUpdateTaskDuedateForChecked("this-week")}
         >
           마감 날짜 이번주
         </Button>
-
 
         <Button
           variant="outline"
@@ -466,12 +488,10 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           backgroundColor="red.50"
           _hover={{ backgroundColor: "red.100" }}
           mr={2}
-          onClick={() =>
-            handlerForUpdateTaskDuedateForChecked("this-month")
-          }
+          onClick={() => handlerForUpdateTaskDuedateForChecked("this-month")}
         >
           마감 날짜 이번달
-        </Button>                
+        </Button>
 
         {/* 230502 */}
         <ModalButtonForUpdateTaskManagerForChecked

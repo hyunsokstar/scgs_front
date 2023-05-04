@@ -95,7 +95,7 @@ const TaskStatusPage = () => {
   const [total_tasks, set_total_tasks] = useState<Task[]>([]);
   const [dateRange, setDateRange] = useState("thisMonth");
   const [taskManagerForFiltering, setTaskManagerForFiltering] = useState("");
-  const [importance, setImportance] = useState(3);
+  const [importance, setImportance] = useState(1);
   const [taskStatusForDeadLine, setTaskStatusForDeadLine] =
     useState<DeadlineOption>();
   const [isRequestedForHelp, setIsRequestedForHelp] = useState(false);

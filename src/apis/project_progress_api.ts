@@ -810,6 +810,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
     pageNum,
     selectedPeriodOptionForUncompletedTaskList,
     username_for_search,
+    task_status_for_search,
   ] = queryKey;
 
   console.log(
@@ -823,6 +824,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         page: pageNum,
         selectedPeriodOptionForUncompletedTaskList,
         username_for_search,
+        task_status_for_search,
       },
     })
     .then((response) => {
@@ -845,11 +847,15 @@ export const getUncompletedTaskListForMe = ({
 }: QueryFunctionContext) => {
   // console.log("getProjectProgressList 요청 확인 at api");
 
-  const [_, pageNum] = queryKey;
+  const [_, pageNum, task_status_for_search] = queryKey;
   // console.log("pageNum : ", pageNum);
 
   return instance
-    .get(`project_progress/uncompleted/for-me?page=${pageNum}`)
+    .get(`project_progress/uncompleted/for-me?page=${pageNum}`, {
+      params: {
+        task_status_for_search,
+      },
+    })
     .then((response) => {
       console.log("api result for uncompleted task list: ", response);
 

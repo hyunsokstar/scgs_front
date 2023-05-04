@@ -8,11 +8,16 @@ import {
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRowForMe from "./UncompletedTaskRowForMe";
+import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
 
 interface Props {}
 
+// 1122
 function UncompletedProjectTaskListForMe({}: Props): ReactElement {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+  const [task_status_for_search, set_task_status_for_search] =
+    useState<string>("");
+
   // const queryClient = useQueryClient();
 
   const {
@@ -20,7 +25,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
     data: taskListDataForMe,
     refetch: projectTaskListRefatch,
   } = useQuery<ITypeForProjectProgressList>(
-    ["getUncompletedTaskListForMe", currentPageNum],
+    ["getUncompletedTaskListForMe", currentPageNum, task_status_for_search],
     getUncompletedTaskListForMe,
     {
       enabled: true,
@@ -44,13 +49,36 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
         border={"1px solid green"}
       >
         <Box>
-          <Text>
-            비완료 리스트 (총: {taskListDataForMe?.totalPageCount} &nbsp; ⚪ :{" "}
-            {taskListDataForMe?.count_for_ready}
-            &nbsp;&nbsp; 🟡 : {taskListDataForMe?.count_for_in_progress}
-            &nbsp;&nbsp; 🟠 : {taskListDataForMe?.count_for_in_testing} )
+          <Text mb={1} fontSize={"20px"}>
+            My Task 비완료 리스트 (총: {taskListDataForMe?.totalPageCount} per
+            page: {taskListDataForMe?.task_number_for_one_page} )
           </Text>
-          per page: {taskListDataForMe?.task_number_for_one_page}
+          <Box display={"flex"} gap={2}>
+            <ButtonForShowCountForTaskStatus
+              task_status={"ready"}
+              status_imoge={"⚪"}
+              status_count={taskListDataForMe?.count_for_ready}
+              button_size={"md"}
+              task_status_for_search={task_status_for_search}
+              set_task_status_for_search={set_task_status_for_search}
+            />
+            <ButtonForShowCountForTaskStatus
+              task_status={"in_progress"}
+              status_imoge={"🟡"}
+              status_count={taskListDataForMe?.count_for_in_progress}
+              button_size={"md"}
+              task_status_for_search={task_status_for_search}
+              set_task_status_for_search={set_task_status_for_search}
+            />
+            <ButtonForShowCountForTaskStatus
+              task_status={"testing"}
+              status_imoge={"🟠"}
+              status_count={taskListDataForMe?.count_for_in_testing}
+              button_size={"md"}
+              task_status_for_search={task_status_for_search}
+              set_task_status_for_search={set_task_status_for_search}
+            />
+          </Box>
         </Box>
 
         <Box textAlign={"right"} m={0}>

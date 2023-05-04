@@ -37,8 +37,10 @@ function CompletedProjectTaskListForMe({}: Props): ReactElement {
         border={"0px solid green"}
       >
         <Text py={1}>
-          완료 리스트(총: {pageProgressListData?.totalPageCount} 개 per page:
-          {pageProgressListData?.task_number_for_one_page})
+          <Text mb={1} fontSize={"20px"}>
+            완료 리스트 (총: {pageProgressListData?.totalPageCount} 개 per page:
+            {pageProgressListData?.task_number_for_one_page})
+          </Text>
         </Text>
         <Box textAlign={"right"} m={0}></Box>
       </Flex>{" "}

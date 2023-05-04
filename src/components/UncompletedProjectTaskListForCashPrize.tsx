@@ -29,9 +29,11 @@ import {
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRowForCashPrize from "./UncompletedTaskRowForCashPrize";
+import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
 
 interface Props {}
 
+// 1122
 function UncompletedProjectTaskList({}: Props): ReactElement {
   const theme = useTheme();
 
@@ -42,6 +44,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   ] = useState("all");
 
   const [username_for_search, set_username_for_search] = useState<string>();
+  const [task_status_for_search, set_task_status_for_search] = useState<string>("");
 
   const {
     isLoading,
@@ -181,8 +184,9 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                   <Tr borderBottom={"2px solid #fafad2"}>
                     <Th colSpan={2}>
                       <Text fontSize={22}>
-                        Tasks For Cash Prize (총: {taskListData?.totalPageCount} 개,
-                        per_page: {taskListData?.task_number_for_one_page} 개){" "}
+                        Tasks For Cash Prize (총: {taskListData?.totalPageCount}{" "}
+                        개, per_page: {taskListData?.task_number_for_one_page}{" "}
+                        개){" "}
                       </Text>
                     </Th>
                   </Tr>
@@ -198,13 +202,18 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                       gap={2}
                       borderBottom={"1px solid #fafad2"}
                     >
+                      {/* fixit */}
+                      {/* <ButtonForShowCountForTaskStatus
+                        button_text={"⚪ :{taskListData?.count_for_ready"}
+                        button_size={"md"}
+                        task_status_for_search={task_status_for_search} 
+                        set_task_status_for_search={set_task_status_for_search} 
+                      /> */}
+
                       <Text>⚪ :{taskListData?.count_for_ready}</Text>
                       <Text>🟡 : {taskListData?.count_for_in_progress}</Text>
                       <Text>🟠 : {taskListData?.count_for_in_testing}</Text>
                     </Td>
-                    {/* <Td borderBottomWidth="1px" borderColor="teal.200">
-                        Row 1, Column 3
-                      </Td> */}
                   </Tr>
                   <Tr height="30px" borderBottom={"2px solid #fafad2"}>
                     <Td>

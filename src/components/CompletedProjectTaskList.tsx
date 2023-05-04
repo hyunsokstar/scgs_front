@@ -151,18 +151,10 @@ function CompletedProjectTaskList({}: Props): ReactElement {
                 </Thead>
                 <Tbody border={"0px solid green"}>
                   <Tr height="30px">
-                    <Td
-                    // borderBottomWidth="0px"
-                    // borderRightWidth="1px"
-                    // borderColor="teal.200"
-                    >
+                    <Td>
                       <Text>담당자별:</Text>
                     </Td>
-                    <Td
-                    // borderBottomWidth="0px"
-                    // borderRightWidth="1px"
-                    // borderColor="teal.200"
-                    >
+                    <Td>
                       {pageProgressListData?.writers_info?.map((writer) => {
                         return (
                           // <Text fontSize="lg" color="blue.900">
