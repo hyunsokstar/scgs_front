@@ -33,6 +33,7 @@ import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUp
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
 import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
 import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskForDueDate";
+import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForSetFilterOptionForTaskList";
 
 interface Props {}
 
@@ -53,6 +54,12 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   const [due_date_option_for_filtering, set_due_date_option_for_filtering] =
     useState<string>("");
 
+  const [rating_for_filter_option, set_rating_for_filter_option] =
+    useState<number>(0);
+
+  const [isForUrgent, setIsForUrgent] = useState(false);
+  const [checkForCashPrize, setCheckForCashPrize] = useState(false);
+
   const {
     isLoading,
     data: taskListData,
@@ -64,7 +71,10 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
       selectedPeriodOptionForUncompletedTaskList,
       username_for_search,
       task_status_for_search,
-      due_date_option_for_filtering
+      due_date_option_for_filtering,
+      rating_for_filter_option,
+      isForUrgent,
+      checkForCashPrize
     ],
     getUncompletedTaskList,
     {
@@ -137,25 +147,6 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
     setFilterValueForTaskManager(value);
     updateFilteredDataForTaskManager(value);
   };
-
-  // const mutationForSearchListByUserName = useMutation(
-  //   apiForSelctUncompletedListForUserName(username),
-  //   {
-  //     onSuccess: (result: any) => {
-  //       console.log("result : ", result);
-  //       // queryClient.refetchQueries(["getOneProjectTask"]);
-
-  //       toast({
-  //         status: "success",
-  //         title: "task status update success",
-  //         description: result.message,
-  //       });
-  //     },
-  //     onError: (err) => {
-  //       console.log("error : ", err);
-  //     },
-  //   }
-  // );
 
   const searchUncompletedListforUserName = (username: string) => {
     console.log("username : ", username);
@@ -260,6 +251,14 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
     return <Box>..Loading</Box>;
   }
 
+  const handleUrgentChange = () => {
+    setIsForUrgent(!isForUrgent);
+  };
+
+  const handleCashPrizeChange = () => {
+    setCheckForCashPrize(!checkForCashPrize);
+  };
+
   // 2244
   return (
     <Box w={"100%"} border={"1px solid purple"} p={0} mt={2}>
@@ -321,6 +320,15 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
               {/* <Td borderBottomWidth="1px" borderColor="teal.200">
                       Row 1, Column 3
                     </Td> */}
+            </Tr>
+            <Tr borderBottom={"2px solid #9AE6B4"}>
+              <Td>중요도</Td>
+              <Td>
+                <StarRatingForSetFilterOptionForTaskList
+                  rating={rating_for_filter_option}
+                  setRating={set_rating_for_filter_option}
+                />
+              </Td>
             </Tr>
             <Tr height="30px" borderBottom={"2px solid #9AE6B4"}>
               <Td>
@@ -389,7 +397,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
               />
             </Box>
 
-            <Box>
+            <Box mt={1}>
               업무 : &nbsp;
               <Input
                 size="xs"
@@ -466,11 +474,26 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                   set_due_date_option_for_filtering
                 }
               />
-              {/* <ButtonForFilteringTaskForDueDate button_text="오후" />
-            <ButtonForFilteringTaskForDueDate button_text="내일" />
-            <ButtonForFilteringTaskForDueDate button_text="내일 모레" />
-            <ButtonForFilteringTaskForDueDate button_text="이번주" />
-            <ButtonForFilteringTaskForDueDate button_text="이번달" /> */}
+            </Box>
+            <Box display={"flex"} mt={3} gap={2} alignItems={"center"}>
+              <Box display="flex" alignItems="center">
+                긴급 여부 :{" "}
+                <Checkbox
+                  size="lg"
+                  ml={2}
+                  isChecked={isForUrgent}
+                  onChange={handleUrgentChange}
+                />
+              </Box>
+              <Box display="flex" alignItems="center">
+                상금 여부 :{" "}
+                <Checkbox
+                  size="lg"
+                  ml={2}
+                  isChecked={checkForCashPrize}
+                  onChange={handleCashPrizeChange}
+                />
+              </Box>
             </Box>
           </Box>
         </Box>

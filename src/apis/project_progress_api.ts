@@ -125,6 +125,25 @@ export const update_task_for_is_task_for_cash_prize = (taskPk: string) => {
     });
 };
 
+export const update_task_for_is_task_for_urgent = (taskPk: string) => {
+  console.log("update_task_for_is_task_for_urgent 실행");
+
+  return instance
+    .put(
+      `/project_progress/${taskPk}/is_task_for_urgent/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const getDataForTaskStaticsForIsCompleted = () => {
   const config: AxiosRequestConfig = {
     method: "get",
@@ -576,8 +595,7 @@ export const apiForUpdateTaskManagerForCheckedTasks = ({
 export const apiForUpdateTaskImportanceForChecked = ({
   checkedRowPks,
   importance,
-}: typeForParameterForUpdateTaskImportanceForChecked
-) => {
+}: typeForParameterForUpdateTaskImportanceForChecked) => {
   console.log(checkedRowPks, importance);
 
   return instance
@@ -800,7 +818,6 @@ export const getTasksWithCashPrize = ({ queryKey }: QueryFunctionContext) => {
     username_for_search,
   ] = queryKey;
 
-
   return instance
     .get("project_progress/tasks-with-cash-prize", {
       params: {
@@ -831,9 +848,11 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
     selectedPeriodOptionForUncompletedTaskList,
     username_for_search,
     task_status_for_search,
-    due_date_option_for_filtering
+    due_date_option_for_filtering,
+    rating_for_filter_option,
+    isForUrgent,
+    checkForCashPrize,
   ] = queryKey;
-
 
   return instance
     .get("project_progress/uncompleted", {
@@ -842,7 +861,10 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         selectedPeriodOptionForUncompletedTaskList,
         username_for_search,
         task_status_for_search,
-        due_date_option_for_filtering
+        due_date_option_for_filtering,
+        rating_for_filter_option,
+        isForUrgent,
+        checkForCashPrize,
       },
     })
     .then((response) => {

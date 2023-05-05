@@ -184,6 +184,7 @@ export interface taskRowForUncompleted {
   current_status?: string;
   check_result_by_tester: boolean;
   is_task_for_cash_prize: boolean;
+  is_task_for_urgent: boolean;
   cash_prize?: number;
 }
 

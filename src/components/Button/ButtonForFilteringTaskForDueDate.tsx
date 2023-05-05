@@ -31,6 +31,7 @@ const ButtonForFilteringTaskForDueDate = ({
     <Button
       size="sm"
       variant="outline"
+      border={"1px solid black"}
       bg={
         due_date_option === due_date_option_for_filtering
           ? "blue.300"

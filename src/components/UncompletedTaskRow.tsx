@@ -33,6 +33,7 @@ import {
   updateProjectIsTesting,
   updateProjectTaskCompleted,
   update_task_for_is_task_for_cash_prize,
+  update_task_for_is_task_for_urgent,
 } from "../apis/project_progress_api";
 import { Link } from "react-router-dom";
 import { deleteOneProjectTask } from "../apis/user_api";
@@ -239,6 +240,33 @@ function UncompletedTaskRow({
     update_mutation_for_is_task_for_cash_prize.mutate(taskPk);
   };
 
+  const update_mutation_for_is_task_for_urgent = useMutation(
+    update_task_for_is_task_for_urgent,
+    {
+      onSuccess: (result: any) => {
+        // console.log("result : ", result);
+        if (projectTaskListRefatch) {
+          projectTaskListRefatch();
+        }
+        queryClient.refetchQueries(["getUnompletedTaskList"]);
+
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+  const update_For_is_task_for_urgent = (taskPk: string) => {
+    console.log("taskPk:", taskPk);
+    update_mutation_for_is_task_for_urgent.mutate(taskPk);
+  };
+
   if (ProjectProgressList && ProjectProgressList.length === 0) {
     return (
       <Box textAlign="center">
@@ -264,7 +292,7 @@ function UncompletedTaskRow({
                   alignItems={"center"}
                   backgroundColor={rowColor(task.current_status)}
                   _hover={{ backgroundColor: "gray.100" }}
-                  width={"2000px"}
+                  width={"2100px"}
                 >
                   <HStack border={"0px solid green"}>
                     <Box border={"0px solid yellow"} width={"50px"}>
@@ -390,7 +418,7 @@ function UncompletedTaskRow({
                         />
                       </HStack>
                     </Box>
-                    <Box border={"0px solid blue"} width={"260px"}>
+                    <Box border={"0px solid blue"} width={"280px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>경과</Text>
@@ -409,8 +437,22 @@ function UncompletedTaskRow({
                         </Box>
                       </HStack>
                     </Box>
+                    {/* 긴급 여부 확인 */}
 
-                    <Box width={"40px"}>
+                    <Box display={"flex"} width={"80px"}>
+                      <Text fontSize={"2xl"} mr={1}>🚨</Text>
+                      <Checkbox
+                        size="lg"
+                        colorScheme="red"
+                        defaultChecked={task.is_task_for_urgent}
+                        onChange={() =>
+                          update_For_is_task_for_urgent(task.pk)
+                        }
+                      />
+                    </Box>
+
+                    <Box display={"flex"} width={"80px"}>
+                      <Text fontSize={"2xl"} mr={1}>💰</Text>
                       <Checkbox
                         size="lg"
                         colorScheme="red"
@@ -418,9 +460,7 @@ function UncompletedTaskRow({
                         onChange={() =>
                           update_For_is_task_for_cash_prize(task.pk)
                         }
-                      >
-                        C
-                      </Checkbox>
+                      />
                     </Box>
 
                     <Box>
