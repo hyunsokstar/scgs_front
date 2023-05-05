@@ -67,7 +67,7 @@ function UncompletedTaskRow({
   const inProgressColor = useColorModeValue("orange.500", "orange.300");
   const queryClient = useQueryClient();
 
-  console.log("ProjectProgressList : ", ProjectProgressList);
+  // console.log("ProjectProgressList : ", ProjectProgressList);
 
   const handleSlideToggleChange = (checked: boolean) => {
     console.log(`SlideToggle is now ${checked ? "on" : "off"}`);
@@ -198,7 +198,7 @@ function UncompletedTaskRow({
   };
 
   const rowColor = (task_status: string) => {
-    console.log("task_staus : ", task_status);
+    // console.log("task_staus : ", task_status);
 
     if (task_status === "ready") {
       return "white";
@@ -264,7 +264,7 @@ function UncompletedTaskRow({
                   alignItems={"center"}
                   backgroundColor={rowColor(task.current_status)}
                   _hover={{ backgroundColor: "gray.100" }}
-                  width={"1900px"}
+                  width={"2000px"}
                 >
                   <HStack border={"0px solid green"}>
                     <Box border={"0px solid yellow"} width={"50px"}>

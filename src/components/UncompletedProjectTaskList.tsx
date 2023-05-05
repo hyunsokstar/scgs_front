@@ -31,6 +31,8 @@ import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRow from "./UncompletedTaskRow";
 import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
+import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
+import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskForDueDate";
 
 interface Props {}
 
@@ -48,6 +50,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   const [username_for_search, set_username_for_search] = useState<string>();
   const [task_status_for_search, set_task_status_for_search] =
     useState<string>("");
+  const [due_date_option_for_filtering, set_due_date_option_for_filtering] =
+    useState<string>("");
 
   const {
     isLoading,
@@ -60,6 +64,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
       selectedPeriodOptionForUncompletedTaskList,
       username_for_search,
       task_status_for_search,
+      due_date_option_for_filtering
     ],
     getUncompletedTaskList,
     {
@@ -78,8 +83,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
   const toast = useToast();
 
-  console.log("taskListData  : ", taskListData);
-  console.log("filteredData  : ", filteredData);
+  // console.log("taskListData  : ", taskListData);
+  // console.log("filteredData  : ", filteredData);
 
   useEffect(() => {
     setFilteredData(taskListData?.ProjectProgressList);
@@ -401,6 +406,73 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
               />
             </Box>
           </Box>
+
+          <Box mt={2}>
+            마감 기한:
+            <Box display={"flex"} gap={2} mt={1}>
+              <ButtonForFilteringTaskForDueDate
+                button_text="미정"
+                due_date_option="undecided"
+                due_date_option_for_filtering={due_date_option_for_filtering}
+                set_due_date_option_for_filtering={
+                  set_due_date_option_for_filtering
+                }
+              />
+              <ButtonForFilteringTaskForDueDate
+                button_text="정오"
+                due_date_option="until-noon"
+                due_date_option_for_filtering={due_date_option_for_filtering}
+                set_due_date_option_for_filtering={
+                  set_due_date_option_for_filtering
+                }
+              />
+              <ButtonForFilteringTaskForDueDate
+                button_text="오후"
+                due_date_option="until-evening"
+                due_date_option_for_filtering={due_date_option_for_filtering}
+                set_due_date_option_for_filtering={
+                  set_due_date_option_for_filtering
+                }
+              />
+              <ButtonForFilteringTaskForDueDate
+                button_text="내일"
+                due_date_option="until-tomorrow"
+                due_date_option_for_filtering={due_date_option_for_filtering}
+                set_due_date_option_for_filtering={
+                  set_due_date_option_for_filtering
+                }
+              />
+              <ButtonForFilteringTaskForDueDate
+                button_text="내일 모레"
+                due_date_option="until-the-day-after-tomorrow"
+                due_date_option_for_filtering={due_date_option_for_filtering}
+                set_due_date_option_for_filtering={
+                  set_due_date_option_for_filtering
+                }
+              />
+              <ButtonForFilteringTaskForDueDate
+                button_text="이번주"
+                due_date_option="until-this-week"
+                due_date_option_for_filtering={due_date_option_for_filtering}
+                set_due_date_option_for_filtering={
+                  set_due_date_option_for_filtering
+                }
+              />
+              <ButtonForFilteringTaskForDueDate
+                button_text="이번달"
+                due_date_option="until-this-month"
+                due_date_option_for_filtering={due_date_option_for_filtering}
+                set_due_date_option_for_filtering={
+                  set_due_date_option_for_filtering
+                }
+              />
+              {/* <ButtonForFilteringTaskForDueDate button_text="오후" />
+            <ButtonForFilteringTaskForDueDate button_text="내일" />
+            <ButtonForFilteringTaskForDueDate button_text="내일 모레" />
+            <ButtonForFilteringTaskForDueDate button_text="이번주" />
+            <ButtonForFilteringTaskForDueDate button_text="이번달" /> */}
+            </Box>
+          </Box>
         </Box>
 
         <Box textAlign={"right"} m={0}>
@@ -496,6 +568,12 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
         {/* 230502 */}
         <ModalButtonForUpdateTaskManagerForChecked
           button_text="담당자 변경 for check"
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+        />
+
+        <ModalButtonForUpdateImortanceForChecked
+          button_text="update importance for checked"
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
         />

@@ -4,6 +4,7 @@ import { Button, ButtonProps } from "@chakra-ui/react";
 type Props = ButtonProps & {
   button_text: string;
   due_date_option:
+    | "undecided"
     | "until-noon"
     | "until-evening"
     | "until-tomorrow"
@@ -32,10 +33,10 @@ const ButtonForFilteringTaskForDueDate = ({
       variant="outline"
       bg={
         due_date_option === due_date_option_for_filtering
-          ? "purple.300"
-          : "purple.100"
+          ? "blue.300"
+          : ""
       }
-      _hover={{ bg: "purple.500" }}
+      _hover={{ bg: "blue.300" }}
       onClick={() => onClickHandler()}
     >
       {button_text}

@@ -74,8 +74,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
   const toast = useToast();
 
-  console.log("taskListData  : ", taskListData);
-  console.log("filteredData  : ", filteredData);
+  // console.log("taskListData  : ", taskListData);
+  // console.log("filteredData  : ", filteredData);
 
   useEffect(() => {
     setFilteredData(taskListData?.ProjectProgressList);

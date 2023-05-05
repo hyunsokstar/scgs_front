@@ -309,6 +309,11 @@ export interface typeForParameterForUpdateTaskMangerForChecked {
   selectedManagerPk: number;
 }
 
+export interface typeForParameterForUpdateTaskImportanceForChecked {
+  checkedRowPks: number[];
+  importance: number;
+}
+
 export interface typeForDueDateUpdateForChecked {
   duration_option:
     | "noon"

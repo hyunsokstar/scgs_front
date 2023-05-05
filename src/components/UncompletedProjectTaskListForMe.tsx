@@ -91,6 +91,14 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
         <Box>
           마감 기한:
           <Box display={"flex"} gap={2}>
+          <ButtonForFilteringTaskForDueDate
+              button_text="미정"
+              due_date_option="undecided"
+              due_date_option_for_filtering={due_date_option_for_filtering}
+              set_due_date_option_for_filtering={
+                set_due_date_option_for_filtering
+              }
+            />
             <ButtonForFilteringTaskForDueDate
               button_text="정오"
               due_date_option="until-noon"

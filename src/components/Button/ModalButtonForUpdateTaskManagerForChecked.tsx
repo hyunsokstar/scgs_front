@@ -69,13 +69,14 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
     error,
   } = useQuery<IUserNamesForCreate[]>(["user_names"], getUserNamesForCreate);
 
-  console.log("checkedRowPks : ", checkedRowPks);
-  console.log("dataForTaskListForCheckedPks : ", dataForTaskListForCheckedPks);
+  // console.log("checkedRowPks : ", checkedRowPks);
+  // console.log("dataForTaskListForCheckedPks : ", dataForTaskListForCheckedPks);
   const queryClient = useQueryClient();
 
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
 
+  
   const mutationForUpdateTaskManagerForCheckedTasks = useMutation(
     apiForUpdateTaskManagerForCheckedTasks,
     {
@@ -94,7 +95,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
   );
 
   const updateTaskManagerForCheckedTasks = () => {
-    console.log("checkedRowPks : ", checkedRowPks);
+    // console.log("checkedRowPks : ", checkedRowPks);
     console.log("selectedManager : ", selectedManager);
 
     mutationForUpdateTaskManagerForCheckedTasks.mutate({

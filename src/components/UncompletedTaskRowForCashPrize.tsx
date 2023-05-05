@@ -83,7 +83,7 @@ function UncompletedTaskRow({
     }
   );
 
-  console.log("ProjectProgressList : ", ProjectProgressList);
+  // console.log("ProjectProgressList : ", ProjectProgressList);
 
   const deleteHandelr = (pk: number) => {
     const response = deleteMutation.mutate(pk);
@@ -91,7 +91,7 @@ function UncompletedTaskRow({
   };
 
   const rowColor = (task_status: string) => {
-    console.log("task_staus : ", task_status);
+    // console.log("task_staus : ", task_status);
 
     if (task_status === "ready") {
       return "white";

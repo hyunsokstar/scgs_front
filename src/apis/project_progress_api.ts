@@ -10,6 +10,7 @@ import {
   IFormTypeForProjectProgress,
   ITypeForTaskDetailUpdate,
   typeForDueDateUpdateForChecked,
+  typeForParameterForUpdateTaskImportanceForChecked,
   typeForParameterForUpdateTaskMangerForChecked,
 } from "../types/project_progress/project_progress_type";
 
@@ -27,7 +28,7 @@ export const apiForGetTaskListForCheckedPks = ({
   queryKey,
 }: QueryFunctionContext) => {
   const [_, checkedRowPks] = queryKey;
-  console.log("체크 pks for task list : ", checkedRowPks);
+  // console.log("체크 pks for task list : ", checkedRowPks);
 
   return instance
     .get("project_progress/task-list-for-checked", {
@@ -572,6 +573,29 @@ export const apiForUpdateTaskManagerForCheckedTasks = ({
     });
 };
 
+export const apiForUpdateTaskImportanceForChecked = ({
+  checkedRowPks,
+  importance,
+}: typeForParameterForUpdateTaskImportanceForChecked
+) => {
+  console.log(checkedRowPks, importance);
+
+  return instance
+    .put(
+      "/project_progress/update-task-importance-for-checked",
+      { checkedRowPks, importance: importance },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const api_for_update_check_for_cash_prize = ({
   taskPk,
   taskMangerPk,
@@ -776,10 +800,6 @@ export const getTasksWithCashPrize = ({ queryKey }: QueryFunctionContext) => {
     username_for_search,
   ] = queryKey;
 
-  console.log(
-    "selectedPeriodOptionForUncompletedTaskList : ",
-    selectedPeriodOptionForUncompletedTaskList
-  );
 
   return instance
     .get("project_progress/tasks-with-cash-prize", {
@@ -811,12 +831,9 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
     selectedPeriodOptionForUncompletedTaskList,
     username_for_search,
     task_status_for_search,
+    due_date_option_for_filtering
   ] = queryKey;
 
-  console.log(
-    "selectedPeriodOptionForUncompletedTaskList : ",
-    selectedPeriodOptionForUncompletedTaskList
-  );
 
   return instance
     .get("project_progress/uncompleted", {
@@ -825,6 +842,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         selectedPeriodOptionForUncompletedTaskList,
         username_for_search,
         task_status_for_search,
+        due_date_option_for_filtering
       },
     })
     .then((response) => {
