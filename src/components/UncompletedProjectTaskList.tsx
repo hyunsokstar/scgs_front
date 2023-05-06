@@ -475,6 +475,11 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                 }
               />
             </Box>
+
+            <Box>
+              {/* <ButtonsForSelectFilterOptionForTaskClassification /> */}
+            </Box>
+
             <Box display={"flex"} mt={3} gap={2} alignItems={"center"}>
               <Box display="flex" alignItems="center">
                 긴급 여부 :{" "}
@@ -500,9 +505,11 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
+            button_text = "task 추가"
             projectTaskListRefatch={projectTaskListRefatch}
           />
         </Box>
+
       </Box>
 
       {/* 0501 */}
@@ -600,6 +607,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
         />
+
       </Box>
 
       <Box>

@@ -168,6 +168,7 @@ export interface taskRowForUncompleted {
     pk: number;
     username: string;
   };
+  task_classification: string;
   task: string;
   in_progress: boolean;
   is_testing: boolean;
@@ -209,6 +210,7 @@ export interface IFormTypeForProjectProgress {
   task_completed: boolean;
   password: string;
   task_manager: number;
+  task_classification: string;
 }
 
 export interface ITypeForTaskDetailUpdate {

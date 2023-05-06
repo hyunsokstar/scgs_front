@@ -3,20 +3,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   List,
   ListItem,
-  ListIcon,
-  Flex,
   Checkbox,
   Text,
   useColorModeValue,
-  Container,
-  Grid,
-  GridItem,
   Box,
   IconButton,
   HStack,
   VStack,
   useToast,
-  Icon,
+  Badge,
 } from "@chakra-ui/react";
 import { CheckCircleIcon, WarningIcon, CalendarIcon } from "@chakra-ui/icons";
 import {
@@ -275,6 +270,30 @@ function UncompletedTaskRow({
     );
   }
 
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case "crud":
+        return "blue";
+      case "new-future":
+        return "green";
+      case "trouble-shooting":
+        return "red";
+      case "ui-task":
+        return "yellow";
+      case "refactoring":
+        return "orange";
+      case "optimization":
+        return "purple";
+      case "boiler-plate":
+        return "teal";
+      case "test-code":
+        return "pink";
+      default:
+        return "gray";
+    }
+  };
+
+  // 2244
   return (
     <Box border={"0px solid blue"} maxWidth={"100%"}>
       <Box overflowX="auto" width="100%">
@@ -309,7 +328,7 @@ function UncompletedTaskRow({
                       display={"flex"}
                       flexDirection={"column"}
                       border={"0px solid yellow"}
-                      width={"200px"}
+                      width={"160px"}
                     >
                       <Text color={"blue.600"} textAlign={"start"}>
                         {task.task_manager?.username}
@@ -319,7 +338,15 @@ function UncompletedTaskRow({
                       </Text>
                     </Box>
 
-                    {/* <Box>{task.current_status}</Box> */}
+                    {/* <Box width="140px" border="1px solid green">
+                      <Badge
+                        size="md"
+                        colorScheme={getCategoryColor(task.task_classification)}
+                        p={1}
+                      >
+                        {task.task_classification}
+                      </Badge>
+                    </Box> */}
 
                     <Box border={"0px solid blue"} width={"440px"}>
                       <Text fontSize="sm" fontWeight="bold">
@@ -329,6 +356,17 @@ function UncompletedTaskRow({
                         >
                           {task.task}
                         </Link>
+                        &nbsp;&nbsp;
+                        <Badge
+                          size="md"
+                          fontSize={"10px"}
+                          colorScheme={getCategoryColor(
+                            task.task_classification
+                          )}
+                          p={1}
+                        >
+                          {task.task_classification}
+                        </Badge>
                       </Text>
                     </Box>
 
@@ -440,19 +478,21 @@ function UncompletedTaskRow({
                     {/* 긴급 여부 확인 */}
 
                     <Box display={"flex"} width={"80px"}>
-                      <Text fontSize={"2xl"} mr={1}>🚨</Text>
+                      <Text fontSize={"2xl"} mr={1}>
+                        🚨
+                      </Text>
                       <Checkbox
                         size="lg"
                         colorScheme="red"
                         defaultChecked={task.is_task_for_urgent}
-                        onChange={() =>
-                          update_For_is_task_for_urgent(task.pk)
-                        }
+                        onChange={() => update_For_is_task_for_urgent(task.pk)}
                       />
                     </Box>
 
                     <Box display={"flex"} width={"80px"}>
-                      <Text fontSize={"2xl"} mr={1}>💰</Text>
+                      <Text fontSize={"2xl"} mr={1}>
+                        💰
+                      </Text>
                       <Checkbox
                         size="lg"
                         colorScheme="red"

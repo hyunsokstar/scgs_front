@@ -29,6 +29,7 @@ import { getUserNamesForCreate } from "../../apis/user_api";
 
 interface IProps {
   projectTaskListRefatch: () => void;
+  button_text: string;
 }
 
 interface IUserNamesForCreate {
@@ -38,6 +39,7 @@ interface IUserNamesForCreate {
 
 const ModalButtonForAddProjectTask: FC<IProps> = ({
   projectTaskListRefatch,
+  button_text = "add task",
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -45,7 +47,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
     handleSubmit,
     formState: { errors },
     watch,
-    reset 
+    reset,
   } = useForm<IFormTypeForProjectProgress>();
 
   // user data 가져 오기
@@ -71,7 +73,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
       },
       onSuccess: (data) => {
         // console.log("data : ", data);
-        reset()
+        reset();
 
         toast({
           title: "welcome back!",
@@ -94,6 +96,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
     task_completed,
     password,
     task_manager,
+    task_classification,
   }: IFormTypeForProjectProgress) => {
     console.log("task create 체크 :: ", task_manager);
 
@@ -104,11 +107,12 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
       task_completed,
       password,
       task_manager,
+      task_classification,
     });
   };
 
   return (
-    <>
+    <Box>
       <Button
         onClick={onOpen}
         size={"xs"}
@@ -120,13 +124,13 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
         py={5}
         px={2}
       >
-        Project Task 추가
+        {button_text}
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>프로젝트 task 추가</ModalHeader>
+          <ModalHeader>Task 추가 #xptmzmcnrk </ModalHeader>
           <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)}>
               <VStack spacing={1} align="stretch">
@@ -192,6 +196,21 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
                   <Checkbox {...register("task_completed")} />
                 </FormControl>
 
+                <Select
+                  placeholder="Select task classification"
+                  defaultValue="crud"
+                  {...register("task_classification", { required: true })}
+                >
+                  <option value="crud">CRUD 작업</option>
+                  <option value="new-future">새로운 기능 개발</option>
+                  <option value="trouble-shooting">문제 해결 작업</option>
+                  <option value="ui-task">UI 작업</option>
+                  <option value="refactoring">리팩토링 작업</option>
+                  <option value="optimization">최적화 작업</option>
+                  <option value="boiler-plate">보일러 플레이트 만들기</option>
+                  <option value="test-code">테스트 코드 작성</option>
+                </Select>
+
                 <FormControl>
                   <FormLabel>Password</FormLabel>
                   <Input
@@ -211,7 +230,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
           </ModalBody>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
 
