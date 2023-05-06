@@ -8,19 +8,29 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Spacer,
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import StarRatingForUpdateImportanceForChecked from "../StarRating/StarRatingForUpdateImportanceForChecked";
+
 import {
   apiForGetTaskListForCheckedPks,
+  apiForUpdateTaskClassificationForChecked,
   apiForUpdateTaskImportanceForChecked,
 } from "../../apis/project_progress_api";
 import { typeForTaskListForChecked } from "../../types/project_progress/project_progress_type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
+import { RadioButtonsForSelectTaskClassification } from "../Buttons/RadioButtonsForSelectTaskClassification";
+
+type TaskClassification =
+  | "crud"
+  | "new-future"
+  | "trouble-shooting"
+  | "ui-task"
+  | "refactoring"
+  | "optimization"
+  | "boiler-plate"
+  | "test-code";
 
 type ModalButtonForUpdateImortanceForCheckedProps = {
   button_text: string;
@@ -33,11 +43,13 @@ type FormData = {
 };
 
 // 1122
-const ModalButtonForUpdateImortanceForChecked: React.FC<
+const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
   ModalButtonForUpdateImortanceForCheckedProps
 > = ({ button_text, checkedRowPks, setCheckedRowPks }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [rating, setRating] = useState(1);
+  const [selectedClassification, setSelectedClassification] =
+    useState<TaskClassification>("crud");
+
   const queryClient = useQueryClient();
   const toast = useToast();
 
@@ -57,15 +69,16 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
     setIsOpen(false);
   };
 
-  const mutationForUpdateTaskImportanceForChecked = useMutation(
-    apiForUpdateTaskImportanceForChecked,
+  // apiForUpdateTaskClassificationForChecked
+  const mutationForUpdateTaskClassificationForChecked = useMutation(
+    apiForUpdateTaskClassificationForChecked,
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
         toast({
           status: "success",
-          title: "task manager update for check success",
+          title: "task_classification update success",
           description: result.message,
         });
 
@@ -80,13 +93,15 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
     }
   );
 
-  const handlerForUpdateImportanceForChecked = () => {
-    mutationForUpdateTaskImportanceForChecked.mutate({
+  // handlerForUpdateTaskClassificationForChecked
+  const handlerForUpdateTaskClassificationForChecked = () => {
+    mutationForUpdateTaskClassificationForChecked.mutate({
       checkedRowPks,
-      importance: rating,
+      task_classification: selectedClassification,
     });
   };
 
+  // 2244
   return (
     <Box>
       <Button
@@ -106,7 +121,6 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
           <ModalHeader bg="purple.300">Update Importance</ModalHeader>
           <ModalCloseButton colorScheme="gray" />
           <ModalBody bg="purple.200">
-            
             <Box mb={3}>
               {dataForTaskListForCheckedPks ? (
                 <TableForTaskListForChecked
@@ -119,26 +133,25 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
               )}
             </Box>
 
-            {/* 업데이트용 컴퍼넌트 */}
             <Box
-              border={"0px solid blue"}
-              width={"340px"}
+              border={"1px solid blue"}
+              width={"100%"}
               display={"flex"}
-              justifyContent={"flex-start"}
+              justifyContent={"space-around"}
               alignItems={"center"}
+              mt={5}
             >
-              <StarRatingForUpdateImportanceForChecked
-                rating={rating}
-                setRating={setRating}
-                checkedRowPks={checkedRowPks}
-              />
-
-              <Spacer />
-
+              {/* 업데이트용 컴퍼넌트 33*/}
+              <Box>
+                <RadioButtonsForSelectTaskClassification
+                  selectedClassification={selectedClassification}
+                  setSelectedClassification={setSelectedClassification}
+                />
+              </Box>
               <Button
                 size={"md"}
                 colorScheme="purple"
-                onClick={handlerForUpdateImportanceForChecked}
+                onClick={handlerForUpdateTaskClassificationForChecked}
               >
                 Update
               </Button>
@@ -152,4 +165,4 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
   );
 };
 
-export default ModalButtonForUpdateImortanceForChecked;
+export default ModalButtonForUpdateTaskClassificationForChecked;

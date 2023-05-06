@@ -317,6 +317,11 @@ export interface typeForParameterForUpdateTaskImportanceForChecked {
   importance: number;
 }
 
+export interface typeForParameterForUpdateTaskClassificationForChecked {
+  checkedRowPks: number[];
+  task_classification: string;
+}
+
 export interface typeForDueDateUpdateForChecked {
   duration_option:
     | "noon"

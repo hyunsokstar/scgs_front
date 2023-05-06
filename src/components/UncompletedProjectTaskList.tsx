@@ -34,6 +34,7 @@ import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskS
 import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
 import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskForDueDate";
 import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForSetFilterOptionForTaskList";
+import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 
 interface Props {}
 
@@ -74,7 +75,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
       due_date_option_for_filtering,
       rating_for_filter_option,
       isForUrgent,
-      checkForCashPrize
+      checkForCashPrize,
     ],
     getUncompletedTaskList,
     {
@@ -90,6 +91,10 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   const [filterValueForTaskManager, setFilterValueForTaskManager] =
     useState<any>();
   const [filterValueForTask, setFilterValueForTask] = useState<any>();
+  const [
+    filterValueForTaskClassification,
+    setFilterValueForTaskClassification,
+  ] = useState<any>();
 
   const toast = useToast();
 
@@ -144,8 +149,35 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = event.target.value;
-    setFilterValueForTaskManager(value);
+    setFilterValueForTaskClassification(value);
     updateFilteredDataForTaskManager(value);
+  };
+
+  const updateFilteredDataForTaskClassification = (
+    filterValueForTaskClassification: string
+  ) => {
+    if (filterValueForTaskClassification !== "") {
+      const filteredData = taskListData?.ProjectProgressList.filter((item) =>
+        item.task_classification
+          .toLowerCase()
+          .includes(filterValueForTaskClassification.toLowerCase())
+      );
+      setFilteredData(filteredData);
+    } else {
+      setFilteredData(taskListData?.ProjectProgressList);
+      console.log(
+        "filterValueForTaskClassification : ",
+        filterValueForTaskClassification
+      );
+    }
+  };
+
+  const handleFilterChangeForTaskClassification = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setFilterValueForTaskClassification(value);
+    updateFilteredDataForTaskClassification(value);
   };
 
   const searchUncompletedListforUserName = (username: string) => {
@@ -379,43 +411,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
           />
 
-          <Box mt={2}>
-            <Box>
-              담당 : &nbsp;
-              <Input
-                size="xs"
-                variant="outline"
-                bg="blue.50"
-                borderColor="gray.300"
-                _focus={{ border: "0px solid blue", boxShadow: "none" }}
-                _hover={{ bg: "green.50", borderColor: "black" }}
-                _placeholder={{ color: "black" }}
-                id="url"
-                w={"300px"}
-                value={filterValueForTaskManager}
-                onChange={handleFilterChangeForTaskManager}
-              />
-            </Box>
-
-            <Box mt={1}>
-              업무 : &nbsp;
-              <Input
-                size="xs"
-                variant="outline"
-                bg="blue.50"
-                borderColor="gray.300"
-                _focus={{ border: "1px solid blue", boxShadow: "none" }}
-                _hover={{ bg: "green.50", borderColor: "black" }}
-                _placeholder={{ color: "black" }}
-                id="url"
-                w={"300px"}
-                value={filterValueForTask}
-                onChange={handleFilterChangeForTask}
-              />
-            </Box>
-          </Box>
-
-          <Box mt={2}>
+          <Box mt={3}>
             마감 기한:
             <Box display={"flex"} gap={2} mt={1}>
               <ButtonForFilteringTaskForDueDate
@@ -475,17 +471,16 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                 }
               />
             </Box>
-
             <Box>
               {/* <ButtonsForSelectFilterOptionForTaskClassification /> */}
             </Box>
-
-            <Box display={"flex"} mt={3} gap={2} alignItems={"center"}>
+            <Box display={"flex"} mt={3} gap={5} alignItems={"center"}>
               <Box display="flex" alignItems="center">
                 긴급 여부 :{" "}
                 <Checkbox
                   size="lg"
                   ml={2}
+                  border={"1px solid blue"}
                   isChecked={isForUrgent}
                   onChange={handleUrgentChange}
                 />
@@ -494,6 +489,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                 상금 여부 :{" "}
                 <Checkbox
                   size="lg"
+                  border={"1px solid blue"}
                   ml={2}
                   isChecked={checkForCashPrize}
                   onChange={handleCashPrizeChange}
@@ -501,15 +497,66 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
               </Box>
             </Box>
           </Box>
+          <Box mt={3}>
+            <Box>
+              담당 : &nbsp;
+              <Input
+                size="xs"
+                variant="outline"
+                bg="blue.50"
+                borderColor="gray.300"
+                _focus={{ border: "0px solid blue", boxShadow: "none" }}
+                _hover={{ bg: "green.50", borderColor: "black" }}
+                _placeholder={{ color: "black" }}
+                id="url"
+                w={"300px"}
+                value={filterValueForTaskManager}
+                onChange={handleFilterChangeForTaskManager}
+              />
+            </Box>
+
+            <Box mt={1}>
+              업무 : &nbsp;
+              <Input
+                size="xs"
+                variant="outline"
+                bg="blue.50"
+                borderColor="gray.300"
+                _focus={{ border: "1px solid blue", boxShadow: "none" }}
+                _hover={{ bg: "green.50", borderColor: "black" }}
+                _placeholder={{ color: "black" }}
+                id="url"
+                w={"300px"}
+                value={filterValueForTask}
+                onChange={handleFilterChangeForTask}
+              />
+            </Box>
+
+            <Box mt={1}>
+              분류 : &nbsp;
+              <Input
+                size="xs"
+                variant="outline"
+                bg="blue.50"
+                borderColor="gray.300"
+                _focus={{ border: "1px solid blue", boxShadow: "none" }}
+                _hover={{ bg: "green.50", borderColor: "black" }}
+                _placeholder={{ color: "black" }}
+                id="url"
+                w={"300px"}
+                value={filterValueForTaskClassification}
+                onChange={handleFilterChangeForTaskClassification}
+              />
+            </Box>
+          </Box>
         </Box>
 
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
-            button_text = "task 추가"
+            button_text="task 추가"
             projectTaskListRefatch={projectTaskListRefatch}
           />
         </Box>
-
       </Box>
 
       {/* 0501 */}
@@ -608,6 +655,11 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           setCheckedRowPks={setCheckedRowPks}
         />
 
+        <ModalButtonForUpdateTaskClassificationForChecked
+          button_text="update classification for checked"
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+        />
       </Box>
 
       <Box>

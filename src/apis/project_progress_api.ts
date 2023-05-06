@@ -10,6 +10,7 @@ import {
   IFormTypeForProjectProgress,
   ITypeForTaskDetailUpdate,
   typeForDueDateUpdateForChecked,
+  typeForParameterForUpdateTaskClassificationForChecked,
   typeForParameterForUpdateTaskImportanceForChecked,
   typeForParameterForUpdateTaskMangerForChecked,
 } from "../types/project_progress/project_progress_type";
@@ -580,6 +581,29 @@ export const apiForUpdateTaskManagerForCheckedTasks = ({
     .put(
       "/project_progress/update-task-manager-for-checked",
       { checkedRowPks, task_manager: selectedManagerPk },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
+export const apiForUpdateTaskClassificationForChecked = ({
+  checkedRowPks,
+  task_classification,
+}: typeForParameterForUpdateTaskClassificationForChecked) => {
+  console.log(checkedRowPks, task_classification);
+
+  return instance
+    .put(
+      // "/project_progress/update-task-importance-for-checked",
+      "/project_progress/update-task-clasification-for-checked",
+      { checkedRowPks, task_classification: task_classification },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
