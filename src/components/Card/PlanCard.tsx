@@ -15,6 +15,7 @@ interface CardProps {
   writer: string;
 }
 
+
 const PlanCard: React.FC<CardProps> = ({ title, description, writer }) => {
   const [showDetails, setShowDetails] = useState(false);
   const backgroundColor = useColorModeValue("gray.100", "gray.700");
@@ -34,6 +35,7 @@ const PlanCard: React.FC<CardProps> = ({ title, description, writer }) => {
       backgroundColor={bgColor}
       p={4}
       position="relative"
+      width={"100%"}
     >
       <CloseButton
         position="absolute"

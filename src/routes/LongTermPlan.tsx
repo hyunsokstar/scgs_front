@@ -62,9 +62,7 @@ interface Props {}
 const LongTermPlan = (props: Props) => {
   return (
     <Box border={"1px solid purple"} display={"flex"} flexDirection={"column"} gap={3}>
-      <PlanCardContainer topic={"일별 계획"} cardDataArray={cardData} />
-      <PlanCardContainer topic={"주간 계획"} cardDataArray={cardData} />
-      <PlanCardContainer topic={"월간 계획"} cardDataArray={cardData} />
+      <PlanCardContainer topic={"계획 목록"} cardDataArray={cardData} />
     </Box>
   );
 };

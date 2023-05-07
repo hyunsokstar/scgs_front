@@ -4,7 +4,7 @@ import { ViewSwitcher } from "../../components/Gantt/view-switcher";
 import { getStartEndDateForProject, initTasks } from "./helper";
 import "gantt-task-react/dist/index.css";
 
-const test4 = () => {
+const test4_2 = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [view, setView] = React.useState<ViewMode>(ViewMode.Day);
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -91,4 +91,4 @@ const test4 = () => {
   );
 };
 
-export default test4;
+export default test4_2;

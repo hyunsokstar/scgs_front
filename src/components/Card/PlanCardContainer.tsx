@@ -67,6 +67,10 @@ interface Props {
 }
 
 const PlanCardContainer = ({ topic, cardDataArray }: Props) => {
+
+  
+
+
   return (
     <Box border={"2px solid red"}>
       <Box px={"auto"}>
@@ -82,7 +86,7 @@ const PlanCardContainer = ({ topic, cardDataArray }: Props) => {
         mx={"auto"}
       >
         {cardDataArray.map((card, index) => (
-          <Box key={index} mb={1}>
+          <Box key={index} mb={1} width={"30%"} mx={3}>
             <PlanCard {...card} />
           </Box>
         ))}{" "}

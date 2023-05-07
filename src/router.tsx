@@ -51,6 +51,7 @@ import StudyNotePage from "./routes/StudyNotePage";
 import StudyNoteDetail from "./routes/StudyNoteDetail";
 import Test9 from "./routes/TestPage/Test9";
 import Test10 from "./routes/TestPage/Test10";
+import Test4_2 from "./routes/TestPage/Test4_2";
 
 const router = createBrowserRouter([
   {
@@ -98,6 +99,11 @@ const router = createBrowserRouter([
         path: "test4",
         element: <Test4 />,
       },
+      {
+        path: "test4-2",
+        element: <Test4_2 />,
+      },
+      
       {
         path: "test5",
         element: <Test5 />,
