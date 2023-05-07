@@ -16,6 +16,7 @@ import {
   Text,
   Flex,
   Input,
+  Textarea,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useQuery } from "@tanstack/react-query";
@@ -228,9 +229,9 @@ const TableForShortCut = () => {
                 <Checkbox />
               </Td>
               <Td>
-              {/* <Text>{shortcut?.writer.username}</Text> */}
+                {/* <Text>{shortcut?.writer.username}</Text> */}
 
-                {shortcut.writer !== null? (
+                {shortcut.writer !== null ? (
                   <Avatar
                     size={"sm"}
                     // src={shortcut.writer.profile_image}
@@ -248,7 +249,7 @@ const TableForShortCut = () => {
               </Td>
               <Td>
                 <Flex justifyContent={"space-between"}>
-                  {shortcut.shortcut}
+                  <Textarea defaultValue={shortcut.shortcut} />
                   <CopyButtonByPropsText text={shortcut.shortcut} />
                 </Flex>
               </Td>
