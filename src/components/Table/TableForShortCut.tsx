@@ -30,6 +30,7 @@ import ModalButtonForUpdateShortCut from "../modal/ModalButtonForUpdateShortCut"
 import CopyButtonByPropsText from "../Button/CopyButtonByPropsText";
 import { Shortcut, ShortcutsResponse } from "../../types/type_for_shortcut";
 import PaginationComponent from "../PaginationComponent";
+import ModalButtonForShowShortcut from "../modal/modalButtonForShowShortcut";
 
 const favorite_color = ["blue", "red", "orange", "red", "purple"];
 
@@ -250,7 +251,13 @@ const TableForShortCut = () => {
               <Td>
                 <Flex justifyContent={"space-between"}>
                   <Textarea defaultValue={shortcut.shortcut} />
-                  <CopyButtonByPropsText text={shortcut.shortcut} />
+
+                  <Box display={"flex"} flexDirection={"column"}>
+                    <CopyButtonByPropsText text={shortcut.shortcut} />
+                    <ModalButtonForShowShortcut
+                      shorcutText={shortcut.shortcut}
+                    />
+                  </Box>
                 </Flex>
               </Td>
               <Td>{shortcut.description}</Td>
