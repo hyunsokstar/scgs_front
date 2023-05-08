@@ -6,71 +6,24 @@ import { useQuery } from "@tanstack/react-query";
 import { api_for_get_long_term_plan_list } from "../apis/api_for_long_term_plan";
 import { list_for_long_term_plan } from "../types/type_for_plan_maker";
 import ModalButtonForCreatePlan from "../components/modal/ModalButtonForCreatePlan";
-
-const cardData = [
-  {
-    title: "Card 1",
-    description: "This is the description of card 1.",
-    writer: "John Doe",
-  },
-  {
-    title: "Card 2",
-    description: "This is the description of card 2.",
-    writer: "Jane Smith",
-  },
-  {
-    title: "Card 3",
-    description: "This is the description of card 3.",
-    writer: "Bob Johnson",
-  },
-  {
-    title: "Card 4",
-    description: "This is the description of card 1.",
-    writer: "John Doe",
-  },
-  {
-    title: "Card 5",
-    description: "This is the description of card 2.",
-    writer: "Jane Smith",
-  },
-  {
-    title: "Card 6",
-    description: "This is the description of card 3.",
-    writer: "Bob Johnson",
-  },
-  {
-    title: "Card 7",
-    description: "This is the description of card 1.",
-    writer: "John Doe",
-  },
-  {
-    title: "Card 8",
-    description: "This is the description of card 2.",
-    writer: "Jane Smith",
-  },
-  {
-    title: "Card 9",
-    description: "This is the description of card 3.",
-    writer: "Bob Johnson",
-  },
-  {
-    title: "Card 10",
-    description: "This is the description of card 3.",
-    writer: "Bob Johnson",
-  },
-];
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface Props {}
 
 const LongTermPlan = (props: Props) => {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
 
   const {
     isLoading: loading_for_long_term_plan,
     data: data_for_long_term_plan,
     refetch: refetch_for_long_term_plan,
   } = useQuery<list_for_long_term_plan>(
-    ["get_shortcut_list", currentPageNum],
+    ["get_plan_list", currentPageNum],
     api_for_get_long_term_plan_list,
     {
       enabled: true,
@@ -95,7 +48,11 @@ const LongTermPlan = (props: Props) => {
       gap={3}
     >
       <Box textAlign={"right"} mt={2}>
-        <ModalButtonForCreatePlan button_text={"계획 추가"} />
+        {isLoggedIn ? (
+          <ModalButtonForCreatePlan button_text={"계획 추가"} />
+        ) : (
+          "계획 입력은 로그인 필요"
+        )}
       </Box>
 
       <PlanCardContainer

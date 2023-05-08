@@ -15,3 +15,8 @@ export type row_for_long_term_plan = {
  
 export type list_for_long_term_plan = row_for_long_term_plan[];
   
+export interface formTypeForCreatePlan  {
+  title: string;
+  description: string;
+  category: "project" | "study" | "event";
+}

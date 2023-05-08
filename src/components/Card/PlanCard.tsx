@@ -7,9 +7,13 @@ import {
   Text,
   useColorModeValue,
   useToken,
+  useToast
 } from "@chakra-ui/react";
 import { row_for_long_term_plan } from "../../types/type_for_plan_maker";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiFordeleteOnePlan } from "../../apis/api_for_long_term_plan";
 
+// 1122
 const PlanCard: React.FC<row_for_long_term_plan> = ({
   pk,
   title,
@@ -27,7 +31,36 @@ const PlanCard: React.FC<row_for_long_term_plan> = ({
     "purple.500",
     "teal.500",
   ]);
+  
+  const toast = useToast();
+  const queryClient = useQueryClient();
 
+
+  const mutationForDeleteOnePlan = useMutation(
+    (plan_pk:number) => {
+      return apiFordeleteOnePlan(plan_pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["get_plan_list"]);
+
+        toast({
+          title: "delete api docu 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const deletePlanHandler = (plan_pk: number) => {
+    mutationForDeleteOnePlan.mutate(plan_pk);
+  };
+
+  // 2244
   return (
     <Box
       borderWidth="1px"
@@ -44,7 +77,8 @@ const PlanCard: React.FC<row_for_long_term_plan> = ({
         right={2}
         variant="outline"
         colorScheme="blue"
-        onClick={() => setShowDetails(false)}
+        // onClick={() => setShowDetails(false)}
+        onClick={() => deletePlanHandler(pk)}
       />
 
       <Heading size="md" mb={2} color={titleColor}>
@@ -59,7 +93,7 @@ const PlanCard: React.FC<row_for_long_term_plan> = ({
 
       {!showDetails && (
         <Button mt={4} onClick={() => setShowDetails(true)}>
-          Show details
+          Show Plans
         </Button>
       )}
 
