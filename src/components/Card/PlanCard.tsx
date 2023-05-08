@@ -12,6 +12,7 @@ import {
 import { row_for_long_term_plan } from "../../types/type_for_plan_maker";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFordeleteOnePlan } from "../../apis/api_for_long_term_plan";
+import ModalButtonForPlanContents from "../modal/modalButtonForPlanContents";
 
 // 1122
 const PlanCard: React.FC<row_for_long_term_plan> = ({
@@ -90,6 +91,8 @@ const PlanCard: React.FC<row_for_long_term_plan> = ({
       <Text fontWeight="bold" color={footerColor}>
         Written by {writer.username}
       </Text>
+
+      <ModalButtonForPlanContents modal_text={"계획표 보기"} />
 
       {!showDetails && (
         <Button mt={4} onClick={() => setShowDetails(true)}>
