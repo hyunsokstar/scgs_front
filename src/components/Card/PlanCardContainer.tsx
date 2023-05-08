@@ -1,6 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 import PlanCard from "./PlanCard";
+import { list_for_long_term_plan } from "../../types/type_for_plan_maker";
 
 const cardData = [
   {
@@ -55,21 +56,15 @@ const cardData = [
   },
 ];
 
-interface ITypeForPlanCard {
-  title: string;
-  description: string;
-  writer: string;
-}
-
 interface Props {
   topic: string;
-  cardDataArray: ITypeForPlanCard[];
+  cardDataArray: list_for_long_term_plan;
 }
 
 const PlanCardContainer = ({ topic, cardDataArray }: Props) => {
 
+  console.log("cardDataArray : ", cardDataArray);
   
-
 
   return (
     <Box border={"2px solid red"}>
@@ -85,9 +80,16 @@ const PlanCardContainer = ({ topic, cardDataArray }: Props) => {
         gap={3}
         mx={"auto"}
       >
-        {cardDataArray.map((card, index) => (
-          <Box key={index} mb={1} width={"30%"} mx={3}>
-            <PlanCard {...card} />
+        {cardDataArray.map((row, index) => (
+          <Box key={row.pk} mb={1} width={"30%"} mx={3}>
+            <PlanCard  
+                pk = {row.pk}
+                title = {row.title}
+                description = {row.description}
+                category= {row.category}
+                writer = {row.writer}
+                created_at = {row.created_at}
+            />
           </Box>
         ))}{" "}
       </Box>

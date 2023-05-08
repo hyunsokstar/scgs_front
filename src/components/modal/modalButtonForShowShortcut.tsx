@@ -59,7 +59,7 @@ const ModalButtonForShowShortcut: React.FC<ModalButtonForShowShortcutProps> = ({
             <Box textAlign={"end"} m={2}>
               <CopyButtonByPropsText text={shorcutText} />
             </Box>
-            <Textarea value={shorcutText} />
+            <Textarea value={shorcutText} height={"390px"} />
           </ModalBody>
           <ModalFooter bg="purple.100"></ModalFooter>
         </ModalContent>

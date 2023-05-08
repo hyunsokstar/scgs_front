@@ -6,17 +6,18 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  useToken
+  useToken,
 } from "@chakra-ui/react";
+import { row_for_long_term_plan } from "../../types/type_for_plan_maker";
 
-interface CardProps {
-  title: string;
-  description: string;
-  writer: string;
-}
-
-
-const PlanCard: React.FC<CardProps> = ({ title, description, writer }) => {
+const PlanCard: React.FC<row_for_long_term_plan> = ({
+  pk,
+  title,
+  category,
+  description,
+  writer,
+  created_at,
+}) => {
   const [showDetails, setShowDetails] = useState(false);
   const backgroundColor = useColorModeValue("gray.100", "gray.700");
   const borderColor = useColorModeValue("gray.200", "gray.600");
@@ -24,7 +25,7 @@ const PlanCard: React.FC<CardProps> = ({ title, description, writer }) => {
     "gray.50",
     "blue.500",
     "purple.500",
-    "teal.500"
+    "teal.500",
   ]);
 
   return (
@@ -47,13 +48,13 @@ const PlanCard: React.FC<CardProps> = ({ title, description, writer }) => {
       />
 
       <Heading size="md" mb={2} color={titleColor}>
-        {title}
+        {category}
       </Heading>
       <Text mb={2} color={bodyColor}>
-        {description}
+        {title}
       </Text>
       <Text fontWeight="bold" color={footerColor}>
-        Written by {writer}
+        Written by {writer.username}
       </Text>
 
       {!showDetails && (
@@ -64,12 +65,7 @@ const PlanCard: React.FC<CardProps> = ({ title, description, writer }) => {
 
       {showDetails && (
         <Box mt={4}>
-          <Text mb={2}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel
-            tellus at nisi volutpat lobortis. Donec ac tristique nibh. Morbi
-            bibendum, ex sed commodo lacinia, augue sapien pretium nisi, nec
-            consectetur turpis mi vel erat.
-          </Text>
+          <Text mb={2}>{description}</Text>
           <Button onClick={() => setShowDetails(false)}>Hide details</Button>
         </Box>
       )}

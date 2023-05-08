@@ -32,6 +32,7 @@ import { Shortcut, ShortcutsResponse } from "../../types/type_for_shortcut";
 import PaginationComponent from "../PaginationComponent";
 import ModalButtonForShowShortcut from "../modal/modalButtonForShowShortcut";
 
+
 const favorite_color = ["blue", "red", "orange", "red", "purple"];
 
 // 1122
