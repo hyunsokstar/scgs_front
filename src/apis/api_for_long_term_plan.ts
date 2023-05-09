@@ -26,6 +26,18 @@ export const api_for_get_long_term_plan_list = async ({
   });
 };
 
+// 1122
+export const getContentsListForPlan = async ({ queryKey }: QueryFunctionContext) => {
+  const [_, plan_pk] = queryKey;
+  // console.log("roomPestimatePk : ", taskPk);
+  return await instance
+    .get(`plan-maker/${plan_pk}/contents`)
+    .then((response) => response.data);
+};
+
+
+
+
 export const apiForCreatePlan = ({
   title,
   description,

@@ -11,16 +11,20 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { MdClose } from "react-icons/md";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
+
+//
 import GanttChartForLongTermPlan from "../Chart/GanttChartForLongTermPlan";
+import { getContentsListForPlan } from "../../apis/api_for_long_term_plan";
 
 type ModalButtonProps = {
   modal_text: string;
-  plan_pk: number;  
+  plan_pk: number;
 };
 
 const ModalButtonForPlanContents: React.FC<ModalButtonProps> = ({
   modal_text,
-  plan_pk
+  plan_pk,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modal_title, setModalTitle] = useState("Modal Title");
@@ -28,6 +32,18 @@ const ModalButtonForPlanContents: React.FC<ModalButtonProps> = ({
   const handleButtonClick = () => {
     onOpen();
   };
+
+  // plan_pk
+  const {
+    data: dataForPlanContents,
+    isLoading: isLoadingForPlanContents,
+    refetch: refetchForPlanContents,
+  } = useQuery<any>(
+    ["getContentsListForPlan", plan_pk, "getContentsListForPlan"],
+    getContentsListForPlan
+  );
+
+  console.log("dataForPlanContents : ", dataForPlanContents);
 
   return (
     <Box>
