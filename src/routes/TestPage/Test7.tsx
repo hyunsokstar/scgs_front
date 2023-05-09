@@ -11,8 +11,8 @@ const rows = [
   { id: 1, title: 'Demo' }
 ];
 
-function App() {
+function Test7() {
   return <DataGrid columns={columns} rows={rows} />;
 }
 
-export default App;
+export default Test7;

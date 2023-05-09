@@ -16,6 +16,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; /
 //
 import GanttChartForLongTermPlan from "../Chart/GanttChartForLongTermPlan";
 import { getContentsListForPlan } from "../../apis/api_for_long_term_plan";
+import { LongTermPlanContentList } from "../../types/type_for_plan_maker";
 
 type ModalButtonProps = {
   modal_text: string;
@@ -38,11 +39,12 @@ const ModalButtonForPlanContents: React.FC<ModalButtonProps> = ({
     data: dataForPlanContents,
     isLoading: isLoadingForPlanContents,
     refetch: refetchForPlanContents,
-  } = useQuery<any>(
+  } = useQuery<LongTermPlanContentList>(
     ["getContentsListForPlan", plan_pk, "getContentsListForPlan"],
     getContentsListForPlan
   );
 
+  console.log("plan_pk : ", plan_pk);
   console.log("dataForPlanContents : ", dataForPlanContents);
 
   return (

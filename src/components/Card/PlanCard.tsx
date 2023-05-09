@@ -7,12 +7,13 @@ import {
   Text,
   useColorModeValue,
   useToken,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import { row_for_long_term_plan } from "../../types/type_for_plan_maker";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFordeleteOnePlan } from "../../apis/api_for_long_term_plan";
 import ModalButtonForPlanContents from "../modal/modalButtonForPlanContents";
+import MoModalContenModalButtonForGridTableForPlanContents from "../modal/MoModalContenModalButtonForGridTableForPlanContents";
 
 // 1122
 const PlanCard: React.FC<row_for_long_term_plan> = ({
@@ -32,13 +33,12 @@ const PlanCard: React.FC<row_for_long_term_plan> = ({
     "purple.500",
     "teal.500",
   ]);
-  
+
   const toast = useToast();
   const queryClient = useQueryClient();
 
-
   const mutationForDeleteOnePlan = useMutation(
-    (plan_pk:number) => {
+    (plan_pk: number) => {
       return apiFordeleteOnePlan(plan_pk);
     },
     {
@@ -60,6 +60,8 @@ const PlanCard: React.FC<row_for_long_term_plan> = ({
   const deletePlanHandler = (plan_pk: number) => {
     mutationForDeleteOnePlan.mutate(plan_pk);
   };
+
+  console.log("pk : ", pk);
 
   // 2244
   return (
@@ -92,9 +94,14 @@ const PlanCard: React.FC<row_for_long_term_plan> = ({
         Written by {writer.username}
       </Text>
 
-      <ModalButtonForPlanContents plan_pk = {pk} modal_text={"계획표 보기"} />
+      <Box display={"flex"} justifyContent={"flex-start"} gap={2} mt={2}>
+        <MoModalContenModalButtonForGridTableForPlanContents
+          button_text={"일정 테이블"}
+        />
+        <ModalButtonForPlanContents plan_pk={pk} modal_text={"계획표 보기"} />
+      </Box>
 
-      {!showDetails && (
+      {/* {!showDetails && (
         <Button mt={4} onClick={() => setShowDetails(true)}>
           Show Plans
         </Button>
@@ -105,7 +112,7 @@ const PlanCard: React.FC<row_for_long_term_plan> = ({
           <Text mb={2}>{description}</Text>
           <Button onClick={() => setShowDetails(false)}>Hide details</Button>
         </Box>
-      )}
+      )} */}
     </Box>
   );
 };
