@@ -96,6 +96,7 @@ const PlanCard: React.FC<row_for_long_term_plan> = ({
 
       <Box display={"flex"} justifyContent={"flex-start"} gap={2} mt={2}>
         <MoModalContenModalButtonForGridTableForPlanContents
+          plan_pk={pk}
           button_text={"일정 테이블"}
         />
         <ModalButtonForPlanContents plan_pk={pk} modal_text={"계획표 보기"} />

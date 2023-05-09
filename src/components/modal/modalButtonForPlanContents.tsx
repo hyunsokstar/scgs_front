@@ -30,6 +30,7 @@ const ModalButtonForPlanContents: React.FC<ModalButtonProps> = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modal_title, setModalTitle] = useState("Modal Title");
 
+  
   const handleButtonClick = () => {
     onOpen();
   };

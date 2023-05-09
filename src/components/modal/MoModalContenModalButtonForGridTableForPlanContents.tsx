@@ -13,15 +13,32 @@ import {
   Box,
 } from "@chakra-ui/react";
 import GridTableForPlanContents from "../GridTable/GridTableForPlanContents";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
+import { getContentsListForPlan } from "../../apis/api_for_long_term_plan";
+import { LongTermPlanContentList } from "../../types/type_for_plan_maker";
 
 interface IProps {
   button_text: string;
+  plan_pk: number;
 }
 
 const ModalButtonForGridTableForPlanContents = ({
   button_text,
+  plan_pk,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // plan_pk
+  const {
+    data: dataForPlanContents,
+    isLoading: isLoadingForPlanContents,
+    refetch: refetchForPlanContents,
+  } = useQuery<LongTermPlanContentList>(
+    ["getContentsListForPlan", plan_pk, "getContentsListForPlan"],
+    getContentsListForPlan
+  );
+
+  console.log("dataForPlanContents for gird table : ", dataForPlanContents);
 
   const headerBgColor = "pastelBlue";
   const bodyBgColor = "pastelGreen";
@@ -44,7 +61,9 @@ const ModalButtonForGridTableForPlanContents = ({
             variant="outline"
           />
           <ModalBody bg={bodyBgColor}>
-            <GridTableForPlanContents />
+            <GridTableForPlanContents
+              dataForPlanContents={dataForPlanContents}
+            />
           </ModalBody>
           <ModalFooter bg={footerBgColor}>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
