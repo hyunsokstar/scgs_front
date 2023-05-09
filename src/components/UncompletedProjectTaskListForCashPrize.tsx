@@ -44,7 +44,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   ] = useState("all");
 
   const [username_for_search, set_username_for_search] = useState<string>();
-  const [task_status_for_search, set_task_status_for_search] = useState<string>("");
+  const [task_status_for_search, set_task_status_for_search] =
+    useState<string>("");
 
   const {
     isLoading,
@@ -311,6 +312,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
+            button_text="task 추가"
             projectTaskListRefatch={projectTaskListRefatch}
           />
         </Box>

@@ -13,8 +13,6 @@ import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskFor
 
 interface Props {}
 
-
-
 // 1122
 function UncompletedProjectTaskListForMe({}: Props): ReactElement {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
@@ -31,7 +29,12 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
     data: taskListDataForMe,
     refetch: projectTaskListRefatch,
   } = useQuery<ITypeForProjectProgressList>(
-    ["getUncompletedTaskListForMe", currentPageNum, task_status_for_search, due_date_option_for_filtering],
+    [
+      "getUncompletedTaskListForMe",
+      currentPageNum,
+      task_status_for_search,
+      due_date_option_for_filtering,
+    ],
     getUncompletedTaskListForMe,
     {
       enabled: true,
@@ -91,7 +94,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
         <Box>
           마감 기한:
           <Box display={"flex"} gap={2}>
-          <ButtonForFilteringTaskForDueDate
+            <ButtonForFilteringTaskForDueDate
               button_text="미정"
               due_date_option="undecided"
               due_date_option_for_filtering={due_date_option_for_filtering}
@@ -157,6 +160,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
 
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
+            button_text="task 추가"
             projectTaskListRefatch={projectTaskListRefatch}
           />
         </Box>

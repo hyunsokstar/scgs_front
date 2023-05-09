@@ -61,9 +61,13 @@ const ModalButtonForGridTableForPlanContents = ({
             variant="outline"
           />
           <ModalBody bg={bodyBgColor}>
-            <GridTableForPlanContents
-              dataForPlanContents={dataForPlanContents}
-            />
+            {dataForPlanContents ? (
+              <GridTableForPlanContents
+                dataForPlanContents={dataForPlanContents}
+              />
+            ) : (
+              "no data"
+            )}
           </ModalBody>
           <ModalFooter bg={footerBgColor}>
             <Button colorScheme="blue" mr={3} onClick={onClose}>

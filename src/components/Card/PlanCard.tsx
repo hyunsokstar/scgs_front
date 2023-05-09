@@ -99,6 +99,7 @@ const PlanCard: React.FC<row_for_long_term_plan> = ({
           plan_pk={pk}
           button_text={"일정 테이블"}
         />
+        
         <ModalButtonForPlanContents plan_pk={pk} modal_text={"계획표 보기"} />
       </Box>
 

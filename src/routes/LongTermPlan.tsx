@@ -36,10 +36,6 @@ const LongTermPlan = (props: Props) => {
     console.log("계획 추가 버튼 클릭");
   };
 
-  if (!data_for_long_term_plan) {
-    return "no data";
-  }
-
   return (
     <Box
       border={"1px solid purple"}
@@ -55,10 +51,14 @@ const LongTermPlan = (props: Props) => {
         )}
       </Box>
 
-      <PlanCardContainer
-        topic={"계획 목록"}
-        cardDataArray={data_for_long_term_plan}
-      />
+      {data_for_long_term_plan ? (
+        <PlanCardContainer
+          topic={"계획 목록"}
+          cardDataArray={data_for_long_term_plan}
+        />
+      ) : (
+        ""
+      )}
     </Box>
   );
 };

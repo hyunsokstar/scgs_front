@@ -305,7 +305,7 @@ const TableForShortCut = () => {
       <Box maxW="100%" bg="blue.100" color="red.500" mt={2}>
         <PaginationComponent
           current_page_num={currentPageNum}
-          task_number_for_one_page={data_for_shortcut.task_number_for_one_page}
+          // task_number_for_one_page={data_for_shortcut.task_number_for_one_page}
           total_page_num={data_for_shortcut.totalCount}
           setCurrentPageNum={setCurrentPageNum}
         />

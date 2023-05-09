@@ -30,7 +30,6 @@ const ModalButtonForPlanContents: React.FC<ModalButtonProps> = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modal_title, setModalTitle] = useState("Modal Title");
 
-  
   const handleButtonClick = () => {
     onOpen();
   };
@@ -82,7 +81,13 @@ const ModalButtonForPlanContents: React.FC<ModalButtonProps> = ({
             color="gray.800"
           >
             모달 contents for {plan_pk}
-            {/* <GanttChartForLongTermPlan /> */}
+            {dataForPlanContents ? (
+              <GanttChartForLongTermPlan
+                dataForPlanContents={dataForPlanContents}
+              />
+            ) : (
+              "no data"
+            )}
           </ModalBody>
           <ModalFooter
             borderTop="1px solid"

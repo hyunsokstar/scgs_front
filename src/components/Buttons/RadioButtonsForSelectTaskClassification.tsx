@@ -33,7 +33,7 @@ export function RadioButtonsForSelectTaskClassification({
   selectedClassification,
   setSelectedClassification,
 }: RadioButtonsForSelectTaskClassificationProps) {
-  const handleClassificationChange = (e: string) => {
+  const handleClassificationChange = (e: any) => {
     console.log("e : ", e);
     setSelectedClassification(e);
   };
