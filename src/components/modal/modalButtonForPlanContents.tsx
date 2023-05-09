@@ -15,10 +15,12 @@ import GanttChartForLongTermPlan from "../Chart/GanttChartForLongTermPlan";
 
 type ModalButtonProps = {
   modal_text: string;
+  plan_pk: number;  
 };
 
 const ModalButtonForPlanContents: React.FC<ModalButtonProps> = ({
   modal_text,
+  plan_pk
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modal_title, setModalTitle] = useState("Modal Title");
@@ -60,7 +62,8 @@ const ModalButtonForPlanContents: React.FC<ModalButtonProps> = ({
             bg="pink.100"
             color="gray.800"
           >
-            <GanttChartForLongTermPlan />
+            모달 contents for {plan_pk}
+            {/* <GanttChartForLongTermPlan /> */}
           </ModalBody>
           <ModalFooter
             borderTop="1px solid"

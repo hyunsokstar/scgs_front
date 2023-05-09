@@ -92,7 +92,7 @@ const PlanCard: React.FC<row_for_long_term_plan> = ({
         Written by {writer.username}
       </Text>
 
-      <ModalButtonForPlanContents modal_text={"계획표 보기"} />
+      <ModalButtonForPlanContents plan_pk = {pk} modal_text={"계획표 보기"} />
 
       {!showDetails && (
         <Button mt={4} onClick={() => setShowDetails(true)}>
