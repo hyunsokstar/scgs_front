@@ -33,5 +33,6 @@ export type LongTermPlanContent = {
   displayOrder: number;
   project: number | null;
   dependencies: string;
+  selected?: boolean;
 };
 export type LongTermPlanContentList = LongTermPlanContent[];

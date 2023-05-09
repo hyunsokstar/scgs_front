@@ -39,21 +39,10 @@ const checkboxFormatter = ({ row, column, onRowChange, onClose }: any) => {
       checked={row.selected}
       onChange={(e) => {
         const checked = e.target.checked;
-        onRowChange({ ...row, selected: checked });
-      }}
-    />
-  );
-};
+        const new_row = { ...row, selected: checked };
+        console.log("new_row : ", new_row);
 
-const checkboxFormatter2 = ({ row, column, onRowChange, onClose }: any) => {
-  return (
-    <input
-      type="checkbox"
-      value={row.id}
-      checked={row.selected}
-      onChange={(e) => {
-        // const checked = e.target.checked;
-        // onRowChange({ ...row, selected: checked });
+        onRowChange({ ...row, selected: checked });
       }}
     />
   );
@@ -64,20 +53,14 @@ const checkboxFormatter2 = ({ row, column, onRowChange, onClose }: any) => {
 const columns = [
   {
     key: "checkbox",
-    name: "",
+    name: "checkbox",
     width: 20,
-    resizable: false,
-    sortable: false,
     formatter: checkboxFormatter,
     headerRenderer: ({ column }: any) => (
-      <input
-        type="checkbox"
-        // checked={column.allCheckBoxSelected}
-        onClick={column.allCheckHandler}
-        // column={column}
-        // isCellSelected={() => false}
-      />
+      <input type="checkbox" onClick={column.allCheckHandler} />
     ),
+    // resizable: false,
+    // sortable: false,
   },
   { key: "name", name: "Name", editor: TextEditor, editable: true },
   { key: "username", name: "Username", editor: TextEditor, editable: true },
@@ -88,7 +71,6 @@ const columns = [
     // rome-ignore lint/suspicious/noExplicitAny: <explanation>
     formatter: ({ row, column }: any) => {
       // console.log("row : ", row);
-
       // console.log("column : ", column);
 
       return (
@@ -105,8 +87,6 @@ const columns = [
           />
           {column.user && row.username === column.user.username ? (
             <ModalForUserProfileImageUpdate
-              // userPk={row.pk}
-              // profile_image={row.profile_image}
               loginUser={column.user}
             />
           ) : (
@@ -120,7 +100,7 @@ const columns = [
   {
     key: "position",
     name: "Position",
-    editor: SelectBoxEditor
+    editor: SelectBoxEditor,
     // rome-ignore lint/suspicious/noExplicitAny: <explanation>
     // formatter: ({ row, column }: any) => {
     //   return (
@@ -132,12 +112,10 @@ const columns = [
     //         : "backend"} */}
     //         {row.position.position_name}
     //     </Box>
-      // );
-    },
+    // );
+  },
   // },
 ];
-
-const position_names = ["사원", "대리", "과장", "부장", "사장", "회장"];
 
 // 1122
 function UsersByDataGridPage({}: Props): ReactElement {
@@ -294,30 +272,29 @@ function UsersByDataGridPage({}: Props): ReactElement {
           return row;
         }
       });
-      setGridRows(no_selected_rows)
+      setGridRows(no_selected_rows);
     }
 
     console.log("삭제 버튼 클릭");
   };
 
-  const allCheckHandler = (column:any) => {
-    console.log("hi");
+  const allCheckHandler = (column: any) => {
+    console.log("column.target.checked : ", column.target.checked);
 
     const new_grid_rows = gridRows?.map((row) => {
-
-
-      if (!column.target.checked) {
-        return {
-          ...row,
-          selected: false,
-        };
-      } else {
+      if (column.target.checked === true) {
         return {
           ...row,
           selected: true,
         };
+      } else {
+        return {
+          ...row,
+          selected: false,
+        };
       }
     });
+
     setGridRows(new_grid_rows);
   };
 
@@ -537,13 +514,11 @@ function UsersByDataGridPage({}: Props): ReactElement {
 
         <Box>
           <DataGrid
-            // columns={columns}
             columns={columns.map((col) => ({
               ...col,
               isLoggedIn,
               user,
               allCheckHandler,
-              allCheckBoxSelected,
             }))}
             rows={gridRows}
             rowKeyGetter={rowKeyGetter}
