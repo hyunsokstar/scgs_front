@@ -28,11 +28,10 @@ export type LongTermPlanContent = {
   end: string;
   name: string;
   progress: number;
-  type: "project" | "task" | "milestone";
-  hideChildren: boolean;
   displayOrder: number;
-  project: number | null;
   dependencies: string;
   selected?: boolean;
 };
 export type LongTermPlanContentList = LongTermPlanContent[];
+
+

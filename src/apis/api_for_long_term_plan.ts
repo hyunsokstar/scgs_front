@@ -5,6 +5,7 @@ import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import {} from "../types/api_docu_type";
 import {
+  LongTermPlanContentList,
   formTypeForCreatePlan,
   list_for_long_term_plan,
 } from "../types/type_for_plan_maker";
@@ -14,6 +15,27 @@ const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
   withCredentials: true,
 });
+// 1122
+
+export const apiForUpdatePlanContentsForChecked = (
+  checkedRowsForUpdate:LongTermPlanContentList,
+) => {
+  console.log("checkedRowsForUpdate: ", checkedRowsForUpdate);
+
+  return instance
+    .put(
+      "plan-maker/update-plan-contents-for-checked",
+      {
+        checkedRowsForUpdate,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
 
 export const api_for_get_long_term_plan_list = async ({
   queryKey,
@@ -27,7 +49,9 @@ export const api_for_get_long_term_plan_list = async ({
 };
 
 // 1122
-export const getContentsListForPlan = async ({ queryKey }: QueryFunctionContext) => {
+export const getContentsListForPlan = async ({
+  queryKey,
+}: QueryFunctionContext) => {
   const [_, plan_pk] = queryKey;
   // console.log("roomPestimatePk : ", taskPk);
   return await instance
@@ -35,15 +59,11 @@ export const getContentsListForPlan = async ({ queryKey }: QueryFunctionContext)
     .then((response) => response.data);
 };
 
-
-
-
 export const apiForCreatePlan = ({
   title,
   description,
   category,
 }: formTypeForCreatePlan) => {
-
   console.log("category : ", category);
 
   return instance
@@ -61,7 +81,7 @@ export const apiForCreatePlan = ({
       }
     )
     .then((response) => response.data);
-}
+};
 
 export const apiFordeleteOnePlan = (plan_pk: number) => {
   console.log("plan_pk : ", plan_pk);
