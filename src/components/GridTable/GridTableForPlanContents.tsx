@@ -50,7 +50,6 @@ const GridTableForPlanContents = ({ plan_pk, dataForPlanContents }: Props) => {
   const toast = useToast();
 
   console.log("plan_pk : ", plan_pk);
-  
 
   const [gridRows, setGridRows] =
     useState<LongTermPlanContentList>(dataForPlanContents);
@@ -114,11 +113,47 @@ const GridTableForPlanContents = ({ plan_pk, dataForPlanContents }: Props) => {
     }
   );
 
+  const validateData = (data: LongTermPlanContent[]) => {
+    const requiredFields = ["start", "end", "name", "progress", "displayOrder"];
+    const invalidRows = data.filter((row) => {
+      for (const field of requiredFields) {
+        if (!row[field]) {
+          return true;
+        }
+      }
+      return false;
+    });
+  
+    console.log("invalidRows : ", invalidRows);
+  
+    if (invalidRows.length) {
+      const invalidIds = invalidRows.map((row) => {
+        if(row.id !== undefined){
+          return row.id
+        } else {
+          return ""
+        }
+      });
+      const message = invalidIds.includes("") 
+        ? "One or more required fields in a newly added row are missing"
+        : `The following rows are missing required fields: ${invalidIds.join(", ")}`;
+      alert(message);
+      return false;
+    }
+    return true;
+  };
+
   // save 버튼 누르면 체크된 내용 db 에서도 update
   const saveHandler = () => {
-    const data_for_save = gridRows.filter((row) => row.selected);
-    console.log("data_for_save : ", data_for_save);
-    mutationForUpdatePlanContentsForChecked.mutate(data_for_save);
+    const data = gridRows.filter((row) => row.selected);
+
+    const result = validateData(data);
+    // alert(result);
+
+    if (result) {
+      // console.log("data_for_save : ", data);
+      mutationForUpdatePlanContentsForChecked.mutate(data);
+    }
   };
 
   return (

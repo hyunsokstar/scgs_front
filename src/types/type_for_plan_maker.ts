@@ -10,7 +10,7 @@ export type row_for_long_term_plan = {
   description: string;
   category: "project" | "study";
   writer: Writer;
-  created_at: string; // ISO 8601 format
+  created_at?: string; // ISO 8601 format
 };
 
 export type list_for_long_term_plan = row_for_long_term_plan[];
@@ -23,14 +23,15 @@ export interface formTypeForCreatePlan {
 
 export type LongTermPlanContent = {
   id: number;
-  long_term_plan: number;
   start: string;
   end: string;
   name: string;
   progress: number;
   displayOrder: number;
-  dependencies: string;
+  dependencies?: string;
+  long_term_plan?: number;
   selected?: boolean;
+  [key: string]: any; // 인덱스 서명 추가
 };
 export type LongTermPlanContentList = LongTermPlanContent[];
 
