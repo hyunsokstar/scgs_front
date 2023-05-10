@@ -123,20 +123,22 @@ const GridTableForPlanContents = ({ plan_pk, dataForPlanContents }: Props) => {
       }
       return false;
     });
-  
+
     console.log("invalidRows : ", invalidRows);
-  
+
     if (invalidRows.length) {
       const invalidIds = invalidRows.map((row) => {
-        if(row.id !== undefined){
-          return row.id
+        if (row.id !== undefined) {
+          return row.id;
         } else {
-          return ""
+          return "";
         }
       });
-      const message = invalidIds.includes("") 
+      const message = invalidIds.includes("")
         ? "One or more required fields in a newly added row are missing"
-        : `The following rows are missing required fields: ${invalidIds.join(", ")}`;
+        : `The following rows are missing required fields: ${invalidIds.join(
+            ", "
+          )}`;
       alert(message);
       return false;
     }
