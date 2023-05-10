@@ -1,9 +1,8 @@
 import React, { ReactElement, useState } from "react";
-import { Box, Input } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { Column, Row } from "react-data-grid";
-import moment from "moment";
-import Datetime from "react-datetime";
-import "react-datetime/css/react-datetime.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 // type Props = {
 //   row: Row<any>;
@@ -18,22 +17,27 @@ function DateEditor({
   onRowChange,
   onClose,
 }: any): ReactElement {
-  const [value, setValue] = useState(row[column.key]);
+  const [value, setValue] = useState(new Date(row[column.key]));
 
-  const handleChange = (date: any) => {
-    const momentDate = moment(date);
-    setValue(momentDate);
-    onRowChange({ ...row, [column.key]: momentDate.format("YYYY-MM-DD"), selected: true });
+  const handleChange = (date: Date | null) => {
+    if (date) {
+      setValue(date);
+      onRowChange({
+        ...row,
+        [column.key]: date.toISOString().substring(0, 10),
+        selected: true,
+      });
+    }
   };
 
   return (
     <Box height={"100%"} border={"1px solid blue"}>
-      <Datetime
-        value={value}
-        dateFormat={"YYYY-MM-DD"}
-        timeFormat={false}
+      <DatePicker
+        selected={value}
+        dateFormat={"yyyy-MM-dd"}
         onChange={handleChange}
-        inputProps={{ placeholder: `${column.key}`, onBlur: () => onClose(true), autoFocus: true }}
+        onBlur={() => onClose(true)}
+        autoFocus
       />
     </Box>
   );
