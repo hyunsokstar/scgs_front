@@ -53,7 +53,7 @@ const ModalButtonForGridTableForPlanContents = ({
       <Modal isOpen={isOpen} size={"7xl"} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader bg={headerBgColor}>Modal Header</ModalHeader>
+          <ModalHeader bg={headerBgColor}>일정 테이블</ModalHeader>
           <ModalCloseButton
             bg={closeBtnBgColor}
             _hover={{ bg: closeBtnHoverBgColor }}
@@ -61,6 +61,7 @@ const ModalButtonForGridTableForPlanContents = ({
             variant="outline"
           />
           <ModalBody bg={bodyBgColor}>
+
             {dataForPlanContents ? (
               <GridTableForPlanContents
                 dataForPlanContents={dataForPlanContents}

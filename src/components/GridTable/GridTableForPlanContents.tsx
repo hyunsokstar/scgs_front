@@ -7,6 +7,7 @@ import {
 } from "../../types/type_for_plan_maker";
 import CheckBoxForGrid from "./Formatter/CheckBoxForGrid";
 import styles from "./css/table_for_contents.module.css";
+import { Box, Button } from "@chakra-ui/react";
 
 const columns = [
   {
@@ -19,15 +20,11 @@ const columns = [
     ),
   },
   { key: "id", name: "ID" },
-  { key: "long_term_plan", name: "Long Term Plan" },
+  { key: "name", name: "Name" },
   { key: "start", name: "Start" },
   { key: "end", name: "End" },
-  { key: "name", name: "Name" },
   { key: "progress", name: "Progress" },
-  { key: "type", name: "Type" },
-  { key: "hideChildren", name: "Hide Children" },
   { key: "displayOrder", name: "Display Order" },
-  { key: "project", name: "Project" },
   { key: "dependencies", name: "Dependencies" },
 ];
 
@@ -58,26 +55,55 @@ const GridTableForPlanContents = ({ dataForPlanContents }: Props) => {
     setGridRows(new_grid_rows);
   };
 
+  const addEmptyRow = () => {
+    const newRow: any = {
+      start: '',
+      end: '',
+      name: '',
+      dependencies: '',
+      selected: false,
+    };
+
+    setGridRows((prevRows) => [...prevRows, newRow]);
+  };
+
   return (
-    <DataGrid
-      columns={columns.map((column) => ({
-        ...column,
-        allCheckHandler,
-      }))}
-      rows={gridRows}
-      onRowsChange={(rows: LongTermPlanContentList) => {
-        // console.log("changed rows : ", rows);
-        setGridRows(rows);
-      }}
-      rowClass={(row: LongTermPlanContent) => {
-        if (row.selected) {
-          // console.log("row : ", row);
-          return styles.selected;
-        } else {
-          return "";
-        }
-      }}
-    />
+    <Box border={"1px solid black"}>
+      <Box textAlign={"right"} >
+        <Button
+          variant="outline"
+          size="md"
+          borderColor="black"
+          _hover={{ backgroundColor: "gray.100" }}
+          m={2}
+          onClick={addEmptyRow} // Add onClick event handler here
+        >
+          일정 추가
+        </Button>{" "}
+      </Box>
+
+      <Box>
+        <DataGrid
+          columns={columns.map((column) => ({
+            ...column,
+            allCheckHandler,
+          }))}
+          rows={gridRows}
+          onRowsChange={(rows: LongTermPlanContentList) => {
+            // console.log("changed rows : ", rows);
+            setGridRows(rows);
+          }}
+          rowClass={(row: LongTermPlanContent) => {
+            if (row.selected) {
+              // console.log("row : ", row);
+              return styles.selected;
+            } else {
+              return "";
+            }
+          }}
+        />
+      </Box>
+    </Box>
   );
 };
 
