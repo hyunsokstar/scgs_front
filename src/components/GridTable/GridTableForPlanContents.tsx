@@ -9,10 +9,14 @@ import CheckBoxForGrid from "./Formatter/CheckBoxForGrid";
 import styles from "./css/table_for_contents.module.css";
 import { Box, Button, useToast } from "@chakra-ui/react";
 import TextEditor from "../Editor/textEditor";
-import { apiForUpdatePlanContentsForChecked } from "../../apis/api_for_long_term_plan";
+import {
+  apiForUpdatePlanContentsForChecked,
+  apiFordeletePlanContentsForChecked,
+} from "../../apis/api_for_long_term_plan";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import DateEditor from "../Editor/DateEditor";
 import dayjs from "dayjs";
+import { log } from "console";
 
 const columns = [
   {
@@ -158,6 +162,46 @@ const GridTableForPlanContents = ({ plan_pk, dataForPlanContents }: Props) => {
     }
   };
 
+  const mutationForPlanContentsForChecked = useMutation(
+    (idsForDeleteContentsForChecked: number[]) => {
+      return apiFordeletePlanContentsForChecked(idsForDeleteContentsForChecked);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        // refetch_for_api_docu();
+        queryClient.refetchQueries(["getContentsListForPlan"]);
+
+        toast({
+          title: "delete note contnet for checked 성공!",
+          status: "success",
+          description: data.message,
+        });
+      },
+    }
+  );
+
+  const deleteHandler = () => {
+    const idsForDeleteContentsForChecked = gridRows
+      .filter((row) => row.selected) // row.selected가 true인 것만 필터링
+      .map((row) => row.id); // 요소로 row.id만 추출하여 배열로 만듦
+
+    console.log(
+      "idsForDeleteContentsForChecked : ",
+      idsForDeleteContentsForChecked
+    );
+
+    console.log(
+      "idsForDeleteContentsForChecked : ",
+      idsForDeleteContentsForChecked
+    );
+
+    mutationForPlanContentsForChecked.mutate(idsForDeleteContentsForChecked);
+  };
+
   return (
     <Box border={"1px solid black"}>
       <Box textAlign={"right"}>
@@ -180,6 +224,16 @@ const GridTableForPlanContents = ({ plan_pk, dataForPlanContents }: Props) => {
           onClick={saveHandler} // Add onClick event handler here
         >
           save
+        </Button>{" "}
+        <Button
+          variant="outline"
+          size="md"
+          borderColor="black"
+          _hover={{ backgroundColor: "gray.100" }}
+          m={2}
+          onClick={deleteHandler} // Add onClick event handler here
+        >
+          delete
         </Button>{" "}
       </Box>
 

@@ -17,6 +17,21 @@ const instance = axios.create({
 });
 // 1122
 
+export const apiFordeletePlanContentsForChecked = (
+  idsForDeleteContentsForChecked: number[]
+) => {
+  console.log("study_note_pk , idsForDeleteContentsForChecked : ", idsForDeleteContentsForChecked);
+
+  return instance
+    .delete("plan-maker/contents/delete-for-checked", {
+      data: idsForDeleteContentsForChecked, // [1,2,3,5]
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForUpdatePlanContentsForChecked = (
   checkedRowsForUpdate:LongTermPlanContentList,
 ) => {

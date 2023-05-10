@@ -73,7 +73,7 @@ const PlanCardContainer = ({ topic, cardDataArray }: Props) => {
       </Box>
       <Box
         display={"flex"}
-        justifyContent={"space-between"}
+        justifyContent={"flex-start"}
         border={"1px solid green"}
         flexWrap={"wrap"}
         width={"92%"}
