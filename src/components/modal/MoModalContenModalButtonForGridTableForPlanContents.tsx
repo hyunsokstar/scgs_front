@@ -56,14 +56,14 @@ const ModalButtonForGridTableForPlanContents = ({
           <ModalHeader bg={headerBgColor}>일정 테이블</ModalHeader>
           <ModalCloseButton
             bg={closeBtnBgColor}
-            _hover={{ bg: closeBtnHoverBgColor }}
+            _hover={{ bg: "lightblue" }}
             border="1px solid black"
             variant="outline"
           />
           <ModalBody bg={bodyBgColor}>
-
             {dataForPlanContents ? (
               <GridTableForPlanContents
+                plan_pk={plan_pk}
                 dataForPlanContents={dataForPlanContents}
               />
             ) : (
@@ -74,7 +74,6 @@ const ModalButtonForGridTableForPlanContents = ({
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

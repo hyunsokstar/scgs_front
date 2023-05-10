@@ -103,9 +103,9 @@ const ModalButtonForPlanContents: React.FC<ModalButtonProps> = ({
             >
               Close
             </Button>
-            <Button colorScheme="blue" onClick={onClose}>
+            {/* <Button colorScheme="blue" onClick={onClose}>
               Save
-            </Button>
+            </Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>

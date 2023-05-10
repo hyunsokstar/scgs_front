@@ -11,6 +11,8 @@ import { Box, Button, useToast } from "@chakra-ui/react";
 import TextEditor from "../Editor/textEditor";
 import { apiForUpdatePlanContentsForChecked } from "../../apis/api_for_long_term_plan";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import DateEditor from "../Editor/DateEditor";
+import dayjs from "dayjs";
 
 const columns = [
   {
@@ -23,21 +25,32 @@ const columns = [
     ),
   },
   { key: "id", name: "ID" },
+  // { key: "long_term_plan", name: "Long Term Plan" },
   { key: "name", name: "Name", editor: TextEditor, editable: true },
-  { key: "start", name: "Start" },
-  { key: "end", name: "End" },
-  { key: "progress", name: "Progress" },
-  { key: "displayOrder", name: "Display Order" },
+  { key: "start", name: "Start", editor: DateEditor, editable: true },
+  { key: "end", name: "End", editor: DateEditor, editable: true },
+  { key: "progress", name: "Progress", editor: TextEditor, editable: true },
+  {
+    key: "displayOrder",
+    name: "Display Order",
+    editor: TextEditor,
+    editable: true,
+  },
   { key: "dependencies", name: "Dependencies" },
 ];
 
-// LongTermPlanContentList
-type Props = { dataForPlanContents: LongTermPlanContentList };
+interface Props {
+  plan_pk: number;
+  dataForPlanContents: LongTermPlanContentList;
+}
 
 // 1122
-const GridTableForPlanContents = ({ dataForPlanContents }: Props) => {
+const GridTableForPlanContents = ({ plan_pk, dataForPlanContents }: Props) => {
   const queryClient = useQueryClient();
   const toast = useToast();
+
+  console.log("plan_pk : ", plan_pk);
+  
 
   const [gridRows, setGridRows] =
     useState<LongTermPlanContentList>(dataForPlanContents);
@@ -62,10 +75,13 @@ const GridTableForPlanContents = ({ dataForPlanContents }: Props) => {
     setGridRows(new_grid_rows);
   };
 
+  const today = dayjs().format("YYYY-MM-DD");
+
   const addEmptyRow = () => {
     const newRow: any = {
-      start: "",
-      end: "",
+      long_term_plan: plan_pk,
+      start: today,
+      end: today,
       name: "",
       dependencies: "",
       selected: false,
@@ -100,8 +116,7 @@ const GridTableForPlanContents = ({ dataForPlanContents }: Props) => {
 
   // save 버튼 누르면 체크된 내용 db 에서도 update
   const saveHandler = () => {
-    const data_for_save = gridRows
-    .filter((row) => row.selected)
+    const data_for_save = gridRows.filter((row) => row.selected);
     console.log("data_for_save : ", data_for_save);
     mutationForUpdatePlanContentsForChecked.mutate(data_for_save);
   };
