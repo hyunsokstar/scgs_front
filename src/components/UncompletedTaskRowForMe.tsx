@@ -3,20 +3,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   List,
   ListItem,
-  ListIcon,
-  Flex,
   Checkbox,
   Text,
   useColorModeValue,
-  Container,
-  Grid,
-  GridItem,
   Box,
   IconButton,
   HStack,
-  VStack,
   useToast,
-  Icon,
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
@@ -280,7 +273,7 @@ function UncompletedTaskRowForMe({
 
                     <Box
                       border={"0px solid blue"}
-                      width={"200px"}
+                      width={"240px"}
                       display={"flex"}
                       justifyContent={"flex-start"}
                       alignItems={"center"}
@@ -325,7 +318,7 @@ function UncompletedTaskRowForMe({
                         />
                       </HStack>
                     </Box>
-                    <Box border={"0px solid blue"} width={"200px"}>
+                    <Box border={"0px solid blue"} width={"260px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>경과</Text>

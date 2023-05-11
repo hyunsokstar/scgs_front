@@ -149,7 +149,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = event.target.value;
-    setFilterValueForTaskClassification(value);
+    // setFilterValueForTaskClassification(value);
     updateFilteredDataForTaskManager(value);
   };
 
