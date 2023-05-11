@@ -324,6 +324,7 @@ export interface typeForParameterForUpdateTaskClassificationForChecked {
 
 export interface typeForDueDateUpdateForChecked {
   duration_option:
+    | "undetermined"
     | "noon"
     | "evening"
     | "tomorrow"

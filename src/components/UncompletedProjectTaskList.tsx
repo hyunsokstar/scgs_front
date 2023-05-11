@@ -260,6 +260,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   // due_date update
   const handlerForUpdateTaskDuedateForChecked = (
     duration_option:
+      | "undetermined"
       | "noon"
       | "evening"
       | "tomorrow"
@@ -480,7 +481,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                 <Checkbox
                   size="lg"
                   ml={2}
-                  border={"1px solid blue"}
+                  border={"1px solid gray"}
                   isChecked={isForUrgent}
                   onChange={handleUrgentChange}
                 />
@@ -489,7 +490,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                 상금 여부 :{" "}
                 <Checkbox
                   size="lg"
-                  border={"1px solid blue"}
+                  border={"1px solid gray"}
                   ml={2}
                   isChecked={checkForCashPrize}
                   onChange={handleCashPrizeChange}
@@ -550,116 +551,136 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             </Box>
           </Box>
         </Box>
+        <Box>3 영역</Box>
+      </Box>
 
-        <Box textAlign={"right"} m={0}>
+      {/* 0501 */}
+      {/* <Box>{checkedRowPks}</Box> */}
+      <Box display={"flex"} justifyContent={"space-between"}>
+        <Box>
+          <Box p={2} gap={2}>
+            {/* <Text as="span"></Text> */}
+            <Button
+              variant="outline"
+              size="sm"
+              backgroundColor="purple.50"
+              _hover={{ backgroundColor: "purple.100" }}
+              mr={2}
+              onClick={() =>
+                handlerForUpdateTaskDuedateForChecked("undetermined")
+              }
+            >
+              마감 날짜 초기화
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              backgroundColor="purple.50"
+              _hover={{ backgroundColor: "purple.100" }}
+              mr={2}
+              onClick={() => handlerForUpdateTaskDuedateForChecked("noon")}
+            >
+              마감 날짜 정오
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              backgroundColor="purple.50"
+              _hover={{ backgroundColor: "purple.100" }}
+              mr={2}
+              onClick={() => handlerForUpdateTaskDuedateForChecked("evening")}
+            >
+              마감 날짜 오후
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              backgroundColor="purple.50"
+              _hover={{ backgroundColor: "purple.100" }}
+              mr={2}
+              onClick={() => handlerForUpdateTaskDuedateForChecked("tomorrow")}
+            >
+              마감 날짜 내일
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              backgroundColor="purple.50"
+              _hover={{ backgroundColor: "purple.100" }}
+              mr={2}
+              onClick={() =>
+                handlerForUpdateTaskDuedateForChecked("day-after-tomorrow")
+              }
+            >
+              마감 날짜 모레
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              backgroundColor="purple.50"
+              _hover={{ backgroundColor: "purple.100" }}
+              mr={2}
+              onClick={() => handlerForUpdateTaskDuedateForChecked("this-week")}
+            >
+              마감 날짜 이번주
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              backgroundColor="purple.50"
+              _hover={{ backgroundColor: "purple.100" }}
+              mr={2}
+              onClick={() =>
+                handlerForUpdateTaskDuedateForChecked("this-month")
+              }
+            >
+              마감 날짜 이번달
+            </Button>
+          </Box>
+          <Box display={"flex"} p={2} gap={2}>
+            <Checkbox size="lg" colorScheme="blue" />
+            <Button
+              variant="outline"
+              size="sm"
+              backgroundColor="red.50"
+              _hover={{ backgroundColor: "red.100" }}
+              mr={2}
+              onClick={deleteTaskForChecked}
+            >
+              삭제
+            </Button>
+
+            <ModalButtonForUpdateTaskManagerForChecked
+              button_text="담당자 변경"
+              checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+            />
+
+            <ModalButtonForUpdateImortanceForChecked
+              button_text="중요도 업데이트"
+              checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+            />
+
+            <ModalButtonForUpdateTaskClassificationForChecked
+              button_text="분류 업데이트"
+              checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+            />
+          </Box>
+        </Box>
+        <Box p={2}>
           <ModalButtonForAddProjectTask
             button_text="task 추가"
             projectTaskListRefatch={projectTaskListRefatch}
           />
         </Box>
-      </Box>
-
-      {/* 0501 */}
-      {/* <Box>{checkedRowPks}</Box> */}
-      <Box display={"flex"} border={"1px solid blue"} p={2} gap={2}>
-        <Checkbox size="lg" colorScheme="blue" />
-        <Button
-          variant="outline"
-          size="sm"
-          backgroundColor="red.50"
-          _hover={{ backgroundColor: "red.100" }}
-          mr={2}
-          onClick={deleteTaskForChecked}
-        >
-          delete for check
-        </Button>
-
-        <Button
-          variant="outline"
-          size="sm"
-          backgroundColor="red.50"
-          _hover={{ backgroundColor: "red.100" }}
-          mr={2}
-          onClick={() => handlerForUpdateTaskDuedateForChecked("noon")}
-        >
-          마감 날짜 정오
-        </Button>
-
-        <Button
-          variant="outline"
-          size="sm"
-          backgroundColor="red.50"
-          _hover={{ backgroundColor: "red.100" }}
-          mr={2}
-          onClick={() => handlerForUpdateTaskDuedateForChecked("evening")}
-        >
-          마감 날짜 오후
-        </Button>
-
-        <Button
-          variant="outline"
-          size="sm"
-          backgroundColor="red.50"
-          _hover={{ backgroundColor: "red.100" }}
-          mr={2}
-          onClick={() => handlerForUpdateTaskDuedateForChecked("tomorrow")}
-        >
-          마감 날짜 내일
-        </Button>
-
-        <Button
-          variant="outline"
-          size="sm"
-          backgroundColor="red.50"
-          _hover={{ backgroundColor: "red.100" }}
-          mr={2}
-          onClick={() =>
-            handlerForUpdateTaskDuedateForChecked("day-after-tomorrow")
-          }
-        >
-          마감 날짜 모레
-        </Button>
-
-        <Button
-          variant="outline"
-          size="sm"
-          backgroundColor="red.50"
-          _hover={{ backgroundColor: "red.100" }}
-          mr={2}
-          onClick={() => handlerForUpdateTaskDuedateForChecked("this-week")}
-        >
-          마감 날짜 이번주
-        </Button>
-
-        <Button
-          variant="outline"
-          size="sm"
-          backgroundColor="red.50"
-          _hover={{ backgroundColor: "red.100" }}
-          mr={2}
-          onClick={() => handlerForUpdateTaskDuedateForChecked("this-month")}
-        >
-          마감 날짜 이번달
-        </Button>
-
-        {/* 230502 */}
-        <ModalButtonForUpdateTaskManagerForChecked
-          button_text="담당자 변경 for check"
-          checkedRowPks={checkedRowPks}
-          setCheckedRowPks={setCheckedRowPks}
-        />
-
-        <ModalButtonForUpdateImortanceForChecked
-          button_text="update importance for checked"
-          checkedRowPks={checkedRowPks}
-          setCheckedRowPks={setCheckedRowPks}
-        />
-
-        <ModalButtonForUpdateTaskClassificationForChecked
-          button_text="update classification for checked"
-          checkedRowPks={checkedRowPks}
-          setCheckedRowPks={setCheckedRowPks}
-        />
       </Box>
 
       <Box>
