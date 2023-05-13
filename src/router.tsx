@@ -53,6 +53,7 @@ import Test9 from "./routes/TestPage/Test9";
 import Test10 from "./routes/TestPage/Test10";
 import Test4_2 from "./routes/TestPage/Test4_2";
 import TeamStatusPage from "./routes/TeamStatusPage";
+import ShortCutDetail from "./routes/ShortCutDetail";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: "study-note/:study_note_pk",
         element: <StudyNoteDetail />,
+      },
+      {
+        path: "shortcut/:shortcut_pk",
+        element: <ShortCutDetail />,
       },
       {
         path: "shortcut",

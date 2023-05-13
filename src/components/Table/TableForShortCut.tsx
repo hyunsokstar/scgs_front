@@ -31,7 +31,7 @@ import CopyButtonByPropsText from "../Button/CopyButtonByPropsText";
 import { Shortcut, ShortcutsResponse } from "../../types/type_for_shortcut";
 import PaginationComponent from "../PaginationComponent";
 import ModalButtonForShowShortcut from "../modal/modalButtonForShowShortcut";
-
+import { Link } from "react-router-dom";
 
 const favorite_color = ["blue", "red", "orange", "red", "purple"];
 
@@ -155,7 +155,7 @@ const TableForShortCut = () => {
       border={"1px solid green"}
     >
       <Text fontFamily="heading" fontSize="3xl" color="black">
-        Table For Shortcut
+        Table For Shortcut 11
       </Text>{" "}
       {filterValueForTag}
       <Box
@@ -212,6 +212,11 @@ const TableForShortCut = () => {
             <Th fontFamily="monospace" fontSize="lg" color="teal.500">
               Shortcut
             </Th>
+
+            <Th fontFamily="monospace" fontSize="lg" color="teal.500">
+              관련 shortcut
+            </Th>
+
             <Th fontFamily="monospace" fontSize="lg" color="teal.500">
               Description
             </Th>
@@ -260,6 +265,21 @@ const TableForShortCut = () => {
                     />
                   </Box>
                 </Flex>
+              </Td>
+              <Td>
+                {/* 고쳐 픽스 */}
+                <Box
+                  as={Link}
+                  to={`/shortcut/${shortcut.id}`}
+                  textDecoration="none"
+                  color="black"
+                  _hover={{
+                    textDecoration: "underline",
+                    color: "blue",
+                  }}
+                >
+                  관련 shortcut({shortcut.related_shortcut_count})
+                </Box>
               </Td>
               <Td>{shortcut.description}</Td>
               <Td>{shortcut.classification}</Td>

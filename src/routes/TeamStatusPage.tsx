@@ -5,6 +5,10 @@ import { Box } from "@chakra-ui/react";
 interface Props {}
 
 const TeamStatusPage = (props: Props) => {
+
+  
+
+
   return (
     <Box display={"flex"} justifyContent={"flex-start"} flexWrap={"wrap"}>
       <Box flexBasis={"25%"}>

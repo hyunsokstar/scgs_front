@@ -16,6 +16,14 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+// 1122
+export const getRelatedShortCutList = async ({ queryKey }: QueryFunctionContext) => {
+  const [_, shortcut_pk] = queryKey;
+  return await instance
+    .get(`shortcut/${shortcut_pk}`)
+    .then((response) => response.data);
+};
+
 export const api_for_get_shortcut_list = async ({
   queryKey,
 }: QueryFunctionContext): Promise<ShortcutsResponse> => {
