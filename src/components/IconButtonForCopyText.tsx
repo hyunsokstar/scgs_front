@@ -1,10 +1,8 @@
-import { FC } from "react";
+import { FC, useRef } from "react";
 import {
   Box,
   Icon,
   IconButton,
-  useClipboard,
-  Text,
   useToast,
 } from "@chakra-ui/react";
 import { MdContentCopy } from "react-icons/md";
@@ -22,15 +20,29 @@ const IconButtonForCopyText: FC<IconButtonForCopyTextProps> = ({
   size = "md",
   outline = true,
 }) => {
-  const { onCopy, hasCopied } = useClipboard(text);
   const toast = useToast();
+  const textareaRef = useRef(null);
 
   const handleCopy = () => {
-    onCopy();
+    // HTML 문자열에서 텍스트 콘텐츠만 추출
+    const parser = new DOMParser();
+    const htmlDoc = parser.parseFromString(text, "text/html");
+    const extractedText = htmlDoc.body.textContent || "";
+
+    // 추출한 텍스트를 숨겨진 textarea 요소에 넣고 복사
+    const textarea = document.createElement("textarea");
+    textarea.style.position = "absolute";
+    textarea.style.left = "-9999px";
+    textarea.value = extractedText;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+
     toast({
-      title: "copy success",
+      title: "복사 성공",
       status: "success",
-      description: `${text} is Coppied to Clip board`,
+      description: `${extractedText}가 클립보드에 복사되었습니다.`,
       duration: 3000,
       isClosable: true,
     });

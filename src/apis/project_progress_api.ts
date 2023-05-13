@@ -763,7 +763,7 @@ export const insertProjectProgressRow = ({
   task_completed,
   password,
   task_manager,
-  task_classification
+  task_classification,
 }: IFormTypeForProjectProgress) =>
   instance
     .post(
@@ -775,7 +775,7 @@ export const insertProjectProgressRow = ({
         task_completed,
         password,
         task_manager,
-        task_classification
+        task_classification,
       },
       {
         headers: {
@@ -902,6 +902,10 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         count_for_ready: response.data.count_for_ready,
         count_for_in_progress: response.data.count_for_in_progress,
         count_for_in_testing: response.data.count_for_in_testing,
+        total_task_count_for_today: response.data.total_task_count_for_today,
+        completed_task_count_for_today:
+          response.data.completed_task_count_for_today,
+        achievement_rate_for_today: response.data.achievement_rate_for_today,
       };
 
       return response_data;

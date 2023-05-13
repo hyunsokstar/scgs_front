@@ -12,6 +12,7 @@ import {
   Th,
   Td,
   Checkbox,
+  Progress,
   // useTheme,
 } from "@chakra-ui/react";
 
@@ -551,7 +552,25 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             </Box>
           </Box>
         </Box>
-        <Box>3 영역</Box>
+        <Box>
+          <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
+            <Text fontSize="xl" fontWeight="bold" mb={2}>
+              Today Task Status
+            </Text>
+            <Text>총 업무 개수: {taskListData.total_task_count_for_today}</Text>
+            <Text>
+              총 완료 개수: {taskListData.completed_task_count_for_today}
+            </Text>
+            <Text>달성률:{taskListData.achievement_rate_for_today}%</Text>
+            <Box w="100%">
+              <Progress
+                value={taskListData.achievement_rate_for_today}
+                size="sm"
+                mb={2}
+              />
+            </Box>
+          </Box>
+        </Box>
       </Box>
 
       {/* 0501 */}

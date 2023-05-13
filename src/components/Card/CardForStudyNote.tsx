@@ -12,6 +12,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFordeleteOneStudyNote } from "../../apis/study_note_api";
 import { Button } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { log } from "console";
 
 const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
   pk,
@@ -27,6 +30,10 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
   const queryClient = useQueryClient();
   const toast = useToast();
   const navigate = useNavigate();
+
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
 
   const mutationForDeleteStudyNote = useMutation(
     (pk: number) => {
@@ -50,8 +57,19 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
     }
   );
 
-  const deleteStudyNoteButtonHandler = (pk: any) => {
-    mutationForDeleteStudyNote.mutate(pk);
+  const deleteStudyNoteButtonHandler = (pk: any, wirter: any) => {
+    console.log("wirter : ", wirter);
+    console.log("loginUser.username : ", loginUser.username);
+
+    const login_user_name = loginUser.username;
+    const writer_name = writer.username;
+
+    if (login_user_name === writer_name) {
+      alert("삭제 gogo");
+      mutationForDeleteStudyNote.mutate(pk);
+    } else {
+      alert(`작성자인 ${writer_name}님만 삭제 가능 합니다 !`);
+    }
   };
 
   const goToStudyNoteDetail = (pk: any) => {
@@ -87,15 +105,21 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
           <Text fontSize="xl" fontWeight="bold">
             {title}
           </Text>
-          <IconButton
-            aria-label="Close"
-            icon={
-              <CloseIcon onClick={() => deleteStudyNoteButtonHandler(pk)} />
-            }
-            variant="outline"
-            size="sm"
-            colorScheme="pink"
-          />
+          {writer.username === loginUser.username ? (
+            <IconButton
+              aria-label="Close"
+              icon={
+                <CloseIcon
+                  onClick={() => deleteStudyNoteButtonHandler(pk, writer)}
+                />
+              }
+              variant="outline"
+              size="sm"
+              colorScheme="pink"
+            />
+          ) : (
+            ""
+          )}
         </Box>
         <Box
           p="2"

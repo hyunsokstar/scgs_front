@@ -52,6 +52,7 @@ import StudyNoteDetail from "./routes/StudyNoteDetail";
 import Test9 from "./routes/TestPage/Test9";
 import Test10 from "./routes/TestPage/Test10";
 import Test4_2 from "./routes/TestPage/Test4_2";
+import TeamStatusPage from "./routes/TeamStatusPage";
 
 const router = createBrowserRouter([
   {
@@ -135,6 +136,10 @@ const router = createBrowserRouter([
       {
         path: "test-board",
         element: <TestBoardPage />,
+      },
+      {
+        path: "team-status",
+        element: <TeamStatusPage />,
       },
       {
         path: "react-table",

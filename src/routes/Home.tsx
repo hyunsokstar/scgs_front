@@ -24,52 +24,72 @@ const image_array = [
     image_url:
       "https://img.freepik.com/premium-photo/wooden-blocks-with-figures-on-a-blue-surface-hierarchical-organizational-structure-of-management-gender-balance-effective-management-model-in-the-organization_116441-17272.jpg",
   },
+
   {
     image_url:
-      "https://a0.muscache.com/im/pictures/8340b03d-6405-4a61-ac8a-fc9d9d445f0f.jpg?im_w=720",
+      "https://www.sisajournal.com/news/photo/first/201608/img_156337_1.jpg",
+  },
+  {
+    image_url:
+      "https://i.namu.wiki/i/HMBQxN5-ERYkWQymdJLqbH_p8QOVhJHvLA_RBeNMLhntmQpk_DnKGhBPI6HhJfu2Kj1_doR3ZQgF1ME8fyGqaEyb41JIwzuZd8KnMqLVXNDkx_5HBBoq98Y1tlvv2V2k8tYHhIRrpuFW6Zd9ZI-u7Q.webp",
   },
 ];
 
 export default function Home() {
   return (
-    <Box width={"100%"} border={"0px solid green"}>
-      <Flex justifyContent={"center"}>
-        <NavLink to="/my_task">
-          <SampleCard
-            imageSrc={image_array[0].image_url}
-            title={"My Task"}
-            description={"My Task"}
-          />
-        </NavLink>
-        <NavLink
-          to="/project_admin"
-          // onClick={() => handleItemClick("project_admin")}
-        >
-          <SampleCard
-            imageSrc={image_array[1].image_url}
-            title={"Project Task"}
-            description={"Project Task"}
-          />
-        </NavLink>
+    <Box>
+      <Box
+        display={"flex"}
+        justifyContent={"space-around"}
+        flexWrap={"wrap"}
+        gap={3}
+        border={"1px solid red"}
+      >
+        <SampleCard
+          imageSrc={image_array[0].image_url}
+          title={"My Task"}
+          description={"My Task"}
+          linkTo={"/my_task"}
+        />
 
-        <NavLink to="/task-status">
-          <SampleCard
-            imageSrc={image_array[2].image_url}
-            title={"project Status"}
-            description={"project Status"}
-          />
-        </NavLink>
+        <SampleCard
+          imageSrc={image_array[1].image_url}
+          title={"Project Task"}
+          description={"Project Task"}
+          linkTo="/project_admin"
+        />
 
-        <NavLink to="/data-grid/users">
-          <SampleCard
-            imageSrc={image_array[3].image_url}
-            title={"팀 관리"}
-            description={"팀 관리"}
-          />
-        </NavLink>
-      </Flex>
+        <SampleCard
+          imageSrc={image_array[2].image_url}
+          title={"칸반 보드"}
+          description={"칸반 보드"}
+          linkTo="/task-status"
+        />
 
-      {/* <Counter /> */}
+        <SampleCard
+          imageSrc={image_array[3].image_url}
+          title={"팀 관리"}
+          description={"팀 관리"}
+          linkTo="/data-grid/users"
+        />
+
+        <SampleCard
+          imageSrc={image_array[4].image_url}
+          title={"Wanted"}
+          description={"Wanted"}
+          linkTo="/wanted"
+        />
+
+        <SampleCard
+          imageSrc={image_array[5].image_url}
+          title={"업무 통계"}
+          description={"업무 통계"}
+          linkTo="/task-statics"
+        />
+        
+
+
+      </Box>
     </Box>
   );
 }

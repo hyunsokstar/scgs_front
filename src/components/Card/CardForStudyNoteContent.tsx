@@ -32,6 +32,8 @@ import { CheckIcon } from "@chakra-ui/icons";
 import CheckboxComponentForList from "../CheckBox/CheckboxComponentForList";
 import { useEffect, useState } from "react";
 import ModalButtonForUpdateStudyNoteContent from "../Button/ModalButtonForUpdateStudyNoteContent";
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
 
 const PastelColor = {
   bg: "#C7E5F0",
@@ -53,6 +55,10 @@ const CardForStudyNoteContent = ({
   const queryClient = useQueryClient();
   const toast = useToast();
 
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
+
   const mutationForDeleteStudyNoteContent = useMutation(
     (pk: number) => {
       return apiFordeleteOneStudyNoteContent(pk);
@@ -73,8 +79,18 @@ const CardForStudyNoteContent = ({
   );
 
   const deleteStudyNoteContentByPk = (pk: number) => {
-    console.log("pk check for delete : ", pk);
-    mutationForDeleteStudyNoteContent.mutate(pk);
+    // console.log("pk check for delete : ", pk);
+    // console.log("writer.username : ", writer.username);
+    // console.log("loginUser.username : ", loginUser.username);
+
+    const writer_name = writer.username;
+    const login_user_name = loginUser.username;
+
+    if (writer_name === login_user_name) {
+      mutationForDeleteStudyNoteContent.mutate(pk);
+    } else {
+      alert(`작성자인 ${writer_name} 님만 삭제 가능 !!`);
+    }
   };
 
   const mutation_for_order_plus_1_for_note_content = useMutation(
@@ -189,11 +205,15 @@ const CardForStudyNoteContent = ({
         <Spacer />
         {/* delete button for study note content */}
 
-        <CloseButton
-          size="sm"
-          colorScheme="teal"
-          onClick={() => deleteStudyNoteContentByPk(pk)}
-        />
+        {writer.username === loginUser.username ? (
+          <CloseButton
+            size="sm"
+            colorScheme="teal"
+            onClick={() => deleteStudyNoteContentByPk(pk)}
+          />
+        ) : (
+          ""
+        )}
       </Box>
       <Box my="4">
         <Table variant="simple">

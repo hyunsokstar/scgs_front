@@ -183,7 +183,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/wanted"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -211,7 +211,7 @@ const Header = () => {
           >
             Task Status
           </Text>
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
           to="/test-board"
@@ -229,7 +229,7 @@ const Header = () => {
         </NavLink>
 
         <NavLink
-          to="/task-statics"
+          to="/team-status"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
           <Text
@@ -239,7 +239,7 @@ const Header = () => {
             cursor="pointer"
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
-            Task Statics
+            Team Status
           </Text>
         </NavLink>
 
@@ -318,35 +318,6 @@ const Header = () => {
           </Text>
         </NavLink>
 
-        {/* <NavLink
-          to="/tutorials"
-          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-        >
-          <Text
-            fontSize="xl"
-            fontWeight="medium"
-            mr={{ base: 0, md: "1rem" }}
-            cursor="pointer"
-            _hover={{ color: "white", transform: "scale(1.1)" }}
-          >
-            Tutorial
-          </Text>
-        </NavLink> */}
-
-        {/* <NavLink
-          to="/site-manual"
-          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-        >
-          <Text
-            fontSize="xl"
-            fontWeight="medium"
-            mr={{ base: 0, md: "1rem" }}
-            cursor="pointer"
-            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
-          >
-            Site Manual
-          </Text>
-        </NavLink> */}
 
         <Box>
           {/* <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box> */}
