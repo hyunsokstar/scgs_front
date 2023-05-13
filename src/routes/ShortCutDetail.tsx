@@ -20,23 +20,30 @@ const ShortCutDetail = (props: Props) => {
     getRelatedShortCutList
   );
 
-  console.log("dataForRelatedShortCutList : ", dataForRelatedShortCutList);
+  console.log(
+    "dataForRelatedShortCutList.data_for_original_shortcut : ",
+    dataForRelatedShortCutList?.data_for_original_shortcut
+  );
 
   return (
     <Box>
-      ShortCutDetail for {shortcut_pk}
-      {dataForRelatedShortCutList && (
+      {/* ShortCutDetail for {shortcut_pk} */}
+      {dataForRelatedShortCutList &&
+      dataForRelatedShortCutList.data_for_related_shortcut ? (
         <Box>
           <PresenterForOriginalShortcut
             shortcutData={dataForRelatedShortCutList.data_for_original_shortcut}
           />
 
-          <br /><br />
-
+          <br />
+          <br />
           <ListForRelatedShortcutList
             data={dataForRelatedShortCutList.data_for_related_shortcut}
           />
+
         </Box>
+      ) : (
+        "no data"
       )}
     </Box>
   );

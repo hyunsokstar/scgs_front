@@ -90,5 +90,5 @@ export type OriginalShortcutType = {
 
 export type ResponseTypeForApiForRelatedShortCutList = {
   data_for_original_shortcut: OriginalShortcutType;
-  data_for_related_shortcut: RelatedShortcutType[];
+  data_for_related_shortcut?: RelatedShortcutType[];
 };

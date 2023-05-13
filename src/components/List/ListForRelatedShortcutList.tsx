@@ -1,5 +1,15 @@
-import { Box, Table, Thead, Tbody, Tr, Th, Td, Textarea } from "@chakra-ui/react";
+import {
+  Box,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Textarea,
+} from "@chakra-ui/react";
 import React from "react";
+import TextAreaForCopyTextUsingButton from "../TextArea/TextAreaForCopyTextUsingButton";
 
 interface Shortcut {
   id: number;
@@ -27,15 +37,23 @@ const ListForRelatedShortcutList: React.FC<ListForRelatedShortcutListProps> = ({
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((item) => (
-            <Tr key={item.id}>
-              <Td>
-                <Textarea defaultValue={item.shortcut_content} />
-              </Td>
-              <Td>{item.description}</Td>
-              <Td>{item.created_at}</Td>
+          {data.length > 0 ? (
+            data.map((item) => (
+              <Tr key={item.id}>
+                <Td>
+                  <TextAreaForCopyTextUsingButton
+                    text={item.shortcut_content}
+                  />
+                </Td>
+                <Td>{item.description}</Td>
+                <Td>{item.created_at}</Td>
+              </Tr>
+            ))
+          ) : (
+            <Tr>
+              <Td colSpan={3}>no data</Td>
             </Tr>
-          ))}
+          )}
         </Tbody>
       </Table>
     </Box>
