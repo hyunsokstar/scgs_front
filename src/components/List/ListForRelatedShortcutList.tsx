@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
+  Checkbox,
   Table,
   Thead,
   Tbody,
@@ -10,12 +11,16 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { MdDelete as DeleteIcon } from "react-icons/md";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MdDelete as TrashIcon } from "react-icons/md";
 import TextAreaForCopyTextUsingButton from "../TextArea/TextAreaForCopyTextUsingButton";
 import ModalButtonForCreateRelatedShortcut from "../modal/ModalButtonForCreateRelatedShortcut";
-import { apiForDeleteRelatedShortcutByPk } from "../../apis/api_for_shortcut";
+import {
+  apiForDeleteRelatedShortcutByPk,
+  apiForDeleteRelatedShortcutForCheckedRow,
+} from "../../apis/api_for_shortcut";
 
 interface Shortcut {
   id: number;
@@ -30,23 +35,29 @@ interface ListForRelatedShortcutListProps {
   data: Shortcut[];
 }
 
-// 1122
 const ListForRelatedShortcutList = ({
   shortcutId,
   data,
 }: ListForRelatedShortcutListProps) => {
   const queryClient = useQueryClient();
   const toast = useToast();
+  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  const [allChecked, setAllChecked] = useState(false);
 
-  // mutationForDeleteRelatedShortcutByPk
+  useEffect(() => {
+    if (allChecked) {
+      setSelectedRows(data.map((item) => item.id));
+    } else {
+      setSelectedRows([]);
+    }
+  }, [allChecked, data]);
+
   const mutationForDeleteRelatedShortcutByPk = useMutation(
     (pk: number) => {
       return apiForDeleteRelatedShortcutByPk(pk);
     },
     {
-      onSettled: () => {
-        // setSelectedItems([]);
-      },
+      onSettled: () => {},
       onSuccess: (data) => {
         console.log("data : ", data);
         queryClient.refetchQueries(["getRelatedShortCutList"]);
@@ -59,14 +70,65 @@ const ListForRelatedShortcutList = ({
   );
 
   const handleDelete = (pk: number) => {
-    // Add your delete logic here
     mutationForDeleteRelatedShortcutByPk.mutate(pk);
     console.log("Delete button clicked : ", pk);
   };
 
+  const handleAllCheck = (isChecked: boolean) => {
+    setAllChecked(isChecked);
+  };
+
+  const handleRowCheck = (id: number, isChecked: boolean) => {
+    if (isChecked) {
+      setSelectedRows((prev) => [...prev, id]);
+    } else {
+      setSelectedRows((prev) => prev.filter((rowId) => rowId !== id));
+    }
+  };
+
+  const mutationForDeleteCheckedRows = useMutation(
+    (checkedRowPks: number[]) => {
+      return apiForDeleteRelatedShortcutForCheckedRow(checkedRowPks);
+    },
+    {
+      onSettled: () => {},
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        setSelectedRows([]);
+        queryClient.refetchQueries(["getRelatedShortCutList"]);
+
+        toast({
+          title: "Delete Related Shortcut For Checked Rows 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const buttonHandlerForDeleteChekcedRows = () => {
+    console.log("selectedRows : ", selectedRows);
+
+    if (selectedRows.length) {
+      //   alert(selectedRows);
+      mutationForDeleteCheckedRows.mutate(selectedRows);
+    } else {
+      alert("하나 이상의 row 를 선택 해주세요");
+    }
+  };
+
   return (
     <Box>
-      <Box display="flex" justifyContent="flex-end">
+      <Box display="flex" justifyContent="space-between">
+        <Button
+          variant="outline"
+          size="md"
+          _hover={{ backgroundColor: "teal.100" }}
+          onClick={buttonHandlerForDeleteChekcedRows}
+        >
+          <DeleteIcon />
+          Delete for Checked Row
+        </Button>
+
         <ModalButtonForCreateRelatedShortcut
           shortcutId={shortcutId}
           buttonText={"Create Related Shortcut"}
@@ -76,10 +138,18 @@ const ListForRelatedShortcutList = ({
       <Table variant="striped">
         <Thead>
           <Tr>
+            <Th>
+              <Checkbox
+                size="md"
+                border={"1px solid gray"}
+                id="allcheck"
+                onChange={(e) => handleAllCheck(e.target.checked)}
+                isChecked={allChecked}
+              />
+            </Th>
             <Th>Shortcut Content</Th>
             <Th>Description</Th>
-            {/* <Th>Created At</Th> */}
-            <Th>delete</Th>
+            <Th>Delete</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -87,12 +157,20 @@ const ListForRelatedShortcutList = ({
             data.map((item) => (
               <Tr key={item.id}>
                 <Td>
+                  <Checkbox
+                    size="md"
+                    colorScheme="blue"
+                    value={item.id}
+                    isChecked={selectedRows.includes(item.id)}
+                    onChange={(e) => handleRowCheck(item.id, e.target.checked)}
+                  />
+                </Td>
+                <Td>
                   <TextAreaForCopyTextUsingButton
                     text={item.shortcut_content}
                   />
                 </Td>
                 <Td>{item.description}</Td>
-                {/* <Td>{item.created_at}</Td> */}
                 <Td>
                   <Button
                     variant="outline"
@@ -107,7 +185,7 @@ const ListForRelatedShortcutList = ({
             ))
           ) : (
             <Tr>
-              <Td colSpan={3}>no data</Td>
+              <Td colSpan={3}>No data</Td>
             </Tr>
           )}
         </Tbody>

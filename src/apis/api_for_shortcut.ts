@@ -18,7 +18,26 @@ const instance = axios.create({
 });
 
 // 1122
-export const apiForDeleteRelatedShortcutByPk = (related_shortcut_pk : number) => {
+// apiForDeleteRelatedShortcutForCheckedRow
+export const apiForDeleteRelatedShortcutForCheckedRow = (
+  selectedRows: number[]
+) => {
+  console.log("checkedRowPks: ", selectedRows);
+
+  return instance
+    .delete("shortcut/related-shortcut/delete-for-chekced-row", {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+      data: { selectedRows }, // 요청 데이터를 `data` 필드에 포함
+    })
+    .then((response) => response.data);
+};
+
+
+export const apiForDeleteRelatedShortcutByPk = (
+  related_shortcut_pk: number
+) => {
   console.log("related_shortcut_pk : ", related_shortcut_pk);
   return instance
     .delete(`shortcut/related-shortcut/${related_shortcut_pk}`, {
@@ -27,7 +46,7 @@ export const apiForDeleteRelatedShortcutByPk = (related_shortcut_pk : number) =>
       },
     })
     .then((response) => response.data);
-}
+};
 
 export const apiForCreateRelatedShortcut = ({
   shortcutId,
