@@ -92,3 +92,9 @@ export type ResponseTypeForApiForRelatedShortCutList = {
   data_for_original_shortcut: OriginalShortcutType;
   data_for_related_shortcut?: RelatedShortcutType[];
 };
+
+export type formTypeForCreateRelatedShortcut = {
+  shortcutId: number;
+  shortcut_content: string;
+  description: string;
+};

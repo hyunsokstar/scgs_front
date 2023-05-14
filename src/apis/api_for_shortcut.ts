@@ -9,6 +9,7 @@ import {
   ShortcutsResponse,
   TypeForInsertToShortcutApi,
   TypeForUpdateFormForShortcut,
+  formTypeForCreateRelatedShortcut,
 } from "../types/type_for_shortcut";
 
 const instance = axios.create({
@@ -17,7 +18,41 @@ const instance = axios.create({
 });
 
 // 1122
-export const getRelatedShortCutList = async ({ queryKey }: QueryFunctionContext) => {
+export const apiForDeleteRelatedShortcutByPk = (related_shortcut_pk : number) => {
+  console.log("related_shortcut_pk : ", related_shortcut_pk);
+  return instance
+    .delete(`shortcut/related-shortcut/${related_shortcut_pk}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+}
+
+export const apiForCreateRelatedShortcut = ({
+  shortcutId,
+  shortcut_content,
+  description,
+}: formTypeForCreateRelatedShortcut) =>
+  instance
+    .post(
+      `/shortcut/${shortcutId}`,
+      {
+        shortcutId,
+        shortcut_content,
+        description,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
+export const getRelatedShortCutList = async ({
+  queryKey,
+}: QueryFunctionContext) => {
   const [_, shortcut_pk] = queryKey;
   return await instance
     .get(`shortcut/${shortcut_pk}`)

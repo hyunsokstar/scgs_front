@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Table,
@@ -6,10 +7,15 @@ import {
   Tr,
   Th,
   Td,
-  Textarea,
+  Button,
+  useToast,
 } from "@chakra-ui/react";
-import React from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { MdDelete as TrashIcon } from "react-icons/md";
 import TextAreaForCopyTextUsingButton from "../TextArea/TextAreaForCopyTextUsingButton";
+import ModalButtonForCreateRelatedShortcut from "../modal/ModalButtonForCreateRelatedShortcut";
+import { apiForDeleteRelatedShortcutByPk } from "../../apis/api_for_shortcut";
 
 interface Shortcut {
   id: number;
@@ -20,20 +26,60 @@ interface Shortcut {
 }
 
 interface ListForRelatedShortcutListProps {
+  shortcutId: number;
   data: Shortcut[];
 }
 
-const ListForRelatedShortcutList: React.FC<ListForRelatedShortcutListProps> = ({
+// 1122
+const ListForRelatedShortcutList = ({
+  shortcutId,
   data,
-}) => {
+}: ListForRelatedShortcutListProps) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  // mutationForDeleteRelatedShortcutByPk
+  const mutationForDeleteRelatedShortcutByPk = useMutation(
+    (pk: number) => {
+      return apiForDeleteRelatedShortcutByPk(pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["getRelatedShortCutList"]);
+        toast({
+          title: "delete related shortcut 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const handleDelete = (pk: number) => {
+    // Add your delete logic here
+    mutationForDeleteRelatedShortcutByPk.mutate(pk);
+    console.log("Delete button clicked : ", pk);
+  };
+
   return (
     <Box>
+      <Box display="flex" justifyContent="flex-end">
+        <ModalButtonForCreateRelatedShortcut
+          shortcutId={shortcutId}
+          buttonText={"Create Related Shortcut"}
+        />
+      </Box>
+
       <Table variant="striped">
         <Thead>
           <Tr>
             <Th>Shortcut Content</Th>
             <Th>Description</Th>
-            <Th>Created At</Th>
+            {/* <Th>Created At</Th> */}
+            <Th>delete</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -46,7 +92,17 @@ const ListForRelatedShortcutList: React.FC<ListForRelatedShortcutListProps> = ({
                   />
                 </Td>
                 <Td>{item.description}</Td>
-                <Td>{item.created_at}</Td>
+                {/* <Td>{item.created_at}</Td> */}
+                <Td>
+                  <Button
+                    variant="outline"
+                    size="md"
+                    onClick={() => handleDelete(item.id)}
+                    _hover={{ bg: "red.100" }}
+                  >
+                    <TrashIcon size={20} />
+                  </Button>
+                </Td>
               </Tr>
             ))
           ) : (

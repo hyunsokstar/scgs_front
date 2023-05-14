@@ -27,7 +27,6 @@ const ShortCutDetail = (props: Props) => {
 
   return (
     <Box>
-      {/* ShortCutDetail for {shortcut_pk} */}
       {dataForRelatedShortCutList &&
       dataForRelatedShortCutList.data_for_related_shortcut ? (
         <Box>
@@ -37,7 +36,9 @@ const ShortCutDetail = (props: Props) => {
 
           <br />
           <br />
+
           <ListForRelatedShortcutList
+            shortcutId = {dataForRelatedShortCutList.data_for_original_shortcut.id}
             data={dataForRelatedShortCutList.data_for_related_shortcut}
           />
 
