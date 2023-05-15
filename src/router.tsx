@@ -52,7 +52,7 @@ import StudyNoteDetail from "./routes/StudyNoteDetail";
 import Test9 from "./routes/TestPage/Test9";
 import Test10 from "./routes/TestPage/Test10";
 import Test4_2 from "./routes/TestPage/Test4_2";
-import TeamStatusPage from "./routes/TeamStatusPage";
+import TeamStatusPage from "./routes/TaskInfosPerMember";
 import ShortCutDetail from "./routes/ShortCutDetail";
 
 const router = createBrowserRouter([

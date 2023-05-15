@@ -95,6 +95,10 @@ export const apiForUpdateShortcut = ({
   classification,
   tags,
 }: TypeForUpdateFormForShortcut) => {
+
+  console.log("shortcut : ", shortcut);
+  console.log("shortcut : ", shortcut);
+
   return instance
     .put(
       `/shortcut/${shortcutId}`,

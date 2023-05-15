@@ -38,3 +38,22 @@ export interface IUserRow {
   is_new_row?: boolean;
   profile_image?: string;
 }
+
+export type TaskInfoPerUser = {
+  username: string;
+  profile_image: string | null;
+  position: string | null;
+  cash: number;
+  total_count_for_task: number;
+  total_count_for_task: number;
+  uncompleted_count_for_task: number;
+  completed_count_for_task: number;
+
+  total_count_for_task_for_today: number;
+  count_for_uncompleted_task_for_today: number;
+  count_for_completed_task_for_today: number;
+
+  task_in_progress: string;
+};
+
+export type TypeForDataForTaskInfoPerUser = User[];

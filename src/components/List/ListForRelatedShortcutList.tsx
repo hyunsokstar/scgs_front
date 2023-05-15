@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Checkbox,
+  Icon,
+  Text,
   Table,
   Thead,
   Tbody,
@@ -12,6 +14,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { MdDelete as DeleteIcon } from "react-icons/md";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MdDelete as TrashIcon } from "react-icons/md";
@@ -116,8 +119,93 @@ const ListForRelatedShortcutList = ({
     }
   };
 
+  //   useEffect(() => {
+  //     const handleKeyDown = (e: KeyboardEvent) => {
+  //       if (e.altKey && e.key >= "1" && e.key <= "9") {
+  //         const index = parseInt(e.key, 10) - 1; // Convert to 0-based index
+  //         if (index < data.length) {
+  //           // Copy the shortcut content of the index-th row
+  //           const shortcutContent = data[index].shortcut_content;
+  //           //   alert("click check : " + shortcutContent);
+  //           toast({
+  //             title: `Copied: ${shortcutContent}`,
+  //             status: "success",
+  //             duration: 1000,
+  //             position: "top",
+  //             isClosable: true,
+  //           });
+  //           navigator.clipboard.writeText(shortcutContent);
+  //         }
+  //       }
+  //     };
+
+  //     window.addEventListener("keydown", handleKeyDown);
+
+  //     // Cleanup function
+  //     return () => {
+  //       window.removeEventListener("keydown", handleKeyDown);
+  //     };
+  //   }, [data]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.altKey && e.key >= "1" && e.key <= "9") {
+        const index = parseInt(e.key, 10) - 1; // Convert to 0-based index
+        if (index < data.length) {
+          // Copy the shortcut content of the index-th row
+          const shortcutContent = data[index].shortcut_content;
+          // Create a temporary textarea element
+          const textarea = document.createElement("textarea");
+          textarea.value = shortcutContent;
+          document.body.appendChild(textarea);
+          textarea.select();
+          // Try to copy the text
+          if (document.execCommand("copy")) {
+            toast({
+              title: `Copied: ${shortcutContent}`,
+              status: "success",
+              duration: 1000,
+              position: "top",
+              isClosable: true,
+            });
+          } else {
+            toast({
+              title: "Failed to copy",
+              status: "error",
+              duration: 1000,
+              position: "top",
+              isClosable: true,
+            });
+          }
+          // Remove the textarea element
+          document.body.removeChild(textarea);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [data]);
+
   return (
     <Box>
+      <Box
+        mb={3} // Margin top
+        p={2} // Padding
+        borderRadius="md" // Rounded corners
+        backgroundColor="blue.50" // Light blue background color
+        color="blue.800" // Dark blue text color
+        display="flex"
+        alignItems="center"
+      >
+        <Icon as={AiOutlineInfoCircle} mr={2} />
+        <Text fontWeight="bold">Alt + 1~9 를 눌러 copy 가능</Text>
+      </Box>
+
       <Box display="flex" justifyContent="space-between">
         <Button
           variant="outline"

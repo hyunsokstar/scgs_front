@@ -74,7 +74,7 @@ const ModalButtonForUpdateShortCut = ({ shortcutObj }: IProps) => {
       queryClient.refetchQueries(["get_shortcut_list"]);
 
       toast({
-        title: "welcome back!",
+        title: "update shortcut success",
         status: "success",
       });
       onClose();

@@ -40,10 +40,11 @@ export default function Home() {
     <Box>
       <Box
         display={"flex"}
-        justifyContent={"space-around"}
+        justifyContent={"flex-start"}
         flexWrap={"wrap"}
-        gap={3}
+        gap={5}
         border={"1px solid red"}
+        pl={"6%"}
       >
         <SampleCard
           imageSrc={image_array[0].image_url}
@@ -86,9 +87,6 @@ export default function Home() {
           description={"업무 통계"}
           linkTo="/task-statics"
         />
-        
-
-
       </Box>
     </Box>
   );

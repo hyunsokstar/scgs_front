@@ -13,29 +13,33 @@ import { FcPlanner } from "react-icons/fc";
 import { TbBrandTelegram } from "react-icons/tb";
 
 interface ProfileCardProps {
-  imageUrl: string;
+  profile_image: string;
   username: string;
-  role: string;
-  taskCountForToday: number;
+  position: string;
   status: string;
+  total_count_for_task: number;
   count_for_uncompleted_task: number;
   count_for_completed_task: number;
+  total_count_for_task_for_today: number;
+  count_for_uncompleted_task_for_today: number;
+  count_for_completed_task_for_today: number;
   total_rewards: number;
   currentTask: string;
-  ability_score: number;
 }
 
 export const ProfileCardForTeamStatus: React.FC<ProfileCardProps> = ({
-  imageUrl,
+  profile_image,
   username,
-  role,
+  position,
   status,
-  taskCountForToday,
+  total_count_for_task,
   count_for_uncompleted_task,
   count_for_completed_task,
+  total_count_for_task_for_today,
+  count_for_uncompleted_task_for_today,
+  count_for_completed_task_for_today,
   total_rewards,
   currentTask,
-  ability_score,
 }) => {
   return (
     <Box
@@ -45,8 +49,22 @@ export const ProfileCardForTeamStatus: React.FC<ProfileCardProps> = ({
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
+      height={"500px"}
     >
-      <Image src={imageUrl} alt={username} />
+      {profile_image ? (
+        <Image
+          src={profile_image}
+          style={{ width: "100%", maxHeight: "60%", objectFit: "fill" }}
+          alt={username}
+        />
+      ) : (
+        <Image
+          src={
+            "https://i.namu.wiki/i/Xs9CYSwgkCiuPpWsF2SzzKOQc41SQo3X87mZn6uc6Zrm62y3wMGgI2SWbaVv5bipvRExh5zv8evHR5dekKZKbA.webp"
+          }
+          alt={username}
+        />
+      )}
 
       <Box p="6">
         <Box
@@ -65,7 +83,7 @@ export const ProfileCardForTeamStatus: React.FC<ProfileCardProps> = ({
             {username}
           </Box>
           <Badge borderRadius="full" px="2" colorScheme="teal">
-            {role}
+            {position}
           </Badge>
           <Box
             color="gray.500"
@@ -82,16 +100,31 @@ export const ProfileCardForTeamStatus: React.FC<ProfileCardProps> = ({
 
         <Box mt={2}>
           <Grid templateColumns="repeat(2, 1fr)" gap={2} mt={3}>
-            <Text fontSize="sm">업무 총계 : {taskCountForToday} 개</Text>
-            <Text fontSize="sm">today : {taskCountForToday} 개</Text>
-            <Text fontSize="sm">비완료: {count_for_uncompleted_task}</Text>
-            <Text fontSize="sm">완료: {count_for_completed_task}</Text>
-            <Text fontSize="sm">능력치: {ability_score} 점</Text>
-            <Text fontSize="sm">상금: {total_rewards} 원</Text>
-          </Grid>
+            {/* <Text fontSize="sm">업무 총계 : {taskCountForToday} 개</Text> */}
+            {/* <Text fontSize="sm">today : {taskCountForToday} 개</Text> */}
+            {/* <Text>until today</Text> */}
+            <Text>전체</Text>
+            <Text>오늘</Text>
+            <Box>
+              <Text fontSize="sm">total: {total_count_for_task}</Text>
+              <Text fontSize="sm">비완료: {count_for_uncompleted_task}</Text>
+              <Text fontSize="sm">완료 : {count_for_completed_task}</Text>
+            </Box>
+            <Box>
+              <Text fontSize="sm">total: {total_count_for_task_for_today}</Text>
+              <Text fontSize="sm">
+                비완료: {count_for_uncompleted_task_for_today}
+              </Text>
+              <Text fontSize="sm">
+                완료 : {count_for_completed_task_for_today}
+              </Text>
+            </Box>
 
+            <text>상금 총계</text>
+            <Text fontSize="sm">{total_rewards} 원</Text>
+          </Grid>
           <Box mt={2}>
-            <Text fontSize="md">작업중: {currentTask}</Text>
+            <Text fontSize="md">in progress: {currentTask}</Text>
           </Box>
 
           <Box textAlign={"right"} mt={5}>

@@ -10,7 +10,19 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export const apiForUpdateEditModeForStudyNoteContent = (userPk: string | number) => {
+export const apiForgetDataForTaskInfoPerUser = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  // const [_, pageNum] = queryKey;
+  return instance.get(`users/members-task-status`).then((response) => {
+    console.log("response : ", response);
+
+    return response.data;
+  });
+};
+export const apiForUpdateEditModeForStudyNoteContent = (
+  userPk: string | number
+) => {
   console.log("apiForUpdateEditModeForStudyNoteForContent 실행 check");
 
   return instance
@@ -84,7 +96,7 @@ export const getUserNamesForSelectOption = () =>
     // console.log("user list response : ", response);
     return response.data;
   });
-  
+
 // export const getUserNamesForSelectOption = () =>
 //   instance.get("users/only-user-name").then((response) => {
 //     // console.log("user list response : ", response);
