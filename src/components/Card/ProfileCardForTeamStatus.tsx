@@ -49,22 +49,25 @@ export const ProfileCardForTeamStatus: React.FC<ProfileCardProps> = ({
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
-      height={"500px"}
+      height={"100%"}
     >
-      {profile_image ? (
-        <Image
-          src={profile_image}
-          style={{ width: "100%", maxHeight: "60%", objectFit: "fill" }}
-          alt={username}
-        />
-      ) : (
-        <Image
-          src={
-            "https://i.namu.wiki/i/Xs9CYSwgkCiuPpWsF2SzzKOQc41SQo3X87mZn6uc6Zrm62y3wMGgI2SWbaVv5bipvRExh5zv8evHR5dekKZKbA.webp"
-          }
-          alt={username}
-        />
-      )}
+      <Box width={"100%"} border={"1px solid green"}>
+        {profile_image ? (
+          <Image
+            src={profile_image}
+            style={{ width: "520px", height: "220px", objectFit: "cover" }}
+            alt={username}
+          />
+        ) : (
+          <Image
+            style={{ width: "500px", height: "220px", objectFit: "cover" }}
+            src={
+              "https://i.namu.wiki/i/Xs9CYSwgkCiuPpWsF2SzzKOQc41SQo3X87mZn6uc6Zrm62y3wMGgI2SWbaVv5bipvRExh5zv8evHR5dekKZKbA.webp"
+            }
+            alt={username}
+          />
+        )}
+      </Box>
 
       <Box p="6">
         <Box
@@ -100,9 +103,6 @@ export const ProfileCardForTeamStatus: React.FC<ProfileCardProps> = ({
 
         <Box mt={2}>
           <Grid templateColumns="repeat(2, 1fr)" gap={2} mt={3}>
-            {/* <Text fontSize="sm">업무 총계 : {taskCountForToday} 개</Text> */}
-            {/* <Text fontSize="sm">today : {taskCountForToday} 개</Text> */}
-            {/* <Text>until today</Text> */}
             <Text>전체</Text>
             <Text>오늘</Text>
             <Box>
@@ -127,7 +127,7 @@ export const ProfileCardForTeamStatus: React.FC<ProfileCardProps> = ({
             <Text fontSize="md">in progress: {currentTask}</Text>
           </Box>
 
-          <Box textAlign={"right"} mt={5}>
+          <Box textAlign={"right"} mt={3}>
             <Grid templateColumns="repeat(4, 1fr)" gap={2}>
               <IconButton
                 variant={"outline"}

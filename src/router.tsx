@@ -54,6 +54,7 @@ import Test10 from "./routes/TestPage/Test10";
 import Test4_2 from "./routes/TestPage/Test4_2";
 import TeamStatusPage from "./routes/TaskInfosPerMember";
 import ShortCutDetail from "./routes/ShortCutDetail";
+import TeamStatusDetailPage from "./routes/TeamStatusDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -109,7 +110,7 @@ const router = createBrowserRouter([
         path: "test4-2",
         element: <Test4_2 />,
       },
-      
+
       {
         path: "test5",
         element: <Test5 />,
@@ -142,10 +143,17 @@ const router = createBrowserRouter([
         path: "test-board",
         element: <TestBoardPage />,
       },
+
       {
         path: "team-status",
         element: <TeamStatusPage />,
       },
+
+      {
+        path: "team-status/:userPk",
+        element: <TeamStatusDetailPage />,
+      },
+
       {
         path: "react-table",
         element: <ReactTablePage />,

@@ -49,7 +49,7 @@ const TaskInfosPerMember = (props: Props) => {
         {dataForTaskInfoPerUser
           ? dataForTaskInfoPerUser.map((user) => {
               return (
-                <Box flexBasis={"25%"}>
+                <Box width={"23%"} mt={2} mb={3}>
                   <ProfileCardForTeamStatus
                     profile_image={user.profile_image}
                     username={user.username}
