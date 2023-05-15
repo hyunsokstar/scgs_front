@@ -11,8 +11,10 @@ import {
 import { GrTask, GrKeyboard } from "react-icons/gr";
 import { FcPlanner } from "react-icons/fc";
 import { TbBrandTelegram } from "react-icons/tb";
+import { Link } from 'react-router-dom';
 
 interface ProfileCardProps {
+  id: number;
   profile_image: string;
   username: string;
   position: string;
@@ -28,6 +30,7 @@ interface ProfileCardProps {
 }
 
 export const ProfileCardForTeamStatus: React.FC<ProfileCardProps> = ({
+  id,
   profile_image,
   username,
   position,
@@ -41,6 +44,7 @@ export const ProfileCardForTeamStatus: React.FC<ProfileCardProps> = ({
   total_rewards,
   currentTask,
 }) => {
+
   return (
     <Box
       maxW="sm"
@@ -129,12 +133,14 @@ export const ProfileCardForTeamStatus: React.FC<ProfileCardProps> = ({
 
           <Box textAlign={"right"} mt={3}>
             <Grid templateColumns="repeat(4, 1fr)" gap={2}>
-              <IconButton
-                variant={"outline"}
-                aria-label="Task"
-                icon={<GrTask />}
-                size={"md"}
-              />
+              <Link to={`/team-status/${id}`}>
+                <IconButton
+                  variant={"outline"}
+                  aria-label="Task"
+                  icon={<GrTask />}
+                  size={"md"}
+                />
+              </Link>
               <IconButton
                 variant={"outline"}
                 aria-label="Planner"

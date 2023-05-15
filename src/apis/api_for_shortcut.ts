@@ -81,8 +81,8 @@ export const getRelatedShortCutList = async ({
 export const api_for_get_shortcut_list = async ({
   queryKey,
 }: QueryFunctionContext): Promise<ShortcutsResponse> => {
-  const [_, pageNum] = queryKey;
-  return await instance.get(`shortcut/?page=${pageNum}`).then((response) => {
+  // const [_, pageNum] = queryKey;
+  return await instance.get("shortcut").then((response) => {
     console.log("response.data 11111111 : ", response.data);
     return response.data;
   });
@@ -96,7 +96,6 @@ export const apiForUpdateShortcut = ({
   tags,
 }: TypeForUpdateFormForShortcut) => {
 
-  console.log("shortcut : ", shortcut);
   console.log("shortcut : ", shortcut);
 
   return instance

@@ -51,6 +51,7 @@ const TaskInfosPerMember = (props: Props) => {
               return (
                 <Box width={"23%"} mt={2} mb={3}>
                   <ProfileCardForTeamStatus
+                    id={user.id}
                     profile_image={user.profile_image}
                     username={user.username}
                     position={user.position}

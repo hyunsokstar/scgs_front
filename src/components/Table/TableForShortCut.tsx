@@ -49,9 +49,6 @@ const TableForShortCut = () => {
   } = useQuery<ShortcutsResponse>(
     ["get_shortcut_list", currentPageNum],
     api_for_get_shortcut_list,
-    {
-      enabled: true,
-    }
   );
 
   const [filteredData, setFilteredData] = useState(
@@ -256,7 +253,7 @@ const TableForShortCut = () => {
               </Td>
               <Td>
                 <Flex justifyContent={"space-between"}>
-                  <Textarea defaultValue={shortcut.shortcut} />
+                  <Textarea value={shortcut.shortcut} />
 
                   <Box display={"flex"} flexDirection={"column"}>
                     <CopyButtonByPropsText text={shortcut.shortcut} />
