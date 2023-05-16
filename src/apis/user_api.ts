@@ -11,6 +11,18 @@ const instance = axios.create({
 });
 // 1122
 
+export const apiForDeleteUserTaskCommentForPk = (commentPk: string | number) => {
+  console.log("commentPk : ", commentPk);
+  return instance
+    // .delete(`project_progress/comment/${commentPk}`, {
+      .delete(`users/comment/${commentPk}/delete`, {
+        headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForCreateUserTaskComment = ({
   userPk,
   comment,

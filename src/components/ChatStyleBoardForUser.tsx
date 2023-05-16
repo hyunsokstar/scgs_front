@@ -31,7 +31,7 @@ import {
   updateCommentTextForTaskApi,
   updateMutationForCommentEditModeApi,
 } from "../apis/project_progress_api";
-import { apiForCreateUserTaskComment } from "../apis/user_api";
+import { apiForCreateUserTaskComment, apiForDeleteUserTaskCommentForPk } from "../apis/user_api";
 
 interface Message {
   writer: any;
@@ -61,7 +61,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
 
         // toast({
         //   status: "success",
@@ -83,7 +83,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
 
         toast({
           status: "success",
@@ -105,9 +105,11 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
     });
   };
 
-  const deleteCommentMutationByPk = useMutation(
+  // const deleteCommentMutationByPk = useMutation(
+  const mutationForDeleteUserTaskComment = useMutation(
     (pk: string | number) => {
-      return deleteOneCommentForTaskByPkApi(pk);
+      // return deleteOneCommentForTaskByPkApi(pk);
+      return apiForDeleteUserTaskCommentForPk(pk);
     },
     {
       onSettled: () => {
@@ -116,7 +118,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
       onSuccess: (data) => {
         console.log("data : ", data);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
 
         toast({
           title: "delete comment 성공!",
@@ -126,9 +128,11 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
     }
   );
 
-  const onDeleteCommentHandler = (commentPk: string | number) => {
-    console.log("onDeleteCommentHandler : ", commentPk);
-    deleteCommentMutationByPk.mutate(commentPk);
+  const deleteButtonHandlerForUserTaskComment = (
+    commentPk: string | number
+  ) => {
+    console.log("coment pk for delete : ", commentPk);
+    mutationForDeleteUserTaskComment.mutate(commentPk);
   };
 
   return (
@@ -174,7 +178,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
                       rounded="md"
                       size="xs"
                     />
-                    <IconButton
+                    {/* <IconButton
                       aria-label="Cancel"
                       icon={<FaTimes />}
                       onClick={() => EditModeHandler(pk)}
@@ -183,13 +187,13 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
                       rounded="md"
                       size="xs"
                       ml={1}
-                    />
+                    /> */}
                   </Box>
                 </Box>
               ) : (
                 <Box>
                   {comment}
-                  <IconButton
+                  {/* <IconButton
                     icon={<EditIcon />}
                     aria-label="modify"
                     onClick={() => EditModeHandler(pk)}
@@ -199,11 +203,12 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
                     size="xs"
                     rounded="md"
                     ml={2}
-                  />
+                  /> */}
                   <IconButton
                     icon={<DeleteIcon />}
                     aria-label="Delete"
-                    onClick={() => onDeleteCommentHandler(pk)}
+                    // onClick={() => onDeleteCommentHandler(pk)}
+                    onClick={() => deleteButtonHandlerForUserTaskComment(pk)}
                     variant="outline"
                     colorScheme="teal"
                     _hover={{ bg: "teal.400" }}
