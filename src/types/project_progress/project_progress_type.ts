@@ -105,7 +105,6 @@ export interface IOneTaskForProjectTaskType {
   due_date: string;
   started_at_formatted: string;
   elapsed_time_from_started_at: string;
-
   cash_prize: number;
   is_urgent_request: boolean;
 

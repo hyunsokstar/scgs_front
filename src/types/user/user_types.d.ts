@@ -57,3 +57,9 @@ export type TaskInfoPerUser = {
 };
 
 export type TypeForDataForTaskInfoPerUser = User[];
+
+
+export interface parameterTypeForCreateUserTaskComment {
+  userPk: string | number | undefined;
+  comment: string;
+}

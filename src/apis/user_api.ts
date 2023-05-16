@@ -3,12 +3,40 @@ import Cookie from "js-cookie";
 
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { backendApi } from "./common_api";
-import { IUserRow } from "../types/user/user_types";
+import { IUserRow, parameterTypeForCreateUserTaskComment } from "../types/user/user_types";
 
 const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
   withCredentials: true,
 });
+// 1122
+
+export const apiForCreateUserTaskComment = ({
+  userPk,
+  comment,
+}: parameterTypeForCreateUserTaskComment ) =>
+  instance
+    .post(
+      `/users/${userPk}/comment`,
+      {
+        owner: userPk,
+        comment,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
+export const apiForGetTaskDataForSelectedUser = async ({ queryKey }: QueryFunctionContext) => {
+  const [_, userPk] = queryKey;
+
+  return await instance
+    .get(`users/${userPk}/task-data-for-uncompleted`)
+    .then((response) => response.data);
+};
 
 export const apiForgetDataForTaskInfoPerUser = ({
   queryKey,
