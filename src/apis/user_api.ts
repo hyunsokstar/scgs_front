@@ -42,6 +42,14 @@ export const apiForCreateUserTaskComment = ({
     )
     .then((response) => response.data);
 
+export const apiForGetCompletedTaskListForPersonalTaskStatus = async ({ queryKey }: QueryFunctionContext) => {
+  const [_, userPk] = queryKey;
+
+  return await instance
+    .get(`users/${userPk}/task-data-for-uncompleted`)
+    .then((response) => response.data);
+};
+
 export const apiForGetTaskDataForSelectedUser = async ({ queryKey }: QueryFunctionContext) => {
   const [_, userPk] = queryKey;
 

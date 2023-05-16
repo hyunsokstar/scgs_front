@@ -17,7 +17,7 @@ interface ProfileCardProps {
   id: number;
   profile_image: string;
   username: string;
-  position: string;
+  position: string | null;
   status: string;
   total_count_for_task: number;
   count_for_uncompleted_task: number;
@@ -29,7 +29,7 @@ interface ProfileCardProps {
   currentTask: string;
 }
 
-export const ProfileCardForTeamStatus: React.FC<ProfileCardProps> = ({
+export const ProfileCardForTeamStatus: React.FC<any> = ({
   id,
   profile_image,
   username,

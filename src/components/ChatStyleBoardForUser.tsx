@@ -32,6 +32,7 @@ import {
   updateMutationForCommentEditModeApi,
 } from "../apis/project_progress_api";
 import { apiForCreateUserTaskComment, apiForDeleteUserTaskCommentForPk } from "../apis/user_api";
+import { UserTaskComment } from "../types/user/user_types";
 
 interface Message {
   writer: any;
@@ -233,14 +234,14 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
 }
 
 interface User {
-  pk: number;
+  pk?: number;
   username: string;
   profile_image: string;
 }
 
 type IProps = {
   userPk: string | undefined;
-  task_comments: ITaskComment[];
+  task_comments: UserTaskComment[] | undefined;
   task_manager: User | undefined;
 };
 
