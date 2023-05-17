@@ -17,11 +17,7 @@ const PersonalUserTaskStatusPage = (props: Props) => {
     isLoading: isLoadingForUncompletedTaskListDataForSelectedUser,
     refetch: refetchForUncompletedTaskListDataForSelectedUser,
   } = useQuery<typeForUncompletedTaskListForPersonalTaskStatus>(
-    [
-      "apiForGetTaskDataForSelectedUser",
-      userPk,
-      "apiForGetTaskDataForSelectedUser",
-    ],
+    ["apiForGetTaskDataForSelectedUser", userPk],
     apiForGetTaskDataForSelectedUser
   );
 
@@ -52,7 +48,8 @@ const PersonalUserTaskStatusPage = (props: Props) => {
           refetchForUncompletedTaskListDataForSelectedUser
         }
       />
-
+      <br />
+      <br />
       <CompleteTaskListForPersnalTaskStatus userPk={userPk} />
     </Box>
   );

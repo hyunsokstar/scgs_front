@@ -3,9 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import React, { ReactElement, useState } from "react";
 import { getCompletedTaskListForMe } from "../apis/project_progress_api";
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
-import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
-import ModalForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
-// import CompletedTaskRow from "./CompletedTaskRow";
 import CompletedTaskRowForMe from "./CompletedTaskRowForMe";
 
 interface Props {}

@@ -135,3 +135,44 @@ export type typeForUncompletedTaskListForPersonalTaskStatus = {
   count_for_in_progress: number;
   count_for_in_testing: number;
 };
+
+export interface typeForCompletedTaskRow {
+  pk: string;
+  task_classification: string;
+  task: string;
+  writer: string;
+  task_manager: TaskManager;
+  importance: number;
+  in_progress: boolean;
+  is_testing: boolean;
+  task_completed: boolean;
+  current_status: string;
+  started_at: string;
+  due_date: string;
+  started_at_formatted: string;
+  completed_at_formatted: string;
+  due_date_formatted: string;
+  elapsed_time_from_started_at: string;
+  time_consumed_from_start_to_complete: string;
+  time_left_to_due_date: string;
+  check_result_by_tester: boolean;
+  score_by_tester: number;
+  is_task_for_cash_prize: boolean;
+  is_task_for_urgent: boolean;
+  cash_prize: number;
+}
+
+export interface typeForCompletedTaskListDataForSelectedUser {
+  ProjectProgressList: typeForCompletedTaskRow[];
+  task_number_for_one_page: number;
+  totalPageCount: number;
+}
+
+export interface  typeForPropsForCompletedTaskRowForPersonalUserTaskStatus {
+  ProjectProgressList: typeForCompletedTaskRow[];
+  task_number_for_one_page: number;
+  totalPageCount: number;
+  currentPageNum: number,
+  setCurrentPageNum: any,
+  projectTaskListRefatch: any
+}

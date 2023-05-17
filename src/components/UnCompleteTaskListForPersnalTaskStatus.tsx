@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
 import UncompletedTaskRowForMe from "./UncompletedTaskRowForMe";
 import { typeForUncompletedTaskListForPersonalTaskStatus } from "../types/user/user_types";
+import UncompletedTaskRowForPersonalUserTaskStatus from "./UncompletedTaskRowForPersonalUserTaskStatus";
 
 interface Props {
   dataForUncompletedTaskListDataForSelectedUser?:
@@ -78,7 +79,11 @@ const UnCompleteTaskListForPersnalTaskStatus = ({
 
       {dataForUncompletedTaskListDataForSelectedUser ? (
         <Box>
-          <UncompletedTaskRowForMe
+                {/* queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
+      queryClient.refetchQueries([
+        "apiForCompletedTaskListDataForSelectedUser",
+      ]); */}
+          <UncompletedTaskRowForPersonalUserTaskStatus
             ProjectProgressList={
               dataForUncompletedTaskListDataForSelectedUser.ProjectProgressList
             }

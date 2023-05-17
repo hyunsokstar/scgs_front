@@ -46,7 +46,7 @@ export const apiForGetCompletedTaskListForPersonalTaskStatus = async ({ queryKey
   const [_, userPk] = queryKey;
 
   return await instance
-    .get(`users/${userPk}/task-data-for-uncompleted`)
+    .get(`users/${userPk}/task-data-for-completed`)
     .then((response) => response.data);
 };
 
