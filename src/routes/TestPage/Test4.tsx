@@ -1,94 +1,111 @@
 import React, { useState } from "react";
-import { Task, ViewMode, Gantt } from "gantt-task-react";
-import { ViewSwitcher } from "../../components/Gantt/view-switcher";
-import { getStartEndDateForProject, initTasks } from "./helper";
-import "gantt-task-react/dist/index.css";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+  DraggableProvided,
+  DroppableProvided,
+} from "react-beautiful-dnd";
 
-const test4 = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [view, setView] = React.useState<ViewMode>(ViewMode.Day);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [tasks, setTasks] = React.useState<Task[]>(initTasks());
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [isChecked, setIsChecked] = React.useState<Task[]>(initTasks());
+type Team = "기획팀" | "API 팀" | "UI 팀" | "Assister 팀";
+const teams: Team[] = ["기획팀", "API 팀", "UI 팀", "Assister 팀"];
+const initialMembers: Record<Team, string[]> = {
+  기획팀: ["Member 1", "Member 2", "Member 3"],
+  "API 팀": ["Member 4", "Member 5", "Member 6"],
+  "UI 팀": ["Member 7", "Member 8", "Member 9"],
+  "Assister 팀": ["Member 10", "Member 11", "Member 12"],
+};
 
-  let columnWidth = 65;
-  if (view === ViewMode.Year) {
-    columnWidth = 350;
-  } else if (view === ViewMode.Month) {
-    columnWidth = 300;
-  } else if (view === ViewMode.Week) {
-    columnWidth = 250;
-  }
+const teamColors: Record<Team, string> = {
+  기획팀: "lightgreen",
+  "API 팀": "lightblue",
+  "UI 팀": "lightyellow",
+  "Assister 팀": "lightpink",
+};
 
-  const handleTaskChange = (task: Task) => {
-    console.log(`On date change Id:${task.id}`);
-    let newTasks = tasks.map((t) => (t.id === task.id ? task : t));
-    if (task.project) {
-      const [start, end] = getStartEndDateForProject(newTasks, task.project);
-      const project =
-        newTasks[newTasks.findIndex((t) => t.id === task.project)];
-      if (
-        project.start.getTime() !== start.getTime() ||
-        project.end.getTime() !== end.getTime()
-      ) {
-        const changedProject = { ...project, start, end };
-        newTasks = newTasks.map((t) =>
-          t.id === task.project ? changedProject : t
-        );
-      }
+const Test4 = () => {
+  const [members, setMembers] = useState(initialMembers);
+
+  const handleOnDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+
+    const { source, destination } = result;
+
+    if (source.droppableId !== destination.droppableId) {
+      const sourceMembers = [...members[source.droppableId as Team]];
+      const destMembers = [...members[destination.droppableId as Team]];
+      const [removed] = sourceMembers.splice(source.index, 1);
+      destMembers.splice(destination.index, 0, removed);
+      setMembers({
+        ...members,
+        [source.droppableId as Team]: sourceMembers,
+        [destination.droppableId as Team]: destMembers,
+      });
+    } else {
+      const teamMembers = [...members[source.droppableId as Team]];
+      const [removed] = teamMembers.splice(source.index, 1);
+      teamMembers.splice(destination.index, 0, removed);
+      setMembers({
+        ...members,
+        [source.droppableId as Team]: teamMembers,
+      });
     }
-    setTasks(newTasks);
-  };
-
-  const handleTaskDelete = (task: Task) => {
-    const conf = window.confirm(`Are you sure about ${task.name} ?`);
-    if (conf) {
-      setTasks(tasks.filter((t) => t.id !== task.id));
-    }
-    return conf;
-  };
-
-  const handleProgressChange = async (task: Task) => {
-    setTasks(tasks.map((t) => (t.id === task.id ? task : t)));
-    console.log(`On progress change Id:${task.id}`);
-  };
-
-  const handleDblClick = (task: Task) => {
-    alert(`On Double Click event Id:${task.id}`);
-  };
-
-  const handleClick = (task: Task) => {
-    console.log(`On Click event Id:${task.id}`);
-  };
-
-  const handleSelect = (task: Task, isSelected: boolean) => {
-    console.log(`${task.name} has ${(isSelected ? "selected" : "unselected")}`);
-  };
-
-  const handleExpanderClick = (task: Task) => {
-    setTasks(tasks.map((t) => (t.id === task.id ? task : t)));
-    console.log(`On expander click Id:${task.id}`);
   };
 
   return (
-    <div className="Wrapper">
-      <h3>Gantt With Unlimited Height</h3>
-      <Gantt
-        tasks={tasks}
-        viewMode={view}
-        onDateChange={handleTaskChange}
-        onDelete={handleTaskDelete}
-        onProgressChange={handleProgressChange}
-        onDoubleClick={handleDblClick}
-        onClick={handleClick}
-        onSelect={handleSelect}
-        onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
-        columnWidth={columnWidth}
-      />
-    </div>
+    <DragDropContext onDragEnd={handleOnDragEnd}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        {teams.map((team, i) => (
+          <Droppable droppableId={team} key={i}>
+            {(provided: DroppableProvided) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                style={{
+                  backgroundColor: teamColors[team],
+                  width: "24%",
+                  padding: "10px",
+                  margin: "1%",
+                  borderRadius: "10px",
+                  boxSizing: "border-box",
+                }}
+              >
+                <h2>{team}</h2>
+                {members[team].map((member, index) => (
+                  <Draggable key={member} draggableId={member} index={index}>
+                    {(provided: DraggableProvided) => (
+                      <p
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                        style={{
+                          padding: "10px",
+                          margin: "10px 0",
+                          backgroundColor: "white",
+                          borderRadius: "5px",
+                          ...provided.draggableProps.style,
+                        }}
+                      >
+                        {member}
+                      </p>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        ))}
+      </div>
+    </DragDropContext>
   );
 };
 
-export default test4;
+export default Test4;

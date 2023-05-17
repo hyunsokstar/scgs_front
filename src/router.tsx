@@ -43,7 +43,7 @@ import Test5 from "./routes/TestPage/Test5";
 import TaskStaticsPage from "./components/TaskStaticsPage";
 import Test6 from "./routes/TestPage/Test6";
 import Test7 from "./routes/TestPage/Test7";
-import { Test8 } from "./routes/TestPage/Test8";
+import Test8 from "./routes/TestPage/Test8";
 import WantedPage from "./routes/WantedPage";
 import LongTermPlan from "./routes/LongTermPlan";
 import LongTermPlanDetail from "./routes/LongTermPlanDetail";
@@ -51,10 +51,10 @@ import StudyNotePage from "./routes/StudyNotePage";
 import StudyNoteDetail from "./routes/StudyNoteDetail";
 import Test9 from "./routes/TestPage/Test9";
 import Test10 from "./routes/TestPage/Test10";
-import Test4_2 from "./routes/TestPage/Test4_2";
 import TeamStatusPage from "./routes/TaskInfosPerMember";
 import ShortCutDetail from "./routes/ShortCutDetail";
 import PersonalUserTaskStatusPage from "./routes/PersonalUserTaskStatusPage";
+import Test31 from "./routes/TestPage/Test31";
 
 const router = createBrowserRouter([
   {
@@ -103,14 +103,13 @@ const router = createBrowserRouter([
         element: <Test3 />,
       },
       {
+        path: "test31",
+        element: <Test31 />,
+      },
+      {
         path: "test4",
         element: <Test4 />,
       },
-      {
-        path: "test4-2",
-        element: <Test4_2 />,
-      },
-
       {
         path: "test5",
         element: <Test5 />,
@@ -143,7 +142,7 @@ const router = createBrowserRouter([
         path: "test-board",
         element: <TestBoardPage />,
       },
-      
+
       {
         path: "team-status",
         element: <TeamStatusPage />,

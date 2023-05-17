@@ -79,10 +79,6 @@ const UnCompleteTaskListForPersnalTaskStatus = ({
 
       {dataForUncompletedTaskListDataForSelectedUser ? (
         <Box>
-                {/* queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
-      queryClient.refetchQueries([
-        "apiForCompletedTaskListDataForSelectedUser",
-      ]); */}
           <UncompletedTaskRowForPersonalUserTaskStatus
             ProjectProgressList={
               dataForUncompletedTaskListDataForSelectedUser.ProjectProgressList

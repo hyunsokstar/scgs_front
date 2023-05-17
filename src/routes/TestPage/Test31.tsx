@@ -8,16 +8,23 @@ import {
   DroppableProvided,
 } from "react-beautiful-dnd";
 
-type Team = "기획팀" | "API 팀" | "UI 팀" | "Assister 팀";
-const teams: Team[] = ["기획팀", "API 팀", "UI 팀", "Assister 팀"];
+type Team = "기획팀" | "API 팀" | "UI 팀" | "QA 팀";
+const teams: Team[] = ["기획팀", "API 팀", "UI 팀", "QA 팀"];
 const initialMembers: Record<Team, string[]> = {
   기획팀: ["Member 1", "Member 2", "Member 3"],
   "API 팀": ["Member 4", "Member 5", "Member 6"],
   "UI 팀": ["Member 7", "Member 8", "Member 9"],
-  "Assister 팀": ["Member 10", "Member 11", "Member 12"],
+  "QA 팀": ["Member 10", "Member 11", "Member 12"],
 };
 
-const Test3 = () => {
+const teamColors: Record<Team, string> = {
+  기획팀: "lightgreen",
+  "API 팀": "lightblue",
+  "UI 팀": "lightyellow",
+  "QA 팀": "lightpink",
+};
+
+const Test31 = () => {
   const [members, setMembers] = useState(initialMembers);
 
   const handleOnDragEnd = (result: DropResult) => {
@@ -48,11 +55,28 @@ const Test3 = () => {
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
         {teams.map((team, i) => (
           <Droppable droppableId={team} key={i}>
             {(provided: DroppableProvided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef}>
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                style={{
+                  backgroundColor: teamColors[team],
+                  width: "24%",
+                  padding: "10px",
+                  margin: "1%",
+                  borderRadius: "10px",
+                  boxSizing: "border-box",
+                }}
+              >
                 <h2>{team}</h2>
                 {members[team].map((member, index) => (
                   <Draggable key={member} draggableId={member} index={index}>
@@ -61,6 +85,13 @@ const Test3 = () => {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
+                        style={{
+                          padding: "10px",
+                          margin: "10px 0",
+                          backgroundColor: "white",
+                          borderRadius: "5px",
+                          ...provided.draggableProps.style,
+                        }}
                       >
                         {member}
                       </p>
@@ -77,4 +108,4 @@ const Test3 = () => {
   );
 };
 
-export default Test3;
+export default Test31;

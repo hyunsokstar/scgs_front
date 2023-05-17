@@ -320,7 +320,7 @@ function UncompletedTaskRow({
                     mr={5}
                   >
                     통과 : &nbsp;
-                    {task.task_completed ? (
+                    {!task.task_completed ? (
                       <SlideToggleButton
                         onChange={() => {
                           update_for_check_for_cash_prize(

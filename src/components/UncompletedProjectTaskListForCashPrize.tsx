@@ -185,8 +185,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                   <Tr borderBottom={"2px solid #fafad2"}>
                     <Th colSpan={2}>
                       <Text fontSize={22}>
-                        Tasks For Cash Prize (총: {taskListData?.totalPageCount}{" "}
-                        개, per_page: {taskListData?.task_number_for_one_page}{" "}
+                        Tasks For Cash Prize (총: {taskListData?.totalPageCount}{" "}개, per_page: {taskListData?.task_number_for_one_page}{" "}
                         개){" "}
                       </Text>
                     </Th>
