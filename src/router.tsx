@@ -55,6 +55,7 @@ import TeamStatusPage from "./routes/TaskInfosPerMember";
 import ShortCutDetail from "./routes/ShortCutDetail";
 import PersonalUserTaskStatusPage from "./routes/PersonalUserTaskStatusPage";
 import Test31 from "./routes/TestPage/Test31";
+import TeamManagementPage from "./routes/TeamManagementPage";
 
 const router = createBrowserRouter([
   {
@@ -146,6 +147,10 @@ const router = createBrowserRouter([
       {
         path: "team-status",
         element: <TeamStatusPage />,
+      },
+      {
+        path: "team-management",
+        element: <TeamManagementPage />,
       },
 
       {

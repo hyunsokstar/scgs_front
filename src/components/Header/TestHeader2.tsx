@@ -134,13 +134,14 @@ const Header = () => {
 
   return (
     <>
-      <Flex
+      <Box
+        display={"flex"}
         as="nav"
         height={"60px"}
         bg="gray.800"
-        px={1.5}
-        align="center"
-        justify="space-between"
+        px={1}
+        alignItems={"center"}
+        justifyContent="space-between"
         my={1}
         mb={1}
       >
@@ -159,8 +160,6 @@ const Header = () => {
         >
           <Text
             fontSize="xl"
-            fontWeight="medium"
-            mr={{ base: 0, md: "1rem" }}
             cursor="pointer"
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
@@ -318,6 +317,21 @@ const Header = () => {
           </Text>
         </NavLink>
 
+        <NavLink
+          to="/team-management"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            Team Management
+          </Text>
+        </NavLink>
+
         <Box>
           {/* <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box> */}
           {!isLoggedIn || logoutSuccess === true ? (
@@ -362,7 +376,7 @@ const Header = () => {
             </Box>
           )}
         </Box>
-      </Flex>
+      </Box>
       <LoginModal
         setLogOutSuccess={setLogoutSuccess}
         isOpen={isLoginOpen}
