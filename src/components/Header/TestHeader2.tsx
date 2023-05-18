@@ -228,6 +228,21 @@ const Header = () => {
         </NavLink>
 
         <NavLink
+          to="/task-statics"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            Statics
+          </Text>
+        </NavLink>        
+
+        <NavLink
           to="/test-board"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >

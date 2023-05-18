@@ -12,10 +12,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Box } from "@chakra-ui/react";
-import { ITypeForTaskStaticsDataForPerson } from "../../types/project_progress/project_progress_type";
+import { ManagerData } from "../../types/project_progress/project_progress_type";
 
 interface Props {
-  data: ITypeForTaskStaticsDataForPerson;
+  data: ManagerData[];
 }
 
 const BarChartForTaskStatus = ({ data }: Props) => {

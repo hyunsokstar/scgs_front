@@ -1,9 +1,10 @@
 import { Flex, Box, Text, HStack } from "@chakra-ui/react";
 import BarChartForTaskStatus from "./Chart/BarChartForTaskStatus";
-import { ITypeForTaskStaticsDataForPerson } from "../types/project_progress/project_progress_type";
+import { TaskStaticsResponse } from "../types/project_progress/project_progress_type";
 import { useQuery } from "@tanstack/react-query";
 import { getDataForTaskStaticsForIsCompleted } from "../apis/project_progress_api";
 import PieChartForUncompletedTaskCount from "./Chart/PieChartForUncompletedTaskCount";
+import BarChartForDailyTaskCount from "./Chart/BarChartForDailyTaskCount";
 
 // const data: ITypeForTaskStaticsDataForPerson = [
 //   {
@@ -24,7 +25,7 @@ function TaskStaticsPage() {
     isLoading: isLoadingForDataForTaskStaticsForIsCompleted,
     isError: isErrorForDataForTaskStaticsForIsCompleted,
     refetch: refetchForDataForTaskStaticsForIsCompleted,
-  } = useQuery<ITypeForTaskStaticsDataForPerson>(
+  } = useQuery<TaskStaticsResponse>(
     ["getDataForTaskStaticsForIsCompleted"],
     () => getDataForTaskStaticsForIsCompleted()
   );
@@ -41,7 +42,7 @@ function TaskStaticsPage() {
   }
 
   const data_for_uncompleted_tasks_for_pie_chart =
-    dataForTaskStaticsForIsCompleted.map((row) => {
+    dataForTaskStaticsForIsCompleted.managers.map((row) => {
       return {
         name: row.task_manager,
         value: row.total_count_for_uncompleted_task,
@@ -49,7 +50,7 @@ function TaskStaticsPage() {
     });
 
   const data_for_completed_tasks_for_pie_chart =
-    dataForTaskStaticsForIsCompleted.map((row) => {
+    dataForTaskStaticsForIsCompleted.managers.map((row) => {
       return {
         name: row.task_manager,
         value: row.total_count_for_completed_task,
@@ -57,16 +58,31 @@ function TaskStaticsPage() {
     });
 
   return (
-    <Flex flexDirection={"column"}>
-      <Text fontSize={"32px"} mx={"auto"}>
+    <Box display="flex" flexDirection={"column"}>
+      <Box fontSize={"32px"} mx={"auto"}>
         {" "}
-        멤버별 Task Status{" "}
-      </Text>
-      <Box border="1px solid black">
-        <BarChartForTaskStatus data={dataForTaskStaticsForIsCompleted} />
+        일별 업무 통계
       </Box>
+      <BarChartForDailyTaskCount
+        data={dataForTaskStaticsForIsCompleted.task_count_for_month}
+      />
+      <br />
+      <br />
+      <br />
+      <Box fontSize={"32px"} mx={"auto"}>
+        {" "}
+        멤버별 업무 통계
+      </Box>
+      <Box border="1px solid black">
+        <BarChartForTaskStatus
+          data={dataForTaskStaticsForIsCompleted.managers}
+        />
+      </Box>
+      <br />
+      <br />
+      <br />
       <Text fontSize={"32px"} mx={"auto"} mt={3}>
-        전체 통계{" "}
+        업무 비중 통계
       </Text>
       <Box
         display={"flex"}
@@ -78,7 +94,7 @@ function TaskStaticsPage() {
         <Box width="50%" borderRight="1px solid black">
           업무 비중 (비완료)
         </Box>
-        <Box width="50%">업무 비중 (전체)</Box>
+        <Box width="50%">업무 비중 (비완료, 완료 모두 포함)</Box>
       </Box>
       <Box display={"flex"} border="1px solid black">
         <Box width="50%" borderRight="1px solid black">
@@ -92,7 +108,7 @@ function TaskStaticsPage() {
           />{" "}
         </Box>
       </Box>
-    </Flex>
+    </Box>
   );
 }
 

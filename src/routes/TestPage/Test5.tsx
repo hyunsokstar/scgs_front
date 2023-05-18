@@ -1,8 +1,8 @@
 import { FC } from "react";
 import BarChartForTaskStatus from "../../components/Chart/BarChartForTaskStatus";
-import { ITypeForTaskStaticsDataForPerson } from "../../types/project_progress/project_progress_type";
+// import { ITypeForTaskStaticsDataForPerson } from "../../types/project_progress/project_progress_type";
 
-const data: ITypeForTaskStaticsDataForPerson = [
+const data: any = [
   {
     task_manager: "terecal",
     completed_count_for_task: 0,

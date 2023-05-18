@@ -56,6 +56,7 @@ import ShortCutDetail from "./routes/ShortCutDetail";
 import PersonalUserTaskStatusPage from "./routes/PersonalUserTaskStatusPage";
 import Test31 from "./routes/TestPage/Test31";
 import TeamManagementPage from "./routes/TeamManagementPage";
+import MonthlyTaskCountChartPage from "./routes/MonthlyTaskCountChartPage";
 
 const router = createBrowserRouter([
   {
@@ -298,6 +299,10 @@ const router = createBrowserRouter([
         path: "long-term-plan/:planPk",
         element: <LongTermPlanDetail />,
       },
+      {
+        path:"monthly-task-count-chart-page/:userPk",
+        element: <MonthlyTaskCountChartPage />
+      }
     ],
   },
 ]);

@@ -259,7 +259,7 @@ export interface SwitchButtonForFilterOptionForWhetherToHelpRequestProps
   onToggle: (isChecked: boolean) => void;
 }
 
-export type TaskManagerInfo = {
+export type ManagerData = {
   task_manager: string;
   completed_count_for_task: number;
   count_for_testing_task: number;
@@ -268,7 +268,16 @@ export type TaskManagerInfo = {
   total_count_for_completed_task: number;
 };
 
-export type ITypeForTaskStaticsDataForPerson = TaskManagerInfo[];
+export type TaskCountForMonth = {
+  name: string;
+  completedCount: number;
+};
+
+export type TaskStaticsResponse = {
+  managers: ManagerData[];
+  task_count_for_month: TaskCountForMonth[];
+};
+
 
 export interface PieDataForUncompletedTask {
   name: string;
