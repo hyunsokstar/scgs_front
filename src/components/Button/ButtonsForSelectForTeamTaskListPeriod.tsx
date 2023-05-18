@@ -21,7 +21,7 @@ const ButtonsForSelectForTeamTaskListPeriod = ({
   };
 
   return (
-    <Box display={"flex"} gap={2}>
+    <Box display={"flex"} gap={2} >
         <Button
           size={"sm"}
           border={"2px solid black"}

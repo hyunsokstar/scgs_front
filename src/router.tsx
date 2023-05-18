@@ -58,6 +58,7 @@ import Test31 from "./routes/TestPage/Test31";
 import TeamManagementPage from "./routes/TeamManagementPage";
 import MonthlyTaskCountChartPage from "./routes/MonthlyTaskCountChartPage";
 import BarChartForDailyTaskCountForPersonalUserPage from "./routes/ChartPage/BarChartForDailyTaskCountForPersonalUserPage";
+import TodayTaskStatusPage from "./routes/TodayTaskStatusPage";
 
 const router = createBrowserRouter([
   {
@@ -150,6 +151,11 @@ const router = createBrowserRouter([
         path: "team-status",
         element: <TeamStatusPage />,
       },
+      {
+        path: "today-task-status",
+        element: <TodayTaskStatusPage />,
+      },
+
       {
         path: "team-management",
         element: <TeamManagementPage />,

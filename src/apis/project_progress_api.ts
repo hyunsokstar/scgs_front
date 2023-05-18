@@ -887,6 +887,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
     rating_for_filter_option,
     isForUrgent,
     checkForCashPrize,
+    groupByOption
   ] = queryKey;
 
   return instance
@@ -900,6 +901,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         rating_for_filter_option,
         isForUrgent,
         checkForCashPrize,
+        groupByOption
       },
     })
     .then((response) => {

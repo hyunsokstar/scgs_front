@@ -36,6 +36,7 @@ import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdat
 import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskForDueDate";
 import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForSetFilterOptionForTaskList";
 import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
+import RadioButtonForSelectOptionForGropyBy from "./Button/RadioButtonForSelectOptionForGropyBy";
 
 interface Props {}
 
@@ -61,6 +62,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
   const [isForUrgent, setIsForUrgent] = useState(false);
   const [checkForCashPrize, setCheckForCashPrize] = useState(false);
+  const [groupByOption, setGroupByOption] = React.useState<string>("");
 
   const {
     isLoading,
@@ -77,6 +79,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
       rating_for_filter_option,
       isForUrgent,
       checkForCashPrize,
+      groupByOption,
     ],
     getUncompletedTaskList,
     {
@@ -320,8 +323,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
               </Td>
               <Td
                 display={"flex"}
-                justifyContent={"space-between"}
-                gap={2}
+                justifyContent={"flex-start"}
+                gap={3}
                 borderBottom={"1px solid #9AE6B4"}
               >
                 <ButtonForShowCountForTaskStatus
@@ -406,13 +409,13 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
         </Box>
 
         <Box>
+          <Text mb={1}>생성 시점:</Text>
           <ButtonsForSelectForTeamTaskListPeriod
             selectedPeriodOptionForUncompletedTaskList={
               selectedPeriodOptionForUncompletedTaskList
             }
             changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
           />
-
           <Box mt={3}>
             마감 기한:
             <Box display={"flex"} gap={2} mt={1}>
@@ -476,7 +479,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             <Box>
               {/* <ButtonsForSelectFilterOptionForTaskClassification /> */}
             </Box>
-            <Box display={"flex"} mt={3} gap={5} alignItems={"center"}>
+            <Box display={"flex"} mt={5} gap={5} alignItems={"center"}>
               <Box display="flex" alignItems="center">
                 긴급 여부 :{" "}
                 <Checkbox
@@ -552,6 +555,21 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             </Box>
           </Box>
         </Box>
+
+        <Box
+          // border={"1px solid blue"}
+          width={"20%"}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <RadioButtonForSelectOptionForGropyBy
+            groupByOption={groupByOption}
+            setGroupByOption={setGroupByOption}
+          />
+        </Box>
+
         <Box>
           <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
             <Text fontSize="xl" fontWeight="bold" mb={2}>
