@@ -6,19 +6,6 @@ import { getDataForTaskStaticsForIsCompleted } from "../apis/project_progress_ap
 import PieChartForUncompletedTaskCount from "./Chart/PieChartForUncompletedTaskCount";
 import BarChartForDailyTaskCount from "./Chart/BarChartForDailyTaskCount";
 
-// const data: ITypeForTaskStaticsDataForPerson = [
-//   {
-//     task_manager: "terecal",
-//     uncompleted_count_for_task: 1,
-//     completed_count_for_task: 0,
-//   },
-//   {
-//     task_manager: "hyun",
-//     uncompleted_count_for_task: 3,
-//     completed_count_for_task: 4,
-//   },
-// ];
-
 function TaskStaticsPage() {
   const {
     data: dataForTaskStaticsForIsCompleted,

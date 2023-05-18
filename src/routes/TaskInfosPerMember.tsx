@@ -45,6 +45,7 @@ const TaskInfosPerMember = (props: Props) => {
           멤버별 업무 현황
         </Text>
       </Box>{" "}
+      
       <Box display={"flex"} justifyContent={"flex-start"} flexWrap={"wrap"}>
         {dataForTaskInfoPerUser
           ? dataForTaskInfoPerUser.map((user) => {

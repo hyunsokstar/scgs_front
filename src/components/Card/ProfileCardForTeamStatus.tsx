@@ -9,9 +9,11 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { GrTask, GrKeyboard } from "react-icons/gr";
-import { FcPlanner } from "react-icons/fc";
+
+import { BsBarChartFill } from "react-icons/bs";
+
 import { TbBrandTelegram } from "react-icons/tb";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 interface ProfileCardProps {
   id: number;
@@ -44,7 +46,6 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
   total_rewards,
   currentTask,
 }) => {
-
   return (
     <Box
       maxW="sm"
@@ -58,12 +59,12 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
         {profile_image ? (
           <Image
             src={profile_image}
-            style={{ width: "520px", height: "220px", objectFit: "cover" }}
+            style={{ width: "520px", height: "220px", objectFit: "inherit" }}
             alt={username}
           />
         ) : (
           <Image
-            style={{ width: "500px", height: "220px", objectFit: "cover" }}
+            style={{ width: "500px", height: "220px", objectFit: "inherit" }}
             src={
               "https://i.namu.wiki/i/Xs9CYSwgkCiuPpWsF2SzzKOQc41SQo3X87mZn6uc6Zrm62y3wMGgI2SWbaVv5bipvRExh5zv8evHR5dekKZKbA.webp"
             }
@@ -140,13 +141,26 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
                   size={"md"}
                 />
               </Link>
-              <IconButton
-                variant={"outline"}
-                aria-label="Planner"
-                icon={<FcPlanner />}
-                size={"md"}
-              />
-              <IconButton
+
+              <Link to={`/task-statics-for-personal-user/${id}`}>
+                <IconButton
+                  variant={"outline"}
+                  aria-label="Planner"
+                  icon={<BsBarChartFill />}
+                  size={"md"}
+                />
+              </Link>
+
+              {/* <Link to={`/task-statics-for-personal-user/${id}`}>
+                <IconButton
+                  variant={"outline"}
+                  aria-label="Planner"
+                  icon={<BsBarChartFill />}
+                  size={"md"}
+                />
+              </Link> */}
+
+              {/* <IconButton
                 variant={"outline"}
                 aria-label="Shortcut"
                 icon={<GrKeyboard />}
@@ -157,7 +171,7 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
                 aria-label="Telegram"
                 icon={<TbBrandTelegram />}
                 size={"md"}
-              />
+              /> */}
             </Grid>
           </Box>
         </Box>

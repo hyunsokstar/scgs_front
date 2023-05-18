@@ -57,6 +57,7 @@ import PersonalUserTaskStatusPage from "./routes/PersonalUserTaskStatusPage";
 import Test31 from "./routes/TestPage/Test31";
 import TeamManagementPage from "./routes/TeamManagementPage";
 import MonthlyTaskCountChartPage from "./routes/MonthlyTaskCountChartPage";
+import BarChartForDailyTaskCountForPersonalUserPage from "./routes/ChartPage/BarChartForDailyTaskCountForPersonalUserPage";
 
 const router = createBrowserRouter([
   {
@@ -202,6 +203,11 @@ const router = createBrowserRouter([
       {
         path: "task-statics",
         element: <TaskStaticsPage />,
+      },
+      {
+        path: "task-statics-for-personal-user/:userPk",
+        element: <BarChartForDailyTaskCountForPersonalUserPage
+         />,
       },
       {
         path: "kaka-login",

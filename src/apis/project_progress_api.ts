@@ -24,6 +24,15 @@ interface ICommentTextUpdateApiParameter {
   commentPk: number | string;
   commentText: string;
 }
+// 1122
+
+// apiForGetDataForDailyTaskCountForPersonalUser
+export const apiForGetDataForDailyTaskCountForPersonalUser = ({ queryKey }: QueryFunctionContext) => {
+  const [_, userPk] = queryKey;
+  console.log("roomPk : ", userPk);
+  return instance.get(`project_progress/${userPk}/daily-task-count`).then((response) => response.data);
+};
+
 
 export const apiForGetTaskListForCheckedPks = ({
   queryKey,
