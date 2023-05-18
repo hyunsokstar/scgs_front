@@ -131,8 +131,8 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
             <Text fontSize="md">in progress: {currentTask}</Text>
           </Box>
 
-          <Box textAlign={"right"} mt={3}>
-            <Grid templateColumns="repeat(4, 1fr)" gap={2}>
+          <Box textAlign={"right"} mt={5}>
+            <Box display={"flex"} justifyContent={"space-around"}>
               <Link to={`/team-status/${id}`}>
                 <IconButton
                   variant={"outline"}
@@ -150,29 +150,7 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
                   size={"md"}
                 />
               </Link>
-
-              {/* <Link to={`/task-statics-for-personal-user/${id}`}>
-                <IconButton
-                  variant={"outline"}
-                  aria-label="Planner"
-                  icon={<BsBarChartFill />}
-                  size={"md"}
-                />
-              </Link> */}
-
-              {/* <IconButton
-                variant={"outline"}
-                aria-label="Shortcut"
-                icon={<GrKeyboard />}
-                size={"md"}
-              />
-              <IconButton
-                variant={"outline"}
-                aria-label="Telegram"
-                icon={<TbBrandTelegram />}
-                size={"md"}
-              /> */}
-            </Grid>
+            </Box>
           </Box>
         </Box>
       </Box>

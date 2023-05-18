@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const Example = ({data}: any) => {
+const BarChartForDailyTaskCountForPersonalUser = ({ data }: any) => {
   return (
     <Box width="100%" height="300px">
       <ResponsiveContainer width="100%" height="100%">
@@ -32,7 +32,9 @@ const Example = ({data}: any) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="completedCount" stackId="a" fill="#8884d8" />
+          <Bar dataKey="myCompletedCount" stackId="a" fill="#800080" />
+          <Bar dataKey="totalCompletedCount" stackId="a" fill="#E6E6FA" />
+
           {/* <Bar dataKey="uv" stackId="a" fill="#82ca9d" /> */}
         </BarChart>
       </ResponsiveContainer>
@@ -40,4 +42,4 @@ const Example = ({data}: any) => {
   );
 };
 
-export default Example;
+export default BarChartForDailyTaskCountForPersonalUser;
