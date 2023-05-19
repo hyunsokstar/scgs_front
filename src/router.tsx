@@ -212,8 +212,7 @@ const router = createBrowserRouter([
       },
       {
         path: "task-statics-for-personal-user/:userPk",
-        element: <BarChartForDailyTaskCountForPersonalUserPage
-         />,
+        element: <BarChartForDailyTaskCountForPersonalUserPage/>,
       },
       {
         path: "kaka-login",
