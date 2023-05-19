@@ -10,6 +10,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { apiForgetTaskStatusForToday } from "../apis/project_progress_api";
+import RowForTaskSttusForToday from "../components/Row/row";
 
 type Time = "morning_tasks" | "afternoon_tasks" | "for_money_tasks";
 const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "for_money_tasks"];
@@ -51,19 +52,19 @@ const TodayTaskStatusPage = () => {
       const new_tasks = {
         morning_tasks: dataForTaskStatusForToday?.morning_tasks?.map(
           (row: any) => {
-            return row.task;
+            return row;
           }
         ),
 
         afternoon_tasks: dataForTaskStatusForToday?.afternoon_tasks?.map(
           (row: any) => {
-            return row.task;
+            return row;
           }
         ),
 
         for_money_tasks: dataForTaskStatusForToday?.for_money_tasks?.map(
           (row: any) => {
-            return row.task;
+            return row;
           }
         ),
         // for_money_tasks: [],
@@ -146,7 +147,8 @@ const TodayTaskStatusPage = () => {
                           ...provided.draggableProps.style,
                         }}
                       >
-                        {task}
+                        {/* {task.id} */}
+                        <RowForTaskSttusForToday task={task} />
                       </p>
                     )}
                   </Draggable>
