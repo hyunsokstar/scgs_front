@@ -12,18 +12,18 @@ import { AxiosResponse } from "axios";
 import { apiForgetTaskStatusForToday } from "../apis/project_progress_api";
 import RowForTaskSttusForToday from "../components/Row/row";
 
-type Time = "morning_tasks" | "afternoon_tasks" | "for_money_tasks";
-const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "for_money_tasks"];
+type Time = "morning_tasks" | "afternoon_tasks" ;
+const Tasks: Time[] = ["morning_tasks", "afternoon_tasks"];
 const initialTasks = {
   morning_tasks: ["Task 1", "Task 2", "Task 3"],
   afternoon_tasks: ["Task 4", "Task 5", "Task 6"],
-  for_money_tasks: ["Task 7", "Task 8", "Task 9"],
+//   for_money_tasks: ["Task 7", "Task 8", "Task 9"],
 };
 
 const teamColors: Record<Time, string> = {
   morning_tasks: "lightblue",
   afternoon_tasks: "lightyellow",
-  for_money_tasks: "lightpink",
+//   for_money_tasks: "lightpink",
 };
 
 const TodayTaskStatusPage = () => {
@@ -62,11 +62,11 @@ const TodayTaskStatusPage = () => {
           }
         ),
 
-        for_money_tasks: dataForTaskStatusForToday?.for_money_tasks?.map(
-          (row: any) => {
-            return row;
-          }
-        ),
+        // for_money_tasks: dataForTaskStatusForToday?.for_money_tasks?.map(
+        //   (row: any) => {
+        //     return row;
+        //   }
+        // ),
         // for_money_tasks: [],
       };
       setTasks(new_tasks);
@@ -77,35 +77,35 @@ const TodayTaskStatusPage = () => {
 
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-
+  
     const { source, destination } = result;
-
-    console.log("source, destination : ", source, destination);
-
-    if (source.droppableId !== destination.droppableId) {
-      const sourceMembers = [...tasks[source.droppableId as Time]];
-      const destMembers = [...tasks[destination.droppableId as Time]];
-      const [removed] = sourceMembers.splice(source.index, 1);
-      destMembers.splice(destination.index, 0, removed);
-
-      setTasks({
-        ...tasks,
-        [source.droppableId as Time]: sourceMembers,
-        [destination.droppableId as Time]: destMembers,
-      });
+  
+    const startTasks = [...tasks[source.droppableId as Time]];
+    const endTasks = [...tasks[destination.droppableId as Time]];
+  
+    // remove the task from the starting column
+    const [removed] = startTasks.splice(source.index, 1);
+  
+    if (source.droppableId === destination.droppableId) {
+      // if the destination is the same as the source, we're reordering in the same column
+      startTasks.splice(destination.index, 0, removed);
+  
+      setTasks((prevTasks:any) => ({
+        ...prevTasks,
+        [source.droppableId as Time]: startTasks,
+      }));
     } else {
-      console.log("같은 task 내의 이동");
-
-      const tasksForTime = [...tasks[source.droppableId as Time]];
-      const [removed] = tasksForTime.splice(source.index, 1);
-      tasksForTime.splice(destination.index, 0, removed);
-
-      setTasks({
-        ...tasks,
-        [source.droppableId as Time]: tasksForTime,
-      });
+      // if the destination is different from the source, we're moving the task to another column
+      endTasks.splice(destination.index, 0, removed);
+  
+      setTasks((prevTasks:any) => ({
+        ...prevTasks,
+        [source.droppableId as Time]: startTasks,
+        [destination.droppableId as Time]: endTasks,
+      }));
     }
   };
+  
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -133,7 +133,11 @@ const TodayTaskStatusPage = () => {
               >
                 <h2>{Time}</h2>
                 {tasks[Time].map((task: any, index: any) => (
-                  <Draggable key={task} draggableId={task} index={index}>
+                  <Draggable
+                    key={task.id ? task.id.toString() : index}
+                    draggableId={task.id ? task.id.toString() : index}
+                    index={index}
+                  >
                     {(provided: DraggableProvided) => (
                       <p
                         {...provided.draggableProps}
@@ -147,7 +151,6 @@ const TodayTaskStatusPage = () => {
                           ...provided.draggableProps.style,
                         }}
                       >
-                        {/* {task.id} */}
                         <RowForTaskSttusForToday task={task} />
                       </p>
                     )}
