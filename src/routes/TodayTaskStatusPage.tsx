@@ -11,18 +11,18 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { apiForgetTaskStatusForToday } from "../apis/project_progress_api";
 
-type Time = "morning_tasks" | "afternoon_tasks" | "for_money";
-const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "for_money"];
+type Time = "morning_tasks" | "afternoon_tasks" | "for_money_tasks";
+const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "for_money_tasks"];
 const initialTasks = {
   morning_tasks: ["Task 1", "Task 2", "Task 3"],
   afternoon_tasks: ["Task 4", "Task 5", "Task 6"],
-  for_money: ["Task 7", "Task 8", "Task 9"],
+  for_money_tasks: ["Task 7", "Task 8", "Task 9"],
 };
 
 const teamColors: Record<Time, string> = {
   morning_tasks: "lightblue",
   afternoon_tasks: "lightyellow",
-  for_money: "lightpink",
+  for_money_tasks: "lightpink",
 };
 
 const TodayTaskStatusPage = () => {
@@ -61,7 +61,12 @@ const TodayTaskStatusPage = () => {
           }
         ),
 
-        for_money: [],
+        for_money_tasks: dataForTaskStatusForToday?.for_money_tasks?.map(
+          (row: any) => {
+            return row.task;
+          }
+        ),
+        // for_money_tasks: [],
       };
       setTasks(new_tasks);
     }
@@ -74,20 +79,26 @@ const TodayTaskStatusPage = () => {
 
     const { source, destination } = result;
 
+    console.log("source, destination : ", source, destination);
+
     if (source.droppableId !== destination.droppableId) {
       const sourceMembers = [...tasks[source.droppableId as Time]];
       const destMembers = [...tasks[destination.droppableId as Time]];
       const [removed] = sourceMembers.splice(source.index, 1);
       destMembers.splice(destination.index, 0, removed);
+
       setTasks({
         ...tasks,
         [source.droppableId as Time]: sourceMembers,
         [destination.droppableId as Time]: destMembers,
       });
     } else {
+      console.log("같은 task 내의 이동");
+
       const tasksForTime = [...tasks[source.droppableId as Time]];
       const [removed] = tasksForTime.splice(source.index, 1);
       tasksForTime.splice(destination.index, 0, removed);
+
       setTasks({
         ...tasks,
         [source.droppableId as Time]: tasksForTime,
