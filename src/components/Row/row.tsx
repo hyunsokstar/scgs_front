@@ -39,7 +39,11 @@ const RowForTaskSttusForToday: React.FC<Props> = ({ task }) => {
         <Text fontSize="md">{task.task}</Text>
       </Box>
 
-      <Checkbox size="lg" colorScheme="green"></Checkbox>
+      <Checkbox
+        size="lg"
+        colorScheme="green"
+        defaultChecked={task.task_completed}
+      ></Checkbox>
     </Box>
   );
 };
