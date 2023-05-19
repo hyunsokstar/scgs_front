@@ -122,7 +122,7 @@ const TodayTaskStatusPage = () => {
       </Box>
 
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <div
+        <Box
           style={{
             display: "flex",
             justifyContent: "space-around",
@@ -132,7 +132,7 @@ const TodayTaskStatusPage = () => {
           {Tasks.map((Time, i) => (
             <Droppable droppableId={Time} key={i}>
               {(provided: DroppableProvided) => (
-                <div
+                <Box
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                   style={{
@@ -144,7 +144,7 @@ const TodayTaskStatusPage = () => {
                     boxSizing: "border-box",
                   }}
                 >
-                  <h2>{Time}</h2>
+                  <h1>{Time}</h1>
                   {tasks[Time].map((task: any, index: any) => (
                     <Draggable
                       key={task.id ? task.id.toString() : index}
@@ -170,11 +170,11 @@ const TodayTaskStatusPage = () => {
                     </Draggable>
                   ))}
                   {provided.placeholder}
-                </div>
+                </Box>
               )}
             </Droppable>
           ))}
-        </div>
+        </Box>
       </DragDropContext>
     </Box>
   );
