@@ -26,13 +26,31 @@ interface ICommentTextUpdateApiParameter {
 }
 // 1122
 
-// apiForGetDataForDailyTaskCountForPersonalUser
-export const apiForGetDataForDailyTaskCountForPersonalUser = ({ queryKey }: QueryFunctionContext) => {
-  const [_, userPk] = queryKey;
-  console.log("roomPk : ", userPk);
-  return instance.get(`project_progress/${userPk}/daily-task-count`).then((response) => response.data);
+export const apiForgetTaskStatusForToday = () => {
+
+  const config: AxiosRequestConfig = {
+    method: "get",
+    url: "project_progress/task-status-view-for-today",
+    params: {
+    },
+  };
+
+  return instance.request(config).then((response) => {
+    console.log("response for getProgectTasksStatusData: ", response);
+    return response.data;
+  });
 };
 
+// apiForGetDataForDailyTaskCountForPersonalUser
+export const apiForGetDataForDailyTaskCountForPersonalUser = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, userPk] = queryKey;
+  console.log("roomPk : ", userPk);
+  return instance
+    .get(`project_progress/${userPk}/daily-task-count`)
+    .then((response) => response.data);
+};
 
 export const apiForGetTaskListForCheckedPks = ({
   queryKey,
@@ -887,7 +905,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
     rating_for_filter_option,
     isForUrgent,
     checkForCashPrize,
-    groupByOption
+    groupByOption,
   ] = queryKey;
 
   return instance
@@ -901,7 +919,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         rating_for_filter_option,
         isForUrgent,
         checkForCashPrize,
-        groupByOption
+        groupByOption,
       },
     })
     .then((response) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DragDropContext,
   Droppable,
@@ -7,23 +7,67 @@ import {
   DraggableProvided,
   DroppableProvided,
 } from "react-beautiful-dnd";
+import { useQuery } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
+import { apiForgetTaskStatusForToday } from "../apis/project_progress_api";
 
-type Time = "오전" | "오후" | "상금";
-const Tasks: Time[] = ["오전", "오후", "상금"];
-const initialTasks: Record<Time, string[]> = {
-  "오전": ["Task 1", "Task 2", "Task 3"],
-  "오후": ["Task 4", "Task 5", "Task 6"],
-  "상금": ["Task 7", "Task 8", "Task 9"],
+type Time = "morning_tasks" | "afternoon_tasks" | "for_money";
+const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "for_money"];
+const initialTasks = {
+  morning_tasks: ["Task 1", "Task 2", "Task 3"],
+  afternoon_tasks: ["Task 4", "Task 5", "Task 6"],
+  for_money: ["Task 7", "Task 8", "Task 9"],
 };
 
 const teamColors: Record<Time, string> = {
-  "오전": "lightblue",
-  "오후": "lightyellow",
-  "상금": "lightpink",
+  morning_tasks: "lightblue",
+  afternoon_tasks: "lightyellow",
+  for_money: "lightpink",
 };
 
 const TodayTaskStatusPage = () => {
-  const [tasks, setTasks] = useState(initialTasks);
+  const {
+    data: dataForTaskStatusForToday,
+    isLoading,
+    isError,
+    refetch: refetchForGetProgectTasksStatus,
+  } = useQuery<any>(["getTaskStatusForToday"], apiForgetTaskStatusForToday);
+
+  const [tasks, setTasks] = useState<any>(initialTasks);
+
+  console.log(
+    "dataForTaskStatusForToday.afternoon_tasks : ",
+    dataForTaskStatusForToday?.afternoon_tasks
+  );
+  console.log(
+    "check : ",
+    dataForTaskStatusForToday?.afternoon_tasks?.map((row: any) => {
+      return row.task;
+    })
+  );
+
+  useEffect(() => {
+    if (dataForTaskStatusForToday) {
+      const new_tasks = {
+        morning_tasks: dataForTaskStatusForToday?.morning_tasks?.map(
+          (row: any) => {
+            return row.task;
+          }
+        ),
+
+        afternoon_tasks: dataForTaskStatusForToday?.afternoon_tasks?.map(
+          (row: any) => {
+            return row.task;
+          }
+        ),
+
+        for_money: [],
+      };
+      setTasks(new_tasks);
+    }
+  }, [dataForTaskStatusForToday]);
+
+  console.log("dataForTaskStatusForToday : ", dataForTaskStatusForToday);
 
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -60,14 +104,14 @@ const TodayTaskStatusPage = () => {
           width: "100%",
         }}
       >
-        {Tasks.map((team, i) => (
-          <Droppable droppableId={team} key={i}>
+        {Tasks.map((Time, i) => (
+          <Droppable droppableId={Time} key={i}>
             {(provided: DroppableProvided) => (
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
                 style={{
-                  backgroundColor: teamColors[team],
+                  backgroundColor: teamColors[Time],
                   width: "24%",
                   padding: "10px",
                   margin: "1%",
@@ -75,9 +119,9 @@ const TodayTaskStatusPage = () => {
                   boxSizing: "border-box",
                 }}
               >
-                <h2>{team}</h2>
-                {tasks[team].map((member, index) => (
-                  <Draggable key={member} draggableId={member} index={index}>
+                <h2>{Time}</h2>
+                {tasks[Time].map((task: any, index: any) => (
+                  <Draggable key={task} draggableId={task} index={index}>
                     {(provided: DraggableProvided) => (
                       <p
                         {...provided.draggableProps}
@@ -91,7 +135,7 @@ const TodayTaskStatusPage = () => {
                           ...provided.draggableProps.style,
                         }}
                       >
-                        {member}
+                        {task}
                       </p>
                     )}
                   </Draggable>
@@ -107,4 +151,3 @@ const TodayTaskStatusPage = () => {
 };
 
 export default TodayTaskStatusPage;
-
