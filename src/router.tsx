@@ -136,7 +136,7 @@ const router = createBrowserRouter([
       },
       {
         path: "test10",
-        element: <Test10 buttonNumbers={10} />,
+        element: <Test10 />,
       },
       {
         path: "wanted",

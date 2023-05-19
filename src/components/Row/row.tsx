@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Avatar, Text, Image, HStack } from "@chakra-ui/react";
+import { Box, Checkbox, Avatar, Text, Image, HStack } from "@chakra-ui/react";
 
 type TaskManager = {
   pk: number;
@@ -24,23 +24,23 @@ interface Props {
 
 const RowForTaskSttusForToday: React.FC<Props> = ({ task }) => {
   return (
-    <HStack spacing="24px">
-      {task.task_manager ? 
-        <Avatar
-          size="md"
-          src={task.task_manager.profile_image}
-          name={task.task_manager.username}
-        /> : 
-        <Avatar
-          size="md"
-          name="No manager"
-        />
-      }
-      <Box>
+    <Box display={"flex"} justifyContent={"space-between"}>
+      <Box display={"flex"} alignItems={"center"} gap={2}>
+        <Checkbox size="lg" colorScheme="blue"></Checkbox>
+        {task.task_manager ? (
+          <Avatar
+            size="md"
+            src={task.task_manager.profile_image}
+            name={task.task_manager.username}
+          />
+        ) : (
+          <Avatar size="md" name="No manager" />
+        )}
         <Text fontSize="md">{task.task}</Text>
       </Box>
-    </HStack>
 
+      <Checkbox size="lg" colorScheme="green"></Checkbox>
+    </Box>
   );
 };
 

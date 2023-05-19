@@ -11,19 +11,20 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { apiForgetTaskStatusForToday } from "../apis/project_progress_api";
 import RowForTaskSttusForToday from "../components/Row/row";
+import { Box, Heading } from "@chakra-ui/react";
 
-type Time = "morning_tasks" | "afternoon_tasks" ;
-const Tasks: Time[] = ["morning_tasks", "afternoon_tasks"];
+type Time = "morning_tasks" | "afternoon_tasks" | "night_tasks";
+const Tasks: Time[] = ["morning_tasks", "afternoon_tasks" , "night_tasks"];
 const initialTasks = {
   morning_tasks: ["Task 1", "Task 2", "Task 3"],
   afternoon_tasks: ["Task 4", "Task 5", "Task 6"],
-//   for_money_tasks: ["Task 7", "Task 8", "Task 9"],
+  night_tasks: ["Task 7", "Task 8", "Task 9"],
 };
 
 const teamColors: Record<Time, string> = {
   morning_tasks: "lightblue",
   afternoon_tasks: "lightyellow",
-//   for_money_tasks: "lightpink",
+  night_tasks: "lightpink"
 };
 
 const TodayTaskStatusPage = () => {
@@ -62,12 +63,11 @@ const TodayTaskStatusPage = () => {
           }
         ),
 
-        // for_money_tasks: dataForTaskStatusForToday?.for_money_tasks?.map(
-        //   (row: any) => {
-        //     return row;
-        //   }
-        // ),
-        // for_money_tasks: [],
+        night_tasks: dataForTaskStatusForToday?.night_tasks?.map(
+          (row: any) => {
+            return row;
+          }
+        ),
       };
       setTasks(new_tasks);
     }
@@ -77,92 +77,106 @@ const TodayTaskStatusPage = () => {
 
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-  
+
     const { source, destination } = result;
-  
+
     const startTasks = [...tasks[source.droppableId as Time]];
     const endTasks = [...tasks[destination.droppableId as Time]];
-  
+
     // remove the task from the starting column
     const [removed] = startTasks.splice(source.index, 1);
-  
+
     if (source.droppableId === destination.droppableId) {
       // if the destination is the same as the source, we're reordering in the same column
       startTasks.splice(destination.index, 0, removed);
-  
-      setTasks((prevTasks:any) => ({
+
+      setTasks((prevTasks: any) => ({
         ...prevTasks,
         [source.droppableId as Time]: startTasks,
       }));
     } else {
       // if the destination is different from the source, we're moving the task to another column
       endTasks.splice(destination.index, 0, removed);
-  
-      setTasks((prevTasks:any) => ({
+
+      setTasks((prevTasks: any) => ({
         ...prevTasks,
         [source.droppableId as Time]: startTasks,
         [destination.droppableId as Time]: endTasks,
       }));
     }
   };
-  
 
   return (
-    <DragDropContext onDragEnd={handleOnDragEnd}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          width: "100%",
-        }}
-      >
-        {Tasks.map((Time, i) => (
-          <Droppable droppableId={Time} key={i}>
-            {(provided: DroppableProvided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                style={{
-                  backgroundColor: teamColors[Time],
-                  width: "24%",
-                  padding: "10px",
-                  margin: "1%",
-                  borderRadius: "10px",
-                  boxSizing: "border-box",
-                }}
-              >
-                <h2>{Time}</h2>
-                {tasks[Time].map((task: any, index: any) => (
-                  <Draggable
-                    key={task.id ? task.id.toString() : index}
-                    draggableId={task.id ? task.id.toString() : index}
-                    index={index}
-                  >
-                    {(provided: DraggableProvided) => (
-                      <p
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                        style={{
-                          padding: "10px",
-                          margin: "10px 0",
-                          backgroundColor: "white",
-                          borderRadius: "5px",
-                          ...provided.draggableProps.style,
-                        }}
-                      >
-                        <RowForTaskSttusForToday task={task} />
-                      </p>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ))}
-      </div>
-    </DragDropContext>
+    <Box>
+      <Box p={4} bg="gray.200">
+        <Heading
+          as="h1"
+          size="lg"
+          fontFamily="sans-serif"
+          textAlign="center"
+          color="teal.800"
+        >
+          Today Task Status Page
+        </Heading>
+        {/* Rest of your content */}
+      </Box>
+
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            width: "100%",
+          }}
+        >
+          {Tasks.map((Time, i) => (
+            <Droppable droppableId={Time} key={i}>
+              {(provided: DroppableProvided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  style={{
+                    backgroundColor: teamColors[Time],
+                    width: "24%",
+                    padding: "10px",
+                    margin: "1%",
+                    borderRadius: "10px",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <h2>{Time}</h2>
+                  {tasks[Time].map((task: any, index: any) => (
+                    <Draggable
+                      key={task.id ? task.id.toString() : index}
+                      draggableId={task.id ? task.id.toString() : index}
+                      index={index}
+                    >
+                      {(provided: DraggableProvided) => (
+                        <p
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                          style={{
+                            padding: "10px",
+                            margin: "10px 0",
+                            backgroundColor: "white",
+                            borderRadius: "5px",
+                            ...provided.draggableProps.style,
+                          }}
+                        >
+                          <RowForTaskSttusForToday task={task} />
+                        </p>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ))}
+        </div>
+      </DragDropContext>
+    </Box>
   );
 };
 
