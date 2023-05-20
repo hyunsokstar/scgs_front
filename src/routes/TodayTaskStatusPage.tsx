@@ -11,10 +11,10 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { apiForgetTaskStatusForToday } from "../apis/project_progress_api";
 import RowForTaskSttusForToday from "../components/Row/row";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading } from "@chakra-ui/react";
 
 type Time = "morning_tasks" | "afternoon_tasks" | "night_tasks";
-const Tasks: Time[] = ["morning_tasks", "afternoon_tasks" , "night_tasks"];
+const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "night_tasks"];
 const initialTasks = {
   morning_tasks: ["Task 1", "Task 2", "Task 3"],
   afternoon_tasks: ["Task 4", "Task 5", "Task 6"],
@@ -22,9 +22,27 @@ const initialTasks = {
 };
 
 const teamColors: Record<Time, string> = {
-  morning_tasks: "lightblue",
-  afternoon_tasks: "lightyellow",
-  night_tasks: "lightpink"
+  morning_tasks: "#edf2f7", // light blue-gray
+  afternoon_tasks: "#fffaf0", // light orange-yellow
+  night_tasks: "#e2e8f0", // light indigo-blue
+};
+
+const taskColors = {
+  morning_tasks: "green.500", // or "blue.500"
+  afternoon_tasks: "orange.500", // or "yellow.500"
+  night_tasks: "blue.800", // or "purple.500"
+};
+
+const buttonColors = {
+  morning_tasks: "black", // or "blue.200"
+  afternoon_tasks: "black", // or "yellow.200"
+  night_tasks: "white", // or "purple.300"
+};
+
+const hoverColors = {
+  morning_tasks: "green.600", // or "blue.600"
+  afternoon_tasks: "orange.600", // or "yellow.600"
+  night_tasks: "yellow.300", // or "purple.900"
 };
 
 const TodayTaskStatusPage = () => {
@@ -63,11 +81,9 @@ const TodayTaskStatusPage = () => {
           }
         ),
 
-        night_tasks: dataForTaskStatusForToday?.night_tasks?.map(
-          (row: any) => {
-            return row;
-          }
-        ),
+        night_tasks: dataForTaskStatusForToday?.night_tasks?.map((row: any) => {
+          return row;
+        }),
       };
       setTasks(new_tasks);
     }
@@ -144,7 +160,34 @@ const TodayTaskStatusPage = () => {
                     boxSizing: "border-box",
                   }}
                 >
-                  <h1>{Time}</h1>
+                  <Box
+                    bg={taskColors[Time]}
+                    p={3}
+                    borderRadius="md"
+                    shadow="md"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Heading size="md" color="white">
+                      {Time}
+                    </Heading>
+
+                    <Button
+                      as="button"
+                      size="md"
+                      bg="transparent"
+                      border="2px"
+                      borderColor={buttonColors[Time]}
+                      color={buttonColors[Time]}
+                      borderRadius="md"
+                      px={4}
+                      py={2}
+                      _hover={{ bg: hoverColors[Time], color: "white" }}
+                    >
+                      Create
+                    </Button>
+                  </Box>
                   {tasks[Time].map((task: any, index: any) => (
                     <Draggable
                       key={task.id ? task.id.toString() : index}
