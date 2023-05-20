@@ -37,6 +37,16 @@ interface IUserNamesForCreate {
   username: string;
 }
 
+const options = [
+  { label: "오늘 오전", value: "this-morning" },
+  { label: "오늘 오후", value: "this-evening" },
+  { label: "오늘 밤", value: "this-night" },
+  { label: "내일", value: "tomorrow" },
+  { label: "모레", value: "day-after-tomorrow" },
+  { label: "이번주", value: "this-week" },
+  { label: "이번달", value: "this-month" },
+];
+
 const ModalButtonForAddProjectTask: FC<IProps> = ({
   projectTaskListRefatch,
   button_text = "add task",
@@ -97,6 +107,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
     password,
     task_manager,
     task_classification,
+    due_date
   }: IFormTypeForProjectProgress) => {
     console.log("task create 체크 :: ", task_manager);
 
@@ -108,6 +119,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
       password,
       task_manager,
       task_classification,
+      due_date
     });
   };
 
@@ -212,16 +224,18 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
                 </Select>
 
                 <FormControl>
-                  <FormLabel>Password</FormLabel>
-                  <Input
-                    size="sm"
-                    type="text"
-                    placeholder="Password"
-                    {...register("password", { required: true })}
-                  />
-                  {errors.password && (
-                    <Box color="red">Password is required</Box>
-                  )}
+                  <FormLabel>마감 기한</FormLabel>
+                  <Select
+                    placeholder="옵션을 선택하세요"
+                    defaultValue={options[0].value}
+                    {...register("due_date")}
+                  >
+                    {options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </Select>
                 </FormControl>
 
                 <Button type="submit">Submit</Button>

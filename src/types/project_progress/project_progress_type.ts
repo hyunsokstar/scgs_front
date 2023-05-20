@@ -213,6 +213,7 @@ export interface IFormTypeForProjectProgress {
   password: string;
   task_manager: number;
   task_classification: string;
+  due_date: string;
 }
 
 export interface ITypeForTaskDetailUpdate {

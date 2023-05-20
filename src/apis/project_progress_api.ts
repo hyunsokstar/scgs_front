@@ -791,6 +791,7 @@ export const insertProjectProgressRow = ({
   password,
   task_manager,
   task_classification,
+  due_date
 }: IFormTypeForProjectProgress) =>
   instance
     .post(
@@ -803,6 +804,7 @@ export const insertProjectProgressRow = ({
         password,
         task_manager,
         task_classification,
+        due_date
       },
       {
         headers: {

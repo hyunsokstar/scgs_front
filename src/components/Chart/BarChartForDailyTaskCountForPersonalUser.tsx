@@ -10,33 +10,43 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  ComposedChart,
+  Line,
 } from "recharts";
 
 const BarChartForDailyTaskCountForPersonalUser = ({ data }: any) => {
   return (
     <Box width="100%" height="300px">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart
+      <ComposedChart
           width={500}
-          height={300}
+          height={400}
           data={data}
           margin={{
             top: 20,
-            right: 30,
+            right: 20,
+            bottom: 20,
             left: 20,
-            bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <CartesianGrid stroke="#f5f5f5" />
+          <XAxis dataKey="name" scale="band" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="myCompletedCount" stackId="a" fill="#800080" />
-          <Bar dataKey="totalCompletedCount" stackId="a" fill="#E6E6FA" />
+          {/* <Area
+            type="monotone"
+            dataKey="amt"
+            fill="#8884d8"
+            stroke="#8884d8"
+          /> */}
+          {/* <Bar dataKey="myCompletedCount" stackId="a" fill="#800080" />
+          <Bar dataKey="totalCompletedCount" stackId="a" fill="#E6E6FA" /> */}
 
-          {/* <Bar dataKey="uv" stackId="a" fill="#82ca9d" /> */}
-        </BarChart>
+          <Bar dataKey="myCompletedCount" barSize={20} fill="#413ea0" />
+          <Line type="monotone" dataKey="totalCompletedCount" stroke="#ff7300" />
+          {/* <Scatter dataKey="cnt" fill="red" /> */}
+        </ComposedChart>
       </ResponsiveContainer>
     </Box>
   );
