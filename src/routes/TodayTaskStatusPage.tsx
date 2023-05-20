@@ -12,6 +12,7 @@ import { AxiosResponse } from "axios";
 import { apiForgetTaskStatusForToday } from "../apis/project_progress_api";
 import RowForTaskSttusForToday from "../components/Row/row";
 import { Box, Button, Heading } from "@chakra-ui/react";
+import ModalButtonForAddProjectTaskWithDuedateOption from "../components/modal/ModalButtonForAddProjectTaskWithDuedateOption";
 
 type Time = "morning_tasks" | "afternoon_tasks" | "night_tasks";
 const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "night_tasks"];
@@ -31,18 +32,6 @@ const taskColors = {
   morning_tasks: "green.500", // or "blue.500"
   afternoon_tasks: "orange.500", // or "yellow.500"
   night_tasks: "blue.800", // or "purple.500"
-};
-
-const buttonColors = {
-  morning_tasks: "black", // or "blue.200"
-  afternoon_tasks: "black", // or "yellow.200"
-  night_tasks: "white", // or "purple.300"
-};
-
-const hoverColors = {
-  morning_tasks: "green.600", // or "blue.600"
-  afternoon_tasks: "orange.600", // or "yellow.600"
-  night_tasks: "yellow.300", // or "purple.900"
 };
 
 const TodayTaskStatusPage = () => {
@@ -173,20 +162,13 @@ const TodayTaskStatusPage = () => {
                       {Time}
                     </Heading>
 
-                    <Button
-                      as="button"
-                      size="md"
-                      bg="transparent"
-                      border="2px"
-                      borderColor={buttonColors[Time]}
-                      color={buttonColors[Time]}
-                      borderRadius="md"
-                      px={4}
-                      py={2}
-                      _hover={{ bg: hoverColors[Time], color: "white" }}
-                    >
-                      Create
-                    </Button>
+                    <ModalButtonForAddProjectTaskWithDuedateOption
+                      projectTaskListRefatch={function (): void {
+                        throw new Error("Function not implemented.");
+                      }}
+                      button_text={"Create"}
+                      due_date_option={Time}
+                    />
                   </Box>
                   {tasks[Time].map((task: any, index: any) => (
                     <Draggable
