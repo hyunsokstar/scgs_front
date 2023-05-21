@@ -31,7 +31,7 @@ import { getUserNamesForCreate } from "../../apis/user_api";
 interface IProps {
   projectTaskListRefatch: () => void;
   button_text: string;
-  due_date_option: "morning_tasks" | "afternoon_tasks" | "night_tasks";
+  due_date_option_for_button: "morning_tasks" | "afternoon_tasks" | "night_tasks";
 }
 
 interface IUserNamesForCreate {
@@ -39,10 +39,10 @@ interface IUserNamesForCreate {
   username: string;
 }
 
-const options = [
-  { label: "오늘 오전", value: "this-morning" },
-  { label: "오늘 오후", value: "this-evening" },
-  { label: "오늘 밤", value: "this-night" },
+const due_date_options = [
+  { label: "오늘 오전", value: "morning_tasks" },
+  { label: "오늘 오후", value: "evening_tasks" },
+  { label: "오늘 밤", value: "night_tasks" },
   { label: "내일", value: "tomorrow" },
   { label: "모레", value: "day-after-tomorrow" },
   { label: "이번주", value: "this-week" },
@@ -68,15 +68,15 @@ const hoverTextColors = {
   };
 
 const dueDateOptionsForButton = {
-    morning_tasks: options[0].value, // or "blue.600"
-    afternoon_tasks: options[1].value, // or "yellow.600"
-    night_tasks: options[2].value, // or "purple.900"
+    morning_tasks: due_date_options[0].value, // or "blue.600"
+    afternoon_tasks: due_date_options[1].value, // or "yellow.600"
+    night_tasks: due_date_options[2].value, // or "purple.900"
   };
 
 const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
   projectTaskListRefatch,
   button_text = "add task",
-  due_date_option,
+  due_date_option_for_button,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -134,7 +134,7 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
     password,
     task_manager,
     task_classification,
-    due_date,
+    due_date_option,
   }: IFormTypeForProjectProgress) => {
     console.log("task create 체크 :: ", task_manager);
 
@@ -146,7 +146,7 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
       password,
       task_manager,
       task_classification,
-      due_date,
+      due_date_option,
     });
   };
 
@@ -157,12 +157,12 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
         size="md"
         bg="transparent"
         border="2px"
-        borderColor={buttonColors[due_date_option]}
-        color={buttonColors[due_date_option]}
+        borderColor={buttonColors[due_date_option_for_button]}
+        color={buttonColors[due_date_option_for_button]}
         borderRadius="md"
         px={4}
         py={2}
-        _hover={{ bg: hoverColors[due_date_option], color: hoverTextColors[due_date_option] }}
+        _hover={{ bg: hoverColors[due_date_option_for_button], color: hoverTextColors[due_date_option_for_button] }}
         onClick={onOpen}
       >
         Create
@@ -262,10 +262,10 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
                   <Select
                     _hover={{ borderColor: "green.500" }}
                     placeholder="옵션을 선택하세요"
-                    defaultValue={dueDateOptionsForButton[due_date_option]}
-                    {...register("due_date")}
+                    defaultValue={dueDateOptionsForButton[due_date_option_for_button]}
+                    {...register("due_date_option")}
                   >
-                    {options.map((option) => (
+                    {due_date_options.map((option) => (
                       <option key={option.value} value={option.value}>
                         {option.label}
                       </option>

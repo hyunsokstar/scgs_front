@@ -26,13 +26,44 @@ interface ICommentTextUpdateApiParameter {
 }
 // 1122
 
-export const apiForgetTaskStatusForToday = () => {
+// apiForUpdateTaskOrder
+export const apiForUpdateTaskDueDateAndOrder = ({
+  taskPk,
+  time_option,
+  orgin_task_id,
+  ordering_option,
+}: any) => {
+  console.log(`
+  check parameter for apiForUpdateTaskDueDateAndOrder 
+  taskPk : ${taskPk}
+  time_option : ${time_option}
+  order_for_update : ${orgin_task_id}
+  order_for_update : ${ordering_option}
+  `);
 
+  return instance
+    .put(
+      "project_progress/update-task-time-option-and-order",
+      {
+        taskPk,
+        time_option,
+        orgin_task_id,
+        ordering_option,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
+export const apiForgetTaskStatusForToday = () => {
   const config: AxiosRequestConfig = {
     method: "get",
     url: "project_progress/task-status-view-for-today",
-    params: {
-    },
+    params: {},
   };
 
   return instance.request(config).then((response) => {
@@ -791,7 +822,7 @@ export const insertProjectProgressRow = ({
   password,
   task_manager,
   task_classification,
-  due_date
+  due_date_option,
 }: IFormTypeForProjectProgress) =>
   instance
     .post(
@@ -804,7 +835,7 @@ export const insertProjectProgressRow = ({
         password,
         task_manager,
         task_classification,
-        due_date
+        due_date_option,
       },
       {
         headers: {

@@ -7,12 +7,15 @@ import {
   DraggableProvided,
   DroppableProvided,
 } from "react-beautiful-dnd";
-import { useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
-import { apiForgetTaskStatusForToday } from "../apis/project_progress_api";
+import {
+  apiForUpdateTaskDueDateAndOrder,
+  apiForgetTaskStatusForToday,
+} from "../apis/project_progress_api";
 import RowForTaskSttusForToday from "../components/Row/row";
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading, useToast } from "@chakra-ui/react";
 import ModalButtonForAddProjectTaskWithDuedateOption from "../components/modal/ModalButtonForAddProjectTaskWithDuedateOption";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 type Time = "morning_tasks" | "afternoon_tasks" | "night_tasks";
 const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "night_tasks"];
@@ -35,6 +38,9 @@ const taskColors = {
 };
 
 const TodayTaskStatusPage = () => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
   const {
     data: dataForTaskStatusForToday,
     isLoading,
@@ -74,6 +80,32 @@ const TodayTaskStatusPage = () => {
 
   console.log("dataForTaskStatusForToday : ", dataForTaskStatusForToday);
 
+  const mutationForSwitchTheOrderOfTheTwoTasks = useMutation(
+    ({ taskPk, time_option, orgin_task_id, ordering_option }: any) => {
+      return apiForUpdateTaskDueDateAndOrder({
+        taskPk,
+        time_option,
+        orgin_task_id,
+        ordering_option
+      });
+    },
+    {
+      onSettled: () => {},
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
+
+        toast({
+          title: "Update Task Stauts Success",
+          status: "success",
+          description: data.message,
+        });
+
+        // window.location.reload(); // 새로고침
+      },
+    }
+  );
+
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
@@ -85,35 +117,108 @@ const TodayTaskStatusPage = () => {
     // remove the task from the starting column
     const [removed] = startTasks.splice(source.index, 1);
 
+    // const taskPkForUpdate =
+    //   dataForTaskStatusForToday[source.droppableId][source.index].id;
+    // const timeOptionForUpdate = destination.droppableId;
+    // const originTaskPk =
+    //   dataForTaskStatusForToday[destination.droppableId][destination.index].id;
+
     if (source.droppableId === destination.droppableId) {
       // if the destination is the same as the source, we're reordering in the same column
       startTasks.splice(destination.index, 0, removed);
-
-      console.log(
-        "destination.droppableId : ",
-        destination.droppableId,
-        "source pk : ",
-        dataForTaskStatusForToday[source.droppableId][source.index].id,
-        "destination.order : ",
-        destination.index
-      );
 
       setTasks((prevTasks: any) => ({
         ...prevTasks,
         [source.droppableId as Time]: startTasks,
       }));
+
+      if (
+        dataForTaskStatusForToday[destination.droppableId][
+          destination.index
+        ] !== undefined
+      ) {
+        console.log(
+          "교체 하면서 이동(바뀌는거 order -1, 바뀌는거보다 order 작은것들 -2)",
+          "moved task pk : ",
+          dataForTaskStatusForToday[source.droppableId][source.index].id,
+          "time_option : ",
+          destination.droppableId,
+          "orgin_task_id : ",
+          dataForTaskStatusForToday[destination.droppableId][destination.index]
+            .id
+        );
+
+        mutationForSwitchTheOrderOfTheTwoTasks.mutate({
+          taskPk:
+            dataForTaskStatusForToday[source.droppableId][source.index].id,
+          time_option: destination.droppableId,
+          orgin_task_id:
+            dataForTaskStatusForToday[destination.droppableId][
+              destination.index
+            ].id,
+          ordering_option: "switch_order_of_two_tasks" 
+        });
+      } else {
+        console.log(
+          "마지막으로 이동(기존 최대 order + 1)",
+          "moved task pk : ",
+          dataForTaskStatusForToday[source.droppableId][source.index].id,
+          "time_option : ",
+          destination.droppableId
+        );
+
+        mutationForSwitchTheOrderOfTheTwoTasks.mutate({
+          taskPk:
+            dataForTaskStatusForToday[source.droppableId][source.index].id,
+          time_option: destination.droppableId,
+          orgin_task_id:
+            dataForTaskStatusForToday[destination.droppableId][
+              destination.index
+            ].id,
+          ordering_option: "move_to_last" 
+        });
+
+      }
     } else {
       // if the destination is different from the source, we're moving the task to another column
       endTasks.splice(destination.index, 0, removed);
 
-      console.log(
-        "destination.droppableId : ",
-        destination.droppableId,
-        "source pk : ",
-        dataForTaskStatusForToday[source.droppableId][source.index].id,
-        "destination.order : ",
-        destination.index
-      );
+      if (
+        dataForTaskStatusForToday[destination.droppableId][
+          destination.index
+        ] !== undefined
+      ) {
+        console.log(
+          "교체 하면서 이동(바뀌는거 order -1, 바뀌는거보다 order 작은것들 -2)",
+          "moved task pk : ",
+          dataForTaskStatusForToday[source.droppableId][source.index].id,
+          "time_option : ",
+          destination.droppableId,
+          "orgin_task_id : ",
+          dataForTaskStatusForToday[destination.droppableId][destination.index]
+            .id
+        );
+
+        mutationForSwitchTheOrderOfTheTwoTasks.mutate({
+          taskPk:
+            dataForTaskStatusForToday[source.droppableId][source.index].id,
+          time_option: destination.droppableId,
+          orgin_task_id:
+            dataForTaskStatusForToday[destination.droppableId][
+              destination.index
+            ].id,
+          ordering_option: "switch_order_of_two_tasks" 
+        });
+
+      } else {
+        console.log(
+          "마지막으로 이동(기존 최대 order + 1)",
+          "moved task pk : ",
+          dataForTaskStatusForToday[source.droppableId][source.index].id,
+          "time_option : ",
+          destination.droppableId
+        );
+      }
 
       setTasks((prevTasks: any) => ({
         ...prevTasks,
@@ -179,7 +284,7 @@ const TodayTaskStatusPage = () => {
                         refetchForGetProgectTasksStatusForToday
                       }
                       button_text={"Create"}
-                      due_date_option={Time}
+                      due_date_option_for_button={Time}
                     />
                   </Box>
                   {tasks[Time].length
