@@ -48,12 +48,6 @@ const TodayTaskStatusPage = () => {
     "dataForTaskStatusForToday.afternoon_tasks : ",
     dataForTaskStatusForToday?.afternoon_tasks
   );
-  // console.log(
-  //   "check : ",
-  //   dataForTaskStatusForToday?.afternoon_tasks?.map((row: any) => {
-  //     return row.task;
-  //   })
-  // );
 
   useEffect(() => {
     if (dataForTaskStatusForToday) {
@@ -95,8 +89,6 @@ const TodayTaskStatusPage = () => {
       // if the destination is the same as the source, we're reordering in the same column
       startTasks.splice(destination.index, 0, removed);
 
-      // console.log("destination.index :", destination.index);
-      // console.log("source :", source);
       console.log(
         "destination.droppableId : ",
         destination.droppableId,
