@@ -37,7 +37,7 @@ const RowForTaskSttusForToday: React.FC<Props> = ({ task }) => {
         ) : (
           <Avatar size="md" name="No manager" />
         )}
-        <Text fontSize="md">{task.order} : {task.task}</Text>
+        <Text fontSize="md">{task.id} : {task.task}</Text>
       </Box>
 
       <Checkbox
