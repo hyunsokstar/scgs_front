@@ -41,7 +41,7 @@ interface IUserNamesForCreate {
 
 const due_date_options = [
   { label: "오늘 오전", value: "morning_tasks" },
-  { label: "오늘 오후", value: "evening_tasks" },
+  { label: "오늘 오후", value: "afternoon_tasks" },
   { label: "오늘 밤", value: "night_tasks" },
   { label: "내일", value: "tomorrow" },
   { label: "모레", value: "day-after-tomorrow" },

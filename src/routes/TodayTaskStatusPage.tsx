@@ -86,14 +86,14 @@ const TodayTaskStatusPage = () => {
         taskPk,
         time_option,
         orgin_task_id,
-        ordering_option
+        ordering_option,
       });
     },
     {
       onSettled: () => {},
       onSuccess: (data) => {
         console.log("data : ", data);
-        queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getTaskStatusForToday"]);
 
         toast({
           title: "Update Task Stauts Success",
@@ -117,12 +117,7 @@ const TodayTaskStatusPage = () => {
     // remove the task from the starting column
     const [removed] = startTasks.splice(source.index, 1);
 
-    // const taskPkForUpdate =
-    //   dataForTaskStatusForToday[source.droppableId][source.index].id;
-    // const timeOptionForUpdate = destination.droppableId;
-    // const originTaskPk =
-    //   dataForTaskStatusForToday[destination.droppableId][destination.index].id;
-
+    // 같은 영역으로 이동
     if (source.droppableId === destination.droppableId) {
       // if the destination is the same as the source, we're reordering in the same column
       startTasks.splice(destination.index, 0, removed);
@@ -156,7 +151,7 @@ const TodayTaskStatusPage = () => {
             dataForTaskStatusForToday[destination.droppableId][
               destination.index
             ].id,
-          ordering_option: "switch_order_of_two_tasks" 
+          ordering_option: "switch_order_of_two_tasks",
         });
       } else {
         console.log(
@@ -171,13 +166,9 @@ const TodayTaskStatusPage = () => {
           taskPk:
             dataForTaskStatusForToday[source.droppableId][source.index].id,
           time_option: destination.droppableId,
-          orgin_task_id:
-            dataForTaskStatusForToday[destination.droppableId][
-              destination.index
-            ].id,
-          ordering_option: "move_to_last" 
+          orgin_task_id:"",
+          ordering_option: "move_to_last",
         });
-
       }
     } else {
       // if the destination is different from the source, we're moving the task to another column
@@ -207,9 +198,8 @@ const TodayTaskStatusPage = () => {
             dataForTaskStatusForToday[destination.droppableId][
               destination.index
             ].id,
-          ordering_option: "switch_order_of_two_tasks" 
+          ordering_option: "switch_order_of_two_tasks",
         });
-
       } else {
         console.log(
           "마지막으로 이동(기존 최대 order + 1)",
@@ -218,6 +208,14 @@ const TodayTaskStatusPage = () => {
           "time_option : ",
           destination.droppableId
         );
+
+        mutationForSwitchTheOrderOfTheTwoTasks.mutate({
+          taskPk:
+            dataForTaskStatusForToday[source.droppableId][source.index].id,
+          time_option: destination.droppableId,
+          orgin_task_id:"",
+          ordering_option: "move_to_last",
+        });
       }
 
       setTasks((prevTasks: any) => ({
