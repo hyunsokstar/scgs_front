@@ -9,6 +9,7 @@ type TaskManager = {
 
 type TaskProps = {
   id: number;
+  order:number;
   task: string;
   task_manager: TaskManager;
   task_completed: boolean;
@@ -36,7 +37,7 @@ const RowForTaskSttusForToday: React.FC<Props> = ({ task }) => {
         ) : (
           <Avatar size="md" name="No manager" />
         )}
-        <Text fontSize="md">{task.task}</Text>
+        <Text fontSize="md">{task.order} : {task.task}</Text>
       </Box>
 
       <Checkbox

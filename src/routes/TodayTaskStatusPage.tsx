@@ -39,7 +39,7 @@ const TodayTaskStatusPage = () => {
     data: dataForTaskStatusForToday,
     isLoading,
     isError,
-    refetch: refetchForGetProgectTasksStatus,
+    refetch: refetchForGetProgectTasksStatusForToday,
   } = useQuery<any>(["getTaskStatusForToday"], apiForgetTaskStatusForToday);
 
   const [tasks, setTasks] = useState<any>(initialTasks);
@@ -48,12 +48,12 @@ const TodayTaskStatusPage = () => {
     "dataForTaskStatusForToday.afternoon_tasks : ",
     dataForTaskStatusForToday?.afternoon_tasks
   );
-  console.log(
-    "check : ",
-    dataForTaskStatusForToday?.afternoon_tasks?.map((row: any) => {
-      return row.task;
-    })
-  );
+  // console.log(
+  //   "check : ",
+  //   dataForTaskStatusForToday?.afternoon_tasks?.map((row: any) => {
+  //     return row.task;
+  //   })
+  // );
 
   useEffect(() => {
     if (dataForTaskStatusForToday) {
@@ -95,6 +95,17 @@ const TodayTaskStatusPage = () => {
       // if the destination is the same as the source, we're reordering in the same column
       startTasks.splice(destination.index, 0, removed);
 
+      // console.log("destination.index :", destination.index);
+      // console.log("source :", source);
+      console.log(
+        "destination.droppableId : ",
+        destination.droppableId,
+        "source pk : ",
+        dataForTaskStatusForToday[source.droppableId][source.index].id,
+        "destination.order : ",
+        destination.index
+      );
+
       setTasks((prevTasks: any) => ({
         ...prevTasks,
         [source.droppableId as Time]: startTasks,
@@ -102,6 +113,15 @@ const TodayTaskStatusPage = () => {
     } else {
       // if the destination is different from the source, we're moving the task to another column
       endTasks.splice(destination.index, 0, removed);
+
+      console.log(
+        "destination.droppableId : ",
+        destination.droppableId,
+        "source pk : ",
+        dataForTaskStatusForToday[source.droppableId][source.index].id,
+        "destination.order : ",
+        destination.index
+      );
 
       setTasks((prevTasks: any) => ({
         ...prevTasks,
@@ -163,37 +183,39 @@ const TodayTaskStatusPage = () => {
                     </Heading>
 
                     <ModalButtonForAddProjectTaskWithDuedateOption
-                      projectTaskListRefatch={function (): void {
-                        throw new Error("Function not implemented.");
-                      }}
+                      projectTaskListRefatch={
+                        refetchForGetProgectTasksStatusForToday
+                      }
                       button_text={"Create"}
                       due_date_option={Time}
                     />
                   </Box>
-                  {tasks[Time].map((task: any, index: any) => (
-                    <Draggable
-                      key={task.id ? task.id.toString() : index}
-                      draggableId={task.id ? task.id.toString() : index}
-                      index={index}
-                    >
-                      {(provided: DraggableProvided) => (
-                        <p
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                          style={{
-                            padding: "10px",
-                            margin: "10px 0",
-                            backgroundColor: "white",
-                            borderRadius: "5px",
-                            ...provided.draggableProps.style,
-                          }}
+                  {tasks[Time].length
+                    ? tasks[Time].map((task: any, index: any) => (
+                        <Draggable
+                          key={task.id ? task.id.toString() : index}
+                          draggableId={task.id ? task.id.toString() : index}
+                          index={index}
                         >
-                          <RowForTaskSttusForToday task={task} />
-                        </p>
-                      )}
-                    </Draggable>
-                  ))}
+                          {(provided: DraggableProvided) => (
+                            <p
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                              style={{
+                                padding: "10px",
+                                margin: "10px 0",
+                                backgroundColor: "white",
+                                borderRadius: "5px",
+                                ...provided.draggableProps.style,
+                              }}
+                            >
+                              <RowForTaskSttusForToday task={task} />
+                            </p>
+                          )}
+                        </Draggable>
+                      ))
+                    : "no data"}
                   {provided.placeholder}
                 </Box>
               )}
