@@ -16,6 +16,7 @@ import RowForTaskSttusForToday from "../components/Row/row";
 import { Box, Button, Heading, useToast } from "@chakra-ui/react";
 import ModalButtonForAddProjectTaskWithDuedateOption from "../components/modal/ModalButtonForAddProjectTaskWithDuedateOption";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { ITypeForTaskStatusForToday } from "../types/project_progress/project_progress_type";
 
 type Time = "morning_tasks" | "afternoon_tasks" | "night_tasks";
 const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "night_tasks"];
@@ -46,7 +47,7 @@ const TodayTaskStatusPage = () => {
     isLoading,
     isError,
     refetch: refetchForGetProgectTasksStatusForToday,
-  } = useQuery<any>(["getTaskStatusForToday"], apiForgetTaskStatusForToday);
+  } = useQuery<ITypeForTaskStatusForToday | any>(["getTaskStatusForToday"], apiForgetTaskStatusForToday);
 
   const [tasks, setTasks] = useState<any>(initialTasks);
 
@@ -117,41 +118,30 @@ const TodayTaskStatusPage = () => {
     // remove the task from the starting column
     const [removed] = startTasks.splice(source.index, 1);
 
-    // const taskPkForUpdate =
-    //   dataForTaskStatusForToday[source.droppableId][source.index].id;
-    // const timeOptionForUpdate = destination.droppableId;
-    // const originTaskPk =
-    //   dataForTaskStatusForToday[destination.droppableId][destination.index].id;
-
-    if (dataForTaskStatusForToday[destination.droppableId][destination.index]) {
+    if (dataForTaskStatusForToday?.[destination.droppableId]?.[destination.index]) {
       // alert("마지막 아님")
       startTasks.splice(destination.index, 0, removed);
 
-      // setTasks((prevTasks: any) => ({
-      //   ...prevTasks,
-      //   [source.droppableId as Time]: startTasks,
-      // }));
-
       if (
-        dataForTaskStatusForToday[destination.droppableId][destination.index]
+        dataForTaskStatusForToday?.[destination.droppableId]?.[destination.index]
       ) {
         console.log(
           "교체 하면서 이동(바뀌는거 order -1, 바뀌는거보다 order 작은것들 -2)",
           "moved task pk : ",
-          dataForTaskStatusForToday[source.droppableId][source.index].id,
+          dataForTaskStatusForToday?.[source.droppableId]?.[source.index].id,
           "time_option : ",
           destination.droppableId,
           "orgin_task_id : ",
-          dataForTaskStatusForToday[destination.droppableId][destination.index]
+          dataForTaskStatusForToday?.[destination.droppableId]?.[destination.index]
             .id
         );
 
         mutationForSwitchTheOrderOfTheTwoTasks.mutate({
           taskPk:
-            dataForTaskStatusForToday[source.droppableId][source.index].id,
+            dataForTaskStatusForToday[source.droppableId]?.[source.index].id,
           time_option: destination.droppableId,
           orgin_task_id:
-            dataForTaskStatusForToday[destination.droppableId][
+            dataForTaskStatusForToday[destination.droppableId]?.[
               destination.index
             ].id,
           ordering_option: "switch_order_of_two_tasks",

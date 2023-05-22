@@ -280,7 +280,6 @@ export type TaskStaticsResponse = {
   task_count_for_month: TaskCountForMonth[];
 };
 
-
 export interface PieDataForUncompletedTask {
   name: string;
   value: number;
@@ -345,4 +344,30 @@ export interface typeForDueDateUpdateForChecked {
     | "this-week"
     | "this-month";
   checkedRowPks: number[];
+}
+
+export interface TaskForTaskStatusForToday {
+  id: string;
+  task: string;
+  in_progress: boolean;
+  is_testing: boolean;
+  order: number;
+  task_manager: TaskManager;
+  task_completed: boolean;
+  current_status: string;
+  is_urgent_request: boolean;
+  is_task_for_cash_prize: boolean;
+  due_date: string;
+}
+
+export interface TaskManager {
+  pk: number;
+  username: string;
+  profile_image: string;
+}
+
+export interface ITypeForTaskStatusForToday {
+  morning_tasks: TaskForTaskStatusForToday[] | any | undefined;
+  afternoon_tasks: TaskForTaskStatusForToday[] | any | undefined;
+  night_tasks: TaskForTaskStatusForToday[] | any | undefined;
 }
