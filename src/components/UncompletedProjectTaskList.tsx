@@ -37,6 +37,7 @@ import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskFor
 import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForSetFilterOptionForTaskList";
 import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 import RadioButtonForSelectOptionForGropyBy from "./Button/RadioButtonForSelectOptionForGropyBy";
+import ModalButtonForAddProjectTaskWithDuedateOption from "./modal/ModalButtonForAddProjectTaskWithDuedateOption";
 
 interface Props {}
 
@@ -713,9 +714,10 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
           </Box>
         </Box>
         <Box p={2}>
-          <ModalButtonForAddProjectTask
-            button_text="task 추가"
+          <ModalButtonForAddProjectTaskWithDuedateOption
+            button_text="Task 추가 For Team Project"
             projectTaskListRefatch={projectTaskListRefatch}
+            bgColor = "red.300"
           />
         </Box>
       </Box>

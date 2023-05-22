@@ -5,10 +5,8 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   useDisclosure,
-  VStack,
   Box,
   Input,
   Checkbox,
@@ -31,7 +29,11 @@ import { getUserNamesForCreate } from "../../apis/user_api";
 interface IProps {
   projectTaskListRefatch: () => void;
   button_text: string;
-  due_date_option_for_button: "morning_tasks" | "afternoon_tasks" | "night_tasks";
+  due_date_option_for_button?:
+    | "morning_tasks"
+    | "afternoon_tasks"
+    | "night_tasks";
+  bgColor?: string;
 }
 
 interface IUserNamesForCreate {
@@ -62,21 +64,22 @@ const hoverColors = {
 };
 
 const hoverTextColors = {
-    morning_tasks: "white", // or "blue.600"
-    afternoon_tasks: "yellow", // or "yellow.600"
-    night_tasks: "black", // or "purple.900"
-  };
+  morning_tasks: "white", // or "blue.600"
+  afternoon_tasks: "yellow", // or "yellow.600"
+  night_tasks: "black", // or "purple.900"
+};
 
 const dueDateOptionsForButton = {
-    morning_tasks: due_date_options[0].value, // or "blue.600"
-    afternoon_tasks: due_date_options[1].value, // or "yellow.600"
-    night_tasks: due_date_options[2].value, // or "purple.900"
-  };
+  morning_tasks: due_date_options[0].value, // or "blue.600"
+  afternoon_tasks: due_date_options[1].value, // or "yellow.600"
+  night_tasks: due_date_options[2].value, // or "purple.900"
+};
 
 const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
   projectTaskListRefatch,
   button_text = "add task",
-  due_date_option_for_button,
+  due_date_option_for_button = "night_tasks",
+  bgColor,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -155,17 +158,20 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
       <Button
         as="button"
         size="md"
-        bg="transparent"
+        bg={bgColor ? bgColor : "tranparent"}
         border="2px"
         borderColor={buttonColors[due_date_option_for_button]}
         color={buttonColors[due_date_option_for_button]}
         borderRadius="md"
         px={4}
         py={2}
-        _hover={{ bg: hoverColors[due_date_option_for_button], color: hoverTextColors[due_date_option_for_button] }}
+        _hover={{
+          bg: hoverColors[due_date_option_for_button],
+          color: hoverTextColors[due_date_option_for_button],
+        }}
         onClick={onOpen}
       >
-        Create
+        {button_text}
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} size={"6xl"}>
@@ -262,7 +268,9 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
                   <Select
                     _hover={{ borderColor: "green.500" }}
                     placeholder="옵션을 선택하세요"
-                    defaultValue={dueDateOptionsForButton[due_date_option_for_button]}
+                    defaultValue={
+                      dueDateOptionsForButton[due_date_option_for_button]
+                    }
                     {...register("due_date_option")}
                   >
                     {due_date_options.map((option) => (
