@@ -718,6 +718,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             button_text="Task 추가 For Team Project"
             projectTaskListRefatch={projectTaskListRefatch}
             bgColor = "red.300"
+            hoverColor = "red.500"
+            hoverTextColor = "yellow"
           />
         </Box>
       </Box>

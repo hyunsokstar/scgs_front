@@ -34,6 +34,8 @@ interface IProps {
     | "afternoon_tasks"
     | "night_tasks";
   bgColor?: string;
+  hoverColor?: string;
+  hoverTextColor?: string;
 }
 
 interface IUserNamesForCreate {
@@ -80,6 +82,8 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
   button_text = "add task",
   due_date_option_for_button = "night_tasks",
   bgColor,
+  hoverColor,
+  hoverTextColor,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -166,8 +170,10 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
         px={4}
         py={2}
         _hover={{
-          bg: hoverColors[due_date_option_for_button],
-          color: hoverTextColors[due_date_option_for_button],
+          bg: hoverColor ? hoverColor : hoverColors[due_date_option_for_button],
+          color: hoverTextColor
+            ? hoverTextColor
+            : hoverTextColors[due_date_option_for_button],
         }}
         onClick={onOpen}
       >

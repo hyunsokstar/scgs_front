@@ -145,7 +145,7 @@ function CompletedTaskRow({
                 key={task.pk}
                 height={16}
                 border={"1px solid lightgray"}
-                width={"1414px"}
+                width={"1842px"}
                 my={0}
                 display={"flex"}
                 alignItems={"center"}
@@ -157,12 +157,10 @@ function CompletedTaskRow({
                       <Checkbox mx={2} />
                     </HStack>
                   </Box>
-                    <Box width={"140px"}>
-                      <Text color={"blue.600"}>
-                        {task.task_manager.username}
-                      </Text>
-                      <Text color={"tomato"}>{task.writer}</Text>
-                    </Box>
+                  <Box width={"140px"}>
+                    <Text color={"blue.600"}>{task.task_manager.username}</Text>
+                    <Text color={"tomato"}>{task.writer}</Text>
+                  </Box>
                   <Box border={"0px solid blue"} width={"420px"}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
@@ -204,11 +202,15 @@ function CompletedTaskRow({
                         />
                       </HStack>
                     </HStack>
-                    <HStack>
+
+                  </Box>
+
+                  <Box border={"0px solid blue"} width={"310px"}>
+                  <HStack>
                       <Box textAlign={"center"}>
-                        <Text>마감</Text>
+                        <Text>완료 시점</Text>
                       </Box>
-                      <Text>{task.due_date_formatted}</Text>
+                      <Text>{task.completed_at_formatted}</Text>
 
                       <ModalButtonForUpdateProjectTaskCompleteDate
                         taskPk={task.pk}
@@ -218,24 +220,40 @@ function CompletedTaskRow({
                       />
                     </HStack>
                   </Box>
+
                   <Box border={"0px solid blue"} width={"200px"}>
                     <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>소요 시간</Text>
+                      </Box>
+                      <Box>
+                        <Text>{task.time_consumed_from_start_to_complete}</Text>
+                      </Box>
+                    </HStack>
+
+                    {/* <HStack>
                       <Box textAlign={"center"}>
                         <Text>경과</Text>
                       </Box>
                       <Box>
                         <Text>{task.elapsed_time_from_started_at}</Text>
                       </Box>
-                    </HStack>
+                    </HStack> */}
 
-                    <HStack>
+                    {/* <HStack>
                       <Box textAlign={"center"}>
                         <Text>남은 시간</Text>
                       </Box>
                       <Box>
                         <Text>{task.time_left_to_due_date}</Text>
                       </Box>
-                    </HStack>
+                    </HStack> */}
+                  </Box>
+
+                  <Box border={"0px solid blue"} width={"170px"}>
+
+                  업무 평점 부여 
+
                   </Box>
 
                   <Box>
