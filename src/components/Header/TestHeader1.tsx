@@ -135,16 +135,15 @@ const Header = () => {
   return (
     <>
       <Box
-        display="grid"
-        gridTemplateColumns="repeat(2, 1fr) auto repeat(3, 1fr)" // 가운데 열 추가
-        justifyItems="center"  // 가운데 정렬
-        alignItems="center"    // 수직 가운데 정렬
-        // gap="1rem"
-        height={"120px"}
+        display={"flex"}
+        as="nav"
+        height={"60px"}
         bg="gray.800"
+        px={1}
+        alignItems={"center"}
+        justifyContent="space-between"
         my={1}
         mb={1}
-
       >
         <Box display="flex" alignItems="center" onClick={homeButtonHandler}>
           <Icon
@@ -154,6 +153,19 @@ const Header = () => {
             mr="1rem"
           />
         </Box>
+
+        <NavLink
+          to="/my_task"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            My Task
+          </Text>
+        </NavLink>
 
         <NavLink
           to="/project_admin"
@@ -169,6 +181,36 @@ const Header = () => {
             Project Task
           </Text>
         </NavLink>
+
+        {/* <NavLink
+          to="/wanted"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            Wanted
+          </Text>
+        </NavLink>
+
+        <NavLink
+          to="/task-status"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            Task Status
+          </Text>
+        </NavLink> */}
 
         <NavLink
           to="/team-status"
@@ -213,7 +255,7 @@ const Header = () => {
           >
             Statics
           </Text>
-        </NavLink>
+        </NavLink>        
 
         <NavLink
           to="/test-board"
@@ -229,6 +271,21 @@ const Header = () => {
             Test Board
           </Text>
         </NavLink>
+
+        {/* <NavLink
+          to="/api-docu"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            Api Docu
+          </Text>
+        </NavLink> */}
 
         <NavLink
           to="/shortcut"
@@ -306,10 +363,13 @@ const Header = () => {
         </NavLink>
 
         <Box>
+          {/* <Box color={"white"}>{isLoggedIn ? "true" : "false"} </Box> */}
           {!isLoggedIn || logoutSuccess === true ? (
             <Container p={2}>
+              {/* <Box color={"white"}>{loginUser.username}</Box> */}
               <Button onClick={onLoginOpen} size={"md"}>
                 로그인
+                {/* {isLoggedIn ? "true" : "false"} */}
               </Button>
               <LightMode>
                 <Button
@@ -324,8 +384,13 @@ const Header = () => {
             </Container>
           ) : (
             <Box>
+              {/* <Box color={"white"}>{loginUser.username}</Box>
+              <Box color={"white"}>{isLoggedIn}</Box> */}
+
               <HStack mr={2}>
-                <Text color={"orange.500"} fontSize={"2xl"}></Text>
+                <Text color={"orange.500"} fontSize={"2xl"}>
+                  {/* {user?.username} ({user?.admin_level}) 님 */}
+                </Text>
                 <Menu>
                   <MenuButton>
                     <Avatar src={user?.profile_image} height="44px" />
