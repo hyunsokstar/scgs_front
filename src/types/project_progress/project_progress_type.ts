@@ -367,6 +367,13 @@ export interface TaskManager {
 }
 
 export interface ITypeForTaskStatusForToday {
+  toal_task_count_for_today: number;
+  progress_rate: number;
+  task_count_for_uncompleted_task_until_yesterday: number;
+  task_count_for_ready: number;
+  task_count_for_in_progress: number;
+  task_count_for_testing: number;
+  task_count_for_completed: number;
   morning_tasks: TaskForTaskStatusForToday[] | any | undefined;
   afternoon_tasks: TaskForTaskStatusForToday[] | any | undefined;
   night_tasks: TaskForTaskStatusForToday[] | any | undefined;

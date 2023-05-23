@@ -38,6 +38,7 @@ import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForS
 import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 import RadioButtonForSelectOptionForGropyBy from "./Button/RadioButtonForSelectOptionForGropyBy";
 import ModalButtonForAddProjectTaskWithDuedateOption from "./modal/ModalButtonForAddProjectTaskWithDuedateOption";
+import RadioButtonForGroupByOptionForTaskListUntilYesterday from "./Button/RadioButtonForGroupByOptionForTaskListUntilYesterday";
 
 interface Props {
   basic_due_date_option?:
@@ -52,7 +53,7 @@ interface Props {
 }
 
 // 1122
-function UncompletedProjectTaskList({
+function TaskListUntilYesterday({
   basic_due_date_option,
 }: Props): ReactElement {
   // const theme = useTheme();
@@ -315,302 +316,22 @@ function UncompletedProjectTaskList({
       <Box
         border={"1px solid black"}
         display="flex"
-        justifyContent={"space-between"}
+        justifyContent={"flex-start"}
         bgColor={"green.200"}
         alignItems={"center"}
-        p={4}
+        p={2}
       >
-        <Box width={"35%"}>
-          <Table border={"0px solid blue"} mb={1}>
-            <Tr borderBottom={"2px solid #9AE6B4"}>
-              <Th colSpan={2}>
-                <Text fontSize={22}>
-                  비완료 리스트 (총: {taskListData?.totalPageCount} 개,
-                  per_page: {taskListData?.task_number_for_one_page} 개){" "}
-                </Text>
-              </Th>
-            </Tr>
-            <Tr borderBottom={"2px solid #9AE6B4"}>
-              <Td>
-                <Text>진행별</Text>
-              </Td>
-              <Td
-                display={"flex"}
-                justifyContent={"flex-start"}
-                gap={3}
-                borderBottom={"1px solid #9AE6B4"}
-              >
-                <ButtonForShowCountForTaskStatus
-                  task_status={"ready"}
-                  status_imoge={"⚪"}
-                  status_count={taskListData?.count_for_ready}
-                  button_size={"md"}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-
-                <ButtonForShowCountForTaskStatus
-                  task_status={"in_progress"}
-                  status_imoge={"🟡"}
-                  status_count={taskListData?.count_for_in_progress}
-                  button_size={"md"}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-
-                <ButtonForShowCountForTaskStatus
-                  task_status={"testing"}
-                  status_imoge={"🟠"}
-                  status_count={taskListData?.count_for_in_testing}
-                  button_size={"md"}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-              </Td>
-              {/* <Td borderBottomWidth="1px" borderColor="teal.200">
-                      Row 1, Column 3
-                    </Td> */}
-            </Tr>
-            <Tr borderBottom={"2px solid #9AE6B4"}>
-              <Td>중요도</Td>
-              <Td>
-                <StarRatingForSetFilterOptionForTaskList
-                  rating={rating_for_filter_option}
-                  setRating={set_rating_for_filter_option}
-                />
-              </Td>
-            </Tr>
-            <Tr height="30px" borderBottom={"2px solid #9AE6B4"}>
-              <Td>
-                <Text>담당자별:</Text>
-              </Td>
-              <Td>
-                {taskListData?.writers_info?.map((writer) => {
-                  return (
-                    <Box fontSize="lg" color="blue.900">
-                      <HStack>
-                        <Button
-                          variant={"outline"}
-                          size={"sm"}
-                          border={"1px solid black"}
-                          mb={1}
-                          _hover={{
-                            bg: "#90CDF4",
-                            color: "brown",
-                          }}
-                          onClick={() =>
-                            searchUncompletedListforUserName(writer.username)
-                          }
-                          bgColor={
-                            writer.username === username_for_search
-                              ? "#90CDF4"
-                              : ""
-                          }
-                        >
-                          {writer.username} : {writer.task_count}
-                        </Button>
-                      </HStack>
-                    </Box>
-                  );
-                })}
-              </Td>
-              {/* <Td borderBottomWidth="1px" borderColor="teal.200">
-                      Row 2, Column 3
-                    </Td> */}
-            </Tr>
-          </Table>
-        </Box>
-
-        <Box>
-          <Text mb={1}>생성 시점:</Text>
-          <ButtonsForSelectForTeamTaskListPeriod
-            selectedPeriodOptionForUncompletedTaskList={
-              selectedPeriodOptionForUncompletedTaskList
-            }
-            changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
-          />
-          <Box mt={3}>
-            마감 기한:
-            <Box display={"flex"} gap={2} mt={1}>
-              <ButtonForFilteringTaskForDueDate
-                button_text="미정"
-                due_date_option="undecided"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-
-              <ButtonForFilteringTaskForDueDate
-                button_text="어제까지"
-                due_date_option="until-yesterday"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-
-              <ButtonForFilteringTaskForDueDate
-                button_text="정오"
-                due_date_option="until-noon"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-              <ButtonForFilteringTaskForDueDate
-                button_text="오후"
-                due_date_option="until-evening"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-              <ButtonForFilteringTaskForDueDate
-                button_text="내일"
-                due_date_option="until-tomorrow"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-              <ButtonForFilteringTaskForDueDate
-                button_text="내일 모레"
-                due_date_option="until-the-day-after-tomorrow"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-              <ButtonForFilteringTaskForDueDate
-                button_text="이번주"
-                due_date_option="until-this-week"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-              <ButtonForFilteringTaskForDueDate
-                button_text="이번달"
-                due_date_option="until-this-month"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-            </Box>
-            <Box>
-              {/* <ButtonsForSelectFilterOptionForTaskClassification /> */}
-            </Box>
-            <Box display={"flex"} mt={5} gap={5} alignItems={"center"}>
-              <Box display="flex" alignItems="center">
-                긴급 여부 :{" "}
-                <Checkbox
-                  size="lg"
-                  ml={2}
-                  border={"1px solid gray"}
-                  isChecked={isForUrgent}
-                  onChange={handleUrgentChange}
-                />
-              </Box>
-              <Box display="flex" alignItems="center">
-                상금 여부 :{" "}
-                <Checkbox
-                  size="lg"
-                  border={"1px solid gray"}
-                  ml={2}
-                  isChecked={checkForCashPrize}
-                  onChange={handleCashPrizeChange}
-                />
-              </Box>
-            </Box>
-          </Box>
-          <Box mt={3}>
-            <Box>
-              담당 : &nbsp;
-              <Input
-                size="xs"
-                variant="outline"
-                bg="blue.50"
-                borderColor="gray.300"
-                _focus={{ border: "0px solid blue", boxShadow: "none" }}
-                _hover={{ bg: "green.50", borderColor: "black" }}
-                _placeholder={{ color: "black" }}
-                id="url"
-                w={"300px"}
-                value={filterValueForTaskManager}
-                onChange={handleFilterChangeForTaskManager}
-              />
-            </Box>
-
-            <Box mt={1}>
-              업무 : &nbsp;
-              <Input
-                size="xs"
-                variant="outline"
-                bg="blue.50"
-                borderColor="gray.300"
-                _focus={{ border: "1px solid blue", boxShadow: "none" }}
-                _hover={{ bg: "green.50", borderColor: "black" }}
-                _placeholder={{ color: "black" }}
-                id="url"
-                w={"300px"}
-                value={filterValueForTask}
-                onChange={handleFilterChangeForTask}
-              />
-            </Box>
-
-            <Box mt={1}>
-              분류 : &nbsp;
-              <Input
-                size="xs"
-                variant="outline"
-                bg="blue.50"
-                borderColor="gray.300"
-                _focus={{ border: "1px solid blue", boxShadow: "none" }}
-                _hover={{ bg: "green.50", borderColor: "black" }}
-                _placeholder={{ color: "black" }}
-                id="url"
-                w={"300px"}
-                value={filterValueForTaskClassification}
-                onChange={handleFilterChangeForTaskClassification}
-              />
-            </Box>
-          </Box>
-        </Box>
-
         <Box
           // border={"1px solid blue"}
-          width={"20%"}
+          width={"35%"}
           display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
+          flexDirection="row"
+          p={2}
         >
-          <RadioButtonForSelectOptionForGropyBy
+          <RadioButtonForGroupByOptionForTaskListUntilYesterday
             groupByOption={groupByOption}
             setGroupByOption={setGroupByOption}
           />
-        </Box>
-
-        <Box>
-          <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
-            <Text fontSize="xl" fontWeight="bold" mb={2}>
-              Today Task Status
-            </Text>
-            <Text>총 업무 개수: {taskListData.total_task_count_for_today}</Text>
-            <Text>
-              총 완료 개수: {taskListData.completed_task_count_for_today}
-            </Text>
-            <Text>달성률:{taskListData.achievement_rate_for_today}%</Text>
-            <Box w="100%">
-              <Progress
-                value={taskListData.achievement_rate_for_today}
-                size="sm"
-                mb={2}
-              />
-            </Box>
-          </Box>
         </Box>
       </Box>
 
@@ -766,4 +487,4 @@ function UncompletedProjectTaskList({
   );
 }
 
-export default UncompletedProjectTaskList;
+export default TaskListUntilYesterday;

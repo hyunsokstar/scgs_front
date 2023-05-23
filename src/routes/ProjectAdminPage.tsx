@@ -8,10 +8,10 @@ type Props = {};
 // rome-ignore lint/correctness/noEmptyPattern: <explanation>
 function ProjectAdminPage({}: Props): ReactElement {
   return (
-    <VStack gap={1}>
+    <Box display={"flex"} flexDirection={"column"} gap={5}>
       <UncompletedProjectTaskList />
       <CompletedProjectTaskList />
-    </VStack>
+    </Box>
   );
 }
 

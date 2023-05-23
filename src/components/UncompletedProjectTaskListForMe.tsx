@@ -20,7 +20,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
     useState<string>("");
 
   const [due_date_option_for_filtering, set_due_date_option_for_filtering] =
-    useState<string>("");
+    useState<string | undefined>("");
 
   // const queryClient = useQueryClient();
 
