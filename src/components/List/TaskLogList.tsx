@@ -24,10 +24,17 @@ const TaskLogList: React.FC<TaskLogListProps> = ({ dataForTaskLogs }) => {
     <List>
       {dataForTaskLogs.map((taskLog) => (
         <Box>
-          <Box>
-            {[...Array(taskLog.time_distance_for_team_task)].map((_, index) => (
-              <Text key={index}>|</Text>
+          <Box border={"0px solid black"}>
+            {[
+              ...Array(Math.floor(taskLog.time_distance_for_team_task / 6)),
+            ].map((_, index) => (
+              <Text key={index}>| 1hour |</Text>
             ))}
+            {[...Array(taskLog.time_distance_for_team_task % 6)].map(
+              (_, index) => (
+                <Text key={index}>|</Text>
+              )
+            )}
           </Box>
           <ListItem key={taskLog.id} display="flex" alignItems="center">
             <Text mr={"100px"}>{taskLog.completed_at_formatted}</Text>

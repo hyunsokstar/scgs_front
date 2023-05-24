@@ -5,8 +5,12 @@ import { Box } from "@chakra-ui/react";
 // data
 import { useQuery } from "@tanstack/react-query";
 import { apiForGetTaskLogList } from "../../apis/project_progress_api";
-import { TypeForTaskLog } from "../../types/project_progress/project_progress_type";
+import {
+  ResponseDataForTaskLog,
+  TypeForTaskLog,
+} from "../../types/project_progress/project_progress_type";
 import TaskLogList from "../../components/List/TaskLogList";
+import HeaderForTaskStatusForToday from "../../components/Header/HeaderForTaskStatusForToday";
 
 interface Props {}
 
@@ -17,7 +21,7 @@ const TaskLogPage = (props: Props) => {
     isLoading: loadingForTaskLog,
     data: dataForTaskLogs,
     refetch: refetchForTaskLogs,
-  } = useQuery<TypeForTaskLog[]>(
+  } = useQuery<ResponseDataForTaskLog>(
     ["apiForGetTaskLogList", currentPageNum],
     apiForGetTaskLogList,
     {
@@ -33,7 +37,9 @@ const TaskLogPage = (props: Props) => {
 
   return (
     <Box>
-      <TaskLogList dataForTaskLogs={dataForTaskLogs} />
+      <HeaderForTaskStatusForToday data={dataForTaskLogs} />
+
+      <TaskLogList dataForTaskLogs={dataForTaskLogs.TaskLog} />
     </Box>
   );
 };

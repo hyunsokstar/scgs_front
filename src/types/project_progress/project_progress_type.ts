@@ -397,3 +397,10 @@ export interface TypeForTaskLog {
   time_distance_for_team_task: number;
   time_distance_for_my_task: number;
 }
+
+export interface ResponseDataForTaskLog {
+  total_today_task_count: number;
+  total_today_completed_task_count: number;
+  total_today_uncompleted_task_count: number;
+  TaskLog: TypeForTaskLog[];
+}
