@@ -81,19 +81,7 @@ const Header = () => {
     }
   );
 
-  // const logout = () => {
-  //   mutationForLogout.mutate();
-  // };
-
   const onLogOut = async () => {
-    // const toastId = toast({
-    //   title: "Login out...",
-    //   description: "Sad to see you go...",
-    //   status: "loading",
-    //   position: "bottom-right",
-    // });
-
-    // logOutApi
     mutationForLogout.mutate();
 
     await dispatch(logout());
@@ -120,14 +108,6 @@ const Header = () => {
     color: "white",
   };
 
-  // useEffect(() => {
-  //   queryClient.refetchQueries(["me"]);
-  //   if (isLoggedIn) {
-  //     dispatch(login(user));
-  //   } else {
-  //   }
-  // }, []);
-
   const goToUserProfile = (userPk: any) => {
     navigate(`users/${userPk}`);
   };
@@ -136,15 +116,14 @@ const Header = () => {
     <>
       <Box
         display="grid"
-        gridTemplateColumns="repeat(2, 1fr) auto repeat(3, 1fr)" // 가운데 열 추가
-        justifyItems="center"  // 가운데 정렬
-        alignItems="center"    // 수직 가운데 정렬
+        gridTemplateColumns="repeat(7, 1fr)"
+        justifyItems="center" // 가운데 정렬
+        alignItems="center" // 수직 가운데 정렬
         // gap="1rem"
         height={"120px"}
         bg="gray.800"
         my={1}
         mb={1}
-
       >
         <Box display="flex" alignItems="center" onClick={homeButtonHandler}>
           <Icon
@@ -199,7 +178,20 @@ const Header = () => {
             Today Task Status
           </Text>
         </NavLink>
-
+        <NavLink
+          to="/long-term-plan"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            long term plan
+          </Text>
+        </NavLink>
         <NavLink
           to="/task-statics"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
@@ -212,6 +204,21 @@ const Header = () => {
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             Statics
+          </Text>
+        </NavLink>
+
+        <NavLink
+          to="/task-log"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            Task Log
           </Text>
         </NavLink>
 
@@ -272,21 +279,6 @@ const Header = () => {
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             Study Note
-          </Text>
-        </NavLink>
-
-        <NavLink
-          to="/long-term-plan"
-          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-        >
-          <Text
-            fontSize="xl"
-            fontWeight="medium"
-            mr={{ base: 0, md: "1rem" }}
-            cursor="pointer"
-            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
-          >
-            long term plan
           </Text>
         </NavLink>
 

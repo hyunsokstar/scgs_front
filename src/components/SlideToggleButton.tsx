@@ -9,7 +9,7 @@ interface SlideToggleButtonProps {
   is_testing?: boolean;
   onColor?: string;
   offColor?: string;
-  is_disabled? : boolean;
+  is_disabled?: boolean;
 }
 
 const SlideToggleButton: React.FC<SlideToggleButtonProps> = ({
@@ -19,20 +19,12 @@ const SlideToggleButton: React.FC<SlideToggleButtonProps> = ({
   is_testing,
   onColor,
   offColor,
-  is_disabled
+  is_disabled,
 }) => {
   const [isChecked, setIsChecked] = useState<boolean>(checked);
   const [is_disabled_option, set_is_disabled_option] = useState(is_disabled);
 
   useEffect(() => {
-    // if (is_completed === true) {
-    //   console.log("is_completed 1: ", is_completed);
-    //   set_is_disabled_option(false);
-    // } else {
-    //   console.log("is_completed 2: ", is_completed);
-    //   set_is_disabled_option(true);
-    // }
-
     if (in_progress === true || is_testing === true || is_disabled) {
       set_is_disabled_option(true);
     } else {
@@ -46,8 +38,7 @@ const SlideToggleButton: React.FC<SlideToggleButtonProps> = ({
   };
 
   return (
-    <Flex justifyContent={"center"} alignItems={"center"}>
-      {/* {is_disabled_option ? "true" : "false"} */}
+    <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
       <Switch
         onChange={handleToggleChange}
         checked={isChecked}
@@ -57,7 +48,7 @@ const SlideToggleButton: React.FC<SlideToggleButtonProps> = ({
         checkedIcon={false}
         disabled={is_disabled_option}
       />
-    </Flex>
+    </Box>
   );
 };
 

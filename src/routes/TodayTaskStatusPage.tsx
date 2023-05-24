@@ -192,17 +192,14 @@ const TodayTaskStatusPage = () => {
       <Box p={4} bg="gray.200">
         <Box display={"flex"} justifyContent={"space-between"}>
           <Box as="h1" fontFamily="sans-serif" color="teal.800">
-            <Box fontSize={"xl"} textAlign={"left"} mb={2}>
-              오늘 이전 비완료 :{" "}
+            <Box display={"flex"} fontSize={"xl"} textAlign={"left"} mb={2}>
+              오늘 이전 비완료 : &nbsp;
               <ModalButtonForTaskListWithDeadlineUntilYesterDay
                 buttonText={
                   dataForTaskStatusForToday?.task_count_for_uncompleted_task_until_yesterday
                 }
               />
             </Box>
-          </Box>
-          <Box>
-            Today Status Statics
             <TableForStaticsForTodayTaskStatus
               toal_task_count_for_today={
                 dataForTaskStatusForToday?.toal_task_count_for_today
@@ -221,6 +218,10 @@ const TodayTaskStatusPage = () => {
               }
               progress_rate={dataForTaskStatusForToday?.progress_rate}
             />
+          </Box>
+          <Box>
+              <Text>Task log</Text>
+
           </Box>
           <Box>3 영역</Box>
         </Box>

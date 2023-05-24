@@ -48,7 +48,7 @@ const ModalButtonForTaskListWithDeadlineUntilYesterDay: React.FC<
       <Box>
         <Button
           variant="outline"
-          size={"md"}
+          size={"sm"}
           colorScheme="blue"
           color="blue.500"
           _hover={{ bg: "grayPastel" }}

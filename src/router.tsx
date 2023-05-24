@@ -59,6 +59,7 @@ import TeamManagementPage from "./routes/TeamManagementPage";
 import MonthlyTaskCountChartPage from "./routes/MonthlyTaskCountChartPage";
 import BarChartForDailyTaskCountForPersonalUserPage from "./routes/ChartPage/BarChartForDailyTaskCountForPersonalUserPage";
 import TodayTaskStatusPage from "./routes/TodayTaskStatusPage";
+import TaskLogPage from "./routes/Log/TaskLogPage";
 
 const router = createBrowserRouter([
   {
@@ -313,6 +314,10 @@ const router = createBrowserRouter([
       {
         path:"monthly-task-count-chart-page/:userPk",
         element: <MonthlyTaskCountChartPage />
+      },
+      {
+        path:"task-log",
+        element: <TaskLogPage />
       }
     ],
   },
