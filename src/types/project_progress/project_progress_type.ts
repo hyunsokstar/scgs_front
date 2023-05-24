@@ -378,3 +378,22 @@ export interface ITypeForTaskStatusForToday {
   afternoon_tasks: TaskForTaskStatusForToday[] | any | undefined;
   night_tasks: TaskForTaskStatusForToday[] | any | undefined;
 }
+
+export interface WriterForTaskLog {
+  pk: number;
+  username: string;
+  profile_image: string;
+}
+
+export interface TypeForTaskLog {
+  id: number;
+  writer: WriterForTaskLog;
+  taskPk: number;
+  task: string;
+  completed_at: string;
+  completed_at_formatted: string;
+  interval_between_team_task: string | null;
+  interval_between_my_task: string | null;
+  time_distance_for_team_task: number;
+  time_distance_for_my_task: number;
+}
