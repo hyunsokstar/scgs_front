@@ -25,6 +25,18 @@ interface ICommentTextUpdateApiParameter {
   commentText: string;
 }
 // 1122
+// apiForGetTaskLogList
+// http://127.0.0.1:8000/api/v1/project_progress/task-log
+export const apiForGetTaskLogList = async ({
+  queryKey,
+}: QueryFunctionContext): Promise<any> => {
+  const [_, pageNum] = queryKey;
+  const data = await instance
+    .get(`project_progress/task-log?page=${pageNum}`)
+    .then((response) => response.data);
+
+  return data;
+};
 
 // apiForUpdateTaskOrder
 export const apiForUpdateTaskDueDateAndOrder = ({
