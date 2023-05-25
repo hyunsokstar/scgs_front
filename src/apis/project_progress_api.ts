@@ -215,6 +215,8 @@ export const update_task_for_is_task_for_urgent = (taskPk: string) => {
     });
 };
 
+
+// data_for_completed_tasks_for_pie_chart
 export const getDataForTaskStaticsForIsCompleted = () => {
   const config: AxiosRequestConfig = {
     method: "get",

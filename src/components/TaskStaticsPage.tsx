@@ -35,12 +35,19 @@ function TaskStaticsPage() {
         value: row.total_count_for_uncompleted_task,
       };
     });
-
   const data_for_completed_tasks_for_pie_chart =
     dataForTaskStaticsForIsCompleted.managers.map((row) => {
       return {
         name: row.task_manager,
         value: row.total_count_for_completed_task,
+      };
+    });
+
+  const data_for_total_tasks_for_pie_chart =
+    dataForTaskStaticsForIsCompleted.managers.map((row) => {
+      return {
+        name: row.task_manager,
+        value: row.total_count_for_task,
       };
     });
 
@@ -78,18 +85,26 @@ function TaskStaticsPage() {
         textAlign={"center"}
         py={2}
       >
-        <Box width="50%" borderRight="1px solid black">
-          업무 비중 (비완료)
+        <Box width="33.3%" borderRight="1px solid black">
+          업무 비중 (전체)
         </Box>
-        <Box width="50%">업무 비중 (비완료, 완료 모두 포함)</Box>
+        <Box width="33.3%" borderRight="1px solid black">
+          업무 비중 (비완료만)
+        </Box>
+        <Box width="33.3%">업무 비중 (완료만)</Box>
       </Box>
       <Box display={"flex"} border="1px solid black">
-        <Box width="50%" borderRight="1px solid black">
+        <Box width="33.3%">
+          <PieChartForUncompletedTaskCount
+            data={data_for_total_tasks_for_pie_chart}
+          />{" "}
+        </Box>
+        <Box width="33.3%" border="1px solid black" borderY={0}>
           <PieChartForUncompletedTaskCount
             data={data_for_uncompleted_tasks_for_pie_chart}
           />{" "}
         </Box>
-        <Box width="50%">
+        <Box width="33.3%" borderRight="1px solid black">
           <PieChartForUncompletedTaskCount
             data={data_for_completed_tasks_for_pie_chart}
           />{" "}

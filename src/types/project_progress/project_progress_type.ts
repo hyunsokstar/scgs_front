@@ -268,6 +268,7 @@ export type ManagerData = {
   uncompleted_count_for_task: number;
   total_count_for_uncompleted_task: number;
   total_count_for_completed_task: number;
+  total_count_for_task: number;
 };
 
 export type TaskCountForMonth = {
