@@ -1,29 +1,16 @@
 import { Avatar, List, ListItem, Text, Box } from "@chakra-ui/react";
-
-interface TaskLog {
-  id: number;
-  writer: {
-    pk: number;
-    username: string;
-    profile_image: string;
-  };
-  taskPk: number;
-  task: string;
-  completed_at: string;
-  completed_at_formatted: string;
-  time_distance_for_team_task: number;
-  time_distance_for_my_task: number;
-}
+import { TypeForTaskLog } from "../../types/project_progress/project_progress_type";
 
 interface TaskLogListProps {
-  dataForTaskLogs: TaskLog[];
+  dataForTaskLogs: TypeForTaskLog[];
 }
 
-const TaskLogList: React.FC<TaskLogListProps> = ({ dataForTaskLogs }) => {
+const TaskLogList : React.FC<TaskLogListProps> = ({ dataForTaskLogs}) => {
   return (
     <List>
-      {dataForTaskLogs.map((taskLog) => (
+      {dataForTaskLogs.map((taskLog, index) => (
         <Box>
+          
           <Box border={"0px solid black"}>
             {[
               ...Array(Math.floor(taskLog.time_distance_for_team_task / 6)),
@@ -35,8 +22,10 @@ const TaskLogList: React.FC<TaskLogListProps> = ({ dataForTaskLogs }) => {
                 <Text key={index}>|</Text>
               )
             )}
+
           </Box>
           <ListItem key={taskLog.id} display="flex" alignItems="center">
+            <Box mr={5}> {index + 1} </Box> 
             <Text mr={"100px"}>{taskLog.completed_at_formatted}</Text>
             <Avatar
               src={taskLog.writer.profile_image}

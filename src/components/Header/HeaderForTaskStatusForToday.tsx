@@ -1,9 +1,21 @@
-import { Box, Divider, Flex, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Flex,
+  Text,
+  Table,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+} from "@chakra-ui/react";
 
 interface TaskStatusData {
   total_today_task_count: number;
   total_today_completed_task_count: number;
   total_today_uncompleted_task_count: number;
+  average_number_per_hour: number;
+  elapsed_time: string;
 }
 
 interface HeaderForTaskStatusForTodayProps {
@@ -17,6 +29,8 @@ const HeaderForTaskStatusForToday: React.FC<
     total_today_task_count,
     total_today_completed_task_count,
     total_today_uncompleted_task_count,
+    average_number_per_hour,
+    elapsed_time,
   } = data;
 
   const completionRate = Math.round(
@@ -32,17 +46,50 @@ const HeaderForTaskStatusForToday: React.FC<
       display="flex"
       justifyContent="space-between"
     >
-      <Box>
-        <Text fontSize="xl">Today Task Count: {total_today_task_count}</Text>
-        <Text fontSize="xl">
-          Completed Task: {total_today_completed_task_count}
-        </Text>
-        <Text fontSize="xl">
-          Uncompleted Task: {total_today_uncompleted_task_count}
-        </Text>
-        <Text fontSize="xl">완료율: {completionRate}%</Text>
+      <Box display={"flex"} flexDirection={"column"} gap={2}>
+        <Table
+          variant="striped"
+          colorScheme="black"
+          size="md"
+          borderRadius="md"
+          border={"1px solid black"}
+        >
+          <Tbody>
+            <Tr>
+              <Th fontSize="md">Total</Th>
+              <Th fontSize="md">완료</Th>
+              <Th fontSize="md">비완료</Th>
+              <Th fontSize="md">완료율</Th>
+            </Tr>
+            <Tr>
+              <Td fontSize="md">{total_today_task_count}</Td>
+              <Td fontSize="md">{total_today_completed_task_count}</Td>
+              <Td fontSize="md">{total_today_uncompleted_task_count}</Td>
+              <Td fontSize="md">{completionRate}%</Td>
+            </Tr>
+          </Tbody>
+        </Table>
       </Box>
-      <Box>2영역</Box>
+      <Box>
+        <Table
+          variant="striped"
+          colorScheme="black"
+          size="md"
+          borderRadius="md"
+          border={"1px solid black"}
+        >
+          <Tbody>
+            <Tr>
+              <Th fontSize="md">업무 시간(from 9:00)</Th>
+              <Th fontSize="md">평균 개수(시간당)</Th>
+            </Tr>
+            <Tr>
+              <Td fontSize="md">{elapsed_time}</Td>
+              <Td fontSize="md">{average_number_per_hour}</Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </Box>
       <Box>3영역</Box>
     </Box>
   );

@@ -402,5 +402,7 @@ export interface ResponseDataForTaskLog {
   total_today_task_count: number;
   total_today_completed_task_count: number;
   total_today_uncompleted_task_count: number;
+  average_number_per_hour: number;
+  elapsed_time: string;
   TaskLog: TypeForTaskLog[];
 }
