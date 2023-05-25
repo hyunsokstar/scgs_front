@@ -44,7 +44,6 @@ const StudyNoteDetail = (props: Props) => {
     (state: RootState) => state.studyNote.currentPage
   );
 
-  const [pageToMove, setPageToMove] = useState<any>();
   const {
     data: response_data_for_api,
     isLoading: logind_for_study_note_content_list,
@@ -97,16 +96,11 @@ const StudyNoteDetail = (props: Props) => {
     mutationForDeleteContentsForChecked.mutate(checkedValues);
   };
 
-  const handleOrderingClick = () => {
-    // Ordering 버튼 클릭 시 실행되는 함수
-  };
-
-  const handleSearchClick = () => {
-    // Search 버튼 클릭 시 실행되는 함수
-  };
-
   const handleMoveToClick = (order: number) => {
+    console.log("order : ", order);
     const targetElement = document.getElementById(`card-${order}`);
+    console.log("targetElement : ", targetElement);
+
     if (targetElement) {
       const targetOffsetTop = targetElement.offsetTop;
       document.getElementById("card-container")?.scrollTo({
@@ -157,7 +151,7 @@ const StudyNoteDetail = (props: Props) => {
             >
               Delete for check
             </Button>
-            <Box >
+            <Box>
               <ModalButtonForSearchStudyNoteContent
                 study_note_pk={study_note_pk}
               />
@@ -195,8 +189,7 @@ const StudyNoteDetail = (props: Props) => {
         >
           <Box
             id={"navi-box"}
-            // position={"absolute"}
-            top={"150"}
+            top={"220"}
             left={"88"}
             width={"67%"}
             border={"0px solid green"}
@@ -204,9 +197,6 @@ const StudyNoteDetail = (props: Props) => {
             position={"fixed"}
             zIndex={1}
           >
-            {/* 카드 개수 :{" "}
-            {response_data_for_api?.data_for_study_note_contents.length} {" "} */}
-            {/* <Button onClick={() => handleMoveToClick(3)}>3</Button> */}
             <ButtonsForFindToContentWithOrderNum
               numCards={
                 response_data_for_api?.data_for_study_note_contents.length
@@ -236,7 +226,7 @@ const StudyNoteDetail = (props: Props) => {
                         content={row.content}
                         writer={row.writer}
                         created_at={row.created_at}
-                        order={row.order}
+                        order={i+1}
                         index={i}
                         currentPage={currentPage}
                         study_note_pk={study_note_pk}
