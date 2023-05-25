@@ -393,10 +393,19 @@ export interface TypeForTaskLog {
   task: string;
   completed_at: string;
   completed_at_formatted: string;
+
+  time_distance_from_before_task: number;
+  time_distance_from_before_my_task: number;
+
   interval_between_team_task: string | null;
   interval_between_my_task: string | null;
   time_distance_for_team_task: number;
   time_distance_for_my_task: number;
+}
+
+interface WriterData {
+  writer: string;
+  count: number;
 }
 
 export interface ResponseDataForTaskLog {
@@ -406,4 +415,5 @@ export interface ResponseDataForTaskLog {
   average_number_per_hour: number;
   elapsed_time: string;
   TaskLog: TypeForTaskLog[];
+  writers: WriterData[];
 }

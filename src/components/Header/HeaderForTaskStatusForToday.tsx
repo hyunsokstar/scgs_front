@@ -9,6 +9,7 @@ import {
   Th,
   Td,
 } from "@chakra-ui/react";
+import TableForUsersTaskCountInfoForTaskLog from "../Table/TableForUsersTaskCountInfoForTaskLog";
 
 interface TaskStatusData {
   total_today_task_count: number;
@@ -16,6 +17,7 @@ interface TaskStatusData {
   total_today_uncompleted_task_count: number;
   average_number_per_hour: number;
   elapsed_time: string;
+  writers: any;
 }
 
 interface HeaderForTaskStatusForTodayProps {
@@ -31,12 +33,12 @@ const HeaderForTaskStatusForToday: React.FC<
     total_today_uncompleted_task_count,
     average_number_per_hour,
     elapsed_time,
+    writers,
   } = data;
 
   const completionRate = Math.round(
     (total_today_completed_task_count / total_today_task_count) * 100
   );
-  //   const formattedCompletionRate = completionRate.toFixed(2).replace(/\.00$/, "");
 
   return (
     <Box
@@ -114,7 +116,9 @@ const HeaderForTaskStatusForToday: React.FC<
           </Tbody>
         </Table>
       </Box>
-      <Box>3영역</Box>
+      <Box>
+        <TableForUsersTaskCountInfoForTaskLog writers={writers} />
+      </Box>
     </Box>
   );
 };
