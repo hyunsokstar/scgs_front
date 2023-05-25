@@ -56,16 +56,32 @@ const HeaderForTaskStatusForToday: React.FC<
         >
           <Tbody>
             <Tr>
-              <Th fontSize="md">Total</Th>
-              <Th fontSize="md">완료</Th>
-              <Th fontSize="md">비완료</Th>
-              <Th fontSize="md">완료율</Th>
+              <Th fontSize="md" textAlign={"center"}>
+                Total
+              </Th>
+              <Th fontSize="md" textAlign={"center"}>
+                완료
+              </Th>
+              <Th fontSize="md" textAlign={"center"}>
+                비완료
+              </Th>
+              <Th fontSize="md" textAlign={"center"}>
+                완료율
+              </Th>
             </Tr>
             <Tr>
-              <Td fontSize="md">{total_today_task_count}</Td>
-              <Td fontSize="md">{total_today_completed_task_count}</Td>
-              <Td fontSize="md">{total_today_uncompleted_task_count}</Td>
-              <Td fontSize="md">{completionRate}%</Td>
+              <Td fontSize="md" textAlign={"center"}>
+                {total_today_task_count}
+              </Td>
+              <Td fontSize="md" textAlign={"center"}>
+                {total_today_completed_task_count}
+              </Td>
+              <Td fontSize="md" textAlign={"center"}>
+                {total_today_uncompleted_task_count}
+              </Td>
+              <Td fontSize="md" textAlign={"center"}>
+                {completionRate}%
+              </Td>
             </Tr>
           </Tbody>
         </Table>
@@ -80,12 +96,20 @@ const HeaderForTaskStatusForToday: React.FC<
         >
           <Tbody>
             <Tr>
-              <Th fontSize="md">업무 시간(from 9:00)</Th>
-              <Th fontSize="md">평균 개수(시간당)</Th>
+              <Th fontSize="md" textAlign={"center"}>
+                업무 시간(from 9:00)
+              </Th>
+              <Th fontSize="md" textAlign={"center"}>
+                평균 개수(시간당)
+              </Th>
             </Tr>
             <Tr>
-              <Td fontSize="md">{elapsed_time}</Td>
-              <Td fontSize="md">{average_number_per_hour}</Td>
+              <Td fontSize="md" textAlign={"center"}>
+                {elapsed_time}
+              </Td>
+              <Td fontSize="md" textAlign={"center"}>
+                {average_number_per_hour}
+              </Td>
             </Tr>
           </Tbody>
         </Table>
