@@ -90,14 +90,9 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const handlerForApply = () => {
     console.log("handlerForApply : ", selectedButtonsData);
 
-    if (editMode) {
-      exist_page_numbers.map((number) => {
-        dispatch(selectButton({ buttonNumber: number, editMode }));
-      });
-    } else {
-      dispatch(deselectButton());
-      alert("여기");
-    }
+    exist_page_numbers.map((number) => {
+      dispatch(selectButton({ buttonNumber: number, editMode }));
+    });
   };
 
   const pageMoveButtonHandler = (direction: string) => {
@@ -258,6 +253,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     const userPk = loginUser?.pk;
 
     mutationForUpdateEditModeForStudyNoteForContent.mutate(userPk);
+    dispatch(deselectButton());
     console.log("option : ", option);
   };
 
@@ -270,6 +266,8 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       width={"100%"}
       border={"1px solid green"}
     >
+      {/* <Box>{selectedButtonsData.join(", ")}</Box> */}
+
       <Box display={"flex"} width={"100%"} pt={1} px={1} gap={1}>
         <IconButton
           aria-label="Previous"
@@ -348,7 +346,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
             /> */}
           </Box>
         ) : (
-          ""
+          <Box> </Box>
         )}
 
         <Box>

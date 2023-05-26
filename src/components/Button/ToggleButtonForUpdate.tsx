@@ -34,7 +34,7 @@ const ToggleButtonForUpdate = ({
       onClick={handleClick}
       {...rest}
     >
-      {isOn ? "On" : "Off"}
+      {isOn ? "Edit mode On" : "Edit mode Off"}
     </Button>
   );
 };
