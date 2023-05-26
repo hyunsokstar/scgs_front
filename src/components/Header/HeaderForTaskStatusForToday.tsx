@@ -22,11 +22,13 @@ interface TaskStatusData {
 
 interface HeaderForTaskStatusForTodayProps {
   data: TaskStatusData;
+  setUserOptionForList: React.Dispatch<React.SetStateAction<string>>;
+  userOptionForList: string;
 }
 
 const HeaderForTaskStatusForToday: React.FC<
   HeaderForTaskStatusForTodayProps
-> = ({ data }) => {
+> = ({ data, setUserOptionForList, userOptionForList }) => {
   const {
     total_today_task_count,
     total_today_completed_task_count,
@@ -117,7 +119,11 @@ const HeaderForTaskStatusForToday: React.FC<
         </Table>
       </Box>
       <Box>
-        <TableForUsersTaskCountInfoForTaskLog writers={writers} />
+        <TableForUsersTaskCountInfoForTaskLog
+          writers={writers}
+          userOptionForList={userOptionForList}
+          setUserOptionForList={setUserOptionForList}
+        />
       </Box>
     </Box>
   );

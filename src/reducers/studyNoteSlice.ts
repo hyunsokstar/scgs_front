@@ -35,6 +35,10 @@ export const studyNoteSlice = createSlice({
 
       state.currentPage = buttonNumber;
     },
+    deselectButton: (state) => {
+      // console.log("action.payload : ", action.payload);
+      state.selectedButtons = []
+    },
     initalizeSelctButtons: (state, action: PayloadAction<number[]>) => {
       console.log("action.payload : ", action.payload);
       state.selectedButtons = [...action.payload];
@@ -61,6 +65,7 @@ export const studyNoteSlice = createSlice({
 
 export const {
   selectButton,
+  deselectButton,
   initializeCurrentPage,
   initalizeSelctButtons,
   moveToBeforPage,

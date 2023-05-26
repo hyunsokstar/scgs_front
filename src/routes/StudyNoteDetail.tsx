@@ -226,7 +226,7 @@ const StudyNoteDetail = (props: Props) => {
                         content={row.content}
                         writer={row.writer}
                         created_at={row.created_at}
-                        order={i+1}
+                        order={i + 1}
                         index={i}
                         currentPage={currentPage}
                         study_note_pk={study_note_pk}
@@ -244,7 +244,10 @@ const StudyNoteDetail = (props: Props) => {
       </Box>
       <Box flex={1} border={"1px solid green"} px={"auto"}>
         <VStack>
-          <Text width={"100%"}>현재: {currentPage}</Text>
+          <Text width={"100%"}>page: {currentPage}</Text>
+          <Text width={"100%"}>
+            not empty: {response_data_for_api?.exist_page_numbers.join(", ")}
+          </Text>
           {response_data_for_api ? (
             <ButtonsForPageNumbersForStudyNoteContents
               exist_page_numbers={response_data_for_api.exist_page_numbers}

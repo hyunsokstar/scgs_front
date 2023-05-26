@@ -3,13 +3,24 @@ import { TypeForTaskLog } from "../../types/project_progress/project_progress_ty
 
 interface TaskLogListProps {
   dataForTaskLogs: TypeForTaskLog[];
+  userOptionForList: string;
 }
 
-const TaskLogList: React.FC<TaskLogListProps> = ({ dataForTaskLogs }) => {
+
+const TaskLogList: React.FC<TaskLogListProps> = ({
+  dataForTaskLogs,
+  userOptionForList,
+}) => {
+  let totalMinutes;
+  
   return (
     <List>
       {dataForTaskLogs.map((taskLog, index) => {
-        const totalMinutes = taskLog.time_distance_from_before_task;
+        if (userOptionForList !== "") {
+          totalMinutes = taskLog.time_distance_from_before_my_task;
+        } else {
+          totalMinutes = taskLog.time_distance_from_before_task;
+        }
 
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;

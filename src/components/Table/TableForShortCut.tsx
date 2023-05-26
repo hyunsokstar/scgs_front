@@ -207,12 +207,12 @@ const TableForShortCut = () => {
               Writer
             </Th>
 
-            <Th fontFamily="monospace" fontSize="lg" color="teal.500">
+            {/* <Th fontFamily="monospace" fontSize="lg" color="teal.500">
               Description
-            </Th>
+            </Th> */}
 
             <Th fontFamily="monospace" fontSize="lg" color="teal.500">
-              관련 shortcut
+              description(click)
             </Th>
 
             <Th fontFamily="monospace" fontSize="lg" color="teal.500">
@@ -250,7 +250,7 @@ const TableForShortCut = () => {
                 )}
               </Td>
 
-              <Td>{shortcut.description}</Td>
+              {/* <Td>{shortcut.description}</Td> */}
 
               <Td>
                 <Box
@@ -263,11 +263,10 @@ const TableForShortCut = () => {
                     color: "blue",
                   }}
                 >
-                  관련 shortcut({shortcut.related_shortcut_count})
+                  {shortcut.description}({shortcut.related_shortcut_count})
                 </Box>
               </Td>
               <Td>{shortcut.description}</Td>
-              <Td>{shortcut.classification}</Td>
               <Td>
                 {shortcut.tags && shortcut.tags.length > 0
                   ? shortcut.tags.map((tag, i) => {

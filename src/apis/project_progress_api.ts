@@ -30,9 +30,9 @@ interface ICommentTextUpdateApiParameter {
 export const apiForGetTaskLogList = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
-  const [_, pageNum] = queryKey;
+  const [_, userOptionForList] = queryKey;
   const data = await instance
-    .get(`project_progress/task-log?page=${pageNum}`)
+    .get(`project_progress/task-log?userOptionForList=${userOptionForList}`)
     .then((response) => response.data);
 
   return data;

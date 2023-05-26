@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import { Box, Button } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+
 
 type Props = {
   setEditMode: any;
   editMode: boolean | undefined;
+  button_text: string;
 };
 
-const ButtonForEditorMode = ({ editMode, setEditMode }: Props) => {
+const ButtonForEditorMode = ({ button_text, editMode, setEditMode }: Props) => {
   //   const [isToggledOn, setIsToggledOn] = useState(editMode);
+  
 
   const handleClick = () => {
+    if(editMode) {
+
+    }
+
     setEditMode(!editMode);
   };
 
@@ -26,7 +35,7 @@ const ButtonForEditorMode = ({ editMode, setEditMode }: Props) => {
         }}
         onClick={handleClick}
       >
-        {editMode ? "On" : "Off"}
+        {button_text}
       </Button>
     </Box>
   );

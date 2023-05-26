@@ -4,11 +4,15 @@ import { Button, ButtonProps, useColorModeValue } from "@chakra-ui/react";
 interface ToggleButtonForUpdateProps extends ButtonProps {
   currentState: boolean | undefined;
   onChangeHandler: (state: boolean) => void;
+  setEditMode?: any
+  editMode?: boolean | undefined
 }
 
 const ToggleButtonForUpdate = ({
   currentState,
   onChangeHandler,
+  editMode,
+  setEditMode,
   ...rest
 }: ToggleButtonForUpdateProps) => {
   const [isOn, setIsOn] = useState(currentState);
@@ -16,6 +20,7 @@ const ToggleButtonForUpdate = ({
 
   const handleClick = () => {
     setIsOn(!isOn);
+    setEditMode(!editMode)
     onChangeHandler(!isOn);
   };
 

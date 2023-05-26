@@ -26,6 +26,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import {
   selectButton,
+  deselectButton,
   moveToBeforPage,
   moveToNextPage,
   cancle_for_all_selected_pages,
@@ -39,6 +40,8 @@ import {
   apiForPlusOnePageForSelectedPagesForStudyNoteContents,
 } from "../../apis/study_note_api";
 import { type_for_parameter_for_delete_pages_for_study_note } from "../../types/study_note_type";
+import ToggleButtonForUpdate from "../Button/ToggleButtonForUpdate";
+import { apiForUpdateEditModeForStudyNoteContent } from "../../apis/user_api";
 
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
   currentPage: number;
@@ -59,10 +62,14 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const toast = useToast();
+  const [editModeForStudyNoteContent, setEditModeForStudyNoteContent] =
+    useState(false);
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );
+
+  console.log("loginUser : ", loginUser);
 
   const [pagesData, setpagesData] = useState(
     Array.from({ length: 50 }, (_, i) => i + 1)
@@ -82,9 +89,15 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
 
   const handlerForApply = () => {
     console.log("handlerForApply : ", selectedButtonsData);
-    exist_page_numbers.map((number) => {
-      dispatch(selectButton({ buttonNumber: number, editMode }));
-    });
+
+    if (editMode) {
+      exist_page_numbers.map((number) => {
+        dispatch(selectButton({ buttonNumber: number, editMode }));
+      });
+    } else {
+      dispatch(deselectButton());
+      alert("여기");
+    }
   };
 
   const pageMoveButtonHandler = (direction: string) => {
@@ -222,6 +235,32 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     });
   };
 
+  // loginUser.pk
+
+  const mutationForUpdateEditModeForStudyNoteForContent = useMutation(
+    apiForUpdateEditModeForStudyNoteContent,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        // queryClient.refetchQueries(["getOneProjectTask"]);
+
+        toast({
+          status: "success",
+          title: "UpdateEditMode Success !",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const onChangeHandlerForEditModeForStudyNoteContent = (option: boolean) => {
+    setEditModeForStudyNoteContent(option);
+    const userPk = loginUser?.pk;
+
+    mutationForUpdateEditModeForStudyNoteForContent.mutate(userPk);
+    console.log("option : ", option);
+  };
+
   // 2244
   return (
     <Box
@@ -231,7 +270,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       width={"100%"}
       border={"1px solid green"}
     >
-      {/* {exist_page_numbers} */}
       <Box display={"flex"} width={"100%"} pt={1} px={1} gap={1}>
         <IconButton
           aria-label="Previous"
@@ -253,7 +291,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           onClick={() => pageMoveButtonHandler("right")}
         />
         <Spacer />
-        <Button
+        {/* <Button
           onClick={() => handlerForApply()}
           variant="outline"
           size="sm"
@@ -263,11 +301,69 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           _hover={{ bg: "teal.100", color: "white" }}
         >
           Check For Not Empty
-        </Button>
-        <ButtonForEditorMode editMode={editMode} setEditMode={setEditMode} />
+        </Button> */}
+        {/* {exist_page_numbers} */}
+        {/* <ButtonForEditorMode
+          button_text={editMode ? "On" : "Off"}
+          editMode={editMode}
+          setEditMode={setEditMode}
+        /> */}
+        {/* {loginUser.username} */}
+        {/* {loginUser.username && (
+          <ToggleButtonForUpdate
+            currentState={loginUser.is_edit_mode_for_study_note_contents}
+            onChangeHandler={onChangeHandlerForEditModeForStudyNoteContent}
+          />
+        )} */}
       </Box>
 
-      {loginUser.is_edit_mode_for_study_note_contents ? (
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        border={"1px solid black"}
+        width={"100%"}
+        px={2}
+        py={1}
+      >
+        {!isLoggedIn ? "로그인 필요" : ""}
+        {editMode ? (
+          <Box display={"flex"} justifyContent={"space-between"} p={2}>
+            <Button
+              onClick={() => handlerForApply()}
+              variant="outline"
+              size="sm"
+              colorScheme="teal"
+              borderWidth="2px"
+              borderColor="teal.300"
+              _hover={{ bg: "teal.100", color: "white" }}
+            >
+              Check For Not Empty
+            </Button>
+
+            {/* <ButtonForEditorMode
+              button_text={editMode ? "On" : "Off"}
+              editMode={editMode}
+              setEditMode={setEditMode}
+            /> */}
+          </Box>
+        ) : (
+          ""
+        )}
+
+        <Box>
+          {loginUser.username && (
+            <ToggleButtonForUpdate
+              currentState={loginUser.is_edit_mode_for_study_note_contents}
+              onChangeHandler={onChangeHandlerForEditModeForStudyNoteContent}
+              editMode={editMode}
+              setEditMode={setEditMode}
+            />
+          )}
+        </Box>
+      </Box>
+
+      {editMode ? (
         <Box
           display="flex"
           justifyContent="space-between"

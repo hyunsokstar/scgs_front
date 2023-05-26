@@ -16,13 +16,14 @@ interface Props {}
 
 const TaskLogPage = (props: Props) => {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+  const [userOptionForList, setUserOptionForList] = useState("");
 
   const {
     isLoading: loadingForTaskLog,
     data: dataForTaskLogs,
     refetch: refetchForTaskLogs,
   } = useQuery<ResponseDataForTaskLog>(
-    ["apiForGetTaskLogList", currentPageNum],
+    ["apiForGetTaskLogList", userOptionForList],
     apiForGetTaskLogList,
     {
       enabled: true,
@@ -37,9 +38,16 @@ const TaskLogPage = (props: Props) => {
 
   return (
     <Box>
-      <HeaderForTaskStatusForToday data={dataForTaskLogs} />
+      <HeaderForTaskStatusForToday
+        data={dataForTaskLogs}
+        userOptionForList={userOptionForList}
+        setUserOptionForList={setUserOptionForList}
+      />
 
-      <TaskLogList dataForTaskLogs={dataForTaskLogs.TaskLog} />
+      <TaskLogList
+        dataForTaskLogs={dataForTaskLogs.TaskLog}
+        userOptionForList={userOptionForList}
+      />
     </Box>
   );
 };

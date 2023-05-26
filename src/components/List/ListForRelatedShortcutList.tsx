@@ -203,7 +203,7 @@ const ListForRelatedShortcutList = ({
         alignItems="center"
       >
         <Icon as={AiOutlineInfoCircle} mr={2} />
-        <Text fontWeight="bold">Alt + 1~9 를 눌러 copy 가능</Text>
+        {/* <Text fontWeight="bold">Alt + 1~9 를 눌러 copy 가능</Text> */}
       </Box>
 
       <Box display="flex" justifyContent="space-between">
@@ -235,6 +235,7 @@ const ListForRelatedShortcutList = ({
                 isChecked={allChecked}
               />
             </Th>
+            <Th>shortcut</Th>
             <Th>Shortcut Content</Th>
             <Th>Description</Th>
             <Th>Delete</Th>
@@ -242,7 +243,7 @@ const ListForRelatedShortcutList = ({
         </Thead>
         <Tbody>
           {data.length > 0 ? (
-            data.map((item) => (
+            data.map((item, index) => (
               <Tr key={item.id}>
                 <Td>
                   <Checkbox
@@ -253,6 +254,7 @@ const ListForRelatedShortcutList = ({
                     onChange={(e) => handleRowCheck(item.id, e.target.checked)}
                   />
                 </Td>
+                <Td>alt + {index + 1}</Td>
                 <Td>
                   <TextAreaForCopyTextUsingButton
                     text={item.shortcut_content}

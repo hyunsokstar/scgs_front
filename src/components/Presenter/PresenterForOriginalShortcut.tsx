@@ -46,7 +46,7 @@ const PresenterForOriginalShortcut: React.FC<PresenterForOriginalShortcutProps> 
   const { id, writer, shortcut, description, classification, tags, related_shortcut_count } = shortcutData;
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" padding="6" width="100%">
+    <Box bg={"blue.100"} borderWidth="1px" borderRadius="lg" padding="6" width="100%">
       <Text fontSize="2xl" fontWeight="bold" mb="4">Shortcut ID: {id}</Text>
        <HStack spacing={2} mb="4">
         <Image boxSize="50px" borderRadius="full" src={writer.profile_image} alt={writer.username} />
