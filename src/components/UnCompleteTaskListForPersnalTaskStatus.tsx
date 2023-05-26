@@ -34,7 +34,7 @@ const UnCompleteTaskListForPersnalTaskStatus = ({
       >
         <Box>
           <Box mb={1} fontSize={"20px"}>
-            My Task 비완료 리스트 (총:{" "}
+            My Task uncomplete task list (total:{" "}
             {dataForUncompletedTaskListDataForSelectedUser?.totalPageCount} per
             page:{" "}
             {

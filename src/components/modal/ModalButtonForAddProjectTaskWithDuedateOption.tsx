@@ -143,7 +143,7 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
     task_classification,
     due_date_option,
   }: IFormTypeForProjectProgress) => {
-    console.log("task create 체크 :: ", task_manager);
+    console.log("due_date_option 체크 :: ", due_date_option);
 
     createMutationForProjectProgress.mutate({
       task,

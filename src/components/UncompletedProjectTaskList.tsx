@@ -325,8 +325,8 @@ function UncompletedProjectTaskList({
             <Tr borderBottom={"2px solid #9AE6B4"}>
               <Th colSpan={2}>
                 <Text fontSize={22}>
-                  비완료 리스트 (총: {taskListData?.totalPageCount} 개,
-                  per_page: {taskListData?.task_number_for_one_page} 개){" "}
+                  uncomplete task list (total: {taskListData?.totalPageCount},
+                  per_page: {taskListData?.task_number_for_one_page} ){" "}
                 </Text>
               </Th>
             </Tr>
@@ -422,7 +422,7 @@ function UncompletedProjectTaskList({
         </Box>
 
         <Box>
-          <Text mb={1}>생성 시점:</Text>
+          <Text mb={1}>created:</Text>
           <ButtonsForSelectForTeamTaskListPeriod
             selectedPeriodOptionForUncompletedTaskList={
               selectedPeriodOptionForUncompletedTaskList
@@ -430,7 +430,7 @@ function UncompletedProjectTaskList({
             changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
           />
           <Box mt={3}>
-            마감 기한:
+            due_date:
             <Box display={"flex"} gap={2} mt={1}>
               <ButtonForFilteringTaskForDueDate
                 button_text="미정"
@@ -504,7 +504,7 @@ function UncompletedProjectTaskList({
             </Box>
             <Box display={"flex"} mt={5} gap={5} alignItems={"center"}>
               <Box display="flex" alignItems="center">
-                긴급 여부 :{" "}
+                is_emergency :{" "}
                 <Checkbox
                   size="lg"
                   ml={2}
@@ -514,7 +514,7 @@ function UncompletedProjectTaskList({
                 />
               </Box>
               <Box display="flex" alignItems="center">
-                상금 여부 :{" "}
+                is_prize :{" "}
                 <Checkbox
                   size="lg"
                   border={"1px solid gray"}
@@ -527,7 +527,7 @@ function UncompletedProjectTaskList({
           </Box>
           <Box mt={3}>
             <Box>
-              담당 : &nbsp;
+              manager : &nbsp;
               <Input
                 size="xs"
                 variant="outline"
@@ -544,7 +544,7 @@ function UncompletedProjectTaskList({
             </Box>
 
             <Box mt={1}>
-              업무 : &nbsp;
+              task : &nbsp;
               <Input
                 size="xs"
                 variant="outline"
@@ -561,7 +561,7 @@ function UncompletedProjectTaskList({
             </Box>
 
             <Box mt={1}>
-              분류 : &nbsp;
+              menu : &nbsp;
               <Input
                 size="xs"
                 variant="outline"
@@ -596,13 +596,11 @@ function UncompletedProjectTaskList({
         <Box>
           <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
             <Text fontSize="xl" fontWeight="bold" mb={2}>
-              Today Task Status
+              Today
             </Text>
-            <Text>총 업무 개수: {taskListData.total_task_count_for_today}</Text>
-            <Text>
-              총 완료 개수: {taskListData.completed_task_count_for_today}
-            </Text>
-            <Text>달성률:{taskListData.achievement_rate_for_today}%</Text>
+            <Text>total: {taskListData.total_task_count_for_today}</Text>
+            <Text>complete: {taskListData.completed_task_count_for_today}</Text>
+            <Text>progress:{taskListData.achievement_rate_for_today}%</Text>
             <Box w="100%">
               <Progress
                 value={taskListData.achievement_rate_for_today}

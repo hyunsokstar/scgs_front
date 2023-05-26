@@ -92,7 +92,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
         </Box>
 
         <Box>
-          마감 기한:
+          due_data:
           <Box display={"flex"} gap={2}>
             <ButtonForFilteringTaskForDueDate
               button_text="미정"
