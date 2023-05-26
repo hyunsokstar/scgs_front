@@ -48,7 +48,7 @@ const TableForShortCut = () => {
     refetch: refetch_for_shortcut_data,
   } = useQuery<ShortcutsResponse>(
     ["get_shortcut_list", currentPageNum],
-    api_for_get_shortcut_list,
+    api_for_get_shortcut_list
   );
 
   const [filteredData, setFilteredData] = useState(
@@ -206,17 +206,15 @@ const TableForShortCut = () => {
             <Th fontFamily="monospace" fontSize="lg" color="teal.500">
               Writer
             </Th>
+
             <Th fontFamily="monospace" fontSize="lg" color="teal.500">
-              Shortcut
+              Description
             </Th>
 
             <Th fontFamily="monospace" fontSize="lg" color="teal.500">
               관련 shortcut
             </Th>
 
-            <Th fontFamily="monospace" fontSize="lg" color="teal.500">
-              Description
-            </Th>
             <Th fontFamily="monospace" fontSize="lg" color="teal.500">
               Classification
             </Th>
@@ -251,20 +249,10 @@ const TableForShortCut = () => {
                   <Text>no writer</Text>
                 )}
               </Td>
-              <Td>
-                <Flex justifyContent={"space-between"}>
-                  <Textarea value={shortcut.shortcut} />
 
-                  <Box display={"flex"} flexDirection={"column"}>
-                    <CopyButtonByPropsText text={shortcut.shortcut} />
-                    <ModalButtonForShowShortcut
-                      shorcutText={shortcut.shortcut}
-                    />
-                  </Box>
-                </Flex>
-              </Td>
+              <Td>{shortcut.description}</Td>
+
               <Td>
-                {/* 고쳐 픽스 */}
                 <Box
                   as={Link}
                   to={`/shortcut/${shortcut.id}`}

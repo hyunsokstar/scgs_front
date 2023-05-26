@@ -73,7 +73,6 @@ const ModalButtonForInsertToApiDocu = () => {
 
   const onSubmit = (data: any) => {
     mutationForInserShortcut.mutate({
-      shortcut: data.shortcut,
       description: data.description,
       classification: data.classification,
       tags: selectedTags ? selectedTags : [],
@@ -116,20 +115,6 @@ const ModalButtonForInsertToApiDocu = () => {
           <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Flex flexDirection={"column"} gap={2} width="100%">
-                <Box width="100%">
-                  <Textarea
-                    placeholder="Enter Shortcut"
-                    borderColor={errors?.url ? errorColor : borderColor}
-                    {...register("shortcut", {
-                      required: true,
-                    })}
-                  />
-                  {errors?.url && (
-                    <span style={{ color: errorColor }}>
-                      {"url is invalid"}
-                    </span>
-                  )}
-                </Box>
 
                 <Box width="100%">
                   <Textarea

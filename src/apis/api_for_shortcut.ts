@@ -119,12 +119,10 @@ export const apiForUpdateShortcut = ({
 };
 
 export const apiForinsertToShortcut = ({
-  shortcut,
   description,
   classification,
   tags,
 }: TypeForInsertToShortcutApi) => {
-  console.log("shortcut : ", shortcut);
   console.log("description : ", description);
   console.log("classification : ", classification);
   console.log("tags : ", tags);
@@ -140,7 +138,6 @@ export const apiForinsertToShortcut = ({
     .post(
       `/shortcut/`,
       {
-        shortcut,
         description,
         classification,
         tags,

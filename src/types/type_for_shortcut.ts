@@ -50,7 +50,6 @@ export interface ShortcutsResponse {
 }
 
 export interface TypeForInsertToShortcutApi {
-  shortcut: string;
   description: string;
   classification: string;
   tags: string[];
