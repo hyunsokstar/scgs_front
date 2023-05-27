@@ -179,11 +179,6 @@ const TodayTaskStatusPage = () => {
         ordering_option: "move_to_last",
       });
 
-      // setTasks((prevTasks: any) => ({
-      //   ...prevTasks,
-      //   [source.droppableId as Time]: startTasks,
-      //   [destination.droppableId as Time]: endTasks,
-      // }));
     }
   };
 

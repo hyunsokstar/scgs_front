@@ -118,6 +118,7 @@ const HeaderForTaskStatusForToday: React.FC<
           </Tbody>
         </Table>
       </Box>
+      
       <Box>
         <TableForUsersTaskCountInfoForTaskLog
           writers={writers}
@@ -125,6 +126,9 @@ const HeaderForTaskStatusForToday: React.FC<
           setUserOptionForList={setUserOptionForList}
         />
       </Box>
+
+    <Box>요일별</Box>
+
     </Box>
   );
 };
