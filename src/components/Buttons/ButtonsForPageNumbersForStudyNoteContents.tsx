@@ -69,8 +69,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     (state: RootState) => state.loginInfo
   );
 
-  console.log("loginUser : ", loginUser);
-
   const [pagesData, setpagesData] = useState(
     Array.from({ length: 50 }, (_, i) => i + 1)
   );
@@ -83,8 +81,16 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     }
   }, []);
 
-  const clickHandlerForPageButton = (buttonNumber: number) => {
-    dispatch(selectButton({ buttonNumber, editMode }));
+  const clickHandlerForPageButton = (
+    event: any,
+    buttonNumber: number
+  ) => {
+    if (event.shiftKey) {
+      console.log("shift click");
+    } else {
+      dispatch(selectButton({ buttonNumber, editMode }));
+      console.log("just click");
+    }
   };
 
   const handlerForApply = () => {
@@ -289,30 +295,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           onClick={() => pageMoveButtonHandler("right")}
         />
         <Spacer />
-        {/* <Button
-          onClick={() => handlerForApply()}
-          variant="outline"
-          size="sm"
-          colorScheme="teal"
-          borderWidth="2px"
-          borderColor="teal.300"
-          _hover={{ bg: "teal.100", color: "white" }}
-        >
-          Check For Not Empty
-        </Button> */}
-        {/* {exist_page_numbers} */}
-        {/* <ButtonForEditorMode
-          button_text={editMode ? "On" : "Off"}
-          editMode={editMode}
-          setEditMode={setEditMode}
-        /> */}
-        {/* {loginUser.username} */}
-        {/* {loginUser.username && (
-          <ToggleButtonForUpdate
-            currentState={loginUser.is_edit_mode_for_study_note_contents}
-            onChangeHandler={onChangeHandlerForEditModeForStudyNoteContent}
-          />
-        )} */}
       </Box>
 
       <Box
@@ -338,12 +320,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
             >
               Check For Not Empty
             </Button>
-
-            {/* <ButtonForEditorMode
-              button_text={editMode ? "On" : "Off"}
-              editMode={editMode}
-              setEditMode={setEditMode}
-            /> */}
           </Box>
         ) : (
           <Box> </Box>
@@ -403,7 +379,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
             Cancle
           </Button>
 
-          {/* 삭제 버튼 delete button */}
           <Button
             variant="outline"
             size="sm"
@@ -419,6 +394,8 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         ""
       )}
 
+      <Box>#0528@#$$%^2341asdfa24323</Box>
+      <Box>{selectedButtonsData}</Box>
       <Box px={"auto"} border={"0px solid green"} mx={"auto"} width={"86%"}>
         {pagesData.map((page) => {
           console.log("currentPage, page", typeof currentPage, typeof page);
@@ -429,7 +406,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
               height={"30px"}
               variant="outline"
               borderColor={currentPage == page ? "red" : "blue"}
-              onClick={() => clickHandlerForPageButton(page)}
+              onClick={(e) => clickHandlerForPageButton(e, page)}
               style={{
                 width: "25px",
                 height: "25px",

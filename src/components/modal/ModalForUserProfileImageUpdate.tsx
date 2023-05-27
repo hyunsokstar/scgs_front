@@ -44,7 +44,6 @@ function ModalForUserProfileImageUpdate({ loginUser }: Props) {
   // console.log("profile_image userPk : ", userPk);
   const [fileToUpload, setFileToUpload] = useState<any>();
 
-  // console.log("loginUser : ", loginUser);
 
   const toast = useToast();
   // let file_to_upload: any;

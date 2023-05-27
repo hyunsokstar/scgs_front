@@ -17,22 +17,22 @@ export const studyNoteSlice = createSlice({
   initialState,
   reducers: {
     selectButton: (state, action: PayloadAction<any>) => {
-      // console.log("action.payload : ", action.payload);
-
+      console.log("action.payload.editMode : ", action.payload.editMode);
       const buttonNumber = action.payload.buttonNumber;
 
       if (action.payload.editMode) {
         if (state.selectedButtons.includes(buttonNumber)) {
+          console.log("여기서 클릭한 버튼 number 제거");
           state.selectedButtons = state.selectedButtons.filter(
             (num) => num !== buttonNumber
           );
-        } else {
-          state.selectedButtons = [...state.selectedButtons, buttonNumber].sort(
+        }  else {
+          console.log("여기서 클릭한 버튼 number 추가");
+          state.selectedButtons = [...state.selectedButtons, buttonNumber].sort(  // setState 와 같은 효과
             (a, b) => a - b
           );
         }
       }
-
       state.currentPage = buttonNumber;
     },
     deselectButton: (state) => {

@@ -196,7 +196,7 @@ export const apiForGetStuyNoteContentList = async ({
   queryKey,
 }: QueryFunctionContext) => {
   const [_, study_note_pk, currentPage] = queryKey;
-  console.log("study_note_pk : ", study_note_pk);
+  // console.log("study_note_pk : ", study_note_pk);
 
   return await instance
     .get(`study-note/${study_note_pk}`, {

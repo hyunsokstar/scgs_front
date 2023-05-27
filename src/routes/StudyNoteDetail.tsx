@@ -60,8 +60,6 @@ const StudyNoteDetail = (props: Props) => {
       cacheTime: 0, // cacheTime을 0으로 설정하여 캐싱을 해제
     }
   );
-
-  console.log("response_data_for_api : ", response_data_for_api);
   // 2244 function area
 
   const mutationForDeleteContentsForChecked = useMutation(

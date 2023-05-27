@@ -13,9 +13,6 @@ function MyTaskPage({}: Props): ReactElement {
     (state: RootState) => state.loginInfo
   );
 
-  console.log("isLoggedIn : ", isLoggedIn);
-  console.log("loginUser : ", loginUser);
-
   return (
     <Box width={"100%"} border={"2px solid blue"}>
       <Flex direction={"column"} mt={0} width="100%">
