@@ -408,12 +408,29 @@ interface WriterData {
   count: number;
 }
 
+interface TaskCountForWeekdays {
+  Monday: number;
+  Tuesday: number;
+  Wednesday: number;
+  Thursday: number;
+  Friday: number;
+  Saturday: number;
+  Sunday: number;
+}
+
+interface TodayInfo {
+  date: string;
+  dayOfWeek: string;
+}
+
 export interface ResponseDataForTaskLog {
+  TaskLog: TypeForTaskLog[];
+  writers: WriterData[];
   total_today_task_count: number;
   total_today_completed_task_count: number;
   total_today_uncompleted_task_count: number;
   average_number_per_hour: number;
   elapsed_time: string;
-  TaskLog: TypeForTaskLog[];
-  writers: WriterData[];
+  task_count_for_weekdays: TaskCountForWeekdays;
+  today_info: TodayInfo;
 }
