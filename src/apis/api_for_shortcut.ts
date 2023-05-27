@@ -18,6 +18,7 @@ const instance = axios.create({
 });
 
 // 1122
+
 // apiForDeleteRelatedShortcutForCheckedRow
 export const apiForDeleteRelatedShortcutForCheckedRow = (
   selectedRows: number[]

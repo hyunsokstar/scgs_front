@@ -39,6 +39,7 @@ import {
   apiFordeleteStudyNoteContentsForSelectedPages,
   apiForMinusOnePageForSelectedPagesForStudyNoteContents,
   apiForPlusOnePageForSelectedPagesForStudyNoteContents,
+  apiForUpdateNoteContentsPageForSelected,
 } from "../../apis/study_note_api";
 import { type_for_parameter_for_delete_pages_for_study_note } from "../../types/study_note_type";
 import ToggleButtonForUpdate from "../Button/ToggleButtonForUpdate";
@@ -52,7 +53,6 @@ interface ButtonsForPageNumbersForStudyNoteContentsProps {
   study_note_pk: string | undefined;
 }
 
-// 1122
 const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   ButtonsForPageNumbersForStudyNoteContentsProps
 > = ({
@@ -60,7 +60,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   pageNumbersToEdit,
   pageNumbersToMove,
   exist_page_numbers,
-  study_note_pk,
+  study_note_pk, // 노트 content pk 아니고 노트 주제 pk를 말함
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -183,6 +183,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     }
   );
 
+  // 0528
   const plusOnePageForSelectedPageds = () => {
     console.log("plusOnePageForSelectedPageds check");
 
@@ -280,14 +281,66 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     }
   };
 
-  const moveToForward = () => {
-    // TODO: moveToForward 기능 실행
-    console.log("Move to Forward");
-  };
-  
-  const moveToBackward = () => {
-    // TODO: moveToBackward 기능 실행
-    console.log("Move to Backward");
+  // fix 0528
+  // const moveToForward = () => {
+  //   // TODO: moveToForward 기능 실행
+  //   console.log("Move to Forward");
+  // };
+
+  // const moveToBackward = () => {
+  //   // TODO: moveToBackward 기능 실행
+  //   console.log("Move to Backward");
+  // };
+
+  const mutationForUpdateNoteContentsPageForSelected = useMutation(
+    ({
+      direction,
+      study_note_pk,
+      pageNumbersToEdit,
+      pageNumbersToMove,
+    }: any) => {
+      return apiForUpdateNoteContentsPageForSelected({
+        direction,
+        study_note_pk,
+        pageNumbersToEdit,
+        pageNumbersToMove,
+      });
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        // queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        toast({
+          title: "선택된 페이지들 +1 success !",
+          status: "success",
+          // description: data.message,
+        });
+      },
+    }
+  );
+
+  const buttonHandlerForUpdateNoteContentsPageForSelected = (
+    direction: string
+  ) => {
+    console.log(
+      "buttonHandlerForUpdateNoteContentsPageForSelected 실행 확인",
+      direction
+    );
+
+    if (pageNumbersToEdit.length === 0) {
+      alert("페이지를 하나라도 선택 해주세요");
+      return;
+    }
+
+    mutationForUpdateNoteContentsPageForSelected.mutate({
+      direction,
+      study_note_pk,
+      pageNumbersToEdit,
+      pageNumbersToMove,
+    });
   };
 
   // 2244
@@ -425,31 +478,44 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         <Box>{pageNumbersToEdit.join(", ")}</Box>
         <Box>{pageNumbersToMove.join(", ")}</Box>
         <Box>
-          {pageNumbersToEdit.length === pageNumbersToMove.length && (
-            <>
-              {/* 이동 버튼 */}
-              <Button
-                variant="outline"
-                size={"sm"}
-                colorScheme="yellow"
-                _hover={{ bg: "yellow.100" }}
-                onClick={moveToForward}
-                style={{ backgroundColor: "transparent", marginRight: "10px" }}
-              >
-                Move to Forward
-              </Button>
-              <Button
-                variant="outline"
-                size={"sm"}
-                colorScheme="yellow"
-                _hover={{ bg: "yellow.100" }}
-                onClick={moveToBackward}
-                style={{ backgroundColor: "transparent", marginRight: "10px" }}
-              >
-                Move to Backward
-              </Button>
-            </>
-          )}
+          {pageNumbersToEdit.length === pageNumbersToMove.length &&
+            pageNumbersToEdit.length != 0 && (
+              <>
+                {/* 이동 버튼 */}
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  colorScheme="yellow"
+                  _hover={{ bg: "yellow.100" }}
+                  onClick={() =>
+                    buttonHandlerForUpdateNoteContentsPageForSelected("forward")
+                  }
+                  style={{
+                    backgroundColor: "transparent",
+                    marginRight: "10px",
+                  }}
+                >
+                  Move to Forward
+                </Button>
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  colorScheme="yellow"
+                  _hover={{ bg: "yellow.100" }}
+                  onClick={() =>
+                    buttonHandlerForUpdateNoteContentsPageForSelected(
+                      "backward"
+                    )
+                  }
+                  style={{
+                    backgroundColor: "transparent",
+                    marginRight: "10px",
+                  }}
+                >
+                  Move to Backward
+                </Button>
+              </>
+            )}
         </Box>
       </Box>
       <Box px={"auto"} border={"0px solid green"} mx={"auto"} width={"86%"}>

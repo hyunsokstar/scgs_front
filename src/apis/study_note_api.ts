@@ -18,6 +18,28 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForUpdateNoteContentsPageForSelected
+export const apiForUpdateNoteContentsPageForSelected = ({
+  direction,
+  study_note_pk,
+  pageNumbersToEdit,
+  pageNumbersToMove,
+}: any) => {
+  console.log(direction, study_note_pk, pageNumbersToEdit, pageNumbersToMove);
+
+  return instance
+    .put(
+      `study-note/${study_note_pk}/contents/UpdateNoteContentsPageForSelected`,
+      { direction, study_note_pk, pageNumbersToEdit, pageNumbersToMove },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 export const apiForUpdateStudyNoteContent = ({
   pk,
   title,

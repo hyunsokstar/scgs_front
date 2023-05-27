@@ -38,8 +38,9 @@ export const studyNoteSlice = createSlice({
             (a, b) => a - b
           );
         }
+      } else {
+        state.currentPage = buttonNumber;
       }
-      state.currentPage = buttonNumber;
     },
 
     deselectButton: (state) => {
@@ -62,6 +63,7 @@ export const studyNoteSlice = createSlice({
     },
     cancle_for_all_selected_pages: (state) => {
       state.pageNumbersToEdit = [];
+      state.pageNumbersToMove = [];
     },
     go_to_specific_page: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
@@ -87,7 +89,10 @@ export const studyNoteSlice = createSlice({
           state.pageNumbersToMove = state.pageNumbersToMove.filter(
             (num) => num !== buttonNumber
           );
-        } else if (Math.max(...state.pageNumbersToEdit) < buttonNumber && state.pageNumbersToEdit.length > state.pageNumbersToMove.length) {
+        } else if (
+          Math.max(...state.pageNumbersToEdit) < buttonNumber &&
+          state.pageNumbersToEdit.length > state.pageNumbersToMove.length
+        ) {
           console.log(
             "pageNumbersToEdit 의 최대값보다 buttonNumber 가 크면 추가"
           );
@@ -100,7 +105,7 @@ export const studyNoteSlice = createSlice({
           return; // 조건을 만족하지 않으면 함수 종료
         }
       }
-      state.currentPage = buttonNumber;
+      // state.currentPage = buttonNumber;
     },
   },
 });
