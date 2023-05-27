@@ -45,7 +45,7 @@ const UserProfilePage = () => {
   const [urlToImageUpload, setUrlToImageUpload] = useState<string>();
   const toast = useToast();
   const [editModeForStudyNoteContent, setEditModeForStudyNoteContent] =
-    useState(false);
+    useState<boolean | undefined>(false);
 
   console.log("userProfileData : ", userProfileData);
 
@@ -162,7 +162,9 @@ const UserProfilePage = () => {
     }
   );
 
-  const onChangeHandlerForEditModeForStudyNoteContent = (option: boolean) => {
+  const onChangeHandlerForEditModeForStudyNoteContent = (
+    option: boolean | undefined
+  ) => {
     setEditModeForStudyNoteContent(option);
     const userPk = userProfileData?.pk;
 

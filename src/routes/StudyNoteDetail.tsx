@@ -34,8 +34,12 @@ const StudyNoteDetail = (props: Props) => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  const pageNumbersToEditData = useSelector(
+  const pageNumbersToEdit = useSelector(
     (state: RootState) => state.studyNote.pageNumbersToEdit
+  );
+
+  const pageNumbersToMove = useSelector(
+    (state: RootState) => state.studyNote.pageNumbersToMove
   );
 
   const { study_note_pk } = useParams();
@@ -63,8 +67,8 @@ const StudyNoteDetail = (props: Props) => {
   // 2244 function area
 
   const mutationForDeleteContentsForChecked = useMutation(
-    (pageNumbersToEditData: number[]) => {
-      return apiFordeleteStudyNoteContentsForChecked(pageNumbersToEditData);
+    (pageNumbersToEdit: number[]) => {
+      return apiFordeleteStudyNoteContentsForChecked(pageNumbersToEdit);
     },
     {
       onSettled: () => {
@@ -119,7 +123,7 @@ const StudyNoteDetail = (props: Props) => {
   return (
     <Box display={"flex"}>
       <Box flex={4}>
-        <Box>Study Note Content</Box>
+        <Box>Study Note Content #hyunsok#05280224</Box>
 
         <Box
           display="flex"
@@ -241,7 +245,7 @@ const StudyNoteDetail = (props: Props) => {
         </Box>
       </Box>
       <Box flex={1} border={"1px solid green"} px={"auto"}>
-        <VStack>
+        <Box display={"flex"} flexDirection={"column"}>
           <Text width={"100%"}>page: {currentPage}</Text>
           <Text width={"100%"}>
             not empty: {response_data_for_api?.exist_page_numbers.join(", ")}
@@ -250,13 +254,14 @@ const StudyNoteDetail = (props: Props) => {
             <ButtonsForPageNumbersForStudyNoteContents
               exist_page_numbers={response_data_for_api.exist_page_numbers}
               currentPage={currentPage}
-              pageNumbersToEditData={pageNumbersToEditData}
+              pageNumbersToEdit={pageNumbersToEdit}
+              pageNumbersToMove={pageNumbersToMove}
               study_note_pk={study_note_pk}
             />
           ) : (
             ""
           )}
-        </VStack>
+        </Box>
       </Box>
     </Box>
 

@@ -148,18 +148,18 @@ export const apiForCreateStudyNoteContents = ({
 
 export const apiForPlusOnePageForSelectedPagesForStudyNoteContents = ({
   study_note_pk,
-  pageNumbersToEditData,
+  pageNumbersToEdit,
 }: type_for_parameter_for_delete_pages_for_study_note) => {
   console.log(
     "study_note_pk , selectedButtonsData : ",
     study_note_pk,
-    pageNumbersToEditData
+    pageNumbersToEdit
   );
 
   return instance
     .put(
       `study-note/${study_note_pk}/contents/plus-one-page-for-selected-page`,
-      { pageNumbersToEditData },
+      { pageNumbersToEdit },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
@@ -171,18 +171,18 @@ export const apiForPlusOnePageForSelectedPagesForStudyNoteContents = ({
 
 export const apiForMinusOnePageForSelectedPagesForStudyNoteContents = ({
   study_note_pk,
-  pageNumbersToEditData,
+  pageNumbersToEdit,
 }: type_for_parameter_for_delete_pages_for_study_note) => {
   console.log(
-    "study_note_pk , pageNumbersToEditData : ",
+    "study_note_pk , pageNumbersToEdit : ",
     study_note_pk,
-    pageNumbersToEditData
+    pageNumbersToEdit
   );
 
   return instance
     .put(
       `study-note/${study_note_pk}/contents/minus-one-page-for-selected-page`,
-      { pageNumbersToEditData },
+      { pageNumbersToEdit },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
@@ -209,17 +209,17 @@ export const apiForGetStuyNoteContentList = async ({
 
 export const apiFordeleteStudyNoteContentsForSelectedPages = ({
   study_note_pk,
-  pageNumbersToEditData,
+  pageNumbersToEdit,
 }: type_for_parameter_for_delete_pages_for_study_note) => {
   console.log(
-    "study_note_pk , pageNumbersToEditData : ",
+    "study_note_pk , pageNumbersToEdit : ",
     study_note_pk,
-    pageNumbersToEditData
+    pageNumbersToEdit
   );
 
   return instance
     .delete(`study-note/${study_note_pk}/contents/delete-page`, {
-      data: pageNumbersToEditData, // 요청 본문에 selectedButtonsData 추가
+      data: pageNumbersToEdit, // 요청 본문에 selectedButtonsData 추가
       headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",
       },
@@ -228,13 +228,13 @@ export const apiFordeleteStudyNoteContentsForSelectedPages = ({
 };
 
 export const apiFordeleteStudyNoteContentsForChecked = (
-  selectedButtonsData: number[]
+  pageNumbersToEdit: number[]
 ) => {
-  console.log("study_note_pk , selectedButtonsData : ", selectedButtonsData);
+  console.log("study_note_pk , pageNumbersToEdit : ", pageNumbersToEdit);
 
   return instance
     .delete("study-note/contents/delete-for-checked", {
-      data: selectedButtonsData, // [1,2,3,5]
+      data: pageNumbersToEdit, // [1,2,3,5]
       headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",
       },

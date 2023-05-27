@@ -3,7 +3,7 @@ import { Button, ButtonProps, useColorModeValue } from "@chakra-ui/react";
 
 interface ToggleButtonForUpdateProps extends ButtonProps {
   currentState: boolean | undefined;
-  onChangeHandler: (state: boolean) => void;
+  onChangeHandler: (state: boolean| undefined) => void;
   setEditMode?: any
   editMode?: boolean | undefined
 }
@@ -15,13 +15,13 @@ const ToggleButtonForUpdate = ({
   setEditMode,
   ...rest
 }: ToggleButtonForUpdateProps) => {
-  const [isOn, setIsOn] = useState(currentState);
+  const [isOn, setIsOn] = useState<any>(editMode);
   const pastelColor = useColorModeValue("blue.300", "blue.500"); // 파스텔톤 색상을 설정합니다.
 
   const handleClick = () => {
-    setIsOn(!isOn);
+    setIsOn(editMode);
     setEditMode(!editMode)
-    onChangeHandler(!isOn);
+    onChangeHandler(editMode);
   };
 
   return (
@@ -34,7 +34,8 @@ const ToggleButtonForUpdate = ({
       onClick={handleClick}
       {...rest}
     >
-      {isOn ? "Edit mode On" : "Edit mode Off"}
+      {/* {editMode ? "true" : "false"} */}
+      {editMode ? "Edit mode On" : "Edit mode Off"}
     </Button>
   );
 };

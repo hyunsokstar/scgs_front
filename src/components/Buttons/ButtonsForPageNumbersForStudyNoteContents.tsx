@@ -30,6 +30,7 @@ import {
   moveToBeforPage,
   moveToNextPage,
   cancle_for_all_selected_pages,
+  setPageNumbersToMove,
 } from "../../reducers/studyNoteSlice";
 import ButtonForEditorMode from "../Button/ButtonForEditorMode";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
@@ -46,7 +47,8 @@ import { apiForUpdateEditModeForStudyNoteContent } from "../../apis/user_api";
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
   currentPage: number;
   exist_page_numbers: number[];
-  pageNumbersToEditData: number[];
+  pageNumbersToEdit: number[];
+  pageNumbersToMove: number[];
   study_note_pk: string | undefined;
 }
 
@@ -55,7 +57,8 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   ButtonsForPageNumbersForStudyNoteContentsProps
 > = ({
   currentPage,
-  pageNumbersToEditData,
+  pageNumbersToEdit,
+  pageNumbersToMove,
   exist_page_numbers,
   study_note_pk,
 }) => {
@@ -63,7 +66,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const queryClient = useQueryClient();
   const toast = useToast();
   const [editModeForStudyNoteContent, setEditModeForStudyNoteContent] =
-    useState(false);
+    useState<any>(false);
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -81,12 +84,10 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     }
   }, []);
 
-  const clickHandlerForPageButton = (
-    event: any,
-    buttonNumber: number
-  ) => {
+  const clickHandlerForPageButton = (event: any, buttonNumber: number) => {
     if (event.shiftKey) {
-      console.log("shift click");
+      console.log("shift click for setPageNumbersToMove");
+      dispatch(setPageNumbersToMove({ buttonNumber, editMode }));
     } else {
       dispatch(selectButton({ buttonNumber, editMode }));
       console.log("just click");
@@ -94,7 +95,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   };
 
   const handlerForApply = () => {
-    console.log("pageNumbersToEditData : ", pageNumbersToEditData);
+    console.log("pageNumbersToEdit : ", pageNumbersToEdit);
 
     exist_page_numbers.map((number) => {
       dispatch(selectButton({ buttonNumber: number, editMode }));
@@ -114,11 +115,11 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const mutationForDeleteSelectedPages = useMutation(
     ({
       study_note_pk,
-      pageNumbersToEditData,
+      pageNumbersToEdit,
     }: type_for_parameter_for_delete_pages_for_study_note) => {
       return apiFordeleteStudyNoteContentsForSelectedPages({
         study_note_pk,
-        pageNumbersToEditData,
+        pageNumbersToEdit,
       });
     },
     {
@@ -143,7 +144,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     // study_note_pk
     mutationForDeleteSelectedPages.mutate({
       study_note_pk,
-      pageNumbersToEditData,
+      pageNumbersToEdit,
     });
   };
 
@@ -159,11 +160,11 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const mutationForPlusOnePageForSelectedPages = useMutation(
     ({
       study_note_pk,
-      pageNumbersToEditData,
+      pageNumbersToEdit,
     }: type_for_parameter_for_delete_pages_for_study_note) => {
       return apiForPlusOnePageForSelectedPagesForStudyNoteContents({
         study_note_pk,
-        pageNumbersToEditData,
+        pageNumbersToEdit,
       });
     },
     {
@@ -185,25 +186,25 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const plusOnePageForSelectedPageds = () => {
     console.log("plusOnePageForSelectedPageds check");
 
-    if (pageNumbersToEditData.length === 0) {
+    if (pageNumbersToEdit.length === 0) {
       alert("페이지를 하나라도 선택 해주세요");
       return;
     }
 
     mutationForPlusOnePageForSelectedPages.mutate({
       study_note_pk,
-      pageNumbersToEditData,
+      pageNumbersToEdit,
     });
   };
 
   const mutationForMinusOnePageForSelectedPages = useMutation(
     ({
       study_note_pk,
-      pageNumbersToEditData,
+      pageNumbersToEdit,
     }: type_for_parameter_for_delete_pages_for_study_note) => {
       return apiForMinusOnePageForSelectedPagesForStudyNoteContents({
         study_note_pk,
-        pageNumbersToEditData,
+        pageNumbersToEdit,
       });
     },
     {
@@ -225,14 +226,14 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const minusOnePageForSelectedPageds = () => {
     console.log("plusOnePageForSelectedPageds check");
 
-    if (pageNumbersToEditData.length === 0) {
+    if (pageNumbersToEdit.length === 0) {
       alert("페이지를 하나라도 선택 해주세요");
       return;
     }
 
     mutationForMinusOnePageForSelectedPages.mutate({
       study_note_pk,
-      pageNumbersToEditData,
+      pageNumbersToEdit,
     });
   };
 
@@ -254,13 +255,39 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     }
   );
 
-  const onChangeHandlerForEditModeForStudyNoteContent = (option: boolean) => {
+  const onChangeHandlerForEditModeForStudyNoteContent = (
+    option: boolean | undefined
+  ) => {
     setEditModeForStudyNoteContent(option);
     const userPk = loginUser?.pk;
 
     mutationForUpdateEditModeForStudyNoteForContent.mutate(userPk);
     dispatch(deselectButton());
     console.log("option : ", option);
+  };
+
+  const getColor = (
+    pageNumbersToEdit: number[],
+    pageNumbersToMove: number[],
+    page: number
+  ) => {
+    if (pageNumbersToEdit?.includes(page)) {
+      return "rgba(46, 204, 113, 1)"; // 초록색
+    } else if (pageNumbersToMove?.includes(page)) {
+      return "orange"; // 주황색
+    } else {
+      return "white"; // 기본 배경색
+    }
+  };
+
+  const moveToForward = () => {
+    // TODO: moveToForward 기능 실행
+    console.log("Move to Forward");
+  };
+  
+  const moveToBackward = () => {
+    // TODO: moveToBackward 기능 실행
+    console.log("Move to Backward");
   };
 
   // 2244
@@ -272,8 +299,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       width={"100%"}
       border={"1px solid green"}
     >
-      {/* <Box>{selectedButtonsData.join(", ")}</Box> */}
-
+      {/* <Box>{pageNumbersToEdit.join(", ")}</Box> */}
       <Box display={"flex"} width={"100%"} pt={1} px={1} gap={1}>
         <IconButton
           aria-label="Previous"
@@ -394,12 +420,45 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         ""
       )}
 
-      <Box>#0528@#$$%^2341asdfa24323</Box>
-      <Box>{pageNumbersToEditData}</Box>
+      <Box display={"flex"} flexDirection={"column"}>
+        <Box>#!@#$!@#$$%^!@#$</Box>
+        <Box>{pageNumbersToEdit.join(", ")}</Box>
+        <Box>{pageNumbersToMove.join(", ")}</Box>
+        <Box>
+          {pageNumbersToEdit.length === pageNumbersToMove.length && (
+            <>
+              {/* 이동 버튼 */}
+              <Button
+                variant="outline"
+                size={"sm"}
+                colorScheme="yellow"
+                _hover={{ bg: "yellow.100" }}
+                onClick={moveToForward}
+                style={{ backgroundColor: "transparent", marginRight: "10px" }}
+              >
+                Move to Forward
+              </Button>
+              <Button
+                variant="outline"
+                size={"sm"}
+                colorScheme="yellow"
+                _hover={{ bg: "yellow.100" }}
+                onClick={moveToBackward}
+                style={{ backgroundColor: "transparent", marginRight: "10px" }}
+              >
+                Move to Backward
+              </Button>
+            </>
+          )}
+        </Box>
+      </Box>
       <Box px={"auto"} border={"0px solid green"} mx={"auto"} width={"86%"}>
         {pagesData.map((page) => {
           console.log("currentPage, page", typeof currentPage, typeof page);
           return (
+            // 고칠것 pageNumbersToEdit 에 포함 되어 있으면 PageNumbersToMove에는 안됨
+            // pageNumbersToEdit중에 제일 큰거보다  PageNumbersToMove이 더 커야 함
+            // pageNumbersToEdit 의 개수와 PageNumbersToMove 의 개수가 일치하면 대량 이동 버튼 활성화
             <Button
               key={page}
               width={"10px"}
@@ -411,9 +470,14 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
                 width: "25px",
                 height: "25px",
                 margin: "5px",
-                backgroundColor: pageNumbersToEditData?.includes(page)
-                  ? "rgba(46, 204, 113, 1)"
-                  : "white",
+                // backgroundColor: pageNumbersToEdit?.includes(page)
+                //   ? "rgba(46, 204, 113, 1)"
+                //   : "white",
+                backgroundColor: getColor(
+                  pageNumbersToEdit,
+                  pageNumbersToMove,
+                  page
+                ),
               }}
               borderRadius="0"
             >
