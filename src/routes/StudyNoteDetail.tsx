@@ -34,8 +34,8 @@ const StudyNoteDetail = (props: Props) => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  const selectedButtonsData = useSelector(
-    (state: RootState) => state.studyNote.selectedButtons
+  const pageNumbersToEditData = useSelector(
+    (state: RootState) => state.studyNote.pageNumbersToEdit
   );
 
   const { study_note_pk } = useParams();
@@ -63,8 +63,8 @@ const StudyNoteDetail = (props: Props) => {
   // 2244 function area
 
   const mutationForDeleteContentsForChecked = useMutation(
-    (selectedButtonsData: number[]) => {
-      return apiFordeleteStudyNoteContentsForChecked(selectedButtonsData);
+    (pageNumbersToEditData: number[]) => {
+      return apiFordeleteStudyNoteContentsForChecked(pageNumbersToEditData);
     },
     {
       onSettled: () => {
@@ -250,7 +250,7 @@ const StudyNoteDetail = (props: Props) => {
             <ButtonsForPageNumbersForStudyNoteContents
               exist_page_numbers={response_data_for_api.exist_page_numbers}
               currentPage={currentPage}
-              selectedButtonsData={selectedButtonsData}
+              pageNumbersToEditData={pageNumbersToEditData}
               study_note_pk={study_note_pk}
             />
           ) : (

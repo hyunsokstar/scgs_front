@@ -3,12 +3,14 @@ import { RootState } from "../store";
 
 // [1,2,3,4,5,]
 interface CounterState {
-  selectedButtons: number[];
+  pageNumbersToEdit: number[];
+  pageNumbersToEditToMove: number[]
   currentPage: number;
 }
 
 const initialState: CounterState = {
-  selectedButtons: [],
+  pageNumbersToEdit: [],
+  pageNumbersToEditToMove: [],
   currentPage: 1,
 };
 
@@ -21,27 +23,49 @@ export const studyNoteSlice = createSlice({
       const buttonNumber = action.payload.buttonNumber;
 
       if (action.payload.editMode) {
-        if (state.selectedButtons.includes(buttonNumber)) {
+        if (state.pageNumbersToEdit.includes(buttonNumber)) {
           console.log("여기서 클릭한 버튼 number 제거");
-          state.selectedButtons = state.selectedButtons.filter(
+          state.pageNumbersToEdit = state.pageNumbersToEdit.filter(
             (num) => num !== buttonNumber
           );
         }  else {
           console.log("여기서 클릭한 버튼 number 추가");
-          state.selectedButtons = [...state.selectedButtons, buttonNumber].sort(  // setState 와 같은 효과
+          state.pageNumbersToEdit = [...state.pageNumbersToEdit, buttonNumber].sort(  // setState 와 같은 효과
             (a, b) => a - b
           );
         }
       }
       state.currentPage = buttonNumber;
     },
+
+    // selectButtonTo: (state, action: PayloadAction<any>) => {
+    //   console.log("action.payload.editMode : ", action.payload.editMode);
+    //   const buttonNumber = action.payload.buttonNumber;
+
+    //   if (action.payload.editMode) {
+    //     if (state.pageNumbersToEdit.includes(buttonNumber)) {
+    //       console.log("여기서 클릭한 버튼 number 제거");
+    //       state.pageNumbersToEdit = state.pageNumbersToEdit.filter(
+    //         (num) => num !== buttonNumber
+    //       );
+    //     }  else {
+    //       console.log("여기서 클릭한 버튼 number 추가");
+    //       state.pageNumbersToEdit = [...state.pageNumbersToEdit, buttonNumber].sort(  // setState 와 같은 효과
+    //         (a, b) => a - b
+    //       );
+    //     }
+    //   }
+    //   state.currentPage = buttonNumber;
+    // },
+
+
     deselectButton: (state) => {
       // console.log("action.payload : ", action.payload);
-      state.selectedButtons = []
+      state.pageNumbersToEdit = []
     },
     initalizeSelctButtons: (state, action: PayloadAction<number[]>) => {
       console.log("action.payload : ", action.payload);
-      state.selectedButtons = [...action.payload];
+      state.pageNumbersToEdit = [...action.payload];
     },
     initializeCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
@@ -54,7 +78,7 @@ export const studyNoteSlice = createSlice({
       state.currentPage = action.payload;
     },
     cancle_for_all_selected_pages: (state) => {
-      state.selectedButtons = [];
+      state.pageNumbersToEdit = [];
     },
     go_to_specific_page: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
@@ -74,7 +98,7 @@ export const {
   go_to_specific_page
 } = studyNoteSlice.actions;
 
-export const selectedButtons = (state: RootState) =>
-  state.studyNote.selectedButtons;
+export const pageNumbersToEdit = (state: RootState) =>
+  state.studyNote.pageNumbersToEdit;
 
 export default studyNoteSlice.reducer;

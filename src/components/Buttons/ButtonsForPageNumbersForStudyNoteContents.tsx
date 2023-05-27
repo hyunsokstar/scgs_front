@@ -46,7 +46,7 @@ import { apiForUpdateEditModeForStudyNoteContent } from "../../apis/user_api";
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
   currentPage: number;
   exist_page_numbers: number[];
-  selectedButtonsData: number[];
+  pageNumbersToEditData: number[];
   study_note_pk: string | undefined;
 }
 
@@ -55,7 +55,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   ButtonsForPageNumbersForStudyNoteContentsProps
 > = ({
   currentPage,
-  selectedButtonsData,
+  pageNumbersToEditData,
   exist_page_numbers,
   study_note_pk,
 }) => {
@@ -94,7 +94,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   };
 
   const handlerForApply = () => {
-    console.log("handlerForApply : ", selectedButtonsData);
+    console.log("pageNumbersToEditData : ", pageNumbersToEditData);
 
     exist_page_numbers.map((number) => {
       dispatch(selectButton({ buttonNumber: number, editMode }));
@@ -114,11 +114,11 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const mutationForDeleteSelectedPages = useMutation(
     ({
       study_note_pk,
-      selectedButtonsData,
+      pageNumbersToEditData,
     }: type_for_parameter_for_delete_pages_for_study_note) => {
       return apiFordeleteStudyNoteContentsForSelectedPages({
         study_note_pk,
-        selectedButtonsData,
+        pageNumbersToEditData,
       });
     },
     {
@@ -143,7 +143,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     // study_note_pk
     mutationForDeleteSelectedPages.mutate({
       study_note_pk,
-      selectedButtonsData,
+      pageNumbersToEditData,
     });
   };
 
@@ -159,11 +159,11 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const mutationForPlusOnePageForSelectedPages = useMutation(
     ({
       study_note_pk,
-      selectedButtonsData,
+      pageNumbersToEditData,
     }: type_for_parameter_for_delete_pages_for_study_note) => {
       return apiForPlusOnePageForSelectedPagesForStudyNoteContents({
         study_note_pk,
-        selectedButtonsData,
+        pageNumbersToEditData,
       });
     },
     {
@@ -185,25 +185,25 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const plusOnePageForSelectedPageds = () => {
     console.log("plusOnePageForSelectedPageds check");
 
-    if (selectedButtonsData.length === 0) {
+    if (pageNumbersToEditData.length === 0) {
       alert("페이지를 하나라도 선택 해주세요");
       return;
     }
 
     mutationForPlusOnePageForSelectedPages.mutate({
       study_note_pk,
-      selectedButtonsData,
+      pageNumbersToEditData,
     });
   };
 
   const mutationForMinusOnePageForSelectedPages = useMutation(
     ({
       study_note_pk,
-      selectedButtonsData,
+      pageNumbersToEditData,
     }: type_for_parameter_for_delete_pages_for_study_note) => {
       return apiForMinusOnePageForSelectedPagesForStudyNoteContents({
         study_note_pk,
-        selectedButtonsData,
+        pageNumbersToEditData,
       });
     },
     {
@@ -225,14 +225,14 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const minusOnePageForSelectedPageds = () => {
     console.log("plusOnePageForSelectedPageds check");
 
-    if (selectedButtonsData.length === 0) {
+    if (pageNumbersToEditData.length === 0) {
       alert("페이지를 하나라도 선택 해주세요");
       return;
     }
 
     mutationForMinusOnePageForSelectedPages.mutate({
       study_note_pk,
-      selectedButtonsData,
+      pageNumbersToEditData,
     });
   };
 
@@ -395,7 +395,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       )}
 
       <Box>#0528@#$$%^2341asdfa24323</Box>
-      <Box>{selectedButtonsData}</Box>
+      <Box>{pageNumbersToEditData}</Box>
       <Box px={"auto"} border={"0px solid green"} mx={"auto"} width={"86%"}>
         {pagesData.map((page) => {
           console.log("currentPage, page", typeof currentPage, typeof page);
@@ -411,7 +411,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
                 width: "25px",
                 height: "25px",
                 margin: "5px",
-                backgroundColor: selectedButtonsData?.includes(page)
+                backgroundColor: pageNumbersToEditData?.includes(page)
                   ? "rgba(46, 204, 113, 1)"
                   : "white",
               }}

@@ -148,18 +148,18 @@ export const apiForCreateStudyNoteContents = ({
 
 export const apiForPlusOnePageForSelectedPagesForStudyNoteContents = ({
   study_note_pk,
-  selectedButtonsData,
+  pageNumbersToEditData,
 }: type_for_parameter_for_delete_pages_for_study_note) => {
   console.log(
     "study_note_pk , selectedButtonsData : ",
     study_note_pk,
-    selectedButtonsData
+    pageNumbersToEditData
   );
 
   return instance
     .put(
       `study-note/${study_note_pk}/contents/plus-one-page-for-selected-page`,
-      { selectedButtonsData },
+      { pageNumbersToEditData },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
@@ -171,18 +171,18 @@ export const apiForPlusOnePageForSelectedPagesForStudyNoteContents = ({
 
 export const apiForMinusOnePageForSelectedPagesForStudyNoteContents = ({
   study_note_pk,
-  selectedButtonsData,
+  pageNumbersToEditData,
 }: type_for_parameter_for_delete_pages_for_study_note) => {
   console.log(
-    "study_note_pk , selectedButtonsData : ",
+    "study_note_pk , pageNumbersToEditData : ",
     study_note_pk,
-    selectedButtonsData
+    pageNumbersToEditData
   );
 
   return instance
     .put(
       `study-note/${study_note_pk}/contents/minus-one-page-for-selected-page`,
-      { selectedButtonsData },
+      { pageNumbersToEditData },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
@@ -209,17 +209,17 @@ export const apiForGetStuyNoteContentList = async ({
 
 export const apiFordeleteStudyNoteContentsForSelectedPages = ({
   study_note_pk,
-  selectedButtonsData,
+  pageNumbersToEditData,
 }: type_for_parameter_for_delete_pages_for_study_note) => {
   console.log(
-    "study_note_pk , selectedButtonsData : ",
+    "study_note_pk , pageNumbersToEditData : ",
     study_note_pk,
-    selectedButtonsData
+    pageNumbersToEditData
   );
 
   return instance
     .delete(`study-note/${study_note_pk}/contents/delete-page`, {
-      data: selectedButtonsData, // 요청 본문에 selectedButtonsData 추가
+      data: pageNumbersToEditData, // 요청 본문에 selectedButtonsData 추가
       headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",
       },

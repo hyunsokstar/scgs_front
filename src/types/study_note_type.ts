@@ -34,7 +34,7 @@ export interface StudyNoteData {
 
 export interface type_for_parameter_for_delete_pages_for_study_note {
   study_note_pk: string | undefined;
-  selectedButtonsData: number[];
+  pageNumbersToEditData: number[];
 }
 
 export interface StudyNoteContentFormData {
