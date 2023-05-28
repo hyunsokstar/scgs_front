@@ -30,12 +30,11 @@ const ToggleButtonForUpdate = ({
       size="sm"
       bg={isOn ? pastelColor : "gray.200"}
       _hover={{ bg: isOn ? pastelColor : "gray.300" }}
-      _active={{ bg: isOn ? pastelColor : "gray.400" }}
       onClick={handleClick}
       {...rest}
     >
       {/* {editMode ? "true" : "false"} */}
-      {editMode ? "Edit mode On" : "Edit mode Off"}
+      {editMode ? "Edit mode Off" : "Edit mode On"}
     </Button>
   );
 };

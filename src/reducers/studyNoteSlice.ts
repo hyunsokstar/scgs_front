@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-// [1,2,3,4,5,]
 interface CounterState {
   pageNumbersToEdit: number[];
   pageNumbersToMove: number[];
@@ -44,7 +43,6 @@ export const studyNoteSlice = createSlice({
     },
 
     deselectButton: (state) => {
-      // console.log("action.payload : ", action.payload);
       state.pageNumbersToEdit = [];
     },
     initalizeSelctButtons: (state, action: PayloadAction<number[]>) => {
@@ -74,15 +72,8 @@ export const studyNoteSlice = createSlice({
       console.log("action.payload.editMode : ", action.payload.editMode);
       const buttonNumber = action.payload.buttonNumber;
       // todo
-      // pageNumbersToEdit 에 포함 되어 있으면 PageNumbersToMove에는 안됨
-      // pageNumbersToEdit중에 제일 큰거보다  PageNumbersToMove이 더 커야 함 pageNumbersToEdit, PageNumbersToMove이 둘다 숫자 배열임
-
       if (action.payload.editMode) {
         if (state.pageNumbersToMove.includes(buttonNumber)) {
-          // if (state.pageNumbersToEdit.includes(buttonNumber)) { // 이건 굳이 따로할 필요가 없었네
-          //   alert("이동할 페이지는 이전 페이지와 같을수 없습니다.");
-          //   return;
-          // }
           console.log(
             "클릭 했던 버튼 클릭한 경우 pageNumbersToMove 에서 buttonNumber 제거"
           );
@@ -105,8 +96,10 @@ export const studyNoteSlice = createSlice({
           return; // 조건을 만족하지 않으면 함수 종료
         }
       }
-      // state.currentPage = buttonNumber;
     },
+
+    // 질문: 
+    setPageNumbersToEdit: (state, action: PayloadAction<any>) => {},
   },
 });
 

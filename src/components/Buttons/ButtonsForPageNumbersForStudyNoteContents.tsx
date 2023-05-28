@@ -7,6 +7,7 @@ import {
   Spacer,
   IconButton,
   useToast,
+  Divider,
 } from "@chakra-ui/react";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
@@ -44,6 +45,7 @@ import {
 import { type_for_parameter_for_delete_pages_for_study_note } from "../../types/study_note_type";
 import ToggleButtonForUpdate from "../Button/ToggleButtonForUpdate";
 import { apiForUpdateEditModeForStudyNoteContent } from "../../apis/user_api";
+import InputsForSettingOptionForPageUpdate from "../Input/InputsForSettingOptionForPageUpdate";
 
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
   currentPage: number;
@@ -65,8 +67,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const toast = useToast();
-  const [editModeForStudyNoteContent, setEditModeForStudyNoteContent] =
-    useState<any>(false);
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -259,7 +259,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   const onChangeHandlerForEditModeForStudyNoteContent = (
     option: boolean | undefined
   ) => {
-    setEditModeForStudyNoteContent(option);
+    // setEditModeForStudyNoteContent(option);
     const userPk = loginUser?.pk;
 
     mutationForUpdateEditModeForStudyNoteForContent.mutate(userPk);
@@ -280,17 +280,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       return "white"; // 기본 배경색
     }
   };
-
-  // fix 0528
-  // const moveToForward = () => {
-  //   // TODO: moveToForward 기능 실행
-  //   console.log("Move to Forward");
-  // };
-
-  // const moveToBackward = () => {
-  //   // TODO: moveToBackward 기능 실행
-  //   console.log("Move to Backward");
-  // };
 
   const mutationForUpdateNoteContentsPageForSelected = useMutation(
     ({
@@ -536,9 +525,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
                 width: "25px",
                 height: "25px",
                 margin: "5px",
-                // backgroundColor: pageNumbersToEdit?.includes(page)
-                //   ? "rgba(46, 204, 113, 1)"
-                //   : "white",
                 backgroundColor: getColor(
                   pageNumbersToEdit,
                   pageNumbersToMove,
@@ -553,6 +539,10 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         })}
       </Box>
       {/* 페이지 넘버 출력 end */}
+      <Divider />
+      <Box width={"100%"}>
+        <InputsForSettingOptionForPageUpdate />
+      </Box>
     </Box>
   );
 };
