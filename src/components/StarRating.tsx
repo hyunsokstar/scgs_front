@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Flex, IconButton, Icon } from "@chakra-ui/react";
+import { Flex, IconButton, Icon, Box } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 
 type Props = {
@@ -25,7 +25,7 @@ const StarRating = ({
   };
 
   return (
-    <Flex>
+    <Box display="flex" w={"80px"}>
       {[...Array(5)].map((_, index) => {
         const starRating = index + 1;
         const isSelected = rating >= starRating;
@@ -48,7 +48,7 @@ const StarRating = ({
           />
         );
       })}
-    </Flex>
+    </Box>
   );
 };
 

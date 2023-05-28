@@ -137,10 +137,10 @@ const ExtraTasksTable = ({
             </Th>
             <Th width="30px">Task Manager</Th>
             <Th width="200px">Task</Th>
-            <Th width="100px">Task Status</Th>
-            <Th width="30px">Task importance</Th>
-            <Th width="30px">Started At</Th>
-            <Th width="30px">Completed At</Th>
+            <Th width="120px">Task Status</Th>
+            <Th width="100px">Task importance</Th>
+            <Th width="150px">Started At</Th>
+            <Th width="150px">Completed At</Th>
             <Th width="30px"> 삭제 </Th>
           </Tr>
         </Thead>
@@ -173,15 +173,15 @@ const ExtraTasksTable = ({
                       border="1px solid green"
                     >
                       <option value="ready">
-                        대기중&nbsp;&nbsp; ⚪
+                        대기중&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ⚪
                       </option>
-                      <option value="in_progress">진행중&nbsp;&nbsp; 🟡</option>
-                      <option value="testing">테스팅&nbsp;&nbsp; 🟠</option>
-                      <option value="completed">완료됨&nbsp;&nbsp; 🔵</option>
+                      <option value="in_progress">진행중&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🟡</option>
+                      <option value="testing">테스팅&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🟠</option>
+                      <option value="completed">완료됨&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔵</option>
                     </Select>
                   </Td>
                   {/* <Td>{row.importance}</Td> */}
-                  <Td>
+                  <Td border={"1px solid red"}>
                     <StarRating
                       initialRating={row.importance}
                       taskPk={row.pk}

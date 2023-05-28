@@ -439,35 +439,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                             </Tr>
                             <Tr>
                               <Td w="50%">
-                                <InputGroup w="200px">
-                                  <InputLeftElement
-                                    pointerEvents="none"
-                                    children={<FaDollarSign color="gray.300" />}
-                                    fontSize="md"
-                                    bgColor={"rgba(255, 215, 0, 0.5)"}
-                                    px={2}
-                                  />
-                                  <Input
-                                    type="number"
-                                    placeholder=" 상금 입력"
-                                    textAlign={"center"}
-                                    defaultValue={taskData.cash_prize}
-                                    {...register("cash_prize")}
-                                  />
-                                  <InputRightElement>
-                                    <Button
-                                      variant={"outline"}
-                                      type="submit"
-                                      // h="2.5rem"
-                                      size="md"
-                                      mr={0}
-                                      // bg="blue.500"
-                                      _hover={{ bg: "blue.600" }}
-                                    >
-                                      입력
-                                    </Button>
-                                  </InputRightElement>
-                                </InputGroup>
+                                is_task_for_help
                               </Td>
                               <Td w="50%">
                                 <Checkbox

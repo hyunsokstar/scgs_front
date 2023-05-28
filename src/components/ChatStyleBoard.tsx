@@ -243,7 +243,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );
-  
+
   const [commentTextToUpload, setCommentTextToUpload] = useState("");
 
   const createMutationForTaskComment = useMutation(createCommentForTaskApi, {
@@ -257,8 +257,8 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
         title: "welcome back!",
         status: "success",
       });
-      //   requery getOneProjectTask
       queryClient.refetchQueries(["getOneProjectTask"]);
+      setCommentTextToUpload("");
     },
     onError: (error: any) => {
       console.log("error.response : ", error.response);
@@ -267,21 +267,18 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
   });
 
   console.log("isLoggedIn for chatstyle board : ", isLoggedIn);
-  
 
   const commentButtonHandler = () => {
     // alert(isLoggedIn);
     if (!isLoggedIn) {
       alert("로그인 해주세요");
-    }else {
+    } else {
       // alert("로그인 상태입니다")
     }
     createMutationForTaskComment.mutate({
       taskPk,
       comment: commentTextToUpload,
     });
-    // alert(taskPk);
-    // alert(commentTextToUpload);
   };
 
   return (
@@ -310,6 +307,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
           >
             delete
           </Button>
+          $%^#@%@#$%052903
           <Spacer />
           <Box>
             <ModalButtonForAddCommentForTask taskPk={taskPk} />
@@ -366,7 +364,8 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             bg={"purple.50"}
             mr="1"
             onChange={(e) => setCommentTextToUpload(e.target.value)}
-            placeholder="입력해주세요"
+            value={commentTextToUpload}
+            placeholder="입력해주세요1"
           />
           <Button
             variant="outline"
@@ -378,7 +377,6 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
           >
             입력
           </Button>
-          {/* {isLoggedIn ? "true" : "false"} */}
         </Box>
       </Box>
     </Box>

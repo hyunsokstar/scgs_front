@@ -380,7 +380,7 @@ function ChatStyleBoard({ userPk, task_comments, task_manager }: IProps) {
             bg={"purple.50"}
             mr="1"
             onChange={(e) => setCommentTextToUpload(e.target.value)}
-            placeholder="입력해주세요"
+            placeholder="입력해주세요2"
           />
           <Button
             variant="outline"

@@ -246,7 +246,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-
+        dispatch(cancle_for_all_selected_pages());
         toast({
           status: "success",
           title: "UpdateEditMode Success !",

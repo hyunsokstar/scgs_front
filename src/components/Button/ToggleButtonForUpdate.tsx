@@ -28,12 +28,11 @@ const ToggleButtonForUpdate = ({
     <Button
       variant={"outline"}
       size="sm"
-      bg={isOn ? pastelColor : "gray.200"}
-      _hover={{ bg: isOn ? pastelColor : "gray.300" }}
+      bg={!editMode ? "blue.200" : "red.200"}
+      _hover={{ bg: isOn ? pastelColor : "red.300" }}
       onClick={handleClick}
       {...rest}
     >
-      {/* {editMode ? "true" : "false"} */}
       {editMode ? "Edit mode Off" : "Edit mode On"}
     </Button>
   );
