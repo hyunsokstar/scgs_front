@@ -32,6 +32,7 @@ import {
   moveToNextPage,
   cancle_for_all_selected_pages,
   setPageNumbersToMove,
+  go_to_specific_page,
 } from "../../reducers/studyNoteSlice";
 import ButtonForEditorMode from "../Button/ButtonForEditorMode";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
@@ -245,7 +246,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        // queryClient.refetchQueries(["getOneProjectTask"]);
 
         toast({
           status: "success",
@@ -263,7 +263,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     const userPk = loginUser?.pk;
 
     mutationForUpdateEditModeForStudyNoteForContent.mutate(userPk);
-    dispatch(deselectButton());
+    // dispatch(deselectButton());
     console.log("option : ", option);
   };
 
@@ -301,11 +301,17 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        // queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        if (data.direction === "forward") {
+          dispatch(go_to_specific_page(pageNumbersToMove[0]));
+        } else if (data.direction === "backward") {
+          dispatch(go_to_specific_page(pageNumbersToEdit[0]));
+        }
+
         toast({
           title: "선택된 페이지들 +1 success !",
           status: "success",
-          // description: data.message,
+          description: data.message,
         });
       },
     }
@@ -462,10 +468,14 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         ""
       )}
 
+      {!editMode ? <Box>#!@#$!@#$$%^!@#$</Box> : ""}
+      {/* <Box display={"flex"} flexDirection={"row"}>
+        <Box border={"1px solid blue"}>
+          {pageNumbersToEdit.join(", ")}
+        </Box>
+        <Box >{pageNumbersToMove.join(", ")}</Box>
+      </Box> */}
       <Box display={"flex"} flexDirection={"column"}>
-        <Box>#!@#$!@#$$%^!@#$</Box>
-        <Box>{pageNumbersToEdit.join(", ")}</Box>
-        <Box>{pageNumbersToMove.join(", ")}</Box>
         <Box>
           {pageNumbersToEdit.length === pageNumbersToMove.length &&
             pageNumbersToEdit.length != 0 && (
@@ -541,7 +551,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       {/* 페이지 넘버 출력 end */}
       <Divider />
       <Box width={"100%"}>
-        <InputsForSettingOptionForPageUpdate />
+        {editMode ? <InputsForSettingOptionForPageUpdate /> : ""}
       </Box>
     </Box>
   );

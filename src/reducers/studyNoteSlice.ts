@@ -99,13 +99,25 @@ export const studyNoteSlice = createSlice({
     },
 
     // 질문: 
-    setPageNumbersToEdit: (state, action: PayloadAction<any>) => {},
+    // setPageNumbersToEdit: (state, action: PayloadAction<any>) => {
+    // },
+    setPageNumbersToEdit: (state, action: PayloadAction<number[]>) => {
+      state.pageNumbersToEdit = action.payload;
+    },
+    setPageNumbersToMove2: (state, action: PayloadAction<number[]>) => {
+      console.log("setPageNumbersToMove2 실행 check");
+      
+      state.pageNumbersToMove = action.payload;
+      
+    },
+    // pageNumbersToMove
   },
 });
 
 export const {
   selectButton,
   setPageNumbersToMove,
+  setPageNumbersToMove2,
   deselectButton,
   initializeCurrentPage,
   initalizeSelctButtons,
@@ -113,6 +125,7 @@ export const {
   moveToNextPage,
   cancle_for_all_selected_pages,
   go_to_specific_page,
+  setPageNumbersToEdit
 } = studyNoteSlice.actions;
 
 export const pageNumbersToEdit = (state: RootState) =>

@@ -15,7 +15,6 @@ import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/But
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
 
-import { initializeCurrentPage } from "../reducers/studyNoteSlice";
 import { SearchIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaSort, FaListUl } from "react-icons/fa";
 import ModalButtonForInsertStudyNoteContent from "../components/modal/ModalButtonForInsertStudyNoteContent";

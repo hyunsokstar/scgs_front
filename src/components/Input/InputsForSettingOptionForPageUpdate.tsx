@@ -1,5 +1,12 @@
 import React, { useState, ChangeEvent } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import { Box, Input, Button } from "@chakra-ui/react";
+import { RootState } from "../../store";
+import {
+  setPageNumbersToEdit,
+  setPageNumbersToMove2,
+} from "../../reducers/studyNoteSlice";
 
 interface InputsForSettingOptionForPageUpdateProps {
   // Add any props if needed
@@ -8,10 +15,20 @@ interface InputsForSettingOptionForPageUpdateProps {
 const InputsForSettingOptionForPageUpdate: React.FC<
   InputsForSettingOptionForPageUpdateProps
 > = () => {
+  const dispatch = useDispatch();
+
   const [from1, setFrom1] = useState("");
   const [from2, setFrom2] = useState("");
   const [destination1, setDestination1] = useState("");
   const [destination2, setDestination2] = useState("");
+
+  const pageNumbersToEdit = useSelector(
+    (state: RootState) => state.studyNote.pageNumbersToEdit
+  );
+
+  const pageNumbersToMove = useSelector(
+    (state: RootState) => state.studyNote.pageNumbersToMove
+  );
 
   const [originArray, setOriginArray] = useState<number[]>([]);
   const [destinationArray, setDestinationArray] = useState<number[]>([]);
@@ -43,10 +60,8 @@ const InputsForSettingOptionForPageUpdate: React.FC<
       return;
     }
 
-    if (y <= x) {
-      alert(
-        'The second "from" value should be greater than the first "from" value.'
-      );
+    if (y < x) {
+      alert("시작점이 끝점보다 클 수 없습니다");
       return;
     }
 
@@ -68,46 +83,44 @@ const InputsForSettingOptionForPageUpdate: React.FC<
     }
 
     setOriginArray(fromArray);
+    // setPageNumbersToEdit 를 dispatch 해서 fromArray 를 넘겨서 pageNumbersToEdit에 저장 하고 싶어
+    dispatch(setPageNumbersToEdit(fromArray));
   };
 
   const buttonHandlerForSetPageNumbersToDestination = () => {
+
+    if(destination1 === "" || destination1 <= from2) {
+        alert("목적지가 비어있으면 안되며 출발지보다 커야 합니다")
+        return;
+    }
+
+    if (destination2 === "") {
+      const result = parseInt(from2) - parseInt(from1) + parseInt(destination1);
+      setDestination2(result.toString());
+    }    
+
     const x = parseInt(destination1);
     const y = parseInt(destination2);
 
-    if (isNaN(x) || isNaN(y)) {
+    if (isNaN(x)) {
       alert('Please enter valid numbers for "to" values.');
       return;
     }
 
-    if (y <= x) {
-      alert(
-        'The second "to" value should be greater than the first "to" value.'
-      );
+    if (y < x) {
+      alert("시작점이 끝점보다 클수 없습니다.");
       return;
     }
 
     const destinationArray = Array.from(
-      { length: y - x + 1 },
-      (_, index) => x + index
-    );
-    console.log("destinationArray : ", destinationArray);
-
-    if (
-      originArray.length > 0 &&
-      destinationArray[0] <= originArray[originArray.length - 1]
-    ) {
-      alert(
-        'Invalid input: The minimum value of "to" should be greater than the maximum value of "from".'
+        { length: y - x + 1 },
+        (_, index) => x + index
       );
-      return;
-    }
-
-    if(originArray.length !== destinationArray.length){
-        alert("start array 와 destination array 는 범위가 같아야 합니다");
-        return;
-    }
+      console.log("destinationArray : ", destinationArray);
 
     setDestinationArray(destinationArray);
+    dispatch(setPageNumbersToMove2(destinationArray));
+    
   };
 
   return (
@@ -132,7 +145,7 @@ const InputsForSettingOptionForPageUpdate: React.FC<
         <Input width="50px" mx="2" value={from2} onChange={handleFrom2Change} />
         {/* <Button>from</Button> */}
         <Button onClick={() => buttonHandlerForSetPageNumbersToEdit()}>
-          from
+          fr
         </Button>
       </Box>
       <Box
