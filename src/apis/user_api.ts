@@ -9,8 +9,6 @@ const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
   withCredentials: true,
 });
-// 1122
-
 
 export const apiForDeleteUserTaskCommentForPk = (commentPk: string | number) => {
   console.log("commentPk : ", commentPk);

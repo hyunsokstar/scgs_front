@@ -44,7 +44,6 @@ export default function Room({ pk, imageUrl, name, rating, city, country, price 
                     </Text>
                 </Box>
                 <Text fontSize={"sm"} color={gray}>
-                    {/* <Text as="b">$72</Text> / night */}
                     <Text as="b">${price}</Text> / night
                 </Text>
             </VStack>

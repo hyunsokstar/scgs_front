@@ -443,3 +443,24 @@ export interface ResponseDataForTaskLog {
   task_count_for_weekdays: TaskCountForWeekdays;
   today_info: TodayInfo;
 }
+
+export interface ExtraTaskDetailInfo {
+  pk: number;
+  task_manager: {
+    pk: number;
+    username: string;
+    profile_image: string;
+  };
+  task: string;
+  task_url1: string;
+  task_url2: string;
+  task_status: string;
+  importance: number;
+  started_at: string;
+  completed_at: string | null;
+  started_at_formatted: string;
+}
+
+export interface DetailForExtraTaskProps {
+  extraTaskDetail: ExtraTaskDetailInfo;
+}

@@ -25,7 +25,15 @@ interface ICommentTextUpdateApiParameter {
   commentText: string;
 }
 // 1122
-// apiForGetTaskLogList
+// apiForExtraTaskDetail
+export const apiForExtraTaskDetail = async ({ queryKey }: QueryFunctionContext) => {
+  const [_, ExtraTaskDetailPk] = queryKey;
+  // console.log("roomPestimatePk : ", taskPk);
+  return await instance
+    .get(`project_progress/extra_tasks/${ExtraTaskDetailPk}`)
+    .then((response) => response.data);
+};
+
 // http://127.0.0.1:8000/api/v1/project_progress/task-log
 export const apiForGetTaskLogList = async ({
   queryKey,
@@ -487,7 +495,10 @@ export const getProgectTasksStatusData = ({
   });
 };
 
-// put for pk
+// 1122
+
+
+
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const updateProjectApiByPk = ({
   taskPk,
