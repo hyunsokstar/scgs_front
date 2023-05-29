@@ -203,6 +203,9 @@ export interface ITypeForProjectProgressList {
   total_task_count_for_today?: number;
   completed_task_count_for_today?: number;
   achievement_rate_for_today?: number;
+  checkedRowPks?: any;
+  setCheckedRowPks?: any;
+  handleCheckboxChange?: any;
 }
 
 export interface IFormTypeForProjectProgress {
@@ -378,6 +381,8 @@ export interface ITypeForTaskStatusForToday {
   morning_tasks: TaskForTaskStatusForToday[] | any | undefined;
   afternoon_tasks: TaskForTaskStatusForToday[] | any | undefined;
   night_tasks: TaskForTaskStatusForToday[] | any | undefined;
+  task_count_for_weekdays: TaskCountForWeekdays;
+  today_info: TodayInfo;
 }
 
 export interface WriterForTaskLog {

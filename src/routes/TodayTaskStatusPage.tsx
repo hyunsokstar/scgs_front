@@ -19,6 +19,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ITypeForTaskStatusForToday } from "../types/project_progress/project_progress_type";
 import TableForStaticsForTodayTaskStatus from "../components/Table/TableForStaticsForTodayTaskStatus";
 import ModalButtonForTaskListWithDeadlineUntilYesterDay from "../components/modal/ModalButtonForTaskListWithDeadlineUntilYesterDay";
+import TableForTaskLogForTasksOfWeekDay from "../components/Table/TableForTaskLogForTasksOfWeekDay";
 
 type Time = "morning_tasks" | "afternoon_tasks" | "night_tasks";
 const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "night_tasks"];
@@ -56,10 +57,7 @@ const TodayTaskStatusPage = () => {
 
   const [tasks, setTasks] = useState<any>(initialTasks);
 
-  console.log(
-    "dataForTaskStatusForToday.afternoon_tasks : ",
-    dataForTaskStatusForToday?.afternoon_tasks
-  );
+  console.log("dataForTaskStatusForToday : ", dataForTaskStatusForToday);
 
   useEffect(() => {
     if (dataForTaskStatusForToday) {
@@ -84,7 +82,7 @@ const TodayTaskStatusPage = () => {
     }
   }, [dataForTaskStatusForToday]);
 
-  console.log("dataForTaskStatusForToday : ", dataForTaskStatusForToday);
+  // console.log("dataForTaskStatusForToday : ", dataForTaskStatusForToday);
 
   const mutationForSwitchTheOrderOfTheTwoTasks = useMutation(
     ({ taskPk, time_option, orgin_task_id, ordering_option }: any) => {
@@ -178,16 +176,47 @@ const TodayTaskStatusPage = () => {
         orgin_task_id: "",
         ordering_option: "move_to_last",
       });
-
     }
   };
 
   return (
     <Box>
-      <Box p={4} bg="gray.200">
-        <Box display={"flex"} justifyContent={"space-between"}>
-          <Box as="h1" fontFamily="sans-serif" color="teal.800">
-            <Box display={"flex"} fontSize={"xl"} textAlign={"left"} mb={2}>
+      <Box bg="gray.200" height={"100%"}>
+        <Box display={"flex"} justifyContent={"flex-start"} gap={10}>
+          <Box display={"flex"} flexDirection={"column"} gap={2} ml={2}>
+            <Box>
+              <Box mb={1}>
+                {dataForTaskStatusForToday &&
+                  dataForTaskStatusForToday?.today_info.date}
+
+                {dataForTaskStatusForToday &&
+                  dataForTaskStatusForToday?.today_info.dayOfWeek}
+              </Box>
+
+              {dataForTaskStatusForToday && (
+                <TableForTaskLogForTasksOfWeekDay
+                  today_info={dataForTaskStatusForToday?.today_info}
+                  taskCountForWeekdays={
+                    dataForTaskStatusForToday?.task_count_for_weekdays
+                  }
+                />
+              )}
+            </Box>
+          </Box>
+
+          <Box
+            // fontFamily="sans-serif"
+            color="teal.800"
+            border={"0px solid red"}
+            height={"100%"}
+            mx={2}
+          >
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              textAlign={"center"}
+              my={1}
+            >
               오늘 이전 비완료 : &nbsp;
               <ModalButtonForTaskListWithDeadlineUntilYesterDay
                 buttonText={
@@ -195,6 +224,7 @@ const TodayTaskStatusPage = () => {
                 }
               />
             </Box>
+
             <TableForStaticsForTodayTaskStatus
               toal_task_count_for_today={
                 dataForTaskStatusForToday?.toal_task_count_for_today
@@ -214,10 +244,7 @@ const TodayTaskStatusPage = () => {
               progress_rate={dataForTaskStatusForToday?.progress_rate}
             />
           </Box>
-          <Box>
-              <Text>Task log</Text>
 
-          </Box>
           <Box>3 영역</Box>
         </Box>
       </Box>

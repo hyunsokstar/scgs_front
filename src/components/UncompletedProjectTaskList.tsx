@@ -51,6 +51,7 @@ interface Props {
     | "until-this-month";
 }
 
+
 // 1122
 function UncompletedProjectTaskList({
   basic_due_date_option,
@@ -58,7 +59,7 @@ function UncompletedProjectTaskList({
   // const theme = useTheme();
   const queryClient = useQueryClient();
 
-  const [checkedRowPks, setCheckedRowPks] = useState<number[]>([]);
+  const [checkedRowPks, setCheckedRowPks] = useState<any[]>([]);
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
   const [
     selectedPeriodOptionForUncompletedTaskList,
@@ -309,6 +310,20 @@ function UncompletedProjectTaskList({
     setCheckForCashPrize(!checkForCashPrize);
   };
 
+  const handleChangeForAllCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    const rowPks = taskListData?.ProjectProgressList.map(item => item.pk) || [];
+  
+    if (checked) {
+      // Add all pks to the checkedRowPks array
+      setCheckedRowPks([...checkedRowPks, ...rowPks]);
+    } else {
+      // Remove all pks from the checkedRowPks array
+      setCheckedRowPks([]);
+    }
+  };
+
+
   // 2244
   return (
     <Box w={"100%"} border={"1px solid purple"} p={0} mt={2}>
@@ -383,6 +398,7 @@ function UncompletedProjectTaskList({
             <Tr height="30px" borderBottom={"2px solid #9AE6B4"}>
               <Td>
                 <Text>담당자별:</Text>
+                <Text>@#$%@#$052904</Text>
               </Td>
               <Td>
                 {taskListData?.writers_info?.map((writer) => {
@@ -702,7 +718,18 @@ function UncompletedProjectTaskList({
             </Button>
           </Box>
           <Box display={"flex"} p={2} gap={2}>
-            <Checkbox size="lg" colorScheme="blue" />
+            {/* fix 0529 checkbox 체크 하면 checkedRowPks 배열에 taskListData?.ProjectProgressList 배열의 모든 pk 추가 하기 체크 풀면 모두 빼기 */}
+            {/* <Checkbox size="lg" colorScheme="blue" /> */}
+            <Checkbox
+              size="lg"
+              // border={"1px solid black"}
+              colorScheme="blue"
+              onChange={handleChangeForAllCheckBox}
+              checked={
+                checkedRowPks.length ===
+                taskListData?.ProjectProgressList.length
+              }
+            />
             <Button
               variant="outline"
               size="sm"

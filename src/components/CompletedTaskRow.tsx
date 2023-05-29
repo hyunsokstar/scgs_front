@@ -37,6 +37,9 @@ import ModalButtonForUpdateProjectTaskStartedAt from "./modal/ModalButtonForUpda
 interface IProps {}
 
 function CompletedTaskRow({
+  checkedRowPks,
+  setCheckedRowPks,
+  handleCheckboxChange,
   ProjectProgressList,
   totalPageCount,
   task_number_for_one_page,
@@ -135,8 +138,33 @@ function CompletedTaskRow({
     // }
   };
 
+  const handleChangeForAllCheckBox = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const checked = event.target.checked;
+    const rowPks = ProjectProgressList?.map((item) => item.pk) || [];
+
+    if (checked) {
+      // Add all pks to the checkedRowPks array
+      setCheckedRowPks([...checkedRowPks, ...rowPks]);
+    } else {
+      // Remove all pks from the checkedRowPks array
+      setCheckedRowPks([]);
+    }
+  };
+
+  // 2244
   return (
     <Box border={"0px solid blue"} maxWidth={"100%"}>
+      {/* {checkedRowPks} */}
+      <Checkbox
+        m={2}
+        size={"md"}
+        border={"1px solid black"}
+        colorScheme="blue"
+        onChange={handleChangeForAllCheckBox}
+        checked={checkedRowPks.length === ProjectProgressList?.length}
+      />
       <Box overflowX="auto" width="100%">
         <List>
           {ProjectProgressList?.map((task) => {
@@ -154,7 +182,14 @@ function CompletedTaskRow({
                 <HStack>
                   <Box border={"0px solid yellow"} width={"50px"}>
                     <HStack ml={0}>
-                      <Checkbox mx={2} />
+                      {/* <Checkbox mx={2} /> */}
+                      <Checkbox
+                        mx={2}
+                        border={"1px solid black"}
+                        value={task.pk}
+                        isChecked={checkedRowPks?.includes(task.pk)}
+                        onChange={handleCheckboxChange}
+                      />
                     </HStack>
                   </Box>
                   <Box width={"140px"}>
@@ -202,11 +237,10 @@ function CompletedTaskRow({
                         />
                       </HStack>
                     </HStack>
-
                   </Box>
 
                   <Box border={"0px solid blue"} width={"310px"}>
-                  <HStack>
+                    <HStack>
                       <Box textAlign={"center"}>
                         <Text>완료 시점</Text>
                       </Box>
@@ -251,9 +285,7 @@ function CompletedTaskRow({
                   </Box>
 
                   <Box border={"0px solid blue"} width={"170px"}>
-
-                  업무 평점 부여 
-
+                    업무 평점 부여
                   </Box>
 
                   <Box>

@@ -16,11 +16,19 @@ const TableForStaticsForTodayTaskStatus: React.FC<TableProps> = ({
   task_count_for_in_progress,
   task_count_for_testing,
   task_count_for_completed,
-  progress_rate
+  progress_rate,
 }) => {
   return (
     <Box>
-      <Table bg="blue.100" variant="simple">
+      <Table
+        variant="striped"
+        colorScheme="black"
+        size="md"
+        borderRadius="md"
+        bg={"blue.100"}
+        border={"1px solid black"}
+        mb={2}
+      >
         {" "}
         {/* 내부 영역 배경색을 white로 설정 */}
         <Thead>

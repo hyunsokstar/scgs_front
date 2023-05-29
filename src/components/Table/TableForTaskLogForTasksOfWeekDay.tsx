@@ -32,6 +32,7 @@ const TableForTaskLogForTasksOfWeekDay: React.FC<
         colorScheme="black"
         size="md"
         borderRadius="md"
+        bg={"blue.100"}
         border={"1px solid black"}
       >
         <Thead>

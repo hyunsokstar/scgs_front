@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Container,
+  Checkbox,
   Flex,
   Input,
   Text,
@@ -19,8 +20,10 @@ import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForT
 
 interface Props {}
 
+// 1122
 function CompletedProjectTaskList({}: Props): ReactElement {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+  const [checkedRowPks, setCheckedRowPks] = useState<any[]>([]);
 
   const [
     selectedPeriodOptionForUncompletedTaskList,
@@ -115,6 +118,18 @@ function CompletedProjectTaskList({}: Props): ReactElement {
     set_username_for_search(username);
   };
 
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    const pk = parseInt(value, 10);
+
+    if (checked) {
+      setCheckedRowPks([...checkedRowPks, pk]);
+    } else {
+      setCheckedRowPks(checkedRowPks.filter((item) => item !== pk));
+    }
+  };
+
+  // 2244
   return (
     <Container maxW={"100%"} border={"0px solid purple"} p={0} mt={0}>
       <Box
@@ -250,7 +265,9 @@ function CompletedProjectTaskList({}: Props): ReactElement {
           /> */}
         </Box>
       </Box>
+
       <Box>
+        <Box w={"100%"} border={"1px solid red"}></Box>
         {pageProgressListData ? (
           <CompletedTaskRow
             ProjectProgressList={filteredData}
@@ -261,6 +278,9 @@ function CompletedProjectTaskList({}: Props): ReactElement {
             projectTaskListRefatch={projectTaskListRefatch}
             currentPageNum={currentPageNum}
             setCurrentPageNum={setCurrentPageNum}
+            handleCheckboxChange={handleCheckboxChange}
+            checkedRowPks={checkedRowPks}
+            setCheckedRowPks={setCheckedRowPks}
           />
         ) : (
           ""

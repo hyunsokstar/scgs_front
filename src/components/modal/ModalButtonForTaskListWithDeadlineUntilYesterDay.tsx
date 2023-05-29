@@ -44,15 +44,15 @@ const ModalButtonForTaskListWithDeadlineUntilYesterDay: React.FC<
   return (
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-
       <Box>
         <Button
           variant="outline"
-          size={"sm"}
+          size={"xs"}
           colorScheme="blue"
           color="blue.500"
           _hover={{ bg: "grayPastel" }}
           onClick={handleOpenModal}
+          mt={-1}
         >
           {buttonText}
         </Button>
