@@ -23,6 +23,8 @@ export interface FormTypeForExtraTask {
 export interface extra_task_row_type {
   pk: number;
   task: string;
+  task_url1:string;
+  task_url2:string;
   task_status: string;
   task_manager: {
     pk: number;
@@ -67,10 +69,6 @@ export type ItypeFortestRow = {
   test_result_images: TestResultImage[];
 };
 
-// export type type_for_row_for_testers{
-
-// }
-
 interface IWriter {
   pk: number;
   username: string;
@@ -99,6 +97,8 @@ export interface IOneTaskForProjectTaskType {
   task_manager?: { pk: number; username: string; profile_image: string };
   task: string;
   task_description: string;
+  task_url1: string;
+  task_url2: string;
   task_completed: boolean;
   importance: number;
   started_at: string;
@@ -231,6 +231,8 @@ export interface ITypeForTaskDetailUpdate {
   due_date?: Date | undefined;
   cash_prize?: number;
   is_urgent_request?: boolean;
+  task_url1?: string;
+  task_url2?: string;
 }
 
 export interface ITypeForTaskDetailUpdateForm {
@@ -241,6 +243,8 @@ export interface ITypeForTaskDetailUpdateForm {
   task_completed: boolean;
   cash_prize: number;
   is_urgent_request: boolean;
+  task_url1: string;
+  task_url2: string;
 }
 
 export interface IUserNamesForSelectOption {

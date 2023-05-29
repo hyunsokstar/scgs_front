@@ -60,6 +60,7 @@ import MonthlyTaskCountChartPage from "./routes/MonthlyTaskCountChartPage";
 import BarChartForDailyTaskCountForPersonalUserPage from "./routes/ChartPage/BarChartForDailyTaskCountForPersonalUserPage";
 import TodayTaskStatusPage from "./routes/TodayTaskStatusPage";
 import TaskLogPage from "./routes/Log/TaskLogPage";
+import ExtraTaskDetailPage from "./routes/ExtraTaskDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -228,6 +229,10 @@ const router = createBrowserRouter([
       {
         path: "project_admin/:taskPk",
         element: <ProjectProgressDetail />,
+      },
+      {
+        path: "extra_task/:taskPk",
+        element: <ExtraTaskDetailPage />,
       },
       {
         path: "data-grid/users",

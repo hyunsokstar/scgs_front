@@ -94,7 +94,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
   const [started_at, set_started_at] = useState<any>();
   const [due_date, set_due_date] = useState<Date>();
   const [refer_images, set_refer_images] = useState<any>();
-  const [imageToUpload, setImageToUpload] = useState<any>();
   const [isHovering, setIsHovering] = useState(false);
   const [isUploadingForRefImage, setIsUploadingForRefImage] = useState(false);
 
@@ -135,6 +134,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
     task_completed,
     cash_prize,
     is_urgent_request,
+    task_url1,
+    task_url2,
   }: ITypeForTaskDetailUpdateForm) => {
     // alert("submit 확인");
 
@@ -146,13 +147,15 @@ function ProjectProgressDetail({}: Props): ReactElement {
       taskPk: taskPk,
       writer,
       task,
+      task_url1,
+      task_url2,
       task_description,
       importance,
       task_completed,
       started_at: started_at,
       due_date: due_date,
       cash_prize,
-      is_urgent_request
+      is_urgent_request,
     });
 
     setSubmitting(false);
@@ -293,6 +296,14 @@ function ProjectProgressDetail({}: Props): ReactElement {
     console.log("create test button click");
   };
 
+  const handleUrl1Click = (task_url1: string) => {
+    window.open(task_url1, "_blank");
+  };
+
+  const handleUrl2Click = (task_url2: string) => {
+    window.open(task_url2, "_blank");
+  };
+
   if (isLoadingForTaskData) {
     return <Box>Loading</Box>;
   }
@@ -353,6 +364,57 @@ function ProjectProgressDetail({}: Props): ReactElement {
                           height={"200px"}
                           defaultValue={taskData.task_description}
                         />
+                      </FormControl>
+
+                      <FormControl>
+                        <FormLabel>task_url1</FormLabel>
+                        <InputGroup>
+                          <Input
+                            {...register("task_url1")}
+                            placeholder="task_url1"
+                            defaultValue={taskData.task_url1}
+                            // pr="3.5rem"
+                          />
+                          <InputRightElement width="3.5rem">
+                            <Button
+                              size="sm"
+                              bg={"blue.100"}
+                              _hover={{ bg: "rgba(207, 216, 220, 0.5)" }}
+                              variant="outline"
+                              h={"100%"}
+                              onClick={() =>
+                                handleUrl1Click(taskData.task_url1)
+                              }
+                            >
+                              Open
+                            </Button>
+                          </InputRightElement>
+                        </InputGroup>
+                      </FormControl>
+
+                      <FormControl mt={4}>
+                        <FormLabel>task_url2</FormLabel>
+                        <InputGroup>
+                          <Input
+                            {...register("task_url2")}
+                            placeholder="task_url2"
+                            defaultValue={taskData.task_url2}
+                          />
+                          <InputRightElement width="3.5rem">
+                            <Button
+                              size="sm"
+                              _hover={{ bg: "rgba(207, 216, 220, 0.5)" }}
+                              variant="outline"
+                              bg={"yellow.100"}
+                              h={"100%"}
+                              onClick={() =>
+                                handleUrl2Click(taskData.task_url2)
+                              }
+                            >
+                              Open
+                            </Button>
+                          </InputRightElement>
+                        </InputGroup>
                       </FormControl>
 
                       <FormControl id="importance" isRequired>
@@ -438,9 +500,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                               </Td>
                             </Tr>
                             <Tr>
-                              <Td w="50%">
-                                is_task_for_help
-                              </Td>
+                              <Td w="50%">is_task_for_help</Td>
                               <Td w="50%">
                                 <Checkbox
                                   colorScheme="red"
@@ -573,7 +633,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
               border={"1px solid green"}
             >
               <Box width={"100%"} mt={1} mb={5}>
-                <FormControl display="flex" alignItems="center">
+                {/* <FormControl display="flex" alignItems="center">
                   <FormLabel htmlFor="my-switch" mb="0">
                     Mode Changes(Comment or tech Note)
                   </FormLabel>
@@ -583,7 +643,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
                     size="lg"
                     colorScheme="green"
                   />{" "}
-                </FormControl>
+                </FormControl> */}
+                Briefing Board
               </Box>{" "}
               <Box width={"100%"} height={"100%"} border={"0px solid red"}>
                 {/* 0405 comment list 추가 하기 */}
@@ -602,7 +663,10 @@ function ProjectProgressDetail({}: Props): ReactElement {
         </Flex>
         <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
           <ModalButtonForExtraTask taskPk={taskPk} />
-          <ExtraTasksTable extra_tasks={taskData.extra_tasks} />
+          <ExtraTasksTable
+            extra_tasks={taskData.extra_tasks}
+            orginal_task_pk={taskPk}
+          />
         </Box>
         <Box bg={"white"} width={"100%"} border={"1px solid black"}>
           <Box

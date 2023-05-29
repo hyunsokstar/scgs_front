@@ -5,7 +5,6 @@ import UncompletedProjectTaskList from "../components/UncompletedProjectTaskList
 
 type Props = {};
 
-// rome-ignore lint/correctness/noEmptyPattern: <explanation>
 function ProjectAdminPage({}: Props): ReactElement {
   return (
     <Box display={"flex"} flexDirection={"column"} gap={5}>

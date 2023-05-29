@@ -106,26 +106,17 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({ taskPk }: IProps) => {
 
   return (
     <>
-      {/* <Button
-        size={"xs"}
-        colorScheme="green"
-        onClick={onOpen}
-        _hover={{ bg: "green.700" }}
-        _active={{ bg: "gree.800" }}
-        _focus={{ boxShadow: "none" }}
-      >
-        Project Task 추가
-      </Button> */}
       <Flex justifyContent={"space-between"} p={2} mb={2}>
-        <Text fontSize={20}>부가 업무 추가</Text>
-        <Button
-          variant="outline"
-          colorScheme="blue"
-          css={{ "&:hover": { backgroundColor: "blue", color: "white" } }}
-          onClick={onOpen}
-        >
-          부가 업무 추가
-        </Button>{" "}
+        <Box display={"flex"} justifyContent={"flex-end"} width={"100%"}>
+          <Button
+            variant="outline"
+            colorScheme="blue"
+            css={{ "&:hover": { backgroundColor: "blue", color: "white" } }}
+            onClick={onOpen}
+          >
+            부가 업무 추가
+          </Button>{" "}
+        </Box>
       </Flex>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

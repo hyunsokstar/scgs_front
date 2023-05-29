@@ -51,7 +51,6 @@ interface Props {
     | "until-this-month";
 }
 
-
 // 1122
 function UncompletedProjectTaskList({
   basic_due_date_option,
