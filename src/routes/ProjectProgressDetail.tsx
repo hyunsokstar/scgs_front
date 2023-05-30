@@ -49,6 +49,7 @@ import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import {
   apiForCreateTaskUrlForTask,
+  apiForUpdateTaskUrlForTaskForPk,
   createRefImageForTask,
   deleteOneRefImageForTask,
   updateProjectApiByPk,
@@ -333,23 +334,37 @@ function ProjectProgressDetail({}: Props): ReactElement {
     console.log("updatedTaskUrls : ", updatedTaskUrls);
 
     updatedTaskUrls[index] = newUrl;
-
-    // console.log("updatedTaskUrls : ",updatedTaskUrls);
-
     setTaskUrls(updatedTaskUrls);
   };
 
-  const testUrlPatternAndUpdate = (pk: number, testUrl: string) => {
+  const mutationForUpdateTaskUrlForTaskForPk = useMutation(
+    apiForUpdateTaskUrlForTaskForPk,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        // queryClient.refetchQueries(["getCompletedTaskListForTester"]);
+        setTaskUrls([])
+        toast({
+          status: "success",
+          title: "task url update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const testUrlPatternAndUpdate = (pk: number, taskUrlForUpdate: string) => {
     try {
-      const parsedUrl = new URL(testUrl);
+      const parsedUrl = new URL(taskUrlForUpdate);
       if (parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:") {
-        alert(`task_url(id:${pk}) update to : ${testUrl}`);
+        alert(`task_url(id:${pk}) update to : ${taskUrlForUpdate}`);
+        mutationForUpdateTaskUrlForTaskForPk.mutate({ pk, taskUrlForUpdate });
       } else {
-        alert("Invalid URL: " + testUrl);
+        alert("Invalid URL: " + taskUrlForUpdate);
         return;
       }
     } catch (error) {
-      alert("Invalid URL: " + testUrl);
+      alert("Invalid URL: " + taskUrlForUpdate);
       return;
     }
   };
@@ -494,22 +509,38 @@ function ProjectProgressDetail({}: Props): ReactElement {
                                       updateTaskUrl(index, e.target.value)
                                     }
                                   />
-                                  <InputRightAddon width={"50px"} p={0}>
-                                    <Button
-                                      colorScheme="teal"
-                                      size="sm"
-                                      width={"50px"}
-                                      height={"100%"}
-                                      variant={"outline"}
-                                      onClick={() =>
-                                        buttonHandlerForOpenTaskUrl(
-                                          taskUrl.id,
-                                          index
-                                        )
-                                      }
-                                    >
-                                      Open
-                                    </Button>
+                                  <InputRightAddon width={"80px"} p={0}>
+                                    {taskUrls[index] && taskUrls[index] !== taskUrl.task_url ? (
+                                      <Button
+                                        colorScheme="teal"
+                                        size="sm"
+                                        bg={"orange.200"}
+                                        width={"80px"}
+                                        height={"100%"}
+                                        variant={"outline"}
+                                        onClick={() =>
+                                          buttonHandlerForOpenTaskUrl(
+                                            taskUrl.id,
+                                            index
+                                          )
+                                        }
+                                      >
+                                        update
+                                      </Button>
+                                    ) : (
+                                      <Button
+                                        colorScheme="teal"
+                                        size="sm"
+                                        width={"80px"}
+                                        height={"100%"}
+                                        variant={"outline"}
+                                        onClick={() => {
+                                          alert("open button click");
+                                        }}
+                                      >
+                                        open
+                                      </Button>
+                                    )}
                                   </InputRightAddon>
                                 </InputGroup>
                               </Box>

@@ -26,8 +26,30 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
-// apiForCreateTaskUrlForTask
-export const apiForCreateTaskUrlForTask = (taskPk:any) =>
+// apiForUpdateTaskUrlForTaskForPk
+export const apiForUpdateTaskUrlForTaskForPk = ({
+  pk,
+  taskUrlForUpdate,
+}: any) => {
+  console.log("parameter check : ", pk, taskUrlForUpdate);
+
+  return instance
+    .put(
+      `/project_progress/task-url-for-task/${pk}/update`,
+      { pk, taskUrlForUpdate },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
+export const apiForCreateTaskUrlForTask = (taskPk: any) =>
   instance
     .post(
       `/project_progress/${taskPk}/create-task-urk-for-task-pk`,
