@@ -68,6 +68,8 @@ interface Props {}
 // 1122
 function ProjectProgressDetail({}: Props): ReactElement {
   const { taskPk } = useParams();
+  const [taskUrls, setTaskUrls] = useState<any>([]);
+
   const queryClient = useQueryClient();
   const toast = useToast();
 
@@ -295,30 +297,72 @@ function ProjectProgressDetail({}: Props): ReactElement {
   };
 
   // fix 0531
-  const mutationForCreateTaskUrlForTask = useMutation(apiForCreateTaskUrlForTask, {
-    onMutate: () => {
-      console.log("mutation starting");
-    },
-    onSuccess: (data) => {
-      console.log("data : ", data);
+  const mutationForCreateTaskUrlForTask = useMutation(
+    apiForCreateTaskUrlForTask,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
 
-      toast({
-        title: "Task URL 추가",
-        description: "Task URL을 추가하였습니다.",
-        status: "success",
-        duration: 2000,
-        isClosable: true,
-      });
-      // queryClient.refetchQueries(["getStudyNoteList"]);
-    },
-    onError: (error: any) => {
-      console.log("error.response : ", error.response);
-      console.log("mutation has an error", error.response.data);
-    },
-  });
+        toast({
+          title: "Task URL 추가",
+          description: "Task URL을 추가하였습니다.",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        // queryClient.refetchQueries(["getStudyNoteList"]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
 
   const handleAddTaskUrl = () => {
     mutationForCreateTaskUrlForTask.mutate(taskPk);
+  };
+
+  const updateTaskUrl = (index: number, newUrl: string) => {
+    console.log("newUrl : ", newUrl);
+
+    const updatedTaskUrls = [...taskUrls];
+    console.log("updatedTaskUrls : ", updatedTaskUrls);
+
+    updatedTaskUrls[index] = newUrl;
+
+    // console.log("updatedTaskUrls : ",updatedTaskUrls);
+
+    setTaskUrls(updatedTaskUrls);
+  };
+
+  const testUrlPatternAndUpdate = (pk: number, testUrl: string) => {
+    try {
+      const parsedUrl = new URL(testUrl);
+      if (parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:") {
+        alert(`task_url(id:${pk}) update to : ${testUrl}`);
+      } else {
+        alert("Invalid URL: " + testUrl);
+        return;
+      }
+    } catch (error) {
+      alert("Invalid URL: " + testUrl);
+      return;
+    }
+  };
+
+  const buttonHandlerForOpenTaskUrl = (pk: number, index: number) => {
+    console.log("url for update : ", taskUrls[index]);
+    const taskUrlForUpdate = taskUrls[index];
+
+    if (taskUrlForUpdate) {
+      testUrlPatternAndUpdate(pk, taskUrlForUpdate);
+    } else {
+      alert("The input hasn't been modified, so I won't perform an update");
+    }
   };
 
   // 2244
@@ -413,7 +457,14 @@ function ProjectProgressDetail({}: Props): ReactElement {
                           </Box>
                         </Box>
                         <Box>
-                          {taskData.task_urls.map((taskUrl) => (
+                          {/* {taskUrls
+                            ? taskUrls.map((row: any) => {
+                                return <Box>{row}</Box>;
+                              })
+                            : "no data"} */}
+                        </Box>
+                        <Box>
+                          {taskData.task_urls.map((taskUrl, index) => (
                             <Box
                               display="flex"
                               alignItems={"center"}
@@ -436,16 +487,26 @@ function ProjectProgressDetail({}: Props): ReactElement {
                               >
                                 <InputGroup>
                                   <Input
-                                    value={taskUrl.task_url}
+                                    defaultValue={taskUrl.task_url}
+                                    value={taskUrls[index]}
                                     width={"100%"}
+                                    onChange={(e) =>
+                                      updateTaskUrl(index, e.target.value)
+                                    }
                                   />
-                                  <InputRightAddon>
+                                  <InputRightAddon width={"50px"} p={0}>
                                     <Button
                                       colorScheme="teal"
                                       size="sm"
                                       width={"50px"}
                                       height={"100%"}
-                                      variant={"unstyled"}
+                                      variant={"outline"}
+                                      onClick={() =>
+                                        buttonHandlerForOpenTaskUrl(
+                                          taskUrl.id,
+                                          index
+                                        )
+                                      }
                                     >
                                       Open
                                     </Button>
