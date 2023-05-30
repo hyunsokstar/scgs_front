@@ -7,6 +7,7 @@ import {
   ITypeForTaskDetailUpdate,
   ITypeForTaskDetailUpdateForm,
 } from "../types/project_progress/project_progress_type";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
 import {
   Box,
@@ -40,6 +41,7 @@ import {
   InputGroup,
   InputRightElement,
   InputLeftElement,
+  InputRightAddon,
 } from "@chakra-ui/react";
 import { FaDollarSign } from "react-icons/fa";
 
@@ -366,49 +368,68 @@ function ProjectProgressDetail({}: Props): ReactElement {
                         />
                       </FormControl>
 
-                      <FormControl>
-                        <FormLabel>task_url1</FormLabel>
-                        <Box display="flex" alignItems="center">
-                          <Textarea
-                            {...register("task_url1")}
-                            placeholder="task_url1"
-                            defaultValue={taskData.task_url1}
-                            // pr="3.5rem"
-                          />
-                          <Button
-                            size="sm"
-                            bg={"blue.100"}
-                            _hover={{ bg: "rgba(207, 216, 220, 0.5)" }}
-                            variant="outline"
-                            h={"100%"}
-                            onClick={() => handleUrl1Click(taskData.task_url1)}
-                            ml={2} // 추가: 왼쪽 여백
+                      <FormControl
+                        id="task"
+                        border="0px solid green"
+                        width={"100%"}
+                      >
+                        <Box
+                          display={"flex"}
+                          justifyContent={"space-between"}
+                          alignItems={"center"}
                           >
-                            Open
-                          </Button>
+                          <FormLabel>Task Urls</FormLabel>
+                          <Box>
+                            <IconButton
+                              icon={<AddIcon />}
+                              size={"xs"}
+                              aria-label="Add Task Url"
+                              colorScheme="teal"
+                              variant="outline"
+                            />
+                          </Box>
                         </Box>
-                      </FormControl>
-
-                      <FormControl mt={4}>
-                        <FormLabel>task_url2</FormLabel>
-                        <Box display="flex" alignItems="center">
-                          <Textarea
-                            {...register("task_url2")}
-                            placeholder="task_url2"
-                            defaultValue={taskData.task_url2}
-                            // pr="3.5rem"
-                          />
-                          <Button
-                            size="sm"
-                            bg={"blue.100"}
-                            _hover={{ bg: "rgba(207, 216, 220, 0.5)" }}
-                            variant="outline"
-                            h={"100%"}
-                            onClick={() => handleUrl1Click(taskData.task_url2)}
-                            ml={2} // 추가: 왼쪽 여백
-                          >
-                            Open
-                          </Button>
+                        <Box>
+                          {taskData.task_urls.map((taskUrl) => (
+                            <Box
+                              display="flex"
+                              alignItems={"center"}
+                              width={"100%"}
+                              border={"0px solid green"}
+                              gap={2}
+                              p={1}
+                            >
+                              <IconButton
+                                icon={<MinusIcon />}
+                                size={"xs"}
+                                aria-label="Add Task Url"
+                                colorScheme="red"
+                                variant="outline"
+                              />{" "}
+                              <Box
+                                key={taskUrl.id}
+                                alignItems="center"
+                                width={"100%"}
+                              >
+                                <InputGroup>
+                                  <Input
+                                    value={taskUrl.task_url}
+                                    width={"100%"}
+                                  />
+                                  <InputRightAddon>
+                                    <Button
+                                      colorScheme="teal"
+                                      size="md"
+                                      height={"100%"}
+                                      variant={"unstyled"}
+                                    >
+                                      Open
+                                    </Button>
+                                  </InputRightAddon>
+                                </InputGroup>
+                              </Box>
+                            </Box>
+                          ))}
                         </Box>
                       </FormControl>
 

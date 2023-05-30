@@ -17,12 +17,6 @@ const DetailInfoForExtraTask: React.FC<DetailForExtraTaskProps> = ({
 
   return (
     <Box bg="green.100" p={4} borderRadius="md">
-      <Avatar
-        src={task_manager.profile_image}
-        name={task_manager.username}
-        size="md"
-      />
-      {task_manager.username}
       <UpdateFormForExtraTask extraTaskDetail={extraTaskDetail} />
     </Box>
   );

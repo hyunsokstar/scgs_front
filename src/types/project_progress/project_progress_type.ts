@@ -23,8 +23,8 @@ export interface FormTypeForExtraTask {
 export interface extra_task_row_type {
   pk: number;
   task: string;
-  task_url1:string;
-  task_url2:string;
+  task_url1: string;
+  task_url2: string;
   task_status: string;
   task_manager: {
     pk: number;
@@ -91,6 +91,13 @@ export default interface TestResultImage {
   image_url: string;
 }
 
+export type TypeForTaskUrl = {
+  id: number;
+  task: number;
+  task_url: string;
+  task_description: string;
+};
+
 export interface IOneTaskForProjectTaskType {
   pk: string;
   writer: string;
@@ -119,6 +126,7 @@ export interface IOneTaskForProjectTaskType {
   extra_tasks?: extra_task_row_type[] | undefined;
   tests_for_tasks: ItypeFortestRow[];
   task_comments: ITaskComment[];
+  task_urls: TypeForTaskUrl[];
 }
 
 interface Writer {

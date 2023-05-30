@@ -24,9 +24,48 @@ interface ICommentTextUpdateApiParameter {
   commentPk: number | string;
   commentText: string;
 }
+
 // 1122
-// apiForExtraTaskDetail
-export const apiForExtraTaskDetail = async ({ queryKey }: QueryFunctionContext) => {
+// apiForUpdateExtraTask
+export const apiForUpdateExtraTask = ({
+  pk,
+  task,
+  task_manager,
+  task_status,
+  task_url1,
+  task_url2,
+}: any) => {
+  console.log(
+    "parameter to backend :: ",
+    pk,
+    task,
+    task_manager,
+    task_status,
+    task_url1,
+    task_url2
+  );
+
+  const payload = {
+    pk,
+    task,
+    task_manager,
+    task_status,
+    task_url1,
+    task_url2,
+  };
+
+  return instance
+    .put(`/project_progress/extra_tasks/${pk}`, payload, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+export const apiForExtraTaskDetail = async ({
+  queryKey,
+}: QueryFunctionContext) => {
   const [_, ExtraTaskDetailPk] = queryKey;
   // console.log("roomPestimatePk : ", taskPk);
   return await instance
@@ -222,7 +261,6 @@ export const update_task_for_is_task_for_urgent = (taskPk: string) => {
       return response.data;
     });
 };
-
 
 // data_for_completed_tasks_for_pie_chart
 export const getDataForTaskStaticsForIsCompleted = () => {
@@ -496,8 +534,6 @@ export const getProgectTasksStatusData = ({
 };
 
 // 1122
-
-
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const updateProjectApiByPk = ({
