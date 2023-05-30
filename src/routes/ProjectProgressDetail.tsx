@@ -44,16 +44,11 @@ import {
   InputRightAddon,
 } from "@chakra-ui/react";
 import { FaDollarSign } from "react-icons/fa";
-
 import { useForm } from "react-hook-form";
-// import Calendar from "react-calendar";
-// import "react-calendar/dist/Calendar.css";
-
-// 달력 관련
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
-
 import {
+  apiForCreateTaskUrlForTask,
   createRefImageForTask,
   deleteOneRefImageForTask,
   updateProjectApiByPk,
@@ -70,8 +65,10 @@ import ChatStyleBoard from "../components/ChatStyleBoard";
 
 interface Props {}
 
+// 1122
 function ProjectProgressDetail({}: Props): ReactElement {
   const { taskPk } = useParams();
+  const queryClient = useQueryClient();
   const toast = useToast();
 
   const {
@@ -82,12 +79,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
     ["getOneProjectTask", taskPk, "ProjectProgressDetail"],
     getOneProjectTask
   );
-
-  if (taskData) {
-    // console.log("taskData: ", taskData);
-  } else {
-    // console.log("extra_tasks 없음");
-  }
 
   const [submitting, setSubmitting] = useState(false);
   const { register, handleSubmit, watch, reset } =
@@ -259,7 +250,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
     getImageUploadUrlMutation.mutate();
   };
 
-  // 1122
   const deleteRefImageMutation = useMutation(
     (lef_image_pk: number) => {
       return deleteOneRefImageForTask(lef_image_pk);
@@ -273,8 +263,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
         if (taskDetailRefatch) {
           taskDetailRefatch();
         }
-        // queryClient.refetchQueries(["getUnompletedTaskList"]);
-        // queryClient.refetchQueries(["getCompletedTaskList"]);
         toast({
           title: "delete project task 성공!",
           status: "success",
@@ -306,6 +294,34 @@ function ProjectProgressDetail({}: Props): ReactElement {
     window.open(task_url2, "_blank");
   };
 
+  // fix 0531
+  const mutationForCreateTaskUrlForTask = useMutation(apiForCreateTaskUrlForTask, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
+
+      toast({
+        title: "Task URL 추가",
+        description: "Task URL을 추가하였습니다.",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+      // queryClient.refetchQueries(["getStudyNoteList"]);
+    },
+    onError: (error: any) => {
+      console.log("error.response : ", error.response);
+      console.log("mutation has an error", error.response.data);
+    },
+  });
+
+  const handleAddTaskUrl = () => {
+    mutationForCreateTaskUrlForTask.mutate(taskPk);
+  };
+
+  // 2244
   if (isLoadingForTaskData) {
     return <Box>Loading</Box>;
   }
@@ -377,7 +393,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                           display={"flex"}
                           justifyContent={"space-between"}
                           alignItems={"center"}
-                          >
+                        >
                           <FormLabel>Task Urls</FormLabel>
                           <Box>
                             <IconButton
@@ -386,6 +402,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
                               aria-label="Add Task Url"
                               colorScheme="teal"
                               variant="outline"
+                              onClick={() => {
+                                if (
+                                  window.confirm("Task URL을 추가하시겠습니까?")
+                                ) {
+                                  handleAddTaskUrl();
+                                }
+                              }}
                             />
                           </Box>
                         </Box>
@@ -419,7 +442,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
                                   <InputRightAddon>
                                     <Button
                                       colorScheme="teal"
-                                      size="md"
+                                      size="sm"
+                                      width={"50px"}
                                       height={"100%"}
                                       variant={"unstyled"}
                                     >

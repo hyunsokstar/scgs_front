@@ -253,6 +253,7 @@ export interface ITypeForTaskDetailUpdateForm {
   is_urgent_request: boolean;
   task_url1: string;
   task_url2: string;
+  // task_urls: { task_url: string }[];
 }
 
 export interface IUserNamesForSelectOption {

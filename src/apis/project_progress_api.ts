@@ -26,7 +26,20 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
-// apiForUpdateExtraTask
+// apiForCreateTaskUrlForTask
+export const apiForCreateTaskUrlForTask = (taskPk:any) =>
+  instance
+    .post(
+      `/project_progress/${taskPk}/create-task-urk-for-task-pk`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForUpdateExtraTask = ({
   pk,
   task,
