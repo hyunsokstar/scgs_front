@@ -22,6 +22,7 @@ const DetailInfoForExtraTask: React.FC<DetailForExtraTaskProps> = ({
         name={task_manager.username}
         size="md"
       />
+      {task_manager.username}
       <UpdateFormForExtraTask extraTaskDetail={extraTaskDetail} />
     </Box>
   );

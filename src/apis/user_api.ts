@@ -134,7 +134,6 @@ export const getUsersList = () =>
 
 export const getUserNamesForCreate = () =>
   instance.get("users/only-user-name").then((response) => {
-    // console.log("user list response : ", response);
     return response.data;
   });
 

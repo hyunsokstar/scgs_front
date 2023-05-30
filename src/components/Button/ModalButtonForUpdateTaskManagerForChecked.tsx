@@ -168,6 +168,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
                     </option>
                   ))}
                 </Select>
+                
                 <Button
                   name="confirm"
                   onClick={updateTaskManagerForCheckedTasks}
