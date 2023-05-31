@@ -113,10 +113,10 @@ export const apiForUpdateExtraTask = ({
 export const apiForExtraTaskDetail = async ({
   queryKey,
 }: QueryFunctionContext) => {
-  const [_, ExtraTaskDetailPk] = queryKey;
+  const [_, ExtraTaskPk] = queryKey;
   // console.log("roomPestimatePk : ", taskPk);
   return await instance
-    .get(`project_progress/extra_tasks/${ExtraTaskDetailPk}`)
+    .get(`project_progress/extra_tasks/${ExtraTaskPk}`)
     .then((response) => response.data);
 };
 

@@ -116,24 +116,7 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
               borderColor="gray.400"
             />
           </FormControl>
-          <FormControl>
-            <FormLabel>task_url1</FormLabel>
-            <Textarea
-              placeholder="Task URL 1"
-              defaultValue={task_url1}
-              {...register("task_url1")}
-              borderColor="gray.400"
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>task_url2</FormLabel>
-            <Textarea
-              placeholder="task_url2"
-              defaultValue={task_url2}
-              {...register("task_url2")}
-              borderColor="gray.400"
-            />
-          </FormControl>
+          test urls for extra task detail info
 
           <FormControl>
             <FormLabel>task_status</FormLabel>

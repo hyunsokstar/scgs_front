@@ -8,13 +8,13 @@ import DetailInfoForExtraTask from "../components/DetailInfoForExtraTask";
 interface Props {}
 
 const ExtraTaskDetailPage = (props: Props) => {
-  let { taskPk: ExtraTaskDetailPk } = useParams();
+  let { taskPk: ExtraTaskPk } = useParams();
   const {
     data: dataForExtraTaskDetail,
     isLoading: isLoadingForExtraTaskDetail,
     refetch: refetchForExtraTaskDetail,
   } = useQuery<any>(
-    ["apiForExtraTaskDetail", ExtraTaskDetailPk],
+    ["apiForExtraTaskDetail", ExtraTaskPk],
     apiForExtraTaskDetail
   );
   console.log("dataForExtraTaskDetail : ", dataForExtraTaskDetail);
