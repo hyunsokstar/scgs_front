@@ -49,6 +49,7 @@ import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import {
   apiForCreateTaskUrlForTask,
+  apiForDeleteTaskUrlForTaskWithPk,
   apiForUpdateTaskUrlForTaskForPk,
   createRefImageForTask,
   deleteOneRefImageForTask,
@@ -267,7 +268,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           taskDetailRefatch();
         }
         toast({
-          title: "delete project task 성공!",
+          title: "delete task url success !",
           status: "success",
         });
       },
@@ -285,19 +286,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
     deleteRefImageMutation.mutate(lef_image_pk);
   };
 
-  const createTestHandler = () => {
-    console.log("create test button click");
-  };
-
-  const handleUrl1Click = (task_url1: string) => {
-    window.open(task_url1, "_blank");
-  };
-
-  const handleUrl2Click = (task_url2: string) => {
-    window.open(task_url2, "_blank");
-  };
-
-  // fix 0531
   const mutationForCreateTaskUrlForTask = useMutation(
     apiForCreateTaskUrlForTask,
     {
@@ -314,7 +302,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           duration: 2000,
           isClosable: true,
         });
-        // queryClient.refetchQueries(["getStudyNoteList"]);
+        // queryClient.refetchQueries(["getOneProjectTask"]);
       },
       onError: (error: any) => {
         console.log("error.response : ", error.response);
@@ -343,7 +331,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
       onSuccess: (result: any) => {
         console.log("result : ", result);
         // queryClient.refetchQueries(["getCompletedTaskListForTester"]);
-        setTaskUrls([])
+        setTaskUrls([]);
         toast({
           status: "success",
           title: "task url update success",
@@ -357,7 +345,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
     try {
       const parsedUrl = new URL(taskUrlForUpdate);
       if (parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:") {
-        alert(`task_url(id:${pk}) update to : ${taskUrlForUpdate}`);
+        // alert(`task_url(id:${pk}) update to : ${taskUrlForUpdate}`);
         mutationForUpdateTaskUrlForTaskForPk.mutate({ pk, taskUrlForUpdate });
       } else {
         alert("Invalid URL: " + taskUrlForUpdate);
@@ -367,6 +355,34 @@ function ProjectProgressDetail({}: Props): ReactElement {
       alert("Invalid URL: " + taskUrlForUpdate);
       return;
     }
+  };
+
+  // fix 0531
+  // const mutationForDeleteTaskUrlForTaskWithPk = useMutation(
+  const mutationForDeleteTaskUrlForTaskWithPk = useMutation(
+    (pk: string | number) => {
+      return apiForDeleteTaskUrlForTaskWithPk(pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["getOneProjectTask"]);
+
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  // fix 0531
+  const buttonHandlerForDeleteTaskUrl = (pk: number) => {
+    mutationForDeleteTaskUrlForTaskWithPk.mutate(pk);
   };
 
   const buttonHandlerForOpenTaskUrl = (pk: number, index: number) => {
@@ -494,6 +510,9 @@ function ProjectProgressDetail({}: Props): ReactElement {
                                 aria-label="Add Task Url"
                                 colorScheme="red"
                                 variant="outline"
+                                onClick={() =>
+                                  buttonHandlerForDeleteTaskUrl(taskUrl.id)
+                                }
                               />{" "}
                               <Box
                                 key={taskUrl.id}
@@ -510,7 +529,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
                                     }
                                   />
                                   <InputRightAddon width={"80px"} p={0}>
-                                    {taskUrls[index] && taskUrls[index] !== taskUrl.task_url ? (
+                                    {taskUrls[index] &&
+                                    taskUrls[index] !== taskUrl.task_url ? (
                                       <Button
                                         colorScheme="teal"
                                         size="sm"

@@ -26,7 +26,19 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
-// apiForUpdateTaskUrlForTaskForPk
+// apiForDeleteTaskUrlForTaskWithPk
+export const apiForDeleteTaskUrlForTaskWithPk = (project_pk: string | number) => {
+  console.log("estimatePk : ", project_pk);
+  
+  return instance
+    .delete(`project_progress/task-url-for-task/${project_pk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForUpdateTaskUrlForTaskForPk = ({
   pk,
   taskUrlForUpdate,
@@ -568,7 +580,6 @@ export const getProgectTasksStatusData = ({
   });
 };
 
-// 1122
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const updateProjectApiByPk = ({
