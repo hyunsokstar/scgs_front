@@ -25,7 +25,6 @@ import { AddIcon } from "@chakra-ui/icons";
 import { FaTimes } from "react-icons/fa";
 import Datetime from "react-datetime";
 
-
 interface props {
   handleAddTaskUrl: any;
   taskData: any;
@@ -46,9 +45,9 @@ interface props {
   setIsHovering: any;
   isHovering: any;
   register: any;
-  handleSubmit:any,
-  onSubmit:any
-  delete_lef_image_handler: any
+  handleSubmit: any;
+  onSubmit: any;
+  delete_lef_image_handler: any;
 }
 
 const UpdateFormForTaskDetail = ({
@@ -73,22 +72,22 @@ const UpdateFormForTaskDetail = ({
   register,
   handleSubmit,
   delete_lef_image_handler,
-  onSubmit
+  onSubmit,
 }: props) => {
   return (
     <Box>
-      <Box width={"100%"} height={"100%"} border="1px solid orange">
+      <Box width={"100%"} height={"100%"} border="0px solid orange">
         <Box display={"flex"}>
           <Box
             flex="5"
             bg="white"
-            border="5px solid black"
+            border={"1px solid black"}
             height={"618px"}
             px={2}
             overflowY={"scroll"}
           >
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Box display={"flex"} flexDirection={"column"} w={"100%"}>
+              <Box display={"flex"} flexDirection={"column"} w={"100%"} gap={3}>
                 <FormControl id="writer" isRequired>
                   <FormLabel>Writer</FormLabel>
                   <Input
@@ -127,13 +126,18 @@ const UpdateFormForTaskDetail = ({
                   />
                 </FormControl>
 
-                <FormControl id="task" border="0px solid green" width={"100%"}>
+                <FormControl
+                  id="task"
+                  border="0px solid green"
+                  width={"100%"}
+                  my={2}
+                >
                   <Box
                     display={"flex"}
                     justifyContent={"space-between"}
                     alignItems={"center"}
                   >
-                    <FormLabel>Task Urls</FormLabel>
+                    <FormLabel>Task(main) Urls</FormLabel>
                     <Box>
                       <IconButton
                         icon={<AddIcon />}
@@ -185,8 +189,8 @@ const UpdateFormForTaskDetail = ({
                   </RadioGroup>
                 </FormControl>
 
-                <FormControl id="task_completed">
-                  <FormLabel>Task Completed</FormLabel>
+                <FormControl id="task_completed" display={"flex"} gap={2}>
+                  <FormLabel>Task Completed:</FormLabel>
                   <Checkbox
                     defaultChecked={taskData.task_completed}
                     {...register("task_completed")}
@@ -338,4 +342,3 @@ const UpdateFormForTaskDetail = ({
 };
 
 export default UpdateFormForTaskDetail;
-

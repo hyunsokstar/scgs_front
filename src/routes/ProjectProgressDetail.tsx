@@ -9,8 +9,7 @@ import {
 } from "../types/project_progress/project_progress_type";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
-import { Box, useToast } from "@chakra-ui/react";
-import { FaDollarSign } from "react-icons/fa";
+import { Box, useToast, Heading, Text } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
@@ -271,7 +270,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           duration: 2000,
           isClosable: true,
         });
-        // queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["getOneProjectTask"]);
       },
       onError: (error: any) => {
         console.log("error.response : ", error.response);
@@ -299,7 +298,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        // queryClient.refetchQueries(["getCompletedTaskListForTester"]);
+        queryClient.refetchQueries(["getOneProjectTask"]);
         setTaskUrls([]);
         toast({
           status: "success",
@@ -381,11 +380,14 @@ function ProjectProgressDetail({}: Props): ReactElement {
         {/* 최상단 box */}
         <Box
           display={"flex"}
-          border={"0px solid purple"}
+          border={"1px solid black"}
           width="100%"
-          height={"620px"}
+          height={"643px"}
         >
-          <Box width={"50%"}>
+          <Box width={"50%"} border={"1px solid black"}>
+            <Box>
+              <Heading size="md">Update Form For Task Detail</Heading>
+            </Box>
             <UpdateFormForTaskDetail
               handleAddTaskUrl={handleAddTaskUrl}
               taskData={taskData}
@@ -413,19 +415,18 @@ function ProjectProgressDetail({}: Props): ReactElement {
           </Box>
 
           <Box width={"50%"}>
+            <Box width={"100%"} border={"1px solid green"}>
+              <Heading size="md">Briefing Board</Heading>
+            </Box>{" "}
             <Box
               display={"flex"}
               flexDirection={"column"}
               justifyContent={"flex-start"}
               width="100%"
               height="620px"
-              mb={2}
+              mb={0}
               px={2}
-              border={"1px solid green"}
             >
-              <Box width={"100%"} mt={1} mb={5}>
-                Briefing Board
-              </Box>{" "}
               <Box width={"100%"} height={"100%"} border={"0px solid red"}>
                 {!isCheckedForShowTechNote ? (
                   <ChatStyleBoard
@@ -442,8 +443,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
         </Box>
 
         <br />
+        <br />
 
-        <Box>테스트 리스트 (테스트 체킹은 로그인 필요)</Box>
+        <Box fontSize={"20px"}>
+          <Text fontFamily="Arial, sans-serif">
+            테스트 리스트 (테스트 체킹은 로그인 필요)
+          </Text>
+        </Box>
         <Box bg={"white"} width={"100%"} border={"1px solid black"}>
           <Box
             display={"flex"}
@@ -463,15 +469,20 @@ function ProjectProgressDetail({}: Props): ReactElement {
         </Box>
 
         <br />
-        <Box>부가 업무 리스트</Box>
-        <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
+
+        <Box
+          display={"flex"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          fontSize="20px"
+        >
+          <Box fontFamily="Arial, sans-serif">부가 업무 리스트</Box>
           <ModalButtonForExtraTask taskPk={taskPk} />
-          <ExtraTasksTable
-            extra_tasks={taskData.extra_tasks}
-            orginal_task_pk={taskPk}
-          />
         </Box>
-        
+        <ExtraTasksTable
+          extra_tasks={taskData.extra_tasks}
+          orginal_task_pk={taskPk}
+        />
       </Box>
     );
   }

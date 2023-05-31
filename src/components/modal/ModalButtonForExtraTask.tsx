@@ -106,7 +106,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({ taskPk }: IProps) => {
 
   return (
     <>
-      <Flex justifyContent={"space-between"} p={2} mb={2}>
+      <Flex justifyContent={"space-between"} p={1}>
         <Box display={"flex"} justifyContent={"flex-end"} width={"100%"}>
           <Button
             variant="outline"

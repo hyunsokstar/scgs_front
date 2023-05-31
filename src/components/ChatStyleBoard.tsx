@@ -283,7 +283,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
 
   return (
     <Box>
-      <Box border={"0px solid green"} mb={2}>
+      <Box border={"0px solid green"} mb={1}>
         <HStack spacing={1}>
           <Button
             leftIcon={<FaCheckSquare />}
@@ -322,7 +322,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
         borderRadius="lg"
         border="2px solid gray"
         width="100%"
-        height={"480px"}
+        height={"538px"}
         overflowY={"scroll"}
         gap={2}
       >
@@ -337,13 +337,14 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
           />
         ))}
       </Flex>
+      
       <Box mt={"3.6px"} px={0} border={"0px solid green"}>
         <Box
           display={"flex"}
           border={"0px solid green"}
           gap={1}
           width={"100%"}
-          mt={"2px"}
+          mt={"6px"}
           px={"1px"}
         >
           <Input
@@ -352,7 +353,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             borderWidth="2px"
             borderColor="purple.100"
             size="md"
-            height={"37px"}
+            height={"38px"}
             border={"1px solid purple"}
             width={"100%"}
             _hover={{

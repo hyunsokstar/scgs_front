@@ -265,7 +265,7 @@ function TestListForTaskDetail({ testData }: IPropsForTestListForTaskDetail) {
   // console.log("testData : ", testData);
 
   return (
-    <List spacing={3} height="240px" overflowY="auto">
+    <List spacing={3} height="200px" overflowY="auto">
       {testData?.map((row) => (
         <DataItem
           pk={row.pk}
