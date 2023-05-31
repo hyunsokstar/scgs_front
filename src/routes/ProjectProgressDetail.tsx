@@ -395,7 +395,10 @@ function ProjectProgressDetail({}: Props): ReactElement {
       alert("The input hasn't been modified, so I won't perform an update");
     }
   };
-
+  const handlerForOpenUrl = (url:string) => {
+    window.open(url, "_blank");
+  };
+  
   // 2244
   if (isLoadingForTaskData) {
     return <Box>Loading</Box>;
@@ -554,9 +557,9 @@ function ProjectProgressDetail({}: Props): ReactElement {
                                         width={"80px"}
                                         height={"100%"}
                                         variant={"outline"}
-                                        onClick={() => {
-                                          alert("open button click");
-                                        }}
+                                        onClick={() =>
+                                          handlerForOpenUrl(taskUrl.task_url)
+                                        }
                                       >
                                         open
                                       </Button>
