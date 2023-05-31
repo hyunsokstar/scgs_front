@@ -11,11 +11,13 @@ import {
   Img,
   Text,
   Spinner,
+  useToast
 } from "@chakra-ui/react";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getUploadURL, uploadImage } from "../../api";
 import { createTestResultImageForTest } from "../../apis/project_progress_api";
+import { upload } from "@testing-library/user-event/dist/upload";
 
 interface IProps {
   testPk: string | number;
@@ -26,6 +28,7 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [imageToUpload, setImageToUpload] = useState<any>("");
   const [urlToImageUpload, setUrlToImageUpload] = useState<any>();
+  const toast = useToast();
 
   // 0407 st2
   const [imageFileToUpload, setImageFileToUpload] = useState<any>();
@@ -64,12 +67,12 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
         //   setIsUploadingForRefImage(false);
         //   taskDetailRefatch();
 
-        //   toast({
-        //     status: "success",
-        //     title: "Profile Image uploaded!",
-        //     isClosable: true,
-        //     description: "Feel free to upload more images.",
-        //   });
+          toast({
+            status: "success",
+            title: "Profile Image uploaded!",
+            isClosable: true,
+            description: "Feel free to upload more images.",
+          });
       },
     }
   );
@@ -79,8 +82,8 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
     onSuccess: ({ result }: any) => {
       console.log("result : ", result.variants[0]);
       const uploaded_image = result.variants[0];
-
-      //   alert(uploaded_image);
+      console.log("uploaded_image ::::::: ", uploaded_image);
+      
 
       mutationForcreateTestResultImageForTest.mutate({
         testPk,
@@ -92,7 +95,7 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
   // 0407 st3
   const getImageUploadUrlMutation = useMutation(getUploadURL, {
     onSuccess: (data: any) => {
-      // console.log("data : ", data);
+      console.log("data : ", data);
       setUrlToImageUpload(data.uploadURL);
     },
   });

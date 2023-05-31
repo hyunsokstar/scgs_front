@@ -23,6 +23,7 @@ interface FormData {
   pk?: string;
   task_manager?: any;
   task?: string;
+  task_urls?: string;
   task_url1?: string;
   task_url2?: string;
   task_status?: string;
@@ -37,6 +38,7 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
     pk,
     task_manager,
     task,
+    task_urls,
     task_url1,
     task_url2,
     task_status,
@@ -117,6 +119,7 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
             />
           </FormControl>
           test urls for extra task detail info
+          {/* fix 0601 */}
 
           <FormControl>
             <FormLabel>task_status</FormLabel>

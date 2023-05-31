@@ -9,40 +9,7 @@ import {
 } from "../types/project_progress/project_progress_type";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  Radio,
-  Button,
-  Input,
-  HStack,
-  VStack,
-  Flex,
-  Text,
-  useToast,
-  Checkbox,
-  Image,
-  IconButton,
-  Spinner,
-  Container,
-  List,
-  ListItem,
-  ListIcon,
-  Textarea,
-  Heading,
-  Switch,
-  Spacer,
-  Table,
-  Tbody,
-  Tr,
-  Td,
-  InputGroup,
-  InputRightElement,
-  InputLeftElement,
-  InputRightAddon,
-} from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
 import { FaDollarSign } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import Datetime from "react-datetime";
@@ -64,6 +31,8 @@ import ModalButtonForCreateTest from "../components/modal/ModalButtonForCreateTe
 import TableForTechNote from "../components/Table/TableForTechNote";
 import ModalButtonForCreateTechNoteList from "../components/modal/ModalButtonForCreateTechNoteList";
 import ChatStyleBoard from "../components/ChatStyleBoard";
+import InputListForTaskUrlsForTask from "../components/List/InputListForTaskUrlsForTask";
+import UpdateFormForTaskDetail from "../components/Form/UpdateFormForTaskDetail";
 
 interface Props {}
 
@@ -395,10 +364,10 @@ function ProjectProgressDetail({}: Props): ReactElement {
       alert("The input hasn't been modified, so I won't perform an update");
     }
   };
-  const handlerForOpenUrl = (url:string) => {
+  const handlerForOpenUrl = (url: string) => {
     window.open(url, "_blank");
   };
-  
+
   // 2244
   if (isLoadingForTaskData) {
     return <Box>Loading</Box>;
@@ -408,377 +377,44 @@ function ProjectProgressDetail({}: Props): ReactElement {
     return <Box>Loading..</Box>;
   } else {
     return (
-      <VStack>
-        <Flex border={"0px solid purple"} width="100%" height={"620px"}>
-          <VStack width={"50%"} border={"1px solid black"} pt={0}>
-            {/* 상단 상자 추가 */}
-            <Box width={"100%"} height={"100%"} border="1px solid orange">
-              <Flex>
-                <Box
-                  flex="5"
-                  bg="white"
-                  border="5px solid black"
-                  height={"618px"}
-                  px={2}
-                  overflowY={"scroll"}
-                >
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <VStack w={"100%"}>
-                      <FormControl id="writer" isRequired>
-                        <FormLabel>Writer</FormLabel>
-                        <Input
-                          defaultValue={
-                            taskData.task_manager
-                              ? taskData.task_manager.username
-                              : taskData.writer
-                          }
-                          width="50%" // width를 50%로 설정하여 너비 반으로 줄임
-                          {...register("writer")}
-                          size="md"
-                        />
-                      </FormControl>
-
-                      <FormControl id="task" isRequired>
-                        <FormLabel>Task</FormLabel>
-                        <Input
-                          {...register("task")}
-                          size="md"
-                          defaultValue={taskData.task}
-                        />
-                      </FormControl>
-
-                      <FormControl
-                        id="task"
-                        isRequired
-                        border="0px solid green"
-                        width={"100%"}
-                      >
-                        <FormLabel>Task Description</FormLabel>
-                        <Textarea
-                          {...register("task_description")}
-                          size="md"
-                          height={"200px"}
-                          defaultValue={taskData.task_description}
-                        />
-                      </FormControl>
-
-                      <FormControl
-                        id="task"
-                        border="0px solid green"
-                        width={"100%"}
-                      >
-                        <Box
-                          display={"flex"}
-                          justifyContent={"space-between"}
-                          alignItems={"center"}
-                        >
-                          <FormLabel>Task Urls</FormLabel>
-                          <Box>
-                            <IconButton
-                              icon={<AddIcon />}
-                              size={"xs"}
-                              aria-label="Add Task Url"
-                              colorScheme="teal"
-                              variant="outline"
-                              onClick={() => {
-                                if (
-                                  window.confirm("Task URL을 추가하시겠습니까?")
-                                ) {
-                                  handleAddTaskUrl();
-                                }
-                              }}
-                            />
-                          </Box>
-                        </Box>
-                        <Box>
-                          {/* {taskUrls
-                            ? taskUrls.map((row: any) => {
-                                return <Box>{row}</Box>;
-                              })
-                            : "no data"} */}
-                        </Box>
-                        <Box>
-                          {taskData.task_urls.map((taskUrl, index) => (
-                            <Box
-                              display="flex"
-                              alignItems={"center"}
-                              width={"100%"}
-                              border={"0px solid green"}
-                              gap={2}
-                              p={1}
-                            >
-                              <IconButton
-                                icon={<MinusIcon />}
-                                size={"xs"}
-                                aria-label="Add Task Url"
-                                colorScheme="red"
-                                variant="outline"
-                                onClick={() =>
-                                  buttonHandlerForDeleteTaskUrl(taskUrl.id)
-                                }
-                              />{" "}
-                              <Box
-                                key={taskUrl.id}
-                                alignItems="center"
-                                width={"100%"}
-                              >
-                                <InputGroup>
-                                  <Input
-                                    defaultValue={taskUrl.task_url}
-                                    value={taskUrls[index]}
-                                    width={"100%"}
-                                    onChange={(e) =>
-                                      updateTaskUrl(index, e.target.value)
-                                    }
-                                  />
-                                  <InputRightAddon width={"80px"} p={0}>
-                                    {taskUrls[index] &&
-                                    taskUrls[index] !== taskUrl.task_url ? (
-                                      <Button
-                                        colorScheme="teal"
-                                        size="sm"
-                                        bg={"orange.200"}
-                                        width={"80px"}
-                                        height={"100%"}
-                                        variant={"outline"}
-                                        onClick={() =>
-                                          buttonHandlerForOpenTaskUrl(
-                                            taskUrl.id,
-                                            index
-                                          )
-                                        }
-                                      >
-                                        update
-                                      </Button>
-                                    ) : (
-                                      <Button
-                                        colorScheme="teal"
-                                        size="sm"
-                                        width={"80px"}
-                                        height={"100%"}
-                                        variant={"outline"}
-                                        onClick={() =>
-                                          handlerForOpenUrl(taskUrl.task_url)
-                                        }
-                                      >
-                                        open
-                                      </Button>
-                                    )}
-                                  </InputRightAddon>
-                                </InputGroup>
-                              </Box>
-                            </Box>
-                          ))}
-                        </Box>
-                      </FormControl>
-
-                      <FormControl id="importance" isRequired>
-                        <FormLabel>Importance</FormLabel>
-                        <RadioGroup
-                          defaultValue={taskData.importance.toString()}
-                        >
-                          <HStack spacing="24px">
-                            <Radio
-                              value="1"
-                              {...register("importance")}
-                              size="lg"
-                            >
-                              1
-                            </Radio>
-                            <Radio
-                              value="2"
-                              {...register("importance")}
-                              size="lg"
-                            >
-                              2
-                            </Radio>
-                            <Radio
-                              value="3"
-                              {...register("importance")}
-                              size="lg"
-                            >
-                              3
-                            </Radio>
-                            <Radio
-                              value="4"
-                              {...register("importance")}
-                              size="lg"
-                            >
-                              4
-                            </Radio>
-                            <Radio
-                              value="5"
-                              {...register("importance")}
-                              size="lg"
-                            >
-                              5
-                            </Radio>
-                          </HStack>
-                        </RadioGroup>
-                      </FormControl>
-
-                      <FormControl id="task_completed">
-                        <FormLabel>Task Completed</FormLabel>
-                        <Checkbox
-                          defaultChecked={taskData.task_completed}
-                          {...register("task_completed")}
-                        />
-                      </FormControl>
-
-                      <Box pl={5} border="0px solid blue">
-                        <Table w="100%">
-                          <Tbody>
-                            <Tr borderBottom="1px" borderColor="gray.200">
-                              <Td w="50%">
-                                <Text>시작:</Text>
-                                <Datetime
-                                  isValidDate={invalidDateForStartedAt}
-                                  onChange={handleChangeForStartedAt}
-                                  initialValue={
-                                    taskData.started_at
-                                      ? new Date(taskData.started_at)
-                                      : new Date()
-                                  }
-                                />
-                              </Td>
-                              <Td w="50%">
-                                <Text>마감:</Text>
-                                <Datetime
-                                  isValidDate={invalidDateForCompletedAt}
-                                  onChange={handleChangeForStartedAt}
-                                  initialValue={
-                                    taskData.started_at
-                                      ? new Date(taskData.started_at)
-                                      : new Date()
-                                  }
-                                />
-                              </Td>
-                            </Tr>
-                            <Tr>
-                              <Td w="50%">is_task_for_help</Td>
-                              <Td w="50%">
-                                <Checkbox
-                                  colorScheme="red"
-                                  defaultChecked={taskData.is_urgent_request}
-                                  size={"lg"}
-                                  {...register("is_urgent_request")}
-                                >
-                                  <Text
-                                    ml="2"
-                                    fontSize="md"
-                                    fontWeight="semibold"
-                                  >
-                                    긴급
-                                  </Text>
-                                </Checkbox>
-                              </Td>
-                            </Tr>
-                          </Tbody>
-                        </Table>
-                      </Box>
-                      <Spacer />
-                      <Button
-                        type="submit"
-                        mt={"20px"}
-                        isLoading={submitting}
-                        loadingText="Submitting..."
-                        size="md"
-                        mb={10}
-                        width="100%"
-                        variant="outline"
-                        _hover={{
-                          backgroundColor: "gray.100",
-                          borderColor: "blue.200",
-                        }}
-                        colorScheme="purple"
-                      >
-                        Submit
-                      </Button>
-                      <Spacer />
-                    </VStack>
-                  </form>
-                </Box>
-
-                <Box>
-                  {isUploadingForRefImage && (
-                    <Spinner size="md" color="blue.1000" />
-                  )}
-                </Box>
-                <VStack flex="3" border="0px solid green">
-                  <Box
-                    width={"100%"}
-                    overflowY="scroll"
-                    height={"618px"}
-                    onDragOver={handleDragOver}
-                    onDragLeave={handleDragLeave}
-                    onDrop={handleDrop}
-                    border={"1px solid green"}
-                  >
-                    {refer_images && refer_images.length ? (
-                      refer_images.map((row: any) => {
-                        // console.log("row : ", row);
-                        // return <Image src={row.image_url} height={"200px"} width={"100%"}/>;
-                        return (
-                          <a
-                            href={row.image_url}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            <Box
-                              position="relative"
-                              zIndex="2"
-                              paddingY={0}
-                              _hover={{ border: "skyblue", opacity: 0.7 }}
-                              onMouseEnter={() => setIsHovering(true)}
-                              onMouseLeave={() => setIsHovering(false)}
-                            >
-                              <IconButton
-                                icon={
-                                  <Box display="flex" justifyContent="center">
-                                    <FaTimes />
-                                  </Box>
-                                }
-                                position="absolute"
-                                top={"8px"}
-                                mt={0}
-                                mr={2}
-                                right={0}
-                                size="sm"
-                                // bg="transparent"
-                                zIndex={10}
-                                // _hover={{ bg: "lightblue" }}
-                                // _active={{ bg: "transparent" }}
-                                // _focus={{ outline: "none" }}
-                                display={isHovering ? "block" : "none"} // display 속성을 이용하여 보이기/숨기기를 조작합니다.
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  // alert("삭제 버튼 클릭 : "+ row.pk);
-                                  delete_lef_image_handler(row.pk);
-                                }}
-                                aria-label={""}
-                              />
-                              <Image
-                                src={row.image_url}
-                                height={"200px"}
-                                width={"100%"}
-                              />
-                            </Box>
-                          </a>
-                        );
-                      })
-                    ) : (
-                      <Box>
-                        <Text>참고 이미지(드래그앤 드롭 가능)</Text>
-                      </Box>
-                    )}
-                  </Box>
-                </VStack>
-              </Flex>
-            </Box>{" "}
-          </VStack>
+      <Box>
+        {/* 최상단 box */}
+        <Box
+          display={"flex"}
+          border={"0px solid purple"}
+          width="100%"
+          height={"620px"}
+        >
+          <Box width={"50%"}>
+            <UpdateFormForTaskDetail
+              handleAddTaskUrl={handleAddTaskUrl}
+              taskData={taskData}
+              taskUrls={taskUrls}
+              updateTaskUrl={updateTaskUrl}
+              buttonHandlerForDeleteTaskUrl={buttonHandlerForDeleteTaskUrl}
+              buttonHandlerForOpenTaskUrl={buttonHandlerForOpenTaskUrl}
+              handlerForOpenUrl={handlerForOpenUrl}
+              invalidDateForStartedAt={invalidDateForStartedAt}
+              handleChangeForStartedAt={handleChangeForStartedAt}
+              invalidDateForCompletedAt={invalidDateForCompletedAt}
+              submitting={submitting}
+              isUploadingForRefImage={isUploadingForRefImage}
+              handleDragOver={handleDragOver}
+              handleDragLeave={handleDragLeave}
+              handleDrop={handleDrop}
+              refer_images={refer_images}
+              setIsHovering={setIsHovering}
+              isHovering={isHovering}
+              register={register}
+              handleSubmit={handleSubmit}
+              onSubmit={onSubmit}
+              delete_lef_image_handler={delete_lef_image_handler}
+            />
+          </Box>
 
           <Box width={"50%"}>
-            <Flex
+            <Box
+              display={"flex"}
               flexDirection={"column"}
               justifyContent={"flex-start"}
               width="100%"
@@ -788,21 +424,9 @@ function ProjectProgressDetail({}: Props): ReactElement {
               border={"1px solid green"}
             >
               <Box width={"100%"} mt={1} mb={5}>
-                {/* <FormControl display="flex" alignItems="center">
-                  <FormLabel htmlFor="my-switch" mb="0">
-                    Mode Changes(Comment or tech Note)
-                  </FormLabel>
-                  <Switch
-                    isChecked={isCheckedForShowTechNote}
-                    onChange={handleChange}
-                    size="lg"
-                    colorScheme="green"
-                  />{" "}
-                </FormControl> */}
                 Briefing Board
               </Box>{" "}
               <Box width={"100%"} height={"100%"} border={"0px solid red"}>
-                {/* 0405 comment list 추가 하기 */}
                 {!isCheckedForShowTechNote ? (
                   <ChatStyleBoard
                     taskPk={taskData.pk}
@@ -813,26 +437,22 @@ function ProjectProgressDetail({}: Props): ReactElement {
                   <TableForTechNote isForTask={true} taskPk={taskData?.pk} />
                 )}
               </Box>
-            </Flex>
+            </Box>
           </Box>
-        </Flex>
-        <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
-          <ModalButtonForExtraTask taskPk={taskPk} />
-          <ExtraTasksTable
-            extra_tasks={taskData.extra_tasks}
-            orginal_task_pk={taskPk}
-          />
         </Box>
+
+        <br />
+
+        <Box>테스트 리스트 (테스트 체킹은 로그인 필요)</Box>
         <Box bg={"white"} width={"100%"} border={"1px solid black"}>
           <Box
             display={"flex"}
-            justifyContent={"space-between"}
+            justifyContent={"flex-end"}
             alignItems={"center"}
             bgColor={"yellow.200"}
             p={1}
             textAlign="center"
           >
-            테스트 리스트 (테스트 체킹은 로그인 필요)
             {!isLoadingForTaskData && taskData ? (
               <ModalButtonForCreateTest taskPk={taskData?.pk} />
             ) : (
@@ -841,7 +461,18 @@ function ProjectProgressDetail({}: Props): ReactElement {
           </Box>
           <TestListForTaskDetail testData={taskData?.tests_for_tasks} />
         </Box>
-      </VStack>
+
+        <br />
+        <Box>부가 업무 리스트</Box>
+        <Box bg={"white"} width={"100%"} border={"2px solid blue"}>
+          <ModalButtonForExtraTask taskPk={taskPk} />
+          <ExtraTasksTable
+            extra_tasks={taskData.extra_tasks}
+            orginal_task_pk={taskPk}
+          />
+        </Box>
+        
+      </Box>
     );
   }
 }

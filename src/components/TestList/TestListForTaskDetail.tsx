@@ -179,18 +179,22 @@ function DataItem({
             // alignItems={"center"}
             gap={2}
             border={"0px solid blue"}
+            p={3}
           >
             {test_result_images
               ? test_result_images.map((row) => {
                   return (
                     <Box
-                      w={"80px"}
-                      h={"80px"}
                       border={"0px solid purple"}
                       display="flex"
                       alignItems={"center"}
                     >
-                      <Img src={row.image_url} objectFit={"cover"} />
+                      <Img
+                        src={row.image_url}
+                        w={"80px"}
+                        h={"80px"}
+                        objectFit={"cover"}
+                      />
                     </Box>
                   );
                 })

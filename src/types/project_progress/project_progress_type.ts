@@ -461,6 +461,7 @@ export interface ExtraTaskDetailInfo {
     profile_image: string;
   };
   task: string;
+  task_urls: string;
   task_url1: string;
   task_url2: string;
   task_status: string;

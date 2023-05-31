@@ -24,7 +24,7 @@ const ExtraTaskDetailPage = (props: Props) => {
   return (
     <Box display="flex">
       <Box width="50%">
-        <DetailInfoForExtraTask  extraTaskDetail={dataForExtraTaskDetail} />
+        <DetailInfoForExtraTask extraTaskDetail={dataForExtraTaskDetail} />
       </Box>
       <Divider orientation="vertical" mx={1} />
       <Box width="50%"></Box>

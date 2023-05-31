@@ -132,7 +132,6 @@ const ExtraTasksTable = ({
   //2244
   return (
     <Box overflowX="scroll" width={"100%"}>
-      <Box>부가 업무 리스트</Box>
       <Table
         variant="simple"
         colorScheme="blue"
