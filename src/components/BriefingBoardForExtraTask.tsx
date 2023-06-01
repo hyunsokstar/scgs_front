@@ -26,7 +26,9 @@ import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+    apiForDeleteCommentForExtraTaskByPk,
     apiForInsertCommentForExtraTask,
+  apiForUpdateCommentForExtraTask,
   apiForUpdateEditModeForExtraTaskComment,
   createCommentForTaskApi,
   deleteOneCommentForTaskByPkApi,
@@ -77,12 +79,13 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
     updateMutationForCommentEditMode.mutate(comment_pk);
   };
 
-  const updateMutationForCommentTextForTask = useMutation(
-    updateCommentTextForTaskApi,
+  // fix
+  const mutationForUpdateCommentForExtraTask = useMutation(
+    apiForUpdateCommentForExtraTask,
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["apiForExtraTaskDetail"]);
         toast({
           status: "success",
           title: "task status update success",
@@ -98,7 +101,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
   const onEditConfirmHandler = (commentPk: number | string) => {
     // alert(commentTextForUpdate)
     // pk, commentTextForUpdate 를 이용해서 comment update
-    updateMutationForCommentTextForTask.mutate({
+    mutationForUpdateCommentForExtraTask.mutate({
       commentPk,
       commentText: commentTextForUpdate,
     });
@@ -106,7 +109,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
 
   const deleteCommentMutationByPk = useMutation(
     (pk: string | number) => {
-      return deleteOneCommentForTaskByPkApi(pk);
+      return apiForDeleteCommentForExtraTaskByPk(pk);
     },
     {
       onSettled: () => {
@@ -115,7 +118,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
       onSuccess: (data) => {
         console.log("data : ", data);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["apiForExtraTaskDetail"]);
 
         toast({
           title: "delete comment 성공!",
@@ -353,7 +356,7 @@ function BriefingBoardForExtraTask({
           border={"0px solid green"}
           gap={1}
           width={"100%"}
-          mt={"6px"}
+          mt={"4px"}
           px={"1px"}
         >
           <Input
@@ -362,7 +365,7 @@ function BriefingBoardForExtraTask({
             borderWidth="2px"
             borderColor="purple.100"
             size="md"
-            height={"37px"}
+            height={"38px"}
             border={"1px solid purple"}
             width={"100%"}
             _hover={{
@@ -375,7 +378,7 @@ function BriefingBoardForExtraTask({
             mr="1"
             onChange={(e) => setCommentTextToUpload(e.target.value)}
             value={commentTextToUpload}
-            placeholder="입력해주세요1"
+            placeholder="입력해주세요 12"
           />
           <Button
             variant="outline"

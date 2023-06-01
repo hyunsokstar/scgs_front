@@ -97,7 +97,7 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
       bg="green.100"
       p={4}
       borderRadius="md"
-      height={"584px"}
+      height={"586px"}
       // px={2}
       overflowY={"scroll"}
     >

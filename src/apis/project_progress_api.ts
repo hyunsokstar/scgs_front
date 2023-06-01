@@ -26,6 +26,43 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+export const apiForUpdateCommentForExtraTask = ({
+  commentPk,
+  commentText,
+}: ICommentTextUpdateApiParameter) => {
+  console.log("updateCommentForTaskApi 실행 check : ", commentText);
+
+  return instance
+    .put(
+      `/project_progress/extra-task/comment/${commentPk}/update`,
+      {
+        comment: commentText,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
+export const apiForDeleteCommentForExtraTaskByPk = (
+  commentPk: string | number
+) => {
+  console.log("commentPk : ", commentPk);
+  return instance
+    .delete(`project_progress/extra-task/comment/${commentPk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForInsertCommentForExtraTask = ({
   taskPk,
   comment,
