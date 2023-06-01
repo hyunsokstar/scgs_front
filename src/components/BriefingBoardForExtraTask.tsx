@@ -26,6 +26,7 @@ import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+    apiForInsertCommentForExtraTask,
   apiForUpdateEditModeForExtraTaskComment,
   createCommentForTaskApi,
   deleteOneCommentForTaskByPkApi,
@@ -252,7 +253,7 @@ function BriefingBoardForExtraTask({
 
   const [commentTextToUpload, setCommentTextToUpload] = useState("");
 
-  const createMutationForTaskComment = useMutation(createCommentForTaskApi, {
+  const createMutationForTaskComment = useMutation(apiForInsertCommentForExtraTask, {
     onMutate: () => {
       console.log("mutation starting");
     },
@@ -263,7 +264,8 @@ function BriefingBoardForExtraTask({
         title: "welcome back!",
         status: "success",
       });
-      queryClient.refetchQueries(["getOneProjectTask"]);
+      
+      queryClient.refetchQueries(["apiForExtraTaskDetail"]);
       setCommentTextToUpload("");
     },
     onError: (error: any) => {
@@ -274,17 +276,18 @@ function BriefingBoardForExtraTask({
 
   console.log("isLoggedIn for chatstyle board : ", isLoggedIn);
 
-  const commentButtonHandler = () => {
+  const buttonHandlerForInsertCommentForExtraTask = () => {
     // alert(isLoggedIn);
     if (!isLoggedIn) {
       alert("로그인 해주세요");
+      return;
     } else {
-      // alert("로그인 상태입니다")
+    //   alert("로그인 상태입니다")
+      createMutationForTaskComment.mutate({
+        taskPk,
+        comment: commentTextToUpload,
+      });
     }
-    createMutationForTaskComment.mutate({
-      taskPk,
-      comment: commentTextToUpload,
-    });
   };
 
   return (
@@ -380,7 +383,7 @@ function BriefingBoardForExtraTask({
             height={"37px"}
             borderRadius="md"
             colorScheme={"purple"}
-            onClick={() => commentButtonHandler()}
+            onClick={() => buttonHandlerForInsertCommentForExtraTask()}
           >
             입력
           </Button>

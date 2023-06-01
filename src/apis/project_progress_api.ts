@@ -26,6 +26,25 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+export const apiForInsertCommentForExtraTask = ({
+  taskPk,
+  comment,
+}: FormTypeForCreateCommentForTask) =>
+  instance
+    .post(
+      `/project_progress/extra-task/${taskPk}/comment`,
+      {
+        task: taskPk,
+        comment,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForUpdateEditModeForExtraTaskComment = (
   commentPk: string | number
 ) => {
