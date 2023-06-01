@@ -380,11 +380,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
         {/* 최상단 box */}
         <Box
           display={"flex"}
-          border={"1px solid black"}
+          border={"0px solid black"}
           width="100%"
-          height={"643px"}
+          height={"652px"}
+          mt={2}
+          px={1}
         >
-          <Box width={"50%"} border={"1px solid black"}>
+          <Box width={"50%"} border={"0px solid black"}>
             <Box>
               <Heading size="md">Update Form For Task Detail</Heading>
             </Box>
@@ -415,7 +417,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           </Box>
 
           <Box width={"50%"}>
-            <Box width={"100%"} border={"1px solid green"}>
+            <Box width={"100%"} border={"0px solid green"}>
               <Heading size="md">Briefing Board</Heading>
             </Box>{" "}
             <Box

@@ -266,17 +266,30 @@ function TestListForTaskDetail({ testData }: IPropsForTestListForTaskDetail) {
 
   return (
     <List spacing={3} height="200px" overflowY="auto">
-      {testData?.map((row) => (
-        <DataItem
-          pk={row.pk}
-          test_description={row.test_description}
-          test_passed={row.test_passed}
-          test_method={row.test_method}
-          test_result_image={row.test_result_image}
-          testers_for_test={row.testers_for_test}
-          test_result_images={row.test_result_images}
-        />
-      ))}
+      {testData.length ? (
+        testData?.map((row) => (
+          <DataItem
+            pk={row.pk}
+            test_description={row.test_description}
+            test_passed={row.test_passed}
+            test_method={row.test_method}
+            test_result_image={row.test_result_image}
+            testers_for_test={row.testers_for_test}
+            test_result_images={row.test_result_images}
+          />
+        ))
+      ) : (
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          height={"100%"}
+          fontSize={"20px"}
+          fontFamily="Arial, sans-serif"
+        >
+          No Test Result Data Is Available
+        </Box>
+      )}
     </List>
   );
 }

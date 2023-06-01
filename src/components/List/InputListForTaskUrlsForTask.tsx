@@ -33,7 +33,6 @@ const InputListForTaskUrlsForTask: React.FC<
   buttonHandlerForOpenTaskUrl,
   handlerForOpenUrl,
 }) => {
-  //   console.log("taskUrls : ", taskUrls);
 
   return (
     <Box>

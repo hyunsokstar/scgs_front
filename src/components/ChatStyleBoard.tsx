@@ -337,7 +337,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
           />
         ))}
       </Flex>
-      
+
       <Box mt={"3.6px"} px={0} border={"0px solid green"}>
         <Box
           display={"flex"}
@@ -353,7 +353,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             borderWidth="2px"
             borderColor="purple.100"
             size="md"
-            height={"38px"}
+            height={"37px"}
             border={"1px solid purple"}
             width={"100%"}
             _hover={{

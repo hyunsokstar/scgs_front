@@ -7,12 +7,15 @@ import {
   FormControl,
   FormLabel,
   useToast,
+  IconButton,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { DetailForExtraTaskProps } from "../../types/project_progress/project_progress_type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserNamesForCreate } from "../../apis/user_api";
 import { apiForUpdateExtraTask } from "../../apis/project_progress_api";
+import { MinusIcon } from "@chakra-ui/icons";
+import TaskUrlsListUsingInputForUpdate from "../TaskUrlsListUsingInputForUpdate";
 
 interface IUserNamesForCreate {
   pk: number;
@@ -28,7 +31,6 @@ interface FormData {
   task_url2?: string;
   task_status?: string;
 }
-
 
 // 1122
 const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
@@ -81,11 +83,12 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
 
     mutationForUpdateExtraTask.mutate({
       pk,
-      task:data.task,
-      task_manager: data.task_manager === "" ? task_manager.pk : data.task_manager,
-      task_status:data.task_status,
-      task_url1:data.task_url1,
-      task_url2:data.task_url2,
+      task: data.task,
+      task_manager:
+        data.task_manager === "" ? task_manager.pk : data.task_manager,
+      task_status: data.task_status,
+      task_url1: data.task_url1,
+      task_url2: data.task_url2,
     });
   };
 
@@ -94,7 +97,6 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box display="flex" flexDirection="column" gap={4}>
           <Input type="hidden" {...register("pk")} value={pk} />
-
           <FormControl>
             <FormLabel>담당자</FormLabel>
             <Select
@@ -109,7 +111,6 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
               ))}
             </Select>
           </FormControl>
-
           <FormControl>
             <FormLabel>task</FormLabel>
             <Textarea
@@ -118,9 +119,66 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
               borderColor="gray.400"
             />
           </FormControl>
+          {/* fix0601 */}
           test urls for extra task detail info
-          {/* fix 0601 */}
-
+          {/* {task_urls.map((taskUrl: any, index: any) => (
+            <Box
+              display="flex"
+              alignItems={"center"}
+              width={"100%"}
+              border={"0px solid green"}
+              gap={2}
+              p={1}
+            >
+              <IconButton
+                icon={<MinusIcon />}
+                size={"xs"}
+                aria-label="Add Task Url"
+                colorScheme="red"
+                variant="outline"
+                onClick={() => buttonHandlerForDeleteTaskUrl(taskUrl.id)}
+              />{" "}
+              <Box key={taskUrl.id} alignItems="center" width={"100%"}>
+                <InputGroup>
+                  <Input
+                    defaultValue={taskUrl.task_url}
+                    value={taskUrls[index]}
+                    width={"100%"}
+                    onChange={(e) => updateTaskUrl(index, e.target.value)}
+                  />
+                  <InputRightAddon width={"80px"} p={0}>
+                    {taskUrls[index] && taskUrls[index] !== taskUrl.task_url ? (
+                      <Button
+                        colorScheme="teal"
+                        size="sm"
+                        bg={"orange.200"}
+                        width={"80px"}
+                        height={"100%"}
+                        variant={"outline"}
+                        onClick={() =>
+                          buttonHandlerForOpenTaskUrl(taskUrl.id, index)
+                        }
+                      >
+                        update
+                      </Button>
+                    ) : (
+                      <Button
+                        colorScheme="teal"
+                        size="sm"
+                        width={"80px"}
+                        height={"100%"}
+                        variant={"outline"}
+                        onClick={() => handlerForOpenUrl(taskUrl.task_url)}
+                      >
+                        open
+                      </Button>
+                    )}
+                  </InputRightAddon>
+                </InputGroup>
+              </Box>
+            </Box>
+          ))} */}
+          <TaskUrlsListUsingInputForUpdate task_urls={task_urls} />
           <FormControl>
             <FormLabel>task_status</FormLabel>
             <Select
@@ -135,7 +193,6 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
               <option value="completed">완료됨 🔵</option>
             </Select>
           </FormControl>
-
           <Button type="submit">Update</Button>
         </Box>
       </form>
