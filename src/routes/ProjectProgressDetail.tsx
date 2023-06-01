@@ -383,7 +383,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           border={"0px solid black"}
           width="100%"
           height={"652px"}
-          mt={2}
+          mt={5}
           px={1}
         >
           <Box width={"50%"} border={"0px solid black"}>
@@ -470,7 +470,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           <TestListForTaskDetail testData={taskData?.tests_for_tasks} />
         </Box>
 
-        <br />
+        <br /> <br />
 
         <Box
           display={"flex"}
