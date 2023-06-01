@@ -26,12 +26,27 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
-// apiForDeleteTaskUrlForTaskWithPk
-export const apiForDeleteTaskUrlForTaskWithPk = (project_pk: string | number) => {
+// apiForDeleteTaskUrlForExtraTaskWithPk
+export const apiForCreateTaskUrlForExtaTask = (extraTaskPk: any) =>
+  instance
+    .post(
+      `/project_progress/${extraTaskPk}/create-task-url-for-extra-task`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
+export const apiForDeleteTaskUrlForExtraTaskWithPk = (
+  project_pk: string | number
+) => {
   console.log("estimatePk : ", project_pk);
-  
+
   return instance
-    .delete(`project_progress/task-url-for-task/${project_pk}/delete`, {
+    .delete(`project_progress/task-url-for-extra-task/${project_pk}/delete`, {
       headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",
       },
@@ -39,6 +54,41 @@ export const apiForDeleteTaskUrlForTaskWithPk = (project_pk: string | number) =>
     .then((response) => response.data);
 };
 
+export const apiForDeleteTaskUrlForTaskWithPk = (
+  project_pk: string | number
+) => {
+  console.log("estimatePk : ", project_pk);
+
+  return instance
+    .delete(`project_progress/task-url-for-extra-task/${project_pk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+export const apiForUpdateTaskUrlForExtraTaskForPk = ({
+  pk,
+  taskUrlForUpdate,
+}: any) => {
+  console.log("parameter check : ", pk, taskUrlForUpdate);
+
+  return instance
+    .put(
+      `/project_progress/task-url-for-extra-task/${pk}/update`,
+      { pk, taskUrlForUpdate },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
 export const apiForUpdateTaskUrlForTaskForPk = ({
   pk,
   taskUrlForUpdate,
@@ -60,7 +110,6 @@ export const apiForUpdateTaskUrlForTaskForPk = ({
       return response.data;
     });
 };
-
 export const apiForCreateTaskUrlForTask = (taskPk: any) =>
   instance
     .post(
@@ -579,7 +628,6 @@ export const getProgectTasksStatusData = ({
     return response;
   });
 };
-
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const updateProjectApiByPk = ({

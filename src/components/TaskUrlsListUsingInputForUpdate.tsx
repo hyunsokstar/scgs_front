@@ -11,16 +11,26 @@ import {
 } from "@chakra-ui/react";
 import { MinusIcon } from "@chakra-ui/icons";
 import {
+    apiForCreateTaskUrlForExtaTask,
+  apiForCreateTaskUrlForTask,
   apiForDeleteTaskUrlForTaskWithPk,
+  apiForUpdateTaskUrlForExtraTaskForPk,
   apiForUpdateTaskUrlForTaskForPk,
 } from "../apis/project_progress_api";
+import { AddIcon } from "@chakra-ui/icons";
 
 interface Props {
+  extraTaskPk: number;
   task_urls: string[];
+  titleText: string;
 }
 
 // 1122
-const TaskUrlsListUsingInputForUpdate = ({ task_urls }: Props) => {
+const TaskUrlsListUsingInputForUpdate = ({
+  titleText,
+  extraTaskPk,
+  task_urls,
+}: Props) => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
@@ -37,7 +47,7 @@ const TaskUrlsListUsingInputForUpdate = ({ task_urls }: Props) => {
       onSuccess: (data) => {
         console.log("data : ", data);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["apiForExtraTaskDetail"]);
 
         toast({
           title: "delete comment 성공!",
@@ -62,11 +72,11 @@ const TaskUrlsListUsingInputForUpdate = ({ task_urls }: Props) => {
   };
 
   const mutationForUpdateTaskUrlForTaskForPk = useMutation(
-    apiForUpdateTaskUrlForTaskForPk,
+    apiForUpdateTaskUrlForExtraTaskForPk,
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["apiForExtraTaskDetail"]);
         setTaskUrls([]);
         toast({
           status: "success",
@@ -107,8 +117,56 @@ const TaskUrlsListUsingInputForUpdate = ({ task_urls }: Props) => {
     window.open(url, "_blank");
   };
 
+  const mutationForCreateTaskUrlForTask = useMutation(
+    apiForCreateTaskUrlForExtaTask,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "Task URL 추가",
+          description: "Task URL을 추가하였습니다.",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        queryClient.refetchQueries(["apiForExtraTaskDetail"]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
+
+  const handleAddTaskUrl = () => {
+    mutationForCreateTaskUrlForTask.mutate(extraTaskPk);
+  };
+
+  // 2244
   return (
     <Box>
+      <Box display={"flex"} justifyContent={"space-between"}>
+        <Box>{titleText}</Box>
+        <Box>
+          <IconButton
+            icon={<AddIcon />}
+            size={"xs"}
+            aria-label="Add Task Url"
+            colorScheme="teal"
+            variant="outline"
+            onClick={() => {
+              if (window.confirm("Task URL을 추가하시겠습니까?")) {
+                handleAddTaskUrl();
+              }
+            }}
+          />
+        </Box>
+      </Box>
+
       {task_urls.length ? (
         task_urls.map((taskUrl: any, index: any) => (
           <Box

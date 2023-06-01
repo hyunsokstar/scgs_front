@@ -120,7 +120,6 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
             />
           </FormControl>
           {/* fix0601 */}
-          test urls for extra task detail info
           {/* {task_urls.map((taskUrl: any, index: any) => (
             <Box
               display="flex"
@@ -178,7 +177,11 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
               </Box>
             </Box>
           ))} */}
-          <TaskUrlsListUsingInputForUpdate task_urls={task_urls} />
+          <TaskUrlsListUsingInputForUpdate
+            titleText = {"test urls for extra task detail info"}
+            extraTaskPk={pk}
+            task_urls={task_urls}
+          />
           <FormControl>
             <FormLabel>task_status</FormLabel>
             <Select
