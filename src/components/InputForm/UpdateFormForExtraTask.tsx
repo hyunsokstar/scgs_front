@@ -93,7 +93,14 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
   };
 
   return (
-    <Box bg="green.100" p={4} borderRadius="md">
+    <Box
+      bg="green.100"
+      p={4}
+      borderRadius="md"
+      height={"584px"}
+      // px={2}
+      overflowY={"scroll"}
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box display="flex" flexDirection="column" gap={4}>
           <Input type="hidden" {...register("pk")} value={pk} />
@@ -119,66 +126,8 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
               borderColor="gray.400"
             />
           </FormControl>
-          {/* fix0601 */}
-          {/* {task_urls.map((taskUrl: any, index: any) => (
-            <Box
-              display="flex"
-              alignItems={"center"}
-              width={"100%"}
-              border={"0px solid green"}
-              gap={2}
-              p={1}
-            >
-              <IconButton
-                icon={<MinusIcon />}
-                size={"xs"}
-                aria-label="Add Task Url"
-                colorScheme="red"
-                variant="outline"
-                onClick={() => buttonHandlerForDeleteTaskUrl(taskUrl.id)}
-              />{" "}
-              <Box key={taskUrl.id} alignItems="center" width={"100%"}>
-                <InputGroup>
-                  <Input
-                    defaultValue={taskUrl.task_url}
-                    value={taskUrls[index]}
-                    width={"100%"}
-                    onChange={(e) => updateTaskUrl(index, e.target.value)}
-                  />
-                  <InputRightAddon width={"80px"} p={0}>
-                    {taskUrls[index] && taskUrls[index] !== taskUrl.task_url ? (
-                      <Button
-                        colorScheme="teal"
-                        size="sm"
-                        bg={"orange.200"}
-                        width={"80px"}
-                        height={"100%"}
-                        variant={"outline"}
-                        onClick={() =>
-                          buttonHandlerForOpenTaskUrl(taskUrl.id, index)
-                        }
-                      >
-                        update
-                      </Button>
-                    ) : (
-                      <Button
-                        colorScheme="teal"
-                        size="sm"
-                        width={"80px"}
-                        height={"100%"}
-                        variant={"outline"}
-                        onClick={() => handlerForOpenUrl(taskUrl.task_url)}
-                      >
-                        open
-                      </Button>
-                    )}
-                  </InputRightAddon>
-                </InputGroup>
-              </Box>
-            </Box>
-          ))} */}
           <TaskUrlsListUsingInputForUpdate
-            titleText = {"test urls for extra task detail info"}
+            titleText={"test urls for extra task detail info"}
             extraTaskPk={pk}
             task_urls={task_urls}
           />
