@@ -26,7 +26,25 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
-// apiForDeleteTaskUrlForExtraTaskWithPk
+export const apiForUpdateEditModeForExtraTaskComment = (
+  commentPk: string | number
+) => {
+  console.log("apiForUpdateEditModeForExtraTaskComment 실행 check");
+  return instance
+    .put(
+      `/project_progress/extra-task/${commentPk}/update-edit-mode`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      return response.data;
+    });
+};
+
 export const apiForCreateTaskUrlForExtaTask = (extraTaskPk: any) =>
   instance
     .post(

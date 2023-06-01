@@ -26,6 +26,7 @@ import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  apiForUpdateEditModeForExtraTaskComment,
   createCommentForTaskApi,
   deleteOneCommentForTaskByPkApi,
   updateCommentTextForTaskApi,
@@ -51,18 +52,21 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
   }
 
   const updateMutationForCommentEditMode = useMutation(
-    updateMutationForCommentEditModeApi,
+    apiForUpdateEditModeForExtraTaskComment,
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["apiForExtraTaskDetail"]);
 
-        // toast({
-        //   status: "success",
-        //   title: "task status update success",
-        //   description: result.message,
-        // });
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+          duration: 2000, // 2초 후에 사라짐
+          isClosable: true,
+        });
+
       },
     }
   );
@@ -77,9 +81,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-
         queryClient.refetchQueries(["getOneProjectTask"]);
-
         toast({
           status: "success",
           title: "task status update success",
@@ -236,7 +238,11 @@ type IProps = {
 };
 
 // main 1122
-function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
+function BriefingBoardForExtraTask({
+  taskPk,
+  task_comments,
+  task_manager,
+}: IProps) {
   const toast = useToast();
   const queryClient = useQueryClient();
 
@@ -384,4 +390,4 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
   );
 }
 
-export default ChatStyleBoard;
+export default BriefingBoardForExtraTask;

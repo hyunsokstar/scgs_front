@@ -5,6 +5,7 @@ import { Box, Divider } from "@chakra-ui/react";
 import { apiForExtraTaskDetail } from "../apis/project_progress_api";
 import DetailInfoForExtraTask from "../components/DetailInfoForExtraTask";
 import ChatStyleBoard from "../components/ChatStyleBoard";
+import BriefingBoardForExtraTask from "../components/BriefingBoardForExtraTask";
 
 interface Props {}
 
@@ -23,15 +24,19 @@ const ExtraTaskDetailPage = (props: Props) => {
     return <Box>Loading...</Box>;
   }
   return (
-    <Box display="flex">
+    <Box display="flex" mt={5}>
       <Box width="50%">
-        <Box>extra task detail info area</Box>
+        <Box fontSize={"24px"} fontFamily={"sans-serif"}>
+          extra task detail info area
+        </Box>
         <DetailInfoForExtraTask extraTaskDetail={dataForExtraTaskDetail} />
       </Box>
       <Divider orientation="vertical" mx={1} />
       <Box width="50%">
-        <Box>briefing board for extra task</Box>
-        <ChatStyleBoard
+        <Box fontSize={"24px"} fontFamily={"sans-serif"}>
+          briefing board for extra task
+        </Box>
+        <BriefingBoardForExtraTask
           taskPk={dataForExtraTaskDetail.pk}
           task_manager={dataForExtraTaskDetail?.task_manager}
           task_comments={dataForExtraTaskDetail?.task_comments}
