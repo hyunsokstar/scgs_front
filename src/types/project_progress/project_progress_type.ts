@@ -60,6 +60,7 @@ export interface IResponseTypeForProjectTaskUpdate {
 }
 
 export type ItypeFortestRow = {
+  id?: any;
   pk: number | string;
   test_description: string;
   test_passed: boolean;

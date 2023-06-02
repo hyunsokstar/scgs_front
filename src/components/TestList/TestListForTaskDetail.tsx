@@ -19,6 +19,7 @@ import TestResultImage, {
   ItypeFortestRow,
 } from "../../types/project_progress/project_progress_type";
 import {
+  apiForUpdateTestPassedForExtraTask,
   deleteOneTestForTask,
   updateTesterListByTestPkApi,
   updateTestPassedForTestForTask,
@@ -31,8 +32,10 @@ import { RootState } from "../../store";
 import { CheckIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { FaPlus } from "react-icons/fa";
 import ModalButtonForImageUploadForTestResult from "../modal/ModalButtonForImageUploadForTestResult";
+import ModalButtonForCreateTest from "../modal/ModalButtonForCreateTest";
 
 interface IPropsForTestListForTaskDetail {
+  taskPk?: string | undefined;
   testData: ItypeFortestRow[];
 }
 
@@ -86,9 +89,10 @@ function DataItem({
     const response = deleteTestMutation.mutate(pk);
     console.log("response :", response);
   };
-
-  const updateProjectTaskIsTestingMutations = useMutation(
-    updateTestPassedForTestForTask,
+  
+  // updateTestPassedForTestForTask
+  const mutationForUpdateTestPassedForTask = useMutation(
+    apiForUpdateTestPassedForExtraTask,
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
@@ -104,8 +108,10 @@ function DataItem({
     }
   );
 
-  const updateHandlerForTestPassed = (taskPk: string | number) => {
-    updateProjectTaskIsTestingMutations.mutate(taskPk);
+  const toggleButtonHandlerForUpdateTestPassedForTask = (
+    taskPk: string | number
+  ) => {
+    mutationForUpdateTestPassedForTask.mutate(taskPk);
     console.log("update 핸들러 for task_status check pk : ", taskPk);
   };
 
@@ -157,8 +163,11 @@ function DataItem({
         </Box>
 
         <Box width={"100px"}>
+          {/* updateHandlerForTestPassed */}
           <SlideToggleButtonForUpateTestPassed
-            onChange={() => updateHandlerForTestPassed(pk)}
+            onChange={() =>
+              toggleButtonHandlerForUpdateTestPassedForTask(pk)
+            }
             checked={test_passed}
           />
         </Box>
@@ -261,36 +270,53 @@ function DataItem({
   );
 }
 
-function TestListForTaskDetail({ testData }: IPropsForTestListForTaskDetail) {
-  // console.log("testData : ", testData);
+function TestListForTaskDetail({
+  taskPk,
+  testData,
+}: IPropsForTestListForTaskDetail) {
 
   return (
-    <List spacing={3} height="200px" overflowY="auto">
-      {testData.length ? (
-        testData?.map((row) => (
-          <DataItem
-            pk={row.pk}
-            test_description={row.test_description}
-            test_passed={row.test_passed}
-            test_method={row.test_method}
-            test_result_image={row.test_result_image}
-            testers_for_test={row.testers_for_test}
-            test_result_images={row.test_result_images}
-          />
-        ))
-      ) : (
+    <Box>
+      <Box bg={"white"} width={"100%"} border={"1px solid black"}>
         <Box
           display={"flex"}
-          justifyContent={"center"}
+          justifyContent={"flex-end"}
           alignItems={"center"}
-          height={"100%"}
-          fontSize={"20px"}
-          fontFamily="Arial, sans-serif"
+          bgColor={"yellow.200"}
+          p={1}
+          textAlign="center"
         >
-          No Test Result Data Is Available
+          <ModalButtonForCreateTest taskPk={taskPk} />
         </Box>
-      )}
-    </List>
+      </Box>
+
+      <List bg={"gray.50"} spacing={2} height="200px" overflowY="auto">
+        {testData.length ? (
+          testData?.map((row) => (
+            <DataItem
+              pk={row.pk}
+              test_description={row.test_description}
+              test_passed={row.test_passed}
+              test_method={row.test_method}
+              test_result_image={row.test_result_image}
+              testers_for_test={row.testers_for_test}
+              test_result_images={row.test_result_images}
+            />
+          ))
+        ) : (
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            height={"100%"}
+            fontSize={"20px"}
+            fontFamily="Arial, sans-serif"
+          >
+            No Test Result Data Is Available
+          </Box>
+        )}
+      </List>
+    </Box>
   );
 }
 

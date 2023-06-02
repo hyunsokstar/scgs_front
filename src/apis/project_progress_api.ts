@@ -26,6 +26,27 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+
+export const apiForUpdateTestPassedForExtraTask = (taskPk: string | number) => {
+  console.log("apiForUpdateTestPassedForExtraTask 실행 check");
+
+  return instance
+    .put(
+      `/project_progress/TestForExtraTask/${taskPk}/update-test-passed`,
+      // `/project_progress/TestForTasks/${taskPk}/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const apiForUpdateCommentForExtraTask = ({
   commentPk,
   commentText,
