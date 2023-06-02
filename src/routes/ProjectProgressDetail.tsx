@@ -453,7 +453,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           </Text>
         </Box>
         <Box bg={"white"} width={"100%"} border={"1px solid black"}>
-          <Box
+          {/* <Box
             display={"flex"}
             justifyContent={"flex-end"}
             alignItems={"center"}
@@ -466,7 +466,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
             ) : (
               ""
             )}
-          </Box>
+          </Box> */}
           <TestListForTaskDetail testData={taskData?.tests_for_tasks} />
         </Box>
 

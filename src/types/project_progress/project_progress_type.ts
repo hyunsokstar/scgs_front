@@ -66,6 +66,7 @@ export type ItypeFortestRow = {
   test_passed: boolean;
   test_method?: string;
   test_result_image?: string;
+  testers_for_test_for_extra_task?: any
   testers_for_test?: any;
   test_result_images: TestResultImage[];
 };

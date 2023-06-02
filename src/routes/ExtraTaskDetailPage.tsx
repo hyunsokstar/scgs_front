@@ -47,11 +47,15 @@ const ExtraTaskDetailPage = (props: Props) => {
           />
         </Box>
       </Box>
-      10
-      <TestListForExtraTask
-        taskPk={ExtraTaskPk}
-        testData={dataForExtraTaskDetail.tests_for_extra_task}
-      />
+
+      <Box mt={5}>
+        <TestListForExtraTask
+          listTitle={"Test List For Extra Task"}
+          taskPk={ExtraTaskPk}
+          testData={dataForExtraTaskDetail.tests_for_extra_task}
+        />
+      </Box>
+
       <Box border={"1px solid green"} w={"100%"} mt={10}>
         test result 등록 영역
       </Box>
