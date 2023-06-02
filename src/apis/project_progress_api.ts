@@ -27,6 +27,20 @@ interface ICommentTextUpdateApiParameter {
 
 // 1122
 
+export const apiForDeleteTestForExtraTask = (testPk: string | number) => {
+  console.log("testPk : ", testPk);
+  return (
+    instance
+      // .delete(`project_progress/TestForTasks/${testPk}/delete`, {
+      .delete(`project_progress/TestForExtraTask/${testPk}/delete`, {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      })
+      .then((response) => response.data)
+  );
+};
+
 export const apiForupdateTesterListForExtraTask = (testPk: string | number) => {
   console.log("updateProjectTaskCompleted 실행 check");
 

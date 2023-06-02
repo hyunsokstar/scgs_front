@@ -19,7 +19,8 @@ import TestResultImage, {
   ItypeFortestRow,
 } from "../../types/project_progress/project_progress_type";
 import {
-    apiForupdateTesterListForExtraTask,
+    apiForDeleteTestForExtraTask,
+  apiForupdateTesterListForExtraTask,
   apiForUpdateTestPassedForExtraTask,
   deleteOneTestForTask,
   updateTesterListByTestPkApi,
@@ -59,9 +60,10 @@ function DataItem({
   console.log("isLoggedIn : ", isLoggedIn);
   console.log("pk : ", pk);
 
-  const deleteTestMutation = useMutation(
+  const mutationForDeleteForTestForExtraTask = useMutation(
     (pk: string | number) => {
-      return deleteOneTestForTask(pk);
+    //   return deleteOneTestForTask(pk);
+      return apiForDeleteTestForExtraTask(pk);
     },
     {
       onSettled: () => {
@@ -70,17 +72,17 @@ function DataItem({
       onSuccess: (data) => {
         console.log("data : ", data);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["apiForExtraTaskDetail"]);
         toast({
-          title: "delete test 성공!",
+          title: "delete test for extra task success!",
           status: "success",
         });
       },
     }
   );
 
-  const deleteTestHandler = (pk: string | number) => {
-    const response = deleteTestMutation.mutate(pk);
+  const buttonHandlerForDeleteTestForExtraTask = (pk: string | number) => {
+    const response = mutationForDeleteForTestForExtraTask.mutate(pk);
     console.log("response :", response);
   };
 
@@ -126,7 +128,9 @@ function DataItem({
     }
   );
 
-  const buttonHandlerForUpdateTesterForExtraTask = (testPk: string | number) => {
+  const buttonHandlerForUpdateTesterForExtraTask = (
+    testPk: string | number
+  ) => {
     mutationForUpdateTesterListForExtraTask.mutate(testPk);
   };
 
@@ -212,7 +216,8 @@ function DataItem({
           border={"0px solid black"}
         >
           <Box>
-            {testers_for_test_for_extra_task && testers_for_test_for_extra_task.length !== 0 ? (
+            {testers_for_test_for_extra_task &&
+            testers_for_test_for_extra_task.length !== 0 ? (
               testers_for_test_for_extra_task.map((row: any) => {
                 return (
                   <Avatar
@@ -246,18 +251,15 @@ function DataItem({
           </Box>
         </Flex>
 
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          border="0 px solid purple"
-          width="30px"
-          textAlign={"center"}
-          onClick={() => deleteTestHandler(pk)}
-          flex={1}
-        >
-          <DeleteIcon />
-        </Box>
+        <IconButton
+          aria-label="Delete"
+          icon={<DeleteIcon />}
+          onClick={() => buttonHandlerForDeleteTestForExtraTask(pk)}
+          size="sm"
+        //   colorScheme="purple.50"
+          outline="1px solid"
+          _hover={{ bgColor: "red.100" }}
+        />
       </Flex>
     </ListItem>
   );
@@ -295,7 +297,9 @@ function TestListForExtraTask({
               test_passed={row.test_passed}
               test_method={row.test_method}
               test_result_image={row.test_result_image}
-              testers_for_test_for_extra_task={row.testers_for_test_for_extra_task}
+              testers_for_test_for_extra_task={
+                row.testers_for_test_for_extra_task
+              }
               test_result_images={row.test_result_images}
             />
           ))
