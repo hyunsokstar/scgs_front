@@ -19,6 +19,7 @@ import TestResultImage, {
   ItypeFortestRow,
 } from "../../types/project_progress/project_progress_type";
 import {
+    apiForupdateTesterListForExtraTask,
   apiForUpdateTestPassedForExtraTask,
   deleteOneTestForTask,
   updateTesterListByTestPkApi,
@@ -108,13 +109,13 @@ function DataItem({
   };
 
   // mutationForUpdateTesterListByTestPk
-  const mutationForUpdateTesterListByTestPk = useMutation(
-    updateTesterListByTestPkApi,
+  const mutationForUpdateTesterListForExtraTask = useMutation(
+    apiForupdateTesterListForExtraTask,
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["apiForExtraTaskDetail"]);
 
         toast({
           status: "success",
@@ -125,8 +126,8 @@ function DataItem({
     }
   );
 
-  const updateHandlerForTesterListByTestpK = (testPk: string | number) => {
-    mutationForUpdateTesterListByTestPk.mutate(testPk);
+  const buttonHandlerForUpdateTesterForExtraTask = (testPk: string | number) => {
+    mutationForUpdateTesterListForExtraTask.mutate(testPk);
   };
 
   return (
@@ -235,7 +236,7 @@ function DataItem({
                 size={"sm"} // size는 필수가 아닙니다.
                 aria-label={""}
                 ml={2}
-                onClick={() => updateHandlerForTesterListByTestpK(pk)}
+                onClick={() => buttonHandlerForUpdateTesterForExtraTask(pk)}
               >
                 <CheckIcon boxSize={5} />
               </Button>
