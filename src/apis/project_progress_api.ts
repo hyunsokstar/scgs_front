@@ -26,6 +26,25 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+export const apiForInsertTestResultImageForExtraTask = ({ testPk, image_url }: any) => {
+  console.log("test result image check :", testPk, image_url);
+
+  return instance
+    .post(
+      "medias/TestResultImageForExtraTask",
+      { testPk, image_url },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => {
+      console.log("response for createRefImageForTask api: ", response.data);
+
+      return response.data;
+    });
+};
 
 export const apiForDeleteTestForExtraTask = (testPk: string | number) => {
   console.log("testPk : ", testPk);
