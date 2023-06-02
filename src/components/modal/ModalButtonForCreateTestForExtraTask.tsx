@@ -23,7 +23,7 @@ import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { insertTestForTask } from "../../apis/project_progress_api";
+import { apiForInsertTestForExtraTask, insertTestForTask } from "../../apis/project_progress_api";
 import { FormTypeForCreateTest } from "../../types/project_progress/project_progress_type";
 
 interface IProps {
@@ -31,7 +31,7 @@ interface IProps {
   taskPk: number | string | undefined;
 }
 
-function ModalButtonForCreateTest({ buttonText, taskPk }: IProps) {
+function ModalButtonForCreateTestForExtraTask({ buttonText, taskPk }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -44,6 +44,7 @@ function ModalButtonForCreateTest({ buttonText, taskPk }: IProps) {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<FormTypeForCreateTest>({
     defaultValues: {
@@ -63,7 +64,7 @@ function ModalButtonForCreateTest({ buttonText, taskPk }: IProps) {
     setIsOpen(false);
   };
 
-  const createTestForTask = useMutation(insertTestForTask, {
+  const createTestForTask = useMutation(apiForInsertTestForExtraTask, {
     onMutate: () => {
       console.log("mutation starting");
     },
@@ -75,7 +76,8 @@ function ModalButtonForCreateTest({ buttonText, taskPk }: IProps) {
         status: "success",
       });
       //   requery getOneProjectTask
-      queryClient.refetchQueries(["getOneProjectTask"]);
+      reset()
+      queryClient.refetchQueries(["apiForExtraTaskDetail"]);
       setIsOpen(false);
     },
     onError: (error: any) => {
@@ -89,7 +91,6 @@ function ModalButtonForCreateTest({ buttonText, taskPk }: IProps) {
     test_method,
     test_passed,
   }: FormTypeForCreateTest) => {
-    // console.log("taskPk : ", taskPk);
     console.log("test_description :: ", test_description);
     console.log("test_method :: ", test_method);
     console.log("test_passed :: ", test_passed);
@@ -170,4 +171,4 @@ function ModalButtonForCreateTest({ buttonText, taskPk }: IProps) {
   );
 }
 
-export default ModalButtonForCreateTest;
+export default ModalButtonForCreateTestForExtraTask;

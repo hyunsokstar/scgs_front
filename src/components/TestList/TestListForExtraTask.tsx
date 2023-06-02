@@ -36,6 +36,7 @@ import { FaPlus } from "react-icons/fa";
 import ModalButtonForImageUploadForTestResult from "../modal/ModalButtonForImageUploadForTestResult";
 import ModalButtonForCreateTest from "../modal/ModalButtonForCreateTest";
 import ModalButtonForInsertTestResultImageForExtraTask from "../modal/ModalButtonForInsertTestResultImageForExtraTask";
+import ModalButtonForCreateTestForExtraTask from "../modal/ModalButtonForCreateTestForExtraTask";
 
 interface IPropsForTestListForTaskDetail {
   listTitle?: string;
@@ -143,10 +144,10 @@ function DataItem({
       overflowX={"auto"}
       width={"100%"}
       my={1}
-      border={"1px solid pink"}
+      border={"0px solid pink"}
     >
       <Flex
-        border={"1px solid green"}
+        border={"0px solid green"}
         width="100%"
         justifyContent={"space-between"}
         alignItems={"center"}
@@ -263,6 +264,7 @@ function DataItem({
           //   colorScheme="purple.50"
           outline="1px solid"
           _hover={{ bgColor: "red.100" }}
+          mr={2}
         />
       </Flex>
     </ListItem>
@@ -278,7 +280,7 @@ function TestListForExtraTask({
 
   return (
     <Box>
-      <Box bg={"white"} width={"100%"} border={"1px solid black"}>
+      <Box bg={"white"} width={"100%"} border={"0px solid black"}>
         <Box
           display={"flex"}
           justifyContent={"space-between"}
@@ -288,7 +290,10 @@ function TestListForExtraTask({
           textAlign="center"
         >
           <Box>{listTitle}</Box>
-          <ModalButtonForCreateTest taskPk={taskPk} />
+          <ModalButtonForCreateTestForExtraTask
+            buttonText={"create test for extra task"}
+            taskPk={taskPk}
+          />
         </Box>
       </Box>
 

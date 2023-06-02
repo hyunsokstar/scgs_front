@@ -89,7 +89,7 @@ function DataItem({
     const response = deleteTestMutation.mutate(pk);
     console.log("response :", response);
   };
-  
+
   // updateTestPassedForTestForTask
   const mutationForUpdateTestPassedForTask = useMutation(
     apiForUpdateTestPassedForExtraTask,
@@ -165,9 +165,7 @@ function DataItem({
         <Box width={"100px"}>
           {/* updateHandlerForTestPassed */}
           <SlideToggleButtonForUpateTestPassed
-            onChange={() =>
-              toggleButtonHandlerForUpdateTestPassedForTask(pk)
-            }
+            onChange={() => toggleButtonHandlerForUpdateTestPassedForTask(pk)}
             checked={test_passed}
           />
         </Box>
@@ -274,7 +272,6 @@ function TestListForTaskDetail({
   taskPk,
   testData,
 }: IPropsForTestListForTaskDetail) {
-
   return (
     <Box>
       <Box bg={"white"} width={"100%"} border={"1px solid black"}>
@@ -286,7 +283,10 @@ function TestListForTaskDetail({
           p={1}
           textAlign="center"
         >
-          <ModalButtonForCreateTest taskPk={taskPk} />
+          <ModalButtonForCreateTest
+            buttonText={"create test for task"}
+            taskPk={taskPk}
+          />
         </Box>
       </Box>
 

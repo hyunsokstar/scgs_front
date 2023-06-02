@@ -26,6 +26,31 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+
+export const apiForInsertTestForExtraTask = ({
+  taskPk,
+  test_description,
+  test_method,
+  test_passed,
+}: FormTypeForCreateTest) =>
+  instance
+    .post(
+      // `/project_progress/${taskPk}/TestForTasks`,
+      `/project_progress/ExtraTask/${taskPk}/add-test-for-extra-task`,      
+      {
+        taskPk,
+        test_description,
+        test_method,
+        test_passed,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForInsertTestResultImageForExtraTask = ({ testPk, image_url }: any) => {
   console.log("test result image check :", testPk, image_url);
 
