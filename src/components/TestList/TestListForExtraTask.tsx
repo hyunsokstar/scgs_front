@@ -19,7 +19,7 @@ import TestResultImage, {
   ItypeFortestRow,
 } from "../../types/project_progress/project_progress_type";
 import {
-    apiForDeleteTestForExtraTask,
+  apiForDeleteTestForExtraTask,
   apiForupdateTesterListForExtraTask,
   apiForUpdateTestPassedForExtraTask,
   deleteOneTestForTask,
@@ -35,6 +35,7 @@ import { CheckIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { FaPlus } from "react-icons/fa";
 import ModalButtonForImageUploadForTestResult from "../modal/ModalButtonForImageUploadForTestResult";
 import ModalButtonForCreateTest from "../modal/ModalButtonForCreateTest";
+import ModalButtonForInsertTestResultImageForExtraTask from "../modal/ModalButtonForInsertTestResultImageForExtraTask";
 
 interface IPropsForTestListForTaskDetail {
   listTitle?: string;
@@ -62,7 +63,7 @@ function DataItem({
 
   const mutationForDeleteForTestForExtraTask = useMutation(
     (pk: string | number) => {
-    //   return deleteOneTestForTask(pk);
+      //   return deleteOneTestForTask(pk);
       return apiForDeleteTestForExtraTask(pk);
     },
     {
@@ -206,7 +207,10 @@ function DataItem({
                 })
               : ""}
           </Box>
-          <ModalButtonForImageUploadForTestResult testPk={pk} />
+          <ModalButtonForInsertTestResultImageForExtraTask
+            modalTitle={"register test result image for test for Extra Task"}
+            testPk={pk}
+          />
         </Box>
 
         <Flex
@@ -256,7 +260,7 @@ function DataItem({
           icon={<DeleteIcon />}
           onClick={() => buttonHandlerForDeleteTestForExtraTask(pk)}
           size="sm"
-        //   colorScheme="purple.50"
+          //   colorScheme="purple.50"
           outline="1px solid"
           _hover={{ bgColor: "red.100" }}
         />
