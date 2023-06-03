@@ -6,13 +6,12 @@ interface TaskLogListProps {
   userOptionForList: string;
 }
 
-
 const TaskLogList: React.FC<TaskLogListProps> = ({
   dataForTaskLogs,
   userOptionForList,
 }) => {
   let totalMinutes;
-  
+
   return (
     <List>
       {dataForTaskLogs.map((taskLog, index) => {
@@ -30,14 +29,17 @@ const TaskLogList: React.FC<TaskLogListProps> = ({
 
         return (
           <Box>
-            <Box border={"0px solid black"}>
-              <Text>
-                {hours > 0 && <Text>| 1 hour |</Text>}
-                {minuteBlocks.map((block, index) => (
-                  <Text key={index}>{`${block}`}</Text>
-                ))}
-              </Text>
-            </Box>
+            {index !== 0 && (
+              <Box border={"0px solid black"}>
+                <Text>
+                  {hours > 0 && <Text>| 1 hour |</Text>}
+                  {minuteBlocks.map((block, index) => (
+                    <Text key={index}>{`${block}`}</Text>
+                  ))}
+                </Text>
+              </Box>
+            )}
+
             <ListItem key={taskLog.id} display="flex" alignItems="center">
               <Box mr={5}> {index + 1} </Box>
               <Text mr={"100px"}>{taskLog.completed_at_formatted}</Text>

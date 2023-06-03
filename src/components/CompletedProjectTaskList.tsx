@@ -12,8 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { ReactElement, useState, useEffect } from "react";
 import { getCompletedTaskList } from "../apis/project_progress_api";
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
-import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
-import ModalForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
+
 import CompletedTaskRow from "./CompletedTaskRow";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";

@@ -67,6 +67,7 @@ function UncompletedProjectTaskList({
   const [username_for_search, set_username_for_search] = useState<string>();
   const [task_status_for_search, set_task_status_for_search] =
     useState<string>("");
+
   const [due_date_option_for_filtering, set_due_date_option_for_filtering] =
     useState<string | undefined>(basic_due_date_option);
 
@@ -309,10 +310,13 @@ function UncompletedProjectTaskList({
     setCheckForCashPrize(!checkForCashPrize);
   };
 
-  const handleChangeForAllCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeForAllCheckBox = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const checked = event.target.checked;
-    const rowPks = taskListData?.ProjectProgressList.map(item => item.pk) || [];
-  
+    const rowPks =
+      taskListData?.ProjectProgressList.map((item) => item.pk) || [];
+
     if (checked) {
       // Add all pks to the checkedRowPks array
       setCheckedRowPks([...checkedRowPks, ...rowPks]);
@@ -321,7 +325,6 @@ function UncompletedProjectTaskList({
       setCheckedRowPks([]);
     }
   };
-
 
   // 2244
   return (
@@ -437,175 +440,215 @@ function UncompletedProjectTaskList({
         </Box>
 
         <Box>
-          <Text mb={1}>created:</Text>
-          <ButtonsForSelectForTeamTaskListPeriod
-            selectedPeriodOptionForUncompletedTaskList={
-              selectedPeriodOptionForUncompletedTaskList
-            }
-            changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
-          />
-          <Box mt={3}>
-            due_date:
-            <Box display={"flex"} gap={2} mt={1}>
-              <ButtonForFilteringTaskForDueDate
-                button_text="미정"
-                due_date_option="undecided"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
+          <Table
+            variant="unstyled"
+            // colorScheme="black"
+            // borderRadius="md"
+            size="md"
+            bg={"green.200"}
+            // border={"1px solid black"}
+            mb={2}
+          >
+            <Tbody>
+              <Tr>
+                <Td>created_at</Td>
+                <Td>
+                  <ButtonsForSelectForTeamTaskListPeriod
+                    selectedPeriodOptionForUncompletedTaskList={
+                      selectedPeriodOptionForUncompletedTaskList
+                    }
+                    changeHandler={
+                      changeHandlerForSelectPeriodOptionForTeamTask
+                    }
+                  />
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>due_date</Td>
+                <Td>
+                  {" "}
+                  <Box display={"flex"} gap={2} mt={1}>
+                    <ButtonForFilteringTaskForDueDate
+                      button_text="미정"
+                      due_date_option="undecided"
+                      due_date_option_for_filtering={
+                        due_date_option_for_filtering
+                      }
+                      set_due_date_option_for_filtering={
+                        set_due_date_option_for_filtering
+                      }
+                    />
 
-              <ButtonForFilteringTaskForDueDate
-                button_text="어제까지"
-                due_date_option="until-yesterday"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
+                    <ButtonForFilteringTaskForDueDate
+                      button_text="어제까지"
+                      due_date_option="until-yesterday"
+                      due_date_option_for_filtering={
+                        due_date_option_for_filtering
+                      }
+                      set_due_date_option_for_filtering={
+                        set_due_date_option_for_filtering
+                      }
+                    />
 
-              <ButtonForFilteringTaskForDueDate
-                button_text="정오"
-                due_date_option="until-noon"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-              <ButtonForFilteringTaskForDueDate
-                button_text="오후"
-                due_date_option="until-evening"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-              <ButtonForFilteringTaskForDueDate
-                button_text="내일"
-                due_date_option="until-tomorrow"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-              <ButtonForFilteringTaskForDueDate
-                button_text="내일 모레"
-                due_date_option="until-the-day-after-tomorrow"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-              <ButtonForFilteringTaskForDueDate
-                button_text="이번주"
-                due_date_option="until-this-week"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-              <ButtonForFilteringTaskForDueDate
-                button_text="이번달"
-                due_date_option="until-this-month"
-                due_date_option_for_filtering={due_date_option_for_filtering}
-                set_due_date_option_for_filtering={
-                  set_due_date_option_for_filtering
-                }
-              />
-            </Box>
-            <Box>
-              {/* <ButtonsForSelectFilterOptionForTaskClassification /> */}
-            </Box>
-            <Box display={"flex"} mt={5} gap={5} alignItems={"center"}>
-              <Box display="flex" alignItems="center">
-                is_emergency :{" "}
-                <Checkbox
-                  size="lg"
-                  ml={2}
-                  border={"1px solid gray"}
-                  isChecked={isForUrgent}
-                  onChange={handleUrgentChange}
-                />
-              </Box>
-              <Box display="flex" alignItems="center">
-                is_prize :{" "}
-                <Checkbox
-                  size="lg"
-                  border={"1px solid gray"}
-                  ml={2}
-                  isChecked={checkForCashPrize}
-                  onChange={handleCashPrizeChange}
-                />
-              </Box>
-            </Box>
-          </Box>
-          <Box mt={3}>
-            <Box>
-              manager : &nbsp;
-              <Input
-                size="xs"
-                variant="outline"
-                bg="blue.50"
-                borderColor="gray.300"
-                _focus={{ border: "0px solid blue", boxShadow: "none" }}
-                _hover={{ bg: "green.50", borderColor: "black" }}
-                _placeholder={{ color: "black" }}
-                id="url"
-                w={"300px"}
-                value={filterValueForTaskManager}
-                onChange={handleFilterChangeForTaskManager}
-              />
-            </Box>
+                    <ButtonForFilteringTaskForDueDate
+                      button_text="정오"
+                      due_date_option="until-noon"
+                      due_date_option_for_filtering={
+                        due_date_option_for_filtering
+                      }
+                      set_due_date_option_for_filtering={
+                        set_due_date_option_for_filtering
+                      }
+                    />
+                    <ButtonForFilteringTaskForDueDate
+                      button_text="오후"
+                      due_date_option="until-evening"
+                      due_date_option_for_filtering={
+                        due_date_option_for_filtering
+                      }
+                      set_due_date_option_for_filtering={
+                        set_due_date_option_for_filtering
+                      }
+                    />
+                    <ButtonForFilteringTaskForDueDate
+                      button_text="내일"
+                      due_date_option="until-tomorrow"
+                      due_date_option_for_filtering={
+                        due_date_option_for_filtering
+                      }
+                      set_due_date_option_for_filtering={
+                        set_due_date_option_for_filtering
+                      }
+                    />
+                    <ButtonForFilteringTaskForDueDate
+                      button_text="내일 모레"
+                      due_date_option="until-the-day-after-tomorrow"
+                      due_date_option_for_filtering={
+                        due_date_option_for_filtering
+                      }
+                      set_due_date_option_for_filtering={
+                        set_due_date_option_for_filtering
+                      }
+                    />
+                    <ButtonForFilteringTaskForDueDate
+                      button_text="이번주"
+                      due_date_option="until-this-week"
+                      due_date_option_for_filtering={
+                        due_date_option_for_filtering
+                      }
+                      set_due_date_option_for_filtering={
+                        set_due_date_option_for_filtering
+                      }
+                    />
+                    <ButtonForFilteringTaskForDueDate
+                      button_text="이번달"
+                      due_date_option="until-this-month"
+                      due_date_option_for_filtering={
+                        due_date_option_for_filtering
+                      }
+                      set_due_date_option_for_filtering={
+                        set_due_date_option_for_filtering
+                      }
+                    />
+                  </Box>
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>special option</Td>
+                <Td>
+                  <Box display={"flex"} mt={0} gap={5} alignItems={"center"}>
+                    <Box display="flex" alignItems="center">
+                      is_emergency :{" "}
+                      <Checkbox
+                        size="lg"
+                        ml={2}
+                        border={"1px solid gray"}
+                        isChecked={isForUrgent}
+                        onChange={handleUrgentChange}
+                      />
+                    </Box>
+                    <Box display="flex" alignItems="center">
+                      is_prize :{" "}
+                      <Checkbox
+                        size="lg"
+                        border={"1px solid gray"}
+                        ml={2}
+                        isChecked={checkForCashPrize}
+                        onChange={handleCashPrizeChange}
+                      />
+                    </Box>
+                  </Box>
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>Gropup By</Td>
+                <Td>
+                  <RadioButtonForSelectOptionForGropyBy
+                    groupByOption={groupByOption}
+                    setGroupByOption={setGroupByOption}
+                  />
+                </Td>
+              </Tr>
 
-            <Box mt={1}>
-              task : &nbsp;
-              <Input
-                size="xs"
-                variant="outline"
-                bg="blue.50"
-                borderColor="gray.300"
-                _focus={{ border: "1px solid blue", boxShadow: "none" }}
-                _hover={{ bg: "green.50", borderColor: "black" }}
-                _placeholder={{ color: "black" }}
-                id="url"
-                w={"300px"}
-                value={filterValueForTask}
-                onChange={handleFilterChangeForTask}
-              />
-            </Box>
+              <Tr>
+                <Td>manager</Td>
+                <Td>
+                  {" "}
+                  <Input
+                    size="xs"
+                    variant="outline"
+                    bg="blue.50"
+                    borderColor="gray.300"
+                    _focus={{ border: "0px solid blue", boxShadow: "none" }}
+                    _hover={{ bg: "green.50", borderColor: "black" }}
+                    _placeholder={{ color: "black" }}
+                    id="url"
+                    w={"300px"}
+                    value={filterValueForTaskManager}
+                    onChange={handleFilterChangeForTaskManager}
+                  />
+                </Td>
+              </Tr>
 
-            <Box mt={1}>
-              menu : &nbsp;
-              <Input
-                size="xs"
-                variant="outline"
-                bg="blue.50"
-                borderColor="gray.300"
-                _focus={{ border: "1px solid blue", boxShadow: "none" }}
-                _hover={{ bg: "green.50", borderColor: "black" }}
-                _placeholder={{ color: "black" }}
-                id="url"
-                w={"300px"}
-                value={filterValueForTaskClassification}
-                onChange={handleFilterChangeForTaskClassification}
-              />
-            </Box>
-          </Box>
-        </Box>
+              <Tr>
+                <Td>task</Td>
+                <Td>
+                  <Input
+                    size="xs"
+                    variant="outline"
+                    bg="blue.50"
+                    borderColor="gray.300"
+                    _focus={{ border: "1px solid blue", boxShadow: "none" }}
+                    _hover={{ bg: "green.50", borderColor: "black" }}
+                    _placeholder={{ color: "black" }}
+                    id="url"
+                    w={"300px"}
+                    value={filterValueForTask}
+                    onChange={handleFilterChangeForTask}
+                  />
+                </Td>
+              </Tr>
 
-        <Box
-          // border={"1px solid blue"}
-          width={"20%"}
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <RadioButtonForSelectOptionForGropyBy
-            groupByOption={groupByOption}
-            setGroupByOption={setGroupByOption}
-          />
+              <Tr>
+                <Td>classification</Td>
+                <Td>
+                  <Input
+                    size="xs"
+                    variant="outline"
+                    bg="blue.50"
+                    borderColor="gray.300"
+                    _focus={{ border: "1px solid blue", boxShadow: "none" }}
+                    _hover={{ bg: "green.50", borderColor: "black" }}
+                    _placeholder={{ color: "black" }}
+                    id="url"
+                    w={"300px"}
+                    value={filterValueForTaskClassification}
+                    onChange={handleFilterChangeForTaskClassification}
+                  />
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
         </Box>
 
         <Box>

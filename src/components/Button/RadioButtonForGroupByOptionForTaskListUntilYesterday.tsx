@@ -26,8 +26,8 @@ const RadioButtonForGroupByOptionForTaskListUntilYesterday: React.FC<
           <Radio size="lg" value="member">
             멤버별
           </Radio>
-          <Radio size="lg" value="time">
-            오전/오후
+          <Radio size="lg" value="importance">
+            중요도별2
           </Radio>
         </Stack>
       </RadioGroup>

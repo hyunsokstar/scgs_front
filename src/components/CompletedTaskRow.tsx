@@ -16,6 +16,7 @@ import {
   HStack,
   VStack,
   useToast,
+  Button,
 } from "@chakra-ui/react";
 import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
 import {
@@ -26,6 +27,7 @@ import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
 import SlideToggleButton from "./SlideToggleButton";
 import {
+  apiForDeleteCompletedTaskForChecked,
   updateProjectImportance,
   updateProjectTaskCompleted,
 } from "../apis/project_progress_api";
@@ -36,6 +38,7 @@ import ModalButtonForUpdateProjectTaskCompleteDate from "./modal/ModalButtonForU
 import ModalButtonForUpdateProjectTaskStartedAt from "./modal/ModalButtonForUpdateProjectTaskStartedAt";
 interface IProps {}
 
+// 1122
 function CompletedTaskRow({
   checkedRowPks,
   setCheckedRowPks,
@@ -153,18 +156,57 @@ function CompletedTaskRow({
     }
   };
 
+  const mutationForDeleteTasksForChecked = useMutation(
+    (checkedRowPks: number[]) => {
+      return apiForDeleteCompletedTaskForChecked(checkedRowPks);
+    },
+    {
+      onSuccess: (data) => {
+        setCheckedRowPks([]);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
+
+        toast({
+          title: "Delete Task For Checked 성공!",
+          status: "success",
+          description: data.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
+  const buttonHandlerForDeleteTaskRowForChecked = () => {
+    // checkedRowPks
+    if (checkedRowPks.length === 0) {
+      alert("Note를 하나 이상 체크 해주세요");
+      return;
+    }
+    mutationForDeleteTasksForChecked.mutate(checkedRowPks);
+  };
+
   // 2244
   return (
     <Box border={"0px solid blue"} maxWidth={"100%"}>
-      {/* {checkedRowPks} */}
-      <Checkbox
-        m={2}
-        size={"md"}
-        border={"1px solid black"}
-        colorScheme="blue"
-        onChange={handleChangeForAllCheckBox}
-        checked={checkedRowPks.length === ProjectProgressList?.length}
-      />
+      <Box display={"flex"} justifyContent={"flex-start"} gap={2} my={2}>
+        <Checkbox
+          m={2}
+          size={"lg"}
+          border={"3px solid blue"}
+          colorScheme="blue"
+          onChange={handleChangeForAllCheckBox}
+          checked={checkedRowPks.length === ProjectProgressList?.length}
+        />
+        <Button
+          variant={"outlined"}
+          size={"md"}
+          border={"1px solid blue"}
+          onClick={buttonHandlerForDeleteTaskRowForChecked}
+        >
+          delete for check
+        </Button>
+      </Box>
+
       <Box overflowX="auto" width="100%">
         <List>
           {ProjectProgressList?.map((task) => {

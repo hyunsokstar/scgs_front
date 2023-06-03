@@ -15,19 +15,19 @@ const RadioButtonForSelectOptionForGropyBy: React.FC<
 
   return (
     <Box>
-      <Box fontSize="xl" fontWeight="bold" color="blue.500" mb={2}>
-        groupByOption: {groupByOption !== "" ? groupByOption : "無"}
-      </Box>
+      {/* <Box fontSize="xl" fontWeight="bold" color="blue.500" mb={2}>
+        groupBy: {groupByOption !== "" ? groupByOption : "無"}
+      </Box> */}
       <RadioGroup onChange={handleChange} value={groupByOption}>
-        <Stack direction="column">
+        <Stack direction="row" spacing={5}>
           <Radio size="lg" value="">
             조건 無
           </Radio>
           <Radio size="lg" value="member">
             멤버별
           </Radio>
-          <Radio size="lg" value="time">
-            오전/오후
+          <Radio size="lg" value="importance">
+            중요도별
           </Radio>
         </Stack>
       </RadioGroup>

@@ -26,6 +26,19 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+export const apiForDeleteCompletedTaskForChecked = (
+  checkedRowPks: number[]
+) => {
+  console.log("study_note_pk , selectedButtonsData : ", checkedRowPks);
+  return instance
+    .delete("project_progress/delete-for-checked", {
+      data: checkedRowPks, // [1,2,3,5]
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
 
 export const apiForInsertTestForExtraTask = ({
   taskPk,
@@ -36,7 +49,7 @@ export const apiForInsertTestForExtraTask = ({
   instance
     .post(
       // `/project_progress/${taskPk}/TestForTasks`,
-      `/project_progress/ExtraTask/${taskPk}/add-test-for-extra-task`,      
+      `/project_progress/ExtraTask/${taskPk}/add-test-for-extra-task`,
       {
         taskPk,
         test_description,
@@ -51,7 +64,10 @@ export const apiForInsertTestForExtraTask = ({
     )
     .then((response) => response.data);
 
-export const apiForInsertTestResultImageForExtraTask = ({ testPk, image_url }: any) => {
+export const apiForInsertTestResultImageForExtraTask = ({
+  testPk,
+  image_url,
+}: any) => {
   console.log("test result image check :", testPk, image_url);
 
   return instance
