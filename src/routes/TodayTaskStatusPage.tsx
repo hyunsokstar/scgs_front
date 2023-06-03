@@ -20,6 +20,7 @@ import { ITypeForTaskStatusForToday } from "../types/project_progress/project_pr
 import TableForStaticsForTodayTaskStatus from "../components/Table/TableForStaticsForTodayTaskStatus";
 import ModalButtonForTaskListWithDeadlineUntilYesterDay from "../components/modal/ModalButtonForTaskListWithDeadlineUntilYesterDay";
 import TableForTaskLogForTasksOfWeekDay from "../components/Table/TableForTaskLogForTasksOfWeekDay";
+import TableForTaskManagersForTasksForToday from "../components/Table/TableForTaskManagersForTasksForToday";
 
 type Time = "morning_tasks" | "afternoon_tasks" | "night_tasks";
 const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "night_tasks"];
@@ -181,6 +182,17 @@ const TodayTaskStatusPage = () => {
 
   return (
     <Box>
+      <Box
+        fontSize="2xl"
+        color={"black"}
+        fontWeight="bold"
+        textAlign="center"
+        mb={2}
+        p={3}
+        bg={"gray.200"}
+      >
+        Today Task Status Page
+      </Box>{" "}
       <Box bg="gray.200" height={"100%"}>
         <Box display={"flex"} justifyContent={"flex-start"} gap={10}>
           <Box display={"flex"} flexDirection={"column"} gap={2} ml={2}>
@@ -245,10 +257,14 @@ const TodayTaskStatusPage = () => {
             />
           </Box>
 
-          <Box>3 영역</Box>
+          <Box>
+            3영역:
+            <TableForTaskManagersForTasksForToday
+              task_managers_data={dataForTaskStatusForToday?.task_managers_data}
+            />
+          </Box>
         </Box>
       </Box>
-
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Box
           style={{

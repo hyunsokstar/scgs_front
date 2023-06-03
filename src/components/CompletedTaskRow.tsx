@@ -189,10 +189,10 @@ function CompletedTaskRow({
   return (
     <Box border={"0px solid blue"} maxWidth={"100%"}>
       <Box display={"flex"} justifyContent={"flex-start"} gap={2} my={2}>
+        {/* 수정 필요 체크 박스가 너무 구림 */}
         <Checkbox
           m={2}
           size={"lg"}
-          border={"3px solid blue"}
           colorScheme="blue"
           onChange={handleChangeForAllCheckBox}
           checked={checkedRowPks.length === ProjectProgressList?.length}

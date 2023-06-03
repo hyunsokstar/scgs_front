@@ -14,7 +14,7 @@ const image_array = [
   },
   {
     image_url:
-      "https://shesgotsystems.com/wp-content/uploads/2012/02/PTMrPid635Xo9l_wjCGGb2JsscsyXuPYOqUDT3R976U.jpg",
+      "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/4kvJ/image/csIWEXQANORlEolYeoN13xOVoAM.jpg",
   },
   {
     image_url:
@@ -31,7 +31,7 @@ const image_array = [
   },
   {
     image_url:
-      "https://i.namu.wiki/i/HMBQxN5-ERYkWQymdJLqbH_p8QOVhJHvLA_RBeNMLhntmQpk_DnKGhBPI6HhJfu2Kj1_doR3ZQgF1ME8fyGqaEyb41JIwzuZd8KnMqLVXNDkx_5HBBoq98Y1tlvv2V2k8tYHhIRrpuFW6Zd9ZI-u7Q.webp",
+      "https://st.depositphotos.com/1002709/1915/i/950/depositphotos_19159199-stock-photo-business-graph-analyzing.jpg",
   },
 ];
 
@@ -55,24 +55,25 @@ export default function Home() {
 
         <SampleCard
           imageSrc={image_array[1].image_url}
-          title={"Project Task"}
-          description={"Project Task"}
-          linkTo="/project_admin"
+          title={"Team Status"}
+          description={"Team Status"}
+          linkTo="/team-status"
         />
-
+        
+        {/*
         <SampleCard
           imageSrc={image_array[2].image_url}
           title={"칸반 보드"}
           description={"칸반 보드"}
           linkTo="/task-status"
-        />
+        /> */}
 
-        <SampleCard
+        {/* <SampleCard
           imageSrc={image_array[3].image_url}
           title={"팀 관리"}
           description={"팀 관리"}
           linkTo="/data-grid/users"
-        />
+        /> */}
 
         <SampleCard
           imageSrc={image_array[4].image_url}
@@ -87,6 +88,7 @@ export default function Home() {
           description={"업무 통계"}
           linkTo="/task-statics"
         />
+       
       </Box>
     </Box>
   );

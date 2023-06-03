@@ -385,6 +385,12 @@ export interface TaskManager {
   profile_image: string;
 }
 
+export type TaskManagerData = {
+  task_manager: string;
+  uncompleted_count: number;
+  completed_count: number;
+}
+
 export interface ITypeForTaskStatusForToday {
   toal_task_count_for_today: number;
   progress_rate: number;
@@ -398,6 +404,7 @@ export interface ITypeForTaskStatusForToday {
   night_tasks: TaskForTaskStatusForToday[] | any | undefined;
   task_count_for_weekdays: TaskCountForWeekdays;
   today_info: TodayInfo;
+  task_managers_data: TaskManagerData[];
 }
 
 export interface WriterForTaskLog {

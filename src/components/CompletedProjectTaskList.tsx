@@ -154,11 +154,12 @@ function CompletedProjectTaskList({}: Props): ReactElement {
                 <Thead>
                   <Tr>
                     <Th colSpan={2}>
-                      {" "}
-                      <Box fontSize={22}>
-                        완료 리스트 (총: {pageProgressListData?.totalPageCount}{" "}
-                        개, per_page:{" "}
-                        {pageProgressListData?.task_number_for_one_page} 개){" "}
+                      <Box fontSize={18}>
+                        complteted task (total:{" "}
+                        {pageProgressListData?.totalPageCount} 개, per:
+                        {
+                          pageProgressListData?.task_number_for_one_page
+                        } 개){" "}
                       </Box>
                     </Th>
                   </Tr>

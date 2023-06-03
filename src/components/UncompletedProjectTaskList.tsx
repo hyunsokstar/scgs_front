@@ -341,9 +341,9 @@ function UncompletedProjectTaskList({
           <Table border={"0px solid blue"} mb={1}>
             <Tr borderBottom={"2px solid #9AE6B4"}>
               <Th colSpan={2}>
-                <Text fontSize={22}>
-                  uncomplete task list (total: {taskListData?.totalPageCount},
-                  per_page: {taskListData?.task_number_for_one_page} ){" "}
+                <Text fontSize={18}>
+                  uncomplete task (total: {taskListData?.totalPageCount}, per :{" "}
+                  {taskListData?.task_number_for_one_page} ){" "}
                 </Text>
               </Th>
             </Tr>
@@ -673,6 +673,17 @@ function UncompletedProjectTaskList({
       {/* 0501 */}
       {/* <Box>{checkedRowPks}</Box> */}
       <Box display={"flex"} justifyContent={"space-between"}>
+        {/* 수정 필요 체크 박스가 너무 구림 */}
+        <Checkbox
+          size="lg"
+          colorScheme="blue"
+          onChange={handleChangeForAllCheckBox}
+          checked={
+            checkedRowPks.length === taskListData?.ProjectProgressList.length
+          }
+          ml={2}
+          // border={"3px solid blue"}
+        />
         <Box>
           <Box p={2} gap={2}>
             {/* <Text as="span"></Text> */}
@@ -760,18 +771,6 @@ function UncompletedProjectTaskList({
             </Button>
           </Box>
           <Box display={"flex"} p={2} gap={2}>
-            {/* fix 0529 checkbox 체크 하면 checkedRowPks 배열에 taskListData?.ProjectProgressList 배열의 모든 pk 추가 하기 체크 풀면 모두 빼기 */}
-            {/* <Checkbox size="lg" colorScheme="blue" /> */}
-            <Checkbox
-              size="lg"
-              // border={"1px solid black"}
-              colorScheme="blue"
-              onChange={handleChangeForAllCheckBox}
-              checked={
-                checkedRowPks.length ===
-                taskListData?.ProjectProgressList.length
-              }
-            />
             <Button
               variant="outline"
               size="sm"

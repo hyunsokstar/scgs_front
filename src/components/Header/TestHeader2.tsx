@@ -149,7 +149,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/team-status"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -162,7 +162,7 @@ const Header = () => {
           >
             Team Status
           </Text>
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
           to="/today-task-status"
@@ -192,7 +192,7 @@ const Header = () => {
             long term plan
           </Text>
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/task-statics"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -205,7 +205,7 @@ const Header = () => {
           >
             Statics
           </Text>
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
           to="/task-log"
@@ -278,7 +278,7 @@ const Header = () => {
             cursor="pointer"
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
-            Study Note
+            Note
           </Text>
         </NavLink>
 
