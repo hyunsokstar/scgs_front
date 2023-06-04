@@ -443,10 +443,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
             </Box>
           </Box>
         </Box>
-
         <br />
         <br />
-
         <Box fontSize={"20px"}>
           <Text fontFamily="Arial, sans-serif">
             테스트 리스트 (테스트 체킹은 로그인 필요)
@@ -467,11 +465,12 @@ function ProjectProgressDetail({}: Props): ReactElement {
               ""
             )}
           </Box> */}
-          <TestListForTaskDetail testData={taskData?.tests_for_tasks} />
+          <TestListForTaskDetail
+            taskPk={taskPk}
+            testData={taskData?.tests_for_tasks}
+          />
         </Box>
-
         <br /> <br />
-
         <Box
           display={"flex"}
           justifyContent={"space-between"}

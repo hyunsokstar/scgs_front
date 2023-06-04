@@ -33,6 +33,7 @@ import { CheckIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { FaPlus } from "react-icons/fa";
 import ModalButtonForImageUploadForTestResult from "../modal/ModalButtonForImageUploadForTestResult";
 import ModalButtonForCreateTest from "../modal/ModalButtonForCreateTest";
+import DeleteButtonForTestForTask from "../Button/DeleteButtonForTestForTask";
 
 interface IPropsForTestListForTaskDetail {
   taskPk?: string | undefined;
@@ -145,7 +146,7 @@ function DataItem({
       overflowX={"auto"}
       width={"100%"}
       my={1}
-      border={"1px solid pink"}
+      border={"0px solid pink"}
     >
       <Flex
         border={"1px solid green"}
@@ -251,18 +252,21 @@ function DataItem({
           </Box>
         </Flex>
 
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          border="0 px solid purple"
+        {/* <IconButton
+          aria-label="테스트 삭제"
+          variant={"outline"}
+          border="1px solid purple"
           width="30px"
-          textAlign={"center"}
+          size={"sm"}
           onClick={() => deleteTestHandler(pk)}
-          flex={1}
-        >
-          <DeleteIcon />
-        </Box>
+          mr={2}
+          icon={<DeleteIcon />}
+        /> */}
+        <DeleteButtonForTestForTask
+          pk={pk}
+          test_description={test_description}
+          deleteTestHandler={deleteTestHandler}
+        />
       </Flex>
     </ListItem>
   );

@@ -11,6 +11,7 @@ import {
   HStack,
   useToast,
   Spacer,
+  VStack,
 } from "@chakra-ui/react";
 import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 
@@ -135,16 +136,12 @@ function CompletedTaskRowForTester({
       return deleteOneProjectTask(pk);
     },
     {
-      onSettled: () => {
-        // setSelectedItems([]);
-      },
+      onSettled: () => {},
       onSuccess: (data) => {
         console.log("data : ", data);
         if (projectTaskListRefatch) {
           projectTaskListRefatch();
         }
-        // queryClient.refetchQueries(["getUnompletedTaskList"]);
-        // queryClient.refetchQueries(["getCompletedTaskList"]);
         toast({
           title: "delete project task 성공!",
           status: "success",
@@ -186,22 +183,23 @@ function CompletedTaskRowForTester({
   };
 
   return (
-    <Box>
+    <Box overflowX={"scroll"}>
       {ProjectProgressList?.map((task) => {
         return (
           <List
             display={"flex"}
             justifyContent={"space-between"}
             alignItems={"center"}
+            width={"2500px"}
           >
-            <ListItem border={"0px solid yellow"}>
+            <ListItem border={"0px solid yellow"} flex={0.5}>
               <Checkbox mx={2} />
             </ListItem>
-            <ListItem width={"160px"}>
+            <ListItem width={"160px"} flex={0.7}>
               <Text color={"blue.600"}>{task.task_manager.username}</Text>
               <Text color={"tomato"}>{task.writer}</Text>
             </ListItem>
-            <ListItem border={"0px solid blue"}>
+            <ListItem border={"0px solid blue"} flex={2.5}>
               <Text fontSize="sm" fontWeight="bold">
                 <Link
                   to={`/project_admin/${task.pk}`}
@@ -217,6 +215,7 @@ function CompletedTaskRowForTester({
               display={"flex"}
               justifyContent={"flex-start"}
               border={"0px solid green"}
+              flex={0.7}
             >
               <SlideToggleButton
                 onChange={() => {
@@ -230,6 +229,7 @@ function CompletedTaskRowForTester({
               display={"flex"}
               justifyContent={"flex-start"}
               border={"0px solid green"}
+              flex={0.7}
             >
               <SlideToggleButton
                 onChange={() => {
@@ -241,21 +241,27 @@ function CompletedTaskRowForTester({
               />
             </ListItem>
 
-            <ListItem textAlign={"center"}>
-              <HStack>
-                <Text>시작</Text>
-                <Text>{task.started_at_formatted}</Text>
-              </HStack>
+            <ListItem textAlign={"center"} flex={1.8}>
+              <VStack>
+                <HStack>
+                  <Text>시작</Text>
+                  <Text>{task.started_at_formatted}</Text>
+                </HStack>
+                <HStack>
+                  <Text>완료</Text>
+                  <Text>{task.completed_at_formatted}</Text>
+                </HStack>
+              </VStack>
             </ListItem>
 
-            <ListItem textAlign={"center"}>
+            <ListItem textAlign={"center"} flex={1.5}>
               <HStack>
-                <Text>완료</Text>
-                <Text>{task.completed_at_formatted}</Text>
+                <Text>소요 시간</Text>
+                <Text>{task.time_consumed_from_start_to_complete  }</Text>
               </HStack>
             </ListItem>
-            <ListItem border={"1px solid blue"}>
-              <InputGroup size="sm">
+            <ListItem border={"0px solid blue"} flex={1.5}>
+              <InputGroup size="sm" width={"200px"}>
                 <Input
                   border={"1px solid black"}
                   defaultValue={task.score_by_tester}

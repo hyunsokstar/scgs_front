@@ -228,7 +228,8 @@ const TodayTaskStatusPage = () => {
               alignItems={"center"}
               textAlign={"center"}
               my={1}
-            >
+              >
+              task status for this week &nbsp;&nbsp;
               오늘 이전 비완료 : &nbsp;
               <ModalButtonForTaskListWithDeadlineUntilYesterDay
                 buttonText={
@@ -258,7 +259,7 @@ const TodayTaskStatusPage = () => {
           </Box>
 
           <Box>
-            3영역:
+            task status for today
             <TableForTaskManagersForTasksForToday
               task_managers_data={dataForTaskStatusForToday?.task_managers_data}
             />
