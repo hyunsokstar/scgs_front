@@ -48,7 +48,8 @@ const HeaderForTaskStatusForToday: React.FC<
     <Box
       bg="lightblue"
       py={4}
-      px={6}
+      px={2}
+      gap={2}
       display="flex"
       justifyContent="space-between"
       alignItems={"center"}
@@ -63,7 +64,7 @@ const HeaderForTaskStatusForToday: React.FC<
         </Box>
       </Box>
       <Box>
-        Today:
+        Today Task Statics
         <Table
           variant="striped"
           colorScheme="black"
@@ -73,7 +74,7 @@ const HeaderForTaskStatusForToday: React.FC<
           mb={1}
         >
           <Tbody>
-            <Tr>
+            <Tr bg={"green.100"}>
               <Th fontSize="md" textAlign={"center"}>
                 Total
               </Th>
@@ -101,30 +102,20 @@ const HeaderForTaskStatusForToday: React.FC<
                 {completionRate}%
               </Td>
             </Tr>
-          </Tbody>
-        </Table>
-        
-        <Table
-          variant="striped"
-          colorScheme="black"
-          size="md"
-          borderRadius="md"
-          border={"1px solid black"}
-        >
-          <Tbody>
-            <Tr>
-              <Th fontSize="md" textAlign={"center"}>
+
+            <Tr bg={"green.100"}>
+              <Th fontSize="md" textAlign={"center"} colSpan={2}>
                 업무 시간(from 9:00)
               </Th>
-              <Th fontSize="md" textAlign={"center"}>
+              <Th fontSize="md" textAlign={"center"} colSpan={2}>
                 평균 개수(시간당)
               </Th>
             </Tr>
             <Tr>
-              <Td fontSize="md" textAlign={"center"}>
+              <Td fontSize="md" textAlign={"center"} colSpan={2}>
                 {elapsed_time}
               </Td>
-              <Td fontSize="md" textAlign={"center"}>
+              <Td fontSize="md" textAlign={"center"} colSpan={2}>
                 {average_number_per_hour}
               </Td>
             </Tr>

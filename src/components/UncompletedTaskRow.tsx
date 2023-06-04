@@ -295,234 +295,196 @@ function UncompletedTaskRow({
 
   // 2244
   return (
-    <Box border={"0px solid blue"} maxWidth={"100%"}>
-      {/* {checkedRowPks} */}
-      <Box overflowX="auto" width="100%">
-        {ProjectProgressList ? (
-          <List>
-            {ProjectProgressList?.map((task: any) => {
+    <>
+      <Box border={"0px solid blue"} overflowX={"scroll"}>
+        {ProjectProgressList
+          ? ProjectProgressList.map((task: any) => {
               // console.log("task.task_manager : ", task.taskmanager);
               return (
-                <ListItem
-                  key={task.pk}
-                  height={16}
-                  border={"1px solid lightgray"}
-                  my={0}
+                <List
                   display={"flex"}
+                  flex={1}
+                  justifyContent={"space-between"}
                   alignItems={"center"}
-                  backgroundColor={rowColor(task.current_status)}
-                  _hover={{ backgroundColor: "gray.100" }}
-                  width={"2100px"}
+                  width={"2200px"}
                 >
-                  <HStack border={"0px solid green"}>
-                    <Box border={"0px solid yellow"} width={"50px"}>
-                      <Checkbox
-                        mx={2}
-                        border={"1px solid black"}
-                        value={task.pk}
-                        isChecked={checkedRowPks.includes(task.pk)}
-                        onChange={handleCheckboxChange}
-                      />
-                    </Box>
-
-                    <Box
-                      display={"flex"}
-                      flexDirection={"column"}
-                      border={"0px solid yellow"}
-                      width={"160px"}
-                    >
-                      <Text color={"blue.600"} textAlign={"start"}>
-                        {task.task_manager?.username}
-                      </Text>
-                      <Text color={"tomato"} textAlign={"start"}>
-                        {task.writer}
-                      </Text>
-                    </Box>
-
-                    {/* <Box width="140px" border="1px solid green">
+                  <ListItem border={"0px solid yellow"} flex={0.5}>
+                    <Checkbox
+                      mx={2}
+                      border={"1px solid black"}
+                      value={task.pk}
+                      isChecked={checkedRowPks.includes(task.pk)}
+                      onChange={handleCheckboxChange}
+                    />
+                  </ListItem>
+                  <ListItem
+                    display={"flex"}
+                    flexDirection={"column"}
+                    border={"0px solid yellow"}
+                    flex={1.5}
+                  >
+                    <Text color={"blue.600"} textAlign={"start"}>
+                      {task.task_manager?.username}
+                    </Text>
+                    <Text color={"tomato"} textAlign={"start"}>
+                      {task.writer}
+                    </Text>
+                  </ListItem>
+                  <ListItem border={"0px solid blue"} flex={3}>
+                    <Text fontSize="sm" fontWeight="bold">
+                      <Link
+                        to={`/project_admin/${task.pk}`}
+                        style={{ textDecoration: "underline" }}
+                      >
+                        {task.task}
+                      </Link>
+                      &nbsp;&nbsp;
                       <Badge
                         size="md"
+                        fontSize={"10px"}
                         colorScheme={getCategoryColor(task.task_classification)}
                         p={1}
                       >
                         {task.task_classification}
                       </Badge>
-                    </Box> */}
+                    </Text>
+                  </ListItem>
+                  <ListItem
+                    border={"0px solid blue"}
+                    display={"flex"}
+                    justifyContent={"flex-start"}
+                    alignItems={"center"}
+                    flex={2.2}
+                  >
+                    <StarRating
+                      initialRating={task.importance}
+                      taskPk={task.pk}
+                      onChangeForStarRatingHandler={
+                        onChangeForStarRatingHandler
+                      }
+                    />
+                  </ListItem>
+                  <ListItem
+                    display={"flex"}
+                    border="0px solid green"
+                    justifyContent={"flex-start"}
+                    alignItems={"centerF"}
+                    gap={10}
+                    flex={2.8}
+                  >
+                    <SlideToggleButtonForInProgress
+                      onChange={() => {
+                        updateHandlerForTaskInProgress(task.pk);
+                      }}
+                      checked={task.in_progress}
+                      is_disabled={task.is_testing}
+                    />
 
-                    <Box border={"0px solid blue"} width={"440px"}>
-                      <Text fontSize="sm" fontWeight="bold">
-                        <Link
-                          to={`/project_admin/${task.pk}`}
-                          style={{ textDecoration: "underline" }}
-                        >
-                          {task.task}
-                        </Link>
-                        &nbsp;&nbsp;
-                        <Badge
-                          size="md"
-                          fontSize={"10px"}
-                          colorScheme={getCategoryColor(
-                            task.task_classification
-                          )}
-                          p={1}
-                        >
-                          {task.task_classification}
-                        </Badge>
-                      </Text>
-                    </Box>
+                    <SlideToggleButtonForIsTesting
+                      onChange={() => {
+                        updateHandlerForTaskIsTesting(task.pk);
+                      }}
+                      checked={task.is_testing}
+                      is_disabled={!task.in_progress}
+                    />
 
-                    <Box
-                      border={"0px solid blue"}
-                      width={"220px"}
-                      display={"flex"}
-                      justifyContent={"flex-start"}
-                      alignItems={"center"}
-                    >
-                      <StarRating
-                        initialRating={task.importance}
-                        taskPk={task.pk}
-                        onChangeForStarRatingHandler={
-                          onChangeForStarRatingHandler
-                        }
-                      />
-                    </Box>
-
-                    <Box
-                      display={"flex"}
-                      width="300px"
-                      border="0px solid green"
-                      justifyContent={"flex-start"}
-                      gap={10}
-                    >
-                      <Box border={"0px solid green"} width={"50"}>
-                        <SlideToggleButtonForInProgress
-                          onChange={() => {
-                            updateHandlerForTaskInProgress(task.pk);
-                          }}
-                          checked={task.in_progress}
-                          is_disabled={task.is_testing}
-                        />
+                    <SlideToggleButton
+                      onChange={() => {
+                        updateHandlerForTaskStatus(task.pk);
+                      }}
+                      checked={task.task_completed}
+                      in_progress={!task.in_progress}
+                      is_testing={!task.is_testing}
+                    />
+                  </ListItem>
+                  <ListItem border={"0px solid blue"} flex={2.5}>
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>시작</Text>
                       </Box>
-
-                      <Box border={"0px solid green"} width={"50"}>
-                        <SlideToggleButtonForIsTesting
-                          onChange={() => {
-                            updateHandlerForTaskIsTesting(task.pk);
-                          }}
-                          checked={task.is_testing}
-                          is_disabled={!task.in_progress}
-                        />
-                      </Box>
-
-                      <Box border={"0px solid green"} width={"50"}>
-                        <SlideToggleButton
-                          onChange={() => {
-                            updateHandlerForTaskStatus(task.pk);
-                          }}
-                          checked={task.task_completed}
-                          in_progress={!task.in_progress}
-                          is_testing={!task.is_testing}
-                        />
-                      </Box>
-                    </Box>
-
-                    <Box border={"0px solid blue"} width={"320px"}>
                       <HStack>
-                        <Box textAlign={"center"}>
-                          <Text>시작</Text>
-                        </Box>
-                        <HStack>
-                          <Text>{task.started_at_formatted}</Text>
-                          <ModalButtonForUpdateProjectTaskStartedAt
-                            taskPk={task.pk}
-                            original_due_date={
-                              task.due_date ? task.due_date : ""
-                            }
-                            started_at={task.started_at ? task.started_at : ""}
-                            projectTaskListRefatch={projectTaskListRefatch}
-                          />
-                        </HStack>
-                      </HStack>
-                      <HStack>
-                        <Box textAlign={"center"}>
-                          <Text>마감</Text>
-                        </Box>
-                        <Text>{task.due_date_formatted}</Text>
-
-                        <ModalButtonForUpdateProjectTaskCompleteDate
+                        <Text>{task.started_at_formatted}</Text>
+                        <ModalButtonForUpdateProjectTaskStartedAt
                           taskPk={task.pk}
                           original_due_date={task.due_date ? task.due_date : ""}
                           started_at={task.started_at ? task.started_at : ""}
                           projectTaskListRefatch={projectTaskListRefatch}
                         />
                       </HStack>
-                    </Box>
-                    <Box border={"0px solid blue"} width={"280px"}>
-                      <HStack>
-                        <Box textAlign={"center"}>
-                          <Text>경과</Text>
-                        </Box>
-                        <Box>
-                          <Text>{task.elapsed_time_from_started_at}</Text>
-                        </Box>
-                      </HStack>
+                    </HStack>
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>마감</Text>
+                      </Box>
+                      <Text>{task.due_date_formatted}</Text>
 
-                      <HStack>
-                        <Box textAlign={"center"}>
-                          <Text>남은 시간</Text>
-                        </Box>
-                        <Box>
-                          <Text>{task.time_left_to_due_date}</Text>
-                        </Box>
-                      </HStack>
-                    </Box>
-                    {/* 긴급 여부 확인 */}
-
-                    <Box display={"flex"} width={"80px"}>
-                      <Text fontSize={"2xl"} mr={1}>
-                        🚨
-                      </Text>
-                      <Checkbox
-                        size="lg"
-                        colorScheme="red"
-                        defaultChecked={task.is_task_for_urgent}
-                        onChange={() => update_For_is_task_for_urgent(task.pk)}
+                      <ModalButtonForUpdateProjectTaskCompleteDate
+                        taskPk={task.pk}
+                        original_due_date={task.due_date ? task.due_date : ""}
+                        started_at={task.started_at ? task.started_at : ""}
+                        projectTaskListRefatch={projectTaskListRefatch}
                       />
-                    </Box>
+                    </HStack>
+                  </ListItem>
+                  <ListItem border={"0px solid blue"} flex={2.5}>
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>경과</Text>
+                      </Box>
+                      <Box>
+                        <Text>{task.elapsed_time_from_started_at}</Text>
+                      </Box>
+                    </HStack>
 
-                    <Box display={"flex"} width={"80px"}>
-                      <Text fontSize={"2xl"} mr={1}>
-                        💰
-                      </Text>
-                      <Checkbox
-                        size="lg"
-                        colorScheme="red"
-                        defaultChecked={task.is_task_for_cash_prize}
-                        onChange={() =>
-                          update_For_is_task_for_cash_prize(task.pk)
-                        }
-                      />
-                    </Box>
-
-                    <Box>
-                      <IconButton
-                        aria-label="삭제"
-                        icon={<FaTrash />}
-                        variant="ghost"
-                        onClick={() => deleteHandelr(parseInt(task.pk))}
-                      />
-                    </Box>
-                  </HStack>
-                </ListItem>
+                    <HStack>
+                      <Box textAlign={"center"}>
+                        <Text>남은 시간</Text>
+                      </Box>
+                      <Box>
+                        <Text>{task.time_left_to_due_date}</Text>
+                      </Box>
+                    </HStack>
+                  </ListItem>
+                  {/* 긴급 여부 확인 */}
+                  <ListItem display={"flex"} flex={1}>
+                    <Text fontSize={"2xl"} mr={1}>
+                      🚨
+                    </Text>
+                    <Checkbox
+                      size="lg"
+                      colorScheme="red"
+                      defaultChecked={task.is_task_for_urgent}
+                      onChange={() => update_For_is_task_for_urgent(task.pk)}
+                    />
+                  </ListItem>
+                  <ListItem display={"flex"} flex={1}>
+                    <Text fontSize={"2xl"} mr={1}>
+                      💰
+                    </Text>
+                    <Checkbox
+                      size="lg"
+                      colorScheme="red"
+                      defaultChecked={task.is_task_for_cash_prize}
+                      onChange={() =>
+                        update_For_is_task_for_cash_prize(task.pk)
+                      }
+                    />
+                  </ListItem>
+                  <ListItem >
+                    <IconButton
+                      aria-label="삭제"
+                      icon={<FaTrash />}
+                      variant="ghost"
+                      onClick={() => deleteHandelr(parseInt(task.pk))}
+                    />
+                  </ListItem>
+                  hi
+                </List>
               );
-            })}
-          </List>
-        ) : (
-          "loading"
-        )}
+            })
+          : ""}
       </Box>
 
-      {/* 페이지 네이션 영역 */}
       <Box mt={5}>
         {ProjectProgressList ? (
           <Box maxW="100%" bg="blue.100" color="red.500" mt={-3.5}>
@@ -537,7 +499,7 @@ function UncompletedTaskRow({
           ""
         )}
       </Box>
-    </Box>
+    </>
   );
 }
 
