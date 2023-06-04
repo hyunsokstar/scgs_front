@@ -208,9 +208,7 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
         </Box>
 
         <Box textAlign={"right"} m={0}>
-          {/* <ModalButtonForAddProjectTask
-            projectTaskListRefatch={projectTaskListRefatch}
-          /> */}
+
         </Box>
       </Box>
       <Box>

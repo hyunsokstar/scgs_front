@@ -10,6 +10,7 @@ import {
   IconButton,
   HStack,
   useToast,
+  Spacer,
 } from "@chakra-ui/react";
 import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 
@@ -43,7 +44,8 @@ function CompletedTaskRowForTester({
 }: ITypeForProjectProgressList): ReactElement {
   const queryClient = useQueryClient();
 
-  const [scoreByTesterForUpdate, setScoreByTesterForUpdate] = useState<string>();
+  const [scoreByTesterForUpdate, setScoreByTesterForUpdate] =
+    useState<string>();
 
   const handleSlideToggleChange = (checked: boolean) => {
     console.log(`SlideToggle is now ${checked ? "on" : "off"}`);
@@ -172,150 +174,118 @@ function CompletedTaskRowForTester({
     }
   );
 
-  const handleClickForUpdateScoreByTester = (pk:any) => {
-    mutationForUpdateScoreByTester.mutate({pk, scoreByTesterForUpdate});
-  }
+  const handleClickForUpdateScoreByTester = (pk: any) => {
+    mutationForUpdateScoreByTester.mutate({ pk, scoreByTesterForUpdate });
+  };
 
   const handleChangeForScoreByTester = (e: ChangeEvent<HTMLInputElement>) => {
     console.log("handleChangeForScoreByTester check");
     console.log("e : ", e.target.value);
-    
+
     setScoreByTesterForUpdate(e.target.value);
   };
 
   return (
-    <Box border={"0px solid blue"} maxWidth={"100%"}>
-      <Box overflowX="auto" width="100%">
-        <List>
-          {ProjectProgressList?.map((task) => {
-            return (
-              <ListItem
-                key={task.pk}
-                height={16}
-                border={"1px solid lightgray"}
-                width={"1474px"}
-                my={0}
-                display={"flex"}
-                alignItems={"center"}
-                _hover={{ backgroundColor: "gray.100" }}
-              >
-                <HStack>
-                  <Box border={"0px solid yellow"} width={"50px"}>
-                    <HStack ml={0}>
-                      <Checkbox mx={2} />
-                    </HStack>
-                  </Box>
-                  <Box width={"160px"}>
-                    <Text color={"blue.600"}>{task.task_manager.username}</Text>
-                    <Text color={"tomato"}>{task.writer}</Text>
-                  </Box>
-                  <Box border={"0px solid blue"} width={"420px"}>
-                    <Text fontSize="sm" fontWeight="bold">
-                      <Link
-                        to={`/project_admin/${task.pk}`}
-                        style={{ textDecoration: "underline" }}
-                      >
-                        {task.task}
-                      </Link>
-                    </Text>
-                  </Box>
+    <Box>
+      {ProjectProgressList?.map((task) => {
+        return (
+          <List
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <ListItem border={"0px solid yellow"}>
+              <Checkbox mx={2} />
+            </ListItem>
+            <ListItem width={"160px"}>
+              <Text color={"blue.600"}>{task.task_manager.username}</Text>
+              <Text color={"tomato"}>{task.writer}</Text>
+            </ListItem>
+            <ListItem border={"0px solid blue"}>
+              <Text fontSize="sm" fontWeight="bold">
+                <Link
+                  to={`/project_admin/${task.pk}`}
+                  style={{ textDecoration: "underline" }}
+                >
+                  {task.task}
+                </Link>
+              </Text>
+            </ListItem>
 
-                  {/* task_completed update */}
-                  <Box
-                    display={"flex"}
-                    justifyContent={"flex-start"}
-                    border={"0px solid green"}
-                    width={"120px"}
+            {/* task_completed update */}
+            <ListItem
+              display={"flex"}
+              justifyContent={"flex-start"}
+              border={"0px solid green"}
+            >
+              <SlideToggleButton
+                onChange={() => {
+                  updateHandlerForTaskStatus(task.pk);
+                }}
+                checked={task.task_completed}
+              />
+            </ListItem>
+
+            <ListItem
+              display={"flex"}
+              justifyContent={"flex-start"}
+              border={"0px solid green"}
+            >
+              <SlideToggleButton
+                onChange={() => {
+                  updateHandlerForCheckResultByTester(task.pk);
+                }}
+                onColor={"#FADADD"}
+                offColor={"#D3D3D3"}
+                checked={task.check_result_by_tester}
+              />
+            </ListItem>
+
+            <ListItem textAlign={"center"}>
+              <HStack>
+                <Text>시작</Text>
+                <Text>{task.started_at_formatted}</Text>
+              </HStack>
+            </ListItem>
+
+            <ListItem textAlign={"center"}>
+              <HStack>
+                <Text>완료</Text>
+                <Text>{task.completed_at_formatted}</Text>
+              </HStack>
+            </ListItem>
+            <ListItem border={"1px solid blue"}>
+              <InputGroup size="sm">
+                <Input
+                  border={"1px solid black"}
+                  defaultValue={task.score_by_tester}
+                  onChange={handleChangeForScoreByTester}
+                />
+                <InputRightElement width="60px" mr={-2}>
+                  <Button
+                    border={"1px solid green"}
+                    size="sm"
+                    onClick={() => handleClickForUpdateScoreByTester(task.pk)}
+                    // disabled={value === undefined || value < 0}
                   >
-                    <SlideToggleButton
-                      onChange={() => {
-                        updateHandlerForTaskStatus(task.pk);
-                      }}
-                      checked={task.task_completed}
-                    />
-                  </Box>
+                    평가
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </ListItem>
 
-                  <Box
-                    display={"flex"}
-                    justifyContent={"flex-start"}
-                    border={"0px solid green"}
-                    width={"120px"}
-                  >
-                    <SlideToggleButton
-                      onChange={() => {
-                        updateHandlerForCheckResultByTester(task.pk);
-                      }}
-                      onColor={"#FADADD"}
-                      offColor={"#D3D3D3"}
-                      checked={task.check_result_by_tester}
-                    />
-                  </Box>
+            <ListItem border={"1px solid red"}>
+              <IconButton
+                aria-label="삭제"
+                icon={<FaTrash />}
+                variant="ghost"
+                onClick={() => deleteHandelr(parseInt(task.pk))}
+              />
+            </ListItem>
+          </List>
+        );
+      })}
 
-                  <Box border={"0px solid blue"} width={"310px"}>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>시작</Text>
-                      </Box>
-                      <HStack>
-                        <Text>{task.started_at_formatted}</Text>
-                        <ModalButtonForUpdateProjectTaskStartedAt
-                          taskPk={task.pk}
-                          original_due_date={task.due_date ? task.due_date : ""}
-                          started_at={task.started_at ? task.started_at : ""}
-                          projectTaskListRefatch={projectTaskListRefatch}
-                        />
-                      </HStack>
-                    </HStack>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>마감</Text>
-                      </Box>
-                      <Text>{task.due_date_formatted}</Text>
-
-                      <ModalButtonForUpdateProjectTaskCompleteDate
-                        taskPk={task.pk}
-                        original_due_date={task.due_date ? task.due_date : ""}
-                        started_at={task.started_at ? task.started_at : ""}
-                        projectTaskListRefatch={projectTaskListRefatch}
-                      />
-                    </HStack>
-                  </Box>
-                  <Box border={"0px solid blue"} width={"140px"}>
-                    <InputGroup size="sm">
-                      <Input
-                        border={"1px solid black"}
-                        defaultValue={task.score_by_tester}
-                        onChange={handleChangeForScoreByTester}
-                      />
-                      <InputRightElement width="60px" mr={-2}>
-                        <Button
-                          border={"1px solid green"}
-                          size="sm"
-                          onClick={() => handleClickForUpdateScoreByTester(task.pk)}
-                          // disabled={value === undefined || value < 0}
-                        >
-                          평가
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
-                  </Box>
-
-                  <Box pl={"40px"}>
-                    <IconButton
-                      aria-label="삭제"
-                      icon={<FaTrash />}
-                      variant="ghost"
-                      onClick={() => deleteHandelr(parseInt(task.pk))}
-                    />
-                  </Box>
-                </HStack>
-              </ListItem>
-            );
-          })}
-        </List>
-      </Box>
-
-      {/* 페이지 네이션 영역 */}
       <Box mt={5}>
         {ProjectProgressList ? (
           <Container maxW="100%" bg="blue.100" color="red.500" mt={1}>

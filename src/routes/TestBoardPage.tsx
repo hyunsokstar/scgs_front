@@ -7,9 +7,9 @@ type Props = {};
 // rome-ignore lint/correctness/noEmptyPattern: <explanation>
 function TestBoardPage({}: Props): ReactElement {
   return (
-    <VStack gap={1}>
+    <Box>
       <CompletedProjectTaskListForTester />
-    </VStack>
+    </Box>
   );
 }
 
