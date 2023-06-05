@@ -349,7 +349,7 @@ function UncompletedProjectTaskList({
             </Tr>
             <Tr borderBottom={"2px solid #9AE6B4"}>
               <Td>
-                <Text>진행별</Text>
+                <Text>Progress status</Text>
               </Td>
               <Td
                 display={"flex"}
@@ -389,7 +389,7 @@ function UncompletedProjectTaskList({
                     </Td> */}
             </Tr>
             <Tr borderBottom={"2px solid #9AE6B4"}>
-              <Td>중요도</Td>
+              <Td>Importance</Td>
               <Td>
                 <StarRatingForSetFilterOptionForTaskList
                   rating={rating_for_filter_option}
@@ -399,8 +399,8 @@ function UncompletedProjectTaskList({
             </Tr>
             <Tr height="30px" borderBottom={"2px solid #9AE6B4"}>
               <Td>
-                <Text>담당자별:</Text>
-                <Text>@#$%@#$052904</Text>
+                <Text>Task Manager</Text>
+                {/* <Text>@#$%@#$052904</Text> */}
               </Td>
               <Td>
                 {taskListData?.writers_info?.map((writer) => {
@@ -466,10 +466,9 @@ function UncompletedProjectTaskList({
               <Tr>
                 <Td>due_date</Td>
                 <Td>
-                  {" "}
                   <Box display={"flex"} gap={2} mt={1}>
                     <ButtonForFilteringTaskForDueDate
-                      button_text="미정"
+                      button_text="Undetermined"
                       due_date_option="undecided"
                       due_date_option_for_filtering={
                         due_date_option_for_filtering
@@ -480,7 +479,7 @@ function UncompletedProjectTaskList({
                     />
 
                     <ButtonForFilteringTaskForDueDate
-                      button_text="어제까지"
+                      button_text="Until Yesterday"
                       due_date_option="until-yesterday"
                       due_date_option_for_filtering={
                         due_date_option_for_filtering
@@ -491,7 +490,7 @@ function UncompletedProjectTaskList({
                     />
 
                     <ButtonForFilteringTaskForDueDate
-                      button_text="정오"
+                      button_text="Until Noon"
                       due_date_option="until-noon"
                       due_date_option_for_filtering={
                         due_date_option_for_filtering
@@ -500,8 +499,9 @@ function UncompletedProjectTaskList({
                         set_due_date_option_for_filtering
                       }
                     />
+
                     <ButtonForFilteringTaskForDueDate
-                      button_text="오후"
+                      button_text="until Evening"
                       due_date_option="until-evening"
                       due_date_option_for_filtering={
                         due_date_option_for_filtering
@@ -510,8 +510,11 @@ function UncompletedProjectTaskList({
                         set_due_date_option_for_filtering
                       }
                     />
+                  </Box>
+
+                  <Box display={"flex"} gap={2} mt={1}>
                     <ButtonForFilteringTaskForDueDate
-                      button_text="내일"
+                      button_text="until Tomorrow"
                       due_date_option="until-tomorrow"
                       due_date_option_for_filtering={
                         due_date_option_for_filtering
@@ -520,8 +523,9 @@ function UncompletedProjectTaskList({
                         set_due_date_option_for_filtering
                       }
                     />
+
                     <ButtonForFilteringTaskForDueDate
-                      button_text="내일 모레"
+                      button_text="until Day After Tomorrow"
                       due_date_option="until-the-day-after-tomorrow"
                       due_date_option_for_filtering={
                         due_date_option_for_filtering
@@ -530,8 +534,9 @@ function UncompletedProjectTaskList({
                         set_due_date_option_for_filtering
                       }
                     />
+
                     <ButtonForFilteringTaskForDueDate
-                      button_text="이번주"
+                      button_text="Until This Week"
                       due_date_option="until-this-week"
                       due_date_option_for_filtering={
                         due_date_option_for_filtering
@@ -540,8 +545,9 @@ function UncompletedProjectTaskList({
                         set_due_date_option_for_filtering
                       }
                     />
+
                     <ButtonForFilteringTaskForDueDate
-                      button_text="이번달"
+                      button_text="Until This Month"
                       due_date_option="until-this-month"
                       due_date_option_for_filtering={
                         due_date_option_for_filtering
@@ -558,7 +564,7 @@ function UncompletedProjectTaskList({
                 <Td>
                   <Box display={"flex"} mt={0} gap={5} alignItems={"center"}>
                     <Box display="flex" alignItems="center">
-                      is_emergency :{" "}
+                      Is Emergency :{" "}
                       <Checkbox
                         size="lg"
                         ml={2}
@@ -697,7 +703,7 @@ function UncompletedProjectTaskList({
                 handlerForUpdateTaskDuedateForChecked("undetermined")
               }
             >
-              마감 날짜 초기화
+              Reset Duedate
             </Button>
 
             <Button
@@ -708,7 +714,7 @@ function UncompletedProjectTaskList({
               mr={2}
               onClick={() => handlerForUpdateTaskDuedateForChecked("noon")}
             >
-              마감 날짜 정오
+              Set Due Date to Noon
             </Button>
 
             <Button
@@ -719,7 +725,7 @@ function UncompletedProjectTaskList({
               mr={2}
               onClick={() => handlerForUpdateTaskDuedateForChecked("evening")}
             >
-              마감 날짜 오후
+              Set Due Date to evening
             </Button>
 
             <Button
@@ -730,7 +736,7 @@ function UncompletedProjectTaskList({
               mr={2}
               onClick={() => handlerForUpdateTaskDuedateForChecked("tomorrow")}
             >
-              마감 날짜 내일
+              Set Due Date to Tomorrow
             </Button>
 
             <Button
@@ -743,7 +749,7 @@ function UncompletedProjectTaskList({
                 handlerForUpdateTaskDuedateForChecked("day-after-tomorrow")
               }
             >
-              마감 날짜 모레
+              Set Due Date to Day After Tomorrow
             </Button>
 
             <Button
@@ -754,7 +760,7 @@ function UncompletedProjectTaskList({
               mr={2}
               onClick={() => handlerForUpdateTaskDuedateForChecked("this-week")}
             >
-              마감 날짜 이번주
+              Set Due Date this Weekend
             </Button>
 
             <Button
@@ -767,7 +773,7 @@ function UncompletedProjectTaskList({
                 handlerForUpdateTaskDuedateForChecked("this-month")
               }
             >
-              마감 날짜 이번달
+              Set Due Date to This Month
             </Button>
           </Box>
           <Box display={"flex"} p={2} gap={2}>
@@ -779,23 +785,23 @@ function UncompletedProjectTaskList({
               mr={2}
               onClick={deleteTaskForChecked}
             >
-              삭제
+              Delete For Check
             </Button>
 
             <ModalButtonForUpdateTaskManagerForChecked
-              button_text="담당자 변경"
+              button_text="Update Task Manager For Check"
               checkedRowPks={checkedRowPks}
               setCheckedRowPks={setCheckedRowPks}
             />
 
             <ModalButtonForUpdateImortanceForChecked
-              button_text="중요도 업데이트"
+              button_text="Update Importance For Check"
               checkedRowPks={checkedRowPks}
               setCheckedRowPks={setCheckedRowPks}
             />
 
             <ModalButtonForUpdateTaskClassificationForChecked
-              button_text="분류 업데이트"
+              button_text="Update Classification For Check"
               checkedRowPks={checkedRowPks}
               setCheckedRowPks={setCheckedRowPks}
             />
@@ -803,7 +809,7 @@ function UncompletedProjectTaskList({
         </Box>
         <Box p={2}>
           <ModalButtonForAddProjectTaskWithDuedateOption
-            button_text="Task 추가 For Team Project"
+            button_text="Register Task For Team Project"
             projectTaskListRefatch={projectTaskListRefatch}
             bgColor="red.300"
             hoverColor="red.500"

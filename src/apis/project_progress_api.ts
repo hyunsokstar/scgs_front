@@ -957,17 +957,21 @@ export const updateProjectTaskCompleted = (taskPk: string) => {
 export const apiForUpdateScoreByTester = ({
   pk,
   scoreByTesterForUpdate,
+  cashInfoForUpdate,
+  username,
 }: any) => {
   console.log(
     "parameter check for apiForUpdateScoreByTester : ",
     pk,
-    scoreByTesterForUpdate
+    scoreByTesterForUpdate,
+    cashInfoForUpdate,
+    username
   );
 
   return instance
     .put(
-      `/project_progress/${pk}/score-by-tester/update`,
-      { score_by_tester: scoreByTesterForUpdate },
+      `/project_progress/${pk}/score-update-by-tester`,
+      { score_by_tester: scoreByTesterForUpdate, cashInfoForUpdate, username: username },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",

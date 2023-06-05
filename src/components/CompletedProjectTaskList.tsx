@@ -267,7 +267,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
       </Box>
 
       <Box>
-        <Box w={"100%"} border={"1px solid red"}></Box>
+        <Box w={"100%"} border={"0px solid red"}></Box>
         {pageProgressListData ? (
           <CompletedTaskRow
             ProjectProgressList={filteredData}

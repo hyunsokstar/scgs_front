@@ -37,6 +37,7 @@ import ModalButtonForUpdateProjectTaskCompleteDate from "./modal/ModalButtonForU
 import ModalButtonForUpdateProjectTaskStartedAt from "./modal/ModalButtonForUpdateProjectTaskStartedAt";
 import SlideToggleButtonForInProgress from "./SlideToggleButton/SlideToggleButtonForInProgress";
 import SlideToggleButtonForIsTesting from "./SlideToggleButton/SlideToggleButtonForIsTesting";
+import CommonDeleteButtonForPk from "./Button/CommonDeleteButtonForPk";
 
 interface IProps {
   ProjectProgressList: taskRowForUncompleted[];
@@ -470,12 +471,17 @@ function UncompletedTaskRow({
                       }
                     />
                   </ListItem>
-                  <ListItem >
-                    <IconButton
+                  <ListItem>
+                    {/* <IconButton
                       aria-label="삭제"
                       icon={<FaTrash />}
                       variant="ghost"
                       onClick={() => deleteHandelr(parseInt(task.pk))}
+                    /> */}
+                    <CommonDeleteButtonForPk
+                      pk={task.pk}
+                      targetInfoToDelete={task.task}
+                      handlerForDelete={deleteHandelr}
                     />
                   </ListItem>
                   hi

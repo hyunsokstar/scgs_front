@@ -194,7 +194,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                 <Tbody>
                   <Tr borderBottom={"2px solid #fafad2"}>
                     <Td>
-                      <Text>진행별</Text>
+                      <Text>Progress status</Text>
                     </Td>
                     <Td
                       display={"flex"}

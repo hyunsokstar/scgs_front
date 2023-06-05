@@ -33,7 +33,7 @@ import { CheckIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { FaPlus } from "react-icons/fa";
 import ModalButtonForImageUploadForTestResult from "../modal/ModalButtonForImageUploadForTestResult";
 import ModalButtonForCreateTest from "../modal/ModalButtonForCreateTest";
-import DeleteButtonForTestForTask from "../Button/DeleteButtonForTestForTask";
+import CommonDeleteButtonForPk from "../Button/CommonDeleteButtonForPk";
 
 interface IPropsForTestListForTaskDetail {
   taskPk?: string | undefined;
@@ -197,12 +197,18 @@ function DataItem({
                       display="flex"
                       alignItems={"center"}
                     >
-                      <Img
-                        src={row.image_url}
-                        w={"80px"}
-                        h={"80px"}
-                        objectFit={"cover"}
-                      />
+                      <a
+                        href={row.image_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Img
+                          src={row.image_url}
+                          w={"80px"}
+                          h={"80px"}
+                          objectFit={"cover"}
+                        />
+                      </a>
                     </Box>
                   );
                 })
@@ -252,20 +258,10 @@ function DataItem({
           </Box>
         </Flex>
 
-        {/* <IconButton
-          aria-label="테스트 삭제"
-          variant={"outline"}
-          border="1px solid purple"
-          width="30px"
-          size={"sm"}
-          onClick={() => deleteTestHandler(pk)}
-          mr={2}
-          icon={<DeleteIcon />}
-        /> */}
-        <DeleteButtonForTestForTask
+        <CommonDeleteButtonForPk
           pk={pk}
-          test_description={test_description}
-          deleteTestHandler={deleteTestHandler}
+          targetInfoToDelete={test_description}
+          handlerForDelete={deleteTestHandler}
         />
       </Flex>
     </ListItem>

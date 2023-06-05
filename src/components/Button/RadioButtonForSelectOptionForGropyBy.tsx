@@ -21,13 +21,13 @@ const RadioButtonForSelectOptionForGropyBy: React.FC<
       <RadioGroup onChange={handleChange} value={groupByOption}>
         <Stack direction="row" spacing={5}>
           <Radio size="lg" value="">
-            조건 無
+            Default
           </Radio>
           <Radio size="lg" value="member">
-            멤버별
+            Member
           </Radio>
           <Radio size="lg" value="importance">
-            중요도별
+            Importance
           </Radio>
         </Stack>
       </RadioGroup>

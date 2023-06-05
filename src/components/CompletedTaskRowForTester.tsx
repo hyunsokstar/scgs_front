@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement, useState } from "react";
+import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   List,
@@ -45,8 +45,15 @@ function CompletedTaskRowForTester({
 }: ITypeForProjectProgressList): ReactElement {
   const queryClient = useQueryClient();
 
-  const [scoreByTesterForUpdate, setScoreByTesterForUpdate] =
-    useState<string>();
+  const [originalScoreValues, setOriginalScoreValues] = useState<number[]>([]);
+  const [scoreValues, setScoreValues] = useState<number[]>([]);
+
+  useEffect(() => {
+    const initialScores =
+      ProjectProgressList?.map((task) => task.score_by_tester ?? 0) || [];
+    setOriginalScoreValues(initialScores);
+    setScoreValues(initialScores);
+  }, [ProjectProgressList]);
 
   const handleSlideToggleChange = (checked: boolean) => {
     console.log(`SlideToggle is now ${checked ? "on" : "off"}`);
@@ -171,20 +178,53 @@ function CompletedTaskRowForTester({
     }
   );
 
-  const handleClickForUpdateScoreByTester = (pk: any) => {
-    mutationForUpdateScoreByTester.mutate({ pk, scoreByTesterForUpdate });
+  const handleClickForUpdateScoreByTester = (
+    pk: any,
+    index: number,
+    username: string
+  ) => {
+    // alert(username);
+    let scoreByTesterForUpdate;
+    if (scoreValues[index] === originalScoreValues[index]) {
+      alert("이전값과 같으므로 업데이트 하지 않겠습니다");
+      return;
+    } else if (scoreValues[index] > originalScoreValues[index]) {
+      scoreByTesterForUpdate = scoreValues[index] - originalScoreValues[index];
+      alert("+ 합니다")
+      alert(scoreByTesterForUpdate);
+    } else if(scoreValues[index] < originalScoreValues[index]) {
+      scoreByTesterForUpdate = scoreValues[index] - originalScoreValues[index];
+      alert("- 합니다")
+      alert(scoreByTesterForUpdate); 
+    }
+
+    mutationForUpdateScoreByTester.mutate({
+      pk,
+      cashInfoForUpdate: scoreByTesterForUpdate,
+      scoreByTesterForUpdate: scoreValues[index],
+      username,
+    });
   };
 
-  const handleChangeForScoreByTester = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("handleChangeForScoreByTester check");
-    console.log("e : ", e.target.value);
-
-    setScoreByTesterForUpdate(e.target.value);
+  const handleChangeForScoreByTester = (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const updatedScoreValues = [...scoreValues];
+    updatedScoreValues[index] = parseInt(e.target.value);
+    setScoreValues(updatedScoreValues);
   };
+
+  // const handleChangeForScoreByTester = (e: ChangeEvent<HTMLInputElement>) => {
+  //   console.log("handleChangeForScoreByTester check");
+  //   console.log("e : ", e.target.value);
+
+  //   setScoreByTesterForUpdate(e.target.value);
+  // };
 
   return (
     <Box overflowX={"scroll"}>
-      {ProjectProgressList?.map((task) => {
+      {ProjectProgressList?.map((task, index) => {
         return (
           <List
             display={"flex"}
@@ -257,22 +297,27 @@ function CompletedTaskRowForTester({
             <ListItem textAlign={"center"} flex={1.5}>
               <HStack>
                 <Text>소요 시간</Text>
-                <Text>{task.time_consumed_from_start_to_complete  }</Text>
+                <Text>{task.time_consumed_from_start_to_complete}</Text>
               </HStack>
             </ListItem>
-            <ListItem border={"0px solid blue"} flex={1.5}>
-              <InputGroup size="sm" width={"200px"}>
+            <ListItem border={"0px solid blue"} flex={1.8}>
+              <InputGroup size="sm" width={"250px"}>
                 <Input
                   border={"1px solid black"}
                   defaultValue={task.score_by_tester}
-                  onChange={handleChangeForScoreByTester}
+                  onChange={(e) => handleChangeForScoreByTester(e, index)}
                 />
                 <InputRightElement width="60px" mr={-2}>
                   <Button
                     border={"1px solid green"}
                     size="sm"
-                    onClick={() => handleClickForUpdateScoreByTester(task.pk)}
-                    // disabled={value === undefined || value < 0}
+                    onClick={() =>
+                      handleClickForUpdateScoreByTester(
+                        task.pk,
+                        index,
+                        task.task_manager.username
+                      )
+                    }
                   >
                     평가
                   </Button>
@@ -280,7 +325,7 @@ function CompletedTaskRowForTester({
               </InputGroup>
             </ListItem>
 
-            <ListItem border={"1px solid red"}>
+            <ListItem border={"1px solid red"} mr={2}>
               <IconButton
                 aria-label="삭제"
                 icon={<FaTrash />}

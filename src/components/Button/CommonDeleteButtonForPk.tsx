@@ -14,21 +14,21 @@ import {
 import { DeleteIcon } from "@chakra-ui/icons";
 
 interface DeleteButtonForTestForTaskProps {
-  pk: string | number;
-  test_description: string;
-  deleteTestHandler: (pk: string | number) => void;
+  pk: any;
+  targetInfoToDelete: string;
+  handlerForDelete: (pk: any) => void;
 }
 
-const DeleteButtonForTestForTask: React.FC<DeleteButtonForTestForTaskProps> = ({
+const CommonDeleteButtonForPk: React.FC<DeleteButtonForTestForTaskProps> = ({
   pk,
-  test_description,
-  deleteTestHandler,
+  targetInfoToDelete,
+  handlerForDelete,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const leastDestructiveRef = React.useRef<HTMLButtonElement | null>(null);
 
   const confirmDeleteHandler = (pk: string | number) => {
-    deleteTestHandler(pk);
+    handlerForDelete(pk);
     onClose();
   };
 
@@ -37,7 +37,7 @@ const DeleteButtonForTestForTask: React.FC<DeleteButtonForTestForTaskProps> = ({
       <IconButton
         aria-label="테스트 삭제"
         variant="outline"
-        border="1px solid purple"
+        border="1px solid orange"
         width="30px"
         size="sm"
         onClick={onOpen}
@@ -58,7 +58,7 @@ const DeleteButtonForTestForTask: React.FC<DeleteButtonForTestForTaskProps> = ({
             Delete Test
           </AlertDialogHeader>
           <AlertDialogBody>
-            <Box mt={2}>Target: {test_description}</Box>
+            <Box mt={2}>Target: {targetInfoToDelete}</Box>
             Are you sure you want to delete this test?
           </AlertDialogBody>
           <AlertDialogFooter>
@@ -80,4 +80,4 @@ const DeleteButtonForTestForTask: React.FC<DeleteButtonForTestForTaskProps> = ({
   );
 };
 
-export default DeleteButtonForTestForTask;
+export default CommonDeleteButtonForPk;

@@ -117,14 +117,14 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
             gap={2}
           >
             <Box border="0px solid red">
-              <Table border="0px"variant={"unstyled"}>
+              <Table border="0px" variant={"unstyled"}>
                 <Thead>
                   <Tr>
                     <Th colSpan={2}>
                       {" "}
                       <Box fontSize={22}>
-                        완료 리스트 For Tester (총: {pageProgressListData?.totalPageCount}{" "}
-                        개, per_page:{" "}
+                        완료 리스트 For Tester (총:{" "}
+                        {pageProgressListData?.totalPageCount} 개, per_page:{" "}
                         {pageProgressListData?.task_number_for_one_page} 개){" "}
                       </Box>
                     </Th>
@@ -132,18 +132,10 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
                 </Thead>
                 <Tbody border={"0px solid green"}>
                   <Tr height="30px">
-                    <Td
-                      // borderBottomWidth="0px"
-                      // borderRightWidth="1px"
-                      // borderColor="teal.200"
-                    >
+                    <Td>
                       <Text>담당자별:</Text>
                     </Td>
-                    <Td
-                      // borderBottomWidth="0px"
-                      // borderRightWidth="1px"
-                      // borderColor="teal.200"
-                    >
+                    <Td>
                       {pageProgressListData?.writers_info?.map((writer) => {
                         return (
                           <Text fontSize="lg" color="blue.900">
@@ -152,9 +144,6 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
                         );
                       })}
                     </Td>
-                    {/* <Td borderBottomWidth="1px" borderColor="teal.200">
-                      Row 2, Column 3
-                    </Td> */}
                   </Tr>
                 </Tbody>
               </Table>
@@ -207,9 +196,7 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
           </Box>
         </Box>
 
-        <Box textAlign={"right"} m={0}>
-
-        </Box>
+        <Box textAlign={"right"} m={0}>3영역</Box>
       </Box>
       <Box>
         {pageProgressListData ? (
@@ -222,6 +209,7 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
             projectTaskListRefatch={projectTaskListRefatch}
             currentPageNum={currentPageNum}
             setCurrentPageNum={setCurrentPageNum}
+            
           />
         ) : (
           ""

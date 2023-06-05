@@ -447,24 +447,10 @@ function ProjectProgressDetail({}: Props): ReactElement {
         <br />
         <Box fontSize={"20px"}>
           <Text fontFamily="Arial, sans-serif">
-            테스트 리스트 (테스트 체킹은 로그인 필요)
+            Test List For Task
           </Text>
         </Box>
         <Box bg={"white"} width={"100%"} border={"1px solid black"}>
-          {/* <Box
-            display={"flex"}
-            justifyContent={"flex-end"}
-            alignItems={"center"}
-            bgColor={"yellow.200"}
-            p={1}
-            textAlign="center"
-          >
-            {!isLoadingForTaskData && taskData ? (
-              <ModalButtonForCreateTest taskPk={taskData?.pk} />
-            ) : (
-              ""
-            )}
-          </Box> */}
           <TestListForTaskDetail
             taskPk={taskPk}
             testData={taskData?.tests_for_tasks}
