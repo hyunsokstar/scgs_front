@@ -19,10 +19,9 @@ interface ImageSlideForUncompletedTaskListForCheckedProps {
   dataForTaskListForChecked: string[];
 }
 
-const ImageSlideForUncompletedTaskListForChecked: React.FC<ImageSlideForUncompletedTaskListForCheckedProps> = ({
-  numSlides,
-  dataForTaskListForChecked,
-}) => {
+const ImageSlideForUncompletedTaskListForChecked: React.FC<
+  ImageSlideForUncompletedTaskListForCheckedProps
+> = ({ numSlides, dataForTaskListForChecked }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
