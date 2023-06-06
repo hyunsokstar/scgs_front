@@ -74,19 +74,21 @@ export default function SimpleSlider() {
   return (
     <ChakraProvider theme={theme}>
       <Slider {...settings} ref={sliderRef}>
+
         <Box>
           <Box
             bg="pastelColor1"
             border="1px solid"
             borderColor="gray.200"
-            height="100%" // 슬라이드 내용물을 수직 가운데에 정렬하기 위해 추가
-            display="flex" // 슬라이드 내용물을 수평 가운데에 정렬하기 위해 추가
-            justifyContent="center" // 슬라이드 내용물을 수평 가운데에 정렬하기 위해 추가
-            alignItems="center" // 슬라이드 내용물을 수직 가운데에 정렬하기 위해 추가
+            height="100%" 
+            display="flex" 
+            justifyContent="center" 
+            alignItems="center" 
           >
             <h3>1</h3>
           </Box>
         </Box>
+
         <Box>
           <Box
             bg="pastelColor2"
@@ -100,6 +102,7 @@ export default function SimpleSlider() {
             <h3>2</h3>
           </Box>
         </Box>
+
         <Box>
           <Box
             bg="pastelColor3"
@@ -113,12 +116,15 @@ export default function SimpleSlider() {
             <h3>3</h3>
           </Box>
         </Box>
+
       </Slider>
-      <Box display="flex" justifyContent="center" mt={2}>
+
+      <Box display="flex" justifyContent="center" alignItems={"center"} mt={2}>
         <Button onClick={prevSlide}>Prev</Button>
         {renderCustomPaging()}
         <Button onClick={nextSlide}>Next</Button>
       </Box>
+
     </ChakraProvider>
   );
 }
