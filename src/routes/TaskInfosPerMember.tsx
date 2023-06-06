@@ -39,12 +39,14 @@ const TaskInfosPerMember = (props: Props) => {
         px={6}
         borderRadius="md"
         shadow="md"
+        mt={2}
+        mb={2}
       >
         <Box
           fontSize="50px"
           fontWeight="bold"
           textAlign="center"
-          color="white"
+          color="yellow.200"
         >
           Team Members' Work Status
         </Box>
@@ -53,8 +55,8 @@ const TaskInfosPerMember = (props: Props) => {
         display={"flex"}
         justifyContent={"space-between"}
         width={"100%"}
-        // mt={"20px"}
         px={"20px"}
+        py={"20px"}
         flexWrap={"wrap"}
         bgColor={"black"}
         textAlign={"center"}
@@ -62,7 +64,18 @@ const TaskInfosPerMember = (props: Props) => {
         {dataForTaskInfoPerUser
           ? dataForTaskInfoPerUser.map((user) => {
               return (
-                <Box width={"23%"} mt={2} mb={3}>
+                <Box
+                  width={"23%"}
+                  mt={2}
+                  mb={8}
+                  _hover={{
+                    transform: "translateY(-5px)",
+                    // boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    // border: "1px solid #000000",
+                    transition:
+                      "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border 0.2s ease-in-out",
+                  }}
+                >
                   <ProfileCardForTeamStatus
                     id={user.id}
                     profile_image={user.profile_image}
