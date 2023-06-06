@@ -154,16 +154,6 @@ const ButtonsForUnompletedTaskForChecked: React.FC<
           setCheckedRowPks={setCheckedRowPks}
         />
 
-        {/* <Button
-          variant={"outline"}
-          border={"1px solid blue"}
-          bg={"blue.100"}
-          size={"xs"}
-          mr={5}
-        >
-          show task detail using image slide for check
-        </Button> */}
-
         <Button
           variant={"outline"}
           border={"1px solid blue"}
