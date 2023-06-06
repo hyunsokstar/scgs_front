@@ -1,4 +1,3 @@
-// ImageSlideForUncompletedTaskListForChecked
 import React, { useRef, useState } from "react";
 import Slider from "react-slick";
 import { Box, ChakraProvider, extendTheme, Button } from "@chakra-ui/react";
@@ -82,12 +81,16 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
             border="1px solid"
             borderColor="gray.200"
             height="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
             textAlign="center"
           >
-            <h3>{content}</h3>
+            <Box display={"flex"}>
+              <Box bg="#F6CED8" width={"50%"}>
+                <h3>{content}</h3>
+              </Box>
+              <Box bg="#D8F6F1" width={"50%"}>
+                <h3>{content}</h3>
+              </Box>
+            </Box>
           </Box>
         ))}
       </Slider>
