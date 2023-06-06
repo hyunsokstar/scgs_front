@@ -29,6 +29,7 @@ import { getUserNamesForCreate } from "../../apis/user_api";
 interface IProps {
   projectTaskListRefatch: () => void;
   button_text: string;
+  size: string;
   due_date_option_for_button?:
     | "morning_tasks"
     | "afternoon_tasks"
@@ -80,6 +81,7 @@ const dueDateOptionsForButton = {
 const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
   projectTaskListRefatch,
   button_text = "add task",
+  size,
   due_date_option_for_button = "night_tasks",
   bgColor,
   hoverColor,
@@ -160,8 +162,10 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
   return (
     <Box>
       <Button
+        mt={2}
+        mr={1}
         as="button"
-        size="md"
+        size={size}
         bg={bgColor ? bgColor : "tranparent"}
         border="2px"
         borderColor={buttonColors[due_date_option_for_button]}

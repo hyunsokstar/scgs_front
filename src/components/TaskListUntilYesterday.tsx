@@ -463,6 +463,7 @@ function TaskListUntilYesterday({
         <Box p={2}>
           <ModalButtonForAddProjectTaskWithDuedateOption
             button_text="Task 추가 For Team Project"
+            size={"md"}
             projectTaskListRefatch={projectTaskListRefatch}
             bgColor="red.300"
             hoverColor="red.500"

@@ -6,14 +6,12 @@ import {
   Input,
   useToast,
   Table,
-  Thead,
   Tbody,
   Tr,
   Th,
   Td,
   Checkbox,
   Progress,
-  // useTheme,
 } from "@chakra-ui/react";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -28,18 +26,18 @@ import {
   typeForDueDateUpdateForChecked,
 } from "../types/project_progress/project_progress_type";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
-import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRow from "./UncompletedTaskRow";
-import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
-import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
-import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskForDueDate";
 import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForSetFilterOptionForTaskList";
-import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 import RadioButtonForSelectOptionForGropyBy from "./Button/RadioButtonForSelectOptionForGropyBy";
 import ModalButtonForAddProjectTaskWithDuedateOption from "./modal/ModalButtonForAddProjectTaskWithDuedateOption";
-import ButtonsForUpdateTaskForCheckedList from "./Button/ButtonsForUpdateTaskForCheckedList";
+import ButtonsForUnompletedTaskForChecked from "./Button/ButtonsForUnompletedTaskForChecked";
 import ButtonsForSelectOptionForDueDateForUncompletedTaskList from "./Button/ButtonsForSelectOptionForDueDateForUncompletedTaskList";
+import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
+import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
+import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
+import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskForDueDate";
+import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 
 interface Props {
   basic_due_date_option?:
@@ -57,7 +55,6 @@ interface Props {
 function UncompletedProjectTaskList({
   basic_due_date_option,
 }: Props): ReactElement {
-  // const theme = useTheme();
   const queryClient = useQueryClient();
 
   const [checkedRowPks, setCheckedRowPks] = useState<any[]>([]);
@@ -169,7 +166,6 @@ function UncompletedProjectTaskList({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = event.target.value;
-    // setFilterValueForTaskClassification(value);
     updateFilteredDataForTaskManager(value);
   };
 
@@ -222,13 +218,10 @@ function UncompletedProjectTaskList({
       return apiForDeleteTasksForChecked(checkedRowPks);
     },
     {
-      onSettled: () => {
-        // setSelectedItems([]);
-      },
+      onSettled: () => {},
       onSuccess: (data) => {
         console.log("data : ", data);
         setCheckedRowPks([]);
-        // refetch_for_api_docu();
         queryClient.refetchQueries(["getUncompletedTaskList"]);
 
         toast({
@@ -241,7 +234,6 @@ function UncompletedProjectTaskList({
   );
 
   const deleteTaskForChecked = () => {
-    // checkedRowPks
     if (checkedRowPks.length === 0) {
       alert("Note를 하나 이상 체크 해주세요");
       return;
@@ -257,13 +249,10 @@ function UncompletedProjectTaskList({
       });
     },
     {
-      onSettled: () => {
-        // setSelectedItems([]);
-      },
+      onSettled: () => {},
       onSuccess: (data) => {
         console.log("data : ", data);
         setCheckedRowPks([]);
-        // refetch_for_api_docu();
         queryClient.refetchQueries(["getUncompletedTaskList"]);
 
         toast({
@@ -271,13 +260,10 @@ function UncompletedProjectTaskList({
           status: "success",
           description: data.message,
         });
-
-        // window.location.reload(); // 새로고침
       },
     }
   );
 
-  // due_date update
   const handlerForUpdateTaskDuedateForChecked = (
     duration_option:
       | "undetermined"
@@ -320,10 +306,8 @@ function UncompletedProjectTaskList({
       taskListData?.ProjectProgressList.map((item) => item.pk) || [];
 
     if (checked) {
-      // Add all pks to the checkedRowPks array
       setCheckedRowPks([...checkedRowPks, ...rowPks]);
     } else {
-      // Remove all pks from the checkedRowPks array
       setCheckedRowPks([]);
     }
   };
@@ -435,15 +419,7 @@ function UncompletedProjectTaskList({
         </Box>
 
         <Box>
-          <Table
-            variant="unstyled"
-            // colorScheme="black"
-            // borderRadius="md"
-            size="md"
-            bg={"green.200"}
-            // border={"1px solid black"}
-            mb={2}
-          >
+          <Table variant="unstyled" size="md" bg={"green.200"} mb={2}>
             <Tbody>
               <Tr>
                 <Td>created_at</Td>
@@ -588,37 +564,35 @@ function UncompletedProjectTaskList({
         </Box>
       </Box>
 
-      <Box display={"flex"} justifyContent={"space-between"}>
+      <Box
+        display={"flex"}
+        flexDirection={"row"}
+        justifyContent={"space-between"}
+        ml={2}
+      >
         <Checkbox
-          size="lg"
-          colorScheme="blue"
+          size={"lg"}
           onChange={handleChangeForAllCheckBox}
           checked={
             checkedRowPks.length === taskListData?.ProjectProgressList.length
           }
-          ml={2}
         />
-
-        <Box>
-          <ButtonsForUpdateTaskForCheckedList
-            checkedRowPks={checkedRowPks}
-            setCheckedRowPks={setCheckedRowPks}
-            deleteTaskForChecked={deleteTaskForChecked}
-            handlerForUpdateTaskDuedateForChecked={
-              handlerForUpdateTaskDuedateForChecked
-            }
-          />
-        </Box>
-
-        <Box p={2}>
-          <ModalButtonForAddProjectTaskWithDuedateOption
-            button_text="Register Task For Team Project"
-            projectTaskListRefatch={projectTaskListRefatch}
-            bgColor="red.300"
-            hoverColor="red.500"
-            hoverTextColor="yellow"
-          />
-        </Box>
+        <ButtonsForUnompletedTaskForChecked
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+          deleteTaskForChecked={deleteTaskForChecked}
+          handlerForUpdateTaskDuedateForChecked={
+            handlerForUpdateTaskDuedateForChecked
+          }
+        />
+        <ModalButtonForAddProjectTaskWithDuedateOption
+          button_text="Register Task for team project"
+          size={"sm"}
+          projectTaskListRefatch={projectTaskListRefatch}
+          bgColor="red.300"
+          hoverColor="red.500"
+          hoverTextColor="yellow"
+        />
       </Box>
 
       <Box>

@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Box, Button } from "@chakra-ui/react";
+import ModalButtonForUpdateTaskManagerForChecked from "./ModalButtonForUpdateTaskManagerForChecked";
+import ModalButtonForUpdateImortanceForChecked from "../modal/ModalButtonForUpdateImortanceForChecked";
+import ModalButtonForUpdateTaskClassificationForChecked from "../modal/ModalButtonForUpdateTaskClassificationForChecked";
 
-interface ButtonsForUpdateTaskForCheckedListProps {
+interface ButtonsForUpdateTaskDueDateForCheckedListProps {
   checkedRowPks: any[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<any[]>>;
   deleteTaskForChecked: () => void;
@@ -17,7 +20,9 @@ interface ButtonsForUpdateTaskForCheckedListProps {
   ) => void;
 }
 
-const ButtonsForUpdateTaskForCheckedList: React.FC<ButtonsForUpdateTaskForCheckedListProps> = ({
+const ButtonsForUnompletedTaskForChecked: React.FC<
+  ButtonsForUpdateTaskDueDateForCheckedListProps
+> = ({
   checkedRowPks,
   setCheckedRowPks,
   deleteTaskForChecked,
@@ -32,9 +37,7 @@ const ButtonsForUpdateTaskForCheckedList: React.FC<ButtonsForUpdateTaskForChecke
           backgroundColor="purple.50"
           _hover={{ backgroundColor: "purple.100" }}
           mr={2}
-          onClick={() =>
-            handlerForUpdateTaskDuedateForChecked("undetermined")
-          }
+          onClick={() => handlerForUpdateTaskDuedateForChecked("undetermined")}
         >
           Reset Duedate
         </Button>
@@ -107,23 +110,43 @@ const ButtonsForUpdateTaskForCheckedList: React.FC<ButtonsForUpdateTaskForChecke
           Set DueDate to This Month
         </Button>
       </Box>
-      <Box display={"flex"} p={2} gap={2}>
+      <Box display={"flex"} justifyContent={"flex-start"} gap={2} ml={2}>
         <Button
           variant="outline"
           size="xs"
           backgroundColor="red.50"
           _hover={{ backgroundColor: "red.100" }}
           mr={2}
+          gap={10}
           onClick={deleteTaskForChecked}
         >
           Delete For Check
         </Button>
 
+        <ModalButtonForUpdateTaskManagerForChecked
+          button_text={"update task manager"}
+          size={"xs"}
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+        />
+        <ModalButtonForUpdateImortanceForChecked
+          button_text={"update importance"}
+          size={"xs"}
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+        />
+        <ModalButtonForUpdateTaskClassificationForChecked
+          button_text={"update task for classification"}
+          size={"xs"}
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+        />
         <Button
           variant={"outline"}
           border={"1px solid blue"}
           bg={"blue.100"}
           size={"xs"}
+          mr={5}
         >
           show task detail using image slide for check
         </Button>
@@ -132,4 +155,4 @@ const ButtonsForUpdateTaskForCheckedList: React.FC<ButtonsForUpdateTaskForChecke
   );
 };
 
-export default ButtonsForUpdateTaskForCheckedList;
+export default ButtonsForUnompletedTaskForChecked;

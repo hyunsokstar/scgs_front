@@ -228,9 +228,8 @@ const TodayTaskStatusPage = () => {
               alignItems={"center"}
               textAlign={"center"}
               my={1}
-              >
-              task status for this week &nbsp;&nbsp;
-              오늘 이전 비완료 : &nbsp;
+            >
+              task status for this week &nbsp;&nbsp; 오늘 이전 비완료 : &nbsp;
               <ModalButtonForTaskListWithDeadlineUntilYesterDay
                 buttonText={
                   dataForTaskStatusForToday?.task_count_for_uncompleted_task_until_yesterday
@@ -308,6 +307,7 @@ const TodayTaskStatusPage = () => {
                       }
                       button_text={"Create"}
                       due_date_option_for_button={Time}
+                      size={"md"}
                     />
                   </Box>
                   {tasks[Time].length
