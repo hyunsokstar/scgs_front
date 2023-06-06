@@ -68,50 +68,25 @@ export default function SimpleSlider() {
     return buttons;
   };
 
+  const dataForTaskListForChecked = ["1", "2", "3"];
+
   return (
     <ChakraProvider theme={theme}>
       <Slider {...settings} ref={sliderRef}>
-        <Box>
+        {dataForTaskListForChecked.map((content, index) => (
           <Box
-            bg="pastelColor1"
+            key={index}
             border="1px solid"
             borderColor="gray.200"
             height="100%"
             display="flex"
             justifyContent="center"
             alignItems="center"
+            textAlign={"center"}
           >
-            <h3>1</h3>
+            <h3>{content}</h3>
           </Box>
-        </Box>
-
-        <Box>
-          <Box
-            bg="pastelColor2"
-            border="1px solid"
-            borderColor="gray.200"
-            height="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <h3>2</h3>
-          </Box>
-        </Box>
-
-        <Box>
-          <Box
-            bg="pastelColor3"
-            border="1px solid"
-            borderColor="gray.200"
-            height="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <h3>3</h3>
-          </Box>
-        </Box>
+        ))}
       </Slider>
 
       <Box display="flex" justifyContent="center" alignItems={"center"} mt={2}>
