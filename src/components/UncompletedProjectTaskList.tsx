@@ -38,6 +38,8 @@ import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForS
 import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 import RadioButtonForSelectOptionForGropyBy from "./Button/RadioButtonForSelectOptionForGropyBy";
 import ModalButtonForAddProjectTaskWithDuedateOption from "./modal/ModalButtonForAddProjectTaskWithDuedateOption";
+import ButtonsForUpdateTaskForCheckedList from "./Button/ButtonsForUpdateTaskForCheckedList";
+import ButtonsForSelectOptionForDueDateForUncompletedTaskList from "./Button/ButtonsForSelectOptionForDueDateForUncompletedTaskList";
 
 interface Props {
   basic_due_date_option?:
@@ -341,7 +343,7 @@ function UncompletedProjectTaskList({
           <Table border={"0px solid blue"} mb={1}>
             <Tr borderBottom={"2px solid #9AE6B4"}>
               <Th colSpan={2}>
-                <Text fontSize={18}>
+                <Text fontSize={16}>
                   uncomplete task (total: {taskListData?.totalPageCount}, per :{" "}
                   {taskListData?.task_number_for_one_page} ){" "}
                 </Text>
@@ -367,26 +369,23 @@ function UncompletedProjectTaskList({
                 />
 
                 <ButtonForShowCountForTaskStatus
+                  button_size={"md"}
                   task_status={"in_progress"}
                   status_imoge={"🟡"}
                   status_count={taskListData?.count_for_in_progress}
-                  button_size={"md"}
                   task_status_for_search={task_status_for_search}
                   set_task_status_for_search={set_task_status_for_search}
                 />
 
                 <ButtonForShowCountForTaskStatus
+                  button_size={"md"}
                   task_status={"testing"}
                   status_imoge={"🟠"}
                   status_count={taskListData?.count_for_in_testing}
-                  button_size={"md"}
                   task_status_for_search={task_status_for_search}
                   set_task_status_for_search={set_task_status_for_search}
                 />
               </Td>
-              {/* <Td borderBottomWidth="1px" borderColor="teal.200">
-                      Row 1, Column 3
-                    </Td> */}
             </Tr>
             <Tr borderBottom={"2px solid #9AE6B4"}>
               <Td>Importance</Td>
@@ -400,7 +399,6 @@ function UncompletedProjectTaskList({
             <Tr height="30px" borderBottom={"2px solid #9AE6B4"}>
               <Td>
                 <Text>Task Manager</Text>
-                {/* <Text>@#$%@#$052904</Text> */}
               </Td>
               <Td>
                 {taskListData?.writers_info?.map((writer) => {
@@ -432,9 +430,6 @@ function UncompletedProjectTaskList({
                   );
                 })}
               </Td>
-              {/* <Td borderBottomWidth="1px" borderColor="teal.200">
-                      Row 2, Column 3
-                    </Td> */}
             </Tr>
           </Table>
         </Box>
@@ -466,97 +461,14 @@ function UncompletedProjectTaskList({
               <Tr>
                 <Td>due_date</Td>
                 <Td>
-                  <Box display={"flex"} gap={2} mt={1}>
-                    <ButtonForFilteringTaskForDueDate
-                      button_text="Undetermined"
-                      due_date_option="undecided"
-                      due_date_option_for_filtering={
-                        due_date_option_for_filtering
-                      }
-                      set_due_date_option_for_filtering={
-                        set_due_date_option_for_filtering
-                      }
-                    />
-
-                    <ButtonForFilteringTaskForDueDate
-                      button_text="Until Yesterday"
-                      due_date_option="until-yesterday"
-                      due_date_option_for_filtering={
-                        due_date_option_for_filtering
-                      }
-                      set_due_date_option_for_filtering={
-                        set_due_date_option_for_filtering
-                      }
-                    />
-
-                    <ButtonForFilteringTaskForDueDate
-                      button_text="Until Noon"
-                      due_date_option="until-noon"
-                      due_date_option_for_filtering={
-                        due_date_option_for_filtering
-                      }
-                      set_due_date_option_for_filtering={
-                        set_due_date_option_for_filtering
-                      }
-                    />
-
-                    <ButtonForFilteringTaskForDueDate
-                      button_text="until Evening"
-                      due_date_option="until-evening"
-                      due_date_option_for_filtering={
-                        due_date_option_for_filtering
-                      }
-                      set_due_date_option_for_filtering={
-                        set_due_date_option_for_filtering
-                      }
-                    />
-                  </Box>
-
-                  <Box display={"flex"} gap={2} mt={1}>
-                    <ButtonForFilteringTaskForDueDate
-                      button_text="until Tomorrow"
-                      due_date_option="until-tomorrow"
-                      due_date_option_for_filtering={
-                        due_date_option_for_filtering
-                      }
-                      set_due_date_option_for_filtering={
-                        set_due_date_option_for_filtering
-                      }
-                    />
-
-                    <ButtonForFilteringTaskForDueDate
-                      button_text="until Day After Tomorrow"
-                      due_date_option="until-the-day-after-tomorrow"
-                      due_date_option_for_filtering={
-                        due_date_option_for_filtering
-                      }
-                      set_due_date_option_for_filtering={
-                        set_due_date_option_for_filtering
-                      }
-                    />
-
-                    <ButtonForFilteringTaskForDueDate
-                      button_text="Until This Week"
-                      due_date_option="until-this-week"
-                      due_date_option_for_filtering={
-                        due_date_option_for_filtering
-                      }
-                      set_due_date_option_for_filtering={
-                        set_due_date_option_for_filtering
-                      }
-                    />
-
-                    <ButtonForFilteringTaskForDueDate
-                      button_text="Until This Month"
-                      due_date_option="until-this-month"
-                      due_date_option_for_filtering={
-                        due_date_option_for_filtering
-                      }
-                      set_due_date_option_for_filtering={
-                        set_due_date_option_for_filtering
-                      }
-                    />
-                  </Box>
+                  <ButtonsForSelectOptionForDueDateForUncompletedTaskList
+                    due_date_option_for_filtering={
+                      due_date_option_for_filtering
+                    }
+                    set_due_date_option_for_filtering={
+                      set_due_date_option_for_filtering
+                    }
+                  />
                 </Td>
               </Tr>
               <Tr>
@@ -668,7 +580,7 @@ function UncompletedProjectTaskList({
             <Box w="100%">
               <Progress
                 value={taskListData.achievement_rate_for_today}
-                size="sm"
+                size="xs"
                 mb={2}
               />
             </Box>
@@ -688,127 +600,16 @@ function UncompletedProjectTaskList({
         />
 
         <Box>
-          <Box p={2} gap={2}>
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() =>
-                handlerForUpdateTaskDuedateForChecked("undetermined")
-              }
-            >
-              Reset Duedate
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() => handlerForUpdateTaskDuedateForChecked("noon")}
-            >
-              Set Due Date to Noon
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() => handlerForUpdateTaskDuedateForChecked("evening")}
-            >
-              Set Due Date to evening
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() => handlerForUpdateTaskDuedateForChecked("tomorrow")}
-            >
-              Set Due Date to Tomorrow
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() =>
-                handlerForUpdateTaskDuedateForChecked("day-after-tomorrow")
-              }
-            >
-              Set Due Date to Day After Tomorrow
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() => handlerForUpdateTaskDuedateForChecked("this-week")}
-            >
-              Set Due Date this Weekend
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() =>
-                handlerForUpdateTaskDuedateForChecked("this-month")
-              }
-            >
-              Set Due Date to This Month
-            </Button>
-          </Box>
-          <Box display={"flex"} p={2} gap={2}>
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="red.50"
-              _hover={{ backgroundColor: "red.100" }}
-              mr={2}
-              onClick={deleteTaskForChecked}
-            >
-              Delete For Check
-            </Button>
-
-            <ModalButtonForUpdateTaskManagerForChecked
-              button_text="Update Task Manager For Check"
-              size={"xs"}
-              checkedRowPks={checkedRowPks}
-              setCheckedRowPks={setCheckedRowPks}
-            />
-
-            <ModalButtonForUpdateImortanceForChecked
-              button_text="Update Importance For Check"
-              size={"xs"}
-              checkedRowPks={checkedRowPks}
-              setCheckedRowPks={setCheckedRowPks}
-            />
-
-            <ModalButtonForUpdateTaskClassificationForChecked
-              button_text="Update Classification For Check"
-              size={"xs"}
-              checkedRowPks={checkedRowPks}
-              setCheckedRowPks={setCheckedRowPks}
-            />
-            <Button variant={"outline"} border={"1px solid blue"} size={"xs"}>
-              show task detail using image slide for check
-            </Button>
-          </Box>
+          <ButtonsForUpdateTaskForCheckedList
+            checkedRowPks={checkedRowPks}
+            setCheckedRowPks={setCheckedRowPks}
+            deleteTaskForChecked={deleteTaskForChecked}
+            handlerForUpdateTaskDuedateForChecked={
+              handlerForUpdateTaskDuedateForChecked
+            }
+          />
         </Box>
+
         <Box p={2}>
           <ModalButtonForAddProjectTaskWithDuedateOption
             button_text="Register Task For Team Project"
