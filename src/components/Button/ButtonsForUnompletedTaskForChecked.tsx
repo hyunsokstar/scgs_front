@@ -3,6 +3,7 @@ import { Box, Button } from "@chakra-ui/react";
 import ModalButtonForUpdateTaskManagerForChecked from "./ModalButtonForUpdateTaskManagerForChecked";
 import ModalButtonForUpdateImortanceForChecked from "../modal/ModalButtonForUpdateImortanceForChecked";
 import ModalButtonForUpdateTaskClassificationForChecked from "../modal/ModalButtonForUpdateTaskClassificationForChecked";
+import { useNavigate } from 'react-router-dom';
 
 interface ButtonsForUpdateTaskDueDateForCheckedListProps {
   checkedRowPks: any[];
@@ -28,6 +29,17 @@ const ButtonsForUnompletedTaskForChecked: React.FC<
   deleteTaskForChecked,
   handlerForUpdateTaskDuedateForChecked,
 }) => {
+  const navigator = useNavigate();
+  
+  const handleButtonClick = () => {
+    if (checkedRowPks.length === 0) {
+      alert("Please check at least one item");
+      return;
+    }
+    // Perform other actions
+    navigator(`/task-list-for-checked?checkedRowPks=${checkedRowPks.join(",")}`);
+  };
+
   return (
     <Box>
       <Box p={2} gap={2}>
@@ -141,12 +153,24 @@ const ButtonsForUnompletedTaskForChecked: React.FC<
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
         />
+
+        {/* <Button
+          variant={"outline"}
+          border={"1px solid blue"}
+          bg={"blue.100"}
+          size={"xs"}
+          mr={5}
+        >
+          show task detail using image slide for check
+        </Button> */}
+
         <Button
           variant={"outline"}
           border={"1px solid blue"}
           bg={"blue.100"}
           size={"xs"}
           mr={5}
+          onClick={handleButtonClick}
         >
           show task detail using image slide for check
         </Button>

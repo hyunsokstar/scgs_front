@@ -61,6 +61,7 @@ import BarChartForDailyTaskCountForPersonalUserPage from "./routes/ChartPage/Bar
 import TodayTaskStatusPage from "./routes/TodayTaskStatusPage";
 import TaskLogPage from "./routes/Log/TaskLogPage";
 import ExtraTaskDetailPage from "./routes/ExtraTaskDetailPage";
+import UncompltedTaskListWithImageSlideForCheckedPage from "./routes/UncompltedTaskListWithImageSlideForCheckedPage";
 
 const router = createBrowserRouter([
   {
@@ -230,6 +231,12 @@ const router = createBrowserRouter([
         path: "project_admin/:taskPk",
         element: <ProjectProgressDetail />,
       },
+
+      {
+        path: "task-list-for-checked",
+        element: <UncompltedTaskListWithImageSlideForCheckedPage />,
+      },
+
       {
         path: "extra_task/:taskPk",
         element: <ExtraTaskDetailPage />,
