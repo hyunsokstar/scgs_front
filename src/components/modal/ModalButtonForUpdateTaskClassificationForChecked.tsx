@@ -34,6 +34,7 @@ type TaskClassification =
 
 type ModalButtonForUpdateImortanceForCheckedProps = {
   button_text: string;
+  size: string;
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
 };
@@ -45,7 +46,7 @@ type FormData = {
 // 1122
 const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
   ModalButtonForUpdateImortanceForCheckedProps
-> = ({ button_text, checkedRowPks, setCheckedRowPks }) => {
+> = ({ button_text, size, checkedRowPks, setCheckedRowPks }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedClassification, setSelectedClassification] =
     useState<TaskClassification>("crud");
@@ -105,7 +106,7 @@ const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
   return (
     <Box>
       <Button
-        size="sm"
+        size={size}
         variant="outline"
         backgroundColor="red.50"
         _hover={{ backgroundColor: "red.100" }}

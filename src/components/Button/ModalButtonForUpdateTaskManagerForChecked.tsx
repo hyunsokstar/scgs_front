@@ -30,6 +30,7 @@ interface IUserNamesForCreate {
 
 interface IPropTypes {
   button_text: string;
+  size:string;
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
 }
@@ -39,6 +40,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
   button_text,
   checkedRowPks,
   setCheckedRowPks,
+  size
 }: IPropTypes) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedManager, setSelectedManager] = useState("");
@@ -109,7 +111,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
     <Box>
       <Button
         variant="outline"
-        size="sm"
+        size={size}
         backgroundColor="red.50"
         _hover={{ backgroundColor: "red.100" }}
         mr={2}

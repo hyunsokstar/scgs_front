@@ -24,6 +24,7 @@ import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
 
 type ModalButtonForUpdateImortanceForCheckedProps = {
   button_text: string;
+  size: string;
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
 };
@@ -32,10 +33,9 @@ type FormData = {
   importance: string;
 };
 
-// 1122
 const ModalButtonForUpdateImortanceForChecked: React.FC<
   ModalButtonForUpdateImortanceForCheckedProps
-> = ({ button_text, checkedRowPks, setCheckedRowPks }) => {
+> = ({ button_text, size, checkedRowPks, setCheckedRowPks }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rating, setRating] = useState(1);
   const queryClient = useQueryClient();
@@ -90,7 +90,7 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
   return (
     <Box>
       <Button
-        size="sm"
+        size={size}
         variant="outline"
         backgroundColor="red.50"
         _hover={{ backgroundColor: "red.100" }}
@@ -106,7 +106,6 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
           <ModalHeader bg="purple.300">Update Importance</ModalHeader>
           <ModalCloseButton colorScheme="gray" />
           <ModalBody bg="purple.200">
-            
             <Box mb={3}>
               {dataForTaskListForCheckedPks ? (
                 <TableForTaskListForChecked

@@ -676,10 +676,7 @@ function UncompletedProjectTaskList({
         </Box>
       </Box>
 
-      {/* 0501 */}
-      {/* <Box>{checkedRowPks}</Box> */}
       <Box display={"flex"} justifyContent={"space-between"}>
-        {/* 수정 필요 체크 박스가 너무 구림 */}
         <Checkbox
           size="lg"
           colorScheme="blue"
@@ -688,11 +685,10 @@ function UncompletedProjectTaskList({
             checkedRowPks.length === taskListData?.ProjectProgressList.length
           }
           ml={2}
-          // border={"3px solid blue"}
         />
+
         <Box>
           <Box p={2} gap={2}>
-            {/* <Text as="span"></Text> */}
             <Button
               variant="outline"
               size="sm"
@@ -790,21 +786,27 @@ function UncompletedProjectTaskList({
 
             <ModalButtonForUpdateTaskManagerForChecked
               button_text="Update Task Manager For Check"
+              size={"xs"}
               checkedRowPks={checkedRowPks}
               setCheckedRowPks={setCheckedRowPks}
             />
 
             <ModalButtonForUpdateImortanceForChecked
               button_text="Update Importance For Check"
+              size={"xs"}
               checkedRowPks={checkedRowPks}
               setCheckedRowPks={setCheckedRowPks}
             />
 
             <ModalButtonForUpdateTaskClassificationForChecked
               button_text="Update Classification For Check"
+              size={"xs"}
               checkedRowPks={checkedRowPks}
               setCheckedRowPks={setCheckedRowPks}
             />
+            <Button variant={"outline"} border={"1px solid blue"} size={"xs"}>
+              show task detail using image slide for check
+            </Button>
           </Box>
         </Box>
         <Box p={2}>

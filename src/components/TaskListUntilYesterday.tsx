@@ -438,6 +438,7 @@ function TaskListUntilYesterday({
             </Button>
 
             <ModalButtonForUpdateTaskManagerForChecked
+              size={"md"}
               button_text="담당자 변경"
               checkedRowPks={checkedRowPks}
               setCheckedRowPks={setCheckedRowPks}
@@ -445,17 +446,20 @@ function TaskListUntilYesterday({
 
             <ModalButtonForUpdateImortanceForChecked
               button_text="중요도 업데이트"
+              size={"md"}
               checkedRowPks={checkedRowPks}
               setCheckedRowPks={setCheckedRowPks}
             />
 
             <ModalButtonForUpdateTaskClassificationForChecked
               button_text="분류 업데이트"
+              size={"md"}
               checkedRowPks={checkedRowPks}
               setCheckedRowPks={setCheckedRowPks}
             />
           </Box>
         </Box>
+
         <Box p={2}>
           <ModalButtonForAddProjectTaskWithDuedateOption
             button_text="Task 추가 For Team Project"
