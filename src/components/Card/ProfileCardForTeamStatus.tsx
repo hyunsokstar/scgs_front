@@ -53,7 +53,8 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
-      height={"100%"}
+      height={"530px"}
+      bgColor={"white"}
     >
       <Box width={"100%"} border={"1px solid green"}>
         {profile_image ? (

@@ -1,10 +1,9 @@
 import React from "react";
 import { ProfileCardForTeamStatus } from "../components/Card/ProfileCardForTeamStatus";
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { TypeForDataForTaskInfoPerUser } from "../types/user/user_types";
 import { apiForgetDataForTaskInfoPerUser } from "../apis/user_api";
-import { Row } from "react-data-grid";
 
 interface Props {}
 
@@ -35,18 +34,31 @@ const TaskInfosPerMember = (props: Props) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        bg="teal.500"
+        bgColor={"black"}
         py={4}
         px={6}
         borderRadius="md"
         shadow="md"
       >
-        <Text fontSize="xl" fontWeight="bold" textAlign="center" color="white">
-          멤버별 업무 현황
-        </Text>
+        <Box
+          fontSize="50px"
+          fontWeight="bold"
+          textAlign="center"
+          color="white"
+        >
+          Team Members' Work Status
+        </Box>
       </Box>{" "}
-      
-      <Box display={"flex"} justifyContent={"flex-start"} flexWrap={"wrap"}>
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        width={"100%"}
+        // mt={"20px"}
+        px={"20px"}
+        flexWrap={"wrap"}
+        bgColor={"black"}
+        textAlign={"center"}
+      >
         {dataForTaskInfoPerUser
           ? dataForTaskInfoPerUser.map((user) => {
               return (
@@ -71,8 +83,6 @@ const TaskInfosPerMember = (props: Props) => {
                     }
                     total_rewards={user.cash}
                     currentTask={user.task_in_progress}
-                    // taskCountForToday={10}
-                    // ability_score={600}
                   />
                 </Box>
               );

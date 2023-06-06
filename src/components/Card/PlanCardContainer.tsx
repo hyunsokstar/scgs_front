@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import React from "react";
 import PlanCard from "./PlanCard";
 import { list_for_long_term_plan } from "../../types/type_for_plan_maker";
@@ -62,33 +62,35 @@ interface Props {
 }
 
 const PlanCardContainer = ({ topic, cardDataArray }: Props) => {
-
   console.log("cardDataArray : ", cardDataArray);
-  
 
   return (
-    <Box border={"2px solid red"}>
-      <Box px={"auto"}>
-        <Text align={"center"}>{topic}</Text>
+    <Box border={"0px solid blue"}>
+      <Box textAlign={"center"} px={"auto"} my={2}>
+        <Box fontSize={"30px"} fontFamily={"sans-serif"} fontWeight={"bold"} color={"blue.500"}>
+          {topic}
+        </Box>
       </Box>
+
       <Box
         display={"flex"}
         justifyContent={"flex-start"}
-        border={"1px solid green"}
+        border={"0px solid green"}
         flexWrap={"wrap"}
         width={"92%"}
         gap={3}
         mx={"auto"}
+        my={2}
       >
         {cardDataArray.map((row, index) => (
           <Box key={row.pk} mb={1} width={"30%"} mx={3}>
-            <PlanCard  
-                pk = {row.pk}
-                title = {row.title}
-                description = {row.description}
-                category= {row.category}
-                writer = {row.writer}
-                created_at = {row.created_at}
+            <PlanCard
+              pk={row.pk}
+              title={row.title}
+              description={row.description}
+              category={row.category}
+              writer={row.writer}
+              created_at={row.created_at}
             />
           </Box>
         ))}{" "}

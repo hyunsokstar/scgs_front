@@ -190,12 +190,12 @@ function CompletedTaskRowForTester({
       return;
     } else if (scoreValues[index] > originalScoreValues[index]) {
       scoreByTesterForUpdate = scoreValues[index] - originalScoreValues[index];
-      alert("+ 합니다")
-      alert(scoreByTesterForUpdate);
+      // alert("+ 합니다")
+      // alert(scoreByTesterForUpdate);
     } else if(scoreValues[index] < originalScoreValues[index]) {
       scoreByTesterForUpdate = scoreValues[index] - originalScoreValues[index];
-      alert("- 합니다")
-      alert(scoreByTesterForUpdate); 
+      // alert("- 합니다")
+      // alert(scoreByTesterForUpdate);
     }
 
     mutationForUpdateScoreByTester.mutate({

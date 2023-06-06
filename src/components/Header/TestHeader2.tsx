@@ -149,7 +149,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
-        {/* <NavLink
+        <NavLink
           to="/team-status"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -162,7 +162,7 @@ const Header = () => {
           >
             Team Status
           </Text>
-        </NavLink> */}
+        </NavLink>
 
         <NavLink
           to="/today-task-status"

@@ -123,9 +123,9 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
                     <Th colSpan={2}>
                       {" "}
                       <Box fontSize={22}>
-                        완료 리스트 For Tester (총:{" "}
-                        {pageProgressListData?.totalPageCount} 개, per_page:{" "}
-                        {pageProgressListData?.task_number_for_one_page} 개){" "}
+                        Complete Task List For Tester (total:{" "}
+                        {pageProgressListData?.totalPageCount} , per_page:{" "}
+                        {pageProgressListData?.task_number_for_one_page} ){" "}
                       </Box>
                     </Th>
                   </Tr>
@@ -133,16 +133,35 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
                 <Tbody border={"0px solid green"}>
                   <Tr height="30px">
                     <Td>
-                      <Text>담당자별:</Text>
+                      <Text>task manager:</Text>
                     </Td>
                     <Td>
-                      {pageProgressListData?.writers_info?.map((writer) => {
+                      {/* {pageProgressListData?.writers_info?.map((writer) => {
                         return (
                           <Text fontSize="lg" color="blue.900">
-                            {writer.username}: {writer.task_count}
+                            {writer.username}: {writer.task_count}  :{" "}
+                            {writer.cash} won
                           </Text>
                         );
-                      })}
+                      })} */}
+                      <Table variant="unstyled">
+                        <Thead>
+                          <Tr>
+                            <Th>Username</Th>
+                            <Th>Task Count</Th>
+                            <Th>Cash</Th>
+                          </Tr>
+                        </Thead>
+                        <Tbody>
+                          {pageProgressListData?.writers_info?.map((writer) => (
+                            <Tr key={writer.username}>
+                              <Td>{writer.username}</Td>
+                              <Td>{writer.task_count}</Td>
+                              <Td>{writer.cash} won</Td>
+                            </Tr>
+                          ))}
+                        </Tbody>
+                      </Table>
                     </Td>
                   </Tr>
                 </Tbody>
@@ -196,7 +215,9 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
           </Box>
         </Box>
 
-        <Box textAlign={"right"} m={0}>3영역</Box>
+        <Box textAlign={"right"} m={0}>
+          3영역
+        </Box>
       </Box>
       <Box>
         {pageProgressListData ? (
@@ -209,7 +230,6 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
             projectTaskListRefatch={projectTaskListRefatch}
             currentPageNum={currentPageNum}
             setCurrentPageNum={setCurrentPageNum}
-            
           />
         ) : (
           ""

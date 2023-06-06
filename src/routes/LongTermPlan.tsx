@@ -53,7 +53,7 @@ const LongTermPlan = (props: Props) => {
 
       {data_for_long_term_plan ? (
         <PlanCardContainer
-          topic={"계획 목록"}
+          topic={"Medium to long-term plan list"}
           cardDataArray={data_for_long_term_plan}
         />
       ) : (
