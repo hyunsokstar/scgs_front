@@ -355,6 +355,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
   };
 
   const buttonHandlerForOpenTaskUrl = (pk: number, index: number) => {
+    alert(pk);
     console.log("url for update : ", taskUrls[index]);
     const taskUrlForUpdate = taskUrls[index];
 
