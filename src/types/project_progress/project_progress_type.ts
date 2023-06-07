@@ -241,8 +241,7 @@ export interface ITypeForTaskDetailUpdate {
   due_date?: Date | undefined;
   cash_prize?: number;
   is_urgent_request?: boolean;
-  task_url1?: string;
-  task_url2?: string;
+
 }
 
 export interface ITypeForTaskDetailUpdateForm {

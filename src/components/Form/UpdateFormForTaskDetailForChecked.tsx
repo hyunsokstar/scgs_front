@@ -14,6 +14,7 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
 
 interface IUserNamesForCreate {
   pk: number;
@@ -53,6 +54,27 @@ const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
     task_description: string;
     importance: number;
   }>();
+
+  // const mutationForUpdateTaskDetailForCheckedList = useMutation(
+  //   updateProjectApiByPk,
+  //   {
+  //     onMutate: () => {
+  //       console.log("mutation starting");
+  //     },
+  //     onSuccess: (data) => {
+  //       console.log("success : ", data);
+  //       toast({
+  //         title: "project task update success",
+  //         status: "success",
+  //       });
+  //       taskDetailRefatch();
+  //       // navigate("/estimates");
+  //     },
+  //     onError: (error) => {
+  //       console.log("mutation has an error");
+  //     },
+  //   }
+  // );
 
   const onSubmit = (data: {
     pk: number;

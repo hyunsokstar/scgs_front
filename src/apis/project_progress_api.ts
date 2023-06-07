@@ -461,7 +461,6 @@ export const apiForGetTaskListForCheckedPks = ({
     });
 };
 
-
 export const apiForUpdateTaskDueDateForChecked = ({
   duration_option,
   checkedRowPks,
@@ -837,8 +836,6 @@ export const updateProjectApiByPk = ({
   writer,
   task_description,
   task,
-  task_url1,
-  task_url2,
   importance,
   task_completed,
   started_at,
@@ -852,8 +849,6 @@ export const updateProjectApiByPk = ({
     task_description, // string
     writer, // string
     task, // string
-    task_url1,
-    task_url2,
     importance, // number
     task_completed, // boolean
     started_at, // string or undefined
@@ -868,8 +863,6 @@ export const updateProjectApiByPk = ({
     task_description,
     writer,
     task,
-    task_url1,
-    task_url2,
     importance,
     task_completed,
     started_at,
@@ -885,8 +878,6 @@ export const updateProjectApiByPk = ({
         taskPk,
         writer,
         task,
-        task_url1,
-        task_url2,
         task_description,
         importance,
         task_completed,
@@ -985,7 +976,11 @@ export const apiForUpdateScoreByTester = ({
   return instance
     .put(
       `/project_progress/${pk}/score-update-by-tester`,
-      { score_by_tester: scoreByTesterForUpdate, cashInfoForUpdate, username: username },
+      {
+        score_by_tester: scoreByTesterForUpdate,
+        cashInfoForUpdate,
+        username: username,
+      },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
