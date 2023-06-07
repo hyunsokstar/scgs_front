@@ -771,7 +771,7 @@ export const updateExtraTaskStatusUsingSelectBox = ({
 
   return instance
     .put(
-      `/project_progress/extra_tasks/${taskPk}`,
+      `/project_progress/extra_tasks/${taskPk}/update-extrak-task-prgoress-status`,
       {
         task_status: task_status,
       },

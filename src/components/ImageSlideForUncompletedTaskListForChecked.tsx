@@ -7,6 +7,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserNamesForCreate } from "../apis/user_api";
 import ChatStyleBoard from "./ChatStyleBoard";
 import TestListForTaskDetail from "./TestList/TestListForTaskDetail";
+import ExtraTasksTable from "./ExtraTasksTable";
+import ModalButtonForExtraTask from "./modal/ModalButtonForExtraTask";
 
 const theme = extendTheme({
   colors: {
@@ -148,6 +150,16 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
                 refetch={refetch}
                 taskPk={row.pk}
                 testData={row?.tests_for_tasks}
+              />
+            </Box>
+            <Box>
+              <ModalButtonForExtraTask 
+              refetch={refetch}
+              taskPk={row.pk} />
+              <ExtraTasksTable
+                extra_tasks={row.extra_tasks}
+                orginal_task_pk={row.pk}
+                refetch = {refetch}
               />
             </Box>
           </Box>

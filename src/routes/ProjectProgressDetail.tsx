@@ -431,7 +431,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                     taskPk={taskData.pk}
                     task_manager={taskData?.task_manager}
                     task_comments={taskData?.task_comments}
-                    refetch = {refetchForTaskDetail}
+                    refetch={refetchForTaskDetail}
                   />
                 ) : (
                   <TableForTechNote isForTask={true} taskPk={taskData?.pk} />
@@ -443,15 +443,13 @@ function ProjectProgressDetail({}: Props): ReactElement {
         <br />
         <br />
         <Box fontSize={"20px"}>
-          <Text fontFamily="Arial, sans-serif">
-            Test List For Task
-          </Text>
+          <Text fontFamily="Arial, sans-serif">Test List For Task</Text>
         </Box>
         <Box bg={"white"} width={"100%"} border={"1px solid black"}>
           <TestListForTaskDetail
             taskPk={taskPk}
             testData={taskData?.tests_for_tasks}
-            refetch = {refetchForTaskDetail}
+            refetch={refetchForTaskDetail}
           />
         </Box>
         <br /> <br />
@@ -462,11 +460,16 @@ function ProjectProgressDetail({}: Props): ReactElement {
           fontSize="20px"
         >
           <Box fontFamily="Arial, sans-serif">부가 업무 리스트</Box>
-          <ModalButtonForExtraTask taskPk={taskPk} />
+          <ModalButtonForExtraTask
+            taskPk={taskPk}
+            refetch={refetchForTaskDetail}
+          />
         </Box>
         <ExtraTasksTable
           extra_tasks={taskData.extra_tasks}
           orginal_task_pk={taskPk}
+          refetch = {refetchForTaskDetail}
+          // refetch={refetchForTaskDetail}
         />
       </Box>
     );

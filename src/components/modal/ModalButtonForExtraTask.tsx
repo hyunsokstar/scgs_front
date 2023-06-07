@@ -35,6 +35,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   taskPk: number | string | undefined;
+  refetch: () => void
 }
 
 interface IUserNamesForCreate {
@@ -42,7 +43,7 @@ interface IUserNamesForCreate {
   username: string;
 }
 
-const ModalButtonForAddProjectTask: FC<IProps> = ({ taskPk }: IProps) => {
+const ModalButtonForExtraTask: FC<IProps> = ({ taskPk, refetch }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const queryClient = useQueryClient();
 
@@ -80,7 +81,8 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({ taskPk }: IProps) => {
         status: "success",
       });
       //   requery getOneProjectTask
-      queryClient.refetchQueries(["getOneProjectTask"]);
+      refetch();
+      // queryClient.refetchQueries(["getOneProjectTask"]);
       onClose();
     },
     onError: (error: any) => {
@@ -204,4 +206,4 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({ taskPk }: IProps) => {
   );
 };
 
-export default ModalButtonForAddProjectTask;
+export default ModalButtonForExtraTask;

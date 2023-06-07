@@ -334,6 +334,7 @@ export interface ProjectProgress {
   task_urls?: TypeForTaskUrl[];
   task_comments: ITaskComment[];
   tests_for_tasks: ItypeFortestRow[];
+  extra_tasks?: extra_task_row_type[]
 }
 
 export interface typeForTaskListForChecked {

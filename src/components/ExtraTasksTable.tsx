@@ -33,14 +33,16 @@ import StarRating from "./StarRating";
 import { Link } from "react-router-dom";
 
 interface ExtraTasksTableProps {
-  orginal_task_pk: string | undefined;
+  orginal_task_pk: any;
   extra_tasks: extra_task_row_type[] | undefined;
+  refetch: () => void;
 }
 
 // 1122
 const ExtraTasksTable = ({
   orginal_task_pk,
   extra_tasks,
+  refetch,
 }: ExtraTasksTableProps): ReactElement => {
   const toast = useToast();
   const queryClient = useQueryClient();
