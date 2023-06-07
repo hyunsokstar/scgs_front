@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 import ImageSlideForUncompletedTaskListForChecked from "../components/ImageSlideForUncompletedTaskListForChecked";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { typeForTaskListForChecked } from "../types/project_progress/project_progress_type";
+import { apiForGetTaskListForCheckedPks } from "../apis/project_progress_api";
 
 interface Props {}
 
@@ -23,7 +25,7 @@ const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
       enabled: true,
     }
   );
-    
+
   // 이미지 슬라이드 관련
   const numSlides = 3;
   const dataForTaskListForChecked = ["1", "2", "3"];
