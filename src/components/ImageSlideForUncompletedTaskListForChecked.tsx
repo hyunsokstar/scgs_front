@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import Slider from "react-slick";
 import { Box, ChakraProvider, extendTheme, Button } from "@chakra-ui/react";
 import { ProjectProgress } from "../types/project_progress/project_progress_type";
+import UpdateFormForTaskDetailForChecked from "./Form/UpdateFormForTaskDetailForChecked";
 
 const theme = extendTheme({
   colors: {
@@ -76,7 +77,7 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
   return (
     <ChakraProvider theme={theme}>
       <Slider {...settings} ref={sliderRef}>
-        {dataForTaskListForChecked.map((content, index) => (
+        {dataForTaskListForChecked.map((row, index) => (
           <Box
             key={index}
             border="1px solid"
@@ -86,10 +87,16 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
           >
             <Box display={"flex"}>
               <Box bg="#F6CED8" width={"50%"}>
-                <h3>{content.task}</h3>
+                <UpdateFormForTaskDetailForChecked
+                  pk={row.pk}
+                  task={row.task}
+                  writer={row.writer}
+                  task_description={row.task_description}
+                  importance={row.importance}
+                />
               </Box>
               <Box bg="#D8F6F1" width={"50%"}>
-                <h3>{content.importance}</h3>
+                <h3>{row.importance}</h3>
               </Box>
             </Box>
           </Box>

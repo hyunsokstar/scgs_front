@@ -443,13 +443,12 @@ export const apiForGetDataForDailyTaskCountForPersonalUser = ({
 export const apiForGetTaskListForCheckedPks = ({
   queryKey,
 }: QueryFunctionContext) => {
-  const [_, checkedRowPks] = queryKey;
-  // console.log("체크 pks for task list : ", checkedRowPks);
+  const checkedRowPks = queryKey[1] as number[]; // queryKey[1]로부터 checkedRowPks 배열 추출
 
   return instance
     .get("project_progress/task-list-for-checked", {
       params: {
-        checkedRowPks, // 이름이 동일하게 맞춰짐
+        checkedRowPks: checkedRowPks.join(","),
       },
     })
     .then((response) => {
@@ -461,6 +460,7 @@ export const apiForGetTaskListForCheckedPks = ({
       return response_data;
     });
 };
+
 
 export const apiForUpdateTaskDueDateForChecked = ({
   duration_option,

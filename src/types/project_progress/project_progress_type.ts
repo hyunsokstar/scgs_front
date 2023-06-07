@@ -312,6 +312,7 @@ export interface TaskManager {
 export interface ProjectProgress {
   pk: number;
   task: string;
+  task_description: string;
   writer: string;
   task_manager: TaskManager;
   importance: number;
