@@ -8,7 +8,6 @@ import { apiForGetTaskListForCheckedPks } from "../apis/project_progress_api";
 
 interface Props {}
 
-// 1122
 const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -19,18 +18,26 @@ const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
     data: dataForTaskListForCheckedPks,
     refetch: refatchForTaskListForCheckedPks,
   } = useQuery<typeForTaskListForChecked>(
-    ["getTaskListForCheckedPks", checkedRowPks],
+    ["getTaskListForCheckedPksForImageSlide", checkedRowPks],
     apiForGetTaskListForCheckedPks,
     {
       enabled: true,
     }
   );
 
-  // 이미지 슬라이드 관련
-  const numSlides = 3;
-  const dataForTaskListForChecked = ["1", "2", "3"];
+  if (isLoading) {
+    // 데이터 로딩 중 상태를 표시하거나 스켈레톤 UI를 사용할 수 있습니다.
+    return <div>Loading...</div>;
+  }
 
-  // 2244
+  if (!dataForTaskListForCheckedPks) {
+    // 데이터가 없거나 로딩에 실패한 경우 에러 메시지를 표시할 수 있습니다.
+    return <div>Error: Failed to load data</div>;
+  }
+
+  const numSlides = dataForTaskListForCheckedPks.total_count;
+  const dataForTaskListForChecked = dataForTaskListForCheckedPks.ProjectProgressList;
+
   return (
     <Box>
       UncompltedTaskListWithImageSlideForCheckedPage
