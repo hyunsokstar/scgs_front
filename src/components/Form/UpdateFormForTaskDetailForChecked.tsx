@@ -1,3 +1,4 @@
+import React, { useState, ChangeEvent } from "react";
 import {
   Box,
   Button,
@@ -10,15 +11,23 @@ import {
   HStack,
   Radio,
   RadioGroup,
+  Select,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+
+interface IUserNamesForCreate {
+  pk: number;
+  username: string;
+}
 
 interface UpdateFormForTaskDetailProps {
   pk: number;
   writer: string;
+  task_manager: string;
   task: string;
   task_description: string;
   importance: number;
+  dataForUserNames: IUserNamesForCreate[];
 }
 
 const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
@@ -26,8 +35,12 @@ const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
   writer,
   task,
   task_description,
-  importance
+  importance,
+  dataForUserNames,
+  task_manager,
 }) => {
+  const [selectedManager, setSelectedManager] = useState(task_manager);
+
   const {
     handleSubmit,
     register,
@@ -35,6 +48,7 @@ const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
   } = useForm<{
     pk: number;
     task: string;
+    task_manager: string;
     writer: string;
     task_description: string;
     importance: number;
@@ -48,9 +62,11 @@ const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
     importance: number;
   }) => {
     // 폼 데이터 처리 로직 작성
+    console.log("selectedManager : ", selectedManager);
     console.log(data);
   };
 
+  // 2244
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} mt={5}>
       <Box display={"flex"} flexDirection={"column"} p={2} gap={3}>
@@ -63,14 +79,36 @@ const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
           <FormErrorMessage>{errors.pk?.message}</FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={!!errors.writer}>
-          <FormLabel>Writer</FormLabel>
-          <Input
-            defaultValue={writer}
-            {...register("writer", { required: "Writer is required" })}
-          />
-          <FormErrorMessage>{errors.writer?.message}</FormErrorMessage>
-        </FormControl>
+        <Box display={"flex"} justifyContent={"space-between"} pr={2}>
+          <FormControl isInvalid={!!errors.writer}>
+            <FormLabel>Instructor</FormLabel>
+            <Input
+              defaultValue={writer}
+              {...register("writer", { required: "Writer is required" })}
+            />
+            <FormErrorMessage>{errors.writer?.message}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={!!errors.writer}>
+            <FormLabel>Task Manager:{task_manager}</FormLabel>
+            <Select
+              m={2}
+              defaultValue={task_manager}
+              onChange={(e) => setSelectedManager(e.target.value)}
+              // {...register("task_manager", {
+              //   required: "task_manager is required",
+              // })}
+            >
+              {dataForUserNames &&
+                dataForUserNames?.map((user) => (
+                  <option key={user.pk} value={user.username}>
+                    {user.username}
+                  </option>
+                ))}
+            </Select>
+            <FormErrorMessage>{errors.task_manager?.message}</FormErrorMessage>
+          </FormControl>
+        </Box>
 
         <FormControl isInvalid={!!errors.task}>
           <FormLabel>Task</FormLabel>

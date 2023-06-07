@@ -3,6 +3,8 @@ import Slider from "react-slick";
 import { Box, ChakraProvider, extendTheme, Button } from "@chakra-ui/react";
 import { ProjectProgress } from "../types/project_progress/project_progress_type";
 import UpdateFormForTaskDetailForChecked from "./Form/UpdateFormForTaskDetailForChecked";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getUserNamesForCreate } from "../apis/user_api";
 
 const theme = extendTheme({
   colors: {
@@ -20,11 +22,26 @@ interface ImageSlideForUncompletedTaskListForCheckedProps {
   dataForTaskListForChecked: ProjectProgress[];
 }
 
+interface IUserNamesForCreate {
+  pk: number;
+  username: string;
+}
+
+// 1122
 const ImageSlideForUncompletedTaskListForChecked: React.FC<
   ImageSlideForUncompletedTaskListForCheckedProps
 > = ({ numSlides, dataForTaskListForChecked }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
+
+  const {
+    isLoading: isLoadingForUserNamesData,
+    data: dataForUserNames,
+    error,
+  } = useQuery<IUserNamesForCreate[]>(
+    ["user_names_for_task_detail_list_for_checked"],
+    getUserNamesForCreate
+  );
 
   const handleSlideChange = (index: number) => {
     setActiveSlide(index);
@@ -86,19 +103,27 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
             textAlign="center"
           >
             <Box display={"flex"}>
-              <Box bg="#F6CED8" width={"50%"}>
+              <Box
+                bg="#F6CED8"
+                width={"50%"}
+                overflowY={"scroll"}
+                height={"500px"}
+              >
                 <UpdateFormForTaskDetailForChecked
                   pk={row.pk}
                   task={row.task}
                   writer={row.writer}
                   task_description={row.task_description}
                   importance={row.importance}
+                  task_manager={row.task_manager.username}
+                  dataForUserNames={dataForUserNames ? dataForUserNames : []}
                 />
               </Box>
               <Box bg="#D8F6F1" width={"50%"}>
                 <h3>{row.importance}</h3>
               </Box>
             </Box>
+            <Box>hi</Box>
           </Box>
         ))}
       </Slider>
