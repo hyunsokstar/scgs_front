@@ -53,6 +53,7 @@ const ExtraTaskDetailPage = (props: Props) => {
           listTitle={"Test List For Extra Task"}
           taskPk={ExtraTaskPk}
           testData={dataForExtraTaskDetail.tests_for_extra_task}
+          refetch= {refetchForExtraTaskDetail}
         />
       </Box>
 

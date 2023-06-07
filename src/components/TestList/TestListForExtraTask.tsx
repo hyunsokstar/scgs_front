@@ -42,6 +42,7 @@ interface IPropsForTestListForTaskDetail {
   listTitle?: string;
   taskPk?: string | undefined;
   testData: ItypeFortestRow[];
+  refetch: () => void;
 }
 
 function DataItem({
@@ -275,6 +276,7 @@ function TestListForExtraTask({
   listTitle,
   taskPk,
   testData,
+  refetch
 }: IPropsForTestListForTaskDetail) {
   // console.log("testData : ", testData);
 
@@ -310,6 +312,7 @@ function TestListForExtraTask({
                 row.testers_for_test_for_extra_task
               }
               test_result_images={row.test_result_images}
+              refetch={refetch}
             />
           ))
         ) : (

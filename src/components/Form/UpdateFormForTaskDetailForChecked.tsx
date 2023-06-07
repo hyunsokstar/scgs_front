@@ -14,6 +14,7 @@ import {
   Select,
   useToast,
   Table,
+  Text,
   Thead,
   Tbody,
   Tr,
@@ -130,7 +131,7 @@ const UpdateFormForTaskDetailForChecked: React.FC<
   // 2244
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-      <Box bg={"yellow.100"}>Update Form For Task Detail For Checked</Box>
+      <Text bg={"yellow.100"}>Update Form For Task Detail For Checked</Text>
       <Box display={"flex"} flexDirection={"column"} p={2} gap={5}>
         <FormControl display="none">
           <FormLabel>pk</FormLabel>

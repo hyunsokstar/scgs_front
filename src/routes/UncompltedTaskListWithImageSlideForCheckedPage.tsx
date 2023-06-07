@@ -16,7 +16,7 @@ const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
   const {
     isLoading,
     data: dataForTaskListForCheckedPks,
-    refetch: refatchForTaskListForCheckedPks,
+    refetch: refatchForTaskDetailListForCheckedPks,
   } = useQuery<typeForTaskListForChecked>(
     ["getTaskListForCheckedPksForImageSlide", checkedRowPks],
     apiForGetTaskListForCheckedPks,
@@ -36,7 +36,8 @@ const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
   }
 
   const numSlides = dataForTaskListForCheckedPks.total_count;
-  const dataForTaskListForChecked = dataForTaskListForCheckedPks.ProjectProgressList;
+  const dataForTaskListForChecked =
+    dataForTaskListForCheckedPks.ProjectProgressList;
 
   return (
     <Box>
@@ -44,6 +45,7 @@ const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
       <ImageSlideForUncompletedTaskListForChecked
         numSlides={numSlides}
         dataForTaskListForChecked={dataForTaskListForChecked}
+        refetch={refatchForTaskDetailListForCheckedPks}
       />
       <ul>
         {checkedRowPks.map((rowPk) => (

@@ -22,15 +22,11 @@ import {
   updateProjectApiByPk,
 } from "../apis/project_progress_api";
 import { getUploadURL, uploadImage } from "../api";
-import { FaTimes } from "react-icons/fa";
 import ExtraTasksTable from "../components/ExtraTasksTable";
 import ModalButtonForExtraTask from "../components/modal/ModalButtonForExtraTask";
 import TestListForTaskDetail from "../components/TestList/TestListForTaskDetail";
-import ModalButtonForCreateTest from "../components/modal/ModalButtonForCreateTest";
 import TableForTechNote from "../components/Table/TableForTechNote";
-import ModalButtonForCreateTechNoteList from "../components/modal/ModalButtonForCreateTechNoteList";
 import ChatStyleBoard from "../components/ChatStyleBoard";
-import InputListForTaskUrlsForTask from "../components/List/InputListForTaskUrlsForTask";
 import UpdateFormForTaskDetail from "../components/Form/UpdateFormForTaskDetail";
 
 interface Props {}
@@ -46,7 +42,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
   const {
     data: taskData,
     isLoading: isLoadingForTaskData,
-    refetch: taskDetailRefatch,
+    refetch: refetchForTaskDetail,
   } = useQuery<IOneTaskForProjectTaskType>(
     ["getOneProjectTask", taskPk, "ProjectProgressDetail"],
     getOneProjectTask
@@ -83,7 +79,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
         title: "project task update success",
         status: "success",
       });
-      taskDetailRefatch();
+      refetchForTaskDetail();
       // navigate("/estimates");
     },
     onError: (error) => {
@@ -169,7 +165,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
     onSuccess: (result) => {
       console.log("result : ", result);
       setIsUploadingForRefImage(false);
-      taskDetailRefatch();
+      refetchForTaskDetail();
 
       toast({
         status: "success",
@@ -232,8 +228,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        if (taskDetailRefatch) {
-          taskDetailRefatch();
+        if (refetchForTaskDetail) {
+          refetchForTaskDetail();
         }
         toast({
           title: "delete task url success !",
@@ -435,6 +431,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
                     taskPk={taskData.pk}
                     task_manager={taskData?.task_manager}
                     task_comments={taskData?.task_comments}
+                    refetch = {refetchForTaskDetail}
                   />
                 ) : (
                   <TableForTechNote isForTask={true} taskPk={taskData?.pk} />
@@ -454,6 +451,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           <TestListForTaskDetail
             taskPk={taskPk}
             testData={taskData?.tests_for_tasks}
+            refetch = {refetchForTaskDetail}
           />
         </Box>
         <br /> <br />

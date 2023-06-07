@@ -38,9 +38,10 @@ interface Message {
   isUser: boolean;
   is_edit_mode: boolean;
   pk: number | string;
+  refetch: () => void
 }
 
-function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
+function ListItem({ pk, writer, comment, isUser, is_edit_mode, refetch }: Message) {
   const toast = useToast();
   const queryClient = useQueryClient();
   const [isChecked, setIsChecked] = useState(false);
@@ -56,7 +57,8 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        refetch();
+        // queryClient.refetchQueries(["getOneProjectTask"]);
 
         // toast({
         //   status: "success",
@@ -78,7 +80,8 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        refetch();
+        // queryClient.refetchQueries(["getOneProjectTask"]);
 
         toast({
           status: "success",
@@ -112,7 +115,8 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
       onSuccess: (data) => {
         console.log("data : ", data);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        refetch();
+        // queryClient.refetchQueries(["getOneProjectTask"]);
 
         toast({
           title: "delete comment 성공!",
@@ -233,10 +237,16 @@ type IProps = {
   task_comments: ITaskComment[];
   task_manager: User | undefined;
   taskPk: number | string;
+  refetch: () => void;
 };
 
 // main 1122
-function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
+function ChatStyleBoard({
+  taskPk,
+  task_comments,
+  task_manager,
+  refetch,
+}: IProps) {
   const toast = useToast();
   const queryClient = useQueryClient();
 
@@ -257,7 +267,8 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
         title: "welcome back!",
         status: "success",
       });
-      queryClient.refetchQueries(["getOneProjectTask"]);
+      refetch();
+      // queryClient.refetchQueries(["getOneProjectTask"]);
       setCommentTextToUpload("");
     },
     onError: (error: any) => {
@@ -307,7 +318,6 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
           >
             delete
           </Button>
-          $%^#@%@#$%052903
           <Spacer />
           <Box>
             <ModalButtonForAddCommentForTask taskPk={taskPk} />
@@ -334,6 +344,7 @@ function ChatStyleBoard({ taskPk, task_comments, task_manager }: IProps) {
             comment={co.comment}
             isUser={co.writer.username === task_manager?.username}
             is_edit_mode={co.is_edit_mode}
+            refetch = {refetch}
           />
         ))}
       </Flex>

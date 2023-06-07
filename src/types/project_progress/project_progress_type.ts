@@ -66,9 +66,10 @@ export type ItypeFortestRow = {
   test_passed: boolean;
   test_method?: string;
   test_result_image?: string;
-  testers_for_test_for_extra_task?: any
+  testers_for_test_for_extra_task?: any;
   testers_for_test?: any;
   test_result_images: TestResultImage[];
+  refetch: () => void;
 };
 
 interface IWriter {
@@ -241,7 +242,6 @@ export interface ITypeForTaskDetailUpdate {
   due_date?: Date | undefined;
   cash_prize?: number;
   is_urgent_request?: boolean;
-
 }
 
 export interface ITypeForTaskDetailUpdateForm {
@@ -332,6 +332,8 @@ export interface ProjectProgress {
   is_task_for_cash_prize: boolean;
   cash_prize: number;
   task_urls?: TypeForTaskUrl[];
+  task_comments: ITaskComment[];
+  tests_for_tasks: ItypeFortestRow[];
 }
 
 export interface typeForTaskListForChecked {
@@ -390,7 +392,7 @@ export type TaskManagerData = {
   task_manager: string;
   uncompleted_count: number;
   completed_count: number;
-}
+};
 
 export interface ITypeForTaskStatusForToday {
   toal_task_count_for_today: number;

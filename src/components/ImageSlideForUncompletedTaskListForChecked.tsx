@@ -5,6 +5,8 @@ import { ProjectProgress } from "../types/project_progress/project_progress_type
 import UpdateFormForTaskDetailForChecked from "./Form/UpdateFormForTaskDetailForChecked";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserNamesForCreate } from "../apis/user_api";
+import ChatStyleBoard from "./ChatStyleBoard";
+import TestListForTaskDetail from "./TestList/TestListForTaskDetail";
 
 const theme = extendTheme({
   colors: {
@@ -20,6 +22,7 @@ const theme = extendTheme({
 interface ImageSlideForUncompletedTaskListForCheckedProps {
   numSlides: number;
   dataForTaskListForChecked: ProjectProgress[];
+  refetch: any;
 }
 
 interface IUserNamesForCreate {
@@ -30,7 +33,7 @@ interface IUserNamesForCreate {
 // 1122
 const ImageSlideForUncompletedTaskListForChecked: React.FC<
   ImageSlideForUncompletedTaskListForCheckedProps
-> = ({ numSlides, dataForTaskListForChecked }) => {
+> = ({ numSlides, dataForTaskListForChecked, refetch }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
@@ -40,7 +43,12 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
     error,
   } = useQuery<IUserNamesForCreate[]>(
     ["user_names_for_task_detail_list_for_checked"],
-    getUserNamesForCreate
+    getUserNamesForCreate,
+    {
+      // refetch 함수를 객체에 추가
+      refetchOnWindowFocus: true, // 옵션 활성화
+      refetchOnMount: true,
+    }
   );
 
   const handleSlideChange = (index: number) => {
@@ -107,7 +115,7 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
                 bg="#E6E6FA"
                 width={"50%"}
                 overflowY={"scroll"}
-                height={"500px"}
+                height={"620px"}
               >
                 <UpdateFormForTaskDetailForChecked
                   pk={row.pk}
@@ -127,10 +135,21 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
                 />
               </Box>
               <Box bg="#D8F6F1" width={"50%"}>
-                <h3>{row.importance}</h3>
+                <ChatStyleBoard
+                  taskPk={row.pk}
+                  task_manager={row?.task_manager}
+                  task_comments={row?.task_comments}
+                  refetch={refetch}
+                />
               </Box>
             </Box>
-            <Box>hi</Box>
+            <Box py={3}>
+              <TestListForTaskDetail
+                refetch={refetch}
+                taskPk={row.pk}
+                testData={row?.tests_for_tasks}
+              />
+            </Box>
           </Box>
         ))}
       </Slider>

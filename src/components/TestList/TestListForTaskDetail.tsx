@@ -36,8 +36,9 @@ import ModalButtonForCreateTest from "../modal/ModalButtonForCreateTest";
 import CommonDeleteButtonForPk from "../Button/CommonDeleteButtonForPk";
 
 interface IPropsForTestListForTaskDetail {
-  taskPk?: string | undefined;
+  taskPk?: any;
   testData: ItypeFortestRow[];
+  refetch: any;
 }
 
 // interface DataItemProps {
@@ -57,6 +58,7 @@ function DataItem({
   test_method,
   test_result_image,
   test_result_images,
+  refetch,
 }: ItypeFortestRow) {
   const toast = useToast();
   const queryClient = useQueryClient();
@@ -77,7 +79,7 @@ function DataItem({
       onSuccess: (data) => {
         console.log("data : ", data);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        refetch();
         toast({
           title: "delete test 성공!",
           status: "success",
@@ -98,7 +100,7 @@ function DataItem({
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        refetch();
 
         toast({
           status: "success",
@@ -123,7 +125,7 @@ function DataItem({
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        refetch();
 
         toast({
           status: "success",
@@ -271,6 +273,7 @@ function DataItem({
 function TestListForTaskDetail({
   taskPk,
   testData,
+  refetch,
 }: IPropsForTestListForTaskDetail) {
   return (
     <Box>
@@ -301,6 +304,7 @@ function TestListForTaskDetail({
               test_result_image={row.test_result_image}
               testers_for_test={row.testers_for_test}
               test_result_images={row.test_result_images}
+              refetch = {refetch}
             />
           ))
         ) : (
