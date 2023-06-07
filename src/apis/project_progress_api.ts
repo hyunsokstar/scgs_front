@@ -248,6 +248,20 @@ export const apiForDeleteTaskUrlForTaskWithPk = (
   console.log("estimatePk : ", project_pk);
 
   return instance
+    .delete(`project_progress/task-url-for-task/${project_pk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+export const apiForDeleteExtraTaskUrlForTaskWithPk = (
+  project_pk: string | number
+) => {
+  console.log("estimatePk : ", project_pk);
+
+  return instance
     .delete(`project_progress/task-url-for-extra-task/${project_pk}/delete`, {
       headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",

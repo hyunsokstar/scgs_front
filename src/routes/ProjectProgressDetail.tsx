@@ -326,7 +326,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
   };
 
   // fix 0531
-  // const mutationForDeleteTaskUrlForTaskWithPk = useMutation(
   const mutationForDeleteTaskUrlForTaskWithPk = useMutation(
     (pk: string | number) => {
       return apiForDeleteTaskUrlForTaskWithPk(pk);
@@ -350,6 +349,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
 
   // fix 0531
   const buttonHandlerForDeleteTaskUrl = (pk: number) => {
+    console.log("pk : ", pk);
+    
     mutationForDeleteTaskUrlForTaskWithPk.mutate(pk);
   };
 

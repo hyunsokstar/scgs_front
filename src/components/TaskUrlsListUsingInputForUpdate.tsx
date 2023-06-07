@@ -13,6 +13,7 @@ import { MinusIcon } from "@chakra-ui/icons";
 import {
     apiForCreateTaskUrlForExtaTask,
   apiForCreateTaskUrlForTask,
+  apiForDeleteExtraTaskUrlForTaskWithPk,
   apiForDeleteTaskUrlForTaskWithPk,
   apiForUpdateTaskUrlForExtraTaskForPk,
   apiForUpdateTaskUrlForTaskForPk,
@@ -38,7 +39,7 @@ const TaskUrlsListUsingInputForUpdate = ({
 
   const mutationForDeleteTaskUrlForTaskWithPk = useMutation(
     (pk: string | number) => {
-      return apiForDeleteTaskUrlForTaskWithPk(pk);
+      return apiForDeleteExtraTaskUrlForTaskWithPk(pk);
     },
     {
       onSettled: () => {

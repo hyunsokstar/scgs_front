@@ -331,6 +331,7 @@ export interface ProjectProgress {
   score_by_tester: number;
   is_task_for_cash_prize: boolean;
   cash_prize: number;
+  task_urls?: TypeForTaskUrl[];
 }
 
 export interface typeForTaskListForChecked {
