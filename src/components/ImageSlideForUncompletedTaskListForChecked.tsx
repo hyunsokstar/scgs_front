@@ -104,7 +104,7 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
           >
             <Box display={"flex"}>
               <Box
-                bg="#F6CED8"
+                bg="#E6E6FA"
                 width={"50%"}
                 overflowY={"scroll"}
                 height={"500px"}
@@ -114,9 +114,16 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
                   task={row.task}
                   writer={row.writer}
                   task_description={row.task_description}
+                  taskUrls={row.task_urls}
                   importance={row.importance}
                   task_manager={row.task_manager.username}
                   dataForUserNames={dataForUserNames ? dataForUserNames : []}
+                  current_status={row.current_status}
+                  in_progress={row.in_progress}
+                  is_testing={row.is_testing}
+                  task_completed={row.task_completed}
+                  due_date_formatted={row.due_date_formatted}
+                  time_left_to_due_date={row.time_left_to_due_date}
                 />
               </Box>
               <Box bg="#D8F6F1" width={"50%"}>

@@ -12,7 +12,6 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { TaskForTaskStatusForToday } from "../../types/project_progress/project_progress_type";
 import SlideToggleButtonForInProgress from "../SlideToggleButton/SlideToggleButtonForInProgress";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -26,13 +25,19 @@ import SlideToggleButton from "../SlideToggleButton";
 interface IProps {
   modal_text: string;
   current_status: string;
-  task: TaskForTaskStatusForToday;
+  pk: any;
+  in_progress: any;
+  is_testing: any;
+  task_completed: any;
 }
 
-const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
+const ModalButtonForUpdateTaskStatusForImageSlide: React.FC<IProps> = ({
   modal_text,
   current_status,
-  task,
+  pk,
+  in_progress,
+  is_testing,
+  task_completed,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const queryClient = useQueryClient();
@@ -58,7 +63,7 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        queryClient.refetchQueries(["getTaskStatusForToday"]);
+        queryClient.refetchQueries(["getTaskListForCheckedPksForImageSlide"]);
         // queryClient.refetchQueries(["getCompletedTaskList"]);
         // projectTaskListRefatch()
         toast({
@@ -84,7 +89,7 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        queryClient.refetchQueries(["getTaskStatusForToday"]);
+        queryClient.refetchQueries(["getTaskListForCheckedPksForImageSlide"]);
         // queryClient.refetchQueries(["getCompletedTaskList"]);
 
         toast({
@@ -105,7 +110,7 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getTaskStatusForToday"]);
+      queryClient.refetchQueries(["getTaskListForCheckedPksForImageSlide"]);
 
       toast({
         status: "success",
@@ -141,8 +146,7 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
             _hover={{ bg: "pastel" }}
           />
           <ModalBody bg="gray.100">
-            {/* Place your modal body content here */}
-            {/* task.pk, task.in_progress, task.is_testing */}
+
             <Box
               display={"flex"}
               width="300px"
@@ -153,31 +157,31 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
               <Box border={"0px solid green"} width={"50"}>
                 <SlideToggleButtonForInProgress
                   onChange={() => {
-                    updateHandlerForTaskInProgress(task.id);
+                    updateHandlerForTaskInProgress(pk);
                   }}
-                  checked={task.in_progress}
-                  is_disabled={task.is_testing}
+                  checked={in_progress}
+                  is_disabled={is_testing}
                 />
               </Box>
 
               <Box border={"0px solid green"} width={"50"}>
                 <SlideToggleButtonForIsTesting
                   onChange={() => {
-                    updateHandlerForTaskIsTesting(task.id);
+                    updateHandlerForTaskIsTesting(pk);
                   }}
-                  checked={task.is_testing}
-                  is_disabled={!task.in_progress}
+                  checked={is_testing}
+                  is_disabled={!in_progress}
                 />
               </Box>
 
               <Box border={"0px solid green"} width={"50"}>
                 <SlideToggleButton
                   onChange={() => {
-                    updateHandlerForTaskStatus(task.id);
+                    updateHandlerForTaskStatus(pk);
                   }}
-                  checked={task.task_completed}
-                  in_progress={!task.in_progress}
-                  is_testing={!task.is_testing}
+                  checked={task_completed}
+                  in_progress={!in_progress}
+                  is_testing={!is_testing}
                 />
               </Box>
             </Box>
@@ -196,4 +200,4 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
   );
 };
 
-export default ModalButtonForUpdateTaskStatus;
+export default ModalButtonForUpdateTaskStatusForImageSlide;

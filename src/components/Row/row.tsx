@@ -35,7 +35,7 @@ const RowForTaskSttusForToday: React.FC<Props> = ({ task }) => {
       </Box>
 
       <ModalButtonForUpdateTaskStatus
-        modal_text={"update status"}
+        modal_text={"Update Task Progress Status"}
         current_status={task.current_status}
         task={task}
       />

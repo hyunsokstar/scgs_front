@@ -99,6 +99,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
     task_completed,
     cash_prize,
     is_urgent_request,
+    task_url1,
+    task_url2,
   }: ITypeForTaskDetailUpdateForm) => {
     // alert("submit 확인");
 
@@ -110,6 +112,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
       taskPk: taskPk,
       writer,
       task,
+      // task_url1,
+      // task_url2,
       task_description,
       importance,
       task_completed,
@@ -322,6 +326,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
   };
 
   // fix 0531
+  // const mutationForDeleteTaskUrlForTaskWithPk = useMutation(
   const mutationForDeleteTaskUrlForTaskWithPk = useMutation(
     (pk: string | number) => {
       return apiForDeleteTaskUrlForTaskWithPk(pk);
@@ -345,13 +350,10 @@ function ProjectProgressDetail({}: Props): ReactElement {
 
   // fix 0531
   const buttonHandlerForDeleteTaskUrl = (pk: number) => {
-    console.log("pk : ", pk);
-
     mutationForDeleteTaskUrlForTaskWithPk.mutate(pk);
   };
 
   const buttonHandlerForOpenTaskUrl = (pk: number, index: number) => {
-    alert(pk);
     console.log("url for update : ", taskUrls[index]);
     const taskUrlForUpdate = taskUrls[index];
 
@@ -389,8 +391,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
               <Heading size="md">Update Form For Task Detail</Heading>
             </Box>
             <UpdateFormForTaskDetail
-              taskData={taskData}
               handleAddTaskUrl={handleAddTaskUrl}
+              taskData={taskData}
               taskUrls={taskUrls}
               updateTaskUrl={updateTaskUrl}
               buttonHandlerForDeleteTaskUrl={buttonHandlerForDeleteTaskUrl}
@@ -444,7 +446,9 @@ function ProjectProgressDetail({}: Props): ReactElement {
         <br />
         <br />
         <Box fontSize={"20px"}>
-          <Text fontFamily="Arial, sans-serif">Test List For Task</Text>
+          <Text fontFamily="Arial, sans-serif">
+            Test List For Task
+          </Text>
         </Box>
         <Box bg={"white"} width={"100%"} border={"1px solid black"}>
           <TestListForTaskDetail

@@ -6,22 +6,34 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  IconButton,
   Textarea,
-  VStack,
   HStack,
   Radio,
   RadioGroup,
   Select,
+  useToast,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
+import { apiForCreateTaskUrlForTask } from "../../apis/project_progress_api";
+import InputListForTaskUrlsForTask from "../List/InputListForTaskUrlsForTask";
+import { AddIcon } from "@chakra-ui/icons";
+import InputListForTaskUrlsForTaskDetailListForChecked from "../Input/InputListForTaskUrlsForTaskDetailListForChecked";
+import ModalButtonForUpdateTaskStatusForImageSlide from "../modal/ModalButtonForUpdateTaskStatusForImageSlide";
 
 interface IUserNamesForCreate {
   pk: number;
   username: string;
 }
 
-interface UpdateFormForTaskDetailProps {
+interface updateFormForTaskDetailForCheckedProps {
   pk: number;
   writer: string;
   task_manager: string;
@@ -29,9 +41,19 @@ interface UpdateFormForTaskDetailProps {
   task_description: string;
   importance: number;
   dataForUserNames: IUserNamesForCreate[];
+  taskUrls: any;
+  current_status: string;
+  in_progress: boolean;
+  is_testing: boolean;
+  task_completed: boolean;
+  due_date_formatted: string;
+  time_left_to_due_date: string | null;
 }
 
-const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
+// 1122
+const UpdateFormForTaskDetailForChecked: React.FC<
+  updateFormForTaskDetailForCheckedProps
+> = ({
   pk,
   writer,
   task,
@@ -39,7 +61,16 @@ const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
   importance,
   dataForUserNames,
   task_manager,
+  taskUrls,
+  current_status,
+  in_progress,
+  is_testing,
+  task_completed,
+  due_date_formatted,
+  time_left_to_due_date,
 }) => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
   const [selectedManager, setSelectedManager] = useState(task_manager);
 
   const {
@@ -55,27 +86,6 @@ const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
     importance: number;
   }>();
 
-  // const mutationForUpdateTaskDetailForCheckedList = useMutation(
-  //   updateProjectApiByPk,
-  //   {
-  //     onMutate: () => {
-  //       console.log("mutation starting");
-  //     },
-  //     onSuccess: (data) => {
-  //       console.log("success : ", data);
-  //       toast({
-  //         title: "project task update success",
-  //         status: "success",
-  //       });
-  //       taskDetailRefatch();
-  //       // navigate("/estimates");
-  //     },
-  //     onError: (error) => {
-  //       console.log("mutation has an error");
-  //     },
-  //   }
-  // );
-
   const onSubmit = (data: {
     pk: number;
     task: string;
@@ -88,10 +98,40 @@ const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
     console.log(data);
   };
 
+  const mutationForCreateTaskUrlForTask = useMutation(
+    apiForCreateTaskUrlForTask,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "Task URL 추가",
+          description: "Task URL을 추가하였습니다.",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        queryClient.refetchQueries(["getOneProjectTask"]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
+
+  const handleAddTaskUrl = () => {
+    mutationForCreateTaskUrlForTask.mutate(pk);
+  };
+
   // 2244
   return (
-    <Box as="form" onSubmit={handleSubmit(onSubmit)} mt={5}>
-      <Box display={"flex"} flexDirection={"column"} p={2} gap={3}>
+    <Box as="form" onSubmit={handleSubmit(onSubmit)}>
+      <Box bg={"yellow.100"}>Update Form For Task Detail For Checked</Box>
+      <Box display={"flex"} flexDirection={"column"} p={2} gap={5}>
         <FormControl display="none">
           <FormLabel>pk</FormLabel>
           <Input
@@ -117,9 +157,6 @@ const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
               m={2}
               defaultValue={task_manager}
               onChange={(e) => setSelectedManager(e.target.value)}
-              // {...register("task_manager", {
-              //   required: "task_manager is required",
-              // })}
             >
               {dataForUserNames &&
                 dataForUserNames?.map((user) => (
@@ -154,6 +191,34 @@ const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
           </FormErrorMessage>
         </FormControl>
 
+        <FormControl id="task" border="0px solid green" width={"100%"} my={2}>
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <FormLabel>Task(main) Urls for checked</FormLabel>
+            <Box>
+              <IconButton
+                icon={<AddIcon />}
+                size={"xs"}
+                aria-label="Add Task Url"
+                colorScheme="teal"
+                variant="outline"
+                onClick={() => {
+                  if (window.confirm("Task URL을 추가하시겠습니까?")) {
+                    handleAddTaskUrl();
+                  }
+                }}
+              />
+            </Box>
+          </Box>
+
+          <InputListForTaskUrlsForTaskDetailListForChecked
+            taskUrlsForList={taskUrls}
+          />
+        </FormControl>
+
         <FormControl id="importance" isRequired>
           <FormLabel>Importance</FormLabel>
           <RadioGroup defaultValue={importance.toString()}>
@@ -176,13 +241,46 @@ const UpdateFormForTaskDetail: React.FC<UpdateFormForTaskDetailProps> = ({
             </HStack>
           </RadioGroup>
         </FormControl>
+        <FormControl>
+          <Box display={"flex"} gap={2}>
+            <FormLabel>Task Progress : </FormLabel>
+            <ModalButtonForUpdateTaskStatusForImageSlide
+              modal_text={"update status for task for checked"}
+              pk={pk}
+              current_status={current_status}
+              in_progress={in_progress}
+              is_testing={is_testing}
+              task_completed={task_completed}
+            />
+          </Box>
+        </FormControl>
+
+        <FormControl>
+          <Box display={"flex"} gap={2}>
+            {/* <FormLabel> 마감 / 남은 시간 </FormLabel> */}
+            <Table size="xs">
+              <Thead>
+                <Tr>
+                  <Th>Due Date</Th>
+                  <Th>Time Left</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                <Tr>
+                  <Td>{due_date_formatted}</Td>
+                  <Td>{time_left_to_due_date}</Td>
+                </Tr>
+              </Tbody>
+            </Table>
+          </Box>
+        </FormControl>
 
         <Button mt={4} colorScheme="teal" type="submit">
-          Update
+          Update Task Detail
         </Button>
       </Box>
     </Box>
   );
 };
 
-export default UpdateFormForTaskDetail;
+export default UpdateFormForTaskDetailForChecked;
