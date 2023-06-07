@@ -2,18 +2,33 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 import ImageSlideForUncompletedTaskListForChecked from "../components/ImageSlideForUncompletedTaskListForChecked";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 interface Props {}
 
+// 1122
 const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const checkedRowPks = queryParams.get("checkedRowPks")?.split(",") || [];
-
+  const queryClient = useQueryClient();
+  const {
+    isLoading,
+    data: dataForTaskListForCheckedPks,
+    refetch: refatchForTaskListForCheckedPks,
+  } = useQuery<typeForTaskListForChecked>(
+    ["getTaskListForCheckedPks", checkedRowPks],
+    apiForGetTaskListForCheckedPks,
+    {
+      enabled: true,
+    }
+  );
+    
+  // 이미지 슬라이드 관련
   const numSlides = 3;
   const dataForTaskListForChecked = ["1", "2", "3"];
 
-  
+  // 2244
   return (
     <Box>
       UncompltedTaskListWithImageSlideForCheckedPage
