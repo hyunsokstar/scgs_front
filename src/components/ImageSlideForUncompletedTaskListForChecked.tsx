@@ -76,7 +76,7 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
   return (
     <ChakraProvider theme={theme}>
       <Slider {...settings} ref={sliderRef}>
-        {dataForTaskListForChecked.map((content, index) => (
+        {dataForTaskListForChecked.map((row, index) => (
           <Box
             key={index}
             border="1px solid"
@@ -86,10 +86,10 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
           >
             <Box display={"flex"}>
               <Box bg="#F6CED8" width={"50%"}>
-                <h3>{content.task}</h3>
+                
               </Box>
               <Box bg="#D8F6F1" width={"50%"}>
-                <h3>{content.importance}</h3>
+                <h3>{row.importance}</h3>
               </Box>
             </Box>
           </Box>

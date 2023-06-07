@@ -391,8 +391,8 @@ function ProjectProgressDetail({}: Props): ReactElement {
               <Heading size="md">Update Form For Task Detail</Heading>
             </Box>
             <UpdateFormForTaskDetail
-              handleAddTaskUrl={handleAddTaskUrl}
               taskData={taskData}
+              handleAddTaskUrl={handleAddTaskUrl}
               taskUrls={taskUrls}
               updateTaskUrl={updateTaskUrl}
               buttonHandlerForDeleteTaskUrl={buttonHandlerForDeleteTaskUrl}
