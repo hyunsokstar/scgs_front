@@ -13,6 +13,7 @@ const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
   const numSlides = 3;
   const dataForTaskListForChecked = ["1", "2", "3"];
 
+  
   return (
     <Box>
       UncompltedTaskListWithImageSlideForCheckedPage

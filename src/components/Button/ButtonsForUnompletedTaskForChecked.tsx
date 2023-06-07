@@ -141,12 +141,14 @@ const ButtonsForUnompletedTaskForChecked: React.FC<
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
         />
+
         <ModalButtonForUpdateImortanceForChecked
           button_text={"update importance"}
           size={"xs"}
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
         />
+        
         <ModalButtonForUpdateTaskClassificationForChecked
           button_text={"update task for classification"}
           size={"xs"}
