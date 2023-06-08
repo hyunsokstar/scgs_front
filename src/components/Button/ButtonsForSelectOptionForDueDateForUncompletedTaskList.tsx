@@ -42,6 +42,13 @@ const ButtonsForSelectOptionForDueDateForUncompletedTaskList: React.FC<
           due_date_option_for_filtering={due_date_option_for_filtering}
           set_due_date_option_for_filtering={set_due_date_option_for_filtering}
         />
+
+        <ButtonForFilteringTaskForDueDate
+          button_text="until Night"
+          due_date_option="until-night"
+          due_date_option_for_filtering={due_date_option_for_filtering}
+          set_due_date_option_for_filtering={set_due_date_option_for_filtering}
+        />
       </Box>
 
       <Box display={"flex"} gap={2} mt={1}>

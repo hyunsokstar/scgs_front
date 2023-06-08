@@ -8,6 +8,7 @@ type Props = ButtonProps & {
     | "until-yesterday"
     | "until-noon"
     | "until-evening"
+    | "until-night"
     | "until-tomorrow"
     | "until-the-day-after-tomorrow"
     | "until-this-week"
@@ -31,7 +32,7 @@ const ButtonForFilteringTaskForDueDate = ({
 
   return (
     <Button
-      size="sm"
+      size="xs"
       variant="outline"
       border={"1px solid black"}
       bg={due_date_option === due_date_option_for_filtering ? "blue.300" : ""}
