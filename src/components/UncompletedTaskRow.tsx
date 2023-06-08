@@ -331,7 +331,7 @@ function UncompletedTaskRow({
                       {task.writer}
                     </Text>
                   </ListItem>
-                  <ListItem border={"0px solid blue"} flex={3}>
+                  <ListItem border={"0px solid blue"} flex={5}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
                         to={`/project_admin/${task.pk}`}

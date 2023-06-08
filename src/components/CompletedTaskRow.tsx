@@ -238,7 +238,7 @@ function CompletedTaskRow({
                     <Text color={"blue.600"}>{task.task_manager.username}</Text>
                     <Text color={"tomato"}>{task.writer}</Text>
                   </Box>
-                  <Box border={"0px solid blue"} width={"420px"}>
+                  <Box border={"0px solid blue"} width={"580px"}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
                         to={`/project_admin/${task.pk}`}
@@ -326,9 +326,9 @@ function CompletedTaskRow({
                     </HStack> */}
                   </Box>
 
-                  <Box border={"0px solid blue"} width={"170px"}>
+                  {/* <Box border={"0px solid blue"} width={"170px"}>
                     업무 평점 부여
-                  </Box>
+                  </Box> */}
 
                   <Box>
                     <IconButton
