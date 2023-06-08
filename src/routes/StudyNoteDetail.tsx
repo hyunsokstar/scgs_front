@@ -27,7 +27,7 @@ interface Props {}
 // 1122
 const StudyNoteDetail = (props: Props) => {
   const { study_note_pk } = useParams();
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -42,7 +42,6 @@ const StudyNoteDetail = (props: Props) => {
   const pageNumbersToMove = useSelector(
     (state: RootState) => state.studyNote.pageNumbersToMove
   );
-
 
   const currentPage = useSelector(
     (state: RootState) => state.studyNote.currentPage
@@ -123,7 +122,7 @@ const StudyNoteDetail = (props: Props) => {
   return (
     <Box display={"flex"}>
       <Box flex={4}>
-        <Box>Study Note Content #hyunsok#05280224</Box>
+        <Box>Study Note Content </Box>
 
         <Box
           display="flex"
@@ -216,31 +215,45 @@ const StudyNoteDetail = (props: Props) => {
             alignItems={"center"}
             flexDirection={"column"}
           >
-            {response_data_for_api
-              ? response_data_for_api.data_for_study_note_contents.map(
-                  (row: DataForStudyNoteContent, i) => {
-                    return (
-                      <CardForStudyNoteContent
-                        pk={row.pk}
-                        card_width={"90%"}
-                        title={row.title}
-                        file_name={row.file_name}
-                        content={row.content}
-                        writer={row.writer}
-                        created_at={row.created_at}
-                        order={i + 1}
-                        index={i}
-                        currentPage={currentPage}
-                        study_note_pk={study_note_pk}
-                        refetch_for_study_note_content_list={
-                          refetch_for_study_note_content_list
-                        }
-                        setCheckedValues={setCheckedValues}
-                      />
-                    );
-                  }
-                )
-              : "no data"}
+            {response_data_for_api &&
+            response_data_for_api.data_for_study_note_contents.length ? (
+              response_data_for_api.data_for_study_note_contents.map(
+                (row: DataForStudyNoteContent, i) => {
+                  return (
+                    <CardForStudyNoteContent
+                      pk={row.pk}
+                      card_width={"90%"}
+                      title={row.title}
+                      file_name={row.file_name}
+                      content={row.content}
+                      writer={row.writer}
+                      created_at={row.created_at}
+                      order={i + 1}
+                      index={i}
+                      currentPage={currentPage}
+                      study_note_pk={study_note_pk}
+                      refetch_for_study_note_content_list={
+                        refetch_for_study_note_content_list
+                      }
+                      setCheckedValues={setCheckedValues}
+                    />
+                  );
+                }
+              )
+            ) : (
+              <Box>
+                <Box
+                  fontSize="5xl"
+                  fontWeight="bold"
+                  fontFamily="Poppins, sans-serif"
+                  bg="blue.50"
+                  color="red.500"
+                  p={3}
+                >
+                  No note content available yet for {currentPage} Page !
+                </Box>
+              </Box>
+            )}
           </Box>
         </Box>
       </Box>
