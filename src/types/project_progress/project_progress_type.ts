@@ -334,7 +334,7 @@ export interface ProjectProgress {
   task_urls?: TypeForTaskUrl[];
   task_comments: ITaskComment[];
   tests_for_tasks: ItypeFortestRow[];
-  extra_tasks?: extra_task_row_type[]
+  extra_tasks?: extra_task_row_type[];
 }
 
 export interface typeForTaskListForChecked {
@@ -363,6 +363,7 @@ export interface typeForDueDateUpdateForChecked {
     | "noon"
     | "evening"
     | "tomorrow"
+    | "night"
     | "day-after-tomorrow"
     | "this-week"
     | "this-month";
@@ -487,3 +488,13 @@ export interface ExtraTaskDetailInfo {
 export interface DetailForExtraTaskProps {
   extraTaskDetail: ExtraTaskDetailInfo;
 }
+
+export type typeForDueDateOption =
+  | "undecided"
+  | "until-yesterday"
+  | "until-noon"
+  | "until-evening"
+  | "until-tomorrow"
+  | "until-the-day-after-tomorrow"
+  | "until-this-week"
+  | "until-this-month";

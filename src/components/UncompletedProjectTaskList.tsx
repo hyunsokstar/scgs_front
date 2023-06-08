@@ -23,6 +23,7 @@ import {
 } from "../apis/project_progress_api";
 import {
   ITypeForProjectProgressList,
+  typeForDueDateOption,
   typeForDueDateUpdateForChecked,
 } from "../types/project_progress/project_progress_type";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
@@ -40,15 +41,7 @@ import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskFor
 import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 
 interface Props {
-  basic_due_date_option?:
-    | "undecided"
-    | "until-yesterday"
-    | "until-noon"
-    | "until-evening"
-    | "until-tomorrow"
-    | "until-the-day-after-tomorrow"
-    | "until-this-week"
-    | "until-this-month";
+  basic_due_date_option?: typeForDueDateOption;
 }
 
 // 1122
@@ -269,6 +262,7 @@ function UncompletedProjectTaskList({
       | "undetermined"
       | "noon"
       | "evening"
+      | "night"
       | "tomorrow"
       | "day-after-tomorrow"
       | "this-week"

@@ -307,7 +307,7 @@ function UncompletedTaskRow({
                   flex={1}
                   justifyContent={"space-between"}
                   alignItems={"center"}
-                  width={"2200px"}
+                  width={"2400px"}
                 >
                   <ListItem border={"0px solid yellow"} flex={0.5}>
                     <Checkbox
@@ -331,7 +331,7 @@ function UncompletedTaskRow({
                       {task.writer}
                     </Text>
                   </ListItem>
-                  <ListItem border={"0px solid blue"} flex={5}>
+                  <ListItem border={"0px solid blue"} flex={6}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
                         to={`/project_admin/${task.pk}`}

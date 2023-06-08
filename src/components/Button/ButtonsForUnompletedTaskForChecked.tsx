@@ -3,7 +3,7 @@ import { Box, Button } from "@chakra-ui/react";
 import ModalButtonForUpdateTaskManagerForChecked from "./ModalButtonForUpdateTaskManagerForChecked";
 import ModalButtonForUpdateImortanceForChecked from "../modal/ModalButtonForUpdateImortanceForChecked";
 import ModalButtonForUpdateTaskClassificationForChecked from "../modal/ModalButtonForUpdateTaskClassificationForChecked";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 interface ButtonsForUpdateTaskDueDateForCheckedListProps {
   checkedRowPks: any[];
@@ -18,6 +18,7 @@ interface ButtonsForUpdateTaskDueDateForCheckedListProps {
       | "day-after-tomorrow"
       | "this-week"
       | "this-month"
+      | "night"
   ) => void;
 }
 
@@ -30,14 +31,16 @@ const ButtonsForUnompletedTaskForChecked: React.FC<
   handlerForUpdateTaskDuedateForChecked,
 }) => {
   const navigator = useNavigate();
-  
+
   const handleButtonClick = () => {
     if (checkedRowPks.length === 0) {
       alert("Please check at least one item");
       return;
     }
     // Perform other actions
-    navigator(`/task-list-for-checked?checkedRowPks=${checkedRowPks.join(",")}`);
+    navigator(
+      `/task-list-for-checked?checkedRowPks=${checkedRowPks.join(",")}`
+    );
   };
 
   return (
@@ -73,7 +76,18 @@ const ButtonsForUnompletedTaskForChecked: React.FC<
           mr={2}
           onClick={() => handlerForUpdateTaskDuedateForChecked("evening")}
         >
-          Set DueDate to evening
+          Set DueDate to Evening
+        </Button>
+
+        <Button
+          variant="outline"
+          size="xs"
+          backgroundColor="purple.50"
+          _hover={{ backgroundColor: "purple.100" }}
+          mr={2}
+          onClick={() => handlerForUpdateTaskDuedateForChecked("night")}
+        >
+          Set DueDate to Night
         </Button>
 
         <Button
@@ -148,7 +162,7 @@ const ButtonsForUnompletedTaskForChecked: React.FC<
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
         />
-        
+
         <ModalButtonForUpdateTaskClassificationForChecked
           button_text={"update task for classification"}
           size={"xs"}
