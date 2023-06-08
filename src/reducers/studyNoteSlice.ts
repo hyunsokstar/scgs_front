@@ -49,6 +49,7 @@ export const studyNoteSlice = createSlice({
       console.log("action.payload : ", action.payload);
       state.pageNumbersToEdit = [...action.payload];
     },
+    
     initializeCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },

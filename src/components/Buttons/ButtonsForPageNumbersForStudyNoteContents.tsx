@@ -513,6 +513,26 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
                 >
                   Move to Backward
                 </Button>
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  colorScheme="yellow"
+                  _hover={{ bg: "yellow.100" }}
+                  onClick={() =>
+                    buttonHandlerForUpdateNoteContentsPageForSelected(
+                      "switch"
+                    )
+                  }
+                  style={{
+                    backgroundColor: "transparent",
+                    marginRight: "10px",
+                  }}
+                >
+                  Switch
+                </Button>
+
+
+                
               </>
             )}
         </Box>

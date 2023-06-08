@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -21,14 +21,15 @@ import ModalButtonForInsertStudyNoteContent from "../components/modal/ModalButto
 import ButtonsForFindToContentWithOrderNum from "../components/Button/ButtonsForFindToContentWithOrderNum";
 import ModalButtonForSearchStudyNoteContent from "../components/Button/ModalButtonForSearchStudyNoteContent";
 import ModalButtonForStudyNoteContentOrdering from "../components/modal/ModalButtonForStudyNoteContentOrdering";
+import { initializeCurrentPage } from "../reducers/studyNoteSlice";
 
 interface Props {}
 
 // 1122
-const StudyNoteDetail = (props: Props) => {
-  const { study_note_pk } = useParams();
-  
+const StudyNoteDetail2 = (props: Props) => {
+  const { study_note_pk, note_page_num } = useParams();
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const [checkedValues, setCheckedValues] = useState<number[]>([]);
@@ -42,7 +43,6 @@ const StudyNoteDetail = (props: Props) => {
   const pageNumbersToMove = useSelector(
     (state: RootState) => state.studyNote.pageNumbersToMove
   );
-
 
   const currentPage = useSelector(
     (state: RootState) => state.studyNote.currentPage
@@ -64,7 +64,12 @@ const StudyNoteDetail = (props: Props) => {
       cacheTime: 0, // cacheTime을 0으로 설정하여 캐싱을 해제
     }
   );
-  // 2244 function area
+
+  useEffect(() => {
+    if (note_page_num) {
+      dispatch(initializeCurrentPage(parseInt(note_page_num)));
+    }
+  }, [note_page_num]);
 
   const mutationForDeleteContentsForChecked = useMutation(
     (pageNumbersToEdit: number[]) => {
@@ -271,4 +276,4 @@ const StudyNoteDetail = (props: Props) => {
   );
 };
 
-export default StudyNoteDetail;
+export default StudyNoteDetail2;

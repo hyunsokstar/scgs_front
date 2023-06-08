@@ -62,6 +62,7 @@ import TodayTaskStatusPage from "./routes/TodayTaskStatusPage";
 import TaskLogPage from "./routes/Log/TaskLogPage";
 import ExtraTaskDetailPage from "./routes/ExtraTaskDetailPage";
 import UncompltedTaskListWithImageSlideForCheckedPage from "./routes/UncompltedTaskListWithImageSlideForCheckedPage";
+import StudyNoteDetail2 from "./routes/StudyNoteDetail2";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
       {
         path: "study-note/:study_note_pk",
         element: <StudyNoteDetail />,
+      },
+      {
+        path: "study-note/:study_note_pk/:note_page_num",
+        element: <StudyNoteDetail2  />,
       },
       {
         path: "shortcut/:shortcut_pk",
