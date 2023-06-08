@@ -41,7 +41,7 @@ const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
 
   return (
     <Box>
-      {/* UncompltedTaskListWithImageSlideForCheckedPage */}
+      UncompltedTaskListWithImageSlideForCheckedPage
       <ImageSlideForUncompletedTaskListForChecked
         numSlides={numSlides}
         dataForTaskListForChecked={dataForTaskListForChecked}
