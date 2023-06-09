@@ -275,7 +275,7 @@ export const apiFordeleteOneStudyNote = (pk: number) => {
     .then((response) => response.data);
 };
 
-export const getStudyNoteList = async ({
+export const apiForGetStudyNoteList = async ({
   queryKey,
 }: QueryFunctionContext): Promise<type_for_study_note_list_row[]> => {
   const [_, pageNum] = queryKey;

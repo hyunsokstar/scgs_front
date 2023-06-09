@@ -13,6 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForGetAllUserNames } from "../apis/user_api";
+import { apiForGetStudyNoteList } from "../apis/study_note_api";
+import { type_for_study_note_list_row } from "../types/study_note_type";
 
 interface Props {}
 
@@ -22,6 +24,20 @@ const TableModeForUpdatePage = (props: Props) => {
     data: dataForGetAllUserNames,
     error: errorForGetAllUserName,
   } = useQuery<any>(["xxxxxxxx"], apiForGetAllUserNames);
+
+  const {
+    isLoading: isLoadingForGetStudyNoteList,
+    data: dataForGetStudyNoteList,
+    refetch: refetchForGetStudyNoteList,
+  } = useQuery<type_for_study_note_list_row[]>(
+    ["getStudyNoteListForCopyMode"],
+    apiForGetStudyNoteList,
+    {
+      enabled: true,
+    }
+  );
+
+  console.log("dataForGetStudyNoteList : ", dataForGetStudyNoteList);
 
   const [data, setData] = React.useState([
     { id: 1, header1: "Data 1", header2: "Data 2", selected: false },
@@ -48,7 +64,7 @@ const TableModeForUpdatePage = (props: Props) => {
             w={"50%"}
             m={2}
             placeholder="Choose a task_manager"
-            // onChange={handleChangeForSelectedManager}
+            border={"1px solid gray"}
           >
             {dataForGetAllUserNames?.map((user: any) => (
               <option key={user.pk} value={user.pk}>
@@ -69,22 +85,24 @@ const TableModeForUpdatePage = (props: Props) => {
                   </Th>
                   <Th>Note Title</Th>
                   <Th>Note Description</Th>
+                  <Th>writer</Th>
                 </Tr>
               </Thead>
               <Tbody>
-                {data.map((item) => (
-                  <Tr key={item.id}>
+                {dataForGetStudyNoteList ? dataForGetStudyNoteList.map((item) => (
+                  <Tr key={item.pk}>
                     <Td>
                       <Checkbox
-                        isChecked={selectedRowPks.includes(item.id)}
+                        isChecked={selectedRowPks.includes(item.pk)}
                         border={"1px solid black"}
-                        onChange={() => handleCheckboxChange(item.id)}
+                        onChange={() => handleCheckboxChange(item.pk)}
                       />
                     </Td>
-                    <Td>{item.header1}</Td>
-                    <Td>{item.header2}</Td>
+                    <Td>{item.title}</Td>
+                    <Td>{item.description}</Td>
+                    <Td>{item.writer.username}</Td>
                   </Tr>
-                ))}
+                )): "no data"}
               </Tbody>
             </Table>
           </Box>

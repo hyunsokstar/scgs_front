@@ -82,7 +82,7 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
         borderWidth="1px"
         borderRadius="lg"
         overflow="hidden"
-        width="380px"
+        width="410px"
         height="300px"
         margin="10px"
         bg={cardBgColor}
@@ -129,7 +129,7 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
           justifyContent={"space-between"}
           height={"100%"}
           border={"0px solid green"}
-          _hover={{ bg: "#0ABAB5" }}
+          _hover={{ bg: "blue.100" }}
           onClick={() => goToStudyNoteDetail(pk)}
         >
           <Text fontSize="sm">{description}</Text>

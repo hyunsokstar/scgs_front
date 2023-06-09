@@ -2,7 +2,7 @@ import { Box, Flex, Text, Button } from "@chakra-ui/react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 import React from "react";
-import { getStudyNoteList } from "../apis/study_note_api";
+import { apiForGetStudyNoteList } from "../apis/study_note_api";
 import CardForStudyNote from "../components/Card/CardForStudyNote";
 import ModalButtonForAddStudyNote from "../components/modal/ModalButtonForAddStudyNote";
 import { type_for_study_note_list_row } from "../types/study_note_type";
@@ -15,7 +15,7 @@ const StudyNotePage = () => {
     refetch: studyNoteRefatch,
   } = useQuery<type_for_study_note_list_row[]>(
     ["getStudyNoteList"],
-    getStudyNoteList,
+    apiForGetStudyNoteList,
     {
       enabled: true,
     }
@@ -52,7 +52,7 @@ const StudyNotePage = () => {
         <ModalButtonForAddStudyNote />
       </Box>
 
-      <Box px={"80px"} border={"0px solid purple"}>
+      <Box px={"40px"} border={"0px solid purple"}>
         <Flex
           wrap="wrap"
           justifyContent={"flex-start"}
