@@ -441,6 +441,24 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           >
             +1
           </Button>
+
+          <Button
+            variant="outline"
+            size={"sm"}
+            colorScheme="yellow"
+            _hover={{ bg: "yellow.100" }}
+            ml={2}
+            // onClick={() =>
+            //   goToEditModeForUpdatePage()
+            // }
+            style={{
+              backgroundColor: "transparent",
+              marginRight: "10px",
+            }}
+          >
+            Table Mode For Page Update
+          </Button>
+
           <Spacer />
           <Button
             variant="outline"
@@ -475,11 +493,11 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         </Box>
         <Box >{pageNumbersToMove.join(", ")}</Box>
       </Box> */}
-      <Box display={"flex"} flexDirection={"column"}>
+      <Box display={"flex"} flexDirection={"column"} ml={3}>
         <Box>
           {pageNumbersToEdit.length === pageNumbersToMove.length &&
             pageNumbersToEdit.length != 0 && (
-              <>
+              <Box display={"flex"} justifyContent={"space-around"}>
                 {/* 이동 버튼 */}
                 <Button
                   variant="outline"
@@ -494,7 +512,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
                     marginRight: "10px",
                   }}
                 >
-                  Move to Forward
+                  L To R
                 </Button>
                 <Button
                   variant="outline"
@@ -511,17 +529,16 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
                     marginRight: "10px",
                   }}
                 >
-                  Move to Backward
+                  R To L
                 </Button>
+
                 <Button
                   variant="outline"
                   size={"sm"}
                   colorScheme="yellow"
                   _hover={{ bg: "yellow.100" }}
                   onClick={() =>
-                    buttonHandlerForUpdateNoteContentsPageForSelected(
-                      "switch"
-                    )
+                    buttonHandlerForUpdateNoteContentsPageForSelected("switch")
                   }
                   style={{
                     backgroundColor: "transparent",
@@ -530,10 +547,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
                 >
                   Switch
                 </Button>
-
-
-                
-              </>
+              </Box>
             )}
         </Box>
       </Box>
