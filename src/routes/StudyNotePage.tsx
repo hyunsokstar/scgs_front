@@ -6,6 +6,7 @@ import { getStudyNoteList } from "../apis/study_note_api";
 import CardForStudyNote from "../components/Card/CardForStudyNote";
 import ModalButtonForAddStudyNote from "../components/modal/ModalButtonForAddStudyNote";
 import { type_for_study_note_list_row } from "../types/study_note_type";
+import { Link } from "react-router-dom";
 
 const StudyNotePage = () => {
   const {
@@ -22,59 +23,6 @@ const StudyNotePage = () => {
 
   console.log("studyNoteData : ", studyNoteData);
 
-  const notes = [
-    {
-      title: "Note 1",
-      description: "This is the description for note 1.",
-      writer: "Writer A",
-    },
-    {
-      title: "Note 2",
-      description: "This is the description for note 2.",
-      writer: "Writer B",
-    },
-    {
-      title: "Note 3",
-      description: "This is the description for note 3.",
-      writer: "Writer C",
-    },
-    {
-      title: "Note 4",
-      description: "This is the description for note 4.",
-      writer: "Writer D",
-    },
-    {
-      title: "Note 5",
-      description: "This is the description for note 5.",
-      writer: "Writer E",
-    },
-    {
-      title: "Note 6",
-      description: "This is the description for note 6.",
-      writer: "Writer F",
-    },
-    {
-      title: "Note 7",
-      description: "This is the description for note 7.",
-      writer: "Writer G",
-    },
-    {
-      title: "Note 8",
-      description: "This is the description for note 8.",
-      writer: "Writer H",
-    },
-    {
-      title: "Note 9",
-      description: "This is the description for note 9.",
-      writer: "Writer I",
-    },
-    {
-      title: "Note 10",
-      description: "This is the description for note 10.",
-      writer: "Writer J",
-    },
-  ];
-
   if (studyNoteLoading || !studyNoteData) {
     return <div>Loading study notes...</div>;
   }
@@ -82,24 +30,46 @@ const StudyNotePage = () => {
   return (
     <Box>
       <Text align={"center"} fontSize={"5xl"}>
-        Study Note For Library
+        Tech Note !!
       </Text>
 
-      <Box display="flex" justifyContent="flex-end">
+      <Box display="flex" justifyContent="space-between" p={2}>
+        <Link to={`/study-note/table-mode-for-update-page`}>
+          <Button
+            variant="outline"
+            size={"sm"}
+            colorScheme="yellow"
+            _hover={{ bg: "yellow.100" }}
+            ml={2}
+            style={{
+              backgroundColor: "transparent",
+              marginRight: "10px",
+            }}
+          >
+            Table Mode For Note Copy
+          </Button>
+        </Link>
         <ModalButtonForAddStudyNote />
       </Box>
 
-      <Flex wrap="wrap">
-        {studyNoteData.map((note: type_for_study_note_list_row) => (
-          <CardForStudyNote
-            pk={note.pk}
-            key={note.title}
-            title={note.title}
-            description={note.description}
-            writer={note.writer}
-          />
-        ))}
-      </Flex>
+      <Box px={"80px"} border={"0px solid purple"}>
+        <Flex
+          wrap="wrap"
+          justifyContent={"flex-start"}
+          gap={10}
+          border={"0px solid black"}
+        >
+          {studyNoteData.map((note: type_for_study_note_list_row) => (
+            <CardForStudyNote
+              pk={note.pk}
+              key={note.title}
+              title={note.title}
+              description={note.description}
+              writer={note.writer}
+            />
+          ))}
+        </Flex>
+      </Box>
     </Box>
   );
 };

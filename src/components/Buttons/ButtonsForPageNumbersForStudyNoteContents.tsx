@@ -428,7 +428,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           </Button>
         
           {/* fix 0609 */}
-          <Link to={`/study-note/table-mode-for-update-page`}>
+          {/* <Link to={`/study-note/table-mode-for-update-page`}>
             <Button
               variant="outline"
               size={"sm"}
@@ -442,7 +442,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
             >
               Table Mode For Page Update
             </Button>
-          </Link>
+          </Link> */}
 
           <Spacer />
           <Button
