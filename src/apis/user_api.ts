@@ -10,6 +10,12 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+// 1122
+export const apiForGetAllUserNames = () =>
+  instance.get("users/only-user-name").then((response) => {
+    return response.data;
+  });
+
 export const apiForDeleteUserTaskCommentForPk = (commentPk: string | number) => {
   console.log("commentPk : ", commentPk);
   return instance
