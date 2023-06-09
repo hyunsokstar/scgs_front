@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Text,
@@ -23,14 +23,17 @@ const TableModeForUpdatePage = (props: Props) => {
     isLoading: isLoadingForGetAllUserNames,
     data: dataForGetAllUserNames,
     error: errorForGetAllUserName,
-  } = useQuery<any>(["xxxxxxxx"], apiForGetAllUserNames);
+  } = useQuery<any>(["apiForGetAllUserNames"], apiForGetAllUserNames);
+
+  const [selectedNoteWriter, setSelectedNoteWriter] = useState("");
+  const [pageNum, setPageNum] = useState(1);
 
   const {
     isLoading: isLoadingForGetStudyNoteList,
     data: dataForGetStudyNoteList,
     refetch: refetchForGetStudyNoteList,
   } = useQuery<type_for_study_note_list_row[]>(
-    ["getStudyNoteListForCopyMode"],
+    ["getStudyNoteListForCopyMode",pageNum, selectedNoteWriter],
     apiForGetStudyNoteList,
     {
       enabled: true,
@@ -55,19 +58,27 @@ const TableModeForUpdatePage = (props: Props) => {
     setSelectedRowPks(updatedSelectedRowPks);
   };
 
+  const selectHandlerForNoteWriter = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedValue = event.target.value;
+    setSelectedNoteWriter(selectedValue);
+  };
+
+  // 2244
   return (
     <Box bg="lightblue" display="flex">
       <Box width="50%" border="1px solid black" bg="lavender">
         <Box>
           <Box>note 유저 선택:</Box>
           <Select
-            w={"50%"}
-            m={2}
+            margin={2}
             placeholder="Choose a task_manager"
             border={"1px solid gray"}
+            onChange={selectHandlerForNoteWriter}
           >
             {dataForGetAllUserNames?.map((user: any) => (
-              <option key={user.pk} value={user.pk}>
+              <option key={user.pk} value={user.username}>
                 {user.username}
               </option>
             ))}
@@ -75,7 +86,10 @@ const TableModeForUpdatePage = (props: Props) => {
         </Box>
 
         <Box>
-          <Box>Selected User's Notes: {selectedRowPks}</Box>
+          <Box>
+            Selected User's Notes:
+            <Box>{selectedNoteWriter}</Box>
+          </Box>
           <Box>
             <Table variant="simple">
               <Thead>
@@ -83,26 +97,28 @@ const TableModeForUpdatePage = (props: Props) => {
                   <Th>
                     <Checkbox border={"1px solid black"} />
                   </Th>
+                  <Th>writer</Th>
                   <Th>Note Title</Th>
                   <Th>Note Description</Th>
-                  <Th>writer</Th>
                 </Tr>
               </Thead>
               <Tbody>
-                {dataForGetStudyNoteList ? dataForGetStudyNoteList.map((item) => (
-                  <Tr key={item.pk}>
-                    <Td>
-                      <Checkbox
-                        isChecked={selectedRowPks.includes(item.pk)}
-                        border={"1px solid black"}
-                        onChange={() => handleCheckboxChange(item.pk)}
-                      />
-                    </Td>
-                    <Td>{item.title}</Td>
-                    <Td>{item.description}</Td>
-                    <Td>{item.writer.username}</Td>
-                  </Tr>
-                )): "no data"}
+                {dataForGetStudyNoteList
+                  ? dataForGetStudyNoteList.map((item) => (
+                      <Tr key={item.pk}>
+                        <Td>
+                          <Checkbox
+                            isChecked={selectedRowPks.includes(item.pk)}
+                            border={"1px solid black"}
+                            onChange={() => handleCheckboxChange(item.pk)}
+                          />
+                        </Td>
+                        <Td>{item.writer.username}</Td>
+                        <Td>{item.title}</Td>
+                        <Td>{item.description}</Td>
+                      </Tr>
+                    ))
+                  : "no data"}
               </Tbody>
             </Table>
           </Box>
