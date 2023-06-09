@@ -63,6 +63,7 @@ import TaskLogPage from "./routes/Log/TaskLogPage";
 import ExtraTaskDetailPage from "./routes/ExtraTaskDetailPage";
 import UncompltedTaskListWithImageSlideForCheckedPage from "./routes/UncompltedTaskListWithImageSlideForCheckedPage";
 import StudyNoteDetail2 from "./routes/StudyNoteDetail2";
+import TableModeForUpdatePage from "./routes/TableModeForUpdatePage";
 
 const router = createBrowserRouter([
   {
@@ -82,10 +83,17 @@ const router = createBrowserRouter([
         path: "study-note",
         element: <StudyNotePage />,
       },
+
       {
         path: "study-note/:study_note_pk",
         element: <StudyNoteDetail />,
       },
+
+      {
+        path: "study-note/table-mode-for-update-page",
+        element: <TableModeForUpdatePage />,
+      },
+
       {
         path: "study-note/:study_note_pk/:note_page_num",
         element: <StudyNoteDetail2  />,

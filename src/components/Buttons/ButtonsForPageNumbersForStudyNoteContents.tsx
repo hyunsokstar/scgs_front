@@ -1,40 +1,24 @@
 import {
   Box,
   Button,
-  ButtonProps,
-  HStack,
-  Input,
   Spacer,
   IconButton,
   useToast,
   Divider,
 } from "@chakra-ui/react";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import {
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  Text,
-} from "@chakra-ui/react";
-import {
-  FaTrashAlt,
-  FaChevronLeft,
-  FaChevronRight,
-  FaTimes,
-} from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import {
   selectButton,
-  deselectButton,
   moveToBeforPage,
   moveToNextPage,
   cancle_for_all_selected_pages,
   setPageNumbersToMove,
   go_to_specific_page,
 } from "../../reducers/studyNoteSlice";
-import ButtonForEditorMode from "../Button/ButtonForEditorMode";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -47,6 +31,7 @@ import { type_for_parameter_for_delete_pages_for_study_note } from "../../types/
 import ToggleButtonForUpdate from "../Button/ToggleButtonForUpdate";
 import { apiForUpdateEditModeForStudyNoteContent } from "../../apis/user_api";
 import InputsForSettingOptionForPageUpdate from "../Input/InputsForSettingOptionForPageUpdate";
+import { Link } from "react-router-dom";
 
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
   currentPage: number;
@@ -441,23 +426,23 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           >
             +1
           </Button>
-
-          <Button
-            variant="outline"
-            size={"sm"}
-            colorScheme="yellow"
-            _hover={{ bg: "yellow.100" }}
-            ml={2}
-            // onClick={() =>
-            //   goToEditModeForUpdatePage()
-            // }
-            style={{
-              backgroundColor: "transparent",
-              marginRight: "10px",
-            }}
-          >
-            Table Mode For Page Update
-          </Button>
+        
+          {/* fix 0609 */}
+          <Link to={`/study-note/table-mode-for-update-page`}>
+            <Button
+              variant="outline"
+              size={"sm"}
+              colorScheme="yellow"
+              _hover={{ bg: "yellow.100" }}
+              ml={2}
+              style={{
+                backgroundColor: "transparent",
+                marginRight: "10px",
+              }}
+            >
+              Table Mode For Page Update
+            </Button>
+          </Link>
 
           <Spacer />
           <Button
