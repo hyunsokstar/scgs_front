@@ -47,6 +47,21 @@ export const apiForGetStudyNoteList = async ({
   });
 };
 
+export const apiForGetStudyNoteListForCopyMode = async ({
+  queryKey,
+}: QueryFunctionContext): Promise<any> => {
+  const [_, pageNum, selectedNoteWriter] = queryKey;
+
+  const params = new URLSearchParams();
+  params.append("page", pageNum as string);
+  params.append("selectedNoteWriter", selectedNoteWriter as string); // Add selectedNoteWriter to params
+
+  return await instance.get(`study-note/get-study-note-list-for-copy-mode?${params}`).then((response) => {
+    console.log("response.data : ", response.data);
+    return response.data;
+  });
+};
+
 export const apiForUpdateNoteContentsPageForSelected = ({
   direction,
   study_note_pk,

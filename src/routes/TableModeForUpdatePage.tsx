@@ -16,6 +16,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForGetAllUserNamesWithOutMe } from "../apis/user_api";
 import {
   apiForGetStudyNoteList,
+  apiForGetStudyNoteListForCopyMode,
   apiForGetStudyNoteListForMe,
 } from "../apis/study_note_api";
 import { NoteType, TypeForNoteList } from "../types/study_note_type";
@@ -52,7 +53,7 @@ const TableModeForUpdatePage = (props: Props) => {
     refetch: refetchForGetStudyNoteList,
   } = useQuery<TypeForNoteList>(
     ["getStudyNoteListForCopyMode", pageNum, selectedNoteWriter],
-    apiForGetStudyNoteList,
+    apiForGetStudyNoteListForCopyMode,
     {
       enabled: true,
     }

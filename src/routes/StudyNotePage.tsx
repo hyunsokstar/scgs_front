@@ -27,7 +27,7 @@ const StudyNotePage = () => {
     data: studyNoteData,
     refetch: studyNoteRefatch,
   } = useQuery<TypeForNoteList>(
-    ["getStudyNoteListForCopyMode", pageNum, selectedNoteWriter],
+    ["getStudyNoteList", pageNum, selectedNoteWriter],
     apiForGetStudyNoteList,
     {
       enabled: true,
