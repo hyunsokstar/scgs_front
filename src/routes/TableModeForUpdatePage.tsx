@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import {
   Box,
   Text,
@@ -131,9 +133,9 @@ const TableModeForUpdatePage = (props: Props) => {
             </Select>
           </Box>
 
-          <Box>
+          {/* <Box>
             현재 선택된 note pks :<p>{selectedRowPks.join(", ")}</p>
-          </Box>
+          </Box> */}
 
           <Box>
             <Box display={"flex"} justifyContent={"space-between"} mt={5}>
@@ -151,7 +153,7 @@ const TableModeForUpdatePage = (props: Props) => {
                     buttonText="copy note for check to me"
                     selectedRowPksFromOriginalTable={selectedRowPks}
                     setSelectedRowPksFromOriginalTable={setSelectedRowPks}
-                    handleCheckboxChange = {handleCheckboxChange}
+                    handleCheckboxChange={handleCheckboxChange}
                   />
                 ) : (
                   ""
@@ -183,7 +185,13 @@ const TableModeForUpdatePage = (props: Props) => {
                           />
                         </Td>
                         <Td>{item.writer.username}</Td>
-                        <Td>{item.title}</Td>
+                        <Td>
+                          <Link to={`/study-note/${item.pk}`}>
+                            <Box _hover={{ textDecoration: "underline" }}>
+                              {item.title}
+                            </Box>
+                          </Link>
+                        </Td>
                         <Td>{item.description}</Td>
                       </Tr>
                     ))

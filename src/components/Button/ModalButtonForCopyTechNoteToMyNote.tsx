@@ -172,8 +172,8 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
             </Table>
 
             <Box>
-              현재 선택된 note pks :
-              <p>{selectedRowPksFromOriginalTable.join(", ")}</p>
+              {/* 현재 선택된 note pks :
+              <p>{selectedRowPksFromOriginalTable.join(", ")}</p> */}
             </Box>
             <Box display={"flex"} justifyContent={"flex-end"} p={2}>
               {/* {selectedRowPksFromOriginalTable} */}
