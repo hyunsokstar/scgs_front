@@ -32,7 +32,6 @@ const TableModeForUpdatePage = (props: Props) => {
 
   const [selectedNoteWriter, setSelectedNoteWriter] = useState("");
   const [pageNum, setPageNum] = useState(1);
-  const perPage = 3; // Set the number of items per page
 
   const {
     isLoading: isLoadingForGetStudyNoteList,

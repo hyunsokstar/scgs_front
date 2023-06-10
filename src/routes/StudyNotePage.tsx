@@ -1,20 +1,27 @@
+import React, { useState } from "react";
 import { Box, Flex, Text, Button } from "@chakra-ui/react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
-import React from "react";
 import { apiForGetStudyNoteList } from "../apis/study_note_api";
 import CardForStudyNote from "../components/Card/CardForStudyNote";
 import ModalButtonForAddStudyNote from "../components/modal/ModalButtonForAddStudyNote";
-import { type_for_study_note_list_row } from "../types/study_note_type";
+import {
+  TypeForNoteList,
+  type_for_study_note_list_row,
+} from "../types/study_note_type";
 import { Link } from "react-router-dom";
+import PaginationComponent from "../components/PaginationComponent";
 
 const StudyNotePage = () => {
+  const [pageNum, setPageNum] = useState(1);
+  const [selectedNoteWriter, setSelectedNoteWriter] = useState("");
+
   const {
     isLoading: studyNoteLoading,
     data: studyNoteData,
     refetch: studyNoteRefatch,
-  } = useQuery<type_for_study_note_list_row[]>(
-    ["getStudyNoteList"],
+  } = useQuery<TypeForNoteList>(
+    ["getStudyNoteListForCopyMode", pageNum, selectedNoteWriter],
     apiForGetStudyNoteList,
     {
       enabled: true,
@@ -59,7 +66,7 @@ const StudyNotePage = () => {
           gap={10}
           border={"0px solid black"}
         >
-          {studyNoteData.map((note: type_for_study_note_list_row) => (
+          {studyNoteData.noteList.map((note: type_for_study_note_list_row) => (
             <CardForStudyNote
               pk={note.pk}
               key={note.title}
@@ -69,6 +76,21 @@ const StudyNotePage = () => {
             />
           ))}
         </Flex>
+      </Box>
+
+      <Box mt={5}>
+        {studyNoteData ? (
+          <PaginationComponent
+            current_page_num={pageNum}
+            setCurrentPageNum={setPageNum}
+            total_page_num={studyNoteData?.totalPageCount}
+            task_number_for_one_page={
+              studyNoteData?.note_count_per_page
+            }
+          />
+        ) : (
+          "no data"
+        )}
       </Box>
     </Box>
   );
