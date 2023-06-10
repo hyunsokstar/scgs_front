@@ -13,7 +13,7 @@ import {
   FormLabel,
   Input,
   Textarea,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -22,17 +22,14 @@ import { type_for_insert_study_note } from "../../types/study_note_type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForCreateStudyNote } from "../../apis/study_note_api";
 
+interface IProps {
+  button_text: string;
+}
 
-// interface FormValues {
-//   title: string;
-//   description: string;
-// }
-
-function ModalButtonForAddStudyNote() {
+function ModalButtonForAddStudyNote({ button_text }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
   const queryClient = useQueryClient();
-
 
   const {
     register,
@@ -53,7 +50,7 @@ function ModalButtonForAddStudyNote() {
         status: "success",
       });
       queryClient.refetchQueries(["getStudyNoteList"]);
-      reset()
+      reset();
       setIsOpen(false);
     },
     onError: (error: any) => {
@@ -66,7 +63,6 @@ function ModalButtonForAddStudyNote() {
     console.log(data);
 
     mutationForCreateStudyNote.mutate(data);
-
   };
 
   const onClose = () => setIsOpen(false);
@@ -83,7 +79,7 @@ function ModalButtonForAddStudyNote() {
           rightIcon={<AddIcon />}
           onClick={onOpen}
         >
-          Add Note
+          {button_text}
         </Button>
       </Box>
 

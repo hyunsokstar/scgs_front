@@ -11,10 +11,16 @@ import {
 } from "../types/study_note_type";
 import { Link } from "react-router-dom";
 import PaginationComponent from "../components/PaginationComponent";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store";
 
 const StudyNotePage = () => {
   const [pageNum, setPageNum] = useState(1);
   const [selectedNoteWriter, setSelectedNoteWriter] = useState("");
+
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
 
   const {
     isLoading: studyNoteLoading,
@@ -40,30 +46,39 @@ const StudyNotePage = () => {
         Tech Note !!
       </Text>
 
-      <Box display="flex" justifyContent="space-between" p={2}>
-        <Link to={`/study-note/table-mode-for-update-page`}>
-          <Button
-            variant="outline"
-            size={"sm"}
-            colorScheme="yellow"
-            _hover={{ bg: "yellow.100" }}
-            ml={2}
-            style={{
-              backgroundColor: "transparent",
-              marginRight: "10px",
-            }}
-          >
-            Table Mode For Note Copy
-          </Button>
-        </Link>
-        <ModalButtonForAddStudyNote />
+      <Box
+        display={"flex"}
+        alignItems={"center"}
+        border={"1px solid green"}
+        mx={"50px"}
+      >
+        <ModalButtonForAddStudyNote button_text={"add study note"} />
+        {isLoggedIn ? (
+          <Link to={`/study-note/table-mode-for-update-page`}>
+            <Button
+              variant="outline"
+              size={"md"}
+              colorScheme="yellow"
+              _hover={{ bg: "yellow.100" }}
+              ml={2}
+              style={{
+                backgroundColor: "transparent",
+                marginRight: "10px",
+              }}
+            >
+              Table Mode For Note Copy
+            </Button>
+          </Link>
+        ) : (
+          ""
+        )}
       </Box>
 
       <Box px={"40px"} border={"0px solid purple"}>
         <Flex
           wrap="wrap"
           justifyContent={"flex-start"}
-          gap={10}
+          gap={5}
           border={"0px solid black"}
         >
           {studyNoteData.noteList.map((note: type_for_study_note_list_row) => (
@@ -79,17 +94,15 @@ const StudyNotePage = () => {
       </Box>
 
       <Box mt={5}>
-        {studyNoteData ? (
+        {studyNoteData.noteList ? (
           <PaginationComponent
             current_page_num={pageNum}
             setCurrentPageNum={setPageNum}
             total_page_num={studyNoteData?.totalPageCount}
-            task_number_for_one_page={
-              studyNoteData?.note_count_per_page
-            }
+            task_number_for_one_page={studyNoteData?.note_count_per_page}
           />
         ) : (
-          "no data"
+          ""
         )}
       </Box>
     </Box>

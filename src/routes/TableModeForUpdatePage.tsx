@@ -20,10 +20,18 @@ import {
   type_for_study_note_list_row,
 } from "../types/study_note_type";
 import PaginationComponent from "../components/PaginationComponent";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+
 
 interface Props {}
 
 const TableModeForUpdatePage = (props: Props) => {
+
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
+
   const {
     isLoading: isLoadingForGetAllUserNames,
     data: dataForGetAllUserNames,
@@ -139,7 +147,7 @@ const TableModeForUpdatePage = (props: Props) => {
         </Box>
       </Box>
       <Box width="50%" border="1px solid black" bg="lightpink">
-        target table
+        login user: {loginUser.username}
       </Box>
     </Box>
   );
