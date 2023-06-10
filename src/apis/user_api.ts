@@ -11,6 +11,13 @@ const instance = axios.create({
 });
 
 // 1122
+
+export const apiForGetAllUserNamesWithOutMe = () =>
+  instance.get("users/only-user-name-without-me").then((response) => {
+    return response.data;
+  });
+
+
 export const apiForGetAllUserNames = () =>
   instance.get("users/only-user-name").then((response) => {
     return response.data;

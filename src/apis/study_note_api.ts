@@ -9,7 +9,6 @@ import {
   StudyNoteContentFormData,
   type_for_insert_study_note,
   type_for_parameter_for_delete_pages_for_study_note,
-  type_for_study_note_list_row,
 } from "../types/study_note_type";
 
 const instance = axios.create({
@@ -18,7 +17,36 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForUpdateNoteContentsPageForSelected
+export const apiForGetStudyNoteListForMe = async ({
+  queryKey,
+}: QueryFunctionContext): Promise<any> => {
+  const [_, pageNumForMe] = queryKey;
+
+  const params = new URLSearchParams();
+  params.append("page", pageNumForMe as string);
+
+  return await instance.get(`study-note/for-me/?${params}`).then((response) => {
+    console.log("response.data : ", response.data);
+    return response.data;
+  });
+  
+};
+
+export const apiForGetStudyNoteList = async ({
+  queryKey,
+}: QueryFunctionContext): Promise<any> => {
+  const [_, pageNum, selectedNoteWriter] = queryKey;
+
+  const params = new URLSearchParams();
+  params.append("page", pageNum as string);
+  params.append("selectedNoteWriter", selectedNoteWriter as string); // Add selectedNoteWriter to params
+
+  return await instance.get(`study-note/?${params}`).then((response) => {
+    console.log("response.data : ", response.data);
+    return response.data;
+  });
+};
+
 export const apiForUpdateNoteContentsPageForSelected = ({
   direction,
   study_note_pk,
@@ -273,21 +301,6 @@ export const apiFordeleteOneStudyNote = (pk: number) => {
       },
     })
     .then((response) => response.data);
-};
-
-export const apiForGetStudyNoteList = async ({
-  queryKey,
-}: QueryFunctionContext): Promise<any> => {
-  const [_, pageNum, selectedNoteWriter] = queryKey;
-
-  const params = new URLSearchParams();
-  params.append("page", pageNum as string);
-  params.append("selectedNoteWriter", selectedNoteWriter as string); // Add selectedNoteWriter to params
-
-  return await instance.get(`study-note/?${params}`).then((response) => {
-    console.log("response.data : ", response.data);
-    return response.data;
-  });
 };
 
 export const apiForCreateStudyNote = ({
