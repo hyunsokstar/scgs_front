@@ -278,8 +278,13 @@ export const apiFordeleteOneStudyNote = (pk: number) => {
 export const apiForGetStudyNoteList = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
-  const [_, pageNum] = queryKey;
-  return await instance.get(`study-note/?page=${pageNum}`).then((response) => {
+  const [_, pageNum, selectedNoteWriter] = queryKey;
+
+  const params = new URLSearchParams();
+  params.append("page", pageNum as string);
+  params.append("selectedNoteWriter", selectedNoteWriter as string); // Add selectedNoteWriter to params
+
+  return await instance.get(`study-note/?${params}`).then((response) => {
     console.log("response.data : ", response.data);
     return response.data;
   });

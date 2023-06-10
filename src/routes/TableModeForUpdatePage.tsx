@@ -10,24 +10,19 @@ import {
   Th,
   Td,
   Checkbox,
+  Button,
 } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForGetAllUserNames } from "../apis/user_api";
 import { apiForGetStudyNoteList } from "../apis/study_note_api";
-import {
-  NoteType,
-  TypeForNoteList,
-  type_for_study_note_list_row,
-} from "../types/study_note_type";
+import { NoteType, TypeForNoteList } from "../types/study_note_type";
 import PaginationComponent from "../components/PaginationComponent";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
-
 interface Props {}
 
 const TableModeForUpdatePage = (props: Props) => {
-
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );
@@ -76,11 +71,12 @@ const TableModeForUpdatePage = (props: Props) => {
   // 2244
   return (
     <Box bg="lightblue" display="flex">
-      <Box width="50%" border="1px solid black" bg="lavender">
+      <Box width="50%" border="1px solid black" bg="lavender" p={2}>
         <Box>
           <Box>note 유저 선택:</Box>
           <Select
-            margin={2}
+            // margin={2}
+            width={"50%"}
             placeholder="Choose a task_manager"
             border={"1px solid gray"}
             onChange={selectHandlerForNoteWriter}
@@ -94,9 +90,22 @@ const TableModeForUpdatePage = (props: Props) => {
         </Box>
 
         <Box>
-          <Box>
-            Selected User's Notes:
-            <Box>{selectedNoteWriter}</Box>
+          <Box display={"flex"} justifyContent={"space-between"} mt={5}>
+            <Box>
+              {selectedNoteWriter !== "" ? 
+              <Box>
+                {selectedNoteWriter}'s note
+              </Box> 
+              : "All User's note"}
+
+            </Box>
+            <Box>
+              {selectedRowPks.length ? (
+                <Button>copy note for check to me</Button>
+              ) : (
+                ""
+              )}
+            </Box>
           </Box>
           <Box>
             <Table variant="simple">
@@ -111,7 +120,8 @@ const TableModeForUpdatePage = (props: Props) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {dataForGetStudyNoteList && dataForGetStudyNoteList.noteList ? (
+                {dataForGetStudyNoteList &&
+                dataForGetStudyNoteList.noteList.length ? (
                   dataForGetStudyNoteList.noteList.map((item: NoteType) => (
                     <Tr key={item.pk}>
                       <Td>
@@ -127,7 +137,13 @@ const TableModeForUpdatePage = (props: Props) => {
                     </Tr>
                   ))
                 ) : (
-                  <Box>"no data"</Box>
+                  <Tr>
+                    <Td colSpan={5}>
+                      <Box fontSize={"30px"} textAlign={"center"}>
+                        "no data"
+                      </Box>
+                    </Td>
+                  </Tr>
                 )}
               </Tbody>
             </Table>
