@@ -132,6 +132,10 @@ const TableModeForUpdatePage = (props: Props) => {
           </Box>
 
           <Box>
+            현재 선택된 note pks :<p>{selectedRowPks.join(", ")}</p>
+          </Box>
+
+          <Box>
             <Box display={"flex"} justifyContent={"space-between"} mt={5}>
               <Box>
                 {selectedNoteWriter !== "" ? (
