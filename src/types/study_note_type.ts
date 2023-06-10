@@ -72,3 +72,22 @@ export interface ListPropsForContentOrdering {
   currentPage: number;
   items: any;
 }
+
+export interface UserType {
+  pk: number;
+  username: string;
+  profile_image: string;
+}
+
+export interface NoteType {
+  pk: number;
+  title: string;
+  description: string;
+  writer: UserType;
+}
+
+export interface TypeForNoteList {
+  noteList: NoteType[];
+  totalPageCount: number;
+  note_count_per_page: number;
+}

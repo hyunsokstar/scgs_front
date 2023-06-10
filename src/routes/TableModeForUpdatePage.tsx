@@ -14,7 +14,12 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForGetAllUserNames } from "../apis/user_api";
 import { apiForGetStudyNoteList } from "../apis/study_note_api";
-import { type_for_study_note_list_row } from "../types/study_note_type";
+import {
+  NoteType,
+  TypeForNoteList,
+  type_for_study_note_list_row,
+} from "../types/study_note_type";
+import PaginationComponent from "../components/PaginationComponent";
 
 interface Props {}
 
@@ -27,13 +32,14 @@ const TableModeForUpdatePage = (props: Props) => {
 
   const [selectedNoteWriter, setSelectedNoteWriter] = useState("");
   const [pageNum, setPageNum] = useState(1);
+  const perPage = 3; // Set the number of items per page
 
   const {
     isLoading: isLoadingForGetStudyNoteList,
     data: dataForGetStudyNoteList,
     refetch: refetchForGetStudyNoteList,
-  } = useQuery<type_for_study_note_list_row[]>(
-    ["getStudyNoteListForCopyMode",pageNum, selectedNoteWriter],
+  } = useQuery<TypeForNoteList>(
+    ["getStudyNoteListForCopyMode", pageNum, selectedNoteWriter],
     apiForGetStudyNoteList,
     {
       enabled: true,
@@ -41,11 +47,6 @@ const TableModeForUpdatePage = (props: Props) => {
   );
 
   console.log("dataForGetStudyNoteList : ", dataForGetStudyNoteList);
-
-  const [data, setData] = React.useState([
-    { id: 1, header1: "Data 1", header2: "Data 2", selected: false },
-    { id: 2, header1: "Data 3", header2: "Data 4", selected: false },
-  ]);
 
   const [selectedRowPks, setSelectedRowPks] = React.useState<number[]>([]);
 
@@ -103,24 +104,38 @@ const TableModeForUpdatePage = (props: Props) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {dataForGetStudyNoteList
-                  ? dataForGetStudyNoteList.map((item) => (
-                      <Tr key={item.pk}>
-                        <Td>
-                          <Checkbox
-                            isChecked={selectedRowPks.includes(item.pk)}
-                            border={"1px solid black"}
-                            onChange={() => handleCheckboxChange(item.pk)}
-                          />
-                        </Td>
-                        <Td>{item.writer.username}</Td>
-                        <Td>{item.title}</Td>
-                        <Td>{item.description}</Td>
-                      </Tr>
-                    ))
-                  : "no data"}
+                {dataForGetStudyNoteList && dataForGetStudyNoteList.noteList ? (
+                  dataForGetStudyNoteList.noteList.map((item: NoteType) => (
+                    <Tr key={item.pk}>
+                      <Td>
+                        <Checkbox
+                          isChecked={selectedRowPks.includes(item.pk)}
+                          border={"1px solid black"}
+                          onChange={() => handleCheckboxChange(item.pk)}
+                        />
+                      </Td>
+                      <Td>{item.writer.username}</Td>
+                      <Td>{item.title}</Td>
+                      <Td>{item.description}</Td>
+                    </Tr>
+                  ))
+                ) : (
+                  <Box>"no data"</Box>
+                )}
               </Tbody>
             </Table>
+            {dataForGetStudyNoteList ? (
+              <PaginationComponent
+                current_page_num={pageNum}
+                setCurrentPageNum={setPageNum}
+                total_page_num={dataForGetStudyNoteList?.totalPageCount}
+                task_number_for_one_page={
+                  dataForGetStudyNoteList?.note_count_per_page
+                }
+              />
+            ) : (
+              "no data"
+            )}
           </Box>
         </Box>
       </Box>
