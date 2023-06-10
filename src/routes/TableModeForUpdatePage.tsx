@@ -35,7 +35,6 @@ const TableModeForUpdatePage = (props: Props) => {
     data: dataForGetAllUserNamesWithOutMe,
     error: errorForGetAllUserNameWithOutMe,
     refetch: refetchForGetAllUserNameWithOutMe,
-
   } = useQuery<any>(
     ["apiForGetAllUserNamesWithOutMe"],
     apiForGetAllUserNamesWithOutMe
@@ -95,125 +94,75 @@ const TableModeForUpdatePage = (props: Props) => {
     if (loginUser) {
       refetchForGetStudyNoteList();
       refetchForGetStudyNoteListForMe();
-      refetchForGetAllUserNameWithOutMe()
+      refetchForGetAllUserNameWithOutMe();
     }
   }, [loginUser, isLoggedIn]);
 
   // 2244
   return (
-    <Box bg="lightblue" display="flex">
-      <Box width="50%" border="1px solid black" bg="lavender" p={2}>
-        <Box>
-          <Box>note 유저 선택:</Box>
-          <Select
-            // margin={2}
-            width={"50%"}
-            placeholder="Choose a task_manager"
-            border={"1px solid gray"}
-            onChange={selectHandlerForNoteWriter}
-          >
-            {dataForGetAllUserNamesWithOutMe?.map((user: any) => (
-              <option key={user.pk} value={user.username}>
-                {user.username}
-              </option>
-            ))}
-          </Select>
-        </Box>
-
-        <Box>
-          <Box display={"flex"} justifyContent={"space-between"} mt={5}>
-            <Box>
-              {selectedNoteWriter !== "" ? (
-                <Box>{selectedNoteWriter}'s note</Box>
-              ) : (
-                "All User's note"
-              )}
-            </Box>
-            <Box>
-              {selectedRowPks.length ? (
-                <Button>copy note for check to me</Button>
-              ) : (
-                ""
-              )}
-            </Box>
-          </Box>
-          <Box>
-            <Table variant="simple">
-              <Thead>
-                <Tr>
-                  <Th>
-                    <Checkbox border={"1px solid black"} />
-                  </Th>
-                  <Th>writer</Th>
-                  <Th>Note Title</Th>
-                  <Th>Note Description</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {dataForGetStudyNoteList &&
-                dataForGetStudyNoteList.noteList.length ? (
-                  dataForGetStudyNoteList.noteList.map((item: NoteType) => (
-                    <Tr key={item.pk}>
-                      <Td>
-                        <Checkbox
-                          isChecked={selectedRowPks.includes(item.pk)}
-                          border={"1px solid black"}
-                          onChange={() => handleCheckboxChange(item.pk)}
-                        />
-                      </Td>
-                      <Td>{item.writer.username}</Td>
-                      <Td>{item.title}</Td>
-                      <Td>{item.description}</Td>
-                    </Tr>
-                  ))
-                ) : (
-                  <Tr>
-                    <Td colSpan={5}>
-                      <Box fontSize={"30px"} textAlign={"center"}>
-                        {dataForGetStudyNoteList && dataForGetStudyNoteList.noteList.length === 0 && (
-                          <Box>note is not exist !</Box>
-                        )}
-                      </Box>
-                    </Td>
-                  </Tr>
-                )}
-              </Tbody>
-            </Table>
-            {dataForGetStudyNoteList ? (
-              <PaginationComponent
-                current_page_num={pageNumForMe}
-                setCurrentPageNum={setPageNumForMe}
-                total_page_num={dataForGetStudyNoteListForMe?.totalPageCount}
-                task_number_for_one_page={
-                  dataForGetStudyNoteListForMe?.note_count_per_page
-                }
-              />
-            ) : (
-              "no data"
-            )}
-          </Box>
-        </Box>
+    <Box>
+      <Box
+        textAlign={"center"}
+        fontSize={"30px"}
+        border={"1px solid green"}
+        bgColor={"green.100"}
+        m={2}
+        p={2}
+      >
+        Copy Mode For Tech Note
       </Box>
-      <Box width="50%" border="1px solid black" bg="lightpink">
-        <Box>login user: {loginUser.username}</Box>
-        <Box>
+      <Box bg="wthie" display="flex" mt={2} gap={2} px={2}>
+        <Box width="50%" border="1px solid black" bg="blue.50" p={2}>
           <Box>
-            <Table variant="simple">
-              <Thead>
-                <Tr>
-                  <Th>
-                    <Checkbox border={"1px solid black"} />
-                  </Th>
-                  <Th>writer</Th>
-                  <Th>Note Title</Th>
-                  <Th>Note Description</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {dataForGetStudyNoteListForMe &&
-                dataForGetStudyNoteListForMe.noteList.length ? (
-                  dataForGetStudyNoteListForMe.noteList.map(
-                    (item: NoteType) => (
+            <Box>note 유저 선택:</Box>
+            <Select
+              // margin={2}
+              width={"50%"}
+              placeholder="Choose a task_manager"
+              border={"1px solid gray"}
+              onChange={selectHandlerForNoteWriter}
+            >
+              {dataForGetAllUserNamesWithOutMe?.map((user: any) => (
+                <option key={user.pk} value={user.username}>
+                  {user.username}
+                </option>
+              ))}
+            </Select>
+          </Box>
+
+          <Box>
+            <Box display={"flex"} justifyContent={"space-between"} mt={5}>
+              <Box>
+                {selectedNoteWriter !== "" ? (
+                  <Box>{selectedNoteWriter}'s note</Box>
+                ) : (
+                  "All User's note"
+                )}
+              </Box>
+              <Box>
+                {selectedRowPks.length ? (
+                  <Button>copy note for check to me</Button>
+                ) : (
+                  ""
+                )}
+              </Box>
+            </Box>
+            <Box>
+              <Table variant="simple">
+                <Thead>
+                  <Tr>
+                    <Th>
+                      <Checkbox border={"1px solid black"} />
+                    </Th>
+                    <Th>writer</Th>
+                    <Th>Note Title</Th>
+                    <Th>Note Description</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {dataForGetStudyNoteList &&
+                  dataForGetStudyNoteList.noteList.length ? (
+                    dataForGetStudyNoteList.noteList.map((item: NoteType) => (
                       <Tr key={item.pk}>
                         <Td>
                           <Checkbox
@@ -226,31 +175,94 @@ const TableModeForUpdatePage = (props: Props) => {
                         <Td>{item.title}</Td>
                         <Td>{item.description}</Td>
                       </Tr>
-                    )
-                  )
-                ) : (
+                    ))
+                  ) : (
+                    <Tr>
+                      <Td colSpan={5}>
+                        <Box fontSize={"30px"} textAlign={"center"}>
+                          {dataForGetStudyNoteList &&
+                            dataForGetStudyNoteList.noteList.length === 0 && (
+                              <Box>note is not exist !</Box>
+                            )}
+                        </Box>
+                      </Td>
+                    </Tr>
+                  )}
+                </Tbody>
+              </Table>
+              {dataForGetStudyNoteList ? (
+                <PaginationComponent
+                  current_page_num={pageNumForMe}
+                  setCurrentPageNum={setPageNumForMe}
+                  total_page_num={dataForGetStudyNoteListForMe?.totalPageCount}
+                  task_number_for_one_page={
+                    dataForGetStudyNoteListForMe?.note_count_per_page
+                  }
+                />
+              ) : (
+                "no data"
+              )}
+            </Box>
+          </Box>
+        </Box>
+        <Box width="50%" border="1px solid black" bg="red.50" p={2}>
+          <Box>login user: {loginUser.username}</Box>
+          <Box>
+            <Box>
+              <Table variant="simple">
+                <Thead>
                   <Tr>
-                    <Td colSpan={5}>
-                      <Box fontSize={"30px"} textAlign={"center"}>
-                        "no data"
-                      </Box>
-                    </Td>
+                    <Th>
+                      <Checkbox border={"1px solid black"} />
+                    </Th>
+                    <Th>writer</Th>
+                    <Th>Note Title</Th>
+                    <Th>Note Description</Th>
                   </Tr>
-                )}
-              </Tbody>
-            </Table>
-            {dataForGetStudyNoteList ? (
-              <PaginationComponent
-                current_page_num={pageNum}
-                setCurrentPageNum={setPageNum}
-                total_page_num={dataForGetStudyNoteList?.totalPageCount}
-                task_number_for_one_page={
-                  dataForGetStudyNoteList?.note_count_per_page
-                }
-              />
-            ) : (
-              "no data"
-            )}
+                </Thead>
+                <Tbody>
+                  {dataForGetStudyNoteListForMe &&
+                  dataForGetStudyNoteListForMe.noteList.length ? (
+                    dataForGetStudyNoteListForMe.noteList.map(
+                      (item: NoteType) => (
+                        <Tr key={item.pk}>
+                          <Td>
+                            <Checkbox
+                              isChecked={selectedRowPks.includes(item.pk)}
+                              border={"1px solid black"}
+                              onChange={() => handleCheckboxChange(item.pk)}
+                            />
+                          </Td>
+                          <Td>{item.writer.username}</Td>
+                          <Td>{item.title}</Td>
+                          <Td>{item.description}</Td>
+                        </Tr>
+                      )
+                    )
+                  ) : (
+                    <Tr>
+                      <Td colSpan={5}>
+                        <Box fontSize={"30px"} textAlign={"center"}>
+                          "no data"
+                        </Box>
+                      </Td>
+                    </Tr>
+                  )}
+                </Tbody>
+              </Table>
+              {dataForGetStudyNoteList ? (
+                <PaginationComponent
+                  current_page_num={pageNum}
+                  setCurrentPageNum={setPageNum}
+                  total_page_num={dataForGetStudyNoteList?.totalPageCount}
+                  task_number_for_one_page={
+                    dataForGetStudyNoteList?.note_count_per_page
+                  }
+                />
+              ) : (
+                "no data"
+              )}
+            </Box>
           </Box>
         </Box>
       </Box>
