@@ -61,9 +61,8 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
     setIsOpen(false);
   };
 
-  const buttonHandlerForCopyNoteForCheckedRowsToMyNote = () => {
-
-    alert("button click check !")
+  const buttonHandlerForCopyNoteForCheckedRowsToMyNote = (selectedRowPksFromOriginalTable: number[]) => {
+    alert(selectedRowPksFromOriginalTable);
 
     console.log(
       "buttonHandlerForCopyNoteForCheckedRowsToMyNote : ",
@@ -140,12 +139,20 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
             </Table>
 
             <Box display={"flex"} justifyContent={"flex-end"} p={2}>
+              {/* {selectedRowPksFromOriginalTable} */}
+              현재 선택된 note pks :
+              <p>{selectedRowPksFromOriginalTable.join(", ")}</p>
               <Button
                 variant={"outline"}
                 size={"md"}
                 border={"1px solid green"}
                 _hover={{ bg: "green.100" }}
-                onClick={buttonHandlerForCopyNoteForCheckedRowsToMyNote}
+                // onClick={buttonHandlerForCopyNoteForCheckedRowsToMyNote}
+                onClick={() => {
+                  if (window.confirm("Task URL을 추가하시겠습니까?")) {
+                    buttonHandlerForCopyNoteForCheckedRowsToMyNote(selectedRowPksFromOriginalTable)
+                  }
+                }}
               >
                 Copyt To My Note
               </Button>
