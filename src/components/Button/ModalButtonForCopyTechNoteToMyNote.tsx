@@ -16,9 +16,13 @@ import {
   Tr,
   Th,
   Td,
+  useToast,
 } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiForGetTechNoteListForSelectedRowPks } from "../../apis/study_note_api";
+import {
+  apiForCopySelectedNotesToMyNote,
+  apiForGetTechNoteListForSelectedRowPks,
+} from "../../apis/study_note_api";
 
 interface ModalButtonForCopyTechNoteToMyNoteProps {
   buttonText: string;
@@ -29,6 +33,7 @@ interface ModalButtonForCopyTechNoteToMyNoteProps {
   handleCheckboxChange: (id: number) => void;
 }
 
+// 1122
 const ModalButtonForCopyTechNoteToMyNote: React.FC<
   ModalButtonForCopyTechNoteToMyNoteProps
 > = ({
@@ -37,6 +42,9 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
   handleCheckboxChange,
   setSelectedRowPksFromOriginalTable,
 }) => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedRowPks, setSelectedRowPks] = useState<number[]>([]);
 
@@ -61,13 +69,38 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
     setIsOpen(false);
   };
 
-  const buttonHandlerForCopyNoteForCheckedRowsToMyNote = (selectedRowPksFromOriginalTable: number[]) => {
-    alert(selectedRowPksFromOriginalTable);
+  const mutationForCopySelectedNotesToMyNote = useMutation(
+    apiForCopySelectedNotesToMyNote,
+    {
+      onMutate: () => {
+        // console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
 
-    console.log(
-      "buttonHandlerForCopyNoteForCheckedRowsToMyNote : ",
-      buttonHandlerForCopyNoteForCheckedRowsToMyNote
-    );
+        toast({
+          title: "Task URL 추가",
+          description: "Task URL을 추가하였습니다.",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        queryClient.refetchQueries(["getOneProjectTask"]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
+
+  // fix 0611
+  const buttonHandlerForCopyNoteForCheckedRowsToMyNote = (
+    selectedRowPksFromOriginalTable: number[]
+  ) => {
+    mutationForCopySelectedNotesToMyNote.mutate({
+        selectedRowPksFromOriginalTable,
+    });
   };
 
   // 2244
@@ -138,10 +171,12 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
               </Tbody>
             </Table>
 
-            <Box display={"flex"} justifyContent={"flex-end"} p={2}>
-              {/* {selectedRowPksFromOriginalTable} */}
+            <Box>
               현재 선택된 note pks :
               <p>{selectedRowPksFromOriginalTable.join(", ")}</p>
+            </Box>
+            <Box display={"flex"} justifyContent={"flex-end"} p={2}>
+              {/* {selectedRowPksFromOriginalTable} */}
               <Button
                 variant={"outline"}
                 size={"md"}
@@ -150,11 +185,13 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
                 // onClick={buttonHandlerForCopyNoteForCheckedRowsToMyNote}
                 onClick={() => {
                   if (window.confirm("Task URL을 추가하시겠습니까?")) {
-                    buttonHandlerForCopyNoteForCheckedRowsToMyNote(selectedRowPksFromOriginalTable)
+                    buttonHandlerForCopyNoteForCheckedRowsToMyNote(
+                      selectedRowPksFromOriginalTable
+                    );
                   }
                 }}
               >
-                Copyt To My Note
+                Copy To My Note
               </Button>
             </Box>
           </ModalBody>

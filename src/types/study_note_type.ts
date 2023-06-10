@@ -91,3 +91,7 @@ export interface TypeForNoteList {
   totalPageCount: number;
   note_count_per_page: number;
 }
+
+export interface typeForParameterForApiForCopySelectedNotesToMyNote {
+  selectedRowPksFromOriginalTable: number[]
+}

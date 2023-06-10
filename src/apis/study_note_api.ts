@@ -9,6 +9,7 @@ import {
   StudyNoteContentFormData,
   type_for_insert_study_note,
   type_for_parameter_for_delete_pages_for_study_note,
+  typeForParameterForApiForCopySelectedNotesToMyNote,
 } from "../types/study_note_type";
 
 const instance = axios.create({
@@ -17,26 +18,39 @@ const instance = axios.create({
 });
 
 // 1122
-// export const apiForGetTechNoteListForSelectedRowPks = async ({
-//   queryKey,
-// }: QueryFunctionContext): Promise<any> => {
-//   const [_, selectedRowPks] = queryKey;
-//   const params = new URLSearchParams();
-//   // todo 1 selectedRowPks 를 StudyNoteAPIViewForCheckedRows 로 보내기
-//   return await instance.get(`study-note/get-study-note-for-checked-rows/`).then((response) => {
-//     console.log("response.data : ", response.data);
-//     return response.data;
-//   });
-// };
+export const apiForCopySelectedNotesToMyNote = ({
+  selectedRowPksFromOriginalTable
+}: typeForParameterForApiForCopySelectedNotesToMyNote) => {
+  console.log("selectedRowPksFromOriginalTable at api : ", selectedRowPksFromOriginalTable);
+
+  // return Promise.resolve(); // Placeholder return statement
+  return instance
+    .post(
+      `/study-note/copy-selected-notes-to-my-note`,
+      {
+        selectedRowPksFromOriginalTable,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 export const apiForGetTechNoteListForSelectedRowPks = async ({
   queryKey,
 }: QueryFunctionContext<any>): Promise<any> => {
   const [_, selectedRowPksFromOriginalTable] = queryKey;
   const params = new URLSearchParams();
-  
+
   // todo 1: selectedRowPks를 StudyNoteAPIViewForCheckedRows로 보내기
-  params.append("selectedRowPksFromOriginalTable", selectedRowPksFromOriginalTable.join(","));
-  
+  params.append(
+    "selectedRowPksFromOriginalTable",
+    selectedRowPksFromOriginalTable.join(",")
+  );
+
   return await instance
     .get(`study-note/get-study-note-for-checked-rows/`, { params })
     .then((response) => {
@@ -57,7 +71,6 @@ export const apiForGetStudyNoteListForMe = async ({
     console.log("response.data : ", response.data);
     return response.data;
   });
-  
 };
 
 export const apiForGetStudyNoteList = async ({
@@ -84,10 +97,12 @@ export const apiForGetStudyNoteListForCopyMode = async ({
   params.append("page", pageNum as string);
   params.append("selectedNoteWriter", selectedNoteWriter as string); // Add selectedNoteWriter to params
 
-  return await instance.get(`study-note/get-study-note-list-for-copy-mode?${params}`).then((response) => {
-    console.log("response.data : ", response.data);
-    return response.data;
-  });
+  return await instance
+    .get(`study-note/get-study-note-list-for-copy-mode?${params}`)
+    .then((response) => {
+      console.log("response.data : ", response.data);
+      return response.data;
+    });
 };
 
 export const apiForUpdateNoteContentsPageForSelected = ({
