@@ -26,7 +26,7 @@ interface ModalButtonForCopyTechNoteToMyNoteProps {
   setSelectedRowPksFromOriginalTable: React.Dispatch<
     React.SetStateAction<number[]>
   >;
-  handleCheckboxChange: (id: number)=> void;
+  handleCheckboxChange: (id: number) => void;
 }
 
 const ModalButtonForCopyTechNoteToMyNote: React.FC<
@@ -61,15 +61,17 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
     setIsOpen(false);
   };
 
-  //   const handleCheckboxChange = (id: number) => {
-  //     const isChecked = selectedRowPks.includes(id);
-  //     const updatedSelectedRowPks = isChecked
-  //       ? selectedRowPks.filter((pk) => pk !== id)
-  //       : [...selectedRowPks, id];
+  const buttonHandlerForCopyNoteForCheckedRowsToMyNote = () => {
 
-  //     setSelectedRowPks(updatedSelectedRowPks);
-  //   };
+    alert("button click check !")
 
+    console.log(
+      "buttonHandlerForCopyNoteForCheckedRowsToMyNote : ",
+      buttonHandlerForCopyNoteForCheckedRowsToMyNote
+    );
+  };
+
+  // 2244
   return (
     <>
       <Button
@@ -136,6 +138,18 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
                 )}
               </Tbody>
             </Table>
+
+            <Box display={"flex"} justifyContent={"flex-end"} p={2}>
+              <Button
+                variant={"outline"}
+                size={"md"}
+                border={"1px solid green"}
+                _hover={{ bg: "green.100" }}
+                onClick={buttonHandlerForCopyNoteForCheckedRowsToMyNote}
+              >
+                Copyt To My Note
+              </Button>
+            </Box>
           </ModalBody>
           <ModalFooter bg="gray.100">Modal Footer</ModalFooter>
         </ModalContent>
