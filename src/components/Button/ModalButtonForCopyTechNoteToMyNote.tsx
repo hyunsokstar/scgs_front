@@ -79,13 +79,13 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
         console.log("data : ", data);
 
         toast({
-          title: "Task URL 추가",
-          description: "Task URL을 추가하였습니다.",
+          title: "note copy success",
+          description: "note copy success",
           status: "success",
           duration: 2000,
           isClosable: true,
         });
-        queryClient.refetchQueries(["getOneProjectTask"]);
+        queryClient.refetchQueries(["getStudyNoteListForCopyModeForMe"]);
       },
       onError: (error: any) => {
         console.log("error.response : ", error.response);
