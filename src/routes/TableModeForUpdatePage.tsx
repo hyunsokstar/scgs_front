@@ -203,11 +203,11 @@ const TableModeForUpdatePage = (props: Props) => {
               </Table>
               {dataForGetStudyNoteList ? (
                 <PaginationComponent
-                  current_page_num={pageNumForMe}
-                  setCurrentPageNum={setPageNumForMe}
-                  total_page_num={dataForGetStudyNoteListForMe?.totalPageCount}
+                  current_page_num={pageNum}
+                  setCurrentPageNum={setPageNum}
+                  total_page_num={dataForGetStudyNoteList?.totalPageCount}
                   task_number_for_one_page={
-                    dataForGetStudyNoteListForMe?.note_count_per_page
+                    dataForGetStudyNoteList?.note_count_per_page
                   }
                 />
               ) : (
@@ -263,11 +263,11 @@ const TableModeForUpdatePage = (props: Props) => {
               </Table>
               {dataForGetStudyNoteList ? (
                 <PaginationComponent
-                  current_page_num={pageNum}
-                  setCurrentPageNum={setPageNum}
-                  total_page_num={dataForGetStudyNoteList?.totalPageCount}
+                  current_page_num={pageNumForMe}
+                  setCurrentPageNum={setPageNumForMe}
+                  total_page_num={dataForGetStudyNoteListForMe?.totalPageCount}
                   task_number_for_one_page={
-                    dataForGetStudyNoteList?.note_count_per_page
+                    dataForGetStudyNoteListForMe?.note_count_per_page
                   }
                 />
               ) : (
