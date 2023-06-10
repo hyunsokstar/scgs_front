@@ -188,7 +188,7 @@ const TableModeForUpdatePage = (props: Props) => {
                         <Td>
                           <Link to={`/study-note/${item.pk}`}>
                             <Box _hover={{ textDecoration: "underline" }}>
-                              {item.title}
+                              {item.title} ({item.count_for_note_contents})
                             </Box>
                           </Link>
                         </Td>
@@ -253,7 +253,13 @@ const TableModeForUpdatePage = (props: Props) => {
                             />
                           </Td>
                           <Td>{item.writer.username}</Td>
-                          <Td>{item.title}</Td>
+                          <Td>
+                            <Link to={`/study-note/${item.pk}`}>
+                              <Box _hover={{ textDecoration: "underline" }}>
+                                {item.title} ({item.count_for_note_contents})
+                              </Box>
+                            </Link>
+                          </Td>
                           <Td>{item.description}</Td>
                         </Tr>
                       )

@@ -84,6 +84,7 @@ export interface NoteType {
   title: string;
   description: string;
   writer: UserType;
+  count_for_note_contents: number;
 }
 
 export interface TypeForNoteList {
