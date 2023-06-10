@@ -23,6 +23,7 @@ import { NoteType, TypeForNoteList } from "../types/study_note_type";
 import PaginationComponent from "../components/PaginationComponent";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import ModalButtonForCopyTechNoteToMyNote from "../components/Button/ModalButtonForCopyTechNoteToMyNote";
 
 interface Props {}
 
@@ -46,6 +47,7 @@ const TableModeForUpdatePage = (props: Props) => {
 
   const [selectedNoteWriterForMe, setSelectedNoteWriterForMe] = useState("");
   const [pageNumForMe, setPageNumForMe] = useState(1);
+  const [selectedRowPks, setSelectedRowPks] = React.useState<number[]>([]);
 
   const {
     isLoading: isLoadingForGetStudyNoteList,
@@ -72,8 +74,6 @@ const TableModeForUpdatePage = (props: Props) => {
   );
 
   console.log("dataForGetStudyNoteList : ", dataForGetStudyNoteList);
-
-  const [selectedRowPks, setSelectedRowPks] = React.useState<number[]>([]);
 
   const handleCheckboxChange = (id: number) => {
     const isChecked = selectedRowPks.includes(id);
@@ -146,7 +146,13 @@ const TableModeForUpdatePage = (props: Props) => {
               </Box>
               <Box>
                 {selectedRowPks.length ? (
-                  <Button>copy note for check to me</Button>
+                  // <Button>copy note for check to me</Button>
+                  <ModalButtonForCopyTechNoteToMyNote
+                    buttonText="copy note for check to me"
+                    selectedRowPksFromOriginalTable={selectedRowPks}
+                    setSelectedRowPksFromOriginalTable={setSelectedRowPks}
+                    handleCheckboxChange = {handleCheckboxChange}
+                  />
                 ) : (
                   ""
                 )}

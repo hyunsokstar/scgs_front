@@ -17,6 +17,34 @@ const instance = axios.create({
 });
 
 // 1122
+// export const apiForGetTechNoteListForSelectedRowPks = async ({
+//   queryKey,
+// }: QueryFunctionContext): Promise<any> => {
+//   const [_, selectedRowPks] = queryKey;
+//   const params = new URLSearchParams();
+//   // todo 1 selectedRowPks 를 StudyNoteAPIViewForCheckedRows 로 보내기
+//   return await instance.get(`study-note/get-study-note-for-checked-rows/`).then((response) => {
+//     console.log("response.data : ", response.data);
+//     return response.data;
+//   });
+// };
+export const apiForGetTechNoteListForSelectedRowPks = async ({
+  queryKey,
+}: QueryFunctionContext<any>): Promise<any> => {
+  const [_, selectedRowPksFromOriginalTable] = queryKey;
+  const params = new URLSearchParams();
+  
+  // todo 1: selectedRowPks를 StudyNoteAPIViewForCheckedRows로 보내기
+  params.append("selectedRowPksFromOriginalTable", selectedRowPksFromOriginalTable.join(","));
+  
+  return await instance
+    .get(`study-note/get-study-note-for-checked-rows/`, { params })
+    .then((response) => {
+      console.log("response.data check check : ", response.data);
+      return response.data;
+    });
+};
+
 export const apiForGetStudyNoteListForMe = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
