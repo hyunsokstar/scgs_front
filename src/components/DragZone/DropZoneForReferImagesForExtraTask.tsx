@@ -10,7 +10,7 @@ import {
 import { FaTimes } from "react-icons/fa";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
 import {
-  createRefImageForTask,
+    createRefImageForExtraTask,
   deleteOneRefImageForExtraTask,
 } from "../../apis/project_progress_api";
 import { getUploadURL, uploadImage } from "../../api";
@@ -49,7 +49,7 @@ const DropZoneForReferImagesForExtraTask: React.FC<DragZoneForReferImagesProps> 
         // if (refetchForTaskDetail) {
         //   refetchForTaskDetail();
         // }
-        // queryClient.refetchQueries(["getTaskListForCheckedPksForImageSlide"]);
+        queryClient.refetchQueries(["apiForExtraTaskDetail"]);
 
         // getTaskListForCheckedPksForImageSlide
         toast({
@@ -71,12 +71,12 @@ const DropZoneForReferImagesForExtraTask: React.FC<DragZoneForReferImagesProps> 
     deleteRefImageMutation.mutate(lef_image_pk);
   };
 
-  const createRefImageForTaskMutation = useMutation(createRefImageForTask, {
+  const createRefImageForTaskMutation = useMutation(createRefImageForExtraTask, {
     onSuccess: (result) => {
       console.log("result : ", result);
       setIsUploadingForRefImage(false);
       // refetchForTaskDetail();
-      queryClient.refetchQueries(["getTaskListForCheckedPksForImageSlide"]);
+      queryClient.refetchQueries(["apiForExtraTaskDetail"]);
 
       toast({
         status: "success",
@@ -115,7 +115,6 @@ const DropZoneForReferImagesForExtraTask: React.FC<DragZoneForReferImagesProps> 
     event.preventDefault();
     setIsUploadingForRefImage(true);
     imageFile = event.dataTransfer.files[0];
-    // setImageToUpload(imageFile)
 
     if (imageFile) {
       const imageUrl = URL.createObjectURL(imageFile);
@@ -159,11 +158,8 @@ const DropZoneForReferImagesForExtraTask: React.FC<DragZoneForReferImagesProps> 
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          // border="1px solid green"
+          border="5px solid green"
         >
-          <Box border="0px solid green" textAlign="center">
-            {/* ModalButtonForShowReferImagesForTask component */}
-          </Box>
 
           {refer_images && refer_images.length ? (
             refer_images.map((row: ReferImage) => (

@@ -26,6 +26,26 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+export const createRefImageForExtraTask = ({ image_url, taskPk }: any) => {
+  console.log("createProfilePhoto check !!!!!");
+
+  return instance
+    .post(
+      "medias/ref-image-for-extra-task/upload",
+      { taskPk, image_url },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => {
+      console.log("response for createRefImageForTask api: ", response.data);
+
+      return response.data;
+    });
+};
+
 export const apiForDeleteCompletedTaskForChecked = (
   checkedRowPks: number[]
 ) => {
