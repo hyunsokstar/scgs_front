@@ -332,7 +332,7 @@ function ChatStyleBoard({
         borderRadius="lg"
         border="2px solid gray"
         width="100%"
-        height={"538px"}
+        height={"642px"}
         overflowY={"scroll"}
         gap={2}
       >

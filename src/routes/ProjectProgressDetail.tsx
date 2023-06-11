@@ -375,7 +375,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
           display={"flex"}
           border={"0px solid black"}
           width="100%"
-          height={"652px"}
+          height={"700px"}
           mt={5}
           px={1}
         >
@@ -439,7 +439,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
         </Box>
         <br />
         <br />
-        <Box fontSize={"20px"}>
+        <Box fontSize={"20px"} mt={5}>
           <Text fontFamily="Arial, sans-serif">Test List For Task</Text>
         </Box>
         <Box bg={"white"} width={"100%"} border={"1px solid black"}>
@@ -465,7 +465,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
         <ExtraTasksTable
           extra_tasks={taskData.extra_tasks}
           orginal_task_pk={taskPk}
-          refetch = {refetchForTaskDetail}
+          refetch={refetchForTaskDetail}
           // refetch={refetchForTaskDetail}
         />
       </Box>

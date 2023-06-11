@@ -83,7 +83,7 @@ const UpdateFormForTaskDetail = ({
             flex="5"
             bg="white"
             border={"1px solid black"}
-            height={"618px"}
+            height={"720px"}
             px={2}
             overflowY={"scroll"}
           >
@@ -282,7 +282,7 @@ const UpdateFormForTaskDetail = ({
             <Box
               width={"100%"}
               overflowY="scroll"
-              height={"618px"}
+              height={"720px"}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
@@ -300,8 +300,6 @@ const UpdateFormForTaskDetail = ({
 
               {refer_images && refer_images.length ? (
                 refer_images.map((row: any) => {
-                  // console.log("row : ", row);
-                  // return <Image src={row.image_url} height={"200px"} width={"100%"}/>;
                   return (
                     <a href={row.image_url} target="_blank" rel="noreferrer">
                       <Box
@@ -324,15 +322,10 @@ const UpdateFormForTaskDetail = ({
                           mr={2}
                           right={0}
                           size="sm"
-                          // bg="transparent"
                           zIndex={10}
-                          // _hover={{ bg: "lightblue" }}
-                          // _active={{ bg: "transparent" }}
-                          // _focus={{ outline: "none" }}
                           display={isHovering ? "block" : "none"} // display 속성을 이용하여 보이기/숨기기를 조작합니다.
                           onClick={(e) => {
                             e.preventDefault();
-                            // alert("삭제 버튼 클릭 : "+ row.pk);
                             delete_lef_image_handler(row.pk);
                           }}
                           aria-label={""}
