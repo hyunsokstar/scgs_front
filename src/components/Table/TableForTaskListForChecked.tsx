@@ -8,10 +8,10 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { ProjectProgress } from "../../types/project_progress/project_progress_type";
+import { IOneTaskForProjectTaskType } from "../../types/project_progress/project_progress_type";
 
 type Props = {
-  data: ProjectProgress[];
+  data: IOneTaskForProjectTaskType[];
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
 };

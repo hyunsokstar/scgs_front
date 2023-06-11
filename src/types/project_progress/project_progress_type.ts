@@ -102,14 +102,17 @@ export type TypeForTaskUrl = {
 };
 
 export interface IOneTaskForProjectTaskType {
-  pk: string;
+  pk: number;
   writer: string;
-  task_manager?: { pk: number; username: string; profile_image: string };
+  task_manager: { pk: number; username: string; profile_image: string };
   task: string;
-  task_description: string;
-  task_url1: string;
-  task_url2: string;
+
+  in_progress: boolean;
+  is_testing: boolean;
   task_completed: boolean;
+  current_status: string;
+
+  task_description: string;
   importance: number;
   started_at: string;
   due_date: string;
@@ -117,14 +120,14 @@ export interface IOneTaskForProjectTaskType {
   elapsed_time_from_started_at: string;
   cash_prize: number;
   is_urgent_request: boolean;
-  time_left_to_due_date: string
+  time_left_to_due_date: string;
   task_images: [
     {
       pk: number;
-      task: number;
       image_url: string;
     }
   ];
+  due_date_formatted: string;
   test_result_images: TestResultImage[];
   extra_tasks?: extra_task_row_type[] | undefined;
   tests_for_tasks: ItypeFortestRow[];
@@ -335,9 +338,10 @@ export interface ProjectProgress {
   extra_tasks?: extra_task_row_type[];
 }
 
+// 0612 fix
 export interface typeForTaskListForChecked {
   total_count: number;
-  ProjectProgressList: ProjectProgress[];
+  ProjectProgressList: IOneTaskForProjectTaskType[];
 }
 
 export interface typeForParameterForUpdateTaskMangerForChecked {

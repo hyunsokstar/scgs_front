@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Slider from "react-slick";
 import { Box, ChakraProvider, extendTheme, Button } from "@chakra-ui/react";
-import { ProjectProgress } from "../types/project_progress/project_progress_type";
+import { IOneTaskForProjectTaskType } from "../types/project_progress/project_progress_type";
 import UpdateFormForTaskDetailForChecked from "./Form/UpdateFormForTaskDetailForChecked";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserNamesForCreate } from "../apis/user_api";
@@ -9,6 +9,7 @@ import ChatStyleBoard from "./ChatStyleBoard";
 import TestListForTaskDetail from "./TestList/TestListForTaskDetail";
 import ExtraTasksTable from "./ExtraTasksTable";
 import ModalButtonForExtraTask from "./modal/ModalButtonForExtraTask";
+import DragZoneForReferImages from "./DragZone/DragZoneForReferImages";
 
 const theme = extendTheme({
   colors: {
@@ -23,7 +24,7 @@ const theme = extendTheme({
 
 interface ImageSlideForUncompletedTaskListForCheckedProps {
   numSlides: number;
-  dataForTaskListForChecked: ProjectProgress[];
+  dataForTaskListForChecked: IOneTaskForProjectTaskType[];
   refetch: any;
 }
 
@@ -141,6 +142,10 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
 
                 <Box width={"30%"} bg={"blue.100"} height={"100%"}>
                   이미지 업로드 영역 (row.pk 넘겨 주기 + 이미지 업로드 구현)
+                  <DragZoneForReferImages
+                    taskPk={row.pk}
+                    refer_images={row.task_images}
+                  />
                 </Box>
               </Box>
               <Box bg="#D8F6F1" width={"50%"}>
