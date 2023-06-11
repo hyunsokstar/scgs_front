@@ -9,6 +9,7 @@ export type type_for_study_note_list_row = {
   title: string;
   description: string;
   writer: Writer;
+  studyNoteListRefatch?: () => void;
 };
 
 export type type_for_insert_study_note = {
@@ -60,7 +61,6 @@ export interface type_for_content_list_from_search_result {
   created_at: string;
 }
 
-
 export interface ListItemPropsForContentOrdering {
   order: number;
   title: string;
@@ -94,5 +94,5 @@ export interface TypeForNoteList {
 }
 
 export interface typeForParameterForApiForCopySelectedNotesToMyNote {
-  selectedRowPksFromOriginalTable: number[]
+  selectedRowPksFromOriginalTable: number[];
 }

@@ -21,6 +21,7 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
   title,
   description,
   writer,
+  studyNoteListRefatch,
 }) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
   const headerBgColor = useColorModeValue("gray.200", "gray.600");
@@ -46,8 +47,10 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
       onSuccess: (data) => {
         console.log("data : ", data);
 
-        // refetch_for_api_docu();
-        queryClient.refetchQueries(["getStudyNoteList"]);
+        if (studyNoteListRefatch) {
+          studyNoteListRefatch();
+        }
+        queryClient.refetchQueries(["apiForgetStudyNoteList"]);
 
         toast({
           title: "delete api docu 성공!",
@@ -65,7 +68,7 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
     const writer_name = writer.username;
 
     if (login_user_name === writer_name) {
-      alert("삭제 gogo");
+      // alert("삭제 gogo");
       mutationForDeleteStudyNote.mutate(pk);
     } else {
       alert(`작성자인 ${writer_name}님만 삭제 가능 합니다 !`);

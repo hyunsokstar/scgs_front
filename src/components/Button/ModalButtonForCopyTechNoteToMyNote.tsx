@@ -17,6 +17,7 @@ import {
   Th,
   Td,
   useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -46,7 +47,7 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
   const queryClient = useQueryClient();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedRowPks, setSelectedRowPks] = useState<number[]>([]);
+  const [isCopying, setIsCopying] = useState(false);
 
   const {
     isLoading: isLoadingForGetTechNoteListForSelectedRowPks,
@@ -86,6 +87,8 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
           isClosable: true,
         });
         queryClient.refetchQueries(["getStudyNoteListForCopyModeForMe"]);
+        setIsCopying(false);
+        setIsOpen(false)
       },
       onError: (error: any) => {
         console.log("error.response : ", error.response);
@@ -98,8 +101,9 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
   const buttonHandlerForCopyNoteForCheckedRowsToMyNote = (
     selectedRowPksFromOriginalTable: number[]
   ) => {
+    setIsCopying(true);
     mutationForCopySelectedNotesToMyNote.mutate({
-        selectedRowPksFromOriginalTable,
+      selectedRowPksFromOriginalTable,
     });
   };
 
@@ -113,6 +117,8 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
         onClick={() => setIsOpen(true)}
       >
         {buttonText}
+        {isCopying && <Spinner size="md" color="blue.500" />}{" "}
+        {/* Render Spinner when isCopying is true */}
       </Button>
 
       <Modal size={"6xl"} isOpen={isOpen} onClose={handleClose}>
@@ -192,6 +198,8 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
                 }}
               >
                 Copy To My Note
+                {isCopying && <Spinner size="md" color="blue.500" />}{" "}
+                {/* Render Spinner when isCopying is true */}
               </Button>
             </Box>
           </ModalBody>

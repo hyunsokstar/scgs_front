@@ -25,9 +25,9 @@ const StudyNotePage = () => {
   const {
     isLoading: studyNoteLoading,
     data: studyNoteData,
-    refetch: studyNoteRefatch,
+    refetch: studyNoteListRefatch,
   } = useQuery<TypeForNoteList>(
-    ["getStudyNoteList", pageNum, selectedNoteWriter],
+    ["apiForgetStudyNoteList", pageNum, selectedNoteWriter],
     apiForGetStudyNoteList,
     {
       enabled: true,
@@ -88,6 +88,7 @@ const StudyNotePage = () => {
               title={note.title}
               description={note.description}
               writer={note.writer}
+              studyNoteListRefatch = {studyNoteListRefatch}
             />
           ))}
         </Flex>

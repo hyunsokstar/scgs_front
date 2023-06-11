@@ -148,7 +148,6 @@ const TableModeForUpdatePage = (props: Props) => {
               </Box>
               <Box>
                 {selectedRowPks.length ? (
-                  // <Button>copy note for check to me</Button>
                   <ModalButtonForCopyTechNoteToMyNote
                     buttonText="copy note for check to me"
                     selectedRowPksFromOriginalTable={selectedRowPks}
