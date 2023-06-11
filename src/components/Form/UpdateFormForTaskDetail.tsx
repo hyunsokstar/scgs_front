@@ -284,7 +284,8 @@ const UpdateFormForTaskDetail = ({
               <Box border={"1px solid green"} textAlign={"center"}>
                 <ModalButtonForShowReferImagesForTask
                   modalSize={"7xl"}
-                  buttonText="see refer img by slide"
+                  refer_images={refer_images}
+                  buttonText="Refer Image Slide"
                   buttonWidth={"100%"}
                   buttonSize="sm"
                 />

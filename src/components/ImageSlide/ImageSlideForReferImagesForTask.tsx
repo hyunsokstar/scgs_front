@@ -2,22 +2,22 @@ import React, { useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, ChakraProvider, extendTheme, Button } from "@chakra-ui/react";
+import { Box, Image, Button } from "@chakra-ui/react";
 
-const theme = extendTheme({
-  colors: {
-    pastelColor1: "#F9CBCB",
-    pastelColor2: "#F5D6C6",
-    pastelColor3: "#F4E3D5",
-    pastelColor4: "#E8F1DF",
-    pastelColor5: "#E1E3F0",
-    pastelColor6: "#E7D4E8",
-  },
-});
+type IReferImage = {
+  pk: number;
+  image_url: string;
+};
 
-export default function ImageSlideForReferImagesForTask() {
+interface IProps {
+  refer_images?: IReferImage[];
+}
+
+export default function ImageSlideForReferImagesForTask({
+  refer_images,
+}: IProps) {
   const [activeSlide, setActiveSlide] = React.useState(0);
-  const numSlides = 3;
+  const numSlides = refer_images && refer_images?.length;
   const sliderRef = useRef<any>(null);
 
   const handleSlideChange = (index: any) => {
@@ -40,60 +40,60 @@ export default function ImageSlideForReferImagesForTask() {
     slidesToShow: 1,
     slidesToScroll: 1,
     centerMode: true,
-    centerPadding: "10%",
+    centerPadding: "0%",
     beforeChange: (current: any, next: any) => handleSlideChange(next),
   };
 
   const renderCustomPaging = () => {
     const buttons = [];
 
-    for (let i = 0; i < numSlides; i++) {
-      const isActive = activeSlide === i;
+    if (numSlides) {
+      for (let i = 0; i < numSlides; i++) {
+        const isActive = activeSlide === i;
 
-      buttons.push(
-        <Button
-          key={i}
-          size="sm"
-          variant={isActive ? "solid" : "outline"}
-          colorScheme="gray"
-          mx={1} // 버튼들 간의 간격 조절
-          border="1px solid blue"
-          onClick={() => handleSlideChange(i)}
-        >
-          {i + 1}
-        </Button>
-      );
+        buttons.push(
+          <Button
+            key={i}
+            size="sm"
+            variant={isActive ? "solid" : "outline"}
+            colorScheme="gray"
+            mx={1} // 버튼들 간의 간격 조절
+            border="1px solid blue"
+            onClick={() => handleSlideChange(i)}
+          >
+            {i + 1}
+          </Button>
+        );
+      }
     }
 
     return buttons;
   };
 
-  const dataForTaskListForChecked = ["1", "2", "3"];
+  //   const dataForTaskListForChecked = ["1", "2", "3"];
 
   return (
-    <ChakraProvider theme={theme}>
+    <Box>
       <Slider {...settings} ref={sliderRef}>
-        {dataForTaskListForChecked.map((content, index) => (
-          <Box
-            key={index}
-            border="1px solid"
-            borderColor="gray.200"
-            height="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            textAlign={"center"}
-          >
-            <h3>{content}</h3>
-          </Box>
-        ))}
+        {refer_images && refer_images.length
+          ? refer_images.map((row, index) => (
+              <Box key={index} border="1px solid" px={"auto"} height={"70%"}>
+                <Image
+                  src={row.image_url}
+                  height={"400px"}
+                  objectFit="contain"
+                  mx={"auto"}
+                />
+              </Box>
+            ))
+          : "no data"}
       </Slider>
 
-      <Box display="flex" justifyContent="center" alignItems={"center"} mt={2}>
+      <Box display="flex" justifyContent="center" alignItems={"center"} mt={0}>
         <Button onClick={prevSlide}>Prev</Button>
         {renderCustomPaging()}
         <Button onClick={nextSlide}>Next</Button>
       </Box>
-    </ChakraProvider>
+    </Box>
   );
 }

@@ -10,17 +10,24 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
+import ImageSlideForReferImagesForTask from "../ImageSlide/ImageSlideForReferImagesForTask";
+
+type IReferImage = {
+  pk: number;
+  image_url: string;
+};
 
 interface ModalButtonForCopyTechNoteToMyNoteProps {
   buttonText: string;
   buttonSize?: string;
   buttonWidth?: string;
   modalSize?: string;
+  refer_images: IReferImage[];
 }
 
 const ModalButtonForShowReferImagesForTask: React.FC<
   ModalButtonForCopyTechNoteToMyNoteProps
-> = ({ buttonText, buttonSize, buttonWidth, modalSize }) => {
+> = ({ buttonText, buttonSize, buttonWidth, modalSize, refer_images }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -48,7 +55,9 @@ const ModalButtonForShowReferImagesForTask: React.FC<
             _hover={{ bg: "red.100" }}
             border="1px solid black"
           />
-          <ModalBody bg="gray.200">hi</ModalBody>{" "}
+          <ModalBody bg="gray.200">
+            <ImageSlideForReferImagesForTask refer_images={refer_images} />
+          </ModalBody>{" "}
           <ModalFooter bg="gray.100">Modal Footer</ModalFooter>{" "}
         </ModalContent>{" "}
       </Modal>{" "}
