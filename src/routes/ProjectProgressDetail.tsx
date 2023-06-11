@@ -95,8 +95,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
     task_completed,
     cash_prize,
     is_urgent_request,
-    task_url1,
-    task_url2,
   }: ITypeForTaskDetailUpdateForm) => {
     // alert("submit 확인");
 

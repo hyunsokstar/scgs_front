@@ -32,7 +32,7 @@ const TaskInfosPerMember = (props: Props) => {
     <Box>
       <Box
         display="flex"
-        justifyContent="center"
+        justifyContent="flex-start"
         alignItems="center"
         bgColor={"black"}
         py={4}
@@ -52,55 +52,64 @@ const TaskInfosPerMember = (props: Props) => {
         </Box>
       </Box>{" "}
       <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        width={"100%"}
-        px={"20px"}
         py={"20px"}
-        flexWrap={"wrap"}
+        px={"auto"}
         bgColor={"black"}
         textAlign={"center"}
+        // border={"5px solid pink"}
       >
-        {dataForTaskInfoPerUser
-          ? dataForTaskInfoPerUser.map((user) => {
-              return (
-                <Box
-                  width={"23%"}
-                  mt={2}
-                  mb={8}
-                  _hover={{
-                    transform: "translateY(-5px)",
-                    // boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                    // border: "1px solid #000000",
-                    transition:
-                      "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border 0.2s ease-in-out",
-                  }}
-                >
-                  <ProfileCardForTeamStatus
-                    id={user.id}
-                    profile_image={user.profile_image}
-                    username={user.username}
-                    position={user.position}
-                    status={"일하는중"}
-                    total_count_for_task={user.total_count_for_task}
-                    count_for_uncompleted_task={user.uncompleted_count_for_task}
-                    count_for_completed_task={user.completed_count_for_task}
-                    total_count_for_task_for_today={
-                      user.total_count_for_task_for_today
-                    }
-                    count_for_uncompleted_task_for_today={
-                      user.count_for_uncompleted_task_for_today
-                    }
-                    count_for_completed_task_for_today={
-                      user.count_for_completed_task_for_today
-                    }
-                    total_rewards={user.cash}
-                    currentTask={user.task_in_progress}
-                  />
-                </Box>
-              );
-            })
-          : "no data"}
+        <Box
+          mx={"auto"}
+          width={"95%"}
+          // border={"5px solid blue"}
+          display={"flex"}
+          justifyContent={"flex-start"}
+          flexWrap={"wrap"}
+          gap={"20px"}
+          // px={"20px"}
+        >
+          {dataForTaskInfoPerUser
+            ? dataForTaskInfoPerUser.map((user) => {
+                return (
+                  <Box
+                    width={"23%"}
+                    mt={2}
+                    mb={8}
+                    // border={"5px solid purple"}
+                    _hover={{
+                      transform: "translateY(-5px)",
+                      transition:
+                        "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border 0.2s ease-in-out",
+                    }}
+                  >
+                    <ProfileCardForTeamStatus
+                      id={user.id}
+                      profile_image={user.profile_image}
+                      username={user.username}
+                      position={user.position}
+                      status={"일하는중"}
+                      total_count_for_task={user.total_count_for_task}
+                      count_for_uncompleted_task={
+                        user.uncompleted_count_for_task
+                      }
+                      count_for_completed_task={user.completed_count_for_task}
+                      total_count_for_task_for_today={
+                        user.total_count_for_task_for_today
+                      }
+                      count_for_uncompleted_task_for_today={
+                        user.count_for_uncompleted_task_for_today
+                      }
+                      count_for_completed_task_for_today={
+                        user.count_for_completed_task_for_today
+                      }
+                      total_rewards={user.cash}
+                      currentTask={user.task_in_progress}
+                    />
+                  </Box>
+                );
+              })
+            : "no data"}
+        </Box>
       </Box>
     </Box>
   );

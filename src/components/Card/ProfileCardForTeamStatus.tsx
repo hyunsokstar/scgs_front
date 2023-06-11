@@ -55,6 +55,7 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
       overflow="hidden"
       height={"530px"}
       bgColor={"white"}
+      width={"100%"}
       // _hover={{border:"3px solid blue"}}
     >
       <Box width={"100%"} border={"1px solid green"}>

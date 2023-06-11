@@ -156,12 +156,6 @@ export const getUserNamesForSelectOption = () =>
     return response.data;
   });
 
-// export const getUserNamesForSelectOption = () =>
-//   instance.get("users/only-user-name").then((response) => {
-//     // console.log("user list response : ", response);
-//     return response.data;
-//   });
-
 export const getProfile = ({ queryKey }: QueryFunctionContext) => {
   const [_, userPk] = queryKey;
   // console.log("userPk : ", userPk);

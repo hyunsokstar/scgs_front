@@ -227,6 +227,13 @@ const UpdateFormForTaskDetail = ({
                           />
                         </Td>
                       </Tr>
+
+                      <Tr>
+                        <Td colSpan={2}>
+                          남은 시간 : {taskData.time_left_to_due_date}
+                        </Td>
+                      </Tr>
+
                       <Tr>
                         <Td width="50%">is_task_for_help</Td>
                         <Td width="50%">

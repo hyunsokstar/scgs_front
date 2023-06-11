@@ -117,7 +117,7 @@ export interface IOneTaskForProjectTaskType {
   elapsed_time_from_started_at: string;
   cash_prize: number;
   is_urgent_request: boolean;
-
+  time_left_to_due_date: string;
   task_images: [
     {
       pk: number;
@@ -252,8 +252,6 @@ export interface ITypeForTaskDetailUpdateForm {
   task_completed: boolean;
   cash_prize: number;
   is_urgent_request: boolean;
-  task_url1: string;
-  task_url2: string;
   // task_urls: { task_url: string }[];
 }
 

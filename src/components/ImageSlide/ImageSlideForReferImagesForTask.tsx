@@ -77,13 +77,8 @@ export default function ImageSlideForReferImagesForTask({
       <Slider {...settings} ref={sliderRef}>
         {refer_images && refer_images.length
           ? refer_images.map((row, index) => (
-              <Box key={index} border="1px solid" px={"auto"} height={"70%"}>
-                <Image
-                  src={row.image_url}
-                  height={"400px"}
-                  objectFit="contain"
-                  mx={"auto"}
-                />
+              <Box maxH="600px" w="100%" >
+                <Image src={row.image_url} objectFit="cover" mx="auto" />
               </Box>
             ))
           : "no data"}
