@@ -35,7 +35,7 @@ interface IUserNamesForCreate {
 }
 
 interface updateFormForTaskDetailForCheckedProps {
-  pk: number;
+  pk: any;
   writer: string;
   task_manager: string;
   task: string;

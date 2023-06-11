@@ -117,7 +117,7 @@ export interface IOneTaskForProjectTaskType {
   elapsed_time_from_started_at: string;
   cash_prize: number;
   is_urgent_request: boolean;
-  time_left_to_due_date: string;
+  time_left_to_due_date: string
   task_images: [
     {
       pk: number;

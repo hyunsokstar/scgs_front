@@ -118,23 +118,30 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
                 width={"50%"}
                 overflowY={"scroll"}
                 height={"620px"}
+                display={"flex"}
               >
-                <UpdateFormForTaskDetailForChecked
-                  pk={row.pk}
-                  task={row.task}
-                  writer={row.writer}
-                  task_description={row.task_description}
-                  taskUrls={row.task_urls}
-                  importance={row.importance}
-                  task_manager={row.task_manager.username}
-                  dataForUserNames={dataForUserNames ? dataForUserNames : []}
-                  current_status={row.current_status}
-                  in_progress={row.in_progress}
-                  is_testing={row.is_testing}
-                  task_completed={row.task_completed}
-                  due_date_formatted={row.due_date_formatted}
-                  time_left_to_due_date={row.time_left_to_due_date}
-                />
+                <Box width={"70%"}>
+                  <UpdateFormForTaskDetailForChecked
+                    pk={row.pk}
+                    task={row.task}
+                    writer={row.writer}
+                    task_description={row.task_description}
+                    taskUrls={row.task_urls}
+                    importance={row.importance}
+                    task_manager={row.task_manager.username}
+                    dataForUserNames={dataForUserNames ? dataForUserNames : []}
+                    current_status={row.current_status}
+                    in_progress={row.in_progress}
+                    is_testing={row.is_testing}
+                    task_completed={row.task_completed}
+                    due_date_formatted={row.due_date_formatted}
+                    time_left_to_due_date={row.time_left_to_due_date}
+                  />
+                </Box>
+
+                <Box width={"30%"} bg={"blue.100"} height={"100%"}>
+                  이미지 업로드 영역 (row.pk 넘겨 주기 + 이미지 업로드 구현)
+                </Box>
               </Box>
               <Box bg="#D8F6F1" width={"50%"}>
                 <ChatStyleBoard
@@ -153,13 +160,11 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
               />
             </Box>
             <Box>
-              <ModalButtonForExtraTask 
-              refetch={refetch}
-              taskPk={row.pk} />
+              <ModalButtonForExtraTask refetch={refetch} taskPk={row.pk} />
               <ExtraTasksTable
                 extra_tasks={row.extra_tasks}
                 orginal_task_pk={row.pk}
-                refetch = {refetch}
+                refetch={refetch}
               />
             </Box>
           </Box>
