@@ -118,7 +118,7 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
                 bg="#E6E6FA"
                 width={"50%"}
                 overflowY={"scroll"}
-                height={"620px"}
+                height={"727px"}
                 display={"flex"}
               >
                 <Box width={"70%"}>
@@ -141,7 +141,7 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
                 </Box>
 
                 <Box width={"30%"} bg={"blue.100"} height={"100%"}>
-                  이미지 업로드 영역 (row.pk 넘겨 주기 + 이미지 업로드 구현)
+                  이미지 업로드 영역
                   <DragZoneForReferImages
                     taskPk={row.pk}
                     refer_images={row.task_images}
@@ -157,7 +157,7 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
                 />
               </Box>
             </Box>
-            <Box py={3}>
+            <Box py={3} mt={5}>
               <TestListForTaskDetail
                 refetch={refetch}
                 taskPk={row.pk}
