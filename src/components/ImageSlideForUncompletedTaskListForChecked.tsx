@@ -9,7 +9,7 @@ import ChatStyleBoard from "./ChatStyleBoard";
 import TestListForTaskDetail from "./TestList/TestListForTaskDetail";
 import ExtraTasksTable from "./ExtraTasksTable";
 import ModalButtonForExtraTask from "./modal/ModalButtonForExtraTask";
-import DragZoneForReferImages from "./DragZone/DragZoneForReferImages";
+import DragZoneForReferImagesForTask from "./DragZone/DragZoneForReferImagesForTask";
 
 const theme = extendTheme({
   colors: {
@@ -117,7 +117,7 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
               <Box
                 bg="#E6E6FA"
                 width={"50%"}
-                overflowY={"scroll"}
+                // overflowY={"scroll"}
                 // height={"727px"}
                 display={"flex"}
                 // border={"5px solid red"}
@@ -143,7 +143,7 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
 
                 <Box width={"30%"} bg={"blue.100"} height={"100%"}>
                   이미지 업로드 영역
-                  <DragZoneForReferImages
+                  <DragZoneForReferImagesForTask
                     taskPk={row.pk}
                     refer_images={row.task_images}
                   />

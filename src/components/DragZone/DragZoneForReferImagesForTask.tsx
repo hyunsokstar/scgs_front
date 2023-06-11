@@ -26,7 +26,7 @@ interface DragZoneForReferImagesProps {
 }
 
 // 1122
-const DragZoneForReferImages: React.FC<DragZoneForReferImagesProps> = ({
+const DragZoneForReferImagesForTask: React.FC<DragZoneForReferImagesProps> = ({
   refer_images,
   taskPk,
 }) => {
@@ -155,13 +155,13 @@ const DragZoneForReferImages: React.FC<DragZoneForReferImagesProps> = ({
         <Box
           width="100%"
           overflowY="scroll"
-          height="727px"
+          height="730px"
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           // border="1px solid green"
         >
-          <Box border="1px solid green" textAlign="center">
+          <Box border="0px solid green" textAlign="center">
             {/* ModalButtonForShowReferImagesForTask component */}
           </Box>
 
@@ -217,4 +217,4 @@ const DragZoneForReferImages: React.FC<DragZoneForReferImagesProps> = ({
   );
 };
 
-export default DragZoneForReferImages;
+export default DragZoneForReferImagesForTask;

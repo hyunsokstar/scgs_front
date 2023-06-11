@@ -9,6 +9,7 @@ import BriefingBoardForExtraTask from "../components/BriefingBoardForExtraTask";
 import TestListForTaskDetail from "../components/TestList/TestListForTaskDetail";
 import ModalButtonForCreateTest from "../components/modal/ModalButtonForCreateTest";
 import TestListForExtraTask from "../components/TestList/TestListForExtraTask";
+import DragZoneForReferImagesForTask from "../components/DragZone/DragZoneForReferImagesForTask";
 
 interface Props {}
 
@@ -28,14 +29,20 @@ const ExtraTaskDetailPage = (props: Props) => {
   }
   return (
     <Box>
-      <Box display="flex" mt={5}>
-        <Box width="50%">
-          <Box fontSize={"24px"} fontFamily={"sans-serif"}>
-            extra task detail info area
+      <Box mt={1} width={"100%"} border={"0px solid red"} display={"flex"} height={"730px"}>
+        <Box width="50%" display={"flex"}>
+          <Box width={"70%"} height={"100%"}>
+            <DetailInfoForExtraTask extraTaskDetail={dataForExtraTaskDetail} />
           </Box>
-          <DetailInfoForExtraTask extraTaskDetail={dataForExtraTaskDetail} />
+
+          <Box width={"30%"} height={"100%"} bg={"blue.100"}>
+            <DragZoneForReferImagesForTask
+              taskPk={ExtraTaskPk}
+              refer_images={dataForExtraTaskDetail.task_images}
+            />
+          </Box>
         </Box>
-        <Divider orientation="vertical" mx={1} />
+        {/* <Divider orientation="vertical" mx={1} /> */}
         <Box width="50%">
           <Box fontSize={"24px"} fontFamily={"sans-serif"}>
             briefing board for extra task
@@ -53,7 +60,7 @@ const ExtraTaskDetailPage = (props: Props) => {
           listTitle={"Test List For Extra Task"}
           taskPk={ExtraTaskPk}
           testData={dataForExtraTaskDetail.tests_for_extra_task}
-          refetch= {refetchForExtraTaskDetail}
+          refetch={refetchForExtraTaskDetail}
         />
       </Box>
 

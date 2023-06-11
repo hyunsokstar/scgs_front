@@ -97,9 +97,7 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
       bg="green.100"
       p={4}
       borderRadius="md"
-      height={"586px"}
-      // px={2}
-      overflowY={"scroll"}
+
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box display="flex" flexDirection="column" gap={4}>

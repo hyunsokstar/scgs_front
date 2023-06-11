@@ -5,19 +5,11 @@ import UpdateFormForExtraTask from "./InputForm/UpdateFormForExtraTask";
 const DetailInfoForExtraTask: React.FC<DetailForExtraTaskProps> = ({
   extraTaskDetail,
 }) => {
-  const {
-    pk,
-    task_manager,
-    task,
-    task_urls,
-    task_url1,
-    task_url2,
-    task_status,
-    started_at_formatted,
-  } = extraTaskDetail;
+  const {} = extraTaskDetail;
 
   return (
-    <Box bg="green.100" p={4} borderRadius="md">
+    <Box bg="green.100" borderRadius="md" height={"730px"} overflowY={"scroll"}>
+      extra task detail
       <UpdateFormForExtraTask extraTaskDetail={extraTaskDetail} />
     </Box>
   );
