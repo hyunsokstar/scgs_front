@@ -373,7 +373,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
   } else {
     return (
       <Box>
-        {/* 최상단 box */}
         <Box
           display={"flex"}
           border={"0px solid black"}
