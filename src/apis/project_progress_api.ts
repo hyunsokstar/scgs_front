@@ -1418,10 +1418,16 @@ export const updateProjectStartedAt = ({
     });
 };
 
-// interface ICreateProfilePhotoVariables {
-//   file: string;
-//   userPk: string;
-// }
+export const deleteOneRefImageForExtraTask = (ref_image_pk: number) => {
+  console.log("ref_image_pk : ", ref_image_pk);
+  return instance
+    .delete(`medias/ref-image-for-extra-task/${ref_image_pk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
 
 export const deleteOneRefImageForTask = (ref_image_pk: number) => {
   console.log("ref_image_pk : ", ref_image_pk);

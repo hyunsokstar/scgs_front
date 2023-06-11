@@ -11,7 +11,7 @@ import { FaTimes } from "react-icons/fa";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
 import {
   createRefImageForTask,
-  deleteOneRefImageForTask,
+  deleteOneRefImageForExtraTask,
 } from "../../apis/project_progress_api";
 import { getUploadURL, uploadImage } from "../../api";
 
@@ -38,7 +38,7 @@ const DropZoneForReferImagesForExtraTask: React.FC<DragZoneForReferImagesProps> 
 
   const deleteRefImageMutation = useMutation(
     (lef_image_pk: number) => {
-      return deleteOneRefImageForTask(lef_image_pk);
+      return deleteOneRefImageForExtraTask(lef_image_pk);
     },
     {
       onSettled: () => {
@@ -49,7 +49,7 @@ const DropZoneForReferImagesForExtraTask: React.FC<DragZoneForReferImagesProps> 
         // if (refetchForTaskDetail) {
         //   refetchForTaskDetail();
         // }
-        queryClient.refetchQueries(["getTaskListForCheckedPksForImageSlide"]);
+        // queryClient.refetchQueries(["getTaskListForCheckedPksForImageSlide"]);
 
         // getTaskListForCheckedPksForImageSlide
         toast({
