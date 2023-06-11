@@ -9,7 +9,7 @@ import BriefingBoardForExtraTask from "../components/BriefingBoardForExtraTask";
 import TestListForTaskDetail from "../components/TestList/TestListForTaskDetail";
 import ModalButtonForCreateTest from "../components/modal/ModalButtonForCreateTest";
 import TestListForExtraTask from "../components/TestList/TestListForExtraTask";
-import DragZoneForReferImagesForTask from "../components/DragZone/DragZoneForReferImagesForTask";
+import DropZoneForReferImagesForExtraTask from "../components/DragZone/DropZoneForReferImagesForExtraTask";
 
 interface Props {}
 
@@ -36,7 +36,7 @@ const ExtraTaskDetailPage = (props: Props) => {
           </Box>
 
           <Box width={"30%"} height={"100%"} bg={"blue.100"}>
-            <DragZoneForReferImagesForTask
+            <DropZoneForReferImagesForExtraTask
               taskPk={ExtraTaskPk}
               refer_images={dataForExtraTaskDetail.task_images}
             />
