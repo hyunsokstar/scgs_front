@@ -118,8 +118,9 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
                 bg="#E6E6FA"
                 width={"50%"}
                 overflowY={"scroll"}
-                height={"727px"}
+                // height={"727px"}
                 display={"flex"}
+                // border={"5px solid red"}
               >
                 <Box width={"70%"}>
                   <UpdateFormForTaskDetailForChecked

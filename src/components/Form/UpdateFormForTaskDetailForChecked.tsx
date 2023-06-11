@@ -132,7 +132,15 @@ const UpdateFormForTaskDetailForChecked: React.FC<
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
       <Text bg={"yellow.100"}>Update Form For Task Detail For Checked</Text>
-      <Box display={"flex"} flexDirection={"column"} p={2} gap={5}>
+      <Box
+        display={"flex"}
+        flexDirection={"column"}
+        p={2}
+        gap={5}
+        // border={"5px solid red"}
+        height={"727px"}
+        overflowY={"scroll"}
+      >
         <FormControl display="none">
           <FormLabel>pk</FormLabel>
           <Input

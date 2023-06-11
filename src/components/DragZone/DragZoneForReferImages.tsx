@@ -155,11 +155,11 @@ const DragZoneForReferImages: React.FC<DragZoneForReferImagesProps> = ({
         <Box
           width="100%"
           overflowY="scroll"
-          height="706px"
+          height="727px"
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          border="1px solid green"
+          // border="1px solid green"
         >
           <Box border="1px solid green" textAlign="center">
             {/* ModalButtonForShowReferImagesForTask component */}
