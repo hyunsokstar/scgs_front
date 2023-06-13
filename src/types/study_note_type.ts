@@ -29,6 +29,7 @@ export interface DataForStudyNoteContent {
 }
 
 export interface StudyNoteData {
+  note_user_name: string;
   exist_page_numbers: number[];
   data_for_study_note_contents: DataForStudyNoteContent[];
 }

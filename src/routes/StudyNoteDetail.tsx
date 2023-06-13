@@ -28,6 +28,11 @@ interface Props {}
 const StudyNoteDetail = (props: Props) => {
   const { study_note_pk } = useParams();
 
+  // fix 0613
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -122,7 +127,7 @@ const StudyNoteDetail = (props: Props) => {
   return (
     <Box display={"flex"}>
       <Box flex={4}>
-        <Box>Study Note Content </Box>
+        <Box>Study Note Content2 </Box>
 
         <Box
           display="flex"
@@ -142,32 +147,38 @@ const StudyNoteDetail = (props: Props) => {
               목록
             </Button>
 
-            <Button
-              size="sm"
-              colorScheme="red"
-              variant="outline"
-              _hover={{ backgroundColor: "red.50" }}
-              onClick={deleteContentsForChecked}
-              leftIcon={<DeleteIcon />}
-            >
-              Delete for check
-            </Button>
             <Box>
               <ModalButtonForSearchStudyNoteContent
                 study_note_pk={study_note_pk}
               />
             </Box>
-            <Box>
-              <ModalButtonForStudyNoteContentOrdering
-                study_note_pk={study_note_pk}
-                currentPage={currentPage}
-                data_for_study_note_contents={
-                  response_data_for_api
-                    ? response_data_for_api?.data_for_study_note_contents
-                    : []
-                }
-              />
-            </Box>
+            {/* {response_data_for_api && response_data_for_api?.note_user_name} and
+            {loginUser.username} */}
+            {response_data_for_api?.note_user_name === loginUser.username ? (
+              <Box>
+                <Button
+                  size="sm"
+                  colorScheme="red"
+                  variant="outline"
+                  _hover={{ backgroundColor: "red.50" }}
+                  onClick={deleteContentsForChecked}
+                  leftIcon={<DeleteIcon />}
+                  mr={2}
+                >
+                  Delete for check
+                </Button>
+
+                <ModalButtonForStudyNoteContentOrdering
+                  study_note_pk={study_note_pk}
+                  currentPage={currentPage}
+                  data_for_study_note_contents={
+                    response_data_for_api
+                      ? response_data_for_api?.data_for_study_note_contents
+                      : []
+                  }
+                />
+              </Box>
+            ):""}
           </Box>
           <Box>
             <ModalButtonForInsertStudyNoteContent

@@ -158,7 +158,7 @@ const DropZoneForReferImagesForExtraTask: React.FC<DragZoneForReferImagesProps> 
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          border="5px solid green"
+        //   border="5px solid green"
         >
 
           {refer_images && refer_images.length ? (
