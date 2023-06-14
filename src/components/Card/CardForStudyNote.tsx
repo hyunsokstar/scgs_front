@@ -200,7 +200,7 @@ const CardForStudyNote: React.FC<IProps> = ({
               >
                 <Box>Co-Writer</Box>
                 <Box>
-                  {isLoggedIn ? (
+                  {isLoggedIn && loginUser.username !== writer.username ? (
                     <IconButton
                       aria-label="Add"
                       size={"xs"}
@@ -248,7 +248,6 @@ const CardForStudyNote: React.FC<IProps> = ({
               </Box>
               <Box>
                 <TableForNoteCoworkers noteCowriters={note_cowriters} />
-                {/* {note_cowriters} */}
               </Box>
             </Box>
           </Box>

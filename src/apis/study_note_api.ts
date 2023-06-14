@@ -18,6 +18,17 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForCancleCoWriterForOtherUserNote = (pk: number) => {
+  return instance
+    .delete(`study-note/CoWriter/${pk}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+
 export const apiForRegisterForCoWriterForOtherUserNote = ({ notePk }: any) => {
   // console.log("category : ", notePk);
 
