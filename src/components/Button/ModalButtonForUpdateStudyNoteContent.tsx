@@ -32,6 +32,7 @@ interface ModalButtonForSearchStudyNoteContentProps extends ButtonProps {
   title: string;
   file_name: string;
   content: string;
+  button_text: string;
 }
 
 // Modal.setAppElement("#root"); // 모달이 렌더링되는 컨테이너를 설정합니다.
@@ -44,7 +45,7 @@ interface FormData {
 
 const ModalButtonForUpdateStudyNoteContent: React.FC<
   ModalButtonForSearchStudyNoteContentProps
-> = ({ pk, title, file_name, content }: any) => {
+> = ({ pk, title, file_name, content , button_text}: any) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const toast = useToast();
   const { handleSubmit, register, formState } = useForm<FormData>();
@@ -137,7 +138,7 @@ const ModalButtonForUpdateStudyNoteContent: React.FC<
         onClick={openModal}
         _hover={{ bg: "orange.100", color: "black" }}
       >
-        Update
+        {button_text}
       </Button>
       <Modal
         isOpen={modalIsOpen}

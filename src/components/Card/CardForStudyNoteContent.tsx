@@ -51,6 +51,7 @@ const CardForStudyNoteContent = ({
   order,
   card_width,
   setCheckedValues,
+  is_authority_for_note,
 }: any) => {
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -256,12 +257,17 @@ const CardForStudyNoteContent = ({
         <Button variant="outline" colorScheme="teal">
           Comment
         </Button>
-        <ModalButtonForUpdateStudyNoteContent
-          pk={pk}
-          title={title}
-          file_name={file_name}
-          content={content}
-        />
+        {is_authority_for_note ? (
+          <ModalButtonForUpdateStudyNoteContent
+            button_text={"update for note content"}
+            pk={pk}
+            title={title}
+            file_name={file_name}
+            content={content}
+          />
+        ) : (
+          ""
+        )}
       </Box>
     </Box>
   );

@@ -39,6 +39,7 @@ interface ButtonsForPageNumbersForStudyNoteContentsProps {
   pageNumbersToEdit: number[];
   pageNumbersToMove: number[];
   study_note_pk: string | undefined;
+  is_authority_for_note: boolean | undefined;
 }
 
 const ButtonsForPageNumbersForStudyNoteContents: React.FC<
@@ -49,6 +50,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   pageNumbersToMove,
   exist_page_numbers,
   study_note_pk, // 노트 content pk 아니고 노트 주제 pk를 말함
+  is_authority_for_note,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -72,14 +74,13 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     }
   }, []);
 
-
   // fix 0614
   const clickHandlerForPageButton = (event: any, buttonNumber: number) => {
     if (event.shiftKey) {
       console.log("shift click for setPageNumbersToMove");
       dispatch(setPageNumbersToMove({ buttonNumber, editMode }));
     } else {
-      if(editMode){
+      if (editMode) {
         dispatch(selectButton({ buttonNumber, editMode }));
       } else {
         navigate(`/study-note/${study_note_pk}/${buttonNumber}`);
@@ -372,7 +373,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         border={"1px solid black"}
         width={"100%"}
         px={2}
-        py={1}
+        // py={1}
       >
         {!isLoggedIn ? "로그인 필요" : ""}
         {editMode ? (
@@ -390,19 +391,21 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
             </Button>
           </Box>
         ) : (
-          <Box> </Box>
+          ""
         )}
 
-        <Box>
-          {loginUser.username && (
+        {loginUser.username && is_authority_for_note ? (
+          <Box>
             <ToggleButtonForUpdate
               currentState={loginUser.is_edit_mode_for_study_note_contents}
               onChangeHandler={onChangeHandlerForEditModeForStudyNoteContent}
               editMode={editMode}
               setEditMode={setEditMode}
             />
-          )}
-        </Box>
+          </Box>
+        ) : (
+          ""
+        )}
       </Box>
 
       {editMode ? (

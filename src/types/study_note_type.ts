@@ -1,4 +1,3 @@
-
 export type type_for_insert_study_note = {
   title: string;
   description: string;
@@ -15,11 +14,17 @@ export interface DataForStudyNoteContent {
   order: number;
 }
 
+// export interface CoWriter {
+//   username: string;
+//   is_approved: boolean;
+// }
+
 export interface StudyNoteData {
   note_title: string;
   note_user_name: string;
   exist_page_numbers: number[];
   data_for_study_note_contents: DataForStudyNoteContent[];
+  co_writers_for_approved: String[];
 }
 
 export interface type_for_parameter_for_delete_pages_for_study_note {

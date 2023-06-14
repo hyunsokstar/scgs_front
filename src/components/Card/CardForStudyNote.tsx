@@ -96,7 +96,7 @@ const CardForStudyNote: React.FC<IProps> = ({
   };
 
   const goToStudyNoteDetail = (pk: any) => {
-    navigate(`/study-note/${pk}`);
+    navigate(`/study-note/${pk}/1`);
   };
 
   const mutationForRegisterForCoWriterForOtherUserNote = useMutation(
@@ -173,6 +173,7 @@ const CardForStudyNote: React.FC<IProps> = ({
             ""
           )}
         </Box>
+        
         <Box
           p="2"
           bg={bodyBgColor}

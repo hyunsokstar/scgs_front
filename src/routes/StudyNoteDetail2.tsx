@@ -12,8 +12,6 @@ import {
 import { Box, VStack, Text, Button, HStack, useToast } from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
 import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/ButtonsForPageNumbersForStudyNoteContents";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store";
 
 import { SearchIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaSort, FaListUl } from "react-icons/fa";
@@ -24,12 +22,19 @@ import ModalButtonForStudyNoteContentOrdering from "../components/modal/ModalBut
 import { initializeCurrentPage } from "../reducers/studyNoteSlice";
 import ClipboardButtonForCopyCurrentUrl from "../components/Button/ClipboardButtonForCopyCurrentUrl";
 
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store";
+
 interface Props {}
 
 // 1122
 const StudyNoteDetail2 = (props: Props) => {
   const { study_note_pk, note_page_num } = useParams();
   const dispatch = useDispatch();
+
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
 
   const navigate = useNavigate();
 
@@ -126,6 +131,11 @@ const StudyNoteDetail2 = (props: Props) => {
     return <Box>"loading.."</Box>;
   }
 
+  const is_authority_for_note =
+    response_data_for_api?.note_user_name === loginUser.username ||
+    response_data_for_api?.co_writers_for_approved.includes(loginUser.username);
+
+  // 2244
   return (
     <Box display={"flex"}>
       <Box flex={4}>
@@ -146,37 +156,39 @@ const StudyNoteDetail2 = (props: Props) => {
             >
               목록
             </Button>
+            <ModalButtonForSearchStudyNoteContent
+              study_note_pk={study_note_pk}
+            />
 
-            <Button
-              size="sm"
-              colorScheme="red"
-              variant="outline"
-              _hover={{ backgroundColor: "red.50" }}
-              onClick={deleteContentsForChecked}
-              leftIcon={<DeleteIcon />}
-            >
-              Delete for check
-            </Button>
-            <Box>
-              <ModalButtonForSearchStudyNoteContent
-                study_note_pk={study_note_pk}
-              />
-            </Box>
-            <Box>
-              <ModalButtonForStudyNoteContentOrdering
-                study_note_pk={study_note_pk}
-                currentPage={currentPage}
-                data_for_study_note_contents={
-                  response_data_for_api
-                    ? response_data_for_api?.data_for_study_note_contents
-                    : []
-                }
-              />
-            </Box>
+            {is_authority_for_note ? (
+              <Box display={"flex"} gap={2}>
+                <Button
+                  size="sm"
+                  colorScheme="red"
+                  variant="outline"
+                  _hover={{ backgroundColor: "red.50" }}
+                  onClick={deleteContentsForChecked}
+                  leftIcon={<DeleteIcon />}
+                >
+                  Delete for check
+                </Button>
+                <ModalButtonForStudyNoteContentOrdering
+                  study_note_pk={study_note_pk}
+                  currentPage={currentPage}
+                  data_for_study_note_contents={
+                    response_data_for_api
+                      ? response_data_for_api?.data_for_study_note_contents
+                      : []
+                  }
+                />
+              </Box>
+            ) : (
+              ""
+            )}
           </Box>
           <Box display={"flex"} gap={2}>
             <Box>
-              <ClipboardButtonForCopyCurrentUrl /> 
+              <ClipboardButtonForCopyCurrentUrl />
             </Box>
             <ModalButtonForInsertStudyNoteContent
               buttonText={"create"}
@@ -195,8 +207,20 @@ const StudyNoteDetail2 = (props: Props) => {
           mr={1}
           mb={2}
         >
-          <Box>{response_data_for_api?.note_title}'s contents</Box>
-          <Box>page: {currentPage}</Box>
+          <Box>
+            <Box>note subject:</Box>
+            <Box>{response_data_for_api?.note_title}</Box>
+          </Box>
+          <Box>
+            <Box>CoWriters: </Box>
+            <Box>
+              {response_data_for_api?.co_writers_for_approved.join(", ")}
+            </Box>
+          </Box>
+          <Box>
+            <Box>writer:{response_data_for_api?.note_user_name}</Box>
+            <Box>page: {currentPage}</Box>
+          </Box>
         </Box>
 
         <Box
@@ -211,7 +235,7 @@ const StudyNoteDetail2 = (props: Props) => {
         >
           <Box
             id={"navi-box"}
-            top={"260"}
+            top={"285"}
             left={"88"}
             width={"67%"}
             border={"0px solid green"}
@@ -257,6 +281,7 @@ const StudyNoteDetail2 = (props: Props) => {
                         refetch_for_study_note_content_list
                       }
                       setCheckedValues={setCheckedValues}
+                      is_authority_for_note={is_authority_for_note}
                     />
                   );
                 }
@@ -291,6 +316,7 @@ const StudyNoteDetail2 = (props: Props) => {
               pageNumbersToEdit={pageNumbersToEdit}
               pageNumbersToMove={pageNumbersToMove}
               study_note_pk={study_note_pk}
+              is_authority_for_note={is_authority_for_note}
             />
           ) : (
             ""

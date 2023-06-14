@@ -125,6 +125,10 @@ const StudyNoteDetail = (props: Props) => {
     return <Box>"loading.."</Box>;
   }
 
+  const is_authority_for_note =
+    response_data_for_api?.note_user_name === loginUser.username ||
+    response_data_for_api?.co_writers_for_approved.includes(loginUser.username);
+
   return (
     <Box display={"flex"}>
       <Box flex={4}>
@@ -155,7 +159,8 @@ const StudyNoteDetail = (props: Props) => {
             </Box>
             {/* {response_data_for_api && response_data_for_api?.note_user_name} and
             {loginUser.username} */}
-            {response_data_for_api?.note_user_name === loginUser.username ? (
+            {response_data_for_api &&
+            response_data_for_api?.note_user_name === loginUser.username ? (
               <Box>
                 <Button
                   size="sm"
@@ -282,6 +287,7 @@ const StudyNoteDetail = (props: Props) => {
           </Text>
           {response_data_for_api ? (
             <ButtonsForPageNumbersForStudyNoteContents
+              is_authority_for_note={is_authority_for_note}
               exist_page_numbers={response_data_for_api.exist_page_numbers}
               currentPage={currentPage}
               pageNumbersToEdit={pageNumbersToEdit}
