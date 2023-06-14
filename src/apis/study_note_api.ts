@@ -18,6 +18,25 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForUpdateForUpdateIsApprovedForNoteCoWriter = (cowriterPk: any) => {
+  console.log("cowriterPk :::::::::::::::::::::::", cowriterPk);
+
+  return instance
+    .put(
+      "/study-note/update-is-approved-for-cowriter",
+      { cowriterPk },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const apiForCopySelectedNotesToMyNote = ({
   selectedRowPksFromOriginalTable
 }: typeForParameterForApiForCopySelectedNotesToMyNote) => {

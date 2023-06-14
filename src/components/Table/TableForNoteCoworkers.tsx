@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { TypeForNoteCoWriter } from "../../types/study_note_type";
 import { useState } from "react";
+import ToggleButtonForIsApprovedForNoteCoWriting from "../Button/ToggleButtonForIsApprovedForNoteCoWriting";
 
 interface IProps {
   noteCowriters: TypeForNoteCoWriter[];
@@ -35,11 +36,15 @@ const TableForNoteCoworkers = ({ noteCowriters }: IProps) => {
                 />
               </Td>
               <Td>
-                <Switch
+                <ToggleButtonForIsApprovedForNoteCoWriting
+                  cowriterPk={cowriter.id}
+                  is_approved={cowriter.is_approved}
+                />
+                {/* <Switch
                   colorScheme="blue"
                   isChecked={cowriter.is_approved}
                   // onChange={() => handleToggle(cowriter.id)}
-                />
+                /> */}
               </Td>
             </Tr>
           ))}
