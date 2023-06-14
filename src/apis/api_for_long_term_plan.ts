@@ -17,6 +17,7 @@ const instance = axios.create({
 });
 // 1122
 
+
 export const apiFordeletePlanContentsForChecked = (
   idsForDeleteContentsForChecked: number[]
 ) => {

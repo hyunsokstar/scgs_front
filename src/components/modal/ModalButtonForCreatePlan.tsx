@@ -24,11 +24,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForCreatePlan } from "../../apis/api_for_long_term_plan";
 import { formTypeForCreatePlan } from "../../types/type_for_plan_maker";
 
-// type FormData = {
-//   title: string;
-//   description: string;
-//   category: "project" | "study" | "event";
-// };
 
 interface IProps {
   button_text: string;

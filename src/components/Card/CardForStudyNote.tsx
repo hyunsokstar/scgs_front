@@ -5,14 +5,17 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import { CloseIcon } from "@chakra-ui/icons";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   NoteWriterType,
   TypeForNote,
   TypeForNoteCoWriter,
 } from "../../types/study_note_type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiFordeleteOneStudyNote } from "../../apis/study_note_api";
+import {
+  apiForRegisterForCoWriterForOtherUserNote,
+  apiFordeleteOneStudyNote,
+} from "../../apis/study_note_api";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -28,6 +31,7 @@ interface IProps {
   note_cowriters: TypeForNoteCoWriter[];
 }
 
+// 1122
 const CardForStudyNote: React.FC<IProps> = ({
   pk,
   title,
@@ -94,6 +98,34 @@ const CardForStudyNote: React.FC<IProps> = ({
     navigate(`/study-note/${pk}`);
   };
 
+  const mutationForRegisterForCoWriterForOtherUserNote = useMutation(
+    apiForRegisterForCoWriterForOtherUserNote,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        toast({
+          title: "register for CoWriter Scusses !!",
+          status: "success",
+        });
+        queryClient.refetchQueries(["get_plan_list"]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
+
+  // mutationForRegisterForCoWriterForOtherUserNote
+  const buttonHandlerForRegisterCoWokerForNote = (notePk: number) => {
+    // alert(notePk);
+    mutationForRegisterForCoWriterForOtherUserNote.mutate({notePk});
+  };
+
+  // 2244
   return (
     <Box>
       <Box
@@ -108,7 +140,7 @@ const CardForStudyNote: React.FC<IProps> = ({
         _hover={{
           borderColor: borderColor,
           boxShadow: "xl",
-          transform: "translateY(-4px)",
+          transform: "translateY(-2px)",
         }}
         // position={"relative"}
       >
@@ -161,7 +193,59 @@ const CardForStudyNote: React.FC<IProps> = ({
           >
             <Box flex={1}>{description}</Box>
             <Box flex={1}>
-              <Box>co_writer :</Box>
+              <Box
+                border="1px solid green"
+                display={"flex"}
+                justifyContent={"space-between"}
+              >
+                <Box>Co-Writer</Box>
+                <Box>
+                  {isLoggedIn ? (
+                    <IconButton
+                      aria-label="Add"
+                      size={"xs"}
+                      icon={<AddIcon />}
+                      variant="outline"
+                      borderColor="blue"
+                      _hover={{ bgColor: "blue.100" }}
+                      onClick={() => {
+                        if (!isLoggedIn) {
+                          toast({
+                            title:
+                              "로그인한 유저만 CoWriter 신청 할 수 있습니다. ",
+                            status: "warning",
+                            duration: 2000, // Automatically close after 2 seconds
+                            isClosable: true, // Display close button
+                            position: "top", // Display at the top of the screen
+                          });
+                          return;
+                        }
+
+                        if (loginUser.username === writer.username) {
+                          toast({
+                            title:
+                              "내가 작성한 노트에는 coWriter 신청을 할 수 없습니다",
+                            status: "warning",
+                            duration: 2000, // Automatically close after 2 seconds
+                            isClosable: true, // Display close button
+                            position: "top", // Display at the top of the screen
+                          });
+                          return;
+                        } else {
+                          const message = `${loginUser.username} 님 ${title}에 대해 co-writer 신청 하시겠습니까?`;
+                          if (window.confirm(message)) {
+                            buttonHandlerForRegisterCoWokerForNote(pk);
+                          } else {
+                            alert("취소 하셨습니다. ");
+                          }
+                        }
+                      }}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </Box>
+              </Box>
               <Box>
                 <TableForNoteCoworkers noteCowriters={note_cowriters} />
                 {/* {note_cowriters} */}
@@ -169,12 +253,7 @@ const CardForStudyNote: React.FC<IProps> = ({
             </Box>
           </Box>
           <Box flex={1} textAlign={"right"} border={"0px solid red"}>
-            {" "}
-            <ClipboardButtonForCopyCurrentUrl
-              button_size={"sm"}
-              pk={pk}
-              // note_url={`/study-note/${pk}`}
-            />
+            <ClipboardButtonForCopyCurrentUrl button_size={"sm"} pk={pk} />
           </Box>
         </Box>
         <Box

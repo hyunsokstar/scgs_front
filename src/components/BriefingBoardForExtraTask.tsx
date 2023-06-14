@@ -99,8 +99,6 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
   );
 
   const onEditConfirmHandler = (commentPk: number | string) => {
-    // alert(commentTextForUpdate)
-    // pk, commentTextForUpdate 를 이용해서 comment update
     mutationForUpdateCommentForExtraTask.mutate({
       commentPk,
       commentText: commentTextForUpdate,

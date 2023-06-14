@@ -18,7 +18,25 @@ const instance = axios.create({
 });
 
 // 1122
-export const apiForUpdateForUpdateIsApprovedForNoteCoWriter = (cowriterPk: any) => {
+export const apiForRegisterForCoWriterForOtherUserNote = ({ notePk }: any) => {
+  // console.log("category : ", notePk);
+
+  return instance
+    .post(
+      `/study-note/${notePk}/register-for-co-writer`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
+export const apiForUpdateForUpdateIsApprovedForNoteCoWriter = (
+  cowriterPk: any
+) => {
   console.log("cowriterPk :::::::::::::::::::::::", cowriterPk);
 
   return instance
@@ -38,9 +56,12 @@ export const apiForUpdateForUpdateIsApprovedForNoteCoWriter = (cowriterPk: any) 
 };
 
 export const apiForCopySelectedNotesToMyNote = ({
-  selectedRowPksFromOriginalTable
+  selectedRowPksFromOriginalTable,
 }: typeForParameterForApiForCopySelectedNotesToMyNote) => {
-  console.log("selectedRowPksFromOriginalTable at api : ", selectedRowPksFromOriginalTable);
+  console.log(
+    "selectedRowPksFromOriginalTable at api : ",
+    selectedRowPksFromOriginalTable
+  );
 
   // return Promise.resolve(); // Placeholder return statement
   return instance
