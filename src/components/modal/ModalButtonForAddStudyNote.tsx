@@ -49,7 +49,7 @@ function ModalButtonForAddStudyNote({ button_text }: IProps) {
         title: "welcome back!",
         status: "success",
       });
-      queryClient.refetchQueries(["getStudyNoteList"]);
+      queryClient.refetchQueries(["apiForgetStudyNoteList"]);
       reset();
       setIsOpen(false);
     },

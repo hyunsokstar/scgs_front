@@ -6,8 +6,8 @@ import { apiForGetStudyNoteList } from "../apis/study_note_api";
 import CardForStudyNote from "../components/Card/CardForStudyNote";
 import ModalButtonForAddStudyNote from "../components/modal/ModalButtonForAddStudyNote";
 import {
+  TypeForNote,
   TypeForNoteList,
-  type_for_study_note_list_row,
 } from "../types/study_note_type";
 import { Link } from "react-router-dom";
 import PaginationComponent from "../components/PaginationComponent";
@@ -50,7 +50,7 @@ const StudyNotePage = () => {
         display={"flex"}
         alignItems={"center"}
         border={"1px solid green"}
-        mx={"50px"}
+        mx={"30px"}
       >
         <ModalButtonForAddStudyNote button_text={"add study note"} />
         {isLoggedIn ? (
@@ -74,20 +74,21 @@ const StudyNotePage = () => {
         )}
       </Box>
 
-      <Box px={"40px"} border={"0px solid purple"}>
+      <Box px={"20px"} border={"0px solid purple"}>
         <Flex
           wrap="wrap"
           justifyContent={"flex-start"}
           gap={5}
           border={"0px solid black"}
         >
-          {studyNoteData.noteList.map((note: type_for_study_note_list_row) => (
+          {studyNoteData.noteList.map((note: TypeForNote) => (
             <CardForStudyNote
               pk={note.pk}
               key={note.title}
               title={note.title}
               description={note.description}
               writer={note.writer}
+              note_cowriters = {note.note_cowriters}
               studyNoteListRefatch = {studyNoteListRefatch}
             />
           ))}

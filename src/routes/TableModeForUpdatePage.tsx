@@ -21,7 +21,7 @@ import {
   apiForGetStudyNoteListForCopyMode,
   apiForGetStudyNoteListForMe,
 } from "../apis/study_note_api";
-import { NoteType, TypeForNoteList } from "../types/study_note_type";
+import { TypeForNote, TypeForNoteList } from "../types/study_note_type";
 import PaginationComponent from "../components/PaginationComponent";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -174,7 +174,7 @@ const TableModeForUpdatePage = (props: Props) => {
                 <Tbody>
                   {dataForGetStudyNoteList &&
                   dataForGetStudyNoteList.noteList.length ? (
-                    dataForGetStudyNoteList.noteList.map((item: NoteType) => (
+                    dataForGetStudyNoteList.noteList.map((item: TypeForNote) => (
                       <Tr key={item.pk}>
                         <Td>
                           <Checkbox
@@ -242,7 +242,7 @@ const TableModeForUpdatePage = (props: Props) => {
                   {dataForGetStudyNoteListForMe &&
                   dataForGetStudyNoteListForMe.noteList.length ? (
                     dataForGetStudyNoteListForMe.noteList.map(
-                      (item: NoteType) => (
+                      (item: TypeForNote) => (
                         <Tr key={item.pk}>
                           <Td>
                             <Checkbox

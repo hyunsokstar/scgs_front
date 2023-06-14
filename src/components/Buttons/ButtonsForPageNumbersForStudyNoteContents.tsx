@@ -31,7 +31,7 @@ import { type_for_parameter_for_delete_pages_for_study_note } from "../../types/
 import ToggleButtonForUpdate from "../Button/ToggleButtonForUpdate";
 import { apiForUpdateEditModeForStudyNoteContent } from "../../apis/user_api";
 import InputsForSettingOptionForPageUpdate from "../Input/InputsForSettingOptionForPageUpdate";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface ButtonsForPageNumbersForStudyNoteContentsProps {
   currentPage: number;
@@ -51,6 +51,8 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   study_note_pk, // 노트 content pk 아니고 노트 주제 pk를 말함
 }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
   const toast = useToast();
 
@@ -70,12 +72,19 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     }
   }, []);
 
+
+  // fix 0614
   const clickHandlerForPageButton = (event: any, buttonNumber: number) => {
     if (event.shiftKey) {
       console.log("shift click for setPageNumbersToMove");
       dispatch(setPageNumbersToMove({ buttonNumber, editMode }));
     } else {
-      dispatch(selectButton({ buttonNumber, editMode }));
+      if(editMode){
+        dispatch(selectButton({ buttonNumber, editMode }));
+      } else {
+        navigate(`/study-note/${study_note_pk}/${buttonNumber}`);
+      }
+
       console.log("just click");
     }
   };
@@ -426,7 +435,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           >
             +1
           </Button>
-        
+
           {/* fix 0609 */}
           {/* <Link to={`/study-note/table-mode-for-update-page`}>
             <Button
@@ -471,7 +480,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         ""
       )}
 
-      {!editMode ? <Box>#!@#$!@#$$%^!@#$</Box> : ""}
+      {!editMode ? <Box ml={2}>page numbers : </Box> : ""}
       {/* <Box display={"flex"} flexDirection={"row"}>
         <Box border={"1px solid blue"}>
           {pageNumbersToEdit.join(", ")}

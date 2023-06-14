@@ -22,6 +22,7 @@ import ButtonsForFindToContentWithOrderNum from "../components/Button/ButtonsFor
 import ModalButtonForSearchStudyNoteContent from "../components/Button/ModalButtonForSearchStudyNoteContent";
 import ModalButtonForStudyNoteContentOrdering from "../components/modal/ModalButtonForStudyNoteContentOrdering";
 import { initializeCurrentPage } from "../reducers/studyNoteSlice";
+import ClipboardButtonForCopyCurrentUrl from "../components/Button/ClipboardButtonForCopyCurrentUrl";
 
 interface Props {}
 
@@ -128,8 +129,6 @@ const StudyNoteDetail2 = (props: Props) => {
   return (
     <Box display={"flex"}>
       <Box flex={4}>
-        <Box>Study Note Content</Box>
-
         <Box
           display="flex"
           justifyContent={"space-between"}
@@ -175,13 +174,29 @@ const StudyNoteDetail2 = (props: Props) => {
               />
             </Box>
           </Box>
-          <Box>
+          <Box display={"flex"} gap={2}>
+            <Box>
+              <ClipboardButtonForCopyCurrentUrl /> 
+            </Box>
             <ModalButtonForInsertStudyNoteContent
               buttonText={"create"}
               currentPage={currentPage}
               study_note_pk={study_note_pk}
             />
           </Box>
+        </Box>
+
+        <Box
+          backgroundColor="gray.200"
+          p={4}
+          fontWeight="bold"
+          display={"flex"}
+          justifyContent={"space-between"}
+          mr={1}
+          mb={2}
+        >
+          <Box>{response_data_for_api?.note_title}'s contents</Box>
+          <Box>page: {currentPage}</Box>
         </Box>
 
         <Box
@@ -196,7 +211,7 @@ const StudyNoteDetail2 = (props: Props) => {
         >
           <Box
             id={"navi-box"}
-            top={"220"}
+            top={"260"}
             left={"88"}
             width={"67%"}
             border={"0px solid green"}

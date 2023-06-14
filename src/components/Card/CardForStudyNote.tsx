@@ -1,27 +1,40 @@
 import {
   Box,
   IconButton,
-  Flex,
   Text,
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
-import { type_for_study_note_list_row } from "../../types/study_note_type";
+import {
+  NoteWriterType,
+  TypeForNote,
+  TypeForNoteCoWriter,
+} from "../../types/study_note_type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFordeleteOneStudyNote } from "../../apis/study_note_api";
-import { Button } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { log } from "console";
+import ClipboardButtonForCopyCurrentUrl from "../Button/ClipboardButtonForCopyCurrentUrl";
+import TableForNoteCoworkers from "../Table/TableForNoteCoworkers";
 
-const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
+interface IProps {
+  pk: any;
+  title: string;
+  description: string;
+  writer: NoteWriterType;
+  studyNoteListRefatch: () => void;
+  note_cowriters: TypeForNoteCoWriter[];
+}
+
+const CardForStudyNote: React.FC<IProps> = ({
   pk,
   title,
   description,
   writer,
   studyNoteListRefatch,
+  note_cowriters,
 }) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
   const headerBgColor = useColorModeValue("gray.200", "gray.600");
@@ -31,6 +44,8 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
   const queryClient = useQueryClient();
   const toast = useToast();
   const navigate = useNavigate();
+
+  console.log("note_cowriters : ", note_cowriters);
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -86,7 +101,6 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
         borderRadius="lg"
         overflow="hidden"
         width="410px"
-        height="300px"
         margin="10px"
         bg={cardBgColor}
         boxShadow="md"
@@ -96,7 +110,7 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
           boxShadow: "xl",
           transform: "translateY(-4px)",
         }}
-        position={"relative"}
+        // position={"relative"}
       >
         <Box
           display={"flex"}
@@ -108,6 +122,7 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
           <Text fontSize="xl" fontWeight="bold">
             {title}
           </Text>
+
           {writer.username === loginUser.username ? (
             <IconButton
               aria-label="Close"
@@ -128,29 +143,52 @@ const CardForStudyNote: React.FC<type_for_study_note_list_row> = ({
           p="2"
           bg={bodyBgColor}
           display={"flex"}
-          flexDirection={"column"}
+          // flexDirection={"column"}
           justifyContent={"space-between"}
-          height={"100%"}
-          border={"0px solid green"}
+          height={"300px"}
+          // border={"0px solid green"}
           _hover={{ bg: "blue.100" }}
-          onClick={() => goToStudyNoteDetail(pk)}
+          onDoubleClick={() => goToStudyNoteDetail(pk)}
+          border={"1px solid green"}
         >
-          <Text fontSize="sm">{description}</Text>
-
-          <Text fontSize="sm" textAlign="right">
-            {writer ? writer.username : "no user"}
-          </Text>
+          <Box
+            fontSize="sm"
+            flex={3}
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"space-between"}
+            border={"1px solid red"}
+          >
+            <Box flex={1}>{description}</Box>
+            <Box flex={1}>
+              <Box>co_writer :</Box>
+              <Box>
+                <TableForNoteCoworkers noteCowriters={note_cowriters} />
+                {/* {note_cowriters} */}
+              </Box>
+            </Box>
+          </Box>
+          <Box flex={1} textAlign={"right"} border={"0px solid red"}>
+            {" "}
+            <ClipboardButtonForCopyCurrentUrl
+              button_size={"sm"}
+              pk={pk}
+              // note_url={`/study-note/${pk}`}
+            />
+          </Box>
         </Box>
         <Box
-          position={"absolute"}
+          // position={"absolute"}
           p="2"
           bg={footerBgColor}
           bottom={0}
           w={"100%"}
         >
-          <Text fontSize="sm" textAlign="right">
-            {writer ? writer.username : "no user"}
-          </Text>
+          <Box textAlign={"right"}>
+            <Text fontSize="sm" textAlign="right">
+              written by {writer ? writer.username : "no user"}
+            </Text>
+          </Box>
         </Box>
       </Box>
     </Box>

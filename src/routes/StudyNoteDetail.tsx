@@ -21,6 +21,7 @@ import ModalButtonForInsertStudyNoteContent from "../components/modal/ModalButto
 import ButtonsForFindToContentWithOrderNum from "../components/Button/ButtonsForFindToContentWithOrderNum";
 import ModalButtonForSearchStudyNoteContent from "../components/Button/ModalButtonForSearchStudyNoteContent";
 import ModalButtonForStudyNoteContentOrdering from "../components/modal/ModalButtonForStudyNoteContentOrdering";
+import ClipboardButtonForCopyCurrentUrl from "../components/Button/ClipboardButtonForCopyCurrentUrl";
 
 interface Props {}
 
@@ -178,9 +179,14 @@ const StudyNoteDetail = (props: Props) => {
                   }
                 />
               </Box>
-            ):""}
+            ) : (
+              ""
+            )}
           </Box>
-          <Box>
+          <Box display={"flex"} gap={2}>
+            <Box>
+              <ClipboardButtonForCopyCurrentUrl />
+            </Box>
             <ModalButtonForInsertStudyNoteContent
               buttonText={"create"}
               currentPage={currentPage}

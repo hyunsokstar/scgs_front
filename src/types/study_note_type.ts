@@ -1,16 +1,3 @@
-interface Writer {
-  pk: number;
-  username: string | null;
-  profile_image: string;
-}
-
-export type type_for_study_note_list_row = {
-  pk: number;
-  title: string;
-  description: string;
-  writer: Writer;
-  studyNoteListRefatch?: () => void;
-};
 
 export type type_for_insert_study_note = {
   title: string;
@@ -29,6 +16,7 @@ export interface DataForStudyNoteContent {
 }
 
 export interface StudyNoteData {
+  note_title: string;
   note_user_name: string;
   exist_page_numbers: number[];
   data_for_study_note_contents: DataForStudyNoteContent[];
@@ -74,22 +62,39 @@ export interface ListPropsForContentOrdering {
   items: any;
 }
 
-export interface UserType {
+export interface NoteWriterType {
   pk: number;
   username: string;
   profile_image: string;
 }
 
-export interface NoteType {
+export interface TypeForNoteCoWriter {
+  id: number;
+  writer: NoteWriterType;
+  study_note: number;
+  is_approved: boolean;
+  created_at: string;
+}
+
+// export type type_for_study_note_list_row = {
+//   pk: number;
+//   title: string;
+//   description: string;
+//   writer: Writer;
+//   studyNoteListRefatch?: () => void;
+// };
+
+export interface TypeForNote {
   pk: number;
   title: string;
   description: string;
-  writer: UserType;
+  writer: NoteWriterType;
+  note_cowriters: TypeForNoteCoWriter[];
   count_for_note_contents: number;
 }
 
 export interface TypeForNoteList {
-  noteList: NoteType[];
+  noteList: TypeForNote[];
   totalPageCount: number;
   note_count_per_page: number;
 }

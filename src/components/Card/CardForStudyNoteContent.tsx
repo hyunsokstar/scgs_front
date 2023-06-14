@@ -212,7 +212,7 @@ const CardForStudyNoteContent = ({
             onClick={() => deleteStudyNoteContentByPk(pk)}
           />
         ) : (
-          ""
+          "no"
         )}
       </Box>
       <Box my="4">
