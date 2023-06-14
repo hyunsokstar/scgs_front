@@ -9,12 +9,12 @@ import {
   apiFordeleteStudyNoteContentsForChecked,
   apiForGetStuyNoteContentList,
 } from "../apis/study_note_api";
-import { Box, VStack, Text, Button, HStack, useToast } from "@chakra-ui/react";
+import { Box, Text, Button, useToast } from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
 import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/ButtonsForPageNumbersForStudyNoteContents";
 
-import { SearchIcon, DeleteIcon } from "@chakra-ui/icons";
-import { FaSort, FaListUl } from "react-icons/fa";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { FaListUl } from "react-icons/fa";
 import ModalButtonForInsertStudyNoteContent from "../components/modal/ModalButtonForInsertStudyNoteContent";
 import ButtonsForFindToContentWithOrderNum from "../components/Button/ButtonsForFindToContentWithOrderNum";
 import ModalButtonForSearchStudyNoteContent from "../components/Button/ModalButtonForSearchStudyNoteContent";
@@ -187,14 +187,18 @@ const StudyNoteDetail2 = (props: Props) => {
             )}
           </Box>
           <Box display={"flex"} gap={2}>
-            <Box>
+            <Box mr={1}>
               <ClipboardButtonForCopyCurrentUrl />
             </Box>
-            <ModalButtonForInsertStudyNoteContent
-              buttonText={"create"}
-              currentPage={currentPage}
-              study_note_pk={study_note_pk}
-            />
+            {is_authority_for_note ? (
+              <ModalButtonForInsertStudyNoteContent
+                buttonText={"create"}
+                currentPage={currentPage}
+                study_note_pk={study_note_pk}
+              />
+            ) : (
+              ""
+            )}
           </Box>
         </Box>
 

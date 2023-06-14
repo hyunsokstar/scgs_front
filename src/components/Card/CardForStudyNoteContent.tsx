@@ -254,9 +254,9 @@ const CardForStudyNoteContent = ({
         </Table>
       </Box>
       <Box display="flex" justifyContent="space-between">
-        <Button variant="outline" colorScheme="teal">
+        {/* <Button variant="outline" colorScheme="teal">
           Comment
-        </Button>
+        </Button> */}
         {is_authority_for_note ? (
           <ModalButtonForUpdateStudyNoteContent
             button_text={"update for note content"}

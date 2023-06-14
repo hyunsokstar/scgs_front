@@ -263,6 +263,7 @@ function TaskListUntilYesterday({
         setCheckedRowPks([]);
         // refetch_for_api_docu();
         queryClient.refetchQueries(["getUncompletedTaskList"]);
+        // queryClient.refetchQueries(["getTaskStatusForToday"]);
 
         toast({
           title: "Update Task Due Date For Checked 성공!",
