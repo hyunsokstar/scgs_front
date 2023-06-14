@@ -26,8 +26,9 @@ interface IProps {
   title: string;
   description: string;
   writer: NoteWriterType;
-  studyNoteListRefatch: () => void;
   note_cowriters: TypeForNoteCoWriter[];
+  count_for_note_contents: number;
+  studyNoteListRefatch: () => void;
 }
 
 // 1122
@@ -36,8 +37,9 @@ const CardForStudyNote: React.FC<IProps> = ({
   title,
   description,
   writer,
-  studyNoteListRefatch,
+  count_for_note_contents,
   note_cowriters,
+  studyNoteListRefatch,
 }) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
   const headerBgColor = useColorModeValue("gray.200", "gray.600");
@@ -146,13 +148,13 @@ const CardForStudyNote: React.FC<IProps> = ({
         <Box
           display={"flex"}
           justifyContent="space-between"
-          bg={headerBgColor}
+          bg={writer.username === loginUser.username ? "green.200" : "blue.200"}
           px="2"
           py="1"
         >
           <Text fontSize="xl" fontWeight="bold">
-            {title}
-            {writer.username === loginUser.username ? "(my)" : ""}
+            {title} ({count_for_note_contents})
+            {/* {writer.username === loginUser.username ? "(my)" : ""} */}
           </Text>
 
           {writer.username === loginUser.username ? (
@@ -263,7 +265,10 @@ const CardForStudyNote: React.FC<IProps> = ({
                 </Box>
               </Box>
               <Box>
-                <TableForNoteCoworkers noteOwnerUserName = {writer.username} noteCowriters={note_cowriters} />
+                <TableForNoteCoworkers
+                  noteOwnerUserName={writer.username}
+                  noteCowriters={note_cowriters}
+                />
               </Box>
             </Box>
           </Box>

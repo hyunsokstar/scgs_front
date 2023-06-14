@@ -5,10 +5,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiForGetStudyNoteList } from "../apis/study_note_api";
 import CardForStudyNote from "../components/Card/CardForStudyNote";
 import ModalButtonForAddStudyNote from "../components/modal/ModalButtonForAddStudyNote";
-import {
-  TypeForNote,
-  TypeForNoteList,
-} from "../types/study_note_type";
+import { TypeForNote, TypeForNoteList } from "../types/study_note_type";
 import { Link } from "react-router-dom";
 import PaginationComponent from "../components/PaginationComponent";
 import { useSelector, useDispatch } from "react-redux";
@@ -88,8 +85,9 @@ const StudyNotePage = () => {
               title={note.title}
               description={note.description}
               writer={note.writer}
-              note_cowriters = {note.note_cowriters}
-              studyNoteListRefatch = {studyNoteListRefatch}
+              note_cowriters={note.note_cowriters}
+              count_for_note_contents={note.count_for_note_contents}
+              studyNoteListRefatch={studyNoteListRefatch}
             />
           ))}
         </Flex>
