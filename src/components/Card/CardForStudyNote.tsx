@@ -8,7 +8,6 @@ import {
 import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   NoteWriterType,
-  TypeForNote,
   TypeForNoteCoWriter,
 } from "../../types/study_note_type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -16,7 +15,7 @@ import {
   apiForRegisterForCoWriterForOtherUserNote,
   apiFordeleteOneStudyNote,
 } from "../../apis/study_note_api";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import ClipboardButtonForCopyCurrentUrl from "../Button/ClipboardButtonForCopyCurrentUrl";
@@ -122,7 +121,7 @@ const CardForStudyNote: React.FC<IProps> = ({
   // mutationForRegisterForCoWriterForOtherUserNote
   const buttonHandlerForRegisterCoWokerForNote = (notePk: number) => {
     // alert(notePk);
-    mutationForRegisterForCoWriterForOtherUserNote.mutate({notePk});
+    mutationForRegisterForCoWriterForOtherUserNote.mutate({ notePk });
   };
 
   // 2244
@@ -175,12 +174,11 @@ const CardForStudyNote: React.FC<IProps> = ({
           p="2"
           bg={bodyBgColor}
           display={"flex"}
-          // flexDirection={"column"}
           justifyContent={"space-between"}
           height={"300px"}
-          // border={"0px solid green"}
           _hover={{ bg: "blue.100" }}
-          onDoubleClick={() => goToStudyNoteDetail(pk)}
+          // onDoubleClick={() => goToStudyNoteDetail(pk)}
+          onClick={() => goToStudyNoteDetail(pk)}
           border={"1px solid green"}
         >
           <Box
