@@ -28,10 +28,7 @@ export const apiForCancleCoWriterForOtherUserNote = (pk: number) => {
     .then((response) => response.data);
 };
 
-
 export const apiForRegisterForCoWriterForOtherUserNote = ({ notePk }: any) => {
-  // console.log("category : ", notePk);
-
   return instance
     .post(
       `/study-note/${notePk}/register-for-co-writer`,

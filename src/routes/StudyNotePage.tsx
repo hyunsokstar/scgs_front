@@ -43,7 +43,7 @@ const StudyNotePage = () => {
   return (
     <Box>
       <Text align={"center"} fontSize={"5xl"}>
-        Tech Note !!
+        Tech Note !! (노트 더블 클릭)
       </Text>
 
       <Box

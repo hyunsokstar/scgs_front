@@ -109,7 +109,7 @@ const CardForStudyNote: React.FC<IProps> = ({
           title: "register for CoWriter Scusses !!",
           status: "success",
         });
-        queryClient.refetchQueries(["get_plan_list"]);
+        queryClient.refetchQueries(["apiForgetStudyNoteList"]);
       },
       onError: (error: any) => {
         console.log("error.response : ", error.response);
@@ -152,6 +152,7 @@ const CardForStudyNote: React.FC<IProps> = ({
         >
           <Text fontSize="xl" fontWeight="bold">
             {title}
+            {writer.username === loginUser.username ? "(my)" : ""}
           </Text>
 
           {writer.username === loginUser.username ? (
@@ -178,8 +179,8 @@ const CardForStudyNote: React.FC<IProps> = ({
           height={"300px"}
           _hover={{ bg: "blue.100" }}
           // onDoubleClick={() => goToStudyNoteDetail(pk)}
-          onClick={() => goToStudyNoteDetail(pk)}
-          border={"1px solid green"}
+          onDoubleClick={() => goToStudyNoteDetail(pk)}
+          // border={"1px solid green"}
         >
           <Box
             fontSize="sm"
@@ -187,17 +188,19 @@ const CardForStudyNote: React.FC<IProps> = ({
             display={"flex"}
             flexDirection={"column"}
             justifyContent={"space-between"}
-            border={"1px solid red"}
+            // border={"1px solid black"}
           >
             <Box flex={1}>{description}</Box>
-            <Box flex={1}>
+            <Box flex={2}>
               <Box
-                border="1px solid green"
+                // border="1px solid black"
                 display={"flex"}
                 justifyContent={"space-between"}
+                mb={1}
               >
                 <Box>Co-Writer</Box>
                 <Box>
+                  {/* cowriter add */}
                   {isLoggedIn && loginUser.username !== writer.username ? (
                     <IconButton
                       aria-label="Add"
@@ -211,6 +214,21 @@ const CardForStudyNote: React.FC<IProps> = ({
                           toast({
                             title:
                               "로그인한 유저만 CoWriter 신청 할 수 있습니다. ",
+                            status: "warning",
+                            duration: 2000, // Automatically close after 2 seconds
+                            isClosable: true, // Display close button
+                            position: "top", // Display at the top of the screen
+                          });
+                          return;
+                        }
+
+                        const coWriterUserNames = note_cowriters.map((co) => {
+                          return co.writer.username;
+                        });
+
+                        if (coWriterUserNames.includes(loginUser.username)) {
+                          toast({
+                            title: "이미 CoWriter 신청 했습니다.",
                             status: "warning",
                             duration: 2000, // Automatically close after 2 seconds
                             isClosable: true, // Display close button
@@ -245,7 +263,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                 </Box>
               </Box>
               <Box>
-                <TableForNoteCoworkers noteCowriters={note_cowriters} />
+                <TableForNoteCoworkers noteOwnerUserName = {writer.username} noteCowriters={note_cowriters} />
               </Box>
             </Box>
           </Box>

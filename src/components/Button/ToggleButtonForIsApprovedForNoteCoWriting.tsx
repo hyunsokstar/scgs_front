@@ -4,20 +4,23 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForUpdateForUpdateIsApprovedForNoteCoWriter } from "../../apis/study_note_api";
 
 interface Props {
-  is_approved: boolean;
   cowriterPk: any;
+  noteOwnerUserName: string;
+  is_approved: boolean;
+  updateAuthority: boolean;
 }
 
 const ToggleButtonForIsApprovedForNoteCoWriting = ({
   cowriterPk,
+  noteOwnerUserName,
   is_approved,
+  updateAuthority,
 }: Props) => {
   const toast = useToast();
   const queryClient = useQueryClient();
 
   const mutationForUpdateUpdateIsApprovedForNoteCoWriter = useMutation(
-    apiForUpdateForUpdateIsApprovedForNoteCoWriter
-    ,
+    apiForUpdateForUpdateIsApprovedForNoteCoWriter,
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
@@ -41,7 +44,20 @@ const ToggleButtonForIsApprovedForNoteCoWriting = ({
 
   const onChangeHandlerForUpdateIsApprovedForNoteCoWriter = () => {
     // alert("change 확인");
-    mutationForUpdateUpdateIsApprovedForNoteCoWriter.mutate(cowriterPk)
+    if (updateAuthority) {
+      mutationForUpdateUpdateIsApprovedForNoteCoWriter.mutate(cowriterPk);
+    } else {
+      const message = `${noteOwnerUserName} 님만 승인 가능 합니다`
+      toast({
+        title:
+        message,
+        status: "warning",
+        duration: 2000, // Automatically close after 2 seconds
+        isClosable: true, // Display close button
+        position: "top", // Display at the top of the screen
+      });
+    }
+    return;
   };
 
   return (

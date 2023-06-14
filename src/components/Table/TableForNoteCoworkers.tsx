@@ -17,10 +17,14 @@ import { RootState } from "../../store";
 import { apiForCancleCoWriterForOtherUserNote } from "../../apis/study_note_api";
 
 interface IProps {
+  noteOwnerUserName: string;
   noteCowriters: TypeForNoteCoWriter[];
 }
 
-const TableForNoteCoworkers = ({ noteCowriters }: IProps) => {
+const TableForNoteCoworkers = ({
+  noteOwnerUserName,
+  noteCowriters,
+}: IProps) => {
   const queryClient = useQueryClient();
   const toast = useToast();
   const { loginUser, isLoggedIn } = useSelector(
@@ -40,7 +44,7 @@ const TableForNoteCoworkers = ({ noteCowriters }: IProps) => {
         queryClient.refetchQueries(["apiForgetStudyNoteList"]);
 
         toast({
-          title: "delete comment 성공!",
+          title: "CoWriter 취소 성공!",
           status: "success",
         });
       },
@@ -54,48 +58,53 @@ const TableForNoteCoworkers = ({ noteCowriters }: IProps) => {
 
   // 2244
   return (
-    <Box overflowY={"scroll"} maxH="120px">
+    <Box overflowY={"scroll"} maxH="200px">
       <Table bgColor={"gray.400"}>
         <Tbody>
-          {noteCowriters.map((cowriter) => (
-            <Tr key={cowriter.id} p={0}>
-              <Td>
-                <Avatar
-                  name={cowriter.writer.username}
-                  src={cowriter.writer.profile_image}
-                  size="sm"
-                />
-              </Td>
-              <Td>
-                <ToggleButtonForIsApprovedForNoteCoWriting
-                  cowriterPk={cowriter.id}
-                  is_approved={cowriter.is_approved}
-                />
-              </Td>
-              <Td>
-                {cowriter.writer.username === loginUser.username ? (
-                  <Button
-                    size={"xs"}
-                    variant="outline"
-                    border={"1px solid blue"}
-                    _hover={{ bgColor: "red.200" }}
-                    onClick={() => {
-                      const message = `${loginUser.username} 님 승인 요청을 취소 하시겠습니까`;
-                      if (window.confirm(message)) {
-                        buttonHandlerForDeleteCoWriterInfo(cowriter.id);
-                      } else {
-                        alert("취소 하셨습니다. ");
-                      }
-                    }}
-                  >
-                    취소
-                  </Button>
-                ) : (
-                  ""
-                )}
-              </Td>
-            </Tr>
-          ))}
+          {noteCowriters.length
+            ? noteCowriters.map((cowriter) => (
+                <Tr key={cowriter.id} p={0}>
+                  <Td>
+                    <Avatar
+                      name={cowriter.writer.username}
+                      src={cowriter.writer.profile_image}
+                      size="sm"
+                    />
+                    <Box>{cowriter.writer.username}</Box>
+                  </Td>
+                  <Td>
+                    <ToggleButtonForIsApprovedForNoteCoWriting
+                      updateAuthority={noteOwnerUserName === loginUser.username}
+                      noteOwnerUserName = {noteOwnerUserName}
+                      cowriterPk={cowriter.id}
+                      is_approved={cowriter.is_approved}
+                    />
+                  </Td>
+                  <Td>
+                    {cowriter.writer.username === loginUser.username ? (
+                      <Button
+                        size={"xs"}
+                        variant="outline"
+                        border={"1px solid blue"}
+                        _hover={{ bgColor: "red.200" }}
+                        onClick={() => {
+                          const message = `${loginUser.username} 님 승인 요청을 취소 하시겠습니까`;
+                          if (window.confirm(message)) {
+                            buttonHandlerForDeleteCoWriterInfo(cowriter.id);
+                          } else {
+                            alert("취소 하셨습니다. ");
+                          }
+                        }}
+                      >
+                        취소
+                      </Button>
+                    ) : (
+                      ""
+                    )}
+                  </Td>
+                </Tr>
+              ))
+            : "Co Writer is not exist"}
         </Tbody>
       </Table>
     </Box>
