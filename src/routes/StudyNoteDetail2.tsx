@@ -26,6 +26,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
 import ModalButtonForInsertSubtitleForPage from "../components/modal/ModalButtonForInsertSubtitleForPage";
 import CardForNoteSubTitleForPage from "../components/Card/CardForNoteSubTitleForPage";
+import ModalButtonForInsertYoutubeContentsForNote from "../components/modal/ModalButtonForInsertYoutubeContentsForNote";
 
 interface Props {}
 
@@ -200,6 +201,12 @@ const StudyNoteDetail2 = (props: Props) => {
             </Box>
             {is_authority_for_note ? (
               <Box display={"flex"} gap={2}>
+                
+                <ModalButtonForInsertYoutubeContentsForNote
+                  study_note_pk={study_note_pk}
+                  currentPage={currentPage}
+                  button_text="add youtube"
+                />
                 <ModalButtonForInsertSubtitleForPage
                   button_text={"add subtitle for page"}
                   study_note_pk={study_note_pk}
