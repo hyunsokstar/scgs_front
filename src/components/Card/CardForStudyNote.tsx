@@ -42,7 +42,6 @@ const CardForStudyNote: React.FC<IProps> = ({
   studyNoteListRefatch,
 }) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
-  const headerBgColor = useColorModeValue("gray.200", "gray.600");
   const bodyBgColor = useColorModeValue("gray.100", "gray.700");
   const footerBgColor = useColorModeValue("gray.200", "gray.600");
   const borderColor = useColorModeValue("gray.400", "gray.500");
@@ -179,6 +178,7 @@ const CardForStudyNote: React.FC<IProps> = ({
           bg={bodyBgColor}
           display={"flex"}
           justifyContent={"space-between"}
+          width={"100%"}
           height={"300px"}
           _hover={{ bg: "blue.100" }}
           // onDoubleClick={() => goToStudyNoteDetail(pk)}

@@ -24,6 +24,7 @@ import ClipboardButtonForCopyCurrentUrl from "../components/Button/ClipboardButt
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
+import ModalButtonForInsertSubtitleForPage from "../components/modal/ModalButtonForInsertSubtitleForPage";
 
 interface Props {}
 
@@ -197,11 +198,18 @@ const StudyNoteDetail2 = (props: Props) => {
               <ClipboardButtonForCopyCurrentUrl />
             </Box>
             {is_authority_for_note ? (
-              <ModalButtonForInsertStudyNoteContent
-                button_text={"add note content"}
-                currentPage={currentPage}
-                study_note_pk={study_note_pk}
-              />
+              <Box display={"flex"} gap={2}>
+                <ModalButtonForInsertSubtitleForPage
+                  button_text={"add subtitle for page"}
+                  study_note_pk={study_note_pk}
+                  currentPage={currentPage}
+                />
+                <ModalButtonForInsertStudyNoteContent
+                  button_text={"add note content"}
+                  currentPage={currentPage}
+                  study_note_pk={study_note_pk}
+                />
+              </Box>
             ) : (
               ""
             )}
