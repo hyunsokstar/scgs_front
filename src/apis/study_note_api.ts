@@ -283,6 +283,7 @@ export const apiForCreateStudyNoteContents = ({
   title,
   file,
   content,
+  content_option
 }: StudyNoteContentFormData) =>
   instance
     .post(
@@ -293,6 +294,7 @@ export const apiForCreateStudyNoteContents = ({
         title,
         file,
         content,
+        content_option
       },
       {
         headers: {

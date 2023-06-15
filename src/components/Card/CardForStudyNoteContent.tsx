@@ -19,6 +19,7 @@ import {
   InputRightElement,
   Icon,
   Checkbox,
+  Avatar,
 } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -151,7 +152,7 @@ const CardForStudyNoteContent = ({
     <Box
       borderRadius="lg"
       p="4"
-      border={"2px solid red"}
+      border={"2px solid black"}
       mb={2}
       w={card_width}
       id={`card-${order}`}
@@ -160,8 +161,9 @@ const CardForStudyNoteContent = ({
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bgColor={"red.100"}
+        bgColor={"blue.200"}
         px={2}
+        py={2}
       >
         <CheckboxComponentForList
           value={pk}
@@ -174,35 +176,39 @@ const CardForStudyNoteContent = ({
         />
 
         <Text>step ({order})</Text>
-        <Flex gap={1} ml={2} my={1}>
-          {order !== 1 ? (
+        {is_authority_for_note ? (
+          <Flex gap={1} ml={2} my={1}>
+            {order !== 1 ? (
+              <IconButton
+                aria-label="up"
+                variant="outline"
+                icon={<FaChevronUp />}
+                border={"1px solid blue"}
+                // colorScheme="gray"
+                // bg={PastelColor.bg}
+                _hover={{ bg: PastelColor.hoverBg }}
+                size={"sm"}
+                onClick={() => order_minus_1_for_note_content(pk)}
+              />
+            ) : (
+              ""
+            )}
             <IconButton
               aria-label="up"
               variant="outline"
-              icon={<FaChevronUp />}
+              icon={<FaChevronDown />}
               border={"1px solid blue"}
               // colorScheme="gray"
               // bg={PastelColor.bg}
               _hover={{ bg: PastelColor.hoverBg }}
               size={"sm"}
-              onClick={() => order_minus_1_for_note_content(pk)}
+              onClick={() => order_plus_1_for_note_content(pk)}
             />
-          ) : (
-            ""
-          )}
-          <IconButton
-            aria-label="up"
-            variant="outline"
-            icon={<FaChevronDown />}
-            border={"1px solid blue"}
-            // colorScheme="gray"
-            // bg={PastelColor.bg}
-            _hover={{ bg: PastelColor.hoverBg }}
-            size={"sm"}
-            onClick={() => order_plus_1_for_note_content(pk)}
-          />
-        </Flex>
-        <Text ml={2}>title: {title}</Text>
+          </Flex>
+        ) : (
+          ""
+        )}
+        <Text ml={2}>{title}</Text>
         <Spacer />
         {/* delete button for study note content */}
 
@@ -213,7 +219,7 @@ const CardForStudyNoteContent = ({
             onClick={() => deleteStudyNoteContentByPk(pk)}
           />
         ) : (
-          "no"
+          ""
         )}
       </Box>
       <Box my="4">
@@ -257,6 +263,13 @@ const CardForStudyNoteContent = ({
         {/* <Button variant="outline" colorScheme="teal">
           Comment
         </Button> */}
+        <Box display={"flex"} gap={2} alignItems={"center"} ml={2}>
+          <Box>
+            <Avatar size="sm" src={writer.profile_image} />
+          </Box>
+          <Box>{writer.username}</Box>
+        </Box>
+
         {is_authority_for_note ? (
           <ModalButtonForUpdateStudyNoteContent
             button_text={"update for note content"}

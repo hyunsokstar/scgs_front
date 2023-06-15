@@ -25,14 +25,14 @@ import { StudyNoteContentFormData } from "../../types/study_note_type";
 import TinyMCEEditor from "../RichEditor/TinyMCEEditor";
 
 type Props = {
-  buttonText: string;
+  button_text: string;
   currentPage: number | string | undefined;
   study_note_pk: number | string | undefined;
-  //   onSubmit: (formData: StudyNoteContentFormData) => void;
+  // onSubmit: (formData: StudyNoteContentFormData) => void;
 };
 
 function ModalButtonForInsertStudyNoteContent({
-  buttonText,
+  button_text,
   currentPage,
   study_note_pk,
 }: Props) {
@@ -84,15 +84,18 @@ function ModalButtonForInsertStudyNoteContent({
     }
   );
 
+  // submit
   const handleFormSubmit = async (formData: StudyNoteContentFormData) => {
     setIsLoading(true);
     console.log("formData : ", formData);
+
     mutationForCreateStudyNote.mutate({
       title: formData.title,
       file: formData.file,
       content: note_content_content,
       study_note_pk: formData.study_note_pk,
       current_page_number: formData.current_page_number,
+      content_option: formData.content_option,
     });
 
     setIsLoading(false);
@@ -131,7 +134,7 @@ function ModalButtonForInsertStudyNoteContent({
         onClick={openModal}
         _hover={{ bg: "teal.500", color: "white" }}
       >
-        Add Note Content
+        {button_text}
       </Button>{" "}
       <Modal
         isOpen={modalIsOpen}
@@ -158,9 +161,12 @@ function ModalButtonForInsertStudyNoteContent({
           <FormControl display="none">
             <Input
               type="hidden"
-              {...register("study_note_pk")}
-              value={study_note_pk}
+              {...register("content_option")}
+              value={"note_content"}
             />
+          </FormControl>
+
+          <FormControl>
             <Input
               type="hidden"
               {...register("current_page_number")}
@@ -197,6 +203,14 @@ function ModalButtonForInsertStudyNoteContent({
                 apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
               />
             </Box>
+          </FormControl>
+
+          <FormControl>
+            <Input
+              type="hidden"
+              {...register("study_note_pk")}
+              value={study_note_pk}
+            />
           </FormControl>
         </Box>
         <Box mt={5}>

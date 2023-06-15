@@ -9,7 +9,7 @@ import {
   apiFordeleteStudyNoteContentsForChecked,
   apiForGetStuyNoteContentList,
 } from "../apis/study_note_api";
-import { Box, Text, Button, useToast } from "@chakra-ui/react";
+import { Box, Text, Button, useToast, Avatar } from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
 import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/ButtonsForPageNumbersForStudyNoteContents";
 
@@ -135,6 +135,12 @@ const StudyNoteDetail2 = (props: Props) => {
     response_data_for_api?.note_user_name === loginUser.username ||
     response_data_for_api?.co_writers_for_approved.includes(loginUser.username);
 
+  const note_cowriters = response_data_for_api?.co_writers_for_approved.map(
+    (row) => {
+      return row.profile_image;
+    }
+  );
+
   // 2244
   return (
     <Box display={"flex"}>
@@ -192,7 +198,7 @@ const StudyNoteDetail2 = (props: Props) => {
             </Box>
             {is_authority_for_note ? (
               <ModalButtonForInsertStudyNoteContent
-                buttonText={"create"}
+                button_text={"add note content"}
                 currentPage={currentPage}
                 study_note_pk={study_note_pk}
               />
@@ -217,8 +223,25 @@ const StudyNoteDetail2 = (props: Props) => {
           </Box>
           <Box>
             <Box>CoWriters: </Box>
-            <Box>
-              {response_data_for_api?.co_writers_for_approved.join(", ")}
+            <Box display={"flex"} gap={2} alignItems={"center"}>
+              {response_data_for_api &&
+              response_data_for_api.co_writers_for_approved.length
+                ? response_data_for_api?.co_writers_for_approved.map((row) => {
+                    return (
+                      <Box display={"flex"} gap={2} alignItems={"center"}>
+                        <Box>
+                          <Avatar
+                            name={row.username}
+                            src={row.profile_image}
+                            size="sm"
+                            ml={"2px"}
+                          />
+                        </Box>
+                        <Box>{row.username}</Box>
+                      </Box>
+                    );
+                  })
+                : " no cowriters"}
             </Box>
           </Box>
           <Box>

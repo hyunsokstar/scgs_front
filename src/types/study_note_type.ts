@@ -8,23 +8,24 @@ export interface DataForStudyNoteContent {
   title: string;
   file_name: string | null;
   content: string;
-  writer: number | null;
+  writer: any;
   created_at: string;
   page: number;
   order: number;
 }
 
-// export interface CoWriter {
-//   username: string;
-//   is_approved: boolean;
-// }
+export interface CoWriter {
+  pk: number;
+  username: string;
+  profile_image: string
+}
 
 export interface StudyNoteData {
   note_title: string;
   note_user_name: string;
   exist_page_numbers: number[];
   data_for_study_note_contents: DataForStudyNoteContent[];
-  co_writers_for_approved: String[];
+  co_writers_for_approved: CoWriter[];
 }
 
 export interface type_for_parameter_for_delete_pages_for_study_note {
@@ -36,6 +37,7 @@ export interface StudyNoteContentFormData {
   title: string;
   file: string;
   content: string;
+  content_option: string;
   study_note_pk: number | string | undefined;
   current_page_number: number | string | undefined;
 }

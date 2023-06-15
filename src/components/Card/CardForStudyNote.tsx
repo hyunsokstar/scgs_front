@@ -173,7 +173,7 @@ const CardForStudyNote: React.FC<IProps> = ({
             ""
           )}
         </Box>
-        
+
         <Box
           p="2"
           bg={bodyBgColor}
@@ -183,6 +183,7 @@ const CardForStudyNote: React.FC<IProps> = ({
           _hover={{ bg: "blue.100" }}
           // onDoubleClick={() => goToStudyNoteDetail(pk)}
           onDoubleClick={() => goToStudyNoteDetail(pk)}
+          gap={2}
           // border={"1px solid green"}
         >
           <Box
@@ -273,7 +274,8 @@ const CardForStudyNote: React.FC<IProps> = ({
               </Box>
             </Box>
           </Box>
-          <Box flex={1} textAlign={"right"} border={"0px solid red"}>
+          <Box flex={1} textAlign={"right"} border={"0px solid red"} p={2} bg={"gray.100"}>
+            {/* <link> */}
             <ClipboardButtonForCopyCurrentUrl button_size={"sm"} pk={pk} />
           </Box>
         </Box>
