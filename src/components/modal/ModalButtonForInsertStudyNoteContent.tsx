@@ -21,7 +21,6 @@ type Props = {
   button_text: string;
   currentPage: number | string | undefined;
   study_note_pk: number | string | undefined;
-  // onSubmit: (formData: StudyNoteContentFormData) => void;
 };
 
 function ModalButtonForInsertStudyNoteContent({
@@ -66,7 +65,9 @@ function ModalButtonForInsertStudyNoteContent({
           title: "welcome back!",
           status: "success",
         });
+
         queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        
         reset();
         setModalIsOpen(false);
       },
@@ -78,6 +79,7 @@ function ModalButtonForInsertStudyNoteContent({
   );
 
   // submit
+  // ref 0616
   const handleFormSubmit = async (formData: StudyNoteContentFormData) => {
     setIsLoading(true);
     console.log("formData : ", formData);
@@ -204,6 +206,7 @@ function ModalButtonForInsertStudyNoteContent({
               {...register("study_note_pk")}
               value={study_note_pk}
             />
+            
           </FormControl>
         </Box>
         <Box mt={5}>

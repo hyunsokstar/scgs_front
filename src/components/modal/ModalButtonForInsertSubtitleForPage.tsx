@@ -13,8 +13,12 @@ import {
   Textarea,
   Button,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiForCreateSubTitleForNote } from "../../apis/study_note_api";
+import { describe } from "node:test";
 
 interface IProps {
   button_text: string;
@@ -22,23 +26,64 @@ interface IProps {
   study_note_pk: number | string | undefined;
 }
 
+// 1122
 const ModalButtonForInsertSubtitleForPage = ({
   button_text,
   currentPage,
   study_note_pk,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const queryClient = useQueryClient();
   const {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm();
+
+  const toast = useToast();
+
+  const mutationForCreateSubTitleForNote = useMutation(
+    apiForCreateSubTitleForNote,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        if (data.message) {
+          toast({
+            status: "warning",
+            title: "sutitle is aleready exists !",
+            description: data.message,
+            duration: 2000,
+            isClosable: true,
+          });
+        } else {
+          toast({
+            title: "Create Note Content !! ",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+          });
+        }
+        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        reset();
+        onClose();
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
 
   // fix 0616
   const onSubmit = (data: any) => {
     // 폼 데이터 처리 로직 추가
-    console.log(data);
-    onClose();
+    // console.log(data);
+    mutationForCreateSubTitleForNote.mutate(data);
   };
 
   return (
@@ -58,6 +103,29 @@ const ModalButtonForInsertSubtitleForPage = ({
           <ModalCloseButton />
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>
+              <FormControl>
+                <Input
+                  type="hidden"
+                  {...register("study_note_pk")}
+                  value={study_note_pk}
+                />
+              </FormControl>
+              <FormControl display="none">
+                <Input
+                  type="hidden"
+                  {...register("content_option")}
+                  value={"subtitle_for_page"}
+                />
+              </FormControl>
+
+              <FormControl>
+                <Input
+                  type="hidden"
+                  {...register("current_page_number")}
+                  value={currentPage}
+                />
+              </FormControl>
+
               <FormControl>
                 <FormLabel>Title</FormLabel>
                 <Input

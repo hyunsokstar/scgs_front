@@ -5,19 +5,23 @@ export type type_for_insert_study_note = {
 
 export interface DataForStudyNoteContent {
   pk: number;
-  title: string;
-  file_name: string | null;
-  content: string;
-  writer: any;
-  created_at: string;
   page: number;
+  created_at: string;
+  title: string;
+  file_name?: string | null;
+  content: string;
+  content_option: string;
+  writer: any;
   order: number;
+  ref_url1: string;
+  ref_url2: string;
+  yutube_url: string;
 }
 
 export interface CoWriter {
   pk: number;
   username: string;
-  profile_image: string
+  profile_image: string;
 }
 
 export interface StudyNoteData {
@@ -108,4 +112,14 @@ export interface TypeForNoteList {
 
 export interface typeForParameterForApiForCopySelectedNotesToMyNote {
   selectedRowPksFromOriginalTable: number[];
+}
+
+export interface IFormTypeForCreateSubjectTitleForPage {
+  content_option: string;
+  study_note_pk: number | string | undefined;
+  current_page_number: number | string | undefined;
+  title: string;
+  ref_url1: string;
+  ref_url2: string;
+  content: string;
 }

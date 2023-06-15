@@ -4,6 +4,7 @@ import { backendApi } from "../apis/common_api";
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import {
+  IFormTypeForCreateSubjectTitleForPage,
   ListPropsForContentOrdering,
   parameterForSearchContentListForStudynote,
   StudyNoteContentFormData,
@@ -18,6 +19,35 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForCreateSubTitleForNote = ({
+  study_note_pk,
+  current_page_number,
+  content_option,
+  title,
+  ref_url1,
+  ref_url2,
+  content,
+}: IFormTypeForCreateSubjectTitleForPage) =>
+  instance
+    .post(
+      `/study-note/${study_note_pk}/content/create-sub-title-for-page`,
+      {
+        study_note_pk,
+        current_page_number,
+        content_option,
+        title,
+        ref_url1,
+        ref_url2,
+        content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForCancleCoWriterForOtherUserNote = (pk: number) => {
   return instance
     .delete(`study-note/CoWriter/${pk}`, {
@@ -283,7 +313,7 @@ export const apiForCreateStudyNoteContents = ({
   title,
   file,
   content,
-  content_option
+  content_option,
 }: StudyNoteContentFormData) =>
   instance
     .post(
@@ -294,7 +324,7 @@ export const apiForCreateStudyNoteContents = ({
         title,
         file,
         content,
-        content_option
+        content_option,
       },
       {
         headers: {

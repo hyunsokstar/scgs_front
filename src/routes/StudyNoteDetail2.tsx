@@ -25,6 +25,7 @@ import ClipboardButtonForCopyCurrentUrl from "../components/Button/ClipboardButt
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
 import ModalButtonForInsertSubtitleForPage from "../components/modal/ModalButtonForInsertSubtitleForPage";
+import CardForNoteSubTitleForPage from "../components/Card/CardForNoteSubTitleForPage";
 
 interface Props {}
 
@@ -299,26 +300,43 @@ const StudyNoteDetail2 = (props: Props) => {
             response_data_for_api.data_for_study_note_contents.length ? (
               response_data_for_api.data_for_study_note_contents.map(
                 (row: DataForStudyNoteContent, i) => {
-                  return (
-                    <CardForStudyNoteContent
-                      pk={row.pk}
-                      card_width={"90%"}
-                      title={row.title}
-                      file_name={row.file_name}
-                      content={row.content}
-                      writer={row.writer}
-                      created_at={row.created_at}
-                      order={i + 1}
-                      index={i}
-                      currentPage={currentPage}
-                      study_note_pk={study_note_pk}
-                      refetch_for_study_note_content_list={
-                        refetch_for_study_note_content_list
-                      }
-                      setCheckedValues={setCheckedValues}
-                      is_authority_for_note={is_authority_for_note}
-                    />
-                  );
+                  if (row.content_option === "note_content") {
+                    return (
+                      <CardForStudyNoteContent
+                        pk={row.pk}
+                        card_width={"90%"}
+                        title={row.title}
+                        file_name={row.file_name}
+                        content={row.content}
+                        writer={row.writer}
+                        created_at={row.created_at}
+                        order={i + 1}
+                        index={i}
+                        currentPage={currentPage}
+                        study_note_pk={study_note_pk}
+                        refetch_for_study_note_content_list={
+                          refetch_for_study_note_content_list
+                        }
+                        setCheckedValues={setCheckedValues}
+                        is_authority_for_note={is_authority_for_note}
+                      />
+                    );
+                  } else {
+                    return (
+                      <CardForNoteSubTitleForPage
+                        pk={row.pk}
+                        card_width={"90%"}
+                        title={row.title}
+                        content={row.content}
+                        writer={row.writer}
+                        order={i + 1}
+                        setCheckedValues={setCheckedValues}
+                        is_authority_for_note={is_authority_for_note}
+                        ref_url1={row.ref_url1}
+                        ref_url2={row.ref_url2}
+                      />
+                    );
+                  }
                 }
               )
             ) : (

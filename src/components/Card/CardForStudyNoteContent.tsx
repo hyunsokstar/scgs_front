@@ -1,14 +1,9 @@
 import {
   Box,
-  Button,
   CloseButton,
-  Input,
   Table,
   Tbody,
   Td,
-  Textarea,
-  Th,
-  Thead,
   Tr,
   Text,
   useToast,
@@ -17,8 +12,6 @@ import {
   Spacer,
   InputGroup,
   InputRightElement,
-  Icon,
-  Checkbox,
   Avatar,
 } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -176,7 +169,7 @@ const CardForStudyNoteContent = ({
         />
 
         <Text>step ({order})</Text>
-        {is_authority_for_note ? (
+        {/* {is_authority_for_note ? (
           <Flex gap={1} ml={2} my={1}>
             {order !== 1 ? (
               <IconButton
@@ -184,8 +177,6 @@ const CardForStudyNoteContent = ({
                 variant="outline"
                 icon={<FaChevronUp />}
                 border={"1px solid blue"}
-                // colorScheme="gray"
-                // bg={PastelColor.bg}
                 _hover={{ bg: PastelColor.hoverBg }}
                 size={"sm"}
                 onClick={() => order_minus_1_for_note_content(pk)}
@@ -198,8 +189,6 @@ const CardForStudyNoteContent = ({
               variant="outline"
               icon={<FaChevronDown />}
               border={"1px solid blue"}
-              // colorScheme="gray"
-              // bg={PastelColor.bg}
               _hover={{ bg: PastelColor.hoverBg }}
               size={"sm"}
               onClick={() => order_plus_1_for_note_content(pk)}
@@ -207,10 +196,9 @@ const CardForStudyNoteContent = ({
           </Flex>
         ) : (
           ""
-        )}
+        )} */}
         <Text ml={2}>{title}</Text>
         <Spacer />
-        {/* delete button for study note content */}
 
         {writer.username === loginUser.username ? (
           <CloseButton
@@ -225,18 +213,10 @@ const CardForStudyNoteContent = ({
       <Box my="4">
         <Table variant="simple">
           <Tbody>
-            {/* <Tr>
-              <Td w={"3%"}>title:</Td>
-              <Td>
-                <Input defaultValue={title} />
-              </Td>
-            </Tr> */}
             <Tr>
               <Td w={"3%"}>file:</Td>
               <Td position={"relative"}>
-                {/* <Input defaultValue={file_name} /> */}
                 <InputGroup>
-                  {/* <Input defaultValue={file_name} /> */}
                   <Text>{file_name}</Text>
                   <InputRightElement>
                     <Box position={"absolute"} right={-6} top={-7} zIndex={1}>
@@ -251,18 +231,13 @@ const CardForStudyNoteContent = ({
                 <Box position={"absolute"} right={0} top={0} zIndex={1}>
                   <IconButtonForCopyText text={content} />
                 </Box>
-                {/* <Textarea defaultValue={content} h="300px" /> */}
                 <div dangerouslySetInnerHTML={{ __html: content }}></div>
-                {/* <Box dangerouslySetInnerHTML={{ __html: content }} /> */}
               </Td>
             </Tr>
           </Tbody>
         </Table>
       </Box>
       <Box display="flex" justifyContent="space-between">
-        {/* <Button variant="outline" colorScheme="teal">
-          Comment
-        </Button> */}
         <Box display={"flex"} gap={2} alignItems={"center"} ml={2}>
           <Box>
             <Avatar size="sm" src={writer.profile_image} />
