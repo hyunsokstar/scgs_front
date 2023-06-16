@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import ClipboardButtonForCopyCurrentUrl from "../Button/ClipboardButtonForCopyCurrentUrl";
 import TableForNoteCoworkers from "../Table/TableForNoteCoworkers";
+import ModalButtonForSubtititleListForNoteContent from "../modal/ModalButtonForSubtititleListForNoteContent";
 
 interface IProps {
   pk: any;
@@ -274,9 +275,25 @@ const CardForStudyNote: React.FC<IProps> = ({
               </Box>
             </Box>
           </Box>
-          <Box flex={1} textAlign={"right"} border={"0px solid red"} p={2} bg={"gray.100"}>
+          <Box
+            flex={1}
+            textAlign={"right"}
+            border={"0px solid red"}
+            p={2}
+            bg={"gray.100"}
+          >
             {/* <link> */}
-            <ClipboardButtonForCopyCurrentUrl button_size={"sm"} pk={pk} />
+            <Box mb={1}>
+              <ModalButtonForSubtititleListForNoteContent
+                study_note_pk={pk}
+                button_text={"List"}
+                modal_title={`${title}'s list`}
+                button_size={"sm"}
+              />
+            </Box>
+            <Box>
+              <ClipboardButtonForCopyCurrentUrl button_size={"sm"} pk={pk} />
+            </Box>
           </Box>
         </Box>
         <Box

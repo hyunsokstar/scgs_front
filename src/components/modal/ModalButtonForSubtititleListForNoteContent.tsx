@@ -16,7 +16,6 @@ import {
   Alert,
   AlertIcon,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
 import { apiForGetSubTitleListForNote } from "../../apis/study_note_api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ITypeForListForSubtitleListForNote } from "../../types/study_note_type";
@@ -57,7 +56,7 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
   // fix 0616
   useEffect(() => {
     mutateForGetSubTitleListForNote.mutate(study_note_pk);
-  }, [dataForGetSubTitleListForNote]);
+  }, []);
 
   // 2244
   return (
@@ -78,7 +77,7 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
           <ModalCloseButton />
           <ModalBody>
             {/* fix 0616 */}
-            {dataForGetSubTitleListForNote ? (
+            {dataForGetSubTitleListForNote.length ? (
               <Table variant="simple">
                 <Tbody>
                   {dataForGetSubTitleListForNote.map((item, index) => (
