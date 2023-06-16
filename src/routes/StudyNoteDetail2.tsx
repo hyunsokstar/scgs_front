@@ -27,6 +27,7 @@ import { RootState } from "../store";
 import ModalButtonForInsertSubtitleForPage from "../components/modal/ModalButtonForInsertSubtitleForPage";
 import CardForNoteSubTitleForPage from "../components/Card/CardForNoteSubTitleForPage";
 import ModalButtonForInsertYoutubeContentsForNote from "../components/modal/ModalButtonForInsertYoutubeContentsForNote";
+import CardForYoutubeContentForPage from "../components/Card/CardForYoutubeContentForPage";
 
 interface Props {}
 
@@ -201,7 +202,6 @@ const StudyNoteDetail2 = (props: Props) => {
             </Box>
             {is_authority_for_note ? (
               <Box display={"flex"} gap={2}>
-                
                 <ModalButtonForInsertYoutubeContentsForNote
                   study_note_pk={study_note_pk}
                   currentPage={currentPage}
@@ -328,7 +328,7 @@ const StudyNoteDetail2 = (props: Props) => {
                         is_authority_for_note={is_authority_for_note}
                       />
                     );
-                  } else {
+                  } else if (row.content_option === "subtitle_for_page") {
                     return (
                       <CardForNoteSubTitleForPage
                         pk={row.pk}
@@ -341,6 +341,19 @@ const StudyNoteDetail2 = (props: Props) => {
                         is_authority_for_note={is_authority_for_note}
                         ref_url1={row.ref_url1}
                         ref_url2={row.ref_url2}
+                      />
+                    );
+                  } else if (row.content_option === "youtube") {
+                    return (
+                      <CardForYoutubeContentForPage
+                        order={i + 1}
+                        setCheckedValues={setCheckedValues}
+                        is_authority_for_note={is_authority_for_note}
+                        card_width={"90%"}
+                        pk={row.pk}
+                        writer={row.writer}
+                        title={row.title}
+                        youtube_url={row.youtube_url}
                       />
                     );
                   }

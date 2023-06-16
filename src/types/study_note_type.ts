@@ -15,7 +15,7 @@ export interface DataForStudyNoteContent {
   order: number;
   ref_url1: string;
   ref_url2: string;
-  yutube_url: string;
+  youtube_url?: string;
 }
 
 export interface CoWriter {
@@ -122,4 +122,12 @@ export interface IFormTypeForCreateSubjectTitleForPage {
   ref_url1: string;
   ref_url2: string;
   content: string;
+}
+
+export interface IFormTypeForCreateYoutubeContentForNote {
+  content_option: string;
+  study_note_pk: number | string | undefined;
+  current_page_number: number | string | undefined;
+  title: string;
+  youtube_url: string;
 }

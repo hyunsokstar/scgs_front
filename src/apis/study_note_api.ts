@@ -11,6 +11,7 @@ import {
   type_for_insert_study_note,
   type_for_parameter_for_delete_pages_for_study_note,
   typeForParameterForApiForCopySelectedNotesToMyNote,
+  IFormTypeForCreateYoutubeContentForNote,
 } from "../types/study_note_type";
 
 const instance = axios.create({
@@ -19,6 +20,32 @@ const instance = axios.create({
 });
 
 // 1122
+
+export const apiForCreateNoteContentForYoutube = ({
+  study_note_pk,
+  current_page_number,
+  content_option,
+  title,
+  youtube_url,
+}: IFormTypeForCreateYoutubeContentForNote) =>
+  instance
+    .post(
+      `/study-note/${study_note_pk}/content/create-youtube-content-for-note`,
+      {
+        study_note_pk,
+        current_page_number,
+        content_option,
+        title,
+        youtube_url,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForCreateSubTitleForNote = ({
   study_note_pk,
   current_page_number,

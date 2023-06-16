@@ -13,8 +13,11 @@ import {
   Input,
   Button,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiForCreateNoteContentForYoutube } from "../../apis/study_note_api";
 
 interface IProps {
   button_text: string;
@@ -22,6 +25,7 @@ interface IProps {
   study_note_pk: number | string | undefined;
 }
 
+// 1122
 const ModalButtonForInsertYoutubeContentsForNote = ({
   button_text,
   currentPage,
@@ -32,14 +36,45 @@ const ModalButtonForInsertYoutubeContentsForNote = ({
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm();
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
+  const mutationForCreateNoteContentForYoutube = useMutation(
+    apiForCreateNoteContentForYoutube,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "Create Youtube Content !! ",
+          description: data.message,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+
+        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        reset();
+        onClose();
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
 
   const onSubmit = (data: any) => {
-    // 폼 데이터 처리 로직 추가
     console.log(data);
-    onClose();
+    mutationForCreateNoteContentForYoutube.mutate(data)
   };
 
+  // 2244
   return (
     <>
       <Button
