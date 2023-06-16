@@ -296,6 +296,21 @@ const Header = () => {
           </Text>
         </NavLink>
 
+        <NavLink
+          to="/data-grid/users"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            Members Table
+          </Text>
+        </NavLink>
+
         <Box>
           {!isLoggedIn || logoutSuccess === true ? (
             <Container p={2}>

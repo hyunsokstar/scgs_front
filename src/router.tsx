@@ -282,10 +282,10 @@ const router = createBrowserRouter([
         path: "framework_study",
         element: <BoilerPlates />,
       },
-      {
-        path: "users",
-        element: <UsersPage />,
-      },
+      // {
+      //   path: "users",
+      //   element: <UsersPage />,
+      // },
       {
         path: "users/:userPk",
         element: <UserProfilePage />,

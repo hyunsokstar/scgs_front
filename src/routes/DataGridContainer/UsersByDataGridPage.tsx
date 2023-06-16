@@ -86,9 +86,7 @@ const columns = [
             onDoubleClick={profileImageDoubleClickHandler}
           />
           {column.user && row.username === column.user.username ? (
-            <ModalForUserProfileImageUpdate
-              loginUser={column.user}
-            />
+            <ModalForUserProfileImageUpdate loginUser={column.user} />
           ) : (
             ""
           )}
@@ -121,6 +119,8 @@ const columns = [
 function UsersByDataGridPage({}: Props): ReactElement {
   const { userLoading, isLoggedIn, user } = useUser();
   const [allCheckBoxSelected, setAllCheckBoxSelected] = useState(false);
+
+  console.log("user ::::::::::: ", user);
 
   const toast = useToast();
 
@@ -172,8 +172,14 @@ function UsersByDataGridPage({}: Props): ReactElement {
     },
   });
 
-  // user save
+  // user save fix 0617
   const handleSaveRow = () => {
+    if (user && user?.admin_level > 3) {
+    } else {
+      alert("admin_level이 3 이상이어야 저장 가능 합니다.");
+      return;
+    }
+
     let data_for_save: IUserRow[];
 
     if (gridRows) {
@@ -184,6 +190,8 @@ function UsersByDataGridPage({}: Props): ReactElement {
           console.log("new row 는 아닙니다.");
         }
       });
+
+      console.log("data_for_save ::::::::::::", data_for_save);
 
       saveMultiUsersMutation.mutate(data_for_save);
 
@@ -209,7 +217,9 @@ function UsersByDataGridPage({}: Props): ReactElement {
           profile_image: row.profileImages?.length
             ? row.profileImages[0].file
             : "",
-          admin_level: Math.floor(Math.random() * 5) + 1,
+          admin_level: row.admin_level
+            ? row.admin_level
+            : Math.floor(Math.random() * 5) + 1,
           position: row.position?.position_name,
           selected: row.selected,
         };
@@ -250,6 +260,12 @@ function UsersByDataGridPage({}: Props): ReactElement {
   );
 
   const deleteButtonForCheckHandler = () => {
+    if (user && user?.admin_level > 3) {
+    } else {
+      alert("admin_level이 3 이상이어야 삭제 가능 합니다.");
+      return;
+    }
+
     let selected_rows;
     let selected_ids;
     let no_selected_rows;
@@ -458,7 +474,6 @@ function UsersByDataGridPage({}: Props): ReactElement {
           justifyContent={"space-between"}
           alignItems={"center"}
           p={2}
-          // gap={2}
           mb={2}
           border={"1px solid black"}
         >
@@ -499,6 +514,8 @@ function UsersByDataGridPage({}: Props): ReactElement {
             >
               저장
             </Button>
+
+            {/* fix 0617 */}
             <Button
               size="md"
               fontWeight="bold"

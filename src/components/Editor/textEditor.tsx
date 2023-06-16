@@ -15,7 +15,7 @@ any): ReactElement {
   return (
     <Box height={"100%"} border={"1px solid blue"}>
       <Input
-        placeholder={`${column.key}`}
+        // placeholder={`${column.key}`}
         defaultValue={
           row[column.key] ? row[column.key] : ""
         }

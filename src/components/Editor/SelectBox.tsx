@@ -32,8 +32,8 @@ function SelectBoxEditor({
           });
         }}
       >
-        <option value="1">Frontend</option>
-        <option value="2">Backend</option>
+        <option value="frontend">Frontend</option>
+        <option value="backend">Backend</option>
       </Select>
     </Box>
   );

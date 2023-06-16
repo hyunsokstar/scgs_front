@@ -285,9 +285,9 @@ const CardForStudyNote: React.FC<IProps> = ({
             {/* <link> */}
             <Box mb={1}>
               <ModalButtonForSubtititleListForNoteContent
-                study_note_pk={pk}
+                modal_title={`${title}'s subtitle list`}
                 button_text={"List"}
-                modal_title={`${title}'s list`}
+                study_note_pk={pk}
                 button_size={"sm"}
               />
             </Box>
