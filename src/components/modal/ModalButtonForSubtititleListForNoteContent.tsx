@@ -1,0 +1,113 @@
+import { useEffect, useState } from "react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+  Table,
+  Tbody,
+  Tr,
+  Td,
+  Alert,
+  AlertIcon,
+} from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import { apiForGetSubTitleListForNote } from "../../apis/study_note_api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ITypeForListForSubtitleListForNote } from "../../types/study_note_type";
+
+interface IProps {
+  button_text: string;
+  modal_title: string;
+  study_note_pk: string | undefined;
+  button_size: string;
+}
+
+// 1122
+const ModalButtonForSubtiTitleListForNoteContent = ({
+  button_text,
+  modal_title,
+  study_note_pk,
+  button_size,
+}: IProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [dataForGetSubTitleListForNote, setDataForGetSubTitleListForNote] =
+    useState<ITypeForListForSubtitleListForNote[]>([]);
+
+  // fix 06161122
+  const mutateForGetSubTitleListForNote = useMutation(
+    apiForGetSubTitleListForNote,
+    {
+      onSuccess: (data) => {
+        // 데이터를 가져온 후 필요한 처리를 수행할 수 있습니다.
+        console.log("dataForGetSubTitleListForNote: ", data);
+        setDataForGetSubTitleListForNote(data);
+      },
+      onError: (error) => {
+        // 에러 처리를 수행할 수 있습니다.
+      },
+    }
+  );
+
+  // fix 0616
+  useEffect(() => {
+    mutateForGetSubTitleListForNote.mutate(study_note_pk);
+  }, [dataForGetSubTitleListForNote]);
+
+  // 2244
+  return (
+    <>
+      <Button
+        variant={"outline"}
+        onClick={onOpen}
+        border={"1px solid black"}
+        _hover={{ bgColor: "yellow.100" }}
+        size={button_size}
+      >
+        {button_text}
+      </Button>
+      <Modal isOpen={isOpen} onClose={onClose} size="6xl">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{modal_title}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {/* fix 0616 */}
+            {dataForGetSubTitleListForNote ? (
+              <Table variant="simple">
+                <Tbody>
+                  {dataForGetSubTitleListForNote.map((item, index) => (
+                    <Tr key={index}>
+                      <Td>{item.page}</Td>
+                      <Td>{item.title}</Td>
+                      <Td>{item.ref_url1}</Td>
+                      <Td>{item.ref_url2}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            ) : (
+              <Alert status="warning">
+                <AlertIcon />
+                dataForGetSubTitleListForNote is not exist
+              </Alert>
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button type="submit" colorScheme="blue" mr={3}>
+              Submit
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+export default ModalButtonForSubtiTitleListForNoteContent;

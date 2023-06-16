@@ -131,3 +131,22 @@ export interface IFormTypeForCreateYoutubeContentForNote {
   title: string;
   youtube_url: string;
 }
+
+export interface ITypeForListForSubtitleListForNote {
+  pk: number;
+  page: number;
+  title: string;
+  file_name: string | null;
+  content: string;
+  content_option: string;
+  ref_url1: string;
+  ref_url2: string;
+  youtube_url: string;
+  writer: {
+    pk: number;
+    username: string;
+    profile_image: string;
+  };
+  created_at: string;
+  order: number;
+}

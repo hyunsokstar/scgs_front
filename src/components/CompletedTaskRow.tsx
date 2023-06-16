@@ -3,24 +3,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   List,
   ListItem,
-  ListIcon,
-  Flex,
   Checkbox,
   Text,
   useColorModeValue,
   Container,
-  Grid,
-  GridItem,
   Box,
   IconButton,
   HStack,
-  VStack,
   useToast,
   Button,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
 import {
-  IResponseTypeForProjectTaskUpdate,
   ITypeForProjectProgressList,
 } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";

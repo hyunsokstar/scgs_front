@@ -81,7 +81,7 @@ const ModalButtonForInsertYoutubeContentsForNote = ({
         variant={"outline"}
         onClick={onOpen}
         border={"1px solid black"}
-        _hover={{ bgColor: "yellow.100" }}
+        _hover={{ bgColor: "green.100" }}
       >
         {button_text}
       </Button>

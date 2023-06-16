@@ -28,6 +28,7 @@ import ModalButtonForInsertSubtitleForPage from "../components/modal/ModalButton
 import CardForNoteSubTitleForPage from "../components/Card/CardForNoteSubTitleForPage";
 import ModalButtonForInsertYoutubeContentsForNote from "../components/modal/ModalButtonForInsertYoutubeContentsForNote";
 import CardForYoutubeContentForPage from "../components/Card/CardForYoutubeContentForPage";
+import ModalButtonForSubtiTitleListForNoteContent from "../components/modal/ModalButtonForSubtititleListForNoteContent";
 
 interface Props {}
 
@@ -166,6 +167,13 @@ const StudyNoteDetail2 = (props: Props) => {
             >
               목록
             </Button>
+            <ModalButtonForSubtiTitleListForNoteContent
+              modal_title={`Note Title: ${response_data_for_api?.note_title}`}
+              button_text={"Subtitle List"}
+              button_size={"sm"}
+              study_note_pk={study_note_pk}
+            />
+
             <ModalButtonForSearchStudyNoteContent
               study_note_pk={study_note_pk}
             />
@@ -198,6 +206,7 @@ const StudyNoteDetail2 = (props: Props) => {
           </Box>
           <Box display={"flex"} gap={2}>
             <Box mr={1}>
+              {/* link button for note content list */}
               <ClipboardButtonForCopyCurrentUrl />
             </Box>
             {is_authority_for_note ? (
