@@ -20,15 +20,44 @@ const instance = axios.create({
 });
 
 // 1122
-export const apiForGetCommentListForNote = (study_note_pk : any) =>
-  instance
-    .get(`/study-note/${study_note_pk}/comment/get-comment-list`)
-    .then((response) => response.data);
 
-export const apiForGetSubTitleListForNote = (study_note_pk : any) =>
-  instance
-    .get(`/study-note/${study_note_pk}/content/get-subtitle-list`)
-    .then((response) => response.data);
+export const apiForGetCommentListForNote = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, study_note_pk] = queryKey;
+  // console.log("pageNum : ", pageNum);
+  return instance
+    .get(`/study-note/${study_note_pk}/comment/get-comment-list`, {
+      params: {},
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
+// export const apiForGetCommentListForNote = (study_note_pk: any) =>
+//   instance
+//     .get(`/study-note/${study_note_pk}/comment/get-comment-list`)
+//     .then((response) => response.data);
+
+// export const apiForGetSubTitleListForNote = (study_note_pk : any) =>
+//   instance
+//     .get(`/study-note/${study_note_pk}/content/get-subtitle-list`)
+//     .then((response) => response.data);
+
+export const apiForGetSubTitleListForNote = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, study_note_pk] = queryKey;
+  // console.log("pageNum : ", pageNum);
+  return instance
+    .get(`/study-note/${study_note_pk}/content/get-subtitle-list`, {
+      params: {},
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
 
 export const apiForCreateNoteContentForYoutube = ({
   study_note_pk,

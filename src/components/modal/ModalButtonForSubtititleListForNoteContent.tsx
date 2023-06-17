@@ -24,6 +24,7 @@ import { useMutation } from "@tanstack/react-query";
 import { ITypeForListForSubtitleListForNote } from "../../types/study_note_type";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 interface IProps {
   button_text: string;
@@ -40,38 +41,50 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
   button_size,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [dataForGetSubTitleListForNote, setDataForGetSubTitleListForNote] =
-    useState<ITypeForListForSubtitleListForNote[]>([]);
+  // const [dataForGetSubTitleListForNote, setDataForGetSubTitleListForNote] =
+  useState<ITypeForListForSubtitleListForNote[]>([]);
 
-  // fix 06161122
-  const mutateForGetSubTitleListForNote = useMutation(
+  const {
+    isLoading,
+    data: dataForGetSubTitleListForNote,
+    refetch: refetchForGetSubTitleListForNote,
+  } = useQuery<any>(
+    ["apiForGetSubTitleListForNote", study_note_pk],
     apiForGetSubTitleListForNote,
     {
-      onSuccess: (data) => {
-        // 데이터를 가져온 후 필요한 처리를 수행할 수 있습니다.
-        console.log("dataForGetSubTitleListForNote: ", data);
-        setDataForGetSubTitleListForNote(data);
-      },
-      onError: (error) => {
-        // 에러 처리를 수행할 수 있습니다.
-      },
+      enabled: true,
     }
   );
 
+  // fix 06161122
+  // const mutateForGetSubTitleListForNote = useMutation(
+  //   apiForGetSubTitleListForNote,
+  //   {
+  //     onSuccess: (data) => {
+  //       // 데이터를 가져온 후 필요한 처리를 수행할 수 있습니다.
+  //       console.log("dataForGetSubTitleListForNote: ", data);
+  //       setDataForGetSubTitleListForNote(data);
+  //     },
+  //     onError: (error) => {
+  //       // 에러 처리를 수행할 수 있습니다.
+  //     },
+  //   }
+  // );
+
   // fix 0616
-  useEffect(() => {
-    mutateForGetSubTitleListForNote.mutate(study_note_pk);
-  }, []);
+  // useEffect(() => {
+  //   mutateForGetSubTitleListForNote.mutate(study_note_pk);
+  // }, []);
 
   // 2244
   return (
-    <>
+    <Box>
       <Button
         variant={"outline"}
-        onClick={onOpen}
         border={"1px solid black"}
         _hover={{ bgColor: "yellow.100" }}
         size={button_size}
+        onClick={onOpen}
       >
         {button_text}
       </Button>
@@ -91,33 +104,35 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
           <ModalCloseButton />
           <ModalBody>
             {/* fix 0616 */}
-            {dataForGetSubTitleListForNote.length ? (
+            {dataForGetSubTitleListForNote ? (
               <Table variant="simple">
                 <Tbody>
-                  {dataForGetSubTitleListForNote.map((item, index) => (
-                    <Tr key={index}>
-                      <Td>{item.page}</Td>
-                      <Td>{item.title}</Td>
-                      <Td>{item.ref_url1}</Td>
-                      <Td>{item.ref_url2}</Td>
-                      <Td>
-                        <Box>
-                          <Link
-                            to={`/study-note/${study_note_pk}/${item.page}`}
-                            style={{ textDecoration: "underline" }}
-                          >
-                            <IconButton
-                              variant={"outline"}
-                              size={"sm"}
-                              aria-label="Next page"
-                              icon={<ArrowForwardIcon />}
-                              _hover={{ borderColor: "blue" }}
-                            />
-                          </Link>
-                        </Box>
-                      </Td>
-                    </Tr>
-                  ))}
+                  {dataForGetSubTitleListForNote.map(
+                    (item: any, index: number) => (
+                      <Tr key={index}>
+                        <Td>{item.page}</Td>
+                        <Td>{item.title}</Td>
+                        <Td>{item.ref_url1}</Td>
+                        <Td>{item.ref_url2}</Td>
+                        <Td>
+                          <Box>
+                            <Link
+                              to={`/study-note/${study_note_pk}/${item.page}`}
+                              style={{ textDecoration: "underline" }}
+                            >
+                              <IconButton
+                                variant={"outline"}
+                                size={"sm"}
+                                aria-label="Next page"
+                                icon={<ArrowForwardIcon />}
+                                _hover={{ borderColor: "blue" }}
+                              />
+                            </Link>
+                          </Box>
+                        </Td>
+                      </Tr>
+                    )
+                  )}
                 </Tbody>
               </Table>
             ) : (
@@ -135,7 +150,7 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
 

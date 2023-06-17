@@ -17,20 +17,17 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 
-import { ITaskComment } from "../types/project_progress/project_progress_type";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
 import { FaCheckSquare, FaPlus, FaTrash } from "react-icons/fa";
-import ModalButtonForAddCommentForTask from "./modal/ModalButtonForAddCommentForTask";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  createCommentForTaskApi,
-  deleteOneCommentForTaskByPkApi,
-  updateCommentTextForTaskApi,
-  updateMutationForCommentEditModeApi,
-} from "../apis/project_progress_api";
+// import {
+//   createCommentForTaskApi,
+//   deleteOneCommentForTaskByPkApi,
+//   updateCommentTextForTaskApi,
+//   updateMutationForCommentEditModeApi,
+// } from "../apis/project_progress_api";
 
 interface Message {
   writer: any;
@@ -51,85 +48,78 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode, refetch }: Messag
     setIsChecked(!isChecked);
   }
 
-  const updateMutationForCommentEditMode = useMutation(
-    updateMutationForCommentEditModeApi,
-    {
-      onSuccess: (result: any) => {
-        console.log("result : ", result);
+//   const updateMutationForCommentEditMode = useMutation(
+//     updateMutationForCommentEditModeApi,
+//     {
+//       onSuccess: (result: any) => {
+//         console.log("result : ", result);
 
-        refetch();
-        // queryClient.refetchQueries(["getOneProjectTask"]);
+//         refetch();
+//       },
+//     }
+//   );
 
-        // toast({
-        //   status: "success",
-        //   title: "task status update success",
-        //   description: result.message,
-        // });
-      },
-    }
-  );
+//   const EditModeHandler = (comment_pk: number | string) => {
+//     console.log("edit mode click check pk : ", comment_pk);
+//     updateMutationForCommentEditMode.mutate(comment_pk);
+//   };
 
-  const EditModeHandler = (comment_pk: number | string) => {
-    console.log("edit mode click check pk : ", comment_pk);
-    updateMutationForCommentEditMode.mutate(comment_pk);
-  };
+//   const updateMutationForCommentTextForTask = useMutation(
+//     updateCommentTextForTaskApi,
+//     {
+//       onSuccess: (result: any) => {
+//         console.log("result : ", result);
 
-  const updateMutationForCommentTextForTask = useMutation(
-    updateCommentTextForTaskApi,
-    {
-      onSuccess: (result: any) => {
-        console.log("result : ", result);
+//         refetch();
+//         // queryClient.refetchQueries(["getOneProjectTask"]);
 
-        refetch();
-        // queryClient.refetchQueries(["getOneProjectTask"]);
+//         toast({
+//           status: "success",
+//           title: "task status update success",
+//           description: result.message,
+//         });
+//       },
+//       onError: (err) => {
+//         console.log("error : ", err);
+//       },
+//     }
+//   );
 
-        toast({
-          status: "success",
-          title: "task status update success",
-          description: result.message,
-        });
-      },
-      onError: (err) => {
-        console.log("error : ", err);
-      },
-    }
-  );
+//   const onEditConfirmHandler = (commentPk: number | string) => {
+//     // alert(commentTextForUpdate)
+//     // pk, commentTextForUpdate 를 이용해서 comment update
+//     updateMutationForCommentTextForTask.mutate({
+//       commentPk,
+//       commentText: commentTextForUpdate,
+//     });
+//   };
 
-  const onEditConfirmHandler = (commentPk: number | string) => {
-    // alert(commentTextForUpdate)
-    // pk, commentTextForUpdate 를 이용해서 comment update
-    updateMutationForCommentTextForTask.mutate({
-      commentPk,
-      commentText: commentTextForUpdate,
-    });
-  };
+//   const deleteCommentMutationByPk = useMutation(
+//     (pk: string | number) => {
+//       return deleteOneCommentForTaskByPkApi(pk);
+//     },
+//     {
+//       onSettled: () => {
+//         // setSelectedItems([]);
+//       },
+//       onSuccess: (data) => {
+//         console.log("data : ", data);
 
-  const deleteCommentMutationByPk = useMutation(
-    (pk: string | number) => {
-      return deleteOneCommentForTaskByPkApi(pk);
-    },
-    {
-      onSettled: () => {
-        // setSelectedItems([]);
-      },
-      onSuccess: (data) => {
-        console.log("data : ", data);
+//         refetch();
+//         // queryClient.refetchQueries(["getOneProjectTask"]);
 
-        refetch();
-        // queryClient.refetchQueries(["getOneProjectTask"]);
+//         toast({
+//           title: "delete comment 성공!",
+//           status: "success",
+//         });
+//       },
+//     }
+//   );
 
-        toast({
-          title: "delete comment 성공!",
-          status: "success",
-        });
-      },
-    }
-  );
-
-  const onDeleteCommentHandler = (commentPk: string | number) => {
-    console.log("onDeleteCommentHandler : ", commentPk);
-    deleteCommentMutationByPk.mutate(commentPk);
-  };
+//   const onDeleteCommentHandler = (commentPk: string | number) => {
+//     console.log("onDeleteCommentHandler : ", commentPk);
+//     deleteCommentMutationByPk.mutate(commentPk);
+//   };
 
   return (
     <HStack justifyContent={isUser ? "flex-start" : "flex-end"} width="100%">
@@ -168,7 +158,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode, refetch }: Messag
                     <IconButton
                       aria-label="Confirm"
                       icon={<FaCheck />}
-                      onClick={() => onEditConfirmHandler(pk)}
+                    //   onClick={() => onEditConfirmHandler(pk)}
                       variant="outline"
                       colorScheme="green"
                       rounded="md"
@@ -177,7 +167,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode, refetch }: Messag
                     <IconButton
                       aria-label="Cancel"
                       icon={<FaTimes />}
-                      onClick={() => EditModeHandler(pk)}
+                    //   onClick={() => EditModeHandler(pk)}
                       variant="outline"
                       colorScheme="pink"
                       rounded="md"
@@ -192,7 +182,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode, refetch }: Messag
                   <IconButton
                     icon={<EditIcon />}
                     aria-label="modify"
-                    onClick={() => EditModeHandler(pk)}
+                    // onClick={() => EditModeHandler(pk)}
                     variant="outline"
                     colorScheme="teal"
                     _hover={{ bg: "teal.400" }}
@@ -203,7 +193,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode, refetch }: Messag
                   <IconButton
                     icon={<DeleteIcon />}
                     aria-label="Delete"
-                    onClick={() => onDeleteCommentHandler(pk)}
+                    // onClick={() => onDeleteCommentHandler(pk)}
                     variant="outline"
                     colorScheme="teal"
                     _hover={{ bg: "teal.400" }}
@@ -227,70 +217,66 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode, refetch }: Messag
   );
 }
 
-interface User {
-  pk: number;
-  username: string;
-  profile_image: string;
-}
+// interface User {
+//   pk: number;
+//   username: string;
+//   profile_image: string;
+// }
 
-type IProps = {
-  task_comments: ITaskComment[];
-  task_manager: User | undefined;
-  taskPk: number | string;
-  refetch: () => void;
-};
+// type IProps = {
+//   task_comments: ITaskComment[];
+//   task_manager: User | undefined;
+//   taskPk: number | string;
+//   refetch: () => void;
+// };
 
 // main 1122
-function ChatStyleBoard({
-  taskPk,
-  task_comments,
-  task_manager,
-  refetch,
-}: IProps) {
+function ChatStyleBoardForNoteBriefingBoard({
+  study_note_pk,
+}: any) {
   const toast = useToast();
   const queryClient = useQueryClient();
 
-  const { loginUser, isLoggedIn } = useSelector(
-    (state: RootState) => state.loginInfo
-  );
-
+//   const { loginUser, isLoggedIn } = useSelector(
+//     (state: RootState) => state.loginInfo
+//   );
   const [commentTextToUpload, setCommentTextToUpload] = useState("");
 
-  const createMutationForTaskComment = useMutation(createCommentForTaskApi, {
-    onMutate: () => {
-      console.log("mutation starting");
-    },
-    onSuccess: (data) => {
-      console.log("data : ", data);
+//   const createMutationForTaskComment = useMutation(createCommentForTaskApi, {
+//     onMutate: () => {
+//       console.log("mutation starting");
+//     },
+//     onSuccess: (data) => {
+//       console.log("data : ", data);
 
-      toast({
-        title: "welcome back!",
-        status: "success",
-      });
-      refetch();
-      // queryClient.refetchQueries(["getOneProjectTask"]);
-      setCommentTextToUpload("");
-    },
-    onError: (error: any) => {
-      console.log("error.response : ", error.response);
-      console.log("mutation has an error", error.response.data);
-    },
-  });
+//       toast({
+//         title: "welcome back!",
+//         status: "success",
+//       });
+//       refetch();
+//       // queryClient.refetchQueries(["getOneProjectTask"]);
+//       setCommentTextToUpload("");
+//     },
+//     onError: (error: any) => {
+//       console.log("error.response : ", error.response);
+//       console.log("mutation has an error", error.response.data);
+//     },
+//   });
 
-  console.log("isLoggedIn for chatstyle board : ", isLoggedIn);
+//   console.log("isLoggedIn for chatstyle board : ", isLoggedIn);
 
-  const commentButtonHandler = () => {
-    // alert(isLoggedIn);
-    if (!isLoggedIn) {
-      alert("로그인 해주세요");
-    } else {
-      // alert("로그인 상태입니다")
-    }
-    createMutationForTaskComment.mutate({
-      taskPk,
-      comment: commentTextToUpload,
-    });
-  };
+//   const commentButtonHandler = () => {
+//     // alert(isLoggedIn);
+//     if (!isLoggedIn) {
+//       alert("로그인 해주세요");
+//     } else {
+//       // alert("로그인 상태입니다")
+//     }
+//     createMutationForTaskComment.mutate({
+//       taskPk,
+//       comment: commentTextToUpload,
+//     });
+//   };
 
   return (
     <Box border={"0px solid blue"}>
@@ -320,7 +306,7 @@ function ChatStyleBoard({
           </Button>
           <Spacer />
           <Box>
-            <ModalButtonForAddCommentForTask taskPk={taskPk} />
+            {/* <ModalButtonForAddCommentForTask taskPk={taskPk} /> */}
           </Box>
         </HStack>{" "}
       </Box>
@@ -336,7 +322,7 @@ function ChatStyleBoard({
         overflowY={"scroll"}
         gap={2}
       >
-        {task_comments.map((co) => (
+        {/* {task_comments.map((co:any) => (
           <ListItem
             key={co.id}
             pk={co.id}
@@ -346,7 +332,7 @@ function ChatStyleBoard({
             is_edit_mode={co.is_edit_mode}
             refetch = {refetch}
           />
-        ))}
+        ))} */}
       </Flex>
 
       <Box mt={"3.6px"} px={0} border={"0px solid green"}>
@@ -385,7 +371,7 @@ function ChatStyleBoard({
             height={"37px"}
             borderRadius="md"
             colorScheme={"purple"}
-            onClick={() => commentButtonHandler()}
+            // onClick={() => commentButtonHandler()}
           >
             입력
           </Button>
@@ -395,4 +381,4 @@ function ChatStyleBoard({
   );
 }
 
-export default ChatStyleBoard;
+export default ChatStyleBoardForNoteBriefingBoard;

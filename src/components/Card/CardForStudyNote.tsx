@@ -298,6 +298,7 @@ const CardForStudyNote: React.FC<IProps> = ({
             <Box>
               {/* 0617 */}
               <ModalButtonForBriefingBoardForNote
+                note_owner_user_name={writer.username}
                 modal_title={`${title}'s Briefing Board`}
                 button_text={"comment"}
                 button_size={"sm"}
