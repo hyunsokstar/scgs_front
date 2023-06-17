@@ -21,6 +21,27 @@ const instance = axios.create({
 
 // 1122
 
+// ForStudyNoteBriefingBoard
+export const apiForEditModeForStudyNoteBriefingBoard = (
+  commentPk: any
+) => {
+  console.log("apiForEditModeForStudyNoteBriefingBoard 실행 check : ", commentPk);
+
+  return instance
+    .put(
+      `/study-note/comment/${commentPk}/update-edit-mode`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      return response.data;
+    });
+};
+
 export const apiForGetCommentListForNote = ({
   queryKey,
 }: QueryFunctionContext) => {
@@ -34,16 +55,6 @@ export const apiForGetCommentListForNote = ({
       return response.data;
     });
 };
-
-// export const apiForGetCommentListForNote = (study_note_pk: any) =>
-//   instance
-//     .get(`/study-note/${study_note_pk}/comment/get-comment-list`)
-//     .then((response) => response.data);
-
-// export const apiForGetSubTitleListForNote = (study_note_pk : any) =>
-//   instance
-//     .get(`/study-note/${study_note_pk}/content/get-subtitle-list`)
-//     .then((response) => response.data);
 
 export const apiForGetSubTitleListForNote = ({
   queryKey,

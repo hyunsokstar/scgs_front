@@ -7,12 +7,14 @@ interface Props {
   study_note_pk: any;
   note_owner_user_name: string;
   dataForGetCommentListForNote: any[];
+  refetch: () => void;
 }
 
 const ChatStyleBoardForBriefingBoard = ({
   study_note_pk,
   dataForGetCommentListForNote,
   note_owner_user_name,
+  refetch,
 }: Props) => {
   return (
     <Box border={"1px solid red"} p={2}>
@@ -30,6 +32,7 @@ const ChatStyleBoardForBriefingBoard = ({
                 comment={comment.comment}
                 isUser={comment.writer.username === note_owner_user_name}
                 is_edit_mode={comment.is_edit_mode}
+                refetch = {refetch}
               />
             ))
           : "no data"}

@@ -60,11 +60,11 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode, refetch }: Messag
         refetch();
         // queryClient.refetchQueries(["getOneProjectTask"]);
 
-        // toast({
-        //   status: "success",
-        //   title: "task status update success",
-        //   description: result.message,
-        // });
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
       },
     }
   );

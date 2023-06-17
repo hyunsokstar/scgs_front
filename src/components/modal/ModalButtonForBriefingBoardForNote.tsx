@@ -88,7 +88,7 @@ const ModalButtonForBriefingBoardForNote = ({
             {/* fix 0617  chat style board 추가 */}
             <ChatStyleBoardForBriefingBoard
               study_note_pk={study_note_pk}
-              // mutateForGetCommentListForNote = {mutateForGetCommentListForNote}
+              refetch = {refetchForGetCommentListForNote}
               dataForGetCommentListForNote={dataForGetCommentListForNote}
               note_owner_user_name={note_owner_user_name}
             />
