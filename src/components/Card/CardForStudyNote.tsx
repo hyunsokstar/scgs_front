@@ -185,7 +185,7 @@ const CardForStudyNote: React.FC<IProps> = ({
           _hover={{ bg: "blue.100" }}
           onDoubleClick={() => goToStudyNoteDetail(pk)}
           gap={2}
-          border={"1px solid red"}
+          border={"0px solid red"}
         >
           <Box
             fontSize="sm"
@@ -193,7 +193,7 @@ const CardForStudyNote: React.FC<IProps> = ({
             display={"flex"}
             flexDirection={"column"}
             justifyContent={"space-between"}
-            border={"2px solid purple"}
+            border={"0px solid purple"}
           >
             <Box flex={1}>{description}</Box>
             <Box flex={2} border={"0px solid pink"}>
@@ -283,7 +283,7 @@ const CardForStudyNote: React.FC<IProps> = ({
             p={2}
             gap={1}
             bg={"gray.100"}
-            border={"2px solid red"}
+            border={"0px solid red"}
           >
             {/* <link> */}
             <Box mb={1}>

@@ -150,3 +150,8 @@ export interface ITypeForListForSubtitleListForNote {
   created_at: string;
   order: number;
 }
+
+export interface FormTypeForCreateCommentForNote {
+  study_note_pk: any;
+  comment: string;
+}

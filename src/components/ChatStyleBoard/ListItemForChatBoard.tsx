@@ -15,7 +15,11 @@ import {
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiForEditModeForStudyNoteBriefingBoard } from "../../apis/study_note_api";
+import {
+  apiForEditModeForStudyNoteBriefingBoard,
+  apiForUpdateCommentForNote,
+  deleteOneCommentForNoteByPkApi,
+} from "../../apis/study_note_api";
 
 interface IProps {
   writer: any;
@@ -53,7 +57,7 @@ const ListItemForChatBoard = ({
         console.log("result : ", result);
         toast({
           status: "success",
-          title: "task status update success",
+          title: "commnet update success",
           description: result.message,
           duration: 2000, // 2초 후에 사라짐
           isClosable: true,
@@ -68,25 +72,87 @@ const ListItemForChatBoard = ({
     updateMutationForCommentEditMode.mutate(comment_pk);
   };
 
+  const deleteCommentMutationByPk = useMutation(
+    (pk: string | number) => {
+      return deleteOneCommentForNoteByPkApi(pk);
+    },
+    {
+      onSettled: () => {},
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        refetch();
+
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const onDeleteCommentHandler = (commentPk: string | number) => {
+    console.log("onDeleteCommentHandler : ", commentPk);
+    deleteCommentMutationByPk.mutate(commentPk);
+  };
+
+  const mutationForUpdateCommentTextForNote = useMutation(
+    apiForUpdateCommentForNote,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        refetch();
+        // queryClient.refetchQueries(["getOneProjectTask"]);
+
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+
+  // buttonHandlerForEditConfirm
+  const buttonHandlerForEditConfirm = (commentPk: any) => {
+    mutationForUpdateCommentTextForNote.mutate({
+      commentPk,
+      commentText: commentTextForUpdate,
+    });
+  };
+
   // 2244
   return (
-    <HStack justifyContent={isUser ? "flex-start" : "flex-end"} width="100%">
+    <Box
+      display={"flex"}
+      gap={2}
+      px={2}
+      justifyContent={isUser ? "flex-start" : "flex-end"}
+      alignItems={"center"}
+      width="100%"
+      // border={"1px solid red"}
+    >
       {isUser && (
         <Checkbox isChecked={isChecked} onChange={handleCheckboxChange} />
       )}
 
       <Box
-        // p={3}
         p={1}
         borderRadius="lg"
         bg={isUser ? "yellow.50" : "blue.100"}
         alignSelf={isUser ? "flex-start" : "flex-end"}
         border="3px solid black"
-        // maxWidth="380px"
         display={"flex"}
         flexDirection={"column"}
+        alignItems={"center"}
         gap={2}
-        my={2}
+        m={1}
+        // border={"0px solid red"}
       >
         <Flex
           justifyContent={"flex-start"}
@@ -99,7 +165,7 @@ const ListItemForChatBoard = ({
           <Box>
             <Text fontSize="lg">
               {is_edit_mode ? (
-                <Box border={"0px solid purple"} >
+                <Box border={"0px solid purple"}>
                   <Textarea
                     width={"320px"}
                     bg={"blue.100"}
@@ -112,7 +178,7 @@ const ListItemForChatBoard = ({
                     <IconButton
                       aria-label="Confirm"
                       icon={<FaCheck />}
-                      //   onClick={() => onEditConfirmHandler(pk)}
+                      onClick={() => buttonHandlerForEditConfirm(pk)}
                       variant="outline"
                       colorScheme="green"
                       rounded="md"
@@ -147,7 +213,7 @@ const ListItemForChatBoard = ({
                   <IconButton
                     icon={<DeleteIcon />}
                     aria-label="Delete"
-                    // onClick={() => onDeleteCommentHandler(pk)}
+                    onClick={() => onDeleteCommentHandler(pk)}
                     variant="outline"
                     colorScheme="teal"
                     _hover={{ bg: "teal.400" }}
@@ -167,7 +233,7 @@ const ListItemForChatBoard = ({
       {!isUser && (
         <Checkbox isChecked={isChecked} onChange={handleCheckboxChange} />
       )}
-    </HStack>
+    </Box>
   );
 };
 

@@ -11,7 +11,7 @@ const ButtonsBriefingBoardForHeaderForNote = (props: Props) => {
       display={"flex"}
       justifyContent={"space-between"}
       gap={2}
-      border={"1px solid blue"}
+      p={2}
     >
       <Box display={"flex"} gap={2}>
         <Button

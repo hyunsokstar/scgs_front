@@ -12,6 +12,7 @@ import {
   type_for_parameter_for_delete_pages_for_study_note,
   typeForParameterForApiForCopySelectedNotesToMyNote,
   IFormTypeForCreateYoutubeContentForNote,
+  FormTypeForCreateCommentForNote,
 } from "../types/study_note_type";
 
 const instance = axios.create({
@@ -21,11 +22,66 @@ const instance = axios.create({
 
 // 1122
 
+export const apiForUpdateCommentForNote = ({
+  commentPk,
+  commentText,
+}: any) => {
+  console.log("apiForUpdateCommentForNote 실행 check : ", commentText);
+
+  return instance
+    .put(
+      `/study-note/comment/${commentPk}/update-comment`,
+      {
+        comment: commentText,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
+export const apiForCreateCommentForNote = ({
+  study_note_pk,
+  comment,
+}: FormTypeForCreateCommentForNote) =>
+  instance
+    .post(
+      `/study-note/${study_note_pk}/create-comment`,
+      {
+        note: study_note_pk,
+        comment,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
+export const deleteOneCommentForNoteByPkApi = (commentPk: string | number) => {
+  // console.log("commentPk : ", commentPk);
+  return instance
+    .delete(`study-note/comment/${commentPk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 // ForStudyNoteBriefingBoard
-export const apiForEditModeForStudyNoteBriefingBoard = (
-  commentPk: any
-) => {
-  console.log("apiForEditModeForStudyNoteBriefingBoard 실행 check : ", commentPk);
+export const apiForEditModeForStudyNoteBriefingBoard = (commentPk: any) => {
+  console.log(
+    "apiForEditModeForStudyNoteBriefingBoard 실행 check : ",
+    commentPk
+  );
 
   return instance
     .put(
