@@ -482,50 +482,55 @@ function UsersByDataGridPage({}: Props): ReactElement {
             명
           </Box>
           <Box display={"flex"} justifyContent={"space-betwwen"} gap={2}>
-            <Button
-              size="md"
-              onClick={createRandomUserRowHandler}
-              fontWeight="bold"
-              colorScheme="purple"
-              _hover={{ bg: "purple.600" }}
-              _active={{ bg: "purple.700" }}
-            >
-              랜덤 행추가
-            </Button>
+            {user && user?.admin_level > 3 ? (
+              <Box display={"flex"} gap={2}>
+                <Button
+                  size="md"
+                  onClick={createRandomUserRowHandler}
+                  fontWeight="bold"
+                  colorScheme="purple"
+                  _hover={{ bg: "purple.600" }}
+                  _active={{ bg: "purple.700" }}
+                >
+                  랜덤 행추가
+                </Button>
 
-            <Button
-              size="md"
-              onClick={handleAddRow}
-              fontWeight="bold"
-              colorScheme="blue"
-              _hover={{ bg: "blue.600" }}
-              _active={{ bg: "blue.700" }}
-            >
-              행추가
-            </Button>
+                <Button
+                  size="md"
+                  onClick={handleAddRow}
+                  fontWeight="bold"
+                  colorScheme="blue"
+                  _hover={{ bg: "blue.600" }}
+                  _active={{ bg: "blue.700" }}
+                >
+                  행추가
+                </Button>
+                <Button
+                  size="md"
+                  onClick={handleSaveRow}
+                  fontWeight="bold"
+                  colorScheme="green"
+                  _hover={{ bg: "green.600" }}
+                  _active={{ bg: "green.700" }}
+                >
+                  저장
+                </Button>
 
-            <Button
-              size="md"
-              onClick={handleSaveRow}
-              fontWeight="bold"
-              colorScheme="green"
-              _hover={{ bg: "green.600" }}
-              _active={{ bg: "green.700" }}
-            >
-              저장
-            </Button>
-
-            {/* fix 0617 */}
-            <Button
-              size="md"
-              fontWeight="bold"
-              colorScheme="red"
-              _hover={{ bg: "red.600" }}
-              _active={{ bg: "red.700" }}
-              onClick={deleteButtonForCheckHandler}
-            >
-              삭제
-            </Button>
+                {/* fix 0617 */}
+                <Button
+                  size="md"
+                  fontWeight="bold"
+                  colorScheme="red"
+                  _hover={{ bg: "red.600" }}
+                  _active={{ bg: "red.700" }}
+                  onClick={deleteButtonForCheckHandler}
+                >
+                  삭제
+                </Button>
+              </Box>
+            ) : (
+              ""
+            )}
           </Box>
         </Flex>
 
