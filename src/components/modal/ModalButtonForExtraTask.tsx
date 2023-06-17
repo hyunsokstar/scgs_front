@@ -5,13 +5,10 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   useDisclosure,
   VStack,
   Box,
-  Input,
-  Checkbox,
   FormControl,
   FormLabel,
   RadioGroup,
@@ -19,10 +16,8 @@ import {
   HStack,
   useToast,
   Select,
-  FormHelperText,
   Flex,
   Textarea,
-  Text,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import {
@@ -35,7 +30,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   taskPk: number | string | undefined;
-  refetch: () => void
+  refetch: () => void;
 }
 
 interface IUserNamesForCreate {

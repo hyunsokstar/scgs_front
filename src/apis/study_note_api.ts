@@ -20,21 +20,10 @@ const instance = axios.create({
 });
 
 // 1122
-
-// export const apiForSubTitleListForNote = async ({
-//   queryKey,
-// }: QueryFunctionContext): Promise<list_for_long_term_plan> => {
-//   const [, study] = queryKey; // 여기서 첫 번째 요소인 `_`를 제거하고 `,`로 수정합니다.
-
-//   const requestBody = {
-//     pageNum: pageNum,
-//   };
-
-//   return await instance.post('plan-maker/', requestBody).then((response) => {
-//     console.log("response.data: ", response.data);
-//     return response.data;
-//   });
-// };
+export const apiForGetCommentListForNote = (study_note_pk : any) =>
+  instance
+    .get(`/study-note/${study_note_pk}/comment/get-comment-list`)
+    .then((response) => response.data);
 
 export const apiForGetSubTitleListForNote = (study_note_pk : any) =>
   instance

@@ -21,6 +21,7 @@ import { RootState } from "../../store";
 import ClipboardButtonForCopyCurrentUrl from "../Button/ClipboardButtonForCopyCurrentUrl";
 import TableForNoteCoworkers from "../Table/TableForNoteCoworkers";
 import ModalButtonForSubtititleListForNoteContent from "../modal/ModalButtonForSubtititleListForNoteContent";
+import ModalButtonForBriefingBoardForNote from "../modal/ModalButtonForBriefingBoardForNote";
 
 interface IProps {
   pk: any;
@@ -182,10 +183,9 @@ const CardForStudyNote: React.FC<IProps> = ({
           width={"100%"}
           height={"300px"}
           _hover={{ bg: "blue.100" }}
-          // onDoubleClick={() => goToStudyNoteDetail(pk)}
           onDoubleClick={() => goToStudyNoteDetail(pk)}
           gap={2}
-          // border={"1px solid green"}
+          border={"1px solid red"}
         >
           <Box
             fontSize="sm"
@@ -193,15 +193,15 @@ const CardForStudyNote: React.FC<IProps> = ({
             display={"flex"}
             flexDirection={"column"}
             justifyContent={"space-between"}
-            // border={"1px solid black"}
+            border={"2px solid purple"}
           >
             <Box flex={1}>{description}</Box>
-            <Box flex={2}>
+            <Box flex={2} border={"0px solid pink"}>
               <Box
-                // border="1px solid black"
                 display={"flex"}
                 justifyContent={"space-between"}
                 mb={1}
+                border={"0px solid blue"}
               >
                 <Box>Co-Writer</Box>
                 <Box>
@@ -277,10 +277,13 @@ const CardForStudyNote: React.FC<IProps> = ({
           </Box>
           <Box
             flex={1}
+            display={"flex"}
+            flexDirection={"column"}
             textAlign={"right"}
-            border={"0px solid red"}
             p={2}
+            gap={1}
             bg={"gray.100"}
+            border={"2px solid red"}
           >
             {/* <link> */}
             <Box mb={1}>
@@ -291,6 +294,17 @@ const CardForStudyNote: React.FC<IProps> = ({
                 button_size={"sm"}
               />
             </Box>
+
+            <Box>
+              {/* 0617 */}
+              <ModalButtonForBriefingBoardForNote
+                modal_title={`${title}'s Briefing Board`}
+                button_text={"comment"}
+                button_size={"sm"}
+                study_note_pk={pk}
+              />
+            </Box>
+
             <Box>
               <ClipboardButtonForCopyCurrentUrl button_size={"sm"} pk={pk} />
             </Box>
