@@ -74,7 +74,7 @@ const StudyNotePage = () => {
       <Box px={"20px"} border={"0px solid purple"}>
         <Flex
           wrap="wrap"
-          justifyContent={"flex-start"}
+          justifyContent={"space-around"}
           gap={5}
           border={"0px solid black"}
         >

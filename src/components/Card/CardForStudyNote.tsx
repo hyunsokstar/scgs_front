@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   IconButton,
   Text,
   useColorModeValue,
@@ -134,7 +135,7 @@ const CardForStudyNote: React.FC<IProps> = ({
         borderWidth="1px"
         borderRadius="lg"
         overflow="hidden"
-        width="410px"
+        width="90vh"
         margin="10px"
         bg={cardBgColor}
         boxShadow="md"
@@ -183,7 +184,8 @@ const CardForStudyNote: React.FC<IProps> = ({
           width={"100%"}
           height={"300px"}
           _hover={{ bg: "blue.100" }}
-          onDoubleClick={() => goToStudyNoteDetail(pk)}
+          id={"note-content-card"}
+          defaultValue={"note-content-card"}
           gap={2}
           border={"0px solid red"}
         >
@@ -285,11 +287,25 @@ const CardForStudyNote: React.FC<IProps> = ({
             bg={"gray.100"}
             border={"0px solid red"}
           >
-            {/* <link> */}
+            <Box>
+              <Button
+                variant={"outline"}
+                size={"md"}
+                border={"1px solid black"}
+                onClick={(event) => {
+                  console.log("event : ", event.target);
+                  event.stopPropagation();
+                  goToStudyNoteDetail(pk);
+                }}
+                _hover={{bgColor:"yellow.200"}}
+              >
+                see contents
+              </Button>
+            </Box>
             <Box mb={1}>
               <ModalButtonForSubtititleListForNoteContent
                 modal_title={`${title}'s subtitle list`}
-                button_text={"List"}
+                button_text={"SubTitle List"}
                 study_note_pk={pk}
                 button_size={"sm"}
               />
