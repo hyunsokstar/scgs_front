@@ -40,7 +40,7 @@ const StudyNotePage = () => {
   return (
     <Box>
       <Text align={"center"} fontSize={"5xl"}>
-        Tech Note !! (노트 더블 클릭)
+        Tech Note !!
       </Text>
 
       <Box
@@ -87,6 +87,7 @@ const StudyNotePage = () => {
               writer={note.writer}
               note_cowriters={note.note_cowriters}
               count_for_note_contents={note.count_for_note_contents}
+              count_for_note_comments = {note.count_for_note_comments}
               studyNoteListRefatch={studyNoteListRefatch}
             />
           ))}

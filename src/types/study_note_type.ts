@@ -102,6 +102,7 @@ export interface TypeForNote {
   writer: NoteWriterType;
   note_cowriters: TypeForNoteCoWriter[];
   count_for_note_contents: number;
+  count_for_note_comments: number;
 }
 
 export interface TypeForNoteList {

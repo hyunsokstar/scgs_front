@@ -31,6 +31,7 @@ interface IProps {
   writer: NoteWriterType;
   note_cowriters: TypeForNoteCoWriter[];
   count_for_note_contents: number;
+  count_for_note_comments: number;
   studyNoteListRefatch: () => void;
 }
 
@@ -42,6 +43,7 @@ const CardForStudyNote: React.FC<IProps> = ({
   writer,
   count_for_note_contents,
   note_cowriters,
+  count_for_note_comments,
   studyNoteListRefatch,
 }) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
@@ -297,7 +299,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                   event.stopPropagation();
                   goToStudyNoteDetail(pk);
                 }}
-                _hover={{bgColor:"yellow.200"}}
+                _hover={{ bgColor: "yellow.200" }}
               >
                 see contents
               </Button>
@@ -319,6 +321,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                 button_text={"comment"}
                 button_size={"sm"}
                 study_note_pk={pk}
+                count_for_note_comments={count_for_note_comments}
               />
             </Box>
 

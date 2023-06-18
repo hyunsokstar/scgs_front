@@ -26,6 +26,7 @@ interface IProps {
   modal_title: string;
   study_note_pk: string | undefined;
   note_owner_user_name: string;
+  count_for_note_comments: number;
 }
 
 // 1122
@@ -35,6 +36,7 @@ const ModalButtonForBriefingBoardForNote = ({
   button_size,
   study_note_pk,
   note_owner_user_name,
+  count_for_note_comments
 }: IProps) => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -109,7 +111,7 @@ const ModalButtonForBriefingBoardForNote = ({
         _hover={{ bgColor: "yellow.100" }}
         size={button_size}
       >
-        {button_text}
+        {button_text} ({count_for_note_comments})
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size="6xl">
         <ModalOverlay />
