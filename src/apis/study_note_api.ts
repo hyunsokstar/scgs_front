@@ -22,10 +22,7 @@ const instance = axios.create({
 
 // 1122
 
-export const apiForUpdateCommentForNote = ({
-  commentPk,
-  commentText,
-}: any) => {
+export const apiForUpdateCommentForNote = ({ commentPk, commentText }: any) => {
   console.log("apiForUpdateCommentForNote 실행 check : ", commentText);
 
   return instance
@@ -159,6 +156,7 @@ export const apiForCreateSubTitleForNote = ({
   ref_url1,
   ref_url2,
   content,
+  youtube_url,
 }: IFormTypeForCreateSubjectTitleForPage) =>
   instance
     .post(
@@ -171,6 +169,7 @@ export const apiForCreateSubTitleForNote = ({
         ref_url1,
         ref_url2,
         content,
+        youtube_url,
       },
       {
         headers: {

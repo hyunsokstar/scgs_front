@@ -161,6 +161,15 @@ const ModalButtonForInsertSubtitleForPage = ({
                   isInvalid={errors.content != null}
                 />
               </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>youtube_url(필수 아님)</FormLabel>
+                <Textarea
+                  placeholder="Enter the youtube_url"
+                  {...register("youtube_url", { required: false })}
+                  isInvalid={errors.content != null}
+                />
+              </FormControl>
             </ModalBody>
             <ModalFooter>
               <Button type="submit" colorScheme="blue" mr={3}>

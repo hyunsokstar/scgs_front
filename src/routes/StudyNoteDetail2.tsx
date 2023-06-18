@@ -350,6 +350,7 @@ const StudyNoteDetail2 = (props: Props) => {
                         is_authority_for_note={is_authority_for_note}
                         ref_url1={row.ref_url1}
                         ref_url2={row.ref_url2}
+                        youtube_url={row.youtube_url}
                       />
                     );
                   } else if (row.content_option === "youtube") {

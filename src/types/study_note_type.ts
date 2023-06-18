@@ -123,6 +123,7 @@ export interface IFormTypeForCreateSubjectTitleForPage {
   ref_url1: string;
   ref_url2: string;
   content: string;
+  youtube_url?: string;
 }
 
 export interface IFormTypeForCreateYoutubeContentForNote {

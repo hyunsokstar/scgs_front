@@ -13,15 +13,13 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  apiFordeleteOneStudyNoteContent,
-} from "../../apis/study_note_api";
+import { apiFordeleteOneStudyNoteContent } from "../../apis/study_note_api";
 import IconButtonForCopyText from "../IconButtonForCopyText";
 import CheckboxComponentForList from "../CheckBox/CheckboxComponentForList";
 import { useEffect, useState } from "react";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
-
+import PlayerForYouTube from "../Player/PlayerForYouTube";
 
 // 1122
 const CardForStudyNoteContent = ({
@@ -35,6 +33,7 @@ const CardForStudyNoteContent = ({
   card_width,
   setCheckedValues,
   is_authority_for_note,
+  youtube_url,
 }: any) => {
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -53,17 +52,13 @@ const CardForStudyNoteContent = ({
         console.log("data : ", data);
 
         queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
-        if(data.message) {
-            toast({
-              title: "delete study note content 성공!",
-              status: "success",
-            });
-
+        if (data.message) {
+          toast({
+            title: "delete study note content 성공!",
+            status: "success",
+          });
         } else {
-
         }
-        
-
       },
     }
   );
@@ -148,7 +143,6 @@ const CardForStudyNoteContent = ({
                 </InputGroup>
               </Td>
             </Tr>
-
           </Tbody>
         </Table>
       </Box>
@@ -159,18 +153,15 @@ const CardForStudyNoteContent = ({
           </Box>
           <Box>{writer.username}</Box>
         </Box>
-
-        {/* {is_authority_for_note ? (
-          <ModalButtonForUpdateStudyNoteContent
-            button_text={"update for note content"}
-            pk={pk}
-            title={title}
-            file_name={file_name}
-            content={content}
-          />
-        ) : (
-          ""
-        )} */}
+        <Box>
+          {youtube_url !== "" ? (
+            <Box>
+              <PlayerForYouTube youtubeUrl={youtube_url} />
+            </Box>
+          ) : (
+            "??"
+          )}
+        </Box>
       </Box>
     </Box>
   );
