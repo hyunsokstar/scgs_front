@@ -23,6 +23,7 @@ import ClipboardButtonForCopyCurrentUrl from "../Button/ClipboardButtonForCopyCu
 import TableForNoteCoworkers from "../Table/TableForNoteCoworkers";
 import ModalButtonForSubtititleListForNoteContent from "../modal/ModalButtonForSubtititleListForNoteContent";
 import ModalButtonForBriefingBoardForNote from "../modal/ModalButtonForBriefingBoardForNote";
+import ModalButtonForUpdateStudyNote from "../modal/ModalButtonForUpdateStudyNote";
 
 interface IProps {
   pk: any;
@@ -166,17 +167,30 @@ const CardForStudyNote: React.FC<IProps> = ({
           </Text>
 
           {writer.username === loginUser.username ? (
-            <IconButton
-              aria-label="Close"
-              icon={
-                <CloseIcon
-                  onClick={() => deleteStudyNoteButtonHandler(pk, writer)}
-                />
-              }
-              variant="outline"
-              size="sm"
-              colorScheme="pink"
-            />
+            <Box display={"flex"} gap={2}>
+              <ModalButtonForUpdateStudyNote
+                button_text={"update for study note"}
+                button_size={"sm"}
+                modal_title={"Modal For update for study note"}
+                study_note_pk={pk}
+                study_note_title={title}
+                study_note_description={description}
+                study_note_first_category={first_category}
+                study_note_second_category={second_category}
+              />
+
+              <IconButton
+                aria-label="Close"
+                icon={
+                  <CloseIcon
+                    onClick={() => deleteStudyNoteButtonHandler(pk, writer)}
+                  />
+                }
+                variant="outline"
+                size="sm"
+                colorScheme="pink"
+              />
+            </Box>
           ) : (
             ""
           )}
