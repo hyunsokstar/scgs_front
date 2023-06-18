@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import {
   Modal,
   ModalOverlay,
@@ -15,8 +17,11 @@ import {
   FormErrorMessage,
   Textarea,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { apiForUpdateStudyNote } from "../../apis/study_note_api";
+
 
 interface IProps {
   button_text: string;
@@ -41,16 +46,42 @@ const ModalButtonForUpdateStudyNote = ({
   study_note_second_category,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const queryClient = useQueryClient();
+  const toast = useToast();
 
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm();
 
+  // apiForUpdateStudyNote
+  const mutationForUpdatetudyNote = useMutation(apiForUpdateStudyNote, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
+
+      toast({
+        title: "welcome back!",
+        status: "success",
+      });
+      queryClient.refetchQueries(["apiForgetStudyNoteList"]);
+      reset();
+      onClose();
+    },
+    onError: (error: any) => {
+      console.log("error.response : ", error.response);
+      console.log("mutation has an error", error.response.data);
+    },
+  });
+
   const onSubmit = (data: any) => {
-    // handle form submission
-    console.log("data : ", data);
+    // alert("button click")
+    console.log(data);
+    mutationForUpdatetudyNote.mutate(data);
   };
 
   // 2244
@@ -74,7 +105,7 @@ const ModalButtonForUpdateStudyNote = ({
             {/* fix 0618 */}
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* study_note_pk */}
-              <Input type="hidden" {...register("pk")} value={study_note_pk} />
+              <Input type="hidden" {...register("study_note_pk")} value={study_note_pk} />
 
               {/* title */}
               <FormControl mt={4} isInvalid={!!errors.title}>

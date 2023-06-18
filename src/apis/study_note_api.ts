@@ -21,6 +21,34 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForUpdateStudyNote = ({
+  study_note_pk,
+  title,
+  description,
+  first_category,
+  second_category,
+}: any) => {
+
+  console.log("apiForUpdateStudyNote excute check !");
+  
+  return instance
+    .put(
+      `/study-note/`,
+      {
+        study_note_pk,
+        title,
+        description,
+        first_category,
+        second_category,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
 
 export const apiForUpdateCommentForNote = ({ commentPk, commentText }: any) => {
   console.log("apiForUpdateCommentForNote 실행 check : ", commentText);
@@ -576,7 +604,7 @@ export const apiForCreateStudyNote = ({
   title,
   description,
   first_category,
-  second_category
+  second_category,
 }: type_for_insert_study_note) =>
   instance
     .post(
@@ -585,7 +613,7 @@ export const apiForCreateStudyNote = ({
         title,
         description,
         first_category,
-        second_category
+        second_category,
       },
       {
         headers: {
