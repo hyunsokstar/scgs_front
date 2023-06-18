@@ -25,6 +25,7 @@ import { ITypeForListForSubtitleListForNote } from "../../types/study_note_type"
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import ButtonForOpenUrlByNewTabForUrlText from "./ButtonForOpenUrlByNewTabForUrlText";
 
 interface IProps {
   button_text: string;
@@ -112,8 +113,8 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
                       <Tr key={index}>
                         <Td>{item.page}</Td>
                         <Td>{item.title}</Td>
-                        <Td>{item.ref_url1}</Td>
-                        <Td>{item.ref_url2}</Td>
+                        <Td>{item.ref_url1} <ButtonForOpenUrlByNewTabForUrlText button_size={"xs"} url={item.ref_url1}/></Td>
+                        <Td>{item.ref_url2} <ButtonForOpenUrlByNewTabForUrlText button_size={"xs"} url={item.ref_url2}/></Td>
                         <Td>
                           <Box>
                             <Link
