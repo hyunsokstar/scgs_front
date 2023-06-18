@@ -154,13 +154,13 @@ const CardForStudyNoteContent = ({
           <Box>{writer.username}</Box>
         </Box>
         <Box>
-          {youtube_url !== "" ? (
+          {youtube_url ? youtube_url !== "" ? (
             <Box>
               <PlayerForYouTube youtubeUrl={youtube_url} />
             </Box>
           ) : (
             "??"
-          )}
+          ): "no data"}
         </Box>
       </Box>
     </Box>

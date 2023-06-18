@@ -39,10 +39,11 @@ const ClipboardButtonForCopyCurrentUrl = ({
     <Button
       onClick={handleClick}
       variant="outline"
-      border={"1px solid gray"}
-      bg={"white"}
+      border={"1px solid black"}
+      // bg={"white"}
       size={button_size}
       {...props}
+      _hover={{ bgColor: "yellow.100" }}
     >
       {hasCopied ? "copy !" : "link"}
     </Button>

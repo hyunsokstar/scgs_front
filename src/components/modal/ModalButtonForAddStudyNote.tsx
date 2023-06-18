@@ -14,6 +14,7 @@ import {
   Input,
   Textarea,
   useToast,
+  Select
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -112,6 +113,50 @@ function ModalButtonForAddStudyNote({ button_text }: IProps) {
                   {...register("description", { required: true })}
                 />
                 <FormErrorMessage>Please enter a description</FormErrorMessage>
+              </FormControl>
+
+              <FormControl mt={4} isInvalid={!!errors.first_category}>
+                <FormLabel htmlFor="first_category">First Category</FormLabel>
+                <Select
+                  id="first_category"
+                  {...register("first_category", { required: true })}
+                  placeholder="Select a category"
+                >
+                  <option value="frontend">Frontend</option>
+                  <option value="backend">Backend</option>
+                  <option value="challenge">Challenge</option>
+                  <option value="boiler-plate">Boiler Plate</option>
+                </Select>
+                {errors.first_category && (
+                  <FormErrorMessage>
+                    {errors.first_category.message}
+                  </FormErrorMessage>
+                )}
+              </FormControl>
+
+              <FormControl mt={4} isInvalid={!!errors.second_category}>
+                <FormLabel htmlFor="second_category">Second Category</FormLabel>
+                <Select
+                  id="second_category"
+                  {...register("second_category", { required: true })}
+                  placeholder="Select a category"
+                >
+                  <option value="tutorial">Tutorial</option>
+                  <option value="framework">Framework</option>
+                  <option value="library">Library</option>
+                  <option value="boiler-plate">Boiler Plate</option>
+                  <option value="sample-code">Sample Code</option>
+                  <option value="code-review">Code Review</option>
+                  <option value="programming-language">
+                    Programming Language
+                  </option>
+                  <option value="challenge">Challenge</option>
+                </Select>
+                {errors.second_category && (
+                  <FormErrorMessage>
+                    {errors.second_category.message}
+                  </FormErrorMessage>
+                )}
               </FormControl>
 
               <Box display="flex" justifyContent="flex-end" mt={4}>

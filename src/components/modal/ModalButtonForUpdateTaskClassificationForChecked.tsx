@@ -62,7 +62,7 @@ const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
     ["getTaskListForUpdateImportanceForChecked", checkedRowPks],
     apiForGetTaskListForCheckedPks,
     {
-      enabled: true,
+      enabled: false,
     }
   );
 

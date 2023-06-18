@@ -1,6 +1,8 @@
 export type type_for_insert_study_note = {
   title: string;
   description: string;
+  first_category: string;
+  second_category: string;
 };
 
 export interface DataForStudyNoteContent {
@@ -95,14 +97,35 @@ export interface TypeForNoteCoWriter {
 //   studyNoteListRefatch?: () => void;
 // };
 
+export enum FirstCategory {
+  FRONTEND = "frontend",
+  BACKEND = "backend",
+  CHALLENGE = "challenge",
+  BOILER_PLATE = "boiler-plate",
+}
+
+export enum SecondCategory {
+  TUTORIAL = "tutorial",
+  FRAMEWORK = "framework",
+  LIBRARY = "library",
+  BOILER_PLATE = "boiler-plate",
+  SAMPLE_CODE = "sample-code",
+  CODE_REVIEW = "code-review",
+  PROGRAMMING_LANGUAGE = "programming-language",
+  CHALLENGE = "challenge",
+}
+
 export interface TypeForNote {
   pk: number;
   title: string;
   description: string;
   writer: NoteWriterType;
   note_cowriters: TypeForNoteCoWriter[];
+  first_category: FirstCategory;
+  second_category: SecondCategory; 
+
   count_for_note_contents: number;
-  count_for_note_comments: number;
+  count_for_note_comments: number; 
 }
 
 export interface TypeForNoteList {

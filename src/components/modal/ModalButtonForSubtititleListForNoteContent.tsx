@@ -26,6 +26,7 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import ButtonForOpenUrlByNewTabForUrlText from "./ButtonForOpenUrlByNewTabForUrlText";
+import YoutubeIconForSubtitleListForNote from "../Icon/YoutubeIconForSubtitleListForNote";
 
 interface IProps {
   button_text: string;
@@ -56,26 +57,6 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
       enabled: true,
     }
   );
-
-  // fix 06161122
-  // const mutateForGetSubTitleListForNote = useMutation(
-  //   apiForGetSubTitleListForNote,
-  //   {
-  //     onSuccess: (data) => {
-  //       // 데이터를 가져온 후 필요한 처리를 수행할 수 있습니다.
-  //       console.log("dataForGetSubTitleListForNote: ", data);
-  //       setDataForGetSubTitleListForNote(data);
-  //     },
-  //     onError: (error) => {
-  //       // 에러 처리를 수행할 수 있습니다.
-  //     },
-  //   }
-  // );
-
-  // fix 0616
-  // useEffect(() => {
-  //   mutateForGetSubTitleListForNote.mutate(study_note_pk);
-  // }, []);
 
   // 2244
   return (
@@ -113,8 +94,25 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
                       <Tr key={index}>
                         <Td>{item.page}</Td>
                         <Td>{item.title}</Td>
-                        <Td>{item.ref_url1} <ButtonForOpenUrlByNewTabForUrlText button_size={"xs"} url={item.ref_url1}/></Td>
-                        <Td>{item.ref_url2} <ButtonForOpenUrlByNewTabForUrlText button_size={"xs"} url={item.ref_url2}/></Td>
+                        <Td>
+                          <YoutubeIconForSubtitleListForNote
+                            url_text={item.youtube_url}
+                          />
+                        </Td>
+                        <Td>
+                          {item.ref_url1}{" "}
+                          <ButtonForOpenUrlByNewTabForUrlText
+                            button_size={"xs"}
+                            url={item.ref_url1}
+                          />
+                        </Td>
+                        <Td>
+                          {item.ref_url2}{" "}
+                          <ButtonForOpenUrlByNewTabForUrlText
+                            button_size={"xs"}
+                            url={item.ref_url2}
+                          />
+                        </Td>
                         <Td>
                           <Box>
                             <Link

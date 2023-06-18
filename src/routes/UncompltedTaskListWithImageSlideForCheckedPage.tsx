@@ -21,7 +21,7 @@ const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
     ["getTaskListForCheckedPksForImageSlide", checkedRowPks],
     apiForGetTaskListForCheckedPks,
     {
-      enabled: true,
+      enabled: false,
     }
   );
 

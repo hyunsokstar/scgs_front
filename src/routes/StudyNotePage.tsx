@@ -71,12 +71,14 @@ const StudyNotePage = () => {
         )}
       </Box>
 
-      <Box px={"20px"} border={"0px solid purple"}>
+      <Box border={"0px solid purple"} px={""}>
         <Flex
           wrap="wrap"
-          justifyContent={"space-around"}
+          justifyContent={"flex-start"}
           gap={5}
           border={"0px solid black"}
+          width={"95%"}
+          mx={"auto"}
         >
           {studyNoteData.noteList.map((note: TypeForNote) => (
             <CardForStudyNote
@@ -88,6 +90,8 @@ const StudyNotePage = () => {
               note_cowriters={note.note_cowriters}
               count_for_note_contents={note.count_for_note_contents}
               count_for_note_comments = {note.count_for_note_comments}
+              first_category={note.first_category}
+              second_category={note.second_category}
               studyNoteListRefatch={studyNoteListRefatch}
             />
           ))}

@@ -33,6 +33,8 @@ interface IProps {
   count_for_note_contents: number;
   count_for_note_comments: number;
   studyNoteListRefatch: () => void;
+  first_category: string;
+  second_category: string;
 }
 
 // 1122
@@ -44,6 +46,8 @@ const CardForStudyNote: React.FC<IProps> = ({
   count_for_note_contents,
   note_cowriters,
   count_for_note_comments,
+  first_category,
+  second_category,
   studyNoteListRefatch,
 }) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
@@ -301,7 +305,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                 }}
                 _hover={{ bgColor: "yellow.200" }}
               >
-                see contents
+                Open Note
               </Button>
             </Box>
             <Box mb={1}>
@@ -336,7 +340,14 @@ const CardForStudyNote: React.FC<IProps> = ({
           bg={footerBgColor}
           bottom={0}
           w={"100%"}
+          display={"flex"}
+          justifyContent={"space-between"}
         >
+          <Box display={"flex"} flexDirection={"column"}>
+            <Text>1st: {first_category}</Text>
+            <Text>2nd: {second_category}</Text>
+          </Box>
+
           <Box textAlign={"right"}>
             <Text fontSize="sm" textAlign="right">
               written by {writer ? writer.username : "no user"}

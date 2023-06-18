@@ -60,7 +60,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
     ["getTaskListForCheckedPks", checkedRowPks],
     apiForGetTaskListForCheckedPks,
     {
-      enabled: true,
+      enabled: false,
     }
   );
 

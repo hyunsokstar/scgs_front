@@ -133,17 +133,6 @@ const CardForYoutubeContentForPage = ({
           <Box>{writer.username}</Box>
         </Box>
 
-        {/* {is_authority_for_note ? (
-            <ModalButtonForUpdateStudyNoteContent
-              button_text={"update for note content"}
-              pk={pk}
-              title={title}
-              file_name={file_name}
-              content={content}
-            />
-          ) : (
-            ""
-          )} */}
       </Box>
     </Box>
   );

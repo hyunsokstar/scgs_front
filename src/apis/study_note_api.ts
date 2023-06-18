@@ -575,6 +575,8 @@ export const apiFordeleteOneStudyNote = (pk: number) => {
 export const apiForCreateStudyNote = ({
   title,
   description,
+  first_category,
+  second_category
 }: type_for_insert_study_note) =>
   instance
     .post(
@@ -582,6 +584,8 @@ export const apiForCreateStudyNote = ({
       {
         title,
         description,
+        first_category,
+        second_category
       },
       {
         headers: {
