@@ -84,6 +84,8 @@ const CardForStudyNote: React.FC<IProps> = ({
         toast({
           title: "delete api docu 성공!",
           status: "success",
+          duration: 2000,
+          isClosable: true,
         });
       },
     }
@@ -97,8 +99,11 @@ const CardForStudyNote: React.FC<IProps> = ({
     const writer_name = writer.username;
 
     if (login_user_name === writer_name) {
+      const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
+      if (confirmDelete) {
+        mutationForDeleteStudyNote.mutate(pk);
+      }
       // alert("삭제 gogo");
-      mutationForDeleteStudyNote.mutate(pk);
     } else {
       alert(`작성자인 ${writer_name}님만 삭제 가능 합니다 !`);
     }
@@ -319,7 +324,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                 Open Note
               </Button>
             </Box>
-            <Box >
+            <Box>
               <ModalButtonForSubtititleListForNoteContent
                 modal_title={`${title}'s subtitle list`}
                 button_text={"SubTitle List"}
