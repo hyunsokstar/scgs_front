@@ -2,22 +2,19 @@ import React, { useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, ChakraProvider, extendTheme, Button } from "@chakra-ui/react";
+import { Box, ChakraProvider, Button } from "@chakra-ui/react";
+import { DataForStudyNoteContent } from "../../types/study_note_type";
 
-const theme = extendTheme({
-  colors: {
-    pastelColor1: "#F9CBCB",
-    pastelColor2: "#F5D6C6",
-    pastelColor3: "#F4E3D5",
-    pastelColor4: "#E8F1DF",
-    pastelColor5: "#E1E3F0",
-    pastelColor6: "#E7D4E8",
-  },
-});
+interface IProps {
+  dataForNoteContentListForPage: DataForStudyNoteContent[];
+}
 
-export default function NoteSlideForStudyNoteSpecificPage() {
+// 1122
+export default function NoteSlideForStudyNoteSpecificPage({
+  dataForNoteContentListForPage,
+}: IProps) {
   const [activeSlide, setActiveSlide] = React.useState(0);
-  const numSlides = 3;
+  const numSlides = dataForNoteContentListForPage.length;
   const sliderRef = useRef<any>(null);
 
   const handleSlideChange = (index: any) => {
@@ -68,12 +65,12 @@ export default function NoteSlideForStudyNoteSpecificPage() {
     return buttons;
   };
 
-  const dataForTaskListForChecked = ["1", "2", "3"];
+  // const dataForNoteContentListForPage = ["1", "2", "3"];
 
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider>
       <Slider {...settings} ref={sliderRef}>
-        {dataForTaskListForChecked.map((content, index) => (
+        {dataForNoteContentListForPage.map((note, index) => (
           <Box
             key={index}
             border="1px solid"
@@ -82,9 +79,10 @@ export default function NoteSlideForStudyNoteSpecificPage() {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            textAlign={"center"}
+            // textAlign={"center"}
           >
-            <h3>{content}</h3>
+            {/* {note.content} */}
+            <div dangerouslySetInnerHTML={{ __html: note.content }} />
           </Box>
         ))}
       </Slider>

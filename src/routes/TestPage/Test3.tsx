@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react'
 import React from 'react'
 
 interface Props {
@@ -7,9 +8,9 @@ interface Props {
 const Test3 = (props: Props) => {
   
   return (
-    <div>
-      
-    </div>
+    <Box>
+      test3 gogo
+    </Box>
   )
 }
 

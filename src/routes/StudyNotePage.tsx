@@ -179,8 +179,8 @@ const StudyNotePage = () => {
           wrap="wrap"
           justifyContent={"flex-start"}
           gap={5}
-          border={"0px solid black"}
-          width={"95%"}
+          // border={"1px solid black"}
+          width={"98%"}
           mx={"auto"}
         >
           {studyNoteData.noteList.map((note: TypeForNote) => (
