@@ -146,18 +146,22 @@ const TableModeForUpdatePage = (props: Props) => {
                   "All User's note"
                 )}
               </Box>
-              <Box>
-                {selectedRowPks.length ? (
-                  <ModalButtonForCopyTechNoteToMyNote
-                    buttonText="copy note for check to me"
-                    selectedRowPksFromOriginalTable={selectedRowPks}
-                    setSelectedRowPksFromOriginalTable={setSelectedRowPks}
-                    handleCheckboxChange={handleCheckboxChange}
-                  />
-                ) : (
-                  ""
-                )}
-              </Box>
+              {isLoggedIn ? (
+                <Box>
+                  {selectedRowPks.length ? (
+                    <ModalButtonForCopyTechNoteToMyNote
+                      buttonText="copy note for check to me"
+                      selectedRowPksFromOriginalTable={selectedRowPks}
+                      setSelectedRowPksFromOriginalTable={setSelectedRowPks}
+                      handleCheckboxChange={handleCheckboxChange}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </Box>
+              ) : (
+                "login is needed"
+              )}
             </Box>
             <Box>
               <Table variant="simple">
@@ -174,26 +178,28 @@ const TableModeForUpdatePage = (props: Props) => {
                 <Tbody>
                   {dataForGetStudyNoteList &&
                   dataForGetStudyNoteList.noteList.length ? (
-                    dataForGetStudyNoteList.noteList.map((item: TypeForNote) => (
-                      <Tr key={item.pk}>
-                        <Td>
-                          <Checkbox
-                            isChecked={selectedRowPks.includes(item.pk)}
-                            border={"1px solid black"}
-                            onChange={() => handleCheckboxChange(item.pk)}
-                          />
-                        </Td>
-                        <Td>{item.writer.username}</Td>
-                        <Td>
-                          <Link to={`/study-note/${item.pk}`}>
-                            <Box _hover={{ textDecoration: "underline" }}>
-                              {item.title} ({item.count_for_note_contents})
-                            </Box>
-                          </Link>
-                        </Td>
-                        <Td>{item.description}</Td>
-                      </Tr>
-                    ))
+                    dataForGetStudyNoteList.noteList.map(
+                      (item: TypeForNote) => (
+                        <Tr key={item.pk}>
+                          <Td>
+                            <Checkbox
+                              isChecked={selectedRowPks.includes(item.pk)}
+                              border={"1px solid black"}
+                              onChange={() => handleCheckboxChange(item.pk)}
+                            />
+                          </Td>
+                          <Td>{item.writer.username}</Td>
+                          <Td>
+                            <Link to={`/study-note/${item.pk}`}>
+                              <Box _hover={{ textDecoration: "underline" }}>
+                                {item.title} ({item.count_for_note_contents})
+                              </Box>
+                            </Link>
+                          </Td>
+                          <Td>{item.description}</Td>
+                        </Tr>
+                      )
+                    )
                   ) : (
                     <Tr>
                       <Td colSpan={5}>

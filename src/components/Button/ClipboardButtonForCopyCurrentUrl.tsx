@@ -16,7 +16,7 @@ const ClipboardButtonForCopyCurrentUrl = ({
   let url = note_url || window.location.href;
 
   if (pk) {
-    url = `${url}/${pk}`;
+    url = `${url}/${pk}/1`;
   }
 
   const [value, setValue] = useState("");

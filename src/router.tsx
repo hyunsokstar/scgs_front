@@ -64,6 +64,7 @@ import ExtraTaskDetailPage from "./routes/ExtraTaskDetailPage";
 import UncompltedTaskListWithImageSlideForCheckedPage from "./routes/UncompltedTaskListWithImageSlideForCheckedPage";
 import StudyNoteDetail2 from "./routes/StudyNoteDetail2";
 import TableModeForUpdatePage from "./routes/TableModeForUpdatePage";
+import NoteContentsByImageSlidePage from "./routes/Slide/NoteContentsByImageSlidePage";
 
 const router = createBrowserRouter([
   {
@@ -94,9 +95,14 @@ const router = createBrowserRouter([
         element: <TableModeForUpdatePage />,
       },
 
+
       {
         path: "study-note/:study_note_pk/:note_page_num",
         element: <StudyNoteDetail2  />,
+      },
+      {
+        path:"study-note/:study_note_pk/:note_page_num/slide",
+        element: <NoteContentsByImageSlidePage />
       },
       {
         path: "shortcut/:shortcut_pk",

@@ -45,11 +45,11 @@ interface ButtonsForPageNumbersForStudyNoteContentsProps {
 const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   ButtonsForPageNumbersForStudyNoteContentsProps
 > = ({
+  study_note_pk, // 노트 content pk 아니고 노트 주제 pk를 말함
   currentPage,
   pageNumbersToEdit,
   pageNumbersToMove,
   exist_page_numbers,
-  study_note_pk, // 노트 content pk 아니고 노트 주제 pk를 말함
   is_authority_for_note,
 }) => {
   const dispatch = useDispatch();
@@ -342,7 +342,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       width={"100%"}
       border={"1px solid green"}
     >
-      {/* <Box>{pageNumbersToEdit.join(", ")}</Box> */}
       <Box display={"flex"} width={"100%"} pt={1} px={1} gap={1}>
         <IconButton
           aria-label="Previous"
@@ -364,6 +363,21 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           onClick={() => pageMoveButtonHandler("right")}
         />
         <Spacer />
+        {/* see by slide 0619 fix*/}
+
+        <Link
+          to={`/study-note/${study_note_pk}/${currentPage}/slide`}
+          style={{ textDecoration: "underline" }}
+        >
+          <Button
+            variant={"outline"}
+            border={"1px solid black"}
+            _hover={{ bgColor: "pink.100" }}
+            size={"sm"}
+          >
+            by slide
+          </Button>
+        </Link>
       </Box>
 
       <Box

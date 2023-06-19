@@ -129,9 +129,7 @@ const CardForStudyNote: React.FC<IProps> = ({
     }
   );
 
-  // mutationForRegisterForCoWriterForOtherUserNote
   const buttonHandlerForRegisterCoWokerForNote = (notePk: number) => {
-    // alert(notePk);
     mutationForRegisterForCoWriterForOtherUserNote.mutate({ notePk });
   };
 
@@ -152,7 +150,6 @@ const CardForStudyNote: React.FC<IProps> = ({
           boxShadow: "xl",
           transform: "translateY(-2px)",
         }}
-        // position={"relative"}
       >
         <Box
           display={"flex"}
@@ -303,7 +300,7 @@ const CardForStudyNote: React.FC<IProps> = ({
             flexDirection={"column"}
             textAlign={"right"}
             p={2}
-            gap={1}
+            gap={2}
             bg={"gray.100"}
             border={"0px solid red"}
           >
@@ -317,12 +314,12 @@ const CardForStudyNote: React.FC<IProps> = ({
                   event.stopPropagation();
                   goToStudyNoteDetail(pk);
                 }}
-                _hover={{ bgColor: "yellow.200" }}
+                _hover={{ bgColor: "yellow.100" }}
               >
                 Open Note
               </Button>
             </Box>
-            <Box mb={1}>
+            <Box >
               <ModalButtonForSubtititleListForNoteContent
                 modal_title={`${title}'s subtitle list`}
                 button_text={"SubTitle List"}

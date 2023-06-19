@@ -58,7 +58,6 @@ const StudyNotePage = () => {
     (state: RootState) => state.loginInfo
   );
 
-  // fix 0619
   const {
     isLoading: studyNoteLoading,
     data: studyNoteData,
@@ -103,11 +102,9 @@ const StudyNotePage = () => {
         mb={2}
         gap={2}
       >
-        {/* 0619 todo: first_category second_category 셀렉트 박스 2개 추가 for filtering study note data */}
-
         {studyNoteData ? (
           <Select
-            placeholder="Select a first category"
+            placeholder="Select a User"
             size={"sm"}
             onChange={handleSelectedNoteWriter}
           >
