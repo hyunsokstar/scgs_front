@@ -128,8 +128,12 @@ export default function NoteSlideForStudyNoteSpecificPage({
                   alignItems={"center"}
                   p={3}
                 >
-                  <Box width={"50%"}>{note.ref_url1}</Box>
-                  <Box width={"50%"}>{note.ref_url2}</Box>
+                  <Box width={"50%"} userSelect="text">
+                    {note.ref_url1}
+                  </Box>
+                  <Box width={"50%"} userSelect="text">
+                    {note.ref_url2}
+                  </Box>
                 </Box>
               </Box>
             );
@@ -165,7 +169,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
             return (
               <Box
                 width={"100%"}
-                bg={"yellow.100"}
+                bg={"blue.100"}
                 display={"flex"}
                 alignItems={"center"}
                 p={3}

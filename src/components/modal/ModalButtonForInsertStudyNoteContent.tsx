@@ -21,12 +21,15 @@ type Props = {
   button_text: string;
   currentPage: number | string | undefined;
   study_note_pk: number | string | undefined;
+  refetch?: () => void;
 };
 
+// 1122
 function ModalButtonForInsertStudyNoteContent({
   button_text,
   currentPage,
   study_note_pk,
+  refetch,
 }: Props) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -66,7 +69,11 @@ function ModalButtonForInsertStudyNoteContent({
           status: "success",
         });
 
-        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        if (refetch) {
+          refetch();
+        } else {
+          queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        }
         
         reset();
         setModalIsOpen(false);
@@ -128,6 +135,7 @@ function ModalButtonForInsertStudyNoteContent({
         variant="outline"
         onClick={openModal}
         _hover={{ bg: "teal.500", color: "white" }}
+        border={"1px solid black"}
       >
         {button_text}
       </Button>{" "}
@@ -140,6 +148,7 @@ function ModalButtonForInsertStudyNoteContent({
           <Button
             variant="outline"
             bg="pink.100"
+            border={"1px solid black"}
             color="gray.700"
             size="sm"
             _hover={{
@@ -206,7 +215,6 @@ function ModalButtonForInsertStudyNoteContent({
               {...register("study_note_pk")}
               value={study_note_pk}
             />
-            
           </FormControl>
         </Box>
         <Box mt={5}>

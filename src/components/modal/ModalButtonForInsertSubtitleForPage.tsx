@@ -18,12 +18,12 @@ import {
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForCreateSubTitleForNote } from "../../apis/study_note_api";
-import { describe } from "node:test";
 
 interface IProps {
   button_text: string;
   currentPage: number | string | undefined;
   study_note_pk: number | string | undefined;
+  refetch?: () => void;
 }
 
 // 1122
@@ -31,6 +31,7 @@ const ModalButtonForInsertSubtitleForPage = ({
   button_text,
   currentPage,
   study_note_pk,
+  refetch,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const queryClient = useQueryClient();
@@ -68,7 +69,11 @@ const ModalButtonForInsertSubtitleForPage = ({
             isClosable: true,
           });
         }
-        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        if (refetch) {
+          refetch();
+        } else {
+          queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        }
         reset();
         onClose();
       },

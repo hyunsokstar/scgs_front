@@ -23,6 +23,7 @@ interface IProps {
   button_text: string;
   currentPage: number | string | undefined;
   study_note_pk: number | string | undefined;
+  refetch?: () => void;
 }
 
 // 1122
@@ -30,6 +31,7 @@ const ModalButtonForInsertYoutubeContentsForNote = ({
   button_text,
   currentPage,
   study_note_pk,
+  refetch,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -57,8 +59,11 @@ const ModalButtonForInsertYoutubeContentsForNote = ({
           duration: 2000,
           isClosable: true,
         });
-
-        queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        if (refetch) {
+          refetch();
+        } else {
+          queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+        }
         reset();
         onClose();
       },
@@ -71,7 +76,7 @@ const ModalButtonForInsertYoutubeContentsForNote = ({
 
   const onSubmit = (data: any) => {
     console.log(data);
-    mutationForCreateNoteContentForYoutube.mutate(data)
+    mutationForCreateNoteContentForYoutube.mutate(data);
   };
 
   // 2244
