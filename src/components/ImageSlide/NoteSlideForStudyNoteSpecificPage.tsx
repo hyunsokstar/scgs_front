@@ -2,8 +2,18 @@ import React, { useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, ChakraProvider, Button, Text } from "@chakra-ui/react";
+import {
+  Box,
+  ChakraProvider,
+  Button,
+  Text,
+  Table,
+  Tbody,
+  Td,
+  Tr,
+} from "@chakra-ui/react";
 import { DataForStudyNoteContent } from "../../types/study_note_type";
+import PlayerForYouTube from "../Player/PlayerForYouTube";
 
 interface IProps {
   dataForNoteContentListForPage: DataForStudyNoteContent[];
@@ -71,30 +81,123 @@ export default function NoteSlideForStudyNoteSpecificPage({
   return (
     <ChakraProvider>
       <Slider {...settings} ref={sliderRef}>
-        {dataForNoteContentListForPage.map((note, index) => (
-          <Box
-            key={index}
-            border="1px solid"
-            borderColor="gray.200"
-            height="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            userSelect="text"
-            // textAlign={"center"}
-          >
-            <Box bg={"yellow.100"} display={"flex"} p={3} fontSize={"24px"}>
-              <Box width={"50%"}>
-                title:
-                <Text>{note.title}</Text>
+        {dataForNoteContentListForPage.map((note, index) => {
+          if (note.content_option === "subtitle_for_page") {
+            return (
+              <Box>
+                <Box width={"100%"} bg={"yellow.100"}>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    height={"78vh"}
+                    userSelect="text"
+                  >
+                    {note.youtube_url ? (
+                      <Box display={"flex"} width={"100%"}>
+                        <Box
+                          width={"30%"}
+                          // border={"1px solid black"}
+                          display={"flex"}
+                          justifyContent={"center"}
+                          alignItems={"center"}
+                          fontSize={"24px"}
+                        >
+                          {note.title}
+                        </Box>
+                        <Box
+                          width={"70%"}
+                          // border={"1px solid black"}
+                          display={"flex"}
+                          justifyContent={"center"}
+                        >
+                          <PlayerForYouTube youtubeUrl={note.youtube_url} />
+                        </Box>
+                      </Box>
+                    ) : (
+                      <Box>
+                        <Text>{note.title}</Text>
+                      </Box>
+                    )}
+                  </Box>
+                </Box>
+                <Box
+                  display={"flex"}
+                  height={"5vh"}
+                  bg={"blue.100"}
+                  alignItems={"center"}
+                  p={3}
+                >
+                  <Box width={"50%"}>{note.ref_url1}</Box>
+                  <Box width={"50%"}>{note.ref_url2}</Box>
+                </Box>
               </Box>
-              <Box width={"50%"}>
-                file :<Text>{note.file_name}</Text>
+            );
+          } else if (note.content_option === "note_content") {
+            return (
+              <Box
+                key={index}
+                border="1px solid"
+                borderColor="gray.200"
+                // height="100%"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                userSelect="text"
+              >
+                <Box bg={"yellow.100"} display={"flex"} p={3} fontSize={"24px"}>
+                  <Box width={"50%"}>
+                    title:
+                    <Text>{note.title}</Text>
+                  </Box>
+                  <Box width={"50%"}>
+                    file :<Text>{note.file_name}</Text>
+                  </Box>
+                </Box>
+                <Box
+                  dangerouslySetInnerHTML={{ __html: note.content }}
+                  overflowY={"scroll"}
+                  height={"70vh"}
+                />
               </Box>
-            </Box>
-            <Box dangerouslySetInnerHTML={{ __html: note.content }} />
-          </Box>
-        ))}
+            );
+          } else if (note.content_option === "youtube") {
+            return (
+              <Box
+                width={"100%"}
+                bg={"yellow.100"}
+                display={"flex"}
+                alignItems={"center"}
+                p={3}
+                textAlign={"center"}
+                fontSize={"38px"}
+              >
+                <Box
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  overflowY={"scroll"}
+                  height={"80vh"}
+                >
+                  <Table variant="simple">
+                    <Tbody>
+                      <Tr>
+                        <Td>{note.title}</Td>
+                        <Td position={"relative"}>
+                          {note.youtube_url ? (
+                            <PlayerForYouTube youtubeUrl={note.youtube_url} />
+                          ) : (
+                            ""
+                          )}
+                        </Td>
+                      </Tr>
+                    </Tbody>
+                  </Table>
+                </Box>
+              </Box>
+            );
+          }
+        })}
       </Slider>
 
       <Box display="flex" justifyContent="center" alignItems={"center"} mt={2}>
