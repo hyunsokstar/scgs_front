@@ -74,7 +74,7 @@ function ModalButtonForInsertStudyNoteContent({
         } else {
           queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
         }
-        
+
         reset();
         setModalIsOpen(false);
       },
@@ -86,7 +86,6 @@ function ModalButtonForInsertStudyNoteContent({
   );
 
   // submit
-  // ref 0616
   const handleFormSubmit = async (formData: StudyNoteContentFormData) => {
     setIsLoading(true);
     console.log("formData : ", formData);
@@ -173,6 +172,14 @@ function ModalButtonForInsertStudyNoteContent({
           <FormControl>
             <Input
               type="hidden"
+              {...register("study_note_pk")}
+              value={study_note_pk}
+            />
+          </FormControl>
+
+          <FormControl>
+            <Input
+              type="hidden"
               {...register("current_page_number")}
               value={currentPage}
             />
@@ -207,14 +214,6 @@ function ModalButtonForInsertStudyNoteContent({
                 apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
               />
             </Box>
-          </FormControl>
-
-          <FormControl>
-            <Input
-              type="hidden"
-              {...register("study_note_pk")}
-              value={study_note_pk}
-            />
           </FormControl>
         </Box>
         <Box mt={5}>
