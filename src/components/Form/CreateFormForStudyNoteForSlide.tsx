@@ -162,7 +162,8 @@ const CreateFormForStudyNoteForSlide = ({
             _hover={{ backgroundColor: "teal.100" }}
             onClick={handleSubmit(handleFormSubmit)}
             isLoading={isLoading}
-            w={"50%"}
+            p={3}
+            w={"100%"}
           >
             Submit
           </Button>

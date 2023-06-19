@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -14,18 +14,37 @@ import {
 } from "@chakra-ui/react";
 import { DataForStudyNoteContent } from "../../types/study_note_type";
 import PlayerForYouTube from "../Player/PlayerForYouTube";
+import CreateFormForStudyNoteForSlide from "../Form/CreateFormForStudyNoteForSlide";
 
 interface IProps {
+  study_note_pk: number | string | undefined;
+  note_page_num: number | string | undefined;
   dataForNoteContentListForPage: DataForStudyNoteContent[];
 }
 
 // 1122
 export default function NoteSlideForStudyNoteSpecificPage({
+  study_note_pk,
+  note_page_num,
   dataForNoteContentListForPage,
 }: IProps) {
   const [activeSlide, setActiveSlide] = React.useState(0);
-  const numSlides = dataForNoteContentListForPage.length;
+  const numSlides = dataForNoteContentListForPage.length + 1;
   const sliderRef = useRef<any>(null);
+
+  const [dataForSlides, setDataForSlides] = useState<any>([]);
+
+  useEffect(() => {
+    let dataForSlidesForUpdate = [
+      ...dataForNoteContentListForPage,
+      <CreateFormForStudyNoteForSlide
+        study_note_pk={study_note_pk}
+        currentPage={note_page_num}
+      />,
+    ];
+
+    setDataForSlides(dataForSlidesForUpdate);
+  }, [dataForNoteContentListForPage]);
 
   const handleSlideChange = (index: any) => {
     setActiveSlide(index);
@@ -76,12 +95,10 @@ export default function NoteSlideForStudyNoteSpecificPage({
     return buttons;
   };
 
-  // const dataForNoteContentListForPage = ["1", "2", "3"];
-
   return (
     <ChakraProvider>
       <Slider {...settings} ref={sliderRef}>
-        {dataForNoteContentListForPage.map((note, index) => {
+        {dataForSlides.map((note, index) => {
           if (note.content_option === "subtitle_for_page") {
             return (
               <Box>
@@ -200,6 +217,8 @@ export default function NoteSlideForStudyNoteSpecificPage({
                 </Box>
               </Box>
             );
+          } else {
+            return note;
           }
         })}
       </Slider>

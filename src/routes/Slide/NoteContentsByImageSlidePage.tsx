@@ -40,7 +40,12 @@ const NoteContentsByImageSlidePage = (props: Props) => {
   // 2244
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} p={1}>
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        p={1}
+      >
         <Box>
           note_pk: {study_note_pk} &nbsp;&nbsp; note_page_num: {note_page_num}
         </Box>
@@ -76,6 +81,8 @@ const NoteContentsByImageSlidePage = (props: Props) => {
         <Box width={"100%"} border={"1px solid green"}>
           {dataForNoteContentListForPage ? (
             <NoteSlideForStudyNoteSpecificPage
+              study_note_pk={study_note_pk}
+              note_page_num={note_page_num}
               dataForNoteContentListForPage={
                 dataForNoteContentListForPage.data_for_study_note_contents
               }
