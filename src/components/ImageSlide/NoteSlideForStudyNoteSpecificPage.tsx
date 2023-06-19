@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, ChakraProvider, Button } from "@chakra-ui/react";
+import { Box, ChakraProvider, Button, Text } from "@chakra-ui/react";
 import { DataForStudyNoteContent } from "../../types/study_note_type";
 
 interface IProps {
@@ -39,6 +39,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
     centerMode: true,
     centerPadding: "0%",
     beforeChange: (current: any, next: any) => handleSlideChange(next),
+    swipe: false, // Disable mouse swipe navigation
   };
 
   const renderCustomPaging = () => {
@@ -79,10 +80,19 @@ export default function NoteSlideForStudyNoteSpecificPage({
             display="flex"
             justifyContent="center"
             alignItems="center"
+            userSelect="text"
             // textAlign={"center"}
           >
-            {/* {note.content} */}
-            <div dangerouslySetInnerHTML={{ __html: note.content }} />
+            <Box bg={"yellow.100"} display={"flex"} p={3} fontSize={"24px"}>
+              <Box width={"50%"}>
+                title:
+                <Text>{note.title}</Text>
+              </Box>
+              <Box width={"50%"}>
+                file :<Text>{note.file_name}</Text>
+              </Box>
+            </Box>
+            <Box dangerouslySetInnerHTML={{ __html: note.content }} />
           </Box>
         ))}
       </Slider>
