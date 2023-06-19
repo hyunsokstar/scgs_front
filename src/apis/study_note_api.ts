@@ -28,9 +28,8 @@ export const apiForUpdateStudyNote = ({
   first_category,
   second_category,
 }: any) => {
-
   console.log("apiForUpdateStudyNote excute check !");
-  
+
   return instance
     .put(
       `/study-note/`,
@@ -313,11 +312,13 @@ export const apiForGetStudyNoteListForMe = async ({
 export const apiForGetStudyNoteList = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
-  const [_, pageNum, selectedNoteWriter] = queryKey;
-
+  const [_, pageNum, selectedNoteWriter, first_category, second_category] =
+    queryKey;
   const params = new URLSearchParams();
   params.append("page", pageNum as string);
-  params.append("selectedNoteWriter", selectedNoteWriter as string); // Add selectedNoteWriter to params
+  params.append("first_category", first_category as string);
+  params.append("second_category", second_category as string);
+  params.append("selectedNoteWriter", selectedNoteWriter as string); // Add selectedNoteWriter to
 
   return await instance.get(`study-note/?${params}`).then((response) => {
     console.log("response.data : ", response.data);

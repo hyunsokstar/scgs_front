@@ -151,8 +151,6 @@ const ModalButtonForUpdateStudyNote = ({
                   {/* options */}
                   <option value="frontend">Frontend</option>
                   <option value="backend">Backend</option>
-                  <option value="challenge">Challenge</option>
-                  <option value="boiler-plate">Boiler Plate</option>
                 </Select>
                 {errors.study_note_first_category && (
                   <FormErrorMessage>

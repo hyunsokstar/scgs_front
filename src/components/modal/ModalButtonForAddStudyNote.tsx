@@ -124,8 +124,6 @@ function ModalButtonForAddStudyNote({ button_text }: IProps) {
                 >
                   <option value="frontend">Frontend</option>
                   <option value="backend">Backend</option>
-                  <option value="challenge">Challenge</option>
-                  <option value="boiler-plate">Boiler Plate</option>
                 </Select>
                 {errors.first_category && (
                   <FormErrorMessage>

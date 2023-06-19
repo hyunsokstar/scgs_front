@@ -122,16 +122,17 @@ export interface TypeForNote {
   writer: NoteWriterType;
   note_cowriters: TypeForNoteCoWriter[];
   first_category: FirstCategory;
-  second_category: SecondCategory; 
+  second_category: SecondCategory;
 
   count_for_note_contents: number;
-  count_for_note_comments: number; 
+  count_for_note_comments: number;
 }
 
 export interface TypeForNoteList {
   noteList: TypeForNote[];
   totalPageCount: number;
   note_count_per_page: number;
+  note_writers: string[];
 }
 
 export interface typeForParameterForApiForCopySelectedNotesToMyNote {
