@@ -17,6 +17,7 @@ import {
   apiFordeleteOneStudyNote,
 } from "../../apis/study_note_api";
 import { useNavigate } from "react-router-dom";
+
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import ClipboardButtonForCopyCurrentUrl from "../Button/ClipboardButtonForCopyCurrentUrl";
@@ -136,6 +137,12 @@ const CardForStudyNote: React.FC<IProps> = ({
 
   const buttonHandlerForRegisterCoWokerForNote = (notePk: number) => {
     mutationForRegisterForCoWriterForOtherUserNote.mutate({ notePk });
+  };
+
+  const buttonHandlerForMoveSlidePageForThisNote = (pk: any) => {
+    // alert(pk);
+    navigate(`/study-note/${pk}/1/slide`);
+
   };
 
   // 2244
@@ -324,6 +331,20 @@ const CardForStudyNote: React.FC<IProps> = ({
                 Open Note
               </Button>
             </Box>
+
+            <Box>
+              {/* slide button 추가 0620 */}
+              <Button
+                variant={"outline"}
+                size={"sm"}
+                border={"1px solid black"}
+                _hover={{ bgColor: "yellow.100" }}
+                onClick={() => buttonHandlerForMoveSlidePageForThisNote(pk)}
+              >
+                Slide
+              </Button>
+            </Box>
+
             <Box>
               <ModalButtonForSubtititleListForNoteContent
                 modal_title={`${title}'s subtitle list`}

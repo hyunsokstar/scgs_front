@@ -11,14 +11,18 @@ import {
   Tbody,
   Td,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 import { DataForStudyNoteContent } from "../../types/study_note_type";
 import PlayerForYouTube from "../Player/PlayerForYouTube";
 import CreateFormForStudyNoteForSlide from "../Form/CreateFormForStudyNoteForSlide";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { IoIosSkipBackward, IoIosFastforward } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
 
 interface IProps {
-  study_note_pk: number | string | undefined;
-  note_page_num: number | string | undefined;
+  study_note_pk: string | undefined;
+  note_page_num: string | undefined;
   dataForNoteContentListForPage: DataForStudyNoteContent[];
 }
 
@@ -28,11 +32,12 @@ export default function NoteSlideForStudyNoteSpecificPage({
   note_page_num,
   dataForNoteContentListForPage,
 }: IProps) {
+  const navigate = useNavigate();
   const [activeSlide, setActiveSlide] = React.useState(0);
   const numSlides = dataForNoteContentListForPage.length + 1;
   const sliderRef = useRef<any>(null);
-
   const [dataForSlides, setDataForSlides] = useState<any>([]);
+  const toast = useToast();
 
   useEffect(() => {
     let dataForSlidesForUpdate = [
@@ -76,6 +81,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
 
     for (let i = 0; i < numSlides; i++) {
       const isActive = activeSlide === i;
+      const buttonText = i === numSlides - 1 ? "C" : i + 1; // 마지막 버튼일 경우 "c"로 표시
 
       buttons.push(
         <Button
@@ -87,12 +93,46 @@ export default function NoteSlideForStudyNoteSpecificPage({
           border="1px solid blue"
           onClick={() => handleSlideChange(i)}
         >
-          {i + 1}
+          {buttonText}{" "}
         </Button>
       );
     }
 
     return buttons;
+  };
+  const changePage = (option: string) => {
+    if (option === "previous") {
+      if (note_page_num && parseInt(note_page_num) > 1) {
+        const page_to_move = parseInt(note_page_num) - 1;
+        navigate(`/study-note/${study_note_pk}/${page_to_move}/slide`);
+      } else {
+        toast({
+          title: "Warnning !",
+          description: "1 페이지 이하로는 이동 불가능 합니다",
+          status: "warning",
+          duration: 2000,
+          isClosable: true,
+        });
+      }
+    } else if (option === "next") {
+      if (note_page_num !== undefined && parseInt(note_page_num) < 50) {
+        console.log("check type : ", typeof note_page_num);
+        const page_to_move = parseInt(note_page_num) + 1;
+        navigate(`/study-note/${study_note_pk}/${page_to_move}/slide`);
+      } else {
+        toast({
+          title: "Warning!",
+          description: `50 is the last page.`,
+          status: "warning",
+          duration: 2000,
+          isClosable: true,
+        });
+      }
+    } else if (option === "first") {
+      navigate(`/study-note/${study_note_pk}/1/slide`);
+    } else if (option === "last") {
+      navigate(`/study-note/${study_note_pk}/50/slide`);
+    }
   };
 
   return (
@@ -114,7 +154,6 @@ export default function NoteSlideForStudyNoteSpecificPage({
                       <Box display={"flex"} width={"100%"}>
                         <Box
                           width={"30%"}
-                          // border={"1px solid black"}
                           display={"flex"}
                           justifyContent={"center"}
                           alignItems={"center"}
@@ -124,7 +163,6 @@ export default function NoteSlideForStudyNoteSpecificPage({
                         </Box>
                         <Box
                           width={"70%"}
-                          // border={"1px solid black"}
                           display={"flex"}
                           justifyContent={"center"}
                         >
@@ -224,9 +262,42 @@ export default function NoteSlideForStudyNoteSpecificPage({
       </Slider>
 
       <Box display="flex" justifyContent="center" alignItems={"center"} mt={2}>
-        <Button onClick={prevSlide}>Prev</Button>
-        {renderCustomPaging()}
-        <Button onClick={nextSlide}>Next</Button>
+        <ChakraProvider>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            my={2}
+            gap={1}
+          >
+            <Button onClick={() => changePage("first")}>F</Button>
+            <Button>
+              <IoIosSkipBackward onClick={() => changePage("previous")} />
+            </Button>
+
+            <Button onClick={prevSlide}>
+              <AiOutlineLeft />
+            </Button>
+            <Box
+              display="flex"
+              // border="1px solid green"
+              // bg="green.50"
+              flexWrap="wrap"
+              w="70%" // 화면의 70% 넓이로 설정
+              mx="auto" // 중앙 정렬을 위해 mx="auto" 설정
+            >
+              {renderCustomPaging()}
+            </Box>
+            <Button onClick={nextSlide}>
+              <AiOutlineRight />
+            </Button>
+
+            <Button>
+              <IoIosFastforward onClick={() => changePage("next")} />
+            </Button>
+            <Button onClick={() => changePage("last")}>L</Button>
+          </Box>
+        </ChakraProvider>
       </Box>
     </ChakraProvider>
   );

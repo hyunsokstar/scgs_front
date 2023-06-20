@@ -37,6 +37,7 @@ const NoteContentsByImageSlidePage = (props: Props) => {
     console.log("hi");
   };
 
+  
   // 2244
   return (
     <Box>
