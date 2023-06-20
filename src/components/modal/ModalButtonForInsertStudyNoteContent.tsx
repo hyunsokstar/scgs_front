@@ -21,6 +21,7 @@ type Props = {
   button_text: string;
   currentPage: number | string | undefined;
   study_note_pk: number | string | undefined;
+  button_size?: string;
   refetch?: () => void;
 };
 
@@ -29,6 +30,7 @@ function ModalButtonForInsertStudyNoteContent({
   button_text,
   currentPage,
   study_note_pk,
+  button_size,
   refetch,
 }: Props) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -135,6 +137,7 @@ function ModalButtonForInsertStudyNoteContent({
         onClick={openModal}
         _hover={{ bg: "teal.500", color: "white" }}
         border={"1px solid black"}
+        size={button_size}
       >
         {button_text}
       </Button>{" "}

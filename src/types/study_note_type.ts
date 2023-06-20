@@ -30,6 +30,7 @@ export interface StudyNoteData {
   note_title: string;
   note_user_name: string;
   exist_page_numbers: number[];
+  note_user_profile_image: string;
   data_for_study_note_contents: DataForStudyNoteContent[];
   co_writers_for_approved: CoWriter[];
 }

@@ -24,6 +24,8 @@ interface IProps {
   study_note_pk: string | undefined;
   note_page_num: string | undefined;
   dataForNoteContentListForPage: DataForStudyNoteContent[];
+  note_title: string;
+  note_writer: string;
 }
 
 // 1122
@@ -31,6 +33,8 @@ export default function NoteSlideForStudyNoteSpecificPage({
   study_note_pk,
   note_page_num,
   dataForNoteContentListForPage,
+  note_title,
+  note_writer,
 }: IProps) {
   const navigate = useNavigate();
   const [activeSlide, setActiveSlide] = React.useState(0);
@@ -74,6 +78,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
     centerPadding: "0%",
     beforeChange: (current: any, next: any) => handleSlideChange(next),
     swipe: false, // Disable mouse swipe navigation
+    verticalSpacing: 5, // Adjust the desired vertical spacing value
   };
 
   const renderCustomPaging = () => {
@@ -90,7 +95,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
           variant={isActive ? "solid" : "outline"}
           colorScheme="gray"
           mx={1} // 버튼들 간의 간격 조절
-          border="1px solid blue"
+          border="0px solid blue"
           onClick={() => handleSlideChange(i)}
         >
           {buttonText}{" "}
@@ -141,13 +146,13 @@ export default function NoteSlideForStudyNoteSpecificPage({
         {dataForSlides.map((note, index) => {
           if (note.content_option === "subtitle_for_page") {
             return (
-              <Box>
-                <Box width={"100%"} bg={"yellow.100"}>
+              <Box border={"0px solid blue"}>
+                <Box width={"100%"} bg={"yellow.100"} border={"0px solid pink"}>
                   <Box
                     display={"flex"}
                     justifyContent={"center"}
                     alignItems={"center"}
-                    height={"78vh"}
+                    height={"60vh"}
                     userSelect="text"
                   >
                     {note.youtube_url ? (
@@ -157,7 +162,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
                           display={"flex"}
                           justifyContent={"center"}
                           alignItems={"center"}
-                          fontSize={"24px"}
+                          fontSize={"12px"}
                         >
                           {note.title}
                         </Box>
@@ -178,7 +183,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
                 </Box>
                 <Box
                   display={"flex"}
-                  height={"5vh"}
+                  height={"2vh"}
                   bg={"blue.100"}
                   alignItems={"center"}
                   p={3}
@@ -196,7 +201,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
             return (
               <Box
                 key={index}
-                border="1px solid"
+                border="0px solid black"
                 borderColor="gray.200"
                 // height="100%"
                 display="flex"
@@ -204,7 +209,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
                 alignItems="center"
                 userSelect="text"
               >
-                <Box bg={"yellow.100"} display={"flex"} p={3} fontSize={"24px"}>
+                <Box bg={"yellow.100"} display={"flex"} p={3} fontSize={"16px"}>
                   <Box width={"50%"}>
                     title:
                     <Text>{note.title}</Text>
@@ -216,7 +221,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
                 <Box
                   dangerouslySetInnerHTML={{ __html: note.content }}
                   overflowY={"scroll"}
-                  height={"70vh"}
+                  height={"60vh"}
                 />
               </Box>
             );
@@ -236,7 +241,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
                   justifyContent={"center"}
                   alignItems={"center"}
                   overflowY={"scroll"}
-                  height={"80vh"}
+                  height={"60vh"}
                 >
                   <Table variant="simple">
                     <Tbody>
@@ -261,13 +266,20 @@ export default function NoteSlideForStudyNoteSpecificPage({
         })}
       </Slider>
 
-      <Box display="flex" justifyContent="center" alignItems={"center"} mt={2}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems={"center"}
+        height={"50px"}
+        border={"1px solid black"}
+        mt={1}
+      >
         <ChakraProvider>
           <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
-            my={2}
+            mt={1}
             gap={1}
           >
             <Button onClick={() => changePage("first")}>F</Button>
@@ -280,8 +292,6 @@ export default function NoteSlideForStudyNoteSpecificPage({
             </Button>
             <Box
               display="flex"
-              // border="1px solid green"
-              // bg="green.50"
               flexWrap="wrap"
               w="70%" // 화면의 70% 넓이로 설정
               mx="auto" // 중앙 정렬을 위해 mx="auto" 설정
