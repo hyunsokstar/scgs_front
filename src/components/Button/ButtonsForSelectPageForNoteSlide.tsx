@@ -13,33 +13,22 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   study_note_pk: string | undefined;
+  button_text: string;
+  exist_page_numbers: numbers[];
 }
 
-const ButtonsForSelectPageForNoteSlide = ({ study_note_pk }: Props) => {
+const ButtonsForSelectPageForNoteSlide = ({
+  study_note_pk,
+  button_text,
+  exist_page_numbers,
+}: Props) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClick = (pageNumber: number) => {
     navigate(`/study-note/${study_note_pk}/${pageNumber}/slide`);
-    setIsModalOpen(false)
+    setIsModalOpen(false);
   };
-
-  //   const renderButtons = () => {
-  //     const buttons = [];
-  //     for (let i = 1; i <= 50; i++) {
-  //       buttons.push(
-  //         <Button
-  //           variant={"outline"}
-  //           size={"sm"}
-  //           key={i}
-  //           onClick={() => handleClick(i)}
-  //         >
-  //           {i}
-  //         </Button>
-  //       );
-  //     }
-  //     return buttons;
-  //   };
 
   const renderButtons = () => {
     const buttons = [];
@@ -65,7 +54,9 @@ const ButtonsForSelectPageForNoteSlide = ({ study_note_pk }: Props) => {
             key={i}
             onClick={() => handleClick(i)}
             m={1}
-            _hover={{bgColor:"blue.100"}}
+            borderWidth={exist_page_numbers && exist_page_numbers.includes(i) ? "2px" : "1px"}
+            borderColor={exist_page_numbers && exist_page_numbers.includes(i) ? "green" : "gray"}
+            _hover={{ bgColor: "blue.100" }}
           >
             {i}
           </Button>
@@ -93,7 +84,7 @@ const ButtonsForSelectPageForNoteSlide = ({ study_note_pk }: Props) => {
   return (
     <Box>
       <Button variant={"outline"} size={"xs"} onClick={handleOpenModal}>
-        select page
+        {button_text}
       </Button>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <ModalOverlay />

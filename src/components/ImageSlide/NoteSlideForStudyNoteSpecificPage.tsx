@@ -146,7 +146,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
         {dataForSlides.map((note, index) => {
           if (note.content_option === "subtitle_for_page") {
             return (
-              <Box border={"0px solid blue"}>
+              <Box border={"0px solid blue"} key={note.pk}>
                 <Box width={"100%"} bg={"yellow.100"} border={"0px solid pink"}>
                   <Box
                     display={"flex"}
@@ -200,7 +200,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
           } else if (note.content_option === "note_content") {
             return (
               <Box
-                key={index}
+                key={note.pk}
                 border="0px solid black"
                 borderColor="gray.200"
                 // height="100%"
@@ -228,6 +228,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
           } else if (note.content_option === "youtube") {
             return (
               <Box
+                key={note.pk}
                 width={"100%"}
                 bg={"blue.100"}
                 display={"flex"}

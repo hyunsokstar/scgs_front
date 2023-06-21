@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Avatar, Box } from "@chakra-ui/react";
+import { Avatar, Box, Button } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import NoteSlideForStudyNoteSpecificPage from "../../components/ImageSlide/NoteSlideForStudyNoteSpecificPage";
 
 import TinyMCEEditor from "../../components/RichEditor/TinyMCEEditor";
@@ -62,12 +62,17 @@ const NoteContentsByImageSlidePage = (props: Props) => {
           <Box>{dataForNoteContentListForPage?.note_title}</Box>
           <Box display={"fex"} gap={2}>
             page: {note_page_num}
-            <ButtonsForSelectPageForNoteSlide study_note_pk={study_note_pk} />
+            <ButtonsForSelectPageForNoteSlide
+              button_text={"select page"}
+              study_note_pk={study_note_pk}
+              exist_page_numbers={
+                dataForNoteContentListForPage?.exist_page_numbers
+              }
+            />
           </Box>
         </Box>
         <Box>
           <Box display={"flex"} gap={2} alignItems={"center"}>
-            {/* {dataForNoteContentListForPage?.note_user_profile_image} */}
             <Avatar
               name={dataForNoteContentListForPage?.note_user_name}
               src={dataForNoteContentListForPage?.note_user_profile_image}
@@ -80,7 +85,12 @@ const NoteContentsByImageSlidePage = (props: Props) => {
               ? dataForNoteContentListForPage?.co_writers_for_approved.map(
                   (row) => {
                     return (
-                      <Box display={"flex"} gap={2} alignItems={"center"}>
+                      <Box
+                        key={row.pk}
+                        display={"flex"}
+                        gap={2}
+                        alignItems={"center"}
+                      >
                         <Box>
                           <Avatar
                             name={row.username}
@@ -100,6 +110,19 @@ const NoteContentsByImageSlidePage = (props: Props) => {
         <Box>
           {is_authority_for_note ? (
             <Box display={"flex"} gap={2}>
+              <Link
+                to={`/study-note/${study_note_pk}/${note_page_num}`}
+                style={{ textDecoration: "underline" }}
+              >
+                <Button
+                  variant={"outline"}
+                  border={"1px solid black"}
+                  _hover={{ bgColor: "gray.100" }}
+                  size={"sm"}
+                >
+                  By Card
+                </Button>
+              </Link>
               <ModalButtonForInsertYoutubeContentsForNote
                 study_note_pk={study_note_pk}
                 currentPage={note_page_num}
@@ -147,12 +170,6 @@ const NoteContentsByImageSlidePage = (props: Props) => {
           ) : (
             "no data"
           )}
-        </Box>
-        <Box width={"100%"} border={"1px solid red"}>
-          {/* <TinyMCEEditor
-            onChange={handleChangeForNoteContent}
-            apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
-          /> */}
         </Box>
       </Box>
     </Box>

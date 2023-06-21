@@ -85,6 +85,7 @@ export const getMe = () =>
     return response.data;
   });
 
+
 export const logOutApi = () =>
   instance
     .post(`users/log-out`, null, {
