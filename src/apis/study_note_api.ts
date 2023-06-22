@@ -21,7 +21,18 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForRegisterClassRoomForStudyNote
+// apiForLoadSavedPageForThisNote
+export const apiForLoadSavedPageForThisNote = ({ study_note_pk }: any) => {
+  console.log("study_note_pk : ", study_note_pk);
+  return instance
+    .get(`/study-note/class-room/load-saved-page/${study_note_pk}`, {
+      params: {},
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
 export const apiForRegisterClassRoomForStudyNote = ({
   study_note_pk,
   current_page = 1,

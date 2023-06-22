@@ -8,6 +8,7 @@ import {
 import {
   apiFordeleteStudyNoteContentsForChecked,
   apiForGetStuyNoteContentList,
+  apiForLoadSavedPageForThisNote,
   apiForRegisterClassRoomForStudyNote,
 } from "../apis/study_note_api";
 import { Box, Text, Button, useToast, Avatar } from "@chakra-ui/react";
@@ -187,6 +188,46 @@ const StudyNoteDetail2 = (props: Props) => {
     });
   };
 
+  const mutationForLoadSavedPageForThisNote = useMutation(
+    apiForLoadSavedPageForThisNote,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data: ", data);
+
+        toast({
+          title: "load save page success!",
+          status: "success",
+          description: data.current_page,
+          duration: 2000,
+          isClosable: true,
+        });
+        navigate(`/study-note/${study_note_pk}/${data.current_page}`);
+      },
+      onError: (error: any) => {
+        console.log("error : ", error.response.data);
+
+        console.log("error type: ", error.response.data.message_type);
+        console.log("error message", error.response.data.message);
+
+        // toast({
+        //   title: "error",
+        //   description: error,
+        //   status: "warning",
+        //   duration: 2000,
+        //   isClosable: true,
+        // });
+      },
+    }
+  );
+
+  const buttonHandlerForLoadSavedPageForThisNote = () => {
+    mutationForLoadSavedPageForThisNote.mutate({ study_note_pk });
+  };
+
+  // 2244
   const is_authority_for_note =
     response_data_for_api?.note_user_name === loginUser.username ||
     response_data_for_api?.co_writers_for_approved.includes(loginUser.username);
@@ -201,7 +242,6 @@ const StudyNoteDetail2 = (props: Props) => {
     return <Box>"loading.."</Box>;
   }
 
-  // 2244
   return (
     <Box display={"flex"}>
       <Box flex={4}>
@@ -458,6 +498,7 @@ const StudyNoteDetail2 = (props: Props) => {
               border={"1px solid black"}
               width={"50%"}
               size={"sm"}
+              onClick={buttonHandlerForLoadSavedPageForThisNote}
             >
               load page
             </Button>
