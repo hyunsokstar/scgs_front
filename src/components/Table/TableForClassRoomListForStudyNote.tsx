@@ -42,24 +42,36 @@ const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
         });
       },
       onError: (error: any) => {
-        console.log("error.response: ", error.response);
-        console.log("mutation has an error", error.response.data);
+        console.log("error : ", error.response.data);
+        
+        console.log("error type: ", error.response.data.message_type);
+        console.log("error message", error.response.data.message);
 
-        const errorMessage = error.response.data; // Adjust the error message field based on your API response structure
+        const errorMessage = error.response.data.message; // Adjust the error message field based on your API response structure
+        if(error.response.data.message_type === "warnning"){
+          toast({
+            title: "recored is already exists",
+            description: errorMessage,
+            status: "warning",
+            duration: 2000,
+            isClosable: true,
+          });
+        } else {
+          toast({
+            title: "Error registering classroom",
+            description: errorMessage,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+        }
 
-        toast({
-          title: "Error registering classroom",
-          description: errorMessage,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
       },
     }
   );
 
   const buttonHandlerForRegisterClassRoomForStudyNote = () => {
-    alert(study_note_pk);
+    // alert(study_note_pk);
     const current_page = 1;
     mutationForRegisterClassRoomForStudyNote.mutate({
       study_note_pk,

@@ -363,7 +363,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           onClick={() => pageMoveButtonHandler("right")}
         />
         <Spacer />
-        {/* see by slide 0619 fix*/}
 
         <Link
           to={`/study-note/${study_note_pk}/${currentPage}/slide`}

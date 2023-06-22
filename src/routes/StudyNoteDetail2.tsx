@@ -8,6 +8,7 @@ import {
 import {
   apiFordeleteStudyNoteContentsForChecked,
   apiForGetStuyNoteContentList,
+  apiForRegisterClassRoomForStudyNote,
 } from "../apis/study_note_api";
 import { Box, Text, Button, useToast, Avatar } from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
@@ -132,9 +133,59 @@ const StudyNoteDetail2 = (props: Props) => {
     navigate(`/study-note`);
   };
 
-  if (logind_for_study_note_content_list) {
-    return <Box>"loading.."</Box>;
-  }
+  const mutationForRegisterClassRoomForStudyNote = useMutation(
+    apiForRegisterClassRoomForStudyNote,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data: ", data);
+
+        toast({
+          title: "Classroom registration success!",
+          status: "success",
+          description: data,
+          duration: 2000,
+          isClosable: true,
+        });
+      },
+      onError: (error: any) => {
+        console.log("error : ", error.response.data);
+
+        console.log("error type: ", error.response.data.message_type);
+        console.log("error message", error.response.data.message);
+
+        const errorMessage = error.response.data.message; // Adjust the error message field based on your API response structure
+        if (error.response.data.message_type === "warnning") {
+          toast({
+            title: "recored is already exists",
+            description: errorMessage,
+            status: "warning",
+            duration: 2000,
+            isClosable: true,
+          });
+        } else {
+          toast({
+            title: "Error registering classroom",
+            description: errorMessage,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+        }
+      },
+    }
+  );
+
+  const buttonHandlerForRegisterClassRoomForStudyNote = () => {
+    // alert(study_note_pk);
+    const current_page = note_page_num;
+    mutationForRegisterClassRoomForStudyNote.mutate({
+      study_note_pk,
+      current_page,
+    });
+  };
 
   const is_authority_for_note =
     response_data_for_api?.note_user_name === loginUser.username ||
@@ -145,6 +196,10 @@ const StudyNoteDetail2 = (props: Props) => {
       return row.profile_image;
     }
   );
+
+  if (logind_for_study_note_content_list) {
+    return <Box>"loading.."</Box>;
+  }
 
   // 2244
   return (
@@ -388,6 +443,25 @@ const StudyNoteDetail2 = (props: Props) => {
       </Box>
       <Box flex={1} border={"1px solid green"} px={"auto"}>
         <Box display={"flex"} flexDirection={"column"}>
+          <Box display={"flex"} gap={2} p={2}>
+            <Button
+              variant={"outline"}
+              border={"1px solid black"}
+              width={"50%"}
+              size={"sm"}
+              onClick={buttonHandlerForRegisterClassRoomForStudyNote}
+            >
+              save page
+            </Button>
+            <Button
+              variant={"outline"}
+              border={"1px solid black"}
+              width={"50%"}
+              size={"sm"}
+            >
+              load page
+            </Button>
+          </Box>
           <Text width={"100%"}>page: {currentPage}</Text>
           <Text width={"100%"}>
             not empty: {response_data_for_api?.exist_page_numbers.join(", ")}
