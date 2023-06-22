@@ -27,6 +27,7 @@ import ModalButtonForSubtititleListForNoteContent from "../modal/ModalButtonForS
 import ModalButtonForBriefingBoardForNote from "../modal/ModalButtonForBriefingBoardForNote";
 import ModalButtonForUpdateStudyNote from "../modal/ModalButtonForUpdateStudyNote";
 import ModalButtonForClassRoomListForStudyNote from "../modal/ModalButtonForClassRoomListForStudyNote";
+import ModalButtonForQnAList from "../modal/ModalButtonForQnAList";
 
 interface IProps {
   pk: any;
@@ -345,7 +346,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                 <ModalButtonForSubtititleListForNoteContent
                   modal_title={`${title}'s subtitle list`}
                   button_text={"SubTitle"}
-                  study_note_pk여기에 subject list={pk}
+                  study_note_pk={pk}
                   button_size={"sm"}
                   button_width="90%" // 수정된 부분
                 />
@@ -369,6 +370,16 @@ const CardForStudyNote: React.FC<IProps> = ({
                   button_text={"Class Room"}
                   button_size={"sm"}
                   modal_title={`${title} 에 대한 Class Room`}
+                  study_note_pk={pk}
+                  modal_size={"6xl"}
+                />
+              </Box>
+
+              <Box>
+                <ModalButtonForQnAList
+                  button_text={"Q & A"}
+                  button_size={"sm"}
+                  modal_title={`${title} 에 대한 Q& A`}
                   study_note_pk={pk}
                   modal_size={"6xl"}
                 />

@@ -1,100 +1,133 @@
-import { Box } from "@chakra-ui/react";
-import {
-  ComposedChart,
-  Line,
-  Area,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  Scatter,
-  ResponsiveContainer,
-} from "recharts";
+import React, { useState } from "react";
+import { VStack, Box, Text, Table, Tbody, Tr, Td } from "@chakra-ui/react";
+import { BiChevronDown } from "react-icons/bi";
 
-const data = [
-  {
-    name: "Page A",
-    uv: 590,
-    pv: 800,
-    // amt: 1400,
-    // cnt: 490,
-  },
-  {
-    name: "Page B",
-    uv: 868,
-    pv: 967,
-    // amt: 1506,
-    // cnt: 590,
-  },
-  {
-    name: "Page C",
-    uv: 1397,
-    pv: 1098,
-    // amt: 989,
-    // cnt: 350,
-  },
-  {
-    name: "Page D",
-    uv: 1480,
-    pv: 1200,
-    // amt: 1228,
-    // cnt: 480,
-  },
-  {
-    name: "Page E",
-    uv: 1520,
-    pv: 1108,
-    // amt: 1100,
-    // cnt: 460,
-  },
-  {
-    name: "Page F",
-    uv: 1400,
-    pv: 680,
-    // amt: 1700,
-    // cnt: 380,
-  },
-];
+interface Comment {
+  id: number;
+  content: string;
+  replies: Comment[];
+}
 
-const BarChartForDailyTaskCountForPersonalUserPage = () => {
+interface CommentListProps {
+  comments: Comment[];
+  indentLevel?: number;
+}
+
+const CommentList: React.FC<CommentListProps> = ({
+  comments,
+  indentLevel = 0,
+}) => {
   return (
-    <Box height={"500px"}>
-      hi
-      <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart
-          width={500}
-          height={400}
-          data={data}
-          margin={{
-            top: 20,
-            right: 20,
-            bottom: 20,
-            left: 20,
-          }}
-        >
-          <CartesianGrid stroke="#f5f5f5" />
-          <XAxis dataKey="name" scale="band" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          {/* <Area
-            type="monotone"
-            dataKey="amt"
-            fill="#8884d8"
-            stroke="#8884d8"
-          /> */}
-          {/* <Bar dataKey="myCompletedCount" stackId="a" fill="#800080" />
-          <Bar dataKey="totalCompletedCount" stackId="a" fill="#E6E6FA" /> */}
-
-          <Bar dataKey="myCompletedCount" barSize={20} fill="#413ea0" />
-          <Line type="monotone" dataKey="totalCompletedCount" stroke="#ff7300" />
-          {/* <Scatter dataKey="cnt" fill="red" /> */}
-        </ComposedChart>
-      </ResponsiveContainer>
-    </Box>
+    <VStack align="start" spacing={2} pl={indentLevel * 4}>
+      {comments.map((comment: Comment) => (
+        <Box key={comment.id} p={2} borderWidth="1px" borderRadius="md">
+          <Table size="sm" variant="simple">
+            <Tbody>
+              <Tr>
+                <Td>
+                  <Text pl={indentLevel * 4} fontWeight="bold">
+                    {`${indentLevel === 0 ? "" : "ㄴ"} ${comment.content}`}
+                  </Text>
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
+          <CommentList
+            comments={comment.replies}
+            indentLevel={indentLevel + 1}
+          />
+        </Box>
+      ))}
+    </VStack>
   );
 };
 
-export default BarChartForDailyTaskCountForPersonalUserPage;
+interface QnAPost {
+  id: number;
+  title: string;
+  content: string;
+  comments: Comment[];
+}
+
+interface QnAPostListProps {
+  posts: QnAPost[];
+}
+
+const QnAPostList: React.FC<QnAPostListProps> = () => {
+  const [posts, setPosts] = useState<QnAPost[]>([
+    {
+      id: 1,
+      title: "게시글 제목",
+      content: "게시글 내용",
+      comments: [
+        {
+          id: 1,
+          content: "1차 댓글 1",
+          replies: [
+            {
+              id: 2,
+              content: "2차 댓글 1",
+              replies: [
+                {
+                  id: 3,
+                  content: "3차 댓글 1",
+                  replies: [],
+                },
+              ],
+            },
+            {
+              id: 4,
+              content: "2차 댓글 2",
+              replies: [],
+            },
+          ],
+        },
+        {
+          id: 5,
+          content: "1차 댓글 2",
+          replies: [
+            {
+              id: 6,
+              content: "2차 댓글 3",
+              replies: [],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 7,
+      title: "다른 게시글",
+      content: "다른 게시글 내용",
+      comments: [],
+    },
+  ]);
+
+  return (
+    <VStack align="center" spacing={4}>
+      {posts.map((post: QnAPost) => (
+        <Box key={post.id} p={4} borderWidth="1px" borderRadius="md">
+          <Table size="sm" variant="simple">
+            <Tbody>
+              <Tr>
+                <Td>
+                  <Text fontWeight="bold" fontSize="sm">
+                    {post.title}
+                  </Text>
+                </Td>
+              </Tr>
+              <Tr>
+                <Td>
+                  <Text fontSize="xs">{post.content}</Text>
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
+          <CommentList comments={post.comments} />
+        </Box>
+      ))}
+    </VStack>
+  );
+};
+
+export default QnAPostList;

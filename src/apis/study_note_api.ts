@@ -22,6 +22,19 @@ const instance = axios.create({
 
 // 1122
 // apiForLoadSavedPageForThisNote
+
+export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
+  const [_, study_note_pk] = queryKey;
+  // console.log("pageNum : ", pageNum);
+  return instance
+    .get(`/study-note/${study_note_pk}/qa-list`, {
+      params: {},
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
 export const apiForLoadSavedPageForThisNote = ({ study_note_pk }: any) => {
   console.log("study_note_pk : ", study_note_pk);
   return instance
