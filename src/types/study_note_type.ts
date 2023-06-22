@@ -197,6 +197,7 @@ export interface FormTypeForCreateCommentForNote {
 }
 
 export interface QnARow {
+  pk: string;
   study_note: number;
   title: string;
   content: string;
@@ -206,6 +207,6 @@ export interface QnARow {
     username: string;
     profile_image: null | string;
   };
-  created_at: string;
+  created_at_formatted: string;
   updated_at: string;
 }

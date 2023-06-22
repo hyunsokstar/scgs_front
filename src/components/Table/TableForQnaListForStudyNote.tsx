@@ -8,9 +8,12 @@ import {
   Td,
   Checkbox,
   Button,
+  IconButton,
 } from "@chakra-ui/react";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { QnARow } from "../../types/study_note_type";
 import ModalButtonForAddQuestionForStudNote from "../modal/ModalButtonForAddQuestionForStudNote";
+import ModalButtonForUpdateQuestionForNote from "../modal/ModalButtonForUpdateQuestionForNote";
 
 interface TabelForQnaListForStudyNoteProps {
   study_note_pk: number | string | undefined;
@@ -45,10 +48,11 @@ const TableForQnaListForStudyNote: React.FC<
               <Checkbox />
             </Th>
             <Th>Title</Th>
-            <Th>Content</Th>
+            {/* <Th>Content</Th> */}
             <Th>Writer</Th>
             <Th>page</Th>
             <Th>Created At</Th>
+            <Th> update/ delete</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -59,10 +63,30 @@ const TableForQnaListForStudyNote: React.FC<
                   <Checkbox />
                 </Td>
                 <Td>{row.title}</Td>
-                <Td>{row.content}</Td>
+                {/* <Td>{row.content}</Td> */}
                 <Td>{row.writer.username}</Td>
                 <Td>{row.page}</Td>
-                <Td>{row.created_at}</Td>
+                <Td>{row.created_at_formatted}</Td>
+                <Td>
+                  <ModalButtonForUpdateQuestionForNote
+                    button_text={"update for question"}
+                    button_size={"sm"}
+                    modal_title={"update for question"}
+                    modal_size={"6xl"}
+                    study_note_pk={study_note_pk}
+                    pk={row.pk}
+                    title={row.title}
+                    content={row.content}
+                    page={row.page}
+                  />
+
+                  <IconButton
+                    aria-label="Delete"
+                    icon={<DeleteIcon />}
+                    size="sm"
+                    variant="ghost"
+                  />
+                </Td>
               </Tr>
             ))
           ) : (
