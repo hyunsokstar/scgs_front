@@ -23,6 +23,28 @@ const instance = axios.create({
 // 1122
 // apiForLoadSavedPageForThisNote
 
+// apiForCreateQuestionForNote
+export const apiForCreateQuestionForNote = ({
+  study_note_pk,
+  title,
+  content,
+}: any) =>
+  instance
+    .post(
+      `/study-note/${study_note_pk}/create-question`,
+      {
+        study_note_pk,
+        title,
+        content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
   const [_, study_note_pk] = queryKey;
   // console.log("pageNum : ", pageNum);

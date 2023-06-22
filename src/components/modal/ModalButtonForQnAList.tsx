@@ -76,7 +76,10 @@ const ModalButtonForQnAList = ({
           <ModalCloseButton />
           <ModalBody>
             {/* fix 0623 */}
-            <TableForQnaListForStudyNote data={dataForGetQnABoardList} />
+            <TableForQnaListForStudyNote
+              study_note_pk={study_note_pk}
+              data={dataForGetQnABoardList}
+            />
           </ModalBody>
           <ModalFooter>
             <Button type="submit" colorScheme="blue" mr={3}>
