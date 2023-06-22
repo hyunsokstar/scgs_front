@@ -79,6 +79,7 @@ const ModalButtonForQnAList = ({
             <TableForQnaListForStudyNote
               study_note_pk={study_note_pk}
               data={dataForGetQnABoardList}
+              refetchForGetQnABoardList={refetchForGetQnABoardList}
             />
           </ModalBody>
           <ModalFooter>

@@ -15,25 +15,26 @@ import ModalButtonForAddQuestionForStudNote from "../modal/ModalButtonForAddQues
 interface TabelForQnaListForStudyNoteProps {
   study_note_pk: number | string | undefined;
   data: QnARow[] | undefined;
+  refetchForGetQnABoardList: () => void;
 }
 
 // 1122
 const TableForQnaListForStudyNote: React.FC<
   TabelForQnaListForStudyNoteProps
-> = ({ study_note_pk, data }) => {
+> = ({ study_note_pk, data, refetchForGetQnABoardList }) => {
   const buttonHandlerForAddQuestion = () => {};
 
   // 2244
   return (
     <Box>
       <Box display={"flex"} justifyContent={"flex-end"} my={2}>
-        {/* <Button onClick={buttonHandlerForAddQuestion}>add question</Button> */}
         <ModalButtonForAddQuestionForStudNote
           button_text={"add question"}
           button_size={"sm"}
           modal_title={"modal for add question"}
           modal_size={"6xl"}
           study_note_pk={study_note_pk}
+          refetchForGetQnABoardList={refetchForGetQnABoardList}
         />
       </Box>
 

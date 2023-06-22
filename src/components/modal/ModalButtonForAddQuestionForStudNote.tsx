@@ -24,6 +24,8 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { apiForCreateQuestionForNote } from "../../apis/study_note_api";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface IProps {
   button_text: string;
@@ -31,6 +33,7 @@ interface IProps {
   modal_title: string;
   modal_size: string;
   study_note_pk: string | number | undefined;
+  refetchForGetQnABoardList: () => void;
 }
 
 const ModalButtonForClassRoomListForStudyNote = ({
@@ -39,15 +42,21 @@ const ModalButtonForClassRoomListForStudyNote = ({
   button_text,
   button_size,
   study_note_pk,
+  refetchForGetQnABoardList,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const queryClient = new QueryClient();
 
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const mutationForCreateTaskUrlForTask = useMutation(
@@ -58,15 +67,18 @@ const ModalButtonForClassRoomListForStudyNote = ({
       },
       onSuccess: (data) => {
         console.log("data : ", data);
+        refetchForGetQnABoardList();
+        reset();
+        // queryClient.refetchQueries(["apiForGetQnABoardList"]);
 
         toast({
-          title: "Task URL 추가",
-          description: "Task URL을 추가하였습니다.",
+          title: "question 추가",
+          description: "question 을 추가하였습니다.",
           status: "success",
           duration: 2000,
           isClosable: true,
         });
-        queryClient.refetchQueries(["apiForExtraTaskDetail"]);
+        onClose();
       },
       onError: (error: any) => {
         console.log("error.response : ", error.response);
@@ -77,12 +89,22 @@ const ModalButtonForClassRoomListForStudyNote = ({
 
   const onSubmit = (data: any) => {
     console.log(data);
-    mutationForCreateTaskUrlForTask.mutate({
-      study_note_pk,
-      title: data.title,
-      content: data.content,
-    });
-    onClose();
+
+    if (isLoggedIn) {
+      mutationForCreateTaskUrlForTask.mutate({
+        study_note_pk,
+        title: data.title,
+        content: data.content,
+      });
+    } else {
+      toast({
+        title: "로그인 필요",
+        description: "question 을 추가 하려면 로그인 필요",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
