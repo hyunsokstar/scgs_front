@@ -207,18 +207,22 @@ const StudyNoteDetail2 = (props: Props) => {
         navigate(`/study-note/${study_note_pk}/${data.current_page}`);
       },
       onError: (error: any) => {
+        console.log("error : ", error);
         console.log("error : ", error.response.data);
+
+        // if(error.response.data)
 
         console.log("error type: ", error.response.data.message_type);
         console.log("error message", error.response.data.message);
 
-        // toast({
-        //   title: "error",
-        //   description: error,
-        //   status: "warning",
-        //   duration: 2000,
-        //   isClosable: true,
-        // });
+        toast({
+          title: "error",
+          description: error.response.data,
+          status: "warning",
+          duration: 2000,
+          isClosable: true,
+        });
+
       },
     }
   );
