@@ -47,11 +47,12 @@ const TableForQnaListForStudyNote: React.FC<
             <Th>Title</Th>
             <Th>Content</Th>
             <Th>Writer</Th>
+            <Th>page</Th>
             <Th>Created At</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {data.length ? (
+          {data && data.length ? (
             data.map((row, index) => (
               <Tr key={index}>
                 <Td>
@@ -60,6 +61,7 @@ const TableForQnaListForStudyNote: React.FC<
                 <Td>{row.title}</Td>
                 <Td>{row.content}</Td>
                 <Td>{row.writer.username}</Td>
+                <Td>{row.page}</Td>
                 <Td>{row.created_at}</Td>
               </Tr>
             ))

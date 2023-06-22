@@ -200,6 +200,7 @@ export interface QnARow {
   study_note: number;
   title: string;
   content: string;
+  page: number;
   writer: {
     pk: number;
     username: string;

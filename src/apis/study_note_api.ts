@@ -28,6 +28,7 @@ export const apiForCreateQuestionForNote = ({
   study_note_pk,
   title,
   content,
+  page,
 }: any) =>
   instance
     .post(
@@ -36,6 +37,7 @@ export const apiForCreateQuestionForNote = ({
         study_note_pk,
         title,
         content,
+        page
       },
       {
         headers: {

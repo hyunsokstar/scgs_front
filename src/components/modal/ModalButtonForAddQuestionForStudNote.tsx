@@ -95,6 +95,7 @@ const ModalButtonForClassRoomListForStudyNote = ({
         study_note_pk,
         title: data.title,
         content: data.content,
+        page: data.page,
       });
     } else {
       toast({
@@ -142,6 +143,27 @@ const ModalButtonForClassRoomListForStudyNote = ({
                 <FormErrorMessage>This field is required</FormErrorMessage>
               )}
             </FormControl>
+
+            <FormControl marginBottom="1rem">
+              <Input
+                {...register("page", {
+                  required: true,
+                  pattern: {
+                    value: /^[1-9][0-9]?$|^50$/, // Accepts values between 1 and 50
+                    message: "Please enter a number between 1 and 50",
+                  },
+                })}
+                width={"20%"}
+                placeholder="Todo Page"
+                type="number"
+              />
+              {errors.page && (
+                <Box style={{ color: "red" }}>
+                  {typeof errors.page === "string" && errors.page}
+                </Box>
+              )}
+            </FormControl>
+
           </ModalBody>
           <ModalFooter>
             <Box display={"flex"} gap={2} width={"100%"}>
