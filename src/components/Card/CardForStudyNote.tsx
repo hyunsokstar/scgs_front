@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   IconButton,
+  Grid,
   Text,
   useColorModeValue,
   useToast,
@@ -25,6 +26,7 @@ import TableForNoteCoworkers from "../Table/TableForNoteCoworkers";
 import ModalButtonForSubtititleListForNoteContent from "../modal/ModalButtonForSubtititleListForNoteContent";
 import ModalButtonForBriefingBoardForNote from "../modal/ModalButtonForBriefingBoardForNote";
 import ModalButtonForUpdateStudyNote from "../modal/ModalButtonForUpdateStudyNote";
+import ModalButtonForClassRoomListForStudyNote from "../modal/ModalButtonForClassRoomListForStudyNote";
 
 interface IProps {
   pk: any;
@@ -142,7 +144,6 @@ const CardForStudyNote: React.FC<IProps> = ({
   const buttonHandlerForMoveSlidePageForThisNote = (pk: any) => {
     // alert(pk);
     navigate(`/study-note/${pk}/1/slide`);
-
   };
 
   // 2244
@@ -306,69 +307,82 @@ const CardForStudyNote: React.FC<IProps> = ({
               </Box>
             </Box>
           </Box>
-          <Box
-            flex={1}
-            display={"flex"}
-            flexDirection={"column"}
-            textAlign={"right"}
-            p={2}
-            gap={2}
-            bg={"gray.100"}
-            border={"0px solid red"}
-          >
-            <Box>
-              <Button
-                variant={"outline"}
-                size={"md"}
-                border={"1px solid black"}
-                onClick={(event) => {
-                  console.log("event : ", event.target);
-                  event.stopPropagation();
-                  goToStudyNoteDetail(pk);
-                }}
-                _hover={{ bgColor: "yellow.100" }}
-              >
-                Open Note
-              </Button>
-            </Box>
+          <Box p={2} gap={2} bg={"gray.100"} border={"0px solid red"}>
+            <Grid templateColumns="repeat(2, 1fr)" gap={2}>
+              <Box>
+                <Button
+                  variant={"outline"}
+                  size={"sm"}
+                  border={"1px solid black"}
+                  onClick={(event) => {
+                    console.log("event : ", event.target);
+                    event.stopPropagation();
+                    goToStudyNoteDetail(pk);
+                  }}
+                  _hover={{ bgColor: "yellow.100" }}
+                  width="90%" // 수정된 부분
+                  textAlign="center" // 수정된 부분
+                >
+                  Open
+                </Button>
+              </Box>
 
-            <Box>
-              {/* slide button 추가 0620 */}
-              <Button
-                variant={"outline"}
-                size={"sm"}
-                border={"1px solid black"}
-                _hover={{ bgColor: "yellow.100" }}
-                onClick={() => buttonHandlerForMoveSlidePageForThisNote(pk)}
-              >
-                Slide
-              </Button>
-            </Box>
+              <Box>
+                <Button
+                  variant={"outline"}
+                  size={"sm"}
+                  border={"1px solid black"}
+                  _hover={{ bgColor: "yellow.100" }}
+                  onClick={() => buttonHandlerForMoveSlidePageForThisNote(pk)}
+                  width="90%" // 수정된 부분
+                  textAlign="center" // 수정된 부분
+                >
+                  Slide
+                </Button>
+              </Box>
 
-            <Box>
-              <ModalButtonForSubtititleListForNoteContent
-                modal_title={`${title}'s subtitle list`}
-                button_text={"SubTitle List"}
-                study_note_pk={pk}
-                button_size={"sm"}
-              />
-            </Box>
+              <Box>
+                <ModalButtonForSubtititleListForNoteContent
+                  modal_title={`${title}'s subtitle list`}
+                  button_text={"SubTitle"}
+                  study_note_pk여기에 subject list={pk}
+                  button_size={"sm"}
+                  button_width="90%" // 수정된 부분
+                />
+              </Box>
 
-            <Box>
-              {/* 0617 */}
-              <ModalButtonForBriefingBoardForNote
-                note_owner_user_name={writer.username}
-                modal_title={`${title}'s Briefing Board`}
-                button_text={"comment"}
-                button_size={"sm"}
-                study_note_pk={pk}
-                count_for_note_comments={count_for_note_comments}
-              />
-            </Box>
+              <Box>
+                {/* 0617 */}
+                <ModalButtonForBriefingBoardForNote
+                  note_owner_user_name={writer.username}
+                  modal_title={`${title}'s Briefing Board`}
+                  button_text={"Briefing"}
+                  button_size={"sm"}
+                  study_note_pk={pk}
+                  count_for_note_comments={count_for_note_comments}
+                  button_width="90%" // 수정된 부분
+                />
+              </Box>
 
-            <Box>
-              <ClipboardButtonForCopyCurrentUrl button_size={"sm"} pk={pk} />
-            </Box>
+              <Box>
+                <ModalButtonForClassRoomListForStudyNote
+                  button_text={"Class Room"}
+                  button_size={"sm"}
+                  modal_title={`${title} 에 대한 Class Room`}
+                  study_note_pk={pk}
+                  modal_size={"6xl"}
+                />
+              </Box>
+
+              <Box>
+                <ClipboardButtonForCopyCurrentUrl
+                  button_size={"sm"}
+                  pk={pk}
+                  width="90%" // 수정된 부분
+                  textAlign="center" // 수정된 부분
+                />
+              </Box>
+            </Grid>
           </Box>
         </Box>
         <Box

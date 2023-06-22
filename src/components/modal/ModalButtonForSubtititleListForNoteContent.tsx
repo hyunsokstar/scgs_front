@@ -33,6 +33,7 @@ interface IProps {
   modal_title: string;
   study_note_pk: string | undefined;
   button_size: string;
+  button_width: string;
 }
 
 // 1122
@@ -41,6 +42,7 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
   modal_title,
   study_note_pk,
   button_size,
+  button_width
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // const [dataForGetSubTitleListForNote, setDataForGetSubTitleListForNote] =
@@ -67,6 +69,7 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
         _hover={{ bgColor: "yellow.100" }}
         size={button_size}
         onClick={onOpen}
+        width={button_width}
       >
         {button_text}
       </Button>

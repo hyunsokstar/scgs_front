@@ -21,6 +21,38 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForRegisterClassRoomForStudyNote
+export const apiForRegisterClassRoomForStudyNote = ({
+  study_note_pk,
+  current_page = 1,
+}: any) =>
+  instance
+    .post(
+      `/study-note/${study_note_pk}/class-room`,
+      {
+        note: study_note_pk,
+        current_page,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
+export const apiForGetClassRoomList = ({ queryKey }: QueryFunctionContext) => {
+  const [_, study_note_pk] = queryKey;
+  // console.log("pageNum : ", pageNum);
+  return instance
+    .get(`/study-note/${study_note_pk}/class-room`, {
+      params: {},
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
 export const apiForUpdateStudyNote = ({
   study_note_pk,
   title,

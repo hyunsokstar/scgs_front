@@ -1,3 +1,16 @@
+export interface ITypeForClassRoomRowForStudyNote {
+  id: number;
+  current_note: number;
+  current_page: number;
+  writer: {
+    pk: number;
+    username: string;
+    profile_image: string;
+  };
+  is_approved: boolean;
+  created_at_formatted: string;
+}
+
 export type type_for_insert_study_note = {
   title: string;
   description: string;
