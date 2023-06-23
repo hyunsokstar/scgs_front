@@ -23,7 +23,7 @@ interface IProps {
   button_size: string;
   modal_title: string;
   modal_size: string;
-  study_note_pk: string | undefined;
+  study_note_pk: string | number | undefined;
 }
 
 // 1122

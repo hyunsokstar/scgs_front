@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Text,
@@ -20,6 +20,7 @@ import { RootState } from "../../store";
 import ModalButtonForUpdateQuestionForNote from "../modal/ModalButtonForUpdateQuestionForNote";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForDeleteQuestionForNote } from "../../apis/study_note_api";
+import ModalButtonForAddQuestionForStudNote from "../modal/ModalButtonForAddQuestionForStudNote";
 
 interface TabelForQnaListForStudyNoteProps {
   study_note_pk: number | string | undefined;
@@ -41,6 +42,19 @@ const TableForQnaListForStudyNote: React.FC<
   const [isOpen, setIsOpen] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState<QnARow | null>(null);
 
+  // todo
+  // data 이 바뀌면 현재 열린 모달의 question 도 바뀌도록 하기
+  // 모달은 아래에 onClick 으로 열린 ModalForQuestionDetailForNote 모달
+
+  useEffect(() => {
+    if (isOpen && selectedQuestion) {
+      const updatedQuestion = data?.find(
+        (question) => question.pk === selectedQuestion.pk
+      );
+      setSelectedQuestion(updatedQuestion || null);
+    }
+  }, [data]);
+
   const openModal = (question: QnARow) => {
     setSelectedQuestion(question);
     setIsOpen(true);
@@ -51,7 +65,7 @@ const TableForQnaListForStudyNote: React.FC<
     setIsOpen(false);
   };
 
-  const mutationForQuestionForNote = useMutation(
+  const mutationForDeleteQuestionForNote = useMutation(
     (pk: string | number) => {
       // return deleteOneCommentForTaskByPkApi(pk);
       return apiForDeleteQuestionForNote(pk);
@@ -75,12 +89,22 @@ const TableForQnaListForStudyNote: React.FC<
 
   const buttonHandlerForDeleteQuestion = (pk: any) => {
     console.log("delete button click !", pk);
-    mutationForQuestionForNote.mutate(pk);
-
+    mutationForDeleteQuestionForNote.mutate(pk);
   };
 
   return (
     <Box>
+      <Box display={"flex"} justifyContent={"flex-end"} p={2}>
+        <ModalButtonForAddQuestionForStudNote
+          button_text={"Add Question"}
+          button_size={"sm"}
+          modal_title={"modal for add question"}
+          modal_size={"6xl"}
+          study_note_pk={study_note_pk}
+          refetchForGetQnABoardList={refetchForGetQnABoardList}
+        />
+      </Box>
+
       <Table>
         <Thead>
           <Tr>
@@ -157,6 +181,7 @@ const TableForQnaListForStudyNote: React.FC<
           isOpen={isOpen}
           closeModal={closeModal}
           question={selectedQuestion}
+          refetchForGetQnABoardList={refetchForGetQnABoardList}
         />
       )}
     </Box>

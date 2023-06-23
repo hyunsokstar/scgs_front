@@ -21,7 +21,54 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForDeleteQuestionForNote
+
+interface IPropsForapiForUpdateCommentForQuestionForNote {
+  commentPk: number;
+  content: string;
+}
+
+export const apiForUpdateCommentForQuestionForNote = ({
+  commentPk,
+  content,
+}: IPropsForapiForUpdateCommentForQuestionForNote) => {
+  console.log("updateCommentForTaskApi 실행 check : ", content);
+
+  return instance
+    .put(
+      `/study-note/answer-for-qaboard/${commentPk}/update-comment`,
+      {
+        content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
+export const apiForAddCommentForQuestionForNote = ({
+  question_pk,
+  content,
+}: any) => {
+  // alert(content);
+
+  return instance
+    .post(
+      `/study-note/qa-board/${question_pk}/add-comment`,
+      { content },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
 
 export const apiForDeleteQuestionForNote = (commentPk: string | number) => {
   // console.log("commentPk : ", commentPk);

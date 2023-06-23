@@ -52,6 +52,7 @@ const ModalButtonForQnAList = ({
     apiForGetQnABoardList,
     {
       enabled: true,
+      cacheTime: 0, // 캐싱 비활성화
     }
   );
 
