@@ -21,7 +21,19 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForLoadSavedPageForThisNote
+// apiForDeleteQuestionForNote
+
+export const apiForDeleteQuestionForNote = (commentPk: string | number) => {
+  // console.log("commentPk : ", commentPk);
+  return instance
+    .delete(`study-note/qa-board/${commentPk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForUpdateQuestionForNote = ({
   question_pk,
   title,

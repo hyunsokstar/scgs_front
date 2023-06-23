@@ -10,6 +10,7 @@ import {
   Td,
   Checkbox,
   IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { QnARow } from "../../types/study_note_type";
@@ -17,6 +18,8 @@ import ModalForQuestionDetailForNote from "../modal/ModalForQuestionDetailForNot
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import ModalButtonForUpdateQuestionForNote from "../modal/ModalButtonForUpdateQuestionForNote";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiForDeleteQuestionForNote } from "../../apis/study_note_api";
 
 interface TabelForQnaListForStudyNoteProps {
   study_note_pk: number | string | undefined;
@@ -27,6 +30,10 @@ interface TabelForQnaListForStudyNoteProps {
 const TableForQnaListForStudyNote: React.FC<
   TabelForQnaListForStudyNoteProps
 > = ({ study_note_pk, data, refetchForGetQnABoardList }) => {
+  const toast = useToast();
+
+  const queryClient = useQueryClient();
+
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );
@@ -42,6 +49,34 @@ const TableForQnaListForStudyNote: React.FC<
   const closeModal = () => {
     setSelectedQuestion(null);
     setIsOpen(false);
+  };
+
+  const mutationForQuestionForNote = useMutation(
+    (pk: string | number) => {
+      // return deleteOneCommentForTaskByPkApi(pk);
+      return apiForDeleteQuestionForNote(pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["apiForGetQnABoardList"]);
+
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const buttonHandlerForDeleteQuestion = (pk: any) => {
+    console.log("delete button click !", pk);
+    mutationForQuestionForNote.mutate(pk);
+
   };
 
   return (
@@ -96,6 +131,7 @@ const TableForQnaListForStudyNote: React.FC<
                       page={row.page}
                     />
                     <IconButton
+                      onClick={() => buttonHandlerForDeleteQuestion(row.pk)}
                       aria-label="Delete"
                       icon={<DeleteIcon />}
                       size="sm"
