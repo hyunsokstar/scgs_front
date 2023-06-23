@@ -1,5 +1,7 @@
+import React, { useState } from "react";
 import {
   Box,
+  Text,
   Table,
   Thead,
   Tbody,
@@ -7,13 +9,13 @@ import {
   Th,
   Td,
   Checkbox,
-  Button,
   IconButton,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { QnARow } from "../../types/study_note_type";
-import ModalButtonForAddQuestionForStudNote from "../modal/ModalButtonForAddQuestionForStudNote";
-import ModalButtonForUpdateQuestionForNote from "../modal/ModalButtonForUpdateQuestionForNote";
+import ModalForQuestionDetailForNote from "../modal/ModalForQuestionDetailForNote"; // 모달 컴포넌트를 임포트하세요.
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface TabelForQnaListForStudyNoteProps {
   study_note_pk: number | string | undefined;
@@ -21,26 +23,28 @@ interface TabelForQnaListForStudyNoteProps {
   refetchForGetQnABoardList: () => void;
 }
 
-// 1122
 const TableForQnaListForStudyNote: React.FC<
   TabelForQnaListForStudyNoteProps
 > = ({ study_note_pk, data, refetchForGetQnABoardList }) => {
-  const buttonHandlerForAddQuestion = () => {};
+  const { loginUser, isLoggedIn } = useSelector(
+    (state: RootState) => state.loginInfo
+  );
 
-  // 2244
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState<QnARow | null>(null);
+
+  const openModal = (question: QnARow) => {
+    setSelectedQuestion(question);
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedQuestion(null);
+    setIsOpen(false);
+  };
+
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"flex-end"} my={2}>
-        <ModalButtonForAddQuestionForStudNote
-          button_text={"add question"}
-          button_size={"sm"}
-          modal_title={"modal for add question"}
-          modal_size={"6xl"}
-          study_note_pk={study_note_pk}
-          refetchForGetQnABoardList={refetchForGetQnABoardList}
-        />
-      </Box>
-
       <Table>
         <Thead>
           <Tr>
@@ -50,9 +54,9 @@ const TableForQnaListForStudyNote: React.FC<
             <Th>Title</Th>
             {/* <Th>Content</Th> */}
             <Th>Writer</Th>
-            <Th>page</Th>
+            <Th>Page</Th>
             <Th>Created At</Th>
-            <Th> update/ delete</Th>
+            <Th>Update / Delete</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -62,42 +66,57 @@ const TableForQnaListForStudyNote: React.FC<
                 <Td>
                   <Checkbox />
                 </Td>
-                <Td>{row.title}</Td>
+                <Td>
+                  <Box
+                    cursor="pointer"
+                    textDecoration={"underline"}
+                    _hover={{ color: "blue.500" }}
+                    onClick={() => openModal(row)}
+                  >
+                    <Text>{row.title}</Text>
+                  </Box>
+                  {/* 모달을 열기 위한 클릭 핸들러 */}
+                </Td>
                 {/* <Td>{row.content}</Td> */}
                 <Td>{row.writer.username}</Td>
                 <Td>{row.page}</Td>
                 <Td>{row.created_at_formatted}</Td>
                 <Td>
-                  <ModalButtonForUpdateQuestionForNote
-                    button_text={"update for question"}
-                    button_size={"sm"}
-                    modal_title={"update for question"}
-                    modal_size={"6xl"}
-                    study_note_pk={study_note_pk}
-                    pk={row.pk}
-                    title={row.title}
-                    content={row.content}
-                    page={row.page}
-                  />
-
-                  <IconButton
-                    aria-label="Delete"
-                    icon={<DeleteIcon />}
-                    size="sm"
-                    variant="ghost"
-                  />
+                  <Box display={"flex"} gap={2}>
+                    <IconButton
+                      aria-label="Edit"
+                      icon={<EditIcon />}
+                      size="sm"
+                      variant="ghost"
+                    />
+                    <IconButton
+                      aria-label="Delete"
+                      icon={<DeleteIcon />}
+                      size="sm"
+                      variant="ghost"
+                    />
+                  </Box>
                 </Td>
               </Tr>
             ))
           ) : (
             <Tr>
               <Td colSpan={5} fontSize={"30px"} textAlign={"center"} py={10}>
-                There is No Question !
+                There is No Question!
               </Td>
             </Tr>
           )}
         </Tbody>
       </Table>
+
+      {/* 모달 컴포넌트 */}
+      {isOpen && (
+        <ModalForQuestionDetailForNote
+          isOpen={isOpen}
+          closeModal={closeModal}
+          question={selectedQuestion}
+        />
+      )}
     </Box>
   );
 };

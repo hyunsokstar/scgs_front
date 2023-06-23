@@ -79,7 +79,6 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
     updateMutationForCommentEditMode.mutate(comment_pk);
   };
 
-  // fix
   const mutationForUpdateCommentForExtraTask = useMutation(
     apiForUpdateCommentForExtraTask,
     {

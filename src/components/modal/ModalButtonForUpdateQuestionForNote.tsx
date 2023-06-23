@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Box,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -13,9 +14,13 @@ import {
   Input,
   Textarea,
   Stack,
+  useToast,
 } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { useForm } from "react-hook-form";
 import { EditIcon } from "@chakra-ui/icons";
+import { apiForUpdateQuestionForNote } from "../../apis/study_note_api";
 
 interface IProps {
   button_text: string;
@@ -29,6 +34,7 @@ interface IProps {
   page: number;
 }
 
+// 1122
 const ModalButtonForUpdateQuestionForNote = ({
   modal_title,
   modal_size,
@@ -39,17 +45,52 @@ const ModalButtonForUpdateQuestionForNote = ({
   title,
   content,
   page,
+  
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   const { handleSubmit, register } = useForm();
+  const queryClient = useQueryClient();
 
-  const onSubmit = (data) => {
+  const mutationForUpdateQuestionForNote = useMutation(
+    apiForUpdateQuestionForNote,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        queryClient.refetchQueries(["apiForGetQnABoardList"]);
+        toast({
+          status: "success",
+          title: "question update success",
+          description: result.message,
+        });
+        onClose();
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+  // const onEditConfirmHandler = (commentPk: number | string) => {
+  //   mutationForUpdateCommentForExtraTask.mutate({
+  //     commentPk,
+  //     commentText: commentTextForUpdate,
+  //   });
+  // };
+
+  const onSubmit = (data: any) => {
+    // alert("이거 실행 되나?")
     console.log(data); // Form 데이터 처리 예시
-    onClose();
+    mutationForUpdateQuestionForNote.mutate({
+      question_pk: data.pk,
+      title: data.title,
+      content: data.content,
+      page: data.page,
+    });
   };
 
   return (
-    <>
+    <Box>
       <IconButton
         aria-label={button_text}
         onClick={onOpen}
@@ -58,7 +99,6 @@ const ModalButtonForUpdateQuestionForNote = ({
         _hover={{ bgColor: "yellow.100" }}
         variant="ghost"
       />
-
       <Modal isOpen={isOpen} onClose={onClose} size={modal_size}>
         <ModalOverlay />
         <ModalContent>
@@ -95,7 +135,7 @@ const ModalButtonForUpdateQuestionForNote = ({
           </form>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
 

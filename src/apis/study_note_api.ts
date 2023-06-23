@@ -22,6 +22,36 @@ const instance = axios.create({
 
 // 1122
 // apiForLoadSavedPageForThisNote
+export const apiForUpdateQuestionForNote = ({
+  question_pk,
+  title,
+  content,
+  page,
+}: any) => {
+  alert("실행 check");
+  console.log("question_pk : ", question_pk);
+  console.log("content : ", content);
+  console.log("page : ", page);
+
+  return instance
+    .put(
+      `/study-note/qa-board/${question_pk}/update`,
+      {
+        title,
+        content,
+        page,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
 
 // apiForCreateQuestionForNote
 export const apiForCreateQuestionForNote = ({
@@ -37,7 +67,7 @@ export const apiForCreateQuestionForNote = ({
         study_note_pk,
         title,
         content,
-        page
+        page,
       },
       {
         headers: {
