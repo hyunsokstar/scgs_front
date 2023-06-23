@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Avatar,
   Box,
   Button,
   Modal,
@@ -15,9 +16,10 @@ import {
   Tr,
   Th,
   Td,
-  VStack,
+  IconButton,
 } from "@chakra-ui/react";
 import { QnARow } from "../../types/study_note_type";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
 interface ModalForQuestionDetailForNoteProps {
   isOpen: boolean;
@@ -28,6 +30,8 @@ interface ModalForQuestionDetailForNoteProps {
 const ModalForQuestionDetailForNote: React.FC<
   ModalForQuestionDetailForNoteProps
 > = ({ isOpen, closeModal, question }) => {
+  console.log("question : ", question);
+
   return (
     <Modal isOpen={isOpen} onClose={closeModal} size="6xl">
       <ModalOverlay />
@@ -77,12 +81,60 @@ const ModalForQuestionDetailForNote: React.FC<
           </Box>
           <Box mt={10}>
             <Box display={"flex"} justifyContent={"space-between"}>
-              <Box>답변 영역</Box>
+              <Box>Comment</Box>
               <Box>
                 <Button> add comment</Button>
               </Box>
             </Box>
-            <Box></Box>
+            <Box>
+              <Table mt={4} variant="striped" colorScheme="gray">
+                <Thead>
+                  <Tr>
+                    <Th>Content</Th>
+                    <Th>Created At</Th>
+                    <Th>modify/delete</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {question &&
+                    question.answers_for_qa_board.map(
+                      (row: AnswerForQaBoard) => (
+                        <Tr key={row.pk}>
+                          <Td>
+                            <Box display={"flex"} gap={2} alignItems={"center"}>
+                              <Avatar
+                                name={row.writer.username}
+                                src={row.writer.profile_image}
+                                size="sm"
+                                mr={2}
+                              />{" "}
+                              <Box>{row.content}</Box>
+                            </Box>
+                          </Td>
+                          <Td>{row.created_at_formatted}</Td>
+                          <Td>
+                            <IconButton
+                              icon={<EditIcon />}
+                              aria-label="Edit"
+                              variant="ghost"
+                              onClick={() => {
+                              }}
+                            />
+                            <IconButton
+                              icon={<DeleteIcon />}
+                              aria-label="Delete"
+                              variant="ghost"
+                              onClick={() => {
+                                // Delete 버튼 클릭 시 동작
+                              }}
+                            />
+                          </Td>
+                        </Tr>
+                      )
+                    )}
+                </Tbody>
+              </Table>
+            </Box>
           </Box>
         </ModalBody>
       </ModalContent>

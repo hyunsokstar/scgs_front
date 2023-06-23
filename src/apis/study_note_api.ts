@@ -28,7 +28,7 @@ export const apiForUpdateQuestionForNote = ({
   content,
   page,
 }: any) => {
-  alert("실행 check");
+  // alert("실행 check");
   console.log("question_pk : ", question_pk);
   console.log("content : ", content);
   console.log("page : ", page);

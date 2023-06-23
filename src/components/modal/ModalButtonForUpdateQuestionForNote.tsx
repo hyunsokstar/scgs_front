@@ -45,8 +45,10 @@ const ModalButtonForUpdateQuestionForNote = ({
   title,
   content,
   page,
-  
 }: IProps) => {
+
+  // alert(pk)
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const { handleSubmit, register } = useForm();
@@ -107,7 +109,7 @@ const ModalButtonForUpdateQuestionForNote = ({
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>
               <Stack spacing={4}>
-                <input type="hidden" defaultValue={pk} {...register("pk")} />
+                <input type="hidden" value={pk} {...register("pk")} />
                 <Input
                   defaultValue={title}
                   {...register("title")}

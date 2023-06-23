@@ -196,6 +196,20 @@ export interface FormTypeForCreateCommentForNote {
   comment: string;
 }
 
+export interface UserProfileImage {
+  pk: number;
+  username: string;
+  profile_image: string | null;
+}
+
+export interface AnswerForQaBoard {
+  pk: number;
+  question: number;
+  content: string;
+  writer: UserProfileImage;
+  created_at_formatted: string;
+}
+
 export interface QnARow {
   pk: string;
   study_note: number;
@@ -209,4 +223,5 @@ export interface QnARow {
   };
   created_at_formatted: string;
   updated_at: string;
+  answers_for_qa_board: AnswerForQaBoard[];
 }

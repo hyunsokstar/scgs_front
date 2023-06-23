@@ -16,6 +16,7 @@ import { QnARow } from "../../types/study_note_type";
 import ModalForQuestionDetailForNote from "../modal/ModalForQuestionDetailForNote"; // 모달 컴포넌트를 임포트하세요.
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import ModalButtonForUpdateQuestionForNote from "../modal/ModalButtonForUpdateQuestionForNote";
 
 interface TabelForQnaListForStudyNoteProps {
   study_note_pk: number | string | undefined;
@@ -83,11 +84,16 @@ const TableForQnaListForStudyNote: React.FC<
                 <Td>{row.created_at_formatted}</Td>
                 <Td>
                   <Box display={"flex"} gap={2}>
-                    <IconButton
-                      aria-label="Edit"
-                      icon={<EditIcon />}
-                      size="sm"
-                      variant="ghost"
+                    <ModalButtonForUpdateQuestionForNote
+                      button_text={"update question"}
+                      button_size={"sm"}
+                      modal_title={"update question"}
+                      modal_size={"6xl"}
+                      study_note_pk={study_note_pk}
+                      pk={row.pk}
+                      title={row.title}
+                      content={row.content}
+                      page={row.page}
                     />
                     <IconButton
                       aria-label="Delete"
