@@ -122,9 +122,8 @@ const ModalForQuestionDetailForNote: React.FC<
   );
 
   const buttonHandlerForAddCommentForQuestionForNote = () => {
-
-    if(contentForComment   ===""){
-      alert("댓글 내용을 입력해 주세요")
+    if (contentForComment === "") {
+      alert("댓글 내용을 입력해 주세요");
       return;
     }
 
@@ -137,76 +136,86 @@ const ModalForQuestionDetailForNote: React.FC<
     }
   };
 
+  // buttonHandlerForDeleteCommentForQuestionForNote
+  const buttonHandlerForDeleteCommentForQuestionForNote = (pk: number) => {
+    alert(pk);
+  };
+
   // 2244
   return (
     <Modal isOpen={isOpen} onClose={closeModal} size="6xl">
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent height={"80vh"}>
         <ModalHeader>Question Details</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Box bgColor={"blue.100"}>
-            {question && (
-              <Box>
-                <Table>
-                  <Tr>
-                    <Td width={"50%"}>
-                      <Box>
-                        <strong>Title:</strong>
-                      </Box>
-                      {question.title}
-                    </Td>
-                    <Td width={"50%"}>
-                      <Box
-                        display={"flex"}
-                        justifyContent={"space-between"}
-                        gap={2}
-                      >
+          <Box display={"flex"} flexDirection={"column"} height={"68vh"}>
+            <Box bgColor={"blue.100"} border={"1px solid green"}>
+              {question && (
+                <Box>
+                  <Table>
+                    <Tr>
+                      <Td width={"50%"}>
                         <Box>
-                          <Text fontWeight="bold">Writer:</Text>
-                          gogo {question.writer.username}
+                          <strong>Title:</strong>
                         </Box>
+                        {question.title}
+                      </Td>
+                      <Td width={"50%"}>
+                        <Box
+                          display={"flex"}
+                          justifyContent={"space-between"}
+                          gap={2}
+                        >
+                          <Box>
+                            <Text fontWeight="bold">Writer:</Text>
+                            gogo {question.writer.username}
+                          </Box>
+                          <Box>
+                            <Text fontWeight="bold">Page:</Text>
+                            {question.page}
+                          </Box>
+                        </Box>
+                      </Td>
+                    </Tr>
+                    <Tr>
+                      <Td colSpan={2}>
                         <Box>
-                          <Text fontWeight="bold">Page:</Text>
-                          {question.page}
+                          <strong>Content:</strong>
                         </Box>
-                      </Box>
-                    </Td>
-                  </Tr>
-                  <Tr>
-                    <Td colSpan={2}>
-                      <Box>
-                        <strong>Content:</strong>
-                      </Box>
-                      <Box mt={2}>{question.content}</Box>
-                    </Td>
-                  </Tr>
-                </Table>
-              </Box>
-            )}
-          </Box>
-          <Box mt={10} overflowY={"scroll"} height={"350px"}>
-            <Box display={"flex"} justifyContent={"space-between"}>
-              <Box>Comment for Question</Box>
+                        <Box mt={2}>{question.content}</Box>
+                      </Td>
+                    </Tr>
+                  </Table>
+                </Box>
+              )}
             </Box>
-            <Box>
-              <Table mt={4} variant="striped" colorScheme="gray">
-                <Thead>
-                  <Tr>
-                    <Th>Content</Th>
-                    <Th>Created At</Th>
-                    <Th>modify/delete</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {/* rome-ignore lint/complexity/useOptionalChain: <explanation> */}
-                  {question &&
-                    question.answers_for_qa_board.map(
-                      (row: AnswerForQaBoard, rowIndex) => (
-                        <Tr key={row.pk}>
-                          <Td>
-                            <Box display={"flex"} gap={2} alignItems={"center"}>
-                              {/* <Avatar
+            <Box mt={10} overflowY={"auto"}>
+              <Box display={"flex"} justifyContent={"space-between"}>
+                <Box>Comment for Question</Box>
+              </Box>
+              <Box>
+                <Table mt={4} variant="striped" colorScheme="gray">
+                  <Thead>
+                    <Tr>
+                      <Th>Content</Th>
+                      <Th>Created At</Th>
+                      <Th>modify/delete</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {/* rome-ignore lint/complexity/useOptionalChain: <explanation> */}
+                    {question &&
+                      question.answers_for_qa_board.map(
+                        (row: AnswerForQaBoard, rowIndex) => (
+                          <Tr key={row.pk}>
+                            <Td>
+                              <Box
+                                display={"flex"}
+                                gap={2}
+                                alignItems={"center"}
+                              >
+                                {/* <Avatar
                                 name={row.writer.username}
                                 src={row.writer.profile_image}
                                 size="sm"
@@ -214,114 +223,121 @@ const ModalForQuestionDetailForNote: React.FC<
                               />{" "}
                               <Box>{row.content}</Box> */}
 
-                              {editingRowIndex === rowIndex ? (
-                                <Box
-                                  display="flex"
-                                  gap={2}
-                                  alignItems="center"
-                                  width={"100%"}
-                                >
-                                  <Avatar
-                                    name={row.writer.username}
-                                    src={row.writer.profile_image}
-                                    size="sm"
-                                    mr={2}
-                                  />
-                                  <Textarea
-                                    width={"100%"}
-                                    border={"1px solid black"}
-                                    value={editedContent}
-                                    onChange={(event) =>
-                                      setEditedContent(event.target.value)
-                                    }
-                                  />
-                                </Box>
-                              ) : (
-                                <Box display="flex" gap={2} alignItems="center">
-                                  <Avatar
-                                    name={row.writer.username}
-                                    src={row.writer.profile_image}
-                                    size="sm"
-                                    mr={2}
-                                  />
-                                  <Box>{row.content}</Box>
-                                </Box>
-                              )}
-                            </Box>
-                          </Td>
-                          <Td>{row.created_at_formatted}</Td>
-                          <Td>
-                            {isLoggedIn &&
-                            row.writer.username === loginUser.username ? (
-                              <Box>
                                 {editingRowIndex === rowIndex ? (
-                                  <>
-                                    <IconButton
-                                      icon={<CheckIcon />}
-                                      aria-label="Save"
-                                      variant="ghost"
-                                      onClick={() => handleSaveClick(row.pk)}
+                                  <Box
+                                    display="flex"
+                                    gap={2}
+                                    alignItems="center"
+                                    width={"100%"}
+                                  >
+                                    <Avatar
+                                      name={row.writer.username}
+                                      src={row.writer.profile_image}
+                                      size="sm"
+                                      mr={2}
                                     />
-                                    <IconButton
-                                      icon={<CloseIcon />}
-                                      aria-label="Cancel"
-                                      variant="ghost"
-                                      onClick={handleCancelClick}
-                                    />
-                                  </>
-                                ) : (
-                                  <>
-                                    <IconButton
-                                      icon={<EditIcon />}
-                                      aria-label="Edit"
-                                      variant="ghost"
-                                      onClick={() =>
-                                        handleEditClick(rowIndex, row.content)
+                                    <Textarea
+                                      width={"100%"}
+                                      border={"1px solid black"}
+                                      value={editedContent}
+                                      onChange={(event) =>
+                                        setEditedContent(event.target.value)
                                       }
                                     />
-                                    <IconButton
-                                      icon={<DeleteIcon />}
-                                      aria-label="Delete"
-                                      variant="ghost"
-                                      onClick={() => {
-                                        // Delete 버튼 클릭 시 동작
-                                      }}
+                                  </Box>
+                                ) : (
+                                  <Box
+                                    display="flex"
+                                    gap={2}
+                                    alignItems="center"
+                                  >
+                                    <Avatar
+                                      name={row.writer.username}
+                                      src={row.writer.profile_image}
+                                      size="sm"
+                                      mr={2}
                                     />
-                                  </>
+                                    <Box>{row.content}</Box>
+                                  </Box>
                                 )}
                               </Box>
-                            ) : (
-                              ""
-                            )}
-                          </Td>
-                        </Tr>
-                      )
-                    )}
-                </Tbody>
-              </Table>
-            </Box>
+                            </Td>
+                            <Td>{row.created_at_formatted}</Td>
+                            <Td>
+                              {isLoggedIn &&
+                              row.writer.username === loginUser.username ? (
+                                <Box>
+                                  {editingRowIndex === rowIndex ? (
+                                    <>
+                                      <IconButton
+                                        icon={<CheckIcon />}
+                                        aria-label="Save"
+                                        variant="ghost"
+                                        onClick={() => handleSaveClick(row.pk)}
+                                      />
+                                      <IconButton
+                                        icon={<CloseIcon />}
+                                        aria-label="Cancel"
+                                        variant="ghost"
+                                        onClick={handleCancelClick}
+                                      />
+                                    </>
+                                  ) : (
+                                    <>
+                                      <IconButton
+                                        icon={<EditIcon />}
+                                        aria-label="Edit"
+                                        variant="ghost"
+                                        onClick={() =>
+                                          handleEditClick(rowIndex, row.content)
+                                        }
+                                      />
+                                      <IconButton
+                                        icon={<DeleteIcon />}
+                                        aria-label="Delete"
+                                        variant="ghost"
+                                        onClick={() => {
+                                          buttonHandlerForDeleteCommentForQuestionForNote(
+                                            row.pk
+                                          );
+                                        }}
+                                      />
+                                    </>
+                                  )}
+                                </Box>
+                              ) : (
+                                ""
+                              )}
+                            </Td>
+                          </Tr>
+                        )
+                      )}
+                  </Tbody>
+                </Table>
+              </Box>
 
-            <Box
-              border="0px solid green"
-              width="100%"
-              display="flex"
-              mt={5}
-              p={1}
-            >
-              <Textarea
-                height="200px"
-                flexGrow={1}
-                value={contentForComment}
-                onChange={handleContentChange}
-              />{" "}
-              <Button
-                variant="solid"
-                colorScheme="green"
-                marginLeft="4"
-                onClick={buttonHandlerForAddCommentForQuestionForNote}
+              <Box
+                border="0px solid green"
+                width="100%"
+                display="flex"
+                mt={5}
+                p={1}
               >
-                comment
-              </Button>
+                <Textarea
+                  height="200px"
+                  flexGrow={1}
+                  value={contentForComment}
+                  onChange={handleContentChange}
+                />{" "}
+                <Button
+                  variant="solid"
+                  colorScheme="green"
+                  marginLeft="4"
+                  onClick={buttonHandlerForAddCommentForQuestionForNote}
+                >
+                  comment
+                </Button>
+              </Box>
             </Box>
           </Box>
         </ModalBody>
