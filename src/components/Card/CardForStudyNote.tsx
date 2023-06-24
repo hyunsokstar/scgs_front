@@ -35,11 +35,14 @@ interface IProps {
   description: string;
   writer: NoteWriterType;
   note_cowriters: TypeForNoteCoWriter[];
-  count_for_note_contents: number;
-  count_for_note_comments: number;
   studyNoteListRefatch: () => void;
   first_category: string;
   second_category: string;
+  count_for_note_contents: number;
+  count_for_note_comments: number;
+  count_for_qna_boards: number;
+  count_for_note_contents_for_subtitle: number;
+  count_for_class_list: number;
 }
 
 // 1122
@@ -48,11 +51,14 @@ const CardForStudyNote: React.FC<IProps> = ({
   title,
   description,
   writer,
-  count_for_note_contents,
   note_cowriters,
-  count_for_note_comments,
   first_category,
   second_category,
+  count_for_note_contents,
+  count_for_note_comments,
+  count_for_qna_boards,
+  count_for_note_contents_for_subtitle,
+  count_for_class_list,
   studyNoteListRefatch,
 }) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
@@ -349,6 +355,9 @@ const CardForStudyNote: React.FC<IProps> = ({
                   study_note_pk={pk}
                   button_size={"sm"}
                   button_width="90%" // 수정된 부분
+                  count_for_note_contents_for_subtitle={
+                    count_for_note_contents_for_subtitle
+                  }
                 />
               </Box>
 
@@ -373,6 +382,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                   modal_title={`${title} 에 대한 Class Room`}
                   study_note_pk={pk}
                   modal_size={"6xl"}
+                  count_for_class_list={count_for_class_list}
                 />
               </Box>
 
@@ -383,6 +393,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                   modal_title={`${title} 에 대한 Q& A`}
                   study_note_pk={pk}
                   modal_size={"6xl"}
+                  count_for_qna_boards={count_for_qna_boards}
                 />
               </Box>
 

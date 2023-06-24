@@ -31,6 +31,7 @@ import CardForNoteSubTitleForPage from "../components/Card/CardForNoteSubTitleFo
 import ModalButtonForInsertYoutubeContentsForNote from "../components/modal/ModalButtonForInsertYoutubeContentsForNote";
 import CardForYoutubeContentForPage from "../components/Card/CardForYoutubeContentForPage";
 import ModalButtonForSubtiTitleListForNoteContent from "../components/modal/ModalButtonForSubtititleListForNoteContent";
+import ModalButtonForQnAList from "../components/modal/ModalButtonForQnAList";
 
 interface Props {}
 
@@ -222,7 +223,6 @@ const StudyNoteDetail2 = (props: Props) => {
           duration: 2000,
           isClosable: true,
         });
-
       },
     }
   );
@@ -271,6 +271,7 @@ const StudyNoteDetail2 = (props: Props) => {
               button_text={"Subtitle List"}
               button_size={"sm"}
               study_note_pk={study_note_pk}
+              // button_width={""}
             />
 
             <ModalButtonForSearchStudyNoteContent
@@ -304,7 +305,18 @@ const StudyNoteDetail2 = (props: Props) => {
             )}
           </Box>
           <Box display={"flex"} gap={2}>
-            <Box mr={1}>
+            <Box>
+              <ModalButtonForQnAList
+                button_text={"Q&A"}
+                button_size={"sm"}
+                modal_title={`QA list for page ${note_page_num}`}
+                modal_size={"6xl"}
+                study_note_pk={study_note_pk}
+                note_page_num = {note_page_num}
+              />
+            </Box>
+
+            <Box>
               {/* link button for note content list */}
               <ClipboardButtonForCopyCurrentUrl />
             </Box>
@@ -313,15 +325,15 @@ const StudyNoteDetail2 = (props: Props) => {
                 <ModalButtonForInsertYoutubeContentsForNote
                   study_note_pk={study_note_pk}
                   currentPage={currentPage}
-                  button_text="add youtube"
+                  button_text="youtube"
                 />
                 <ModalButtonForInsertSubtitleForPage
-                  button_text={"add subtitle for page"}
+                  button_text={"subtitle for page"}
                   study_note_pk={study_note_pk}
                   currentPage={currentPage}
                 />
                 <ModalButtonForInsertStudyNoteContent
-                  button_text={"add note content"}
+                  button_text={"note content"}
                   currentPage={currentPage}
                   study_note_pk={study_note_pk}
                 />

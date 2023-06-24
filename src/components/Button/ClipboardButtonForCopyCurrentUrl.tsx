@@ -45,7 +45,7 @@ const ClipboardButtonForCopyCurrentUrl = ({
       {...props}
       _hover={{ bgColor: "yellow.100" }}
     >
-      {hasCopied ? "copy !" : "link"}
+      {hasCopied ? "copy !" : "link copy"}
     </Button>
   );
 };

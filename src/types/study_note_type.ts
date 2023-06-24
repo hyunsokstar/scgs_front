@@ -137,9 +137,11 @@ export interface TypeForNote {
   note_cowriters: TypeForNoteCoWriter[];
   first_category: FirstCategory;
   second_category: SecondCategory;
-
   count_for_note_contents: number;
   count_for_note_comments: number;
+  count_for_qna_boards: number;
+  count_for_note_contents_for_subtitle: number;
+  count_for_class_list: number;
 }
 
 export interface TypeForNoteList {

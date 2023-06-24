@@ -22,7 +22,6 @@ import {
   apiForGetClassRoomList,
   apiForGetQnABoardList,
 } from "../../apis/study_note_api";
-import TableForClassRoomListForStudyNote from "../Table/TableForClassRoomListForStudyNote";
 import TableForQnaListForStudyNote from "../Table/TableForQnaListForStudyNote";
 
 interface IProps {
@@ -31,6 +30,8 @@ interface IProps {
   modal_title: string;
   modal_size: string;
   study_note_pk: string | undefined;
+  note_page_num?: any;
+  count_for_qna_boards: number;
 }
 
 // 1122
@@ -40,6 +41,8 @@ const ModalButtonForQnAList = ({
   button_text,
   button_size,
   study_note_pk,
+  note_page_num,
+  count_for_qna_boards,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -48,7 +51,7 @@ const ModalButtonForQnAList = ({
     data: dataForGetQnABoardList,
     refetch: refetchForGetQnABoardList,
   } = useQuery<QnARow[]>(
-    ["apiForGetQnABoardList", study_note_pk],
+    ["apiForGetQnABoardList", study_note_pk, note_page_num],
     apiForGetQnABoardList,
     {
       enabled: true,
@@ -68,7 +71,7 @@ const ModalButtonForQnAList = ({
         _hover={{ bgColor: "yellow.100" }}
         size={button_size}
       >
-        {button_text}
+        {button_text} ({count_for_qna_boards})
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size={modal_size}>
         <ModalOverlay />

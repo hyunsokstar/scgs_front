@@ -22,9 +22,7 @@ const instance = axios.create({
 
 // 1122
 
-export const apiForDeleteCommentForQuestionForNote = (
-  comment_pk: number
-) => {
+export const apiForDeleteCommentForQuestionForNote = (comment_pk: number) => {
   console.log("comment_pk : ", comment_pk);
 
   return instance
@@ -151,11 +149,11 @@ export const apiForCreateQuestionForNote = ({
     .then((response) => response.data);
 
 export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
-  const [_, study_note_pk] = queryKey;
-  // console.log("pageNum : ", pageNum);
+  const [_, study_note_pk, note_page_num] = queryKey;
+  console.log("note_page_num : ", note_page_num);
   return instance
     .get(`/study-note/${study_note_pk}/qa-list`, {
-      params: {},
+      params: {note_page_num},
     })
     .then((response) => {
       return response.data;

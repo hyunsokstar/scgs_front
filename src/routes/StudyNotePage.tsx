@@ -193,6 +193,11 @@ const StudyNotePage = () => {
               note_cowriters={note.note_cowriters}
               count_for_note_contents={note.count_for_note_contents}
               count_for_note_comments={note.count_for_note_comments}
+              count_for_qna_boards={note.count_for_qna_boards}
+              count_for_note_contents_for_subtitle={
+                note.count_for_note_contents_for_subtitle
+              }
+              count_for_class_list = {note.count_for_class_list}
               first_category={note.first_category}
               second_category={note.second_category}
               studyNoteListRefatch={studyNoteListRefatch}

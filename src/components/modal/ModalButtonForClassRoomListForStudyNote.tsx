@@ -25,6 +25,7 @@ interface IProps {
   modal_title: string;
   modal_size: string;
   study_note_pk: string | number | undefined;
+  count_for_class_list: number;
 }
 
 // 1122
@@ -35,6 +36,7 @@ const ModalButtonForClassRoomListForStudyNote = ({
   button_size,
   study_note_pk,
   button_width,
+  count_for_class_list,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -65,7 +67,7 @@ const ModalButtonForClassRoomListForStudyNote = ({
         _hover={{ bgColor: "yellow.100" }}
         size={button_size}
       >
-        {button_text}
+        {button_text} ({count_for_class_list})
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size={modal_size}>
         <ModalOverlay />
