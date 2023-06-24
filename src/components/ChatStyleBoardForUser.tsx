@@ -31,7 +31,10 @@ import {
   updateCommentTextForTaskApi,
   updateMutationForCommentEditModeApi,
 } from "../apis/project_progress_api";
-import { apiForCreateUserTaskComment, apiForDeleteUserTaskCommentForPk } from "../apis/user_api";
+import {
+  apiForCreateUserTaskComment,
+  apiForDeleteUserTaskCommentForPk,
+} from "../apis/user_api";
 import { UserTaskComment } from "../types/user/user_types";
 
 interface Message {
@@ -179,32 +182,11 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
                       rounded="md"
                       size="xs"
                     />
-                    {/* <IconButton
-                      aria-label="Cancel"
-                      icon={<FaTimes />}
-                      onClick={() => EditModeHandler(pk)}
-                      variant="outline"
-                      colorScheme="pink"
-                      rounded="md"
-                      size="xs"
-                      ml={1}
-                    /> */}
                   </Box>
                 </Box>
               ) : (
                 <Box>
                   {comment}
-                  {/* <IconButton
-                    icon={<EditIcon />}
-                    aria-label="modify"
-                    onClick={() => EditModeHandler(pk)}
-                    variant="outline"
-                    colorScheme="teal"
-                    _hover={{ bg: "teal.400" }}
-                    size="xs"
-                    rounded="md"
-                    ml={2}
-                  /> */}
                   <IconButton
                     icon={<DeleteIcon />}
                     aria-label="Delete"

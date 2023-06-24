@@ -22,6 +22,20 @@ const instance = axios.create({
 
 // 1122
 
+export const apiForDeleteCommentForQuestionForNote = (
+  comment_pk: number
+) => {
+  console.log("comment_pk : ", comment_pk);
+
+  return instance
+    .delete(`study-note/${comment_pk}/delete-comment`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 interface IPropsForapiForUpdateCommentForQuestionForNote {
   commentPk: number;
   content: string;

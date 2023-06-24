@@ -136,9 +136,31 @@ const ModalForQuestionDetailForNote: React.FC<
     }
   };
 
-  // buttonHandlerForDeleteCommentForQuestionForNote
+  const mutationForDeleteCommentForQuestionForNote = useMutation(
+    (pk: number) => {
+      // return deleteOneCommentForTaskByPkApi(pk);
+      return apiForDeleteCommentForQuestionForNote(pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["apiForGetQnABoardList"]);
+
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+  
   const buttonHandlerForDeleteCommentForQuestionForNote = (pk: number) => {
     alert(pk);
+    mutationForDeleteCommentForQuestionForNote.mutate(pk)
   };
 
   // 2244
