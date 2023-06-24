@@ -6,6 +6,8 @@ import {
   Text,
   useColorModeValue,
   useToast,
+  Icon,
+  Flex,
 } from "@chakra-ui/react";
 import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
@@ -28,6 +30,8 @@ import ModalButtonForBriefingBoardForNote from "../modal/ModalButtonForBriefingB
 import ModalButtonForUpdateStudyNote from "../modal/ModalButtonForUpdateStudyNote";
 import ModalButtonForClassRoomListForStudyNote from "../modal/ModalButtonForClassRoomListForStudyNote";
 import ModalButtonForQnAList from "../modal/ModalButtonForQnAList";
+import { MdLocalPolice } from "react-icons/md";
+import ModalButtonForErrorReportForNote from "../modal/ModalButtonForErrorReportForNote";
 
 interface IProps {
   pk: any;
@@ -155,13 +159,13 @@ const CardForStudyNote: React.FC<IProps> = ({
 
   // 2244
   return (
-    <Box>
+    <Box border={"0px solid blue"} width={"49%"} px={"auto"} mx={"auto"}>
       <Box
         borderWidth="1px"
         borderRadius="lg"
         overflow="hidden"
-        width="90vh"
-        margin="10px"
+        width="91vh"
+        mx={"auto"}
         bg={cardBgColor}
         boxShadow="md"
         transition="box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out"
@@ -170,6 +174,7 @@ const CardForStudyNote: React.FC<IProps> = ({
           boxShadow: "xl",
           transform: "translateY(-2px)",
         }}
+        border={"0px solid red"}
       >
         <Box
           display={"flex"}
@@ -178,10 +183,17 @@ const CardForStudyNote: React.FC<IProps> = ({
           px="2"
           py="1"
         >
-          <Text fontSize="xl" fontWeight="bold">
-            {title} ({count_for_note_contents})
-            {/* {writer.username === loginUser.username ? "(my)" : ""} */}
-          </Text>
+          <Box display={"flex"} gap={2}>
+            <Text fontSize="xl" fontWeight="bold">
+              {title} ({count_for_note_contents})
+            </Text>
+            <ClipboardButtonForCopyCurrentUrl
+              button_size={"sm"}
+              pk={pk}
+              // width="100%" // 수정된 부분
+              textAlign="center" // 수정된 부분
+            />
+          </Box>
 
           {writer.username === loginUser.username ? (
             <Box display={"flex"} gap={2}>
@@ -217,18 +229,18 @@ const CardForStudyNote: React.FC<IProps> = ({
           p="2"
           bg={bodyBgColor}
           display={"flex"}
-          justifyContent={"space-between"}
+          // justifyContent={"space-between"}
           width={"100%"}
           height={"300px"}
           _hover={{ bg: "blue.100" }}
           id={"note-content-card"}
           defaultValue={"note-content-card"}
           gap={2}
-          border={"0px solid red"}
+          border={"0px solid gray"}
         >
           <Box
             fontSize="sm"
-            flex={3}
+            width={"70%"}
             display={"flex"}
             flexDirection={"column"}
             justifyContent={"space-between"}
@@ -314,8 +326,21 @@ const CardForStudyNote: React.FC<IProps> = ({
               </Box>
             </Box>
           </Box>
-          <Box p={2} gap={2} bg={"gray.100"} border={"0px solid red"}>
-            <Grid templateColumns="repeat(2, 1fr)" gap={2}>
+          <Box
+            p={2}
+            gap={2}
+            bg={"gray.100"}
+            border={"0px solid blue"}
+            display={"flex"}
+            justifyContent={"space-around"}
+            width={"30%"}
+          >
+            <Grid
+              templateColumns="repeat(2, 48%)"
+              px={"auto"}
+              border={"0px solid pink"}
+              gap={2}
+            >
               <Box>
                 <Button
                   variant={"outline"}
@@ -327,7 +352,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                     goToStudyNoteDetail(pk);
                   }}
                   _hover={{ bgColor: "yellow.100" }}
-                  width="90%" // 수정된 부분
+                  width="100%" // 수정된 부분
                   textAlign="center" // 수정된 부분
                 >
                   Open
@@ -341,7 +366,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                   border={"1px solid black"}
                   _hover={{ bgColor: "yellow.100" }}
                   onClick={() => buttonHandlerForMoveSlidePageForThisNote(pk)}
-                  width="90%" // 수정된 부분
+                  width="100%" // 수정된 부분
                   textAlign="center" // 수정된 부분
                 >
                   Slide
@@ -354,7 +379,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                   button_text={"SubTitle"}
                   study_note_pk={pk}
                   button_size={"sm"}
-                  button_width="90%" // 수정된 부분
+                  button_width="100%" // 수정된 부분
                   count_for_note_contents_for_subtitle={
                     count_for_note_contents_for_subtitle
                   }
@@ -370,14 +395,14 @@ const CardForStudyNote: React.FC<IProps> = ({
                   button_size={"sm"}
                   study_note_pk={pk}
                   count_for_note_comments={count_for_note_comments}
-                  button_width="90%" // 수정된 부분
+                  button_width="100%" // 수정된 부분
                 />
               </Box>
 
               <Box>
                 <ModalButtonForClassRoomListForStudyNote
                   button_text={"Class Room"}
-                  button_width={"90%"}
+                  button_width={"100%"}
                   button_size={"sm"}
                   modal_title={`${title} 에 대한 Class Room`}
                   study_note_pk={pk}
@@ -390,6 +415,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                 <ModalButtonForQnAList
                   button_text={"Q & A"}
                   button_size={"sm"}
+                  button_width={"100%"}
                   modal_title={`${title} 에 대한 Q& A`}
                   study_note_pk={pk}
                   modal_size={"6xl"}
@@ -398,12 +424,49 @@ const CardForStudyNote: React.FC<IProps> = ({
               </Box>
 
               <Box>
-                <ClipboardButtonForCopyCurrentUrl
+                <ModalButtonForErrorReportForNote
+                  button_text={"🚨 error report"}
+                  button_size={"sm"}
+                  button_width={"100%"}
+                  modal_title={"modal for error report"}
+                  modal_size={"6xl"}
+                />
+              </Box>
+
+              <Box>
+                <ModalButtonForErrorReportForNote
+                  button_text={"제안(미정)"}
+                  button_size={"sm"}
+                  button_width={"100%"}
+                  modal_title={"modal for error report"}
+                  modal_size={"6xl"}
+                />
+              </Box>
+
+              <Box>
+                <ModalButtonForErrorReportForNote
+                  button_text={"까페(미정)"}
+                  button_size={"sm"}
+                  button_width={"100%"}
+                  modal_title={"modal for error report"}
+                  modal_size={"6xl"}
+                />
+              </Box>
+
+              <Box>
+                <ModalButtonForErrorReportForNote
+                  button_text={"chat(미정)"}
+                  button_size={"sm"}
+                  button_width={"100%"}
+                  modal_title={"modal for error report"}
+                  modal_size={"6xl"}
+                />
+                {/* <ClipboardButtonForCopyCurrentUrl
                   button_size={"sm"}
                   pk={pk}
-                  width="90%" // 수정된 부분
+                  width="100%" // 수정된 부분
                   textAlign="center" // 수정된 부분
-                />
+                /> */}
               </Box>
             </Grid>
           </Box>

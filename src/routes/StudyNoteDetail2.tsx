@@ -312,14 +312,18 @@ const StudyNoteDetail2 = (props: Props) => {
                 modal_title={`QA list for page ${note_page_num}`}
                 modal_size={"6xl"}
                 study_note_pk={study_note_pk}
-                note_page_num = {note_page_num}
-              />
+                note_page_num={note_page_num} 
+                count_for_qna_boards={0}              />
             </Box>
 
             <Box>
-              {/* link button for note content list */}
+              
+            </Box>
+
+            <Box>
               <ClipboardButtonForCopyCurrentUrl />
             </Box>
+
             {is_authority_for_note ? (
               <Box display={"flex"} gap={2}>
                 <ModalButtonForInsertYoutubeContentsForNote

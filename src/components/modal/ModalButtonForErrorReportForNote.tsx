@@ -14,15 +14,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import {
-  ITypeForClassRoomRowForStudyNote,
-  QnARow,
-} from "../../types/study_note_type";
-import {
-  apiForGetClassRoomList,
-  apiForGetQnABoardList,
-} from "../../apis/study_note_api";
-import TableForQnaListForStudyNote from "../Table/TableForQnaListForStudyNote";
+// import {
+//   QnARow,
+// } from "../../types/study_note_type";
+// import {
+//   apiForGetQnABoardList,
+// } from "../../apis/study_note_api";
 
 interface IProps {
   button_text: string;
@@ -30,43 +27,36 @@ interface IProps {
   button_width: string;
   modal_title: string;
   modal_size: string;
-  study_note_pk: string | undefined;
-  note_page_num?: any;
-  count_for_qna_boards: number;
 }
 
 // 1122
-const ModalButtonForQnAList = ({
+const ModalButtonForErrorReportForNote = ({
   modal_title,
   modal_size,
   button_text,
   button_size,
   button_width,
-  study_note_pk,
-  note_page_num,
-  count_for_qna_boards,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const {
-    isLoading: isLoadingForGetQnABoardList,
-    data: dataForGetQnABoardList,
-    refetch: refetchForGetQnABoardList,
-  } = useQuery<QnARow[]>(
-    ["apiForGetQnABoardList", study_note_pk, note_page_num],
-    apiForGetQnABoardList,
-    {
-      enabled: true,
-      cacheTime: 0, // 캐싱 비활성화
-    }
-  );
-
-  console.log("dataForGetQnABoardList : ", dataForGetQnABoardList);
+  //   const {
+  //     isLoading: isLoadingForGetQnABoardList,
+  //     data: dataForGetQnABoardList,
+  //     refetch: refetchForGetQnABoardList,
+  //   } = useQuery<QnARow[]>(
+  //     ["apiForGetQnABoardList", study_note_pk, note_page_num],
+  //     apiForGetQnABoardList,
+  //     {
+  //       enabled: true,
+  //       cacheTime: 0, // 캐싱 비활성화
+  //     }
+  //   );
+  //   console.log("dataForGetQnABoardList : ", dataForGetQnABoardList);
 
   // 2244
   return (
     <>
-      <Button
+      {/* <Button
         variant={"outline"}
         onClick={onOpen}
         border={"1px solid black"}
@@ -75,7 +65,20 @@ const ModalButtonForQnAList = ({
         width={button_width}
       >
         {button_text} ({count_for_qna_boards})
+      </Button> */}
+
+      <Button
+        aria-label="Confirm"
+        variant="outline"
+        colorScheme="green"
+        rounded="md"
+        size={button_size}
+        width={button_width}
+        onClick={onOpen}
+      >
+        {button_text}
       </Button>
+
       <Modal isOpen={isOpen} onClose={onClose} size={modal_size}>
         <ModalOverlay />
         <ModalContent>
@@ -83,11 +86,11 @@ const ModalButtonForQnAList = ({
           <ModalCloseButton />
           <ModalBody>
             {/* fix 0623 */}
-            <TableForQnaListForStudyNote
+            {/* <TableForQnaListForStudyNote
               study_note_pk={study_note_pk}
               data={dataForGetQnABoardList}
               refetchForGetQnABoardList={refetchForGetQnABoardList}
-            />
+            /> */}
           </ModalBody>
           <ModalFooter>
             <Button type="submit" colorScheme="blue" mr={3}>
@@ -101,4 +104,4 @@ const ModalButtonForQnAList = ({
   );
 };
 
-export default ModalButtonForQnAList;
+export default ModalButtonForErrorReportForNote;

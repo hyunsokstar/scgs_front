@@ -1,5 +1,6 @@
 // 00
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Box,
   Checkbox,
@@ -14,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   apiForEditModeForStudyNoteBriefingBoard,
   apiForUpdateCommentForNote,
@@ -116,7 +116,6 @@ const ListItemForChatBoard = ({
       },
     }
   );
-
 
   // buttonHandlerForEditConfirm
   const buttonHandlerForEditConfirm = (commentPk: any) => {
