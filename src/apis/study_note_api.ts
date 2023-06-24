@@ -28,7 +28,7 @@ export const apiForDeleteCommentForQuestionForNote = (
   console.log("comment_pk : ", comment_pk);
 
   return instance
-    .delete(`study-note/${comment_pk}/delete-comment`, {
+    .delete(`study-note/answer-for-qaboard/${comment_pk}/delete-comment`, {
       headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",
       },

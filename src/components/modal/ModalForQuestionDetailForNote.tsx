@@ -25,6 +25,7 @@ import { EditIcon, DeleteIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
 import {
   apiForAddCommentForQuestionForNote,
+  apiForDeleteCommentForQuestionForNote,
   apiForUpdateCommentForQuestionForNote,
 } from "../../apis/study_note_api";
 import { useSelector } from "react-redux";
@@ -159,7 +160,7 @@ const ModalForQuestionDetailForNote: React.FC<
   );
   
   const buttonHandlerForDeleteCommentForQuestionForNote = (pk: number) => {
-    alert(pk);
+    // alert(pk);
     mutationForDeleteCommentForQuestionForNote.mutate(pk)
   };
 
@@ -191,7 +192,7 @@ const ModalForQuestionDetailForNote: React.FC<
                         >
                           <Box>
                             <Text fontWeight="bold">Writer:</Text>
-                            gogo {question.writer.username}
+                            {question.writer.username}
                           </Box>
                           <Box>
                             <Text fontWeight="bold">Page:</Text>

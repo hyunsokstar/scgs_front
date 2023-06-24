@@ -21,6 +21,7 @@ import TableForClassRoomListForStudyNote from "../Table/TableForClassRoomListFor
 interface IProps {
   button_text: string;
   button_size: string;
+  button_width: string;
   modal_title: string;
   modal_size: string;
   study_note_pk: string | number | undefined;
@@ -33,6 +34,7 @@ const ModalButtonForClassRoomListForStudyNote = ({
   button_text,
   button_size,
   study_note_pk,
+  button_width,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -59,6 +61,7 @@ const ModalButtonForClassRoomListForStudyNote = ({
         variant={"outline"}
         onClick={onOpen}
         border={"1px solid black"}
+        width={button_width}
         _hover={{ bgColor: "yellow.100" }}
         size={button_size}
       >

@@ -368,6 +368,7 @@ const CardForStudyNote: React.FC<IProps> = ({
               <Box>
                 <ModalButtonForClassRoomListForStudyNote
                   button_text={"Class Room"}
+                  button_width={"90%"}
                   button_size={"sm"}
                   modal_title={`${title} 에 대한 Class Room`}
                   study_note_pk={pk}
