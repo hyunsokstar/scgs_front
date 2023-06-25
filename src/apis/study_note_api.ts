@@ -22,6 +22,18 @@ const instance = axios.create({
 
 // 1122
 
+export const apiForGetErrorReportListForStudyNote = ({ queryKey }: QueryFunctionContext) => {
+  const [_, study_note_pk, note_page_num] = queryKey;
+  console.log("note_page_num : ", note_page_num);
+  
+  return instance
+    .get(`/study-note/${study_note_pk}/error-report-list`, {
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
 export const apiForDeleteCommentForQuestionForNote = (comment_pk: number) => {
   console.log("comment_pk : ", comment_pk);
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Text,
   Table,
   Tbody,
   Tr,
@@ -59,23 +60,25 @@ const TableForNoteCoworkers = ({
   // 2244
   return (
     <Box overflowY={"scroll"} maxH="200px">
-      <Table bgColor={"gray.400"}>
+      <Table bgColor={"gray.400"} size="xs">
         <Tbody>
           {noteCowriters.length
             ? noteCowriters.map((cowriter) => (
                 <Tr key={cowriter.id} p={0}>
                   <Td>
-                    <Avatar
-                      name={cowriter.writer.username}
-                      src={cowriter.writer.profile_image}
-                      size="sm"
-                    />
-                    <Box>{cowriter.writer.username}</Box>
+                    <Box display={"flex"} gap={2} alignItems={"center"} ml={2} my={1}>
+                      <Avatar
+                        name={cowriter.writer.username}
+                        src={cowriter.writer.profile_image}
+                        size="sm"
+                      />
+                      <Text>{cowriter.writer.username}</Text>
+                    </Box>
                   </Td>
                   <Td>
                     <ToggleButtonForIsApprovedForNoteCoWriting
                       updateAuthority={noteOwnerUserName === loginUser.username}
-                      noteOwnerUserName = {noteOwnerUserName}
+                      noteOwnerUserName={noteOwnerUserName}
                       cowriterPk={cowriter.id}
                       is_approved={cowriter.is_approved}
                     />

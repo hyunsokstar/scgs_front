@@ -14,6 +14,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { apiForGetErrorReportListForStudyNote } from "../../apis/study_note_api";
 // import {
 //   QnARow,
 // } from "../../types/study_note_type";
@@ -27,6 +28,7 @@ interface IProps {
   button_width: string;
   modal_title: string;
   modal_size: string;
+  study_note_pk: any
 }
 
 // 1122
@@ -36,22 +38,24 @@ const ModalButtonForErrorReportForNote = ({
   button_text,
   button_size,
   button_width,
+  study_note_pk
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  //   const {
-  //     isLoading: isLoadingForGetQnABoardList,
-  //     data: dataForGetQnABoardList,
-  //     refetch: refetchForGetQnABoardList,
-  //   } = useQuery<QnARow[]>(
-  //     ["apiForGetQnABoardList", study_note_pk, note_page_num],
-  //     apiForGetQnABoardList,
-  //     {
-  //       enabled: true,
-  //       cacheTime: 0, // 캐싱 비활성화
-  //     }
-  //   );
-  //   console.log("dataForGetQnABoardList : ", dataForGetQnABoardList);
+    // apiForGetQnABoardList
+    const {
+      isLoading: isLoadingForGetErrorReportListForStudyNote,
+      data: dataForGetErrorReportListForStudyNote,
+      refetch: refetchForGetErrorReportListForStudyNote,
+    } = useQuery<any[]>(
+      ["apiForGetErrorReportListForStudyNote", study_note_pk],
+      apiForGetErrorReportListForStudyNote,
+      {
+        enabled: true,
+        // cacheTime: 0, // 캐싱 비활성화
+      }
+    );
+    console.log("dataForGetErrorReportForStudyNote : ", dataForGetErrorReportForStudyNote);
 
   // 2244
   return (
@@ -84,14 +88,7 @@ const ModalButtonForErrorReportForNote = ({
         <ModalContent>
           <ModalHeader>{modal_title}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            {/* fix 0623 */}
-            {/* <TableForQnaListForStudyNote
-              study_note_pk={study_note_pk}
-              data={dataForGetQnABoardList}
-              refetchForGetQnABoardList={refetchForGetQnABoardList}
-            /> */}
-          </ModalBody>
+          <ModalBody>{/* fix 0623 */}</ModalBody>
           <ModalFooter>
             <Button type="submit" colorScheme="blue" mr={3}>
               Submit

@@ -429,17 +429,19 @@ const CardForStudyNote: React.FC<IProps> = ({
                   button_size={"sm"}
                   button_width={"100%"}
                   modal_title={"modal for error report"}
+                  study_note_pk={pk}
                   modal_size={"6xl"}
                 />
               </Box>
 
-              <Box>
+              {/* <Box>
                 <ModalButtonForErrorReportForNote
                   button_text={"제안(미정)"}
                   button_size={"sm"}
                   button_width={"100%"}
                   modal_title={"modal for error report"}
                   modal_size={"6xl"}
+                  study_note_pk={pk}
                 />
               </Box>
 
@@ -460,14 +462,9 @@ const CardForStudyNote: React.FC<IProps> = ({
                   button_width={"100%"}
                   modal_title={"modal for error report"}
                   modal_size={"6xl"}
+                  study_note_pk={pk}
                 />
-                {/* <ClipboardButtonForCopyCurrentUrl
-                  button_size={"sm"}
-                  pk={pk}
-                  width="100%" // 수정된 부분
-                  textAlign="center" // 수정된 부분
-                /> */}
-              </Box>
+              </Box> */}
             </Grid>
           </Box>
         </Box>
