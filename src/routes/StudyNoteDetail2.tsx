@@ -256,7 +256,7 @@ const StudyNoteDetail2 = (props: Props) => {
   return (
     <Box
       display={"flex"}
-      border={"5px solid green"}
+      border={"1px solid gray"}
       height={"100%"}
       width={"100%"}
       flexDirection={["column", "column", "column", "column", "row"]}
@@ -264,7 +264,7 @@ const StudyNoteDetail2 = (props: Props) => {
       {/* fix  */}
       <Box
         width={["100%", "100%", "100%", "100%", "80%"]}
-        border={"1px solid black"}
+        border={"0px solid black"}
       >
         <Box
           display="flex"
@@ -435,11 +435,11 @@ const StudyNoteDetail2 = (props: Props) => {
           id="card-container"
           height={"68vh"}
           overflowY={"scroll"}
-          mr={1}
+          // mr={1}
           position={"relative"}
           display={"flex"}
           justifyContent={"center"}
-          border={"2px solid black"}
+          border={"1px solid gray"}
         >
           <Box
             position={"absolute"}
@@ -530,13 +530,13 @@ const StudyNoteDetail2 = (props: Props) => {
       {/* fix this */}
       <Box
         width={["100%", "100%", "100%", "100%", "20%"]}
-        border={"2px solid black"}
+        border={"0px solid black"}
       >
         <Box display={"flex"} flexDirection={"column"}>
           <Box display={"flex"} gap={2} p={2}>
             <Button
               variant={"outline"}
-              border={"1px solid black"}
+              border={"0px solid black"}
               width={"50%"}
               size={"sm"}
               onClick={buttonHandlerForRegisterClassRoomForStudyNote}

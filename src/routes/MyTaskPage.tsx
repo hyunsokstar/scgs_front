@@ -14,7 +14,7 @@ function MyTaskPage({}: Props): ReactElement {
   );
 
   return (
-    <Box width={"100%"} border={"2px solid blue"}>
+    <Box width={"100%"} border={"1px solid blue"} mt={2}>
       <Flex direction={"column"} mt={0} width="100%">
         {isLoggedIn ? (
           <VStack mt={0} spacing={2}>

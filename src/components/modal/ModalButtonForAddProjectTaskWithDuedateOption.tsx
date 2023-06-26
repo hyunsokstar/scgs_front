@@ -160,7 +160,10 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
   };
 
   return (
-    <Box>
+    <Box
+      display={"flex"}
+      border={"0px solid blue"}
+    >
       <Button
         mt={2}
         mr={1}

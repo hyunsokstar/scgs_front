@@ -44,8 +44,8 @@ const ButtonsForUnompletedTaskForChecked: React.FC<
   };
 
   return (
-    <Box>
-      <Box p={2} gap={2}>
+    <Box width={"100%"} border={"0px solid orange"} maxWidth={"100%"}>
+      <Box p={2} gap={2} display={"flex"} flexWrap={"wrap"}>
         <Button
           variant="outline"
           size="xs"
@@ -136,7 +136,13 @@ const ButtonsForUnompletedTaskForChecked: React.FC<
           Set DueDate to This Month
         </Button>
       </Box>
-      <Box display={"flex"} justifyContent={"flex-start"} gap={2} ml={2}>
+      <Box
+        display={"flex"}
+        justifyContent={"flex-start"}
+        flexWrap={"wrap"}
+        gap={2}
+        ml={2}
+      >
         <Button
           variant="outline"
           size="xs"

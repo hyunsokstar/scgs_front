@@ -229,6 +229,7 @@ export interface QnARow {
 }
 
 export interface ErrorReportForStudyNoteData {
+  pk:number;
   study_note: number;
   writer: UserProfileImage;
   page: number;

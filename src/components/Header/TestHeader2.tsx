@@ -116,14 +116,20 @@ const Header = () => {
     <>
       <Box
         display="grid"
-        gridTemplateColumns="repeat(7, 1fr)"
+        gridTemplateColumns={{
+          xl: "repeat(7, 1fr)", // default value for all breakpoints
+          lg: "repeat(2, 1fr)", // for medium-sized screens and up
+          sm: "repeat(2, 1fr)", // for small screens and up
+        }}
         justifyItems="center" // 가운데 정렬
         alignItems="center" // 수직 가운데 정렬
-        // gap="1rem"
-        height={"120px"}
+        // height={"120px"}
+        height={["540px", "540px", "540px", "540px", "120px"]}
+        border={"1px solid gray"}
         bg="gray.800"
-        my={1}
-        mb={1}
+        overflowY={"scroll"}
+        gap={3}
+        width={"100%"}
       >
         <Box display="flex" alignItems="center" onClick={homeButtonHandler}>
           <Icon
@@ -133,6 +139,21 @@ const Header = () => {
             mr="1rem"
           />
         </Box>
+
+        <NavLink
+          to="/my_task"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            My Task
+          </Text>
+        </NavLink>
 
         <NavLink
           to="/project_admin"
@@ -178,20 +199,6 @@ const Header = () => {
             Today Task Status
           </Text>
         </NavLink>
-        {/* <NavLink
-          to="/task-statics"
-          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-        >
-          <Text
-            fontSize="xl"
-            fontWeight="medium"
-            mr={{ base: 0, md: "1rem" }}
-            cursor="pointer"
-            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
-          >
-            Statics
-          </Text>
-        </NavLink> */}
 
         <NavLink
           to="/task-log"

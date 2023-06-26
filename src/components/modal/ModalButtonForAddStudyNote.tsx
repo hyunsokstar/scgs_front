@@ -15,7 +15,7 @@ import {
   Input,
   Textarea,
   useToast,
-  Select
+  Select,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -25,9 +25,10 @@ import { apiForCreateStudyNote } from "../../apis/study_note_api";
 
 interface IProps {
   button_text: string;
+  button_size: string;
 }
 
-function ModalButtonForAddStudyNote({ button_text }: IProps) {
+function ModalButtonForAddStudyNote({ button_text, button_size }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
   const queryClient = useQueryClient();
@@ -70,15 +71,17 @@ function ModalButtonForAddStudyNote({ button_text }: IProps) {
   const onOpen = () => setIsOpen(true);
 
   return (
-    <Box w={"100%"}>
-      <Box display="flex" justifyContent="flex-end">
+    <Box>
+      <Box display="flex">
         <Button
           variant="outline"
           colorScheme="purple"
-          size="md"
+          // size="md"
+          size={button_size}
           _hover={{ bg: "purple.100" }}
           rightIcon={<AddIcon />}
           onClick={onOpen}
+          w={"100%"}
         >
           {button_text}
         </Button>

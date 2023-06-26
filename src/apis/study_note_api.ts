@@ -21,7 +21,41 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForCreateErrorReportForNote
+// apiForUpdateErrorReportForNote
+
+export const apiForDeleteErrorReportByPk = (error_report_pk: string | number) => {
+  console.log("error_report_pk : ", error_report_pk);
+  return instance
+    // .delete(`project_progress/comment/${commentPk}`, {
+      .delete(`study-note/error-report/${error_report_pk}/delete`, {
+        headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+export const apiForUpdateErrorReportForNote = ({ errorPk, content }: any) => {
+  console.log("apiForUpdateErrorReportForNote 실행 check : ", content);
+
+  return instance
+    .put(
+      `/study-note/error-report/${errorPk}/update`,
+      {
+        content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const apiForCreateErrorReportForNote = ({
   study_note_pk,
   page,
@@ -43,16 +77,16 @@ export const apiForCreateErrorReportForNote = ({
     )
     .then((response) => response.data);
 
-    export const apiForGetErrorReportListForStudyNote = ({
-      queryKey,
-    }: QueryFunctionContext) => {
-      const [_, study_note_pk] = queryKey;
-      return instance
-        .get(`/study-note/${study_note_pk}/error-report-list`, {})
-        .then((response) => {
-          return response.data;
-        });
-    };
+export const apiForGetErrorReportListForStudyNote = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, study_note_pk] = queryKey;
+  return instance
+    .get(`/study-note/${study_note_pk}/error-report-list`, {})
+    .then((response) => {
+      return response.data;
+    });
+};
 
 export const apiForGetErrorReportListForPageForStudyNote = ({
   queryKey,

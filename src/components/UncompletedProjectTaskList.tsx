@@ -308,18 +308,30 @@ function UncompletedProjectTaskList({
 
   // 2244
   return (
-    <Box w={"100%"} border={"1px solid purple"} p={0} mt={2}>
+    <Box
+      border={"3px solid purple"}
+      p={0}
+      mt={2}
+      overflowX={"scroll"}
+      // overflowY={"scroll"}
+    >
       <Box
         border={"1px solid black"}
         display="flex"
-        justifyContent={"space-between"}
-        bgColor={"green.200"}
+        justifyContent={"flex-start"}
+        flexWrap={"wrap"}
         alignItems={"center"}
-        p={4}
+        width={"100%"}
       >
-        <Box width={"35%"}>
-          <Table border={"0px solid blue"} mb={1}>
-            <Tr borderBottom={"2px solid #9AE6B4"}>
+        <Box
+          height={"450px"}
+          bg={"green.200"}
+          border={"5px solid red"}
+          alignItems={"center"}
+          width={"100%"}
+        >
+          <Table border={"0px solid blue"}>
+            <Tr borderBottom={"3px solid #9AE6B4"}>
               <Th colSpan={2}>
                 <Text fontSize={16}>
                   uncomplete task (total: {taskListData?.totalPageCount}, per :{" "}
@@ -327,7 +339,7 @@ function UncompletedProjectTaskList({
                 </Text>
               </Th>
             </Tr>
-            <Tr borderBottom={"2px solid #9AE6B4"}>
+            <Tr borderBottom={"3px solid #9AE6B4"}>
               <Td>
                 <Text>Progress status</Text>
               </Td>
@@ -365,7 +377,7 @@ function UncompletedProjectTaskList({
                 />
               </Td>
             </Tr>
-            <Tr borderBottom={"2px solid #9AE6B4"}>
+            <Tr borderBottom={"3px solid #9AE6B4"}>
               <Td>Importance</Td>
               <Td>
                 <StarRatingForSetFilterOptionForTaskList
@@ -374,7 +386,7 @@ function UncompletedProjectTaskList({
                 />
               </Td>
             </Tr>
-            <Tr height="30px" borderBottom={"2px solid #9AE6B4"}>
+            <Tr height="30px" borderBottom={"3px solid #9AE6B4"}>
               <Td>
                 <Text>Task Manager</Text>
               </Td>
@@ -412,8 +424,14 @@ function UncompletedProjectTaskList({
           </Table>
         </Box>
 
-        <Box>
-          <Table variant="unstyled" size="md" bg={"green.200"} mb={2}>
+        <Box
+          height={"450px"}
+          bg={"blue.100"}
+          alignItems={"center"}
+          width={"100%"}
+          border={"5px solid orange"}
+        >
+          <Table variant="unstyled" size="md" mb={2}>
             <Tbody>
               <Tr>
                 <Td>created_at</Td>
@@ -539,7 +557,14 @@ function UncompletedProjectTaskList({
           </Table>
         </Box>
 
-        <Box>
+        <Box
+          flex={1}
+          flexGrow={1}
+          height={"450px"}
+          border={"3px solid black"}
+          bgColor={"orange.200"}
+          alignItems={"center"}
+        >
           <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
             <Text fontSize="xl" fontWeight="bold" mb={2}>
               Today
@@ -561,6 +586,7 @@ function UncompletedProjectTaskList({
       <Box
         display={"flex"}
         flexDirection={"row"}
+        flexWrap={"wrap"}
         justifyContent={"space-between"}
         ml={2}
       >

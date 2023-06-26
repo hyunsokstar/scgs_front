@@ -57,7 +57,7 @@ const ModalButtonForRegisterErrorReportForNote = ({
     data: dataForGetErrorReportListForStudyNote,
     refetch: refetchForGetErrorReportListForStudyNote,
   } = useQuery<ErrorReportForStudyNoteData[]>(
-    ["apiForGetErrorReportListForStudyNote", study_note_pk, currentPage],
+    ["apiForGetErrorReportListForPageForStudyNote", study_note_pk, currentPage],
     apiForGetErrorReportListForPageForStudyNote,
     {
       enabled: true,
@@ -101,6 +101,11 @@ const ModalButtonForRegisterErrorReportForNote = ({
   const onSubmit = (data: any) => {
     // 입력된 데이터 처리
     console.log(data);
+    if(data.content ===""){
+      alert("에러 내용을 입력해 주세요 !!")
+      return;
+    }
+    
     mutationForCreateErrorReportForNote.mutate({
       study_note_pk: study_note_pk,
       page: currentPage,
@@ -133,6 +138,9 @@ const ModalButtonForRegisterErrorReportForNote = ({
               data={
                 dataForGetErrorReportListForStudyNote &&
                 dataForGetErrorReportListForStudyNote
+              }
+              refetchForGetErrorReportListForStudyNote={
+                refetchForGetErrorReportListForStudyNote
               }
             />
             <br />

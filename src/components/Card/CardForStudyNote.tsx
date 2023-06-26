@@ -6,8 +6,7 @@ import {
   Text,
   useColorModeValue,
   useToast,
-  Icon,
-  Flex,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
@@ -72,6 +71,18 @@ const CardForStudyNote: React.FC<IProps> = ({
   const queryClient = useQueryClient();
   const toast = useToast();
   const navigate = useNavigate();
+
+  const note_card_direction = useBreakpointValue({
+    base: "column", // default value for all breakpoints
+    md: "row", // for medium-sized screens and up
+    lg: "row", // for small screens and up
+  });
+
+  const note_card_width = useBreakpointValue({
+    base: "100%", // default value for all breakpoints
+    md: "50%", // for medium-sized screens and up
+    lg: "50%", // for small screens and up
+  });
 
   console.log("note_cowriters : ", note_cowriters);
 
@@ -157,15 +168,20 @@ const CardForStudyNote: React.FC<IProps> = ({
     navigate(`/study-note/${pk}/1/slide`);
   };
 
+  const note_header_direction = useBreakpointValue({
+    base: "column", // for mobile and small screens
+    md: "row", // for medium-sized screens and up
+  });
+
   // 2244
   return (
-    <Box border={"0px solid blue"} width={"49%"} px={"auto"} mx={"auto"}>
+    <Box border={"1px solid blue"} width={"100%"}>
       <Box
         borderWidth="1px"
         borderRadius="lg"
         overflow="hidden"
-        width="91vh"
-        mx={"auto"}
+        width="100%"
+        // mx={"auto"}
         bg={cardBgColor}
         boxShadow="md"
         transition="box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out"
@@ -179,24 +195,26 @@ const CardForStudyNote: React.FC<IProps> = ({
         <Box
           display={"flex"}
           justifyContent="space-between"
+          flexDirection={note_header_direction}
           bg={writer.username === loginUser.username ? "green.200" : "blue.200"}
+          border={"0px solid red"}
           px="2"
           py="1"
+          width={"100%"}
         >
           <Box display={"flex"} gap={2}>
             <Text fontSize="xl" fontWeight="bold">
               {title} ({count_for_note_contents})
             </Text>
-            <ClipboardButtonForCopyCurrentUrl
-              button_size={"sm"}
-              pk={pk}
-              // width="100%" // 수정된 부분
-              textAlign="center" // 수정된 부분
-            />
           </Box>
 
           {writer.username === loginUser.username ? (
-            <Box display={"flex"} gap={2}>
+            <Box display={"flex"} gap={2} justifyContent={"space-between"}>
+              <ClipboardButtonForCopyCurrentUrl
+                button_size={"sm"}
+                pk={pk}
+                textAlign="center" // 수정된 부분
+              />
               <ModalButtonForUpdateStudyNote
                 button_text={"update for study note"}
                 button_size={"sm"}
@@ -226,27 +244,29 @@ const CardForStudyNote: React.FC<IProps> = ({
         </Box>
 
         <Box
-          p="2"
+          // p="2"
           bg={bodyBgColor}
           display={"flex"}
-          // justifyContent={"space-between"}
           width={"100%"}
           height={"300px"}
           _hover={{ bg: "blue.100" }}
           id={"note-content-card"}
           defaultValue={"note-content-card"}
           gap={2}
-          border={"0px solid gray"}
+          // border={"10px solid red"}
+          flexDirection={note_card_direction}
         >
           <Box
             fontSize="sm"
-            width={"70%"}
+            width={note_card_width}
             display={"flex"}
             flexDirection={"column"}
             justifyContent={"space-between"}
-            border={"0px solid purple"}
+            border={"1px solid gray"}
           >
-            <Box flex={1}>{description}</Box>
+            <Box flex={1} p={2}>
+              {description}
+            </Box>
             <Box flex={2} border={"0px solid pink"}>
               <Box
                 display={"flex"}
@@ -254,7 +274,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                 mb={1}
                 border={"0px solid blue"}
               >
-                <Box>Co-Writer</Box>
+                <Box px={2}>Co-Writer</Box>
                 <Box>
                   {/* cowriter add */}
                   {isLoggedIn && loginUser.username !== writer.username ? (
@@ -327,21 +347,22 @@ const CardForStudyNote: React.FC<IProps> = ({
             </Box>
           </Box>
           <Box
-            p={2}
+            // p={2}
             gap={2}
             bg={"gray.100"}
-            border={"0px solid blue"}
+            // border={"5px solid blue"}
             display={"flex"}
             justifyContent={"space-around"}
-            width={"30%"}
+            width={note_card_width}
           >
             <Grid
-              templateColumns="repeat(2, 48%)"
-              px={"auto"}
-              border={"0px solid pink"}
+              templateColumns="repeat(2, 1fr)"
+              // border={"1px solid gray"}
               gap={2}
+              width={"100%"}
+              px={2}
             >
-              <Box>
+              <Box width={"100%"}>
                 <Button
                   variant={"outline"}
                   size={"sm"}

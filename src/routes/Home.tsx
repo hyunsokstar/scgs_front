@@ -43,7 +43,7 @@ export default function Home() {
         justifyContent={"flex-start"}
         flexWrap={"wrap"}
         gap={5}
-        border={"1px solid red"}
+        border={"1px solid gray"}
         pl={"6%"}
       >
         <SampleCard
