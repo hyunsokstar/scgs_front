@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Box,
   Table,
@@ -10,8 +11,10 @@ import {
   Center,
   Avatar,
   IconButton,
+  Textarea,
+  Button,
 } from "@chakra-ui/react";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { EditIcon, DeleteIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { ErrorReportForStudyNoteData } from "../../types/study_note_type";
 
 interface TableForErrorReportListForStudyNoteProps {
@@ -21,8 +24,28 @@ interface TableForErrorReportListForStudyNoteProps {
 const TableForErrorReportListForStudyNote: React.FC<
   TableForErrorReportListForStudyNoteProps
 > = ({ data }) => {
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [updatedContent, setUpdatedContent] = useState<string>("");
+
+  const handleEditClick = (index: number, content: string) => {
+    setEditingIndex(index);
+    setUpdatedContent(content);
+  };
+
+  const handleCancelClick = () => {
+    setEditingIndex(null);
+    setUpdatedContent("");
+  };
+
+  const handleConfirmClick = () => {
+    // Perform the update operation with the updatedContent
+    // You can add your logic here to update the content
+    setEditingIndex(null);
+    setUpdatedContent("");
+  };
+
   return (
-    <Box overflowX="auto" overflowY={"scroll"} height={"400px"}>
+    <Box overflowX="auto" overflowY="scroll" height="400px">
       <Table variant="simple">
         <Thead>
           <Tr>
@@ -36,10 +59,12 @@ const TableForErrorReportListForStudyNote: React.FC<
         </Thead>
         <Tbody>
           {data && data.length !== 0 ? (
-            data.map((item) => (
-              <Tr key={item.created_at_formatted}>
+            data.map((item, index) => (
+              <Tr
+                key={item.created_at_formatted}
+                bgColor={editingIndex === index ?  "yellow.100" : ""}
+              >
                 <Td>
-                  {" "}
                   {item.writer.profile_image ? (
                     <Avatar
                       size="sm"
@@ -51,28 +76,62 @@ const TableForErrorReportListForStudyNote: React.FC<
                   )}
                 </Td>
                 <Td>{item.page}</Td>
-                <Td>{item.content}</Td>
+                <Td>
+                  {editingIndex === index ? (
+                    <Textarea
+                      value={updatedContent}
+                      onChange={(e) => setUpdatedContent(e.target.value)}
+                      autoFocus
+                    />
+                  ) : (
+                    item.content
+                  )}
+                </Td>
                 <Td>{item.is_resolved ? "Yes" : "No"}</Td>
                 <Td>{item.created_at_formatted}</Td>
                 <Td>
-                  <Box display={"flex"} gap={2}>
-                    <IconButton
-                      variant={"outline"}
-                      border={"1px solid black"}
-                      _hover={{ bgColor: "blue.100" }}
-                      aria-label="Update"
-                      icon={<EditIcon />}
-                      colorScheme="blue"
-                    />
-                    <IconButton
-                      variant={"outline"}
-                      border={"1px solid black"}
-                      _hover={{ bgColor: "blue.100" }}
-                      aria-label="Delete"
-                      icon={<DeleteIcon />}
-                      colorScheme="red"
-                    />
-                  </Box>
+                  {editingIndex === index ? (
+                    <Box display="flex" gap={2}>
+                      <IconButton
+                        variant="outline"
+                        border="1px solid black"
+                        _hover={{ bgColor: "blue.100" }}
+                        aria-label="Confirm"
+                        icon={<CheckIcon />}
+                        colorScheme="blue"
+                        onClick={handleConfirmClick}
+                      />
+                      <IconButton
+                        variant="outline"
+                        border="1px solid black"
+                        _hover={{ bgColor: "blue.100" }}
+                        aria-label="Cancel"
+                        icon={<CloseIcon />}
+                        colorScheme="red"
+                        onClick={handleCancelClick}
+                      />
+                    </Box>
+                  ) : (
+                    <Box display="flex" gap={2}>
+                      <IconButton
+                        variant="outline"
+                        border="1px solid black"
+                        _hover={{ bgColor: "blue.100" }}
+                        aria-label="Edit"
+                        icon={<EditIcon />}
+                        colorScheme="blue"
+                        onClick={() => handleEditClick(index, item.content)}
+                      />
+                      <IconButton
+                        variant="outline"
+                        border="1px solid black"
+                        _hover={{ bgColor: "blue.100" }}
+                        aria-label="Delete"
+                        icon={<DeleteIcon />}
+                        colorScheme="red"
+                      />
+                    </Box>
+                  )}
                 </Td>
               </Tr>
             ))
