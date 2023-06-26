@@ -428,9 +428,9 @@ const CardForStudyNote: React.FC<IProps> = ({
                   button_text={"🚨 error report"}
                   button_size={"sm"}
                   button_width={"100%"}
-                  modal_title={"modal for error report"}
+                  modal_title={`${title} 에 대한 error report`}
                   study_note_pk={pk}
-                  modal_size={"6xl"}
+                  modal_size={""}
                 />
               </Box>
 

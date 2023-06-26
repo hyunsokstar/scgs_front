@@ -227,3 +227,13 @@ export interface QnARow {
   updated_at: string;
   answers_for_qa_board: AnswerForQaBoard[];
 }
+
+export interface ErrorReportForStudyNoteData {
+  study_note: number;
+  writer: UserProfileImage;
+  page: number;
+  content: string;
+  is_resolved: boolean;
+  created_at_formatted: string;
+  updated_at: string;
+}

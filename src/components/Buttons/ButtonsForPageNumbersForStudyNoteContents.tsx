@@ -338,11 +338,18 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
     <Box
       display={"flex"}
       flexWrap={"wrap"}
-      gap={1}
+      // gap={1}
       width={"100%"}
-      border={"1px solid green"}
+      border={"1px solid black"}
     >
-      <Box display={"flex"} width={"100%"} pt={1} px={1} gap={1}>
+      <Box
+        display={"flex"}
+        width={"100%"}
+        pt={1}
+        px={1}
+        gap={1}
+        // border={"5px solid blue"}
+      >
         <IconButton
           aria-label="Previous"
           icon={<ChevronLeftIcon />}
@@ -364,6 +371,19 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         />
         <Spacer />
 
+        {loginUser.username && is_authority_for_note ? (
+          <Box>
+            <ToggleButtonForUpdate
+              currentState={loginUser.is_edit_mode_for_study_note_contents}
+              onChangeHandler={onChangeHandlerForEditModeForStudyNoteContent}
+              editMode={editMode}
+              setEditMode={setEditMode}
+            />
+          </Box>
+        ) : (
+          ""
+        )}
+
         <Link
           to={`/study-note/${study_note_pk}/${currentPage}/slide`}
           style={{ textDecoration: "underline" }}
@@ -383,10 +403,10 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         display={"flex"}
         justifyContent={"space-between"}
         alignItems={"center"}
-        border={"1px solid black"}
         width={"100%"}
         px={2}
         // py={1}
+        // border={"5px solid green"}
       >
         {!isLoggedIn ? "로그인 필요" : ""}
         {editMode ? (
@@ -406,26 +426,12 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         ) : (
           ""
         )}
-
-        {loginUser.username && is_authority_for_note ? (
-          <Box>
-            <ToggleButtonForUpdate
-              currentState={loginUser.is_edit_mode_for_study_note_contents}
-              onChangeHandler={onChangeHandlerForEditModeForStudyNoteContent}
-              editMode={editMode}
-              setEditMode={setEditMode}
-            />
-          </Box>
-        ) : (
-          ""
-        )}
       </Box>
 
       {editMode ? (
         <Box
           display="flex"
           justifyContent="space-between"
-          border={"1px solid blue"}
           mt={0}
           w={"100%"}
           p={1}
@@ -451,23 +457,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
           >
             +1
           </Button>
-
-          {/* fix 0609 */}
-          {/* <Link to={`/study-note/table-mode-for-update-page`}>
-            <Button
-              variant="outline"
-              size={"sm"}
-              colorScheme="yellow"
-              _hover={{ bg: "yellow.100" }}
-              ml={2}
-              style={{
-                backgroundColor: "transparent",
-                marginRight: "10px",
-              }}
-            >
-              Table Mode For Page Update
-            </Button>
-          </Link> */}
 
           <Spacer />
           <Button
@@ -497,12 +486,6 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       )}
 
       {!editMode ? <Box ml={2}>page numbers : </Box> : ""}
-      {/* <Box display={"flex"} flexDirection={"row"}>
-        <Box border={"1px solid blue"}>
-          {pageNumbersToEdit.join(", ")}
-        </Box>
-        <Box >{pageNumbersToMove.join(", ")}</Box>
-      </Box> */}
       <Box display={"flex"} flexDirection={"column"} ml={3}>
         <Box>
           {pageNumbersToEdit.length === pageNumbersToMove.length &&
@@ -561,36 +544,38 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
             )}
         </Box>
       </Box>
-      <Box px={"auto"} border={"0px solid green"} mx={"auto"} width={"86%"}>
-        {pagesData.map((page) => {
-          console.log("currentPage, page", typeof currentPage, typeof page);
-          return (
-            // 고칠것 pageNumbersToEdit 에 포함 되어 있으면 PageNumbersToMove에는 안됨
-            // pageNumbersToEdit중에 제일 큰거보다  PageNumbersToMove이 더 커야 함
-            // pageNumbersToEdit 의 개수와 PageNumbersToMove 의 개수가 일치하면 대량 이동 버튼 활성화
-            <Button
-              key={page}
-              width={"10px"}
-              height={"30px"}
-              variant="outline"
-              borderColor={currentPage == page ? "red" : "blue"}
-              onClick={(e) => clickHandlerForPageButton(e, page)}
-              style={{
-                width: "25px",
-                height: "25px",
-                margin: "5px",
-                backgroundColor: getColor(
-                  pageNumbersToEdit,
-                  pageNumbersToMove,
-                  page
-                ),
-              }}
-              borderRadius="0"
-            >
-              {page}
-            </Button>
-          );
-        })}
+      <Box px={"auto"} width={"100%"} border={"0px solid green"}>
+        <Box width={"90%"} mx={"auto"} border={"0px solid red"}>
+          {pagesData.map((page) => {
+            console.log("currentPage, page", typeof currentPage, typeof page);
+            return (
+              // 고칠것 pageNumbersToEdit 에 포함 되어 있으면 PageNumbersToMove에는 안됨
+              // pageNumbersToEdit중에 제일 큰거보다  PageNumbersToMove이 더 커야 함
+              // pageNumbersToEdit 의 개수와 PageNumbersToMove 의 개수가 일치하면 대량 이동 버튼 활성화
+              <Button
+                key={page}
+                width={"10px"}
+                height={"30px"}
+                variant="outline"
+                borderColor={currentPage == page ? "red" : "blue"}
+                onClick={(e) => clickHandlerForPageButton(e, page)}
+                style={{
+                  width: "25px",
+                  height: "25px",
+                  margin: "3px",
+                  backgroundColor: getColor(
+                    pageNumbersToEdit,
+                    pageNumbersToMove,
+                    page
+                  ),
+                }}
+                borderRadius="0"
+              >
+                {page}
+              </Button>
+            );
+          })}
+        </Box>
       </Box>
       {/* 페이지 넘버 출력 end */}
       <Divider />

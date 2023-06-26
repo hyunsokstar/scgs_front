@@ -21,14 +21,36 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForCreateErrorReportForNote
+export const apiForCreateErrorReportForNote = ({
+  study_note_pk,
+  page,
+  content,
+}: any) =>
+  instance
+    .post(
+      `/study-note/${study_note_pk}/create-error-report`,
+      {
+        study_note_pk,
+        page,
+        content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
 
-export const apiForGetErrorReportListForStudyNote = ({ queryKey }: QueryFunctionContext) => {
+export const apiForGetErrorReportListForStudyNote = ({
+  queryKey,
+}: QueryFunctionContext) => {
   const [_, study_note_pk, note_page_num] = queryKey;
   console.log("note_page_num : ", note_page_num);
-  
+
   return instance
-    .get(`/study-note/${study_note_pk}/error-report-list`, {
-    })
+    .get(`/study-note/${study_note_pk}/error-report-list`, {})
     .then((response) => {
       return response.data;
     });
@@ -165,7 +187,7 @@ export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
   console.log("note_page_num : ", note_page_num);
   return instance
     .get(`/study-note/${study_note_pk}/qa-list`, {
-      params: {note_page_num},
+      params: { note_page_num },
     })
     .then((response) => {
       return response.data;

@@ -15,11 +15,9 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import {
-  ITypeForClassRoomRowForStudyNote,
   QnARow,
 } from "../../types/study_note_type";
 import {
-  apiForGetClassRoomList,
   apiForGetQnABoardList,
 } from "../../apis/study_note_api";
 import TableForQnaListForStudyNote from "../Table/TableForQnaListForStudyNote";
@@ -27,7 +25,7 @@ import TableForQnaListForStudyNote from "../Table/TableForQnaListForStudyNote";
 interface IProps {
   button_text: string;
   button_size: string;
-  button_width: string;
+  button_width?: string;
   modal_title: string;
   modal_size: string;
   study_note_pk: string | undefined;

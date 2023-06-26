@@ -254,24 +254,7 @@ const UserProfilePage = () => {
                 <Text fontSize="xl" fontWeight="bold" mb={2}>
                   {userProfileData.username}
                 </Text>
-                {/* <Box>
-                  {userProfileData.skill_for_frameWork.length
-                    ? userProfileData.skill_for_frameWork.map((row) => {
-                        console.log("row", row);
-
-                        return <Badge m={2}>{row.frame_work_name}</Badge>;
-                      })
-                    : "no framewok"}
-                </Box>
-                <Text fontSize="xl" fontWeight="bold" mb={2}>
-                  name: {userProfileData?.name}
-                </Text>
-                <Text fontSize="md" mb={4}>
-                  position:
-                  {userProfileData?.position
-                    ? userProfileData?.position.position_name
-                    : "no position"}
-                </Text> */}
+                
               </Flex>
 
               <Box>

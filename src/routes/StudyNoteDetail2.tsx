@@ -32,6 +32,7 @@ import ModalButtonForInsertYoutubeContentsForNote from "../components/modal/Moda
 import CardForYoutubeContentForPage from "../components/Card/CardForYoutubeContentForPage";
 import ModalButtonForSubtiTitleListForNoteContent from "../components/modal/ModalButtonForSubtititleListForNoteContent";
 import ModalButtonForQnAList from "../components/modal/ModalButtonForQnAList";
+import ModalButtonForRegisterErrorReportForNote from "../components/modal/ModalButtonForRegisterErrorReportForNote";
 
 interface Props {}
 
@@ -39,6 +40,7 @@ interface Props {}
 const StudyNoteDetail2 = (props: Props) => {
   const { study_note_pk, note_page_num } = useParams();
   const dispatch = useDispatch();
+  const [topValue, setTopValue] = useState(270);
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -124,6 +126,9 @@ const StudyNoteDetail2 = (props: Props) => {
 
     if (targetElement) {
       const targetOffsetTop = targetElement.offsetTop;
+
+      // alert(targetOffsetTop)
+
       document.getElementById("card-container")?.scrollTo({
         top: targetOffsetTop,
         behavior: "smooth",
@@ -246,16 +251,34 @@ const StudyNoteDetail2 = (props: Props) => {
     return <Box>"loading.."</Box>;
   }
 
+  // 컴포넌트 내에서 화면 사이즈에 따라 top 값을 동적으로 조절하는 방법
+
   return (
-    <Box display={"flex"}>
-      <Box flex={4}>
+    <Box
+      display={"flex"}
+      border={"5px solid green"}
+      height={"100%"}
+      width={"100%"}
+      flexDirection={["column", "column", "column", "column", "row"]}
+    >
+      {/* fix  */}
+      <Box
+        width={["100%", "100%", "100%", "100%", "80%"]}
+        border={"1px solid black"}
+      >
         <Box
           display="flex"
           justifyContent={"space-between"}
           alignItems="center"
           my={2}
         >
-          <Box display={"flex"} border={"0px solid green"} gap={2}>
+          <Box
+            display={"flex"}
+            border={"0px solid green"}
+            gap={2}
+            px={2}
+            flexWrap={"wrap"}
+          >
             <Button
               size="sm"
               colorScheme="red"
@@ -304,20 +327,17 @@ const StudyNoteDetail2 = (props: Props) => {
               ""
             )}
           </Box>
-          <Box display={"flex"} gap={2}>
+          <Box display={"flex"} gap={2} flexWrap={"wrap"} px={2}>
             <Box>
               <ModalButtonForQnAList
                 button_text={"Q&A"}
-                button_size={"sm"}
+                button_size={"md"}
                 modal_title={`QA list for page ${note_page_num}`}
                 modal_size={"6xl"}
                 study_note_pk={study_note_pk}
-                note_page_num={note_page_num} 
-                count_for_qna_boards={0}              />
-            </Box>
-
-            <Box>
-              
+                note_page_num={note_page_num}
+                count_for_qna_boards={0}
+              />
             </Box>
 
             <Box>
@@ -390,25 +410,16 @@ const StudyNoteDetail2 = (props: Props) => {
           </Box>
         </Box>
 
-        <Box
-          id="card-container"
-          border={"1px solid green"}
-          height={"600px"}
-          overflowY={"scroll"}
-          mr={1}
-          position={"relative"}
-          display={"flex"}
-          justifyContent={"center"}
-        >
+        <Box>
           <Box
             id={"navi-box"}
-            top={"285"}
-            left={"88"}
-            width={"67%"}
-            border={"0px solid green"}
-            p={2}
-            position={"fixed"}
-            zIndex={1}
+            width={"100%"}
+            border={"0px solid pink"}
+            my={2}
+            mx={5}
+            // bg={"lightblue"}
+            zIndex={10}
+            // position={"absolute"}
           >
             <ButtonsForFindToContentWithOrderNum
               numCards={
@@ -417,15 +428,30 @@ const StudyNoteDetail2 = (props: Props) => {
               handleMoveToClick={handleMoveToClick}
             />
           </Box>
+        </Box>
 
+        <Box
+          pt={30}
+          id="card-container"
+          height={"68vh"}
+          overflowY={"scroll"}
+          mr={1}
+          position={"relative"}
+          display={"flex"}
+          justifyContent={"center"}
+          border={"2px solid black"}
+        >
           <Box
             position={"absolute"}
-            top={"80px"}
+            top={"10px"}
             w={"100%"}
             display={"flex"}
             justifyContent={"center"}
             alignItems={"center"}
             flexDirection={"column"}
+            border={"0px solid black"}
+            // pt={1824}
+            // height={"100vh"}
           >
             {response_data_for_api &&
             response_data_for_api.data_for_study_note_contents.length ? (
@@ -435,7 +461,7 @@ const StudyNoteDetail2 = (props: Props) => {
                     return (
                       <CardForStudyNoteContent
                         pk={row.pk}
-                        card_width={"90%"}
+                        card_width={"98%"}
                         title={row.title}
                         file_name={row.file_name}
                         content={row.content}
@@ -456,7 +482,7 @@ const StudyNoteDetail2 = (props: Props) => {
                     return (
                       <CardForNoteSubTitleForPage
                         pk={row.pk}
-                        card_width={"90%"}
+                        card_width={"98%"}
                         title={row.title}
                         content={row.content}
                         writer={row.writer}
@@ -474,7 +500,7 @@ const StudyNoteDetail2 = (props: Props) => {
                         order={i + 1}
                         setCheckedValues={setCheckedValues}
                         is_authority_for_note={is_authority_for_note}
-                        card_width={"90%"}
+                        card_width={"98%"}
                         pk={row.pk}
                         writer={row.writer}
                         title={row.title}
@@ -501,7 +527,11 @@ const StudyNoteDetail2 = (props: Props) => {
           </Box>
         </Box>
       </Box>
-      <Box flex={1} border={"1px solid green"} px={"auto"}>
+      {/* fix this */}
+      <Box
+        width={["100%", "100%", "100%", "100%", "20%"]}
+        border={"2px solid black"}
+      >
         <Box display={"flex"} flexDirection={"column"}>
           <Box display={"flex"} gap={2} p={2}>
             <Button
@@ -523,10 +553,30 @@ const StudyNoteDetail2 = (props: Props) => {
               load page
             </Button>
           </Box>
-          <Text width={"100%"}>page: {currentPage}</Text>
-          <Text width={"100%"}>
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <Text width={"100%"}>
+              page: {currentPage}
+              &nbsp;
+            </Text>
+            <Box p={2}>
+              <ModalButtonForRegisterErrorReportForNote
+                button_text={"🚨"}
+                button_size={"sm"}
+                modal_title={`title: ${response_data_for_api?.note_title} page: ${currentPage} 에 대한 error report register`}
+                modal_size={"7xl"}
+                study_note_pk={study_note_pk}
+                currentPage={currentPage}
+              />
+            </Box>
+          </Box>
+          <Box>
             not empty: {response_data_for_api?.exist_page_numbers.join(", ")}
-          </Text>
+          </Box>
+
           {response_data_for_api ? (
             <ButtonsForPageNumbersForStudyNoteContents
               exist_page_numbers={response_data_for_api.exist_page_numbers}
