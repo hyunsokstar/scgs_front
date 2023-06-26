@@ -1,3 +1,4 @@
+import React, { ReactElement, useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -12,10 +13,10 @@ import {
   Td,
   Checkbox,
   Progress,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { ReactElement, useState, useEffect } from "react";
 import {
   apiForDeleteTasksForChecked,
   apiForUpdateTaskDueDateForChecked,
@@ -34,11 +35,6 @@ import RadioButtonForSelectOptionForGropyBy from "./Button/RadioButtonForSelectO
 import ModalButtonForAddProjectTaskWithDuedateOption from "./modal/ModalButtonForAddProjectTaskWithDuedateOption";
 import ButtonsForUnompletedTaskForChecked from "./Button/ButtonsForUnompletedTaskForChecked";
 import ButtonsForSelectOptionForDueDateForUncompletedTaskList from "./Button/ButtonsForSelectOptionForDueDateForUncompletedTaskList";
-import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
-import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
-import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
-import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskForDueDate";
-import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 
 interface Props {
   basic_due_date_option?: typeForDueDateOption;
@@ -280,10 +276,6 @@ function UncompletedProjectTaskList({
     });
   };
 
-  if (!taskListData) {
-    return <Box>..Loading</Box>;
-  }
-
   const handleUrgentChange = () => {
     setIsForUrgent(!isForUrgent);
   };
@@ -306,44 +298,52 @@ function UncompletedProjectTaskList({
     }
   };
 
+  const header_grid_option = useBreakpointValue({
+    lg: "repeat(3, 1fr)", // default value for all breakpoints
+    md: "repeat(1, 1fr)", // for medium-sized screens and up
+    sm: "repeat(1, 1fr)", // for small screens and up
+  });
+
   // 2244
+  if (!taskListData) {
+    return <Box>..Loading</Box>;
+  }
+
   return (
     <Box
-      border={"3px solid purple"}
+      border={"1px solid black"}
       p={0}
       mt={2}
-      overflowX={"scroll"}
-      // overflowY={"scroll"}
+      width={"100%"}
+      // overflowX={"scroll"}
     >
       <Box
-        border={"1px solid black"}
-        display="flex"
-        justifyContent={"flex-start"}
+        border={"6px solid pink"}
+        display={"flex"}
         flexWrap={"wrap"}
-        alignItems={"center"}
-        width={"100%"}
       >
         <Box
           height={"450px"}
           bg={"green.200"}
           border={"5px solid red"}
-          alignItems={"center"}
           width={"100%"}
         >
-          <Table border={"0px solid blue"}>
-            <Tr borderBottom={"3px solid #9AE6B4"}>
-              <Th colSpan={2}>
+          <Box
+            border={"5px solid blue"}
+            display={"flex"}
+            flexDirection={"column"}
+            gap={3}
+          >
+            <Box borderBottom={"3px solid #9AE6B4"}>
+              <Box>
                 <Text fontSize={16}>
                   uncomplete task (total: {taskListData?.totalPageCount}, per :{" "}
-                  {taskListData?.task_number_for_one_page} ){" "}
+                  {taskListData?.task_number_for_one_page})
                 </Text>
-              </Th>
-            </Tr>
-            <Tr borderBottom={"3px solid #9AE6B4"}>
-              <Td>
-                <Text>Progress status</Text>
-              </Td>
-              <Td
+              </Box>
+            </Box>
+            <Box borderBottom={"3px solid #9AE6B4"}>
+              <Box
                 display={"flex"}
                 justifyContent={"flex-start"}
                 gap={3}
@@ -357,7 +357,6 @@ function UncompletedProjectTaskList({
                   task_status_for_search={task_status_for_search}
                   set_task_status_for_search={set_task_status_for_search}
                 />
-
                 <ButtonForShowCountForTaskStatus
                   button_size={"md"}
                   task_status={"in_progress"}
@@ -366,7 +365,6 @@ function UncompletedProjectTaskList({
                   task_status_for_search={task_status_for_search}
                   set_task_status_for_search={set_task_status_for_search}
                 />
-
                 <ButtonForShowCountForTaskStatus
                   button_size={"md"}
                   task_status={"testing"}
@@ -375,22 +373,18 @@ function UncompletedProjectTaskList({
                   task_status_for_search={task_status_for_search}
                   set_task_status_for_search={set_task_status_for_search}
                 />
-              </Td>
-            </Tr>
-            <Tr borderBottom={"3px solid #9AE6B4"}>
-              <Td>Importance</Td>
-              <Td>
+              </Box>
+            </Box>
+            <Box borderBottom={"3px solid #9AE6B4"}>
+              <Box>
                 <StarRatingForSetFilterOptionForTaskList
                   rating={rating_for_filter_option}
                   setRating={set_rating_for_filter_option}
                 />
-              </Td>
-            </Tr>
-            <Tr height="30px" borderBottom={"3px solid #9AE6B4"}>
-              <Td>
-                <Text>Task Manager</Text>
-              </Td>
-              <Td>
+              </Box>
+            </Box>
+            <Box height="30px" borderBottom={"3px solid #9AE6B4"}>
+              <Box>
                 {taskListData?.writers_info?.map((writer) => {
                   return (
                     <Box fontSize="lg" color="blue.900">
@@ -419,17 +413,17 @@ function UncompletedProjectTaskList({
                     </Box>
                   );
                 })}
-              </Td>
-            </Tr>
-          </Table>
+              </Box>
+            </Box>
+          </Box>
         </Box>
 
         <Box
           height={"450px"}
           bg={"blue.100"}
           alignItems={"center"}
-          width={"100%"}
           border={"5px solid orange"}
+          width={"100%"}
         >
           <Table variant="unstyled" size="md" mb={2}>
             <Tbody>
@@ -558,12 +552,11 @@ function UncompletedProjectTaskList({
         </Box>
 
         <Box
-          flex={1}
-          flexGrow={1}
           height={"450px"}
           border={"3px solid black"}
           bgColor={"orange.200"}
           alignItems={"center"}
+          
         >
           <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
             <Text fontSize="xl" fontWeight="bold" mb={2}>
