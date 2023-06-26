@@ -1,3 +1,4 @@
+import React, { ReactElement, useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -7,9 +8,9 @@ import {
   Input,
   Text,
   HStack,
+  useBreakpointValue
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import React, { ReactElement, useState, useEffect } from "react";
 import { getCompletedTaskList } from "../apis/project_progress_api";
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
 
@@ -128,88 +129,64 @@ function CompletedProjectTaskList({}: Props): ReactElement {
     }
   };
 
+  const column_option_for_width = useBreakpointValue({
+    base: "column", // for mobile and small screens
+    md: "row", // for medium-sized screens and up
+    lg: "row", // for large screens and up
+  });
+
   // 2244
   return (
     <Container maxW={"100%"} border={"0px solid purple"} p={0} mt={0}>
       <Box
-        border={"0px solid black"}
-        display="flex"
+        display={"flex"}
+        flexDirection={column_option_for_width}
+        border={"1px solid black"}
         justifyContent={"space-between"}
         bgColor={"purple.200"}
         alignItems={"center"}
         px={2}
         py={2}
       >
-        <Box border={"0px solid green"}>
-          <Box
-            border={"0px solid blue"}
-            display={"flex"}
-            flexDirection={"column"}
-            justifyContent={"flex-start"}
-            alignItems={"center"}
-            gap={2}
-          >
-            <Box border="0px solid red">
-              <Table border="0px" variant={"unstyled"}>
-                <Thead>
-                  <Tr>
-                    <Th colSpan={2}>
-                      <Box fontSize={18}>
-                        complteted task (total:{" "}
-                        {pageProgressListData?.totalPageCount} 개, per:
-                        {
-                          pageProgressListData?.task_number_for_one_page
-                        } 개){" "}
-                      </Box>
-                    </Th>
-                  </Tr>
-                </Thead>
-                <Tbody border={"0px solid green"}>
-                  <Tr height="30px">
-                    <Td>
-                      <Text>담당자별:</Text>
-                    </Td>
-                    <Td>
-                      {pageProgressListData?.writers_info?.map((writer) => {
-                        return (
-                          // <Text fontSize="lg" color="blue.900">
-                          //   {writer.username}: {writer.task_count}
-                          // </Text>
-                          <Box fontSize="lg" color="blue.900">
-                            <HStack>
-                              <Button
-                                variant={"outline"}
-                                size={"sm"}
-                                border={"1px solid black"}
-                                mb={1}
-                                _hover={{
-                                  bg: "#90CDF4",
-                                  color: "brown",
-                                }}
-                                onClick={() =>
-                                  searchCompletedListforUserName(
-                                    writer.username
-                                  )
-                                }
-                                bgColor={
-                                  writer.username === username_for_search
-                                    ? "#90CDF4"
-                                    : ""
-                                }
-                              >
-                                {writer.username} : {writer.task_count}
-                              </Button>
-                            </HStack>
-                          </Box>
-                        );
-                      })}
-                    </Td>
-                    {/* <Td borderBottomWidth="1px" borderColor="teal.200">
-                      Row 2, Column 3
-                    </Td> */}
-                  </Tr>
-                </Tbody>
-              </Table>
+        <Box>
+          <Box fontSize={18}>
+            complteted task (total: {pageProgressListData?.totalPageCount} 개,
+            per:
+            {pageProgressListData?.task_number_for_one_page} 개)
+          </Box>
+          <Box border="0px solid green">
+            <Box display="flex" alignItems="center" height="30px">
+              <Box flexBasis="30%">
+                <Text>담당자별:</Text>
+              </Box>
+              <Box flexBasis="70%">
+                {pageProgressListData?.writers_info?.map((writer) => (
+                  <Box key={writer.username} fontSize="lg" color="blue.900">
+                    <HStack>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        border="1px solid black"
+                        mb={1}
+                        _hover={{
+                          bg: "#90CDF4",
+                          color: "brown",
+                        }}
+                        onClick={() =>
+                          searchCompletedListforUserName(writer.username)
+                        }
+                        bgColor={
+                          writer.username === username_for_search
+                            ? "#90CDF4"
+                            : ""
+                        }
+                      >
+                        {writer.username} : {writer.task_count}
+                      </Button>
+                    </HStack>
+                  </Box>
+                ))}
+              </Box>
             </Box>
           </Box>
         </Box>

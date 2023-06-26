@@ -6,11 +6,9 @@ import {
   Text,
   Input,
   useToast,
-  Table,
-  Tbody,
-  Tr,
-  Th,
-  Td,
+  RadioGroup,
+  Stack,
+  Radio,
   Checkbox,
   Progress,
   useBreakpointValue,
@@ -111,80 +109,6 @@ function UncompletedProjectTaskList({
     setFilteredData(taskListData?.ProjectProgressList);
   }, [taskListData?.ProjectProgressList]);
 
-  const changeHandlerForSelectPeriodOptionForTeamTask = (option: string) => {
-    setSelectedPeriodOptionForUncompletedTaskList(option);
-  };
-
-  const updateFilteredDataForTask = (filterValueForTask: string) => {
-    if (filterValueForTask !== "") {
-      const filteredData = taskListData?.ProjectProgressList.filter((item) =>
-        item.task.toLowerCase().includes(filterValueForTask.toLowerCase())
-      );
-      setFilteredData(filteredData);
-    } else {
-      setFilteredData(taskListData?.ProjectProgressList);
-      console.log("filterValueForTask : ", filterValueForTask);
-    }
-  };
-
-  const handleFilterChangeForTask = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value;
-    setFilterValueForTask(value);
-    updateFilteredDataForTask(value);
-  };
-
-  const updateFilteredDataForTaskManager = (
-    filterValueForTaskManager: string
-  ) => {
-    if (filterValueForTaskManager !== "") {
-      const filteredData = taskListData?.ProjectProgressList.filter((item) =>
-        item.task_manager.username
-          .toLowerCase()
-          .includes(filterValueForTaskManager.toLowerCase())
-      );
-      setFilteredData(filteredData);
-    } else {
-      setFilteredData(taskListData?.ProjectProgressList);
-      console.log("filterValueForTaskManager : ", filterValueForTaskManager);
-    }
-  };
-
-  const handleFilterChangeForTaskManager = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value;
-    updateFilteredDataForTaskManager(value);
-  };
-
-  const updateFilteredDataForTaskClassification = (
-    filterValueForTaskClassification: string
-  ) => {
-    if (filterValueForTaskClassification !== "") {
-      const filteredData = taskListData?.ProjectProgressList.filter((item) =>
-        item.task_classification
-          .toLowerCase()
-          .includes(filterValueForTaskClassification.toLowerCase())
-      );
-      setFilteredData(filteredData);
-    } else {
-      setFilteredData(taskListData?.ProjectProgressList);
-      console.log(
-        "filterValueForTaskClassification : ",
-        filterValueForTaskClassification
-      );
-    }
-  };
-
-  const handleFilterChangeForTaskClassification = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value;
-    setFilterValueForTaskClassification(value);
-    updateFilteredDataForTaskClassification(value);
-  };
-
   const searchUncompletedListforUserName = (username: string) => {
     console.log("username : ", username);
 
@@ -276,14 +200,6 @@ function UncompletedProjectTaskList({
     });
   };
 
-  const handleUrgentChange = () => {
-    setIsForUrgent(!isForUrgent);
-  };
-
-  const handleCashPrizeChange = () => {
-    setCheckForCashPrize(!checkForCashPrize);
-  };
-
   const handleChangeForAllCheckBox = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -298,11 +214,39 @@ function UncompletedProjectTaskList({
     }
   };
 
-  const header_grid_option = useBreakpointValue({
-    lg: "repeat(3, 1fr)", // default value for all breakpoints
-    md: "repeat(1, 1fr)", // for medium-sized screens and up
-    sm: "repeat(1, 1fr)", // for small screens and up
-  });
+  const handleUrgentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsForUrgent(event.target.checked);
+  };
+
+  const handleCashPrizeChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCheckForCashPrize(event.target.checked);
+  };
+
+  const handleFilterChangeForTaskManager = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFilterValueForTaskManager(event.target.value);
+  };
+
+  const handleFilterChangeForTask = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFilterValueForTask(event.target.value);
+  };
+
+  const handleFilterChangeForTaskClassification = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFilterValueForTaskClassification(event.target.value);
+  };
+
+  const handleSelectPeriodOptionForTeamTask = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSelectedPeriodOptionForUncompletedTaskList(event.target.value);
+  };
 
   // 2244
   if (!taskListData) {
@@ -318,18 +262,22 @@ function UncompletedProjectTaskList({
       // overflowX={"scroll"}
     >
       <Box
-        border={"6px solid pink"}
-        display={"flex"}
-        flexWrap={"wrap"}
+        border={"0px solid pink"}
+        display={"grid"}
+        gridTemplateColumns={{
+          xl: "repeat(3, 1fr)", // default value for all breakpoints
+          lg: "repeat(3, 1fr)", // for medium-sized screens and up
+          sm: "repeat(1, 1fr)", // for small screens and up
+        }}
       >
         <Box
-          height={"450px"}
+          // height={"450px"}
           bg={"green.200"}
-          border={"5px solid red"}
-          width={"100%"}
+          flex={1}
+          p={2}
         >
           <Box
-            border={"5px solid blue"}
+            // border={"5px solid blue"}
             display={"flex"}
             flexDirection={"column"}
             gap={3}
@@ -419,30 +367,34 @@ function UncompletedProjectTaskList({
         </Box>
 
         <Box
-          height={"450px"}
+          // height={"450px"}
           bg={"blue.100"}
           alignItems={"center"}
-          border={"5px solid orange"}
+          // border={"5px solid orange"}
           width={"100%"}
+          p={3}
+          // flex={1}
         >
-          <Table variant="unstyled" size="md" mb={2}>
-            <Tbody>
-              <Tr>
-                <Td>created_at</Td>
-                <Td>
+          <Box>
+            <Box mb={2}>
+              <Box display="flex" alignItems="center" mb={2}>
+                <Box flexBasis="30%" fontWeight="bold">
+                  created_at
+                </Box>
+                <Box flexBasis="70%">
                   <ButtonsForSelectForTeamTaskListPeriod
                     selectedPeriodOptionForUncompletedTaskList={
                       selectedPeriodOptionForUncompletedTaskList
                     }
-                    changeHandler={
-                      changeHandlerForSelectPeriodOptionForTeamTask
-                    }
+                    changeHandler={handleSelectPeriodOptionForTeamTask}
                   />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>due_date</Td>
-                <Td>
+                </Box>
+              </Box>
+              <Box display="flex" alignItems="center" mb={2}>
+                <Box flexBasis="30%" fontWeight="bold">
+                  due_date
+                </Box>
+                <Box flexBasis="70%">
                   <ButtonsForSelectOptionForDueDateForUncompletedTaskList
                     due_date_option_for_filtering={
                       due_date_option_for_filtering
@@ -451,49 +403,54 @@ function UncompletedProjectTaskList({
                       set_due_date_option_for_filtering
                     }
                   />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>special option</Td>
-                <Td>
-                  <Box display={"flex"} mt={0} gap={5} alignItems={"center"}>
-                    <Box display="flex" alignItems="center">
-                      Is Emergency :{" "}
-                      <Checkbox
-                        size="lg"
-                        ml={2}
-                        border={"1px solid gray"}
-                        isChecked={isForUrgent}
-                        onChange={handleUrgentChange}
-                      />
-                    </Box>
-                    <Box display="flex" alignItems="center">
-                      is_prize :{" "}
-                      <Checkbox
-                        size="lg"
-                        border={"1px solid gray"}
-                        ml={2}
-                        isChecked={checkForCashPrize}
-                        onChange={handleCashPrizeChange}
-                      />
-                    </Box>
+                </Box>
+              </Box>
+              <Box display="flex" alignItems="center" mb={2}>
+                <Box flexBasis="30%" fontWeight="bold">
+                  special option
+                </Box>
+                <Box flexBasis="70%" display="flex" alignItems="center" gap={5}>
+                  <Box display="flex" alignItems="center">
+                    Is Emergency :{" "}
+                    <Checkbox
+                      size="lg"
+                      ml={2}
+                      border={"1px solid gray"}
+                      isChecked={isForUrgent}
+                      onChange={handleUrgentChange}
+                    />
                   </Box>
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>Gropup By</Td>
-                <Td>
-                  <RadioButtonForSelectOptionForGropyBy
-                    groupByOption={groupByOption}
-                    setGroupByOption={setGroupByOption}
-                  />
-                </Td>
-              </Tr>
-
-              <Tr>
-                <Td>manager</Td>
-                <Td>
-                  {" "}
+                  <Box display="flex" alignItems="center">
+                    is_prize :{" "}
+                    <Checkbox
+                      size="lg"
+                      border={"1px solid gray"}
+                      ml={2}
+                      isChecked={checkForCashPrize}
+                      onChange={handleCashPrizeChange}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+              <Box display="flex" alignItems="center" mb={2}>
+                <Box flexBasis="30%" fontWeight="bold">
+                  Gropup By
+                </Box>
+                <Box flexBasis="70%">
+                  <RadioGroup value={groupByOption} onChange={setGroupByOption}>
+                    <Stack direction="row">
+                      <Radio value="option1">Option 1</Radio>
+                      <Radio value="option2">Option 2</Radio>
+                      <Radio value="option3">Option 3</Radio>
+                    </Stack>
+                  </RadioGroup>
+                </Box>
+              </Box>
+              <Box display="flex" alignItems="center" mb={2}>
+                <Box flexBasis="30%" fontWeight="bold">
+                  manager
+                </Box>
+                <Box flexBasis="70%">
                   <Input
                     size="xs"
                     variant="outline"
@@ -503,16 +460,17 @@ function UncompletedProjectTaskList({
                     _hover={{ bg: "green.50", borderColor: "black" }}
                     _placeholder={{ color: "black" }}
                     id="url"
-                    w={"300px"}
+                    w={"80%"}
                     value={filterValueForTaskManager}
                     onChange={handleFilterChangeForTaskManager}
                   />
-                </Td>
-              </Tr>
-
-              <Tr>
-                <Td>task</Td>
-                <Td>
+                </Box>
+              </Box>
+              <Box display="flex" alignItems="center" mb={2}>
+                <Box flexBasis="30%" fontWeight="bold">
+                  task
+                </Box>
+                <Box flexBasis="70%">
                   <Input
                     size="xs"
                     variant="outline"
@@ -522,16 +480,17 @@ function UncompletedProjectTaskList({
                     _hover={{ bg: "green.50", borderColor: "black" }}
                     _placeholder={{ color: "black" }}
                     id="url"
-                    w={"300px"}
+                    w={"80%"}
                     value={filterValueForTask}
                     onChange={handleFilterChangeForTask}
                   />
-                </Td>
-              </Tr>
-
-              <Tr>
-                <Td>classification</Td>
-                <Td>
+                </Box>
+              </Box>
+              <Box display="flex" alignItems="center" mb={2}>
+                <Box flexBasis="30%" fontWeight="bold">
+                  class
+                </Box>
+                <Box flexBasis="70%">
                   <Input
                     size="xs"
                     variant="outline"
@@ -541,22 +500,22 @@ function UncompletedProjectTaskList({
                     _hover={{ bg: "green.50", borderColor: "black" }}
                     _placeholder={{ color: "black" }}
                     id="url"
-                    w={"300px"}
+                    w={"80%"}
                     value={filterValueForTaskClassification}
                     onChange={handleFilterChangeForTaskClassification}
                   />
-                </Td>
-              </Tr>
-            </Tbody>
-          </Table>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
         </Box>
 
         <Box
-          height={"450px"}
-          border={"3px solid black"}
+          // height={"450px"}
+          // border={"5px solid black"}
           bgColor={"orange.200"}
           alignItems={"center"}
-          
+          flex={1}
         >
           <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
             <Text fontSize="xl" fontWeight="bold" mb={2}>
