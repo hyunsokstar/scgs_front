@@ -33,6 +33,10 @@ import RadioButtonForSelectOptionForGropyBy from "./Button/RadioButtonForSelectO
 import ModalButtonForAddProjectTaskWithDuedateOption from "./modal/ModalButtonForAddProjectTaskWithDuedateOption";
 import ButtonsForUnompletedTaskForChecked from "./Button/ButtonsForUnompletedTaskForChecked";
 import ButtonsForSelectOptionForDueDateForUncompletedTaskList from "./Button/ButtonsForSelectOptionForDueDateForUncompletedTaskList";
+import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
+import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
+import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   basic_due_date_option?: typeForDueDateOption;
@@ -43,6 +47,7 @@ function UncompletedProjectTaskList({
   basic_due_date_option,
 }: Props): ReactElement {
   const queryClient = useQueryClient();
+  const navigator = useNavigate();
 
   const [checkedRowPks, setCheckedRowPks] = useState<any[]>([]);
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
@@ -248,6 +253,17 @@ function UncompletedProjectTaskList({
     setSelectedPeriodOptionForUncompletedTaskList(event.target.value);
   };
 
+  const handleButtonClick = () => {
+    if (checkedRowPks.length === 0) {
+      alert("Please check at least one item");
+      return;
+    }
+    // Perform other actions
+    navigator(
+      `/task-list-for-checked?checkedRowPks=${checkedRowPks.join(",")}`
+    );
+  };
+
   // 2244
   if (!taskListData) {
     return <Box>..Loading</Box>;
@@ -271,10 +287,12 @@ function UncompletedProjectTaskList({
         }}
       >
         <Box
-          // height={"450px"}
           bg={"green.200"}
           flex={1}
-          p={2}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          p={3}
         >
           <Box
             // border={"5px solid blue"}
@@ -340,7 +358,7 @@ function UncompletedProjectTaskList({
                         <Button
                           variant={"outline"}
                           size={"sm"}
-                          border={"1px solid black"}
+                          // border={"1px solid black"}
                           mb={1}
                           _hover={{
                             bg: "#90CDF4",
@@ -537,26 +555,82 @@ function UncompletedProjectTaskList({
 
       <Box
         display={"flex"}
-        flexDirection={"row"}
+        // flexDirection={"row"}
         flexWrap={"wrap"}
         justifyContent={"space-between"}
         ml={2}
       >
-        <Checkbox
-          size={"lg"}
-          onChange={handleChangeForAllCheckBox}
-          checked={
-            checkedRowPks.length === taskListData?.ProjectProgressList.length
-          }
-        />
-        <ButtonsForUnompletedTaskForChecked
-          checkedRowPks={checkedRowPks}
-          setCheckedRowPks={setCheckedRowPks}
-          deleteTaskForChecked={deleteTaskForChecked}
-          handlerForUpdateTaskDuedateForChecked={
-            handlerForUpdateTaskDuedateForChecked
-          }
-        />
+        <Box p={2}>
+          <Checkbox
+            size={"lg"}
+            onChange={handleChangeForAllCheckBox}
+            checked={
+              checkedRowPks.length === taskListData?.ProjectProgressList.length
+            }
+          />
+        </Box>
+        <Box>
+          <ButtonsForUnompletedTaskForChecked
+            checkedRowPks={checkedRowPks}
+            setCheckedRowPks={setCheckedRowPks}
+            deleteTaskForChecked={deleteTaskForChecked}
+            handlerForUpdateTaskDuedateForChecked={
+              handlerForUpdateTaskDuedateForChecked
+            }
+          />
+
+          <Box
+            display={"flex"}
+            justifyContent={"flex-start"}
+            flexWrap={"wrap"}
+            gap={2}
+            ml={2}
+          >
+            <Button
+              variant="outline"
+              size="xs"
+              backgroundColor="red.50"
+              _hover={{ backgroundColor: "red.100" }}
+              mr={2}
+              gap={10}
+              onClick={deleteTaskForChecked}
+            >
+              Delete For Check
+            </Button>
+
+            <ModalButtonForUpdateTaskManagerForChecked
+              button_text={"update task manager"}
+              size={"xs"}
+              checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+            />
+
+            <ModalButtonForUpdateImortanceForChecked
+              button_text={"update importance"}
+              size={"xs"}
+              checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+            />
+
+            <ModalButtonForUpdateTaskClassificationForChecked
+              button_text={"update task for classification"}
+              size={"xs"}
+              checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+            />
+
+            <Button
+              variant={"outline"}
+              border={"1px solid blue"}
+              bg={"blue.100"}
+              size={"xs"}
+              mr={5}
+              onClick={handleButtonClick}
+            >
+              show task detail using image slide for check
+            </Button>
+          </Box>
+        </Box>
         <ModalButtonForAddProjectTaskWithDuedateOption
           button_text="Register Task for team project"
           size={"sm"}
