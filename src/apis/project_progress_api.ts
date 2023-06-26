@@ -463,6 +463,8 @@ export const apiForGetDataForDailyTaskCountForPersonalUser = ({
 export const apiForGetTaskListForCheckedPks = ({
   queryKey,
 }: QueryFunctionContext) => {
+  console.log("task by slide api 요청 확인");
+  
   const checkedRowPks = queryKey[1] as number[]; // queryKey[1]로부터 checkedRowPks 배열 추출
 
   return instance

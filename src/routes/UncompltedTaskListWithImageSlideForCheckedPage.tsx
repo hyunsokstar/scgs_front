@@ -21,13 +21,13 @@ const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
     ["getTaskListForCheckedPksForImageSlide", checkedRowPks],
     apiForGetTaskListForCheckedPks,
     {
-      enabled: false,
+      enabled: true,
     }
   );
 
   if (isLoading) {
     // 데이터 로딩 중 상태를 표시하거나 스켈레톤 UI를 사용할 수 있습니다.
-    return <div>Loading...</div>;
+    return <div>Loading...??</div>;
   }
 
   if (!dataForTaskListForCheckedPks) {
@@ -47,11 +47,11 @@ const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
         dataForTaskListForChecked={dataForTaskListForChecked}
         refetch={refatchForTaskDetailListForCheckedPks}
       />
-      <ul>
+      {/* <ul>
         {checkedRowPks.map((rowPk) => (
           <li key={rowPk}>{rowPk}</li>
         ))}
-      </ul>
+      </ul> */}
     </Box>
   );
 };
