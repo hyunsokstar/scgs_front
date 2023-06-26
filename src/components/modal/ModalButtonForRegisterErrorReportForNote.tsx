@@ -18,9 +18,13 @@ import {
   useDisclosure,
   Textarea,
   useToast,
+  Divider,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { apiForCreateErrorReportForNote, apiForGetErrorReportListForStudyNote } from "../../apis/study_note_api";
+import {
+  apiForCreateErrorReportForNote,
+  apiForGetErrorReportListForPageForStudyNote,
+} from "../../apis/study_note_api";
 import { ErrorReportForStudyNoteData } from "../../types/study_note_type";
 import TableForErrorReportListForStudyNote from "../Table/TableForErrorReportListForStudyNote";
 
@@ -34,7 +38,7 @@ interface IProps {
   currentPage: number | undefined;
 }
 
-const ModalButtonForErrorReportForNote = ({
+const ModalButtonForRegisterErrorReportForNote = ({
   modal_title,
   modal_size,
   button_text,
@@ -53,8 +57,8 @@ const ModalButtonForErrorReportForNote = ({
     data: dataForGetErrorReportListForStudyNote,
     refetch: refetchForGetErrorReportListForStudyNote,
   } = useQuery<ErrorReportForStudyNoteData[]>(
-    ["apiForGetErrorReportListForStudyNote", study_note_pk],
-    apiForGetErrorReportListForStudyNote,
+    ["apiForGetErrorReportListForStudyNote", study_note_pk, currentPage],
+    apiForGetErrorReportListForPageForStudyNote,
     {
       enabled: true,
       // cacheTime: 0, // 캐싱 비활성화
@@ -64,7 +68,7 @@ const ModalButtonForErrorReportForNote = ({
     "dataForGetErrorReportListForStudyNote : ",
     dataForGetErrorReportListForStudyNote
   );
-  
+
   const mutationForCreateErrorReportForNote = useMutation(
     apiForCreateErrorReportForNote,
     {
@@ -125,13 +129,13 @@ const ModalButtonForErrorReportForNote = ({
           <ModalHeader>{modal_title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-
-          <TableForErrorReportListForStudyNote
+            <TableForErrorReportListForStudyNote
               data={
                 dataForGetErrorReportListForStudyNote &&
                 dataForGetErrorReportListForStudyNote
               }
             />
+            <br />
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <Textarea
@@ -157,4 +161,4 @@ const ModalButtonForErrorReportForNote = ({
   );
 };
 
-export default ModalButtonForErrorReportForNote;
+export default ModalButtonForRegisterErrorReportForNote;

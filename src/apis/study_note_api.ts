@@ -43,14 +43,25 @@ export const apiForCreateErrorReportForNote = ({
     )
     .then((response) => response.data);
 
-export const apiForGetErrorReportListForStudyNote = ({
+    export const apiForGetErrorReportListForStudyNote = ({
+      queryKey,
+    }: QueryFunctionContext) => {
+      const [_, study_note_pk] = queryKey;
+      return instance
+        .get(`/study-note/${study_note_pk}/error-report-list`, {})
+        .then((response) => {
+          return response.data;
+        });
+    };
+
+export const apiForGetErrorReportListForPageForStudyNote = ({
   queryKey,
 }: QueryFunctionContext) => {
-  const [_, study_note_pk, note_page_num] = queryKey;
-  console.log("note_page_num : ", note_page_num);
+  const [_, study_note_pk, currentPage] = queryKey;
+  console.log("currentPage : ", currentPage);
 
   return instance
-    .get(`/study-note/${study_note_pk}/error-report-list`, {})
+    .get(`/study-note/${study_note_pk}/error-report/${currentPage}`, {})
     .then((response) => {
       return response.data;
     });

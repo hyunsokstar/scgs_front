@@ -9,7 +9,9 @@ import {
   Td,
   Center,
   Avatar,
+  IconButton,
 } from "@chakra-ui/react";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { ErrorReportForStudyNoteData } from "../../types/study_note_type";
 
 interface TableForErrorReportListForStudyNoteProps {
@@ -29,6 +31,7 @@ const TableForErrorReportListForStudyNote: React.FC<
             <Th>Content</Th>
             <Th>Is Resolved</Th>
             <Th>Created At</Th>
+            <Th>update/delete</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -51,6 +54,26 @@ const TableForErrorReportListForStudyNote: React.FC<
                 <Td>{item.content}</Td>
                 <Td>{item.is_resolved ? "Yes" : "No"}</Td>
                 <Td>{item.created_at_formatted}</Td>
+                <Td>
+                  <Box display={"flex"} gap={2}>
+                    <IconButton
+                      variant={"outline"}
+                      border={"1px solid black"}
+                      _hover={{ bgColor: "blue.100" }}
+                      aria-label="Update"
+                      icon={<EditIcon />}
+                      colorScheme="blue"
+                    />
+                    <IconButton
+                      variant={"outline"}
+                      border={"1px solid black"}
+                      _hover={{ bgColor: "blue.100" }}
+                      aria-label="Delete"
+                      icon={<DeleteIcon />}
+                      colorScheme="red"
+                    />
+                  </Box>
+                </Td>
               </Tr>
             ))
           ) : (
