@@ -24,6 +24,7 @@ interface IProps {
   currentPage: number | string | undefined;
   study_note_pk: number | string | undefined;
   button_size?: string;
+  button_width?: string;
   refetch?: () => void;
 }
 
@@ -33,7 +34,8 @@ const ModalButtonForInsertSubtitleForPage = ({
   currentPage,
   study_note_pk,
   button_size,
-  refetch
+  button_width,
+  refetch,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const queryClient = useQueryClient();
@@ -101,6 +103,8 @@ const ModalButtonForInsertSubtitleForPage = ({
         border={"1px solid black"}
         size={button_size}
         _hover={{ bgColor: "yellow.100" }}
+        width={button_width}
+        px={5}
       >
         {button_text}
       </Button>

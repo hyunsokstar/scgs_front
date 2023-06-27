@@ -4,12 +4,14 @@ import { Button, ButtonProps, useClipboard, useToast } from "@chakra-ui/react";
 interface ClipboardButtonForCopyCurrentUrlProps extends ButtonProps {
   note_url?: string;
   button_size?: "sm" | "md" | "lg";
+  button_width? : string;
   pk?: number;
 }
 
 const ClipboardButtonForCopyCurrentUrl = ({
   note_url,
   button_size = "md",
+  button_width,
   pk,
   ...props
 }: ClipboardButtonForCopyCurrentUrlProps) => {
@@ -40,8 +42,8 @@ const ClipboardButtonForCopyCurrentUrl = ({
       onClick={handleClick}
       variant="outline"
       border={"1px solid black"}
-      // bg={"white"}
       size={button_size}
+      width={button_width}
       {...props}
       _hover={{ bgColor: "yellow.100" }}
     >

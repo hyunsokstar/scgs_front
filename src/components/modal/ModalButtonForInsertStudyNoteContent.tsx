@@ -22,6 +22,7 @@ type Props = {
   currentPage: number | string | undefined;
   study_note_pk: number | string | undefined;
   button_size?: string;
+  button_width?: string;
   refetch?: () => void;
 };
 
@@ -135,9 +136,10 @@ function ModalButtonForInsertStudyNoteContent({
       <Button
         variant="outline"
         onClick={openModal}
-        _hover={{ bg: "teal.500", color: "white" }}
+        _hover={{ bg: "yellow.100", color: "black" }}
         border={"1px solid black"}
         size={button_size}
+        width={"100%"}
       >
         {button_text}
       </Button>{" "}

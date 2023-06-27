@@ -11,7 +11,14 @@ import {
   apiForLoadSavedPageForThisNote,
   apiForRegisterClassRoomForStudyNote,
 } from "../apis/study_note_api";
-import { Box, Text, Button, useToast, Avatar } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Button,
+  useToast,
+  Avatar,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
 import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/ButtonsForPageNumbersForStudyNoteContents";
 
@@ -236,6 +243,11 @@ const StudyNoteDetail2 = (props: Props) => {
     mutationForLoadSavedPageForThisNote.mutate({ study_note_pk });
   };
 
+  const direction_option_for_note_meta_info = useBreakpointValue({
+    base: "column", // for mobile and small screens
+    md: "row", // for medium-sized screens and up
+  });
+
   // 2244
   const is_authority_for_note =
     response_data_for_api?.note_user_name === loginUser.username ||
@@ -261,7 +273,6 @@ const StudyNoteDetail2 = (props: Props) => {
       width={"100%"}
       flexDirection={["column", "column", "column", "column", "row"]}
     >
-      {/* fix  */}
       <Box
         width={["100%", "100%", "100%", "100%", "80%"]}
         border={"0px solid black"}
@@ -274,27 +285,31 @@ const StudyNoteDetail2 = (props: Props) => {
         >
           <Box
             display={"flex"}
-            border={"0px solid green"}
+            // border={"5px solid green"}
             gap={2}
             px={2}
             flexWrap={"wrap"}
+            flexDirection={["column", "column", "column", "column", "row"]}
           >
-            <Button
-              size="sm"
-              colorScheme="red"
-              variant="outline"
-              _hover={{ backgroundColor: "purple.50" }}
-              leftIcon={<FaListUl />}
-              onClick={() => listButtonHandler()}
-            >
-              목록
-            </Button>
+            <Box>
+              <Button
+                size="sm"
+                colorScheme="red"
+                variant="outline"
+                _hover={{ backgroundColor: "purple.50" }}
+                leftIcon={<FaListUl />}
+                onClick={() => listButtonHandler()}
+                width={"100%"}
+              >
+                목록
+              </Button>
+            </Box>
             <ModalButtonForSubtiTitleListForNoteContent
               modal_title={`Note Title: ${response_data_for_api?.note_title}`}
               button_text={"Subtitle List"}
               button_size={"sm"}
+              button_width="100%"
               study_note_pk={study_note_pk}
-              // button_width={""}
             />
 
             <ModalButtonForSearchStudyNoteContent
@@ -302,7 +317,7 @@ const StudyNoteDetail2 = (props: Props) => {
             />
 
             {is_authority_for_note ? (
-              <Box display={"flex"} gap={2}>
+              <>
                 <Button
                   size="sm"
                   colorScheme="red"
@@ -322,16 +337,25 @@ const StudyNoteDetail2 = (props: Props) => {
                       : []
                   }
                 />
-              </Box>
+              </>
             ) : (
               ""
             )}
           </Box>
-          <Box display={"flex"} gap={2} flexWrap={"wrap"} px={2}>
+          <Box
+            display={"flex"}
+            gap={2}
+            flexWrap={"wrap"}
+            px={2}
+            flexDirection={["column", "column", "column", "column", "row"]}
+            // border={"5px solid red"}
+            my={2}
+          >
             <Box>
               <ModalButtonForQnAList
                 button_text={"Q&A"}
-                button_size={"md"}
+                button_width={"100%"}
+                button_size={"sm"}
                 modal_title={`QA list for page ${note_page_num}`}
                 modal_size={"6xl"}
                 study_note_pk={study_note_pk}
@@ -341,25 +365,38 @@ const StudyNoteDetail2 = (props: Props) => {
             </Box>
 
             <Box>
-              <ClipboardButtonForCopyCurrentUrl />
+              <ClipboardButtonForCopyCurrentUrl
+                button_size={"sm"}
+                button_width={"100%"}
+              />
             </Box>
 
             {is_authority_for_note ? (
-              <Box display={"flex"} gap={2}>
+              <Box
+                display={"flex"}
+                gap={2}
+                flexDirection={["column", "column", "column", "column", "row"]}
+              >
                 <ModalButtonForInsertYoutubeContentsForNote
                   study_note_pk={study_note_pk}
                   currentPage={currentPage}
                   button_text="youtube"
+                  button_width={"100%"}
+                  button_size={"sm"}
                 />
                 <ModalButtonForInsertSubtitleForPage
                   button_text={"subtitle for page"}
                   study_note_pk={study_note_pk}
                   currentPage={currentPage}
+                  button_size={"sm"}
+                  button_width={"100%"}
                 />
                 <ModalButtonForInsertStudyNoteContent
                   button_text={"note content"}
                   currentPage={currentPage}
                   study_note_pk={study_note_pk}
+                  button_size={"sm"}
+                  button_width={"100%"}
                 />
               </Box>
             ) : (
@@ -368,19 +405,23 @@ const StudyNoteDetail2 = (props: Props) => {
           </Box>
         </Box>
 
+        {/* fix */}
         <Box
           backgroundColor="gray.200"
           p={4}
           fontWeight="bold"
           display={"flex"}
           justifyContent={"space-between"}
-          mr={1}
-          mb={2}
+          flexDirection={direction_option_for_note_meta_info}
+          gap={3}
+          my={2}
         >
+          <Box>writer:{response_data_for_api?.note_user_name}</Box>
           <Box>
             <Box>note subject:</Box>
             <Box>{response_data_for_api?.note_title}</Box>
           </Box>
+          <Box>page: {currentPage}</Box>
           <Box>
             <Box>CoWriters: </Box>
             <Box display={"flex"} gap={2} alignItems={"center"}>
@@ -403,10 +444,6 @@ const StudyNoteDetail2 = (props: Props) => {
                   })
                 : " no cowriters"}
             </Box>
-          </Box>
-          <Box>
-            <Box>writer:{response_data_for_api?.note_user_name}</Box>
-            <Box>page: {currentPage}</Box>
           </Box>
         </Box>
 

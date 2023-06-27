@@ -109,7 +109,7 @@ const StudyNotePage = () => {
         flexWrap={"wrap"}
         alignItems={"center"}
         border={"0px solid green"}
-        mx={"30px"}
+        mx={"2px"}
         mb={2}
         gap={2}
       >
@@ -215,7 +215,7 @@ const StudyNotePage = () => {
             sm: "repeat(1, 1fr)", // for small screens and up
           }}
           // width={"100%"}
-          border={"1px solid blue"}
+          border={"0px solid blue"}
           gap={5}
           // px={2}
           width={"100%"}

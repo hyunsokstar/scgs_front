@@ -244,7 +244,7 @@ const CardForStudyNote: React.FC<IProps> = ({
         </Box>
 
         <Box
-          // p="2"
+          p="2"
           bg={bodyBgColor}
           display={"flex"}
           width={"100%"}
@@ -360,7 +360,7 @@ const CardForStudyNote: React.FC<IProps> = ({
               // border={"1px solid gray"}
               gap={2}
               width={"100%"}
-              px={2}
+              p={2}
             >
               <Box width={"100%"}>
                 <Button

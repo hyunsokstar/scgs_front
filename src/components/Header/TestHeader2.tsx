@@ -117,20 +117,23 @@ const Header = () => {
       <Box
         display="grid"
         gridTemplateColumns={{
-          xl: "repeat(7, 1fr)", // default value for all breakpoints
-          lg: "repeat(2, 1fr)", // for medium-sized screens and up
-          sm: "repeat(2, 1fr)", // for small screens and up
+          // base: "2fr", // 변경된 부분: 모바일 화면에서 컬럼당 하나로 설정
+          xl: "repeat(7, 1fr)",
+          lg: "repeat(7, 1fr)",
+          md: "repeat(2, 1fr)",
+          sm: "repeat(2, 1fr)",
         }}
         justifyItems="center" // 가운데 정렬
         alignItems="center" // 수직 가운데 정렬
         // height={"120px"}
-        height={["640px", "620px", "540px", "540px", "120px"]}
+        // height={["640px", "620px", "540px", "540px", "120px"]}
         border={"1px solid gray"}
         bg="gray.800"
         overflowY={"scroll"}
         gap={2}
         py={2}
         width={"100%"}
+        // flex={1}
       >
         <Box display="flex" alignItems="center" onClick={homeButtonHandler}>
           <Icon

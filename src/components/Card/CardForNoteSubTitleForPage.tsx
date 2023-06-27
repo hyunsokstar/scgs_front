@@ -146,22 +146,24 @@ const CardForStudyNoteContent = ({
           </Tbody>
         </Table>
       </Box>
-      <Box display="flex" justifyContent="space-between">
-        <Box display={"flex"} gap={2} alignItems={"center"} ml={2}>
+      <Box border={"1px solid green"} width={"100%"}>
+        {/* <Box display={"flex"} gap={2} alignItems={"center"} ml={2}>
           <Box>
             <Avatar size="sm" src={writer.profile_image} />
           </Box>
           <Box>{writer.username}</Box>
-        </Box>
-        <Box>
-          {youtube_url ? youtube_url !== "" ? (
-            <Box>
-              <PlayerForYouTube youtubeUrl={youtube_url} />
-            </Box>
+        </Box> */}
+          {youtube_url ? (
+            youtube_url !== "" ? (
+              <Box>
+                <PlayerForYouTube youtubeUrl={youtube_url} />
+              </Box>
+            ) : (
+              "??"
+            )
           ) : (
-            "??"
-          ): "no data"}
-        </Box>
+            "no data"
+          )}
       </Box>
     </Box>
   );

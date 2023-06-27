@@ -24,12 +24,14 @@ interface IProps {
   currentPage: number | string | undefined;
   study_note_pk: number | string | undefined;
   button_size?: string;
+  button_width?: string;
   refetch?: () => void;
 }
 
 // 1122
 const ModalButtonForInsertYoutubeContentsForNote = ({
   button_text,
+  button_width,
   currentPage,
   study_note_pk,
   button_size,
@@ -86,10 +88,11 @@ const ModalButtonForInsertYoutubeContentsForNote = ({
     <>
       <Button
         variant={"outline"}
+        width={button_width}
         onClick={onOpen}
         border={"1px solid black"}
         size={button_size}
-        _hover={{ bgColor: "green.100" }}
+        _hover={{ bgColor: "yellow.100" }}
       >
         {button_text}
       </Button>

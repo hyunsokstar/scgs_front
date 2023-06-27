@@ -113,17 +113,10 @@ const CardForYoutubeContentForPage = ({
           ""
         )}
       </Box>
-      <Box my="4">
-        <Table variant="simple">
-          <Tbody>
-            <Tr>
-              <Td>{title}</Td>
-              <Td position={"relative"}>
-                <PlayerForYouTube youtubeUrl={youtube_url} />
-              </Td>
-            </Tr>
-          </Tbody>
-        </Table>
+      <Box my="4" border={"1px solid gray"}>
+        <Box border={"1px solid purple"}>
+          <PlayerForYouTube youtubeUrl={youtube_url} />
+        </Box>
       </Box>
       <Box display="flex" justifyContent="space-between">
         <Box display={"flex"} gap={2} alignItems={"center"} ml={2}>
@@ -132,7 +125,6 @@ const CardForYoutubeContentForPage = ({
           </Box>
           <Box>{writer.username}</Box>
         </Box>
-
       </Box>
     </Box>
   );
