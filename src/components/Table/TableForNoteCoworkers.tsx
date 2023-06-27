@@ -59,7 +59,7 @@ const TableForNoteCoworkers = ({
 
   // 2244
   return (
-    <Box overflowY={"scroll"} maxH="200px">
+    <Box overflowY={"scroll"} height="120px">
       <Table bgColor={"gray.400"} size="xs">
         <Tbody>
           {noteCowriters.length

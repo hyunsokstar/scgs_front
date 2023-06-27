@@ -181,7 +181,6 @@ const CardForStudyNote: React.FC<IProps> = ({
         borderRadius="lg"
         overflow="hidden"
         width="100%"
-        // mx={"auto"}
         bg={cardBgColor}
         boxShadow="md"
         transition="box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out"
@@ -190,16 +189,19 @@ const CardForStudyNote: React.FC<IProps> = ({
           boxShadow: "xl",
           transform: "translateY(-2px)",
         }}
-        border={"0px solid red"}
+        height={"100%"}
+        // border={"5px solid purple"}
+        display={"flex"}
+        flexDirection={"column"}
       >
         <Box
+          // border={"5px solid pink"}
           display={"flex"}
           justifyContent="space-between"
           flexDirection={note_header_direction}
           bg={writer.username === loginUser.username ? "green.200" : "blue.200"}
-          border={"0px solid red"}
           px="2"
-          py="1"
+          py="3"
           width={"100%"}
         >
           <Box display={"flex"} gap={2}>
@@ -248,12 +250,13 @@ const CardForStudyNote: React.FC<IProps> = ({
           bg={bodyBgColor}
           display={"flex"}
           width={"100%"}
-          height={"300px"}
           _hover={{ bg: "blue.100" }}
           id={"note-content-card"}
           defaultValue={"note-content-card"}
           gap={2}
-          // border={"10px solid red"}
+          // border={"5px solid yellow"}
+          height={"400px"}
+          // flexGrow={1}
           flexDirection={note_card_direction}
         >
           <Box
@@ -276,7 +279,6 @@ const CardForStudyNote: React.FC<IProps> = ({
               >
                 <Box px={2}>Co-Writer</Box>
                 <Box>
-                  {/* cowriter add */}
                   {isLoggedIn && loginUser.username !== writer.username ? (
                     <IconButton
                       aria-label="Add"
@@ -454,49 +456,18 @@ const CardForStudyNote: React.FC<IProps> = ({
                   modal_size={""}
                 />
               </Box>
-
-              {/* <Box>
-                <ModalButtonForErrorReportForNote
-                  button_text={"제안(미정)"}
-                  button_size={"sm"}
-                  button_width={"100%"}
-                  modal_title={"modal for error report"}
-                  modal_size={"6xl"}
-                  study_note_pk={pk}
-                />
-              </Box>
-
-              <Box>
-                <ModalButtonForErrorReportForNote
-                  button_text={"까페(미정)"}
-                  button_size={"sm"}
-                  button_width={"100%"}
-                  modal_title={"modal for error report"}
-                  modal_size={"6xl"}
-                />
-              </Box>
-
-              <Box>
-                <ModalButtonForErrorReportForNote
-                  button_text={"chat(미정)"}
-                  button_size={"sm"}
-                  button_width={"100%"}
-                  modal_title={"modal for error report"}
-                  modal_size={"6xl"}
-                  study_note_pk={pk}
-                />
-              </Box> */}
             </Grid>
           </Box>
         </Box>
         <Box
-          // position={"absolute"}
           p="2"
           bg={footerBgColor}
           bottom={0}
           w={"100%"}
           display={"flex"}
           justifyContent={"space-between"}
+          // border={"5px solid orange"}
+          height={"80px"}
         >
           <Box display={"flex"} flexDirection={"column"}>
             <Text>1st: {first_category}</Text>

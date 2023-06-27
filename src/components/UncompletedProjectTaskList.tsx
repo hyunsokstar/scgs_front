@@ -29,9 +29,8 @@ import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForT
 import UncompletedTaskRow from "./UncompletedTaskRow";
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
 import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForSetFilterOptionForTaskList";
-import RadioButtonForSelectOptionForGropyBy from "./Button/RadioButtonForSelectOptionForGropyBy";
 import ModalButtonForAddProjectTaskWithDuedateOption from "./modal/ModalButtonForAddProjectTaskWithDuedateOption";
-import ButtonsForUnompletedTaskForChecked from "./Button/ButtonsForUnompletedTaskForChecked";
+import SelectBoxForDueDateForUnompletedTaskForChecked from "./Button/SelectBoxForDueDateForUnompletedTaskForChecked";
 import ButtonsForSelectOptionForDueDateForUncompletedTaskList from "./Button/ButtonsForSelectOptionForDueDateForUncompletedTaskList";
 import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
 import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
@@ -264,6 +263,18 @@ function UncompletedProjectTaskList({
     );
   };
 
+  const is_show_for_mobile = useBreakpointValue({
+    base: false, // for mobile and small screens
+    md: true, // for medium-sized screens and up
+    lg: true, // for large screens and up
+  });
+
+  const responsive_option_for_direction = useBreakpointValue({
+    base: "column", // for mobile and small screens
+    md: "row", // for medium-sized screens and up
+    lg: "row", // for large screens and up
+  });
+
   // 2244
   if (!taskListData) {
     return <Box>..Loading</Box>;
@@ -293,6 +304,8 @@ function UncompletedProjectTaskList({
           justifyContent={"center"}
           alignItems={"center"}
           p={3}
+          height={"290px"}
+          overflowY={"scroll"}
         >
           <Box
             // border={"5px solid blue"}
@@ -384,256 +397,281 @@ function UncompletedProjectTaskList({
           </Box>
         </Box>
 
-        <Box
-          // height={"450px"}
-          bg={"blue.100"}
-          alignItems={"center"}
-          // border={"5px solid orange"}
-          width={"100%"}
-          p={3}
-          // flex={1}
-        >
-          <Box>
-            <Box mb={2}>
-              <Box display="flex" alignItems="center" mb={2}>
-                <Box flexBasis="30%" fontWeight="bold">
-                  created_at
-                </Box>
-                <Box flexBasis="70%">
-                  <ButtonsForSelectForTeamTaskListPeriod
-                    selectedPeriodOptionForUncompletedTaskList={
-                      selectedPeriodOptionForUncompletedTaskList
-                    }
-                    changeHandler={handleSelectPeriodOptionForTeamTask}
-                  />
-                </Box>
-              </Box>
-              <Box display="flex" alignItems="center" mb={2}>
-                <Box flexBasis="30%" fontWeight="bold">
-                  due_date
-                </Box>
-                <Box flexBasis="70%">
-                  <ButtonsForSelectOptionForDueDateForUncompletedTaskList
-                    due_date_option_for_filtering={
-                      due_date_option_for_filtering
-                    }
-                    set_due_date_option_for_filtering={
-                      set_due_date_option_for_filtering
-                    }
-                  />
-                </Box>
-              </Box>
-              <Box display="flex" alignItems="center" mb={2}>
-                <Box flexBasis="30%" fontWeight="bold">
-                  special option
-                </Box>
-                <Box flexBasis="70%" display="flex" alignItems="center" gap={5}>
-                  <Box display="flex" alignItems="center">
-                    Is Emergency :{" "}
-                    <Checkbox
-                      size="lg"
-                      ml={2}
-                      border={"1px solid gray"}
-                      isChecked={isForUrgent}
-                      onChange={handleUrgentChange}
-                    />
+        {is_show_for_mobile ? (
+          <Box
+            bg={"blue.100"}
+            alignItems={"center"}
+            width={"100%"}
+            p={3}
+            // border={"5px solid green"}
+          >
+            <Box>
+              {/* {is_show_for_mobile ? 
+            :""} */}
+              <Box mb={2}>
+                <Box display="flex" alignItems="center" mb={2}>
+                  <Box flexBasis="30%" fontWeight="bold">
+                    created_at
                   </Box>
-                  <Box display="flex" alignItems="center">
-                    is_prize :{" "}
-                    <Checkbox
-                      size="lg"
-                      border={"1px solid gray"}
-                      ml={2}
-                      isChecked={checkForCashPrize}
-                      onChange={handleCashPrizeChange}
+                  <Box flexBasis="70%">
+                    <ButtonsForSelectForTeamTaskListPeriod
+                      selectedPeriodOptionForUncompletedTaskList={
+                        selectedPeriodOptionForUncompletedTaskList
+                      }
+                      changeHandler={handleSelectPeriodOptionForTeamTask}
                     />
                   </Box>
                 </Box>
-              </Box>
-              <Box display="flex" alignItems="center" mb={2}>
-                <Box flexBasis="30%" fontWeight="bold">
-                  Gropup By
+                <Box display="flex" alignItems="center" mb={2}>
+                  <Box flexBasis="30%" fontWeight="bold">
+                    due_date
+                  </Box>
+                  <Box flexBasis="70%">
+                    <ButtonsForSelectOptionForDueDateForUncompletedTaskList
+                      due_date_option_for_filtering={
+                        due_date_option_for_filtering
+                      }
+                      set_due_date_option_for_filtering={
+                        set_due_date_option_for_filtering
+                      }
+                    />
+                  </Box>
                 </Box>
-                <Box flexBasis="70%">
-                  <RadioGroup value={groupByOption} onChange={setGroupByOption}>
-                    <Stack direction="row">
-                      <Radio value="option1">Option 1</Radio>
-                      <Radio value="option2">Option 2</Radio>
-                      <Radio value="option3">Option 3</Radio>
-                    </Stack>
-                  </RadioGroup>
+                <Box display="flex" alignItems="center" mb={2}>
+                  <Box flexBasis="30%" fontWeight="bold">
+                    special option
+                  </Box>
+                  <Box
+                    flexBasis="70%"
+                    display="flex"
+                    alignItems="center"
+                    gap={5}
+                  >
+                    <Box display="flex" alignItems="center">
+                      Is Emergency :{" "}
+                      <Checkbox
+                        size="lg"
+                        ml={2}
+                        border={"1px solid gray"}
+                        isChecked={isForUrgent}
+                        onChange={handleUrgentChange}
+                      />
+                    </Box>
+                    <Box display="flex" alignItems="center">
+                      is_prize :{" "}
+                      <Checkbox
+                        size="lg"
+                        border={"1px solid gray"}
+                        ml={2}
+                        isChecked={checkForCashPrize}
+                        onChange={handleCashPrizeChange}
+                      />
+                    </Box>
+                  </Box>
                 </Box>
-              </Box>
-              <Box display="flex" alignItems="center" mb={2}>
-                <Box flexBasis="30%" fontWeight="bold">
-                  manager
+                <Box display="flex" alignItems="center" mb={2}>
+                  <Box flexBasis="30%" fontWeight="bold">
+                    Gropup By
+                  </Box>
+                  <Box flexBasis="70%">
+                    <RadioGroup
+                      value={groupByOption}
+                      onChange={setGroupByOption}
+                    >
+                      <Stack direction="row">
+                        <Radio value="option1">Option 1</Radio>
+                        <Radio value="option2">Option 2</Radio>
+                        <Radio value="option3">Option 3</Radio>
+                      </Stack>
+                    </RadioGroup>
+                  </Box>
                 </Box>
-                <Box flexBasis="70%">
-                  <Input
-                    size="xs"
-                    variant="outline"
-                    bg="blue.50"
-                    borderColor="gray.300"
-                    _focus={{ border: "0px solid blue", boxShadow: "none" }}
-                    _hover={{ bg: "green.50", borderColor: "black" }}
-                    _placeholder={{ color: "black" }}
-                    id="url"
-                    w={"80%"}
-                    value={filterValueForTaskManager}
-                    onChange={handleFilterChangeForTaskManager}
-                  />
+                <Box display="flex" alignItems="center" mb={2}>
+                  <Box flexBasis="30%" fontWeight="bold">
+                    manager
+                  </Box>
+                  <Box flexBasis="70%">
+                    <Input
+                      size="xs"
+                      variant="outline"
+                      bg="blue.50"
+                      borderColor="gray.300"
+                      _focus={{ border: "0px solid blue", boxShadow: "none" }}
+                      _hover={{ bg: "green.50", borderColor: "black" }}
+                      _placeholder={{ color: "black" }}
+                      id="url"
+                      w={"80%"}
+                      value={filterValueForTaskManager}
+                      onChange={handleFilterChangeForTaskManager}
+                    />
+                  </Box>
                 </Box>
-              </Box>
-              <Box display="flex" alignItems="center" mb={2}>
-                <Box flexBasis="30%" fontWeight="bold">
-                  task
+                <Box display="flex" alignItems="center" mb={2}>
+                  <Box flexBasis="30%" fontWeight="bold">
+                    task
+                  </Box>
+                  <Box flexBasis="70%">
+                    <Input
+                      size="xs"
+                      variant="outline"
+                      bg="blue.50"
+                      borderColor="gray.300"
+                      _focus={{ border: "1px solid blue", boxShadow: "none" }}
+                      _hover={{ bg: "green.50", borderColor: "black" }}
+                      _placeholder={{ color: "black" }}
+                      id="url"
+                      w={"80%"}
+                      value={filterValueForTask}
+                      onChange={handleFilterChangeForTask}
+                    />
+                  </Box>
                 </Box>
-                <Box flexBasis="70%">
-                  <Input
-                    size="xs"
-                    variant="outline"
-                    bg="blue.50"
-                    borderColor="gray.300"
-                    _focus={{ border: "1px solid blue", boxShadow: "none" }}
-                    _hover={{ bg: "green.50", borderColor: "black" }}
-                    _placeholder={{ color: "black" }}
-                    id="url"
-                    w={"80%"}
-                    value={filterValueForTask}
-                    onChange={handleFilterChangeForTask}
-                  />
-                </Box>
-              </Box>
-              <Box display="flex" alignItems="center" mb={2}>
-                <Box flexBasis="30%" fontWeight="bold">
-                  class
-                </Box>
-                <Box flexBasis="70%">
-                  <Input
-                    size="xs"
-                    variant="outline"
-                    bg="blue.50"
-                    borderColor="gray.300"
-                    _focus={{ border: "1px solid blue", boxShadow: "none" }}
-                    _hover={{ bg: "green.50", borderColor: "black" }}
-                    _placeholder={{ color: "black" }}
-                    id="url"
-                    w={"80%"}
-                    value={filterValueForTaskClassification}
-                    onChange={handleFilterChangeForTaskClassification}
-                  />
+                <Box display="flex" alignItems="center" mb={2}>
+                  <Box flexBasis="30%" fontWeight="bold">
+                    class
+                  </Box>
+                  <Box flexBasis="70%">
+                    <Input
+                      size="xs"
+                      variant="outline"
+                      bg="blue.50"
+                      borderColor="gray.300"
+                      _focus={{ border: "1px solid blue", boxShadow: "none" }}
+                      _hover={{ bg: "green.50", borderColor: "black" }}
+                      _placeholder={{ color: "black" }}
+                      id="url"
+                      w={"80%"}
+                      value={filterValueForTaskClassification}
+                      onChange={handleFilterChangeForTaskClassification}
+                    />
+                  </Box>
                 </Box>
               </Box>
             </Box>
           </Box>
-        </Box>
+        ) : (
+          ""
+        )}
 
-        <Box
-          // height={"450px"}
-          // border={"5px solid black"}
-          bgColor={"orange.200"}
-          alignItems={"center"}
-          flex={1}
-        >
-          <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
-            <Text fontSize="xl" fontWeight="bold" mb={2}>
-              Today
-            </Text>
-            <Text>total: {taskListData.total_task_count_for_today}</Text>
-            <Text>complete: {taskListData.completed_task_count_for_today}</Text>
-            <Text>progress:{taskListData.achievement_rate_for_today}%</Text>
-            <Box w="100%">
-              <Progress
-                value={taskListData.achievement_rate_for_today}
-                size="xs"
-                mb={2}
-              />
+        {is_show_for_mobile ? (
+          <Box
+            // height={"450px"}
+            // border={"5px solid black"}
+            bgColor={"orange.200"}
+            alignItems={"center"}
+            flex={1}
+          >
+            <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
+              <Text fontSize="xl" fontWeight="bold" mb={2}>
+                Today
+              </Text>
+              <Text>total: {taskListData.total_task_count_for_today}</Text>
+              <Text>
+                complete: {taskListData.completed_task_count_for_today}
+              </Text>
+              <Text>progress:{taskListData.achievement_rate_for_today}%</Text>
+              <Box w="100%">
+                <Progress
+                  value={taskListData.achievement_rate_for_today}
+                  size="xs"
+                  mb={2}
+                />
+              </Box>
             </Box>
           </Box>
-        </Box>
+        ) : (
+          ""
+        )}
       </Box>
 
       <Box
-        display={"flex"}
-        // flexDirection={"row"}
-        flexWrap={"wrap"}
-        justifyContent={"space-between"}
-        ml={2}
+        display={"grid"}
+        gridTemplateColumns={{
+          base: "repeat(2, 1fr)", // 모바일
+          md: "repeat(4, 1fr)", // 중간 크기
+          lg: "repeat(4, 1fr)", // 큰 화면
+        }}
+        width={"100%"}
+        gap={2}
+        p={2}
       >
-        <Box p={2}>
+        <Button
+          variant="outline"
+          size="xs"
+          backgroundColor="red.50"
+          _hover={{ backgroundColor: "red.100" }}
+          onClick={deleteTaskForChecked}
+        >
+          delete for Check
+        </Button>
+
+        <ModalButtonForUpdateTaskManagerForChecked
+          button_text={"Update Task Manager"}
+          size={"xs"}
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+        />
+
+        <ModalButtonForUpdateImortanceForChecked
+          button_text={"update importance"}
+          button_width={"100%"}
+          size={"xs"}
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+        />
+
+        <ModalButtonForUpdateTaskClassificationForChecked
+          button_text={"update task for class"}
+          button_width={"100%"}
+          size={"xs"}
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+        />
+      </Box>
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        p={2}
+        gap={2}
+        // border={"5px solid blue"}
+      >
+        <Box>
           <Checkbox
             size={"lg"}
             onChange={handleChangeForAllCheckBox}
             checked={
               checkedRowPks.length === taskListData?.ProjectProgressList.length
             }
+            border={"2px solid black"}
           />
         </Box>
         <Box>
-          <ButtonsForUnompletedTaskForChecked
+          <SelectBoxForDueDateForUnompletedTaskForChecked
             checkedRowPks={checkedRowPks}
             setCheckedRowPks={setCheckedRowPks}
             deleteTaskForChecked={deleteTaskForChecked}
             handlerForUpdateTaskDuedateForChecked={
               handlerForUpdateTaskDuedateForChecked
             }
+            width={"100%"}
           />
-
-          <Box
-            display={"flex"}
-            justifyContent={"flex-start"}
-            flexWrap={"wrap"}
-            gap={2}
-            ml={2}
-          >
-            <Button
-              variant="outline"
-              size="xs"
-              backgroundColor="red.50"
-              _hover={{ backgroundColor: "red.100" }}
-              mr={2}
-              gap={10}
-              onClick={deleteTaskForChecked}
-            >
-              Delete For Check
-            </Button>
-
-            <ModalButtonForUpdateTaskManagerForChecked
-              button_text={"update task manager"}
-              size={"xs"}
-              checkedRowPks={checkedRowPks}
-              setCheckedRowPks={setCheckedRowPks}
-            />
-
-            <ModalButtonForUpdateImortanceForChecked
-              button_text={"update importance"}
-              size={"xs"}
-              checkedRowPks={checkedRowPks}
-              setCheckedRowPks={setCheckedRowPks}
-            />
-
-            <ModalButtonForUpdateTaskClassificationForChecked
-              button_text={"update task for classification"}
-              size={"xs"}
-              checkedRowPks={checkedRowPks}
-              setCheckedRowPks={setCheckedRowPks}
-            />
-
-            <Button
-              variant={"outline"}
-              border={"1px solid blue"}
-              bg={"blue.100"}
-              size={"xs"}
-              mr={5}
-              onClick={handleButtonClick}
-            >
-              show task detail using image slide for check
-            </Button>
-          </Box>
         </Box>
-        <ModalButtonForAddProjectTaskWithDuedateOption
-          button_text="Register Task for team project"
+
+        <Button
+          variant={"outline"}
+          border={"2px solid blue"}
+          bg={"blue.100"}
           size={"sm"}
+          onClick={handleButtonClick}
+          p={4}
+        >
+          Image Slide
+        </Button>
+
+        <ModalButtonForAddProjectTaskWithDuedateOption
+          button_text="Register Task"
+          size={"md"}
           projectTaskListRefatch={projectTaskListRefatch}
           bgColor="red.300"
           hoverColor="red.500"

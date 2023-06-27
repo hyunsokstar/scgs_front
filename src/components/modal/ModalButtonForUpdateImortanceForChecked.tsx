@@ -26,6 +26,7 @@ type ModalButtonForUpdateImortanceForCheckedProps = {
   button_text: string;
   size: string;
   checkedRowPks: number[];
+  button_width: string;
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
@@ -35,7 +36,7 @@ type FormData = {
 
 const ModalButtonForUpdateImortanceForChecked: React.FC<
   ModalButtonForUpdateImortanceForCheckedProps
-> = ({ button_text, size, checkedRowPks, setCheckedRowPks }) => {
+> = ({ button_text, size, checkedRowPks, button_width, setCheckedRowPks }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rating, setRating] = useState(1);
   const queryClient = useQueryClient();
@@ -91,10 +92,10 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
     <Box>
       <Button
         size={size}
+        width={button_width}
         variant="outline"
         backgroundColor="red.50"
         _hover={{ backgroundColor: "red.100" }}
-        mr={2}
         onClick={() => setIsOpen(true)}
       >
         {button_text}
