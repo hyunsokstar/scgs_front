@@ -30,7 +30,7 @@ interface IProps {
   modal_size: string;
   study_note_pk: string | undefined;
   note_page_num?: any;
-  count_for_qna_boards: number;
+  count_for_qna_boards: number | undefined;
 }
 
 // 1122

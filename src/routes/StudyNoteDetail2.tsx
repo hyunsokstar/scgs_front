@@ -83,9 +83,9 @@ const StudyNoteDetail2 = (props: Props) => {
       "apiForGetStuyNoteContentList",
     ],
     apiForGetStuyNoteContentList,
-    {
-      cacheTime: 0, // cacheTime을 0으로 설정하여 캐싱을 해제
-    }
+    // {
+    //   cacheTime: 0, // cacheTime을 0으로 설정하여 캐싱을 해제
+    // }
   );
 
   useEffect(() => {
@@ -360,7 +360,7 @@ const StudyNoteDetail2 = (props: Props) => {
                 modal_size={"6xl"}
                 study_note_pk={study_note_pk}
                 note_page_num={note_page_num}
-                count_for_qna_boards={0}
+                count_for_qna_boards={response_data_for_api?.question_count_for_current_page}
               />
             </Box>
 
@@ -573,7 +573,7 @@ const StudyNoteDetail2 = (props: Props) => {
           <Box display={"flex"} gap={2} p={2}>
             <Button
               variant={"outline"}
-              border={"0px solid black"}
+              border={"1px solid black"}
               width={"50%"}
               size={"sm"}
               onClick={buttonHandlerForRegisterClassRoomForStudyNote}
