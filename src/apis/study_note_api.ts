@@ -807,9 +807,9 @@ export const apiForGetStuyNoteContentList = async ({
   // console.log("study_note_pk : ", study_note_pk);
 
   return await instance
-    .get(`study-note/${study_note_pk}`, {
+    .get(`study-note/${study_note_pk}/${currentPage}`, {
       params: {
-        currentPage,
+        // currentPage,
       },
     })
     .then((response) => response.data);
