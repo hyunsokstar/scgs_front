@@ -1,5 +1,12 @@
 import React, { ReactElement, useState } from "react";
-import { Text, Box, useToast, Checkbox, Button } from "@chakra-ui/react";
+import {
+  Text,
+  Box,
+  useToast,
+  Checkbox,
+  Button,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import {
   apiForDeleteTasksForChecked,
   updateProjectImportance,
@@ -11,6 +18,7 @@ import { deleteOneProjectTask } from "../apis/user_api";
 import ListForUncompletedTaskForUser from "./List/ListForUncompletedTaskForUser";
 import { ProjectProgress } from "../types/user/user_types";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import SlideForUncompletedTaskList from "./Slide/SlideForCompletedTaskList";
 
 interface IProps {
   ProjectProgressList: ProjectProgress[];
@@ -212,6 +220,12 @@ function UncompletedTaskListForUser({
     }
   };
 
+  const is_show_for_mobile = useBreakpointValue({
+    base: false, // for mobile and small screens
+    md: true, // for medium-sized screens and up
+    lg: true, // for large screens and up
+  });
+
   // 2244
   if (ProjectProgressList && ProjectProgressList.length === 0) {
     return (
@@ -240,22 +254,29 @@ function UncompletedTaskListForUser({
           delete for check
         </Button>
       </Box>
-
-      <ListForUncompletedTaskForUser
-        ProjectProgressList={ProjectProgressList}
-        currentPageNum={currentPageNum}
-        task_number_for_one_page={task_number_for_one_page}
-        totalPageCount={totalPageCount}
-        setCurrentPageNum={setCurrentPageNum}
-        updateHandlerForTaskInProgress={updateHandlerForTaskInProgress}
-        updateHandlerForTaskIsTesting={updateHandlerForTaskIsTesting}
-        updateHandlerForTaskStatus={updateHandlerForTaskStatus}
-        onChangeForStarRatingHandler={onChangeForStarRatingHandler}
-        deleteHandler={deleteHandler}
-        projectTaskListRefetch={projectTaskListRefetch}
-        checkedRowPks={checkedRowPks}
-        handleCheckboxChange={handleCheckboxChange}
-      />
+      {is_show_for_mobile ? (
+        <ListForUncompletedTaskForUser
+          ProjectProgressList={ProjectProgressList}
+          currentPageNum={currentPageNum}
+          task_number_for_one_page={task_number_for_one_page}
+          totalPageCount={totalPageCount}
+          setCurrentPageNum={setCurrentPageNum}
+          updateHandlerForTaskInProgress={updateHandlerForTaskInProgress}
+          updateHandlerForTaskIsTesting={updateHandlerForTaskIsTesting}
+          updateHandlerForTaskStatus={updateHandlerForTaskStatus}
+          onChangeForStarRatingHandler={onChangeForStarRatingHandler}
+          deleteHandler={deleteHandler}
+          projectTaskListRefetch={projectTaskListRefetch}
+          checkedRowPks={checkedRowPks}
+          handleCheckboxChange={handleCheckboxChange}
+        />
+      ) : (
+        <SlideForUncompletedTaskList
+          listData={ProjectProgressList}
+          handleCheckboxChange={handleCheckboxChange}
+          checkedRowPks={checkedRowPks}
+        />
+      )}
     </>
   );
 }

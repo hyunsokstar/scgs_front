@@ -14,7 +14,7 @@ import {
 import { taskRowForUncompleted } from "../../types/project_progress/project_progress_type";
 
 interface SlideForUncompletedTaskListProps {
-  listData: taskRowForUncompleted[];
+  listData: taskRowForUncompleted[] | any[];
   handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checkedRowPks: any[];
 }
