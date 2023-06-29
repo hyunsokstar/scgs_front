@@ -58,8 +58,8 @@ function UncompletedTaskListForUser({
     {
       onSuccess: (result: any) => {
         // console.log("result : ", result);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
+        if (projectTaskListRefetch) {
+          projectTaskListRefetch();
         }
         queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
 
@@ -90,8 +90,8 @@ function UncompletedTaskListForUser({
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
+        if (projectTaskListRefetch) {
+          projectTaskListRefetch();
         }
         queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
 
