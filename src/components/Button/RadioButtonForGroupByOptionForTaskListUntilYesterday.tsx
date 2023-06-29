@@ -20,13 +20,13 @@ const RadioButtonForGroupByOptionForTaskListUntilYesterday: React.FC<
       </Box>
       <RadioGroup onChange={handleChange} value={groupByOption}>
         <Stack direction="row">
-          <Radio size="lg" value="">
+          <Radio size="md" value="">
             Default
           </Radio>
-          <Radio size="lg" value="member">
+          <Radio size="md" value="member">
             Member
           </Radio>
-          <Radio size="lg" value="importance">
+          <Radio size="md" value="importance">
             Importance
           </Radio>
         </Stack>

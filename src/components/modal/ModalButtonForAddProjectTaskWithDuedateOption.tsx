@@ -20,6 +20,7 @@ import {
   FormHelperText,
   Grid,
 } from "@chakra-ui/react";
+import { CloseIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
 import { IFormTypeForProjectProgress } from "../../types/project_progress/project_progress_type";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -182,9 +183,27 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Task 추가 #xptmzmcnrk </ModalHeader>
+          <Button
+            variant="ghost"
+            onClick={onClose}
+            position="absolute"
+            right={4}
+            top={4}
+          >
+            <CloseIcon />
+          </Button>
           <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Grid templateColumns="repeat(2, 1fr)" gap={6}>
+              <Grid
+                templateColumns={{
+                  xl: "repeat(2, 1fr)",
+                  lg: "repeat(2, 1fr)",
+                  md: "repeat(2, 1fr)",
+                  sm: "repeat(1, 1fr)",
+                }}
+                gap={6}
+                p={2}
+              >
                 <FormControl>
                   <FormLabel>Task</FormLabel>
                   <Input

@@ -36,6 +36,7 @@ import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUp
 import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
 import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 import { useNavigate } from "react-router-dom";
+import SlideForUncompletedTaskList from "./Slide/SlideForUncompletedTaskList";
 
 interface Props {
   basic_due_date_option?: typeForDueDateOption;
@@ -658,19 +659,23 @@ function UncompletedProjectTaskList({
           />
         </Box>
 
-        <Button
-          variant={"outline"}
-          border={"2px solid blue"}
-          bg={"blue.100"}
-          size={"sm"}
-          onClick={handleButtonClick}
-          p={4}
-        >
-          Image Slide
-        </Button>
+        {is_show_for_mobile ? (
+          <Button
+            variant={"outline"}
+            border={"2px solid blue"}
+            bg={"blue.100"}
+            size={"sm"}
+            onClick={handleButtonClick}
+            p={4}
+          >
+            slide
+          </Button>
+        ) : (
+          ""
+        )}
 
         <ModalButtonForAddProjectTaskWithDuedateOption
-          button_text="Register Task"
+          button_text="register"
           size={"md"}
           projectTaskListRefatch={projectTaskListRefatch}
           bgColor="red.300"
@@ -679,22 +684,36 @@ function UncompletedProjectTaskList({
         />
       </Box>
 
-      <Box>
-        {taskListData ? (
-          <UncompletedTaskRow
-            ProjectProgressList={filteredData}
-            totalPageCount={taskListData.totalPageCount}
-            task_number_for_one_page={taskListData.task_number_for_one_page}
-            currentPageNum={currentPageNum}
-            setCurrentPageNum={setCurrentPageNum}
-            projectTaskListRefatch={projectTaskListRefatch}
-            handleCheckboxChange={handleCheckboxChange}
-            checkedRowPks={checkedRowPks}
-          />
-        ) : (
-          ""
-        )}
-      </Box>
+      {is_show_for_mobile ? (
+        <Box>
+          {taskListData ? (
+            <UncompletedTaskRow
+              ProjectProgressList={filteredData}
+              totalPageCount={taskListData.totalPageCount}
+              task_number_for_one_page={taskListData.task_number_for_one_page}
+              currentPageNum={currentPageNum}
+              setCurrentPageNum={setCurrentPageNum}
+              projectTaskListRefatch={projectTaskListRefatch}
+              handleCheckboxChange={handleCheckboxChange}
+              checkedRowPks={checkedRowPks}
+            />
+          ) : (
+            ""
+          )}
+        </Box>
+      ) : (
+        <Box>
+          {filteredData ? (
+            <SlideForUncompletedTaskList
+              listData={filteredData}
+              handleCheckboxChange={handleCheckboxChange}
+              checkedRowPks={checkedRowPks}
+            />
+          ) : (
+            "no data"
+          )}
+        </Box>
+      )}
     </Box>
   );
 }

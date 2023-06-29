@@ -3,7 +3,7 @@ import {
   Button,
   Container,
   Flex,
-  HStack,
+  VStack,
   Text,
   Input,
   useToast,
@@ -217,13 +217,10 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                   </Tr>
                   <Tr height="30px" borderBottom={"2px solid #fafad2"}>
                     <Td>
-                      <Text>담당자별:</Text>
-                    </Td>
-                    <Td>
                       {taskListData?.writers_info?.map((writer) => {
                         return (
                           <Box fontSize="lg" color="blue.900">
-                            <HStack>
+                            <VStack>
                               <Button
                                 variant={"outline"}
                                 size={"sm"}
@@ -249,7 +246,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                               <Text>
                                 님 {writer.task_count} 개 , {writer.cash} 원
                               </Text>
-                            </HStack>
+                            </VStack>
                           </Box>
                         );
                       })}

@@ -82,7 +82,7 @@ const StudyNoteDetail2 = (props: Props) => {
       currentPage,
       "apiForGetStuyNoteContentList",
     ],
-    apiForGetStuyNoteContentList,
+    apiForGetStuyNoteContentList
     // {
     //   cacheTime: 0, // cacheTime을 0으로 설정하여 캐싱을 해제
     // }
@@ -360,7 +360,9 @@ const StudyNoteDetail2 = (props: Props) => {
                 modal_size={"6xl"}
                 study_note_pk={study_note_pk}
                 note_page_num={note_page_num}
-                count_for_qna_boards={response_data_for_api?.question_count_for_current_page}
+                count_for_qna_boards={
+                  response_data_for_api?.question_count_for_current_page
+                }
               />
             </Box>
 
@@ -453,10 +455,8 @@ const StudyNoteDetail2 = (props: Props) => {
             width={"100%"}
             border={"0px solid pink"}
             my={2}
-            mx={5}
-            // bg={"lightblue"}
             zIndex={10}
-            // position={"absolute"}
+            // mx={5}
           >
             <ButtonsForFindToContentWithOrderNum
               numCards={

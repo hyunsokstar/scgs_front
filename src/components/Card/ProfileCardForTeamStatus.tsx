@@ -48,8 +48,8 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
 }) => {
   return (
     <Box
-      maxW="sm"
-      mx={2}
+      // maxW="sm"
+      // mx={2}
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"

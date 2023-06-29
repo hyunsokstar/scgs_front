@@ -19,15 +19,15 @@ const TableForStaticsForTodayTaskStatus: React.FC<TableProps> = ({
   progress_rate,
 }) => {
   return (
-    <Box>
+    <Box width={"100%"}>
       <Table
         variant="striped"
         colorScheme="black"
-        size="md"
-        borderRadius="md"
+        size="sm"
+        borderRadius="xs"
         bg={"blue.100"}
         border={"1px solid black"}
-        mb={2}
+        width={["max","100%","100%","100%"]}
       >
         {" "}
         {/* 내부 영역 배경색을 white로 설정 */}

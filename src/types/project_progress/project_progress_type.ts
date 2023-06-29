@@ -180,6 +180,7 @@ export interface taskRowForUncompleted {
   task_manager: {
     pk: number;
     username: string;
+    profile_image: string;
   };
   task_classification: string;
   task: string;

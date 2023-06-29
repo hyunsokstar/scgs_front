@@ -1,26 +1,7 @@
-import {
-  Box,
-  Divider,
-  Flex,
-  Text,
-  Table,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-} from "@chakra-ui/react";
+import { Box, Table, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import TableForUsersTaskCountInfoForTaskLog from "../Table/TableForUsersTaskCountInfoForTaskLog";
 import TableForTaskLogForTasksOfWeekDay from "../Table/TableForTaskLogForTasksOfWeekDay";
 import { ResponseDataForTaskLog } from "../../types/project_progress/project_progress_type";
-
-// interface TaskStatusData {
-//   total_today_task_count: number;
-//   total_today_completed_task_count: number;
-//   total_today_uncompleted_task_count: number;
-//   average_number_per_hour: number;
-//   elapsed_time: string;
-//   writers: any;
-// }
 
 interface HeaderForTaskStatusForTodayProps {
   data: ResponseDataForTaskLog;
@@ -51,10 +32,12 @@ const HeaderForTaskStatusForToday: React.FC<
       px={2}
       gap={2}
       display="flex"
+      flexDirection={["column", "column", "row"]}
       justifyContent="space-between"
-      alignItems={"center"}
+      flexWrap="wrap"
+      alignItems="stretch" // Updated alignment to stretch
     >
-      <Box display={"flex"} flexDirection={"column"} gap={2}>
+      <Box flex={["1 0 100%", "1 0 100%", "1 0 33%"]} mb={[4, 4, 0]}>
         <Box>
           {data.today_info.date} {data.today_info.dayOfWeek}
           <TableForTaskLogForTasksOfWeekDay
@@ -63,17 +46,18 @@ const HeaderForTaskStatusForToday: React.FC<
           />
         </Box>
       </Box>
-      <Box>
-        Today Task Statics
-        <Table
-          variant="striped"
-          colorScheme="black"
-          size="md"
-          borderRadius="md"
-          border={"1px solid black"}
-          mb={1}
-        >
-          <Tbody>
+      <Box flex={["1 0 100%", "1 0 100%", "1 0 33%"]} mb={[4, 4, 0]}>
+        <Box>
+          Today Task Statics
+          <Table
+            variant="striped"
+            colorScheme="black"
+            size="sm"
+            borderRadius="md"
+            border={"1px solid black"}
+            mb={1}
+            width="100%"
+          >
             <Tr bg={"green.100"}>
               <Th fontSize="md" textAlign={"center"}>
                 Total
@@ -102,7 +86,6 @@ const HeaderForTaskStatusForToday: React.FC<
                 {completionRate}%
               </Td>
             </Tr>
-
             <Tr bg={"green.100"}>
               <Th fontSize="md" textAlign={"center"} colSpan={2}>
                 업무 시간(from 9:00)
@@ -118,12 +101,11 @@ const HeaderForTaskStatusForToday: React.FC<
               <Td fontSize="md" textAlign={"center"} colSpan={2}>
                 {average_number_per_hour}
               </Td>
-            </Tr>
-          </Tbody>
-        </Table>
+            </Tr>{" "}
+          </Table>
+        </Box>
       </Box>
-
-      <Box>
+      <Box flex={["1 0 100%", "1 0 100%", "1 0 33%"]}>
         <TableForUsersTaskCountInfoForTaskLog
           writers={writers}
           userOptionForList={userOptionForList}

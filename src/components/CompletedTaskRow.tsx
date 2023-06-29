@@ -13,9 +13,7 @@ import {
   useToast,
   Button,
 } from "@chakra-ui/react";
-import {
-  ITypeForProjectProgressList,
-} from "../types/project_progress/project_progress_type";
+import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
 import SlideToggleButton from "./SlideToggleButton";
@@ -202,105 +200,112 @@ function CompletedTaskRow({
 
       <Box overflowX="auto" width="100%">
         <List>
-          {ProjectProgressList?.map((task) => {
-            return (
-              <ListItem
-                key={task.pk}
-                height={16}
-                border={"1px solid lightgray"}
-                width={"1842px"}
-                my={0}
-                display={"flex"}
-                alignItems={"center"}
-                _hover={{ backgroundColor: "gray.100" }}
-              >
-                <HStack>
-                  <Box border={"0px solid yellow"} width={"50px"}>
-                    <HStack ml={0}>
-                      {/* <Checkbox mx={2} /> */}
-                      <Checkbox
-                        mx={2}
-                        border={"1px solid black"}
-                        value={task.pk}
-                        isChecked={checkedRowPks?.includes(task.pk)}
-                        onChange={handleCheckboxChange}
+          {ProjectProgressList && ProjectProgressList.length !== 0 ? (
+            ProjectProgressList?.map((task) => {
+              return (
+                <ListItem
+                  key={task.pk}
+                  height={16}
+                  border={"1px solid lightgray"}
+                  width={"1842px"}
+                  my={0}
+                  display={"flex"}
+                  alignItems={"center"}
+                  _hover={{ backgroundColor: "gray.100" }}
+                >
+                  <HStack>
+                    <Box border={"0px solid yellow"} width={"50px"}>
+                      <HStack ml={0}>
+                        {/* <Checkbox mx={2} /> */}
+                        <Checkbox
+                          mx={2}
+                          border={"1px solid black"}
+                          value={task.pk}
+                          isChecked={checkedRowPks?.includes(task.pk)}
+                          onChange={handleCheckboxChange}
+                        />
+                      </HStack>
+                    </Box>
+                    <Box width={"140px"}>
+                      <Text color={"blue.600"}>
+                        {task.task_manager.username}
+                      </Text>
+                      <Text color={"tomato"}>{task.writer}</Text>
+                    </Box>
+                    <Box border={"0px solid blue"} width={"580px"}>
+                      <Text fontSize="sm" fontWeight="bold">
+                        <Link
+                          to={`/project_admin/${task.pk}`}
+                          style={{ textDecoration: "underline" }}
+                        >
+                          {task.task}
+                        </Link>
+                      </Text>
+                    </Box>
+
+                    {/* task_completed update */}
+                    <Box
+                      display={"flex"}
+                      justifyContent={"flex-start"}
+                      border={"0px solid green"}
+                      width={"120px"}
+                    >
+                      <SlideToggleButton
+                        onChange={() => {
+                          updateHandlerForTaskStatus(task.pk);
+                        }}
+                        checked={task.task_completed}
                       />
-                    </HStack>
-                  </Box>
-                  <Box width={"140px"}>
-                    <Text color={"blue.600"}>{task.task_manager.username}</Text>
-                    <Text color={"tomato"}>{task.writer}</Text>
-                  </Box>
-                  <Box border={"0px solid blue"} width={"580px"}>
-                    <Text fontSize="sm" fontWeight="bold">
-                      <Link
-                        to={`/project_admin/${task.pk}`}
-                        style={{ textDecoration: "underline" }}
-                      >
-                        {task.task}
-                      </Link>
-                    </Text>
-                  </Box>
+                    </Box>
 
-                  {/* task_completed update */}
-                  <Box
-                    display={"flex"}
-                    justifyContent={"flex-start"}
-                    border={"0px solid green"}
-                    width={"120px"}
-                  >
-                    <SlideToggleButton
-                      onChange={() => {
-                        updateHandlerForTaskStatus(task.pk);
-                      }}
-                      checked={task.task_completed}
-                    />
-                  </Box>
-
-                  <Box border={"0px solid blue"} width={"310px"}>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>시작</Text>
-                      </Box>
+                    <Box border={"0px solid blue"} width={"310px"}>
                       <HStack>
-                        <Text>{task.started_at_formatted}</Text>
-                        <ModalButtonForUpdateProjectTaskStartedAt
+                        <Box textAlign={"center"}>
+                          <Text>시작</Text>
+                        </Box>
+                        <HStack>
+                          <Text>{task.started_at_formatted}</Text>
+                          <ModalButtonForUpdateProjectTaskStartedAt
+                            taskPk={task.pk}
+                            original_due_date={
+                              task.due_date ? task.due_date : ""
+                            }
+                            started_at={task.started_at ? task.started_at : ""}
+                            projectTaskListRefatch={projectTaskListRefatch}
+                          />
+                        </HStack>
+                      </HStack>
+                    </Box>
+
+                    <Box border={"0px solid blue"} width={"310px"}>
+                      <HStack>
+                        <Box textAlign={"center"}>
+                          <Text>완료 시점</Text>
+                        </Box>
+                        <Text>{task.completed_at_formatted}</Text>
+
+                        <ModalButtonForUpdateProjectTaskCompleteDate
                           taskPk={task.pk}
                           original_due_date={task.due_date ? task.due_date : ""}
                           started_at={task.started_at ? task.started_at : ""}
                           projectTaskListRefatch={projectTaskListRefatch}
                         />
                       </HStack>
-                    </HStack>
-                  </Box>
+                    </Box>
 
-                  <Box border={"0px solid blue"} width={"310px"}>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>완료 시점</Text>
-                      </Box>
-                      <Text>{task.completed_at_formatted}</Text>
+                    <Box border={"0px solid blue"} width={"200px"}>
+                      <HStack>
+                        <Box textAlign={"center"}>
+                          <Text>소요 시간</Text>
+                        </Box>
+                        <Box>
+                          <Text>
+                            {task.time_consumed_from_start_to_complete}
+                          </Text>
+                        </Box>
+                      </HStack>
 
-                      <ModalButtonForUpdateProjectTaskCompleteDate
-                        taskPk={task.pk}
-                        original_due_date={task.due_date ? task.due_date : ""}
-                        started_at={task.started_at ? task.started_at : ""}
-                        projectTaskListRefatch={projectTaskListRefatch}
-                      />
-                    </HStack>
-                  </Box>
-
-                  <Box border={"0px solid blue"} width={"200px"}>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>소요 시간</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.time_consumed_from_start_to_complete}</Text>
-                      </Box>
-                    </HStack>
-
-                    {/* <HStack>
+                      {/* <HStack>
                       <Box textAlign={"center"}>
                         <Text>경과</Text>
                       </Box>
@@ -309,7 +314,7 @@ function CompletedTaskRow({
                       </Box>
                     </HStack> */}
 
-                    {/* <HStack>
+                      {/* <HStack>
                       <Box textAlign={"center"}>
                         <Text>남은 시간</Text>
                       </Box>
@@ -317,24 +322,27 @@ function CompletedTaskRow({
                         <Text>{task.time_left_to_due_date}</Text>
                       </Box>
                     </HStack> */}
-                  </Box>
+                    </Box>
 
-                  {/* <Box border={"0px solid blue"} width={"170px"}>
+                    {/* <Box border={"0px solid blue"} width={"170px"}>
                     업무 평점 부여
                   </Box> */}
 
-                  <Box>
-                    <IconButton
-                      aria-label="삭제"
-                      icon={<FaTrash />}
-                      variant="ghost"
-                      onClick={() => deleteHandelr(parseInt(task.pk))}
-                    />
-                  </Box>
-                </HStack>
-              </ListItem>
-            );
-          })}
+                    <Box>
+                      <IconButton
+                        aria-label="삭제"
+                        icon={<FaTrash />}
+                        variant="ghost"
+                        onClick={() => deleteHandelr(parseInt(task.pk))}
+                      />
+                    </Box>
+                  </HStack>
+                </ListItem>
+              );
+            })
+          ) : (
+            <Box>no data</Box>
+          )}
         </List>
       </Box>
 

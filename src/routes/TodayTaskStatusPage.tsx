@@ -13,7 +13,15 @@ import {
   apiForgetTaskStatusForToday,
 } from "../apis/project_progress_api";
 import RowForTaskSttusForToday from "../components/Row/row";
-import { Box, Button, Text, Heading, useToast, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Text,
+  Heading,
+  useToast,
+  HStack,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import ModalButtonForAddProjectTaskWithDuedateOption from "../components/modal/ModalButtonForAddProjectTaskWithDuedateOption";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ITypeForTaskStatusForToday } from "../types/project_progress/project_progress_type";
@@ -180,63 +188,74 @@ const TodayTaskStatusPage = () => {
     }
   };
 
+  const column_option_for_responsive = useBreakpointValue({
+    base: "column", // for mobile and small screens
+    md: "row", // for medium-sized screens and up 
+    lg: "row", // for large screens and up
+  });
+
   return (
-    <Box>
+    <Box width={"100%"} border={"0px solid purple"}>
       <Box
         fontSize="2xl"
         color={"black"}
         fontWeight="bold"
         textAlign="center"
+        bg={"yellow.200"}
+        py={3}
         mb={2}
-        p={3}
-        bg={"gray.200"}
       >
         Today Task Status Page
       </Box>{" "}
-      <Box bg="gray.200" height={"100%"}>
-        <Box display={"flex"} justifyContent={"flex-start"} gap={10}>
-          <Box display={"flex"} flexDirection={"column"} gap={2} ml={2}>
-            <Box>
-              <Box mb={1}>
-                {dataForTaskStatusForToday &&
-                  dataForTaskStatusForToday?.today_info.date}
+      <Box
+        display={"grid"}
+        gridTemplateColumns={{
+          xl: "repeat(3, 1fr)",
+          lg: "repeat(3, 1fr)",
+          md: "repeat(1, 1fr)",
+          sm: "repeat(1, 1fr)",
+        }}
+        gap={2}
+        bg="gray.200"
+        // border={"1px solid blue"}
+        width={"100%"}
+      >
+        <Box width={"100%"} overflowX={"auto"}>
+          <Box mb={1}>
+            {dataForTaskStatusForToday &&
+              dataForTaskStatusForToday?.today_info.date}
 
-                {dataForTaskStatusForToday &&
-                  dataForTaskStatusForToday?.today_info.dayOfWeek}
-              </Box>
-
-              {dataForTaskStatusForToday && (
-                <TableForTaskLogForTasksOfWeekDay
-                  today_info={dataForTaskStatusForToday?.today_info}
-                  taskCountForWeekdays={
-                    dataForTaskStatusForToday?.task_count_for_weekdays
-                  }
-                />
-              )}
-            </Box>
+            {dataForTaskStatusForToday &&
+              dataForTaskStatusForToday?.today_info.dayOfWeek}
           </Box>
 
-          <Box
-            // fontFamily="sans-serif"
-            color="teal.800"
-            border={"0px solid red"}
-            height={"100%"}
-            mx={2}
-          >
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              textAlign={"center"}
-              my={1}
-            >
-              task status for this week &nbsp;&nbsp; 오늘 이전 비완료 : &nbsp;
-              <ModalButtonForTaskListWithDeadlineUntilYesterDay
-                buttonText={
-                  dataForTaskStatusForToday?.task_count_for_uncompleted_task_until_yesterday
-                }
-              />
-            </Box>
+          {dataForTaskStatusForToday && (
+            <TableForTaskLogForTasksOfWeekDay
+              today_info={dataForTaskStatusForToday?.today_info}
+              taskCountForWeekdays={
+                dataForTaskStatusForToday?.task_count_for_weekdays
+              }
+            />
+          )}
+        </Box>
 
+        <Box
+          color="teal.800"
+          height={"100%"}
+          width={"full"}
+          // mx={"auto"}
+          // border={"1px solid red"}
+        >
+          <Text>task status for this week</Text>
+          <Box display={"flex"} gap={2}>
+            오늘 이전 비완료 :
+            <ModalButtonForTaskListWithDeadlineUntilYesterDay
+              buttonText={
+                dataForTaskStatusForToday?.task_count_for_uncompleted_task_until_yesterday
+              }
+            />
+          </Box>
+          <Box>
             <TableForStaticsForTodayTaskStatus
               toal_task_count_for_today={
                 dataForTaskStatusForToday?.toal_task_count_for_today
@@ -256,19 +275,20 @@ const TodayTaskStatusPage = () => {
               progress_rate={dataForTaskStatusForToday?.progress_rate}
             />
           </Box>
+        </Box>
 
-          <Box>
-            task status for today
-            <TableForTaskManagersForTasksForToday
-              task_managers_data={dataForTaskStatusForToday?.task_managers_data}
-            />
-          </Box>
+        <Box width={"full"} overflowX={"auto"}>
+          task status for today
+          <TableForTaskManagersForTasksForToday
+            task_managers_data={dataForTaskStatusForToday?.task_managers_data}
+          />
         </Box>
       </Box>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Box
           style={{
             display: "flex",
+            flexDirection: column_option_for_responsive,
             justifyContent: "space-around",
             width: "100%",
           }}
@@ -281,7 +301,7 @@ const TodayTaskStatusPage = () => {
                   ref={provided.innerRef}
                   style={{
                     backgroundColor: teamColors[Time],
-                    width: "30%",
+                    width: "100%",
                     padding: "10px",
                     margin: "1%",
                     borderRadius: "10px",
@@ -310,32 +330,44 @@ const TodayTaskStatusPage = () => {
                       size={"md"}
                     />
                   </Box>
-                  {tasks[Time].length
-                    ? tasks[Time].map((task: any, index: any) => (
-                        <Draggable
-                          key={task.id ? task.id.toString() : index}
-                          draggableId={task.id ? task.id.toString() : index}
-                          index={index}
-                        >
-                          {(provided: DraggableProvided) => (
-                            <p
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                              style={{
-                                padding: "10px",
-                                margin: "10px 0",
-                                backgroundColor: "white",
-                                borderRadius: "5px",
-                                ...provided.draggableProps.style,
-                              }}
-                            >
-                              <RowForTaskSttusForToday task={task} />
-                            </p>
-                          )}
-                        </Draggable>
-                      ))
-                    : "no data"}
+                  {tasks[Time].length ? (
+                    tasks[Time].map((task: any, index: any) => (
+                      <Draggable
+                        key={task.id ? task.id.toString() : index}
+                        draggableId={task.id ? task.id.toString() : index}
+                        index={index}
+                      >
+                        {(provided: DraggableProvided) => (
+                          <p
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                            style={{
+                              padding: "10px",
+                              margin: "10px 0",
+                              backgroundColor: "white",
+                              borderRadius: "5px",
+                              ...provided.draggableProps.style,
+                            }}
+                          >
+                            <RowForTaskSttusForToday task={task} />
+                          </p>
+                        )}
+                      </Draggable>
+                    ))
+                  ) : (
+                    <Box
+                      fontSize={"20px"}
+                      bgColor={"white"}
+                      display={"flex"}
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                      p={2}
+                      // height={"200px"}
+                    >
+                      no data
+                    </Box>
+                  )}
                   {provided.placeholder}
                 </Box>
               )}

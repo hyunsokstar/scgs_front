@@ -1,12 +1,6 @@
 import React, { useRef, useState } from "react";
 import Slider from "react-slick";
-import {
-  Box,
-  ChakraProvider,
-  extendTheme,
-  Button,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Box, ChakraProvider, extendTheme, Button } from "@chakra-ui/react";
 import { IOneTaskForProjectTaskType } from "../types/project_progress/project_progress_type";
 import UpdateFormForTaskDetailForChecked from "./Form/UpdateFormForTaskDetailForChecked";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -108,9 +102,6 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
     return buttons;
   };
 
-  const isMobile = useBreakpointValue({ base: true, lg: false });
-
-  // 2244
   return (
     <ChakraProvider theme={theme}>
       <Slider {...settings} ref={sliderRef}>
@@ -125,10 +116,13 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
             <Box display={"flex"}>
               <Box
                 bg="#E6E6FA"
-                width={isMobile ? "100%" : "100%"}
+                width={"50%"}
+                // overflowY={"scroll"}
+                // height={"727px"}
                 display={"flex"}
+                // border={"5px solid red"}
               >
-                <Box width={isMobile ? "100%" : "70%"}>
+                <Box width={"70%"}>
                   <UpdateFormForTaskDetailForChecked
                     pk={row.pk}
                     task={row.task}
@@ -146,27 +140,22 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
                     time_left_to_due_date={row.time_left_to_due_date}
                   />
                 </Box>
-                {isMobile ? (
-                  ""
-                ) : (
-                  <>
-                    <Box width={"30%"} bg={"blue.100"} height={"100%"}>
-                      이미지 업로드 영역
-                      <DragZoneForReferImagesForTask
-                        taskPk={row.pk}
-                        refer_images={row.task_images}
-                      />
-                    </Box>
-                    <Box bg="#D8F6F1" width={"50%"}>
-                      <ChatStyleBoard
-                        taskPk={row.pk}
-                        task_manager={row?.task_manager}
-                        task_comments={row?.task_comments}
-                        refetch={refetch}
-                      />
-                    </Box>
-                  </>
-                )}
+
+                <Box width={"30%"} bg={"blue.100"} height={"100%"}>
+                  이미지 업로드 영역
+                  <DragZoneForReferImagesForTask
+                    taskPk={row.pk}
+                    refer_images={row.task_images}
+                  />
+                </Box>
+              </Box>
+              <Box bg="#D8F6F1" width={"50%"}>
+                <ChatStyleBoard
+                  taskPk={row.pk}
+                  task_manager={row?.task_manager}
+                  task_comments={row?.task_comments}
+                  refetch={refetch}
+                />
               </Box>
             </Box>
             <Box py={3} mt={5}>

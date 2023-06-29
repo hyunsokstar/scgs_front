@@ -1,19 +1,9 @@
 import {
   Box,
   Button,
-  HStack,
-  Text,
-  Input,
   useToast,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   Checkbox,
-  Progress,
-  // useTheme,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -27,18 +17,13 @@ import {
   ITypeForProjectProgressList,
   typeForDueDateUpdateForChecked,
 } from "../types/project_progress/project_progress_type";
-import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
-import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRow from "./UncompletedTaskRow";
 import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
-import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
 import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
-import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskForDueDate";
-import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForSetFilterOptionForTaskList";
 import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
-import RadioButtonForSelectOptionForGropyBy from "./Button/RadioButtonForSelectOptionForGropyBy";
 import ModalButtonForAddProjectTaskWithDuedateOption from "./modal/ModalButtonForAddProjectTaskWithDuedateOption";
 import RadioButtonForGroupByOptionForTaskListUntilYesterday from "./Button/RadioButtonForGroupByOptionForTaskListUntilYesterday";
+import SlideForUncompletedTaskList from "./Slide/SlideForCompletedTaskList";
 
 interface Props {
   basic_due_date_option?:
@@ -105,15 +90,6 @@ function TaskListUntilYesterday({
     taskListData?.ProjectProgressList
   );
 
-  // filterValueForTask
-  const [filterValueForTaskManager, setFilterValueForTaskManager] =
-    useState<any>();
-  const [filterValueForTask, setFilterValueForTask] = useState<any>();
-  const [
-    filterValueForTaskClassification,
-    setFilterValueForTaskClassification,
-  ] = useState<any>();
-
   const toast = useToast();
 
   // console.log("taskListData  : ", taskListData);
@@ -122,87 +98,6 @@ function TaskListUntilYesterday({
   useEffect(() => {
     setFilteredData(taskListData?.ProjectProgressList);
   }, [taskListData?.ProjectProgressList]);
-
-  const changeHandlerForSelectPeriodOptionForTeamTask = (option: string) => {
-    setSelectedPeriodOptionForUncompletedTaskList(option);
-  };
-
-  const updateFilteredDataForTask = (filterValueForTask: string) => {
-    if (filterValueForTask !== "") {
-      const filteredData = taskListData?.ProjectProgressList.filter((item) =>
-        item.task.toLowerCase().includes(filterValueForTask.toLowerCase())
-      );
-      setFilteredData(filteredData);
-    } else {
-      setFilteredData(taskListData?.ProjectProgressList);
-      console.log("filterValueForTask : ", filterValueForTask);
-    }
-  };
-
-  const handleFilterChangeForTask = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value;
-    setFilterValueForTask(value);
-    updateFilteredDataForTask(value);
-  };
-
-  const updateFilteredDataForTaskManager = (
-    filterValueForTaskManager: string
-  ) => {
-    if (filterValueForTaskManager !== "") {
-      const filteredData = taskListData?.ProjectProgressList.filter((item) =>
-        item.task_manager.username
-          .toLowerCase()
-          .includes(filterValueForTaskManager.toLowerCase())
-      );
-      setFilteredData(filteredData);
-    } else {
-      setFilteredData(taskListData?.ProjectProgressList);
-      console.log("filterValueForTaskManager : ", filterValueForTaskManager);
-    }
-  };
-
-  const handleFilterChangeForTaskManager = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value;
-    // setFilterValueForTaskClassification(value);
-    updateFilteredDataForTaskManager(value);
-  };
-
-  const updateFilteredDataForTaskClassification = (
-    filterValueForTaskClassification: string
-  ) => {
-    if (filterValueForTaskClassification !== "") {
-      const filteredData = taskListData?.ProjectProgressList.filter((item) =>
-        item.task_classification
-          .toLowerCase()
-          .includes(filterValueForTaskClassification.toLowerCase())
-      );
-      setFilteredData(filteredData);
-    } else {
-      setFilteredData(taskListData?.ProjectProgressList);
-      console.log(
-        "filterValueForTaskClassification : ",
-        filterValueForTaskClassification
-      );
-    }
-  };
-
-  const handleFilterChangeForTaskClassification = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value;
-    setFilterValueForTaskClassification(value);
-    updateFilteredDataForTaskClassification(value);
-  };
-
-  const searchUncompletedListforUserName = (username: string) => {
-    console.log("username : ", username);
-
-    set_username_for_search(username);
-  };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
@@ -220,13 +115,10 @@ function TaskListUntilYesterday({
       return apiForDeleteTasksForChecked(checkedRowPks);
     },
     {
-      onSettled: () => {
-        // setSelectedItems([]);
-      },
+      onSettled: () => {},
       onSuccess: (data) => {
         console.log("data : ", data);
         setCheckedRowPks([]);
-        // refetch_for_api_docu();
         queryClient.refetchQueries(["getUncompletedTaskList"]);
 
         toast({
@@ -239,7 +131,6 @@ function TaskListUntilYesterday({
   );
 
   const deleteTaskForChecked = () => {
-    // checkedRowPks
     if (checkedRowPks.length === 0) {
       alert("Note를 하나 이상 체크 해주세요");
       return;
@@ -255,23 +146,17 @@ function TaskListUntilYesterday({
       });
     },
     {
-      onSettled: () => {
-        // setSelectedItems([]);
-      },
+      onSettled: () => {},
       onSuccess: (data) => {
         console.log("data : ", data);
         setCheckedRowPks([]);
-        // refetch_for_api_docu();
         queryClient.refetchQueries(["getUncompletedTaskList"]);
-        // queryClient.refetchQueries(["getTaskStatusForToday"]);
 
         toast({
           title: "Update Task Due Date For Checked 성공!",
           status: "success",
           description: data.message,
         });
-
-        // window.location.reload(); // 새로고침
       },
     }
   );
@@ -299,172 +184,162 @@ function TaskListUntilYesterday({
     });
   };
 
+  const is_show_for_mobile = useBreakpointValue({
+    base: false, // for mobile and small screens
+    md: true, // for medium-sized screens and up
+    lg: true, // for large screens and up
+  });
+
+  // 2244
   if (!taskListData) {
     return <Box>..Loading</Box>;
   }
 
-  const handleUrgentChange = () => {
-    setIsForUrgent(!isForUrgent);
-  };
-
-  const handleCashPrizeChange = () => {
-    setCheckForCashPrize(!checkForCashPrize);
-  };
-
-  // 2244
   return (
-    <Box w={"100%"} border={"1px solid purple"} p={0} mt={2}>
+    <Box w={"100%"} border={"1px solid purple"}>
       <Box
         border={"1px solid black"}
         display="flex"
-        justifyContent={"flex-start"}
+        justifyContent={"space-between"}
         bgColor={"green.200"}
         alignItems={"center"}
         p={2}
       >
-        <Box
-          // border={"1px solid blue"}
-          width={"35%"}
-          display="flex"
-          flexDirection="row"
-          p={2}
-        >
+        <Box width={"35%"} display="flex" flexDirection="row" p={2}>
           <RadioButtonForGroupByOptionForTaskListUntilYesterday
             groupByOption={groupByOption}
             setGroupByOption={setGroupByOption}
           />
         </Box>
       </Box>
+      {/* 0629 */}
+      <Box
+        display={"flex"}
+        flexDirection={["column", "row", "row"]}
+        gap={2}
+        flexWrap={"wrap"}
+        p={2}
+      >
+        <Box gap={2} display="flex" flexWrap={"wrap"}>
+          <Button
+            variant="outline"
+            size="sm"
+            backgroundColor="purple.50"
+            _hover={{ backgroundColor: "purple.100" }}
+            mr={2}
+            onClick={() =>
+              handlerForUpdateTaskDuedateForChecked("undetermined")
+            }
+          >
+            Clear Due Date
+          </Button>
 
-      {/* 0501 */}
-      {/* <Box>{checkedRowPks}</Box> */}
-      <Box display={"flex"} justifyContent={"space-between"}>
-        <Box>
-          <Box p={2} gap={2}>
-            {/* <Text as="span"></Text> */}
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() =>
-                handlerForUpdateTaskDuedateForChecked("undetermined")
-              }
-            >
-              마감 날짜 초기화
-            </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            backgroundColor="purple.50"
+            _hover={{ backgroundColor: "purple.100" }}
+            mr={2}
+            onClick={() => handlerForUpdateTaskDuedateForChecked("noon")}
+          >
+            Due Date Noon
+          </Button>
 
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() => handlerForUpdateTaskDuedateForChecked("noon")}
-            >
-              마감 날짜 정오
-            </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            backgroundColor="purple.50"
+            _hover={{ backgroundColor: "purple.100" }}
+            mr={2}
+            onClick={() => handlerForUpdateTaskDuedateForChecked("evening")}
+          >
+            Due Date Evening
+          </Button>
 
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() => handlerForUpdateTaskDuedateForChecked("evening")}
-            >
-              마감 날짜 오후
-            </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            backgroundColor="purple.50"
+            _hover={{ backgroundColor: "purple.100" }}
+            mr={2}
+            onClick={() => handlerForUpdateTaskDuedateForChecked("tomorrow")}
+          >
+            Due Date Tomorrow
+          </Button>
 
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() => handlerForUpdateTaskDuedateForChecked("tomorrow")}
-            >
-              마감 날짜 내일
-            </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            backgroundColor="purple.50"
+            _hover={{ backgroundColor: "purple.100" }}
+            mr={2}
+            onClick={() =>
+              handlerForUpdateTaskDuedateForChecked("day-after-tomorrow")
+            }
+          >
+            Due Date Day After Tomorrow
+          </Button>
 
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() =>
-                handlerForUpdateTaskDuedateForChecked("day-after-tomorrow")
-              }
-            >
-              마감 날짜 모레
-            </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            backgroundColor="purple.50"
+            _hover={{ backgroundColor: "purple.100" }}
+            mr={2}
+            onClick={() => handlerForUpdateTaskDuedateForChecked("this-week")}
+          >
+            Due Date This Week
+          </Button>
 
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() => handlerForUpdateTaskDuedateForChecked("this-week")}
-            >
-              마감 날짜 이번주
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="purple.50"
-              _hover={{ backgroundColor: "purple.100" }}
-              mr={2}
-              onClick={() =>
-                handlerForUpdateTaskDuedateForChecked("this-month")
-              }
-            >
-              마감 날짜 이번달
-            </Button>
-          </Box>
-          <Box display={"flex"} p={2} gap={2}>
-            <Checkbox size="lg" colorScheme="blue" />
-            <Button
-              variant="outline"
-              size="sm"
-              backgroundColor="red.50"
-              _hover={{ backgroundColor: "red.100" }}
-              mr={2}
-              onClick={deleteTaskForChecked}
-            >
-              삭제
-            </Button>
-
-            <ModalButtonForUpdateTaskManagerForChecked
-              size={"md"}
-              button_text="담당자 변경"
-              checkedRowPks={checkedRowPks}
-              setCheckedRowPks={setCheckedRowPks}
-            />
-
-            <ModalButtonForUpdateImortanceForChecked
-              button_text="중요도 업데이트"
-              size={"md"}
-              checkedRowPks={checkedRowPks}
-              setCheckedRowPks={setCheckedRowPks}
-            />
-
-            <ModalButtonForUpdateTaskClassificationForChecked
-              button_text="분류 업데이트"
-              size={"md"}
-              checkedRowPks={checkedRowPks}
-              setCheckedRowPks={setCheckedRowPks}
-            />
-          </Box>
+          <Button
+            variant="outline"
+            size="sm"
+            backgroundColor="purple.50"
+            _hover={{ backgroundColor: "purple.100" }}
+            mr={2}
+            onClick={() => handlerForUpdateTaskDuedateForChecked("this-month")}
+          >
+            Due Date This Month
+          </Button>
         </Box>
+        <Box display={"flex"} flexWrap={"wrap"} gap={2}>
+          <Button
+            variant="outline"
+            size="sm"
+            backgroundColor="red.50"
+            _hover={{ backgroundColor: "red.100" }}
+            mr={2}
+            onClick={deleteTaskForChecked}
+          >
+            Delete
+          </Button>
 
-        <Box p={2}>
+          <ModalButtonForUpdateTaskManagerForChecked
+            size={"sm"}
+            button_text="Change Assignee"
+            checkedRowPks={checkedRowPks}
+            setCheckedRowPks={setCheckedRowPks}
+          />
+
+          <ModalButtonForUpdateImortanceForChecked
+            button_text="Update Priority"
+            size={"sm"}
+            checkedRowPks={checkedRowPks}
+            setCheckedRowPks={setCheckedRowPks}
+          />
+
+          <ModalButtonForUpdateTaskClassificationForChecked
+            button_text="Update Classification"
+            size={"sm"}
+            checkedRowPks={checkedRowPks}
+            setCheckedRowPks={setCheckedRowPks}
+          />
+        </Box>
+        <Box display={"flex"} gap={2} justifyContent={"space-between"}>
+          <Checkbox size="lg" colorScheme="blue" />
           <ModalButtonForAddProjectTaskWithDuedateOption
-            button_text="Task 추가 For Team Project"
-            size={"md"}
+            button_text="Add Task For Team Project"
+            size={"sm"}
             projectTaskListRefatch={projectTaskListRefatch}
             bgColor="red.300"
             hoverColor="red.500"
@@ -472,23 +347,30 @@ function TaskListUntilYesterday({
           />
         </Box>
       </Box>
-
-      <Box>
-        {taskListData ? (
-          <UncompletedTaskRow
-            ProjectProgressList={filteredData}
-            totalPageCount={taskListData.totalPageCount}
-            task_number_for_one_page={taskListData.task_number_for_one_page}
-            currentPageNum={currentPageNum}
-            setCurrentPageNum={setCurrentPageNum}
-            projectTaskListRefatch={projectTaskListRefatch}
-            handleCheckboxChange={handleCheckboxChange}
-            checkedRowPks={checkedRowPks}
-          />
-        ) : (
-          ""
-        )}
-      </Box>
+      {is_show_for_mobile ? (
+        <Box>
+          {taskListData ? (
+            <UncompletedTaskRow
+              ProjectProgressList={filteredData}
+              totalPageCount={taskListData.totalPageCount}
+              task_number_for_one_page={taskListData.task_number_for_one_page}
+              currentPageNum={currentPageNum}
+              setCurrentPageNum={setCurrentPageNum}
+              projectTaskListRefatch={projectTaskListRefatch}
+              handleCheckboxChange={handleCheckboxChange}
+              checkedRowPks={checkedRowPks}
+            />
+          ) : (
+            ""
+          )}
+        </Box>
+      ) : (
+        <SlideForUncompletedTaskList
+          listData={filteredData}
+          handleCheckboxChange={handleCheckboxChange}
+          checkedRowPks={checkedRowPks}
+        />
+      )}
     </Box>
   );
 }

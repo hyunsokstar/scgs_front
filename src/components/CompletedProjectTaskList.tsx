@@ -3,20 +3,18 @@ import {
   Box,
   Button,
   Container,
-  Checkbox,
-  Flex,
   Input,
+  VStack,
   Text,
-  HStack,
-  useBreakpointValue
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { getCompletedTaskList } from "../apis/project_progress_api";
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
 
 import CompletedTaskRow from "./CompletedTaskRow";
-import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
+import SlideForCompletedTaskList from "./Slide/SlideForCompletedTaskList";
 
 interface Props {}
 
@@ -135,63 +133,80 @@ function CompletedProjectTaskList({}: Props): ReactElement {
     lg: "row", // for large screens and up
   });
 
+  const is_show_for_mobile = useBreakpointValue({
+    base: true, // for mobile and small screens
+    md: false, // for medium-sized screens and up
+    lg: false, // for large screens and up
+  });
+
   // 2244
   return (
     <Container maxW={"100%"} border={"0px solid purple"} p={0} mt={0}>
+      {/* {column_option_for_width} */}
       <Box
         display={"flex"}
         flexDirection={column_option_for_width}
+        gap={7}
         border={"1px solid black"}
         justifyContent={"space-between"}
         bgColor={"purple.200"}
         alignItems={"center"}
+        height={["410px","300px","200px"]}
         px={2}
         py={2}
       >
-        <Box>
-          <Box fontSize={18}>
-            complteted task (total: {pageProgressListData?.totalPageCount} 개,
-            per:
-            {pageProgressListData?.task_number_for_one_page} 개)
-          </Box>
-          <Box border="0px solid green">
-            <Box display="flex" alignItems="center" height="30px">
-              <Box flexBasis="30%">
-                <Text>담당자별:</Text>
-              </Box>
-              <Box flexBasis="70%">
-                {pageProgressListData?.writers_info?.map((writer) => (
-                  <Box key={writer.username} fontSize="lg" color="blue.900">
-                    <HStack>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        border="1px solid black"
-                        mb={1}
-                        _hover={{
-                          bg: "#90CDF4",
-                          color: "brown",
-                        }}
-                        onClick={() =>
-                          searchCompletedListforUserName(writer.username)
-                        }
-                        bgColor={
-                          writer.username === username_for_search
-                            ? "#90CDF4"
-                            : ""
-                        }
-                      >
-                        {writer.username} : {writer.task_count}
-                      </Button>
-                    </HStack>
-                  </Box>
-                ))}
-              </Box>
+        <Box fontSize={18}>
+          <Text>complted Tasks</Text>
+          <Text>
+            total: {pageProgressListData?.totalPageCount} , per:{" "}
+            {pageProgressListData?.task_number_for_one_page} 개
+          </Text>
+        </Box>
+        <Box border="0px solid green">
+          <Box
+            display="flex"
+            justifyContent={"center"}
+            alignItems="center"
+            height="30px"
+          >
+            <Box
+              flexBasis="70%"
+              overflowY={"scroll"}
+              height={"160px"}
+              width={"300px"}
+              border="1px solid black"
+              p={2}
+            >
+              {pageProgressListData?.writers_info?.map((writer) => (
+                <Box key={writer.username} fontSize="lg" color="blue.900">
+                  <VStack>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      border="1px solid black"
+                      mb={1}
+                      _hover={{
+                        bg: "#90CDF4",
+                        color: "brown",
+                      }}
+                      onClick={() =>
+                        searchCompletedListforUserName(writer.username)
+                      }
+                      bgColor={
+                        writer.username === username_for_search ? "#90CDF4" : ""
+                      }
+                      width={"100%"}
+                    >
+                      {writer.username} : {writer.task_count}
+                    </Button>
+                  </VStack>
+                </Box>
+              ))}
             </Box>
           </Box>
         </Box>
 
-        <Box>
+        <Box px={3}>
           <ButtonsForSelectForTeamTaskListPeriod
             selectedPeriodOptionForUncompletedTaskList={
               selectedPeriodOptionForUncompletedTaskList
@@ -235,34 +250,43 @@ function CompletedProjectTaskList({}: Props): ReactElement {
             </Box>
           </Box>
         </Box>
+      </Box>
 
-        <Box textAlign={"right"} m={0}>
-          {/* <ModalButtonForAddProjectTask
-            projectTaskListRefatch={projectTaskListRefatch}
-          /> */}
+      {/* {is_show_for_mobile ? "모바일" : "큰화면"} */}
+      {!is_show_for_mobile ? (
+        <Box>
+          <Box w={"100%"} border={"0px solid red"}></Box>
+          {pageProgressListData ? (
+            <CompletedTaskRow
+              ProjectProgressList={filteredData}
+              totalPageCount={pageProgressListData.totalPageCount}
+              task_number_for_one_page={
+                pageProgressListData.task_number_for_one_page
+              }
+              projectTaskListRefatch={projectTaskListRefatch}
+              currentPageNum={currentPageNum}
+              setCurrentPageNum={setCurrentPageNum}
+              handleCheckboxChange={handleCheckboxChange}
+              checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+            />
+          ) : (
+            "no data"
+          )}
         </Box>
-      </Box>
-
-      <Box>
-        <Box w={"100%"} border={"0px solid red"}></Box>
-        {pageProgressListData ? (
-          <CompletedTaskRow
-            ProjectProgressList={filteredData}
-            totalPageCount={pageProgressListData.totalPageCount}
-            task_number_for_one_page={
-              pageProgressListData.task_number_for_one_page
-            }
-            projectTaskListRefatch={projectTaskListRefatch}
-            currentPageNum={currentPageNum}
-            setCurrentPageNum={setCurrentPageNum}
-            handleCheckboxChange={handleCheckboxChange}
-            checkedRowPks={checkedRowPks}
-            setCheckedRowPks={setCheckedRowPks}
-          />
-        ) : (
-          ""
-        )}
-      </Box>
+      ) : (
+        <Box>
+          {filteredData ? (
+            <SlideForCompletedTaskList
+              listData={filteredData}
+              handleCheckboxChange={handleCheckboxChange}
+              checkedRowPks={checkedRowPks}
+            />
+          ) : (
+            "no data"
+          )}
+        </Box>
+      )}
     </Container>
   );
 }

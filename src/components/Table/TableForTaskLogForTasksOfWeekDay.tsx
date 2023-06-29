@@ -26,14 +26,14 @@ const TableForTaskLogForTasksOfWeekDay: React.FC<
   >;
 
   return (
-    <Box mx="auto">
+    <Box width={"100%"} border={"1px solid green"}>
       <Table
         variant="striped"
         colorScheme="black"
-        size="md"
+        size="xs"
         borderRadius="md"
         bg={"blue.100"}
-        border={"1px solid black"}
+        width={"100%"}
       >
         <Thead>
           <Tr>
@@ -41,8 +41,13 @@ const TableForTaskLogForTasksOfWeekDay: React.FC<
               <Th
                 key={day}
                 bg={
-                  day === today_info.dayOfWeek ? "yellow.200" : "" ? "red.200" : ""
+                  day === today_info.dayOfWeek
+                    ? "yellow.200"
+                    : ""
+                    ? "red.200"
+                    : ""
                 }
+                textAlign={"center"}
               >
                 {day.substring(0, 2)}
               </Th>
@@ -55,8 +60,13 @@ const TableForTaskLogForTasksOfWeekDay: React.FC<
             <Td
               key={day}
               bg={
-                day === today_info.dayOfWeek ? "yellow.200" : "" ? "red.200" : ""
+                day === today_info.dayOfWeek
+                  ? "yellow.200"
+                  : ""
+                  ? "red.200"
+                  : ""
               }
+              textAlign={"center"}
             >
               {taskCountForWeekdays[day]}
             </Td>

@@ -107,7 +107,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
 
   // 2244
   return (
-    <Box m={0}>
+    <Box>
       <Button
         variant="outline"
         size={size}

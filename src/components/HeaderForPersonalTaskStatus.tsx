@@ -6,7 +6,9 @@ import { typeForUncompletedTaskListForPersonalTaskStatus } from "../types/user/u
 
 interface Props {
   userPk: any;
-  dataForUncompletedTaskListDataForSelectedUser: typeForUncompletedTaskListForPersonalTaskStatus | undefined;
+  dataForUncompletedTaskListDataForSelectedUser:
+    | typeForUncompletedTaskListForPersonalTaskStatus
+    | undefined;
 }
 
 const HeaderForPersonalTaskStatus = ({
@@ -14,7 +16,12 @@ const HeaderForPersonalTaskStatus = ({
   dataForUncompletedTaskListDataForSelectedUser,
 }: Props) => {
   return (
-    <Box display={"flex"} mb={5}>
+    <Box
+      display={"flex"}
+      mb={5}
+      flexDirection={["column", "column", "row", "row"]}
+      gap={2}
+    >
       <Box mt={2}>
         <ProfileCardForTeamStatus
           id={dataForUncompletedTaskListDataForSelectedUser?.user_info.id}
@@ -63,10 +70,12 @@ const HeaderForPersonalTaskStatus = ({
         />
       </Box>
 
-      <Box border={"1px solid blue"} width={"100%"} mt={2}>
+      <Box border={"0px solid blue"} width={"100%"} mt={2}>
         <ChatStyleBoardForUser
           userPk={userPk}
-          task_manager={dataForUncompletedTaskListDataForSelectedUser?.user_info}
+          task_manager={
+            dataForUncompletedTaskListDataForSelectedUser?.user_info
+          }
           task_comments={
             dataForUncompletedTaskListDataForSelectedUser?.user_info
               .user_task_comments

@@ -66,6 +66,7 @@ const ModalButtonForTaskListWithDeadlineUntilYesterDay: React.FC<
               <TaskListUntilYesterday
                 basic_due_date_option={"until-yesterday"}
               />
+              
             </ModalBody>
             <ModalFooter>
               <Button
@@ -77,7 +78,6 @@ const ModalButtonForTaskListWithDeadlineUntilYesterDay: React.FC<
               >
                 Close
               </Button>
-              <Button colorScheme="teal">Save</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

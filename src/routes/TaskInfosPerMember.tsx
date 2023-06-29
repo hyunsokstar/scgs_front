@@ -34,47 +34,48 @@ const TaskInfosPerMember = (props: Props) => {
         display="flex"
         justifyContent="flex-start"
         alignItems="center"
-        bgColor={"black"}
+        bgColor={"green.200"}
         py={4}
         px={6}
         borderRadius="md"
         shadow="md"
         mt={2}
         mb={2}
+        // border={"5px solid yellow"}
       >
         <Box
-          fontSize="50px"
+          fontSize="30px"
           fontWeight="bold"
           textAlign="center"
-          color="yellow.200"
+          color="black"
         >
           Team Members' Work Status
         </Box>
       </Box>{" "}
-      <Box
-        py={"20px"}
-        px={"auto"}
-        bgColor={"black"}
-        textAlign={"center"}
-        // border={"5px solid pink"}
-      >
+      <Box py={"20px"} px={"auto"} bgColor={"black"} textAlign={"center"}>
         <Box
+          // mx={"auto"}
+          width={"98%"}
+          display={"grid"}
+          gridTemplateColumns={{
+            base: "1fr", // 변경된 부분: 모바일 화면에서 컬럼당 하나로 설정
+            xl: "repeat(4, 1fr)",
+            lg: "repeat(4, 1fr)",
+            md: "repeat(2, 1fr)",
+            sm: "repeat(1, 1fr)",
+          }}
+          gap={"24px"}
+          // px={"auto"}
           mx={"auto"}
-          width={"95%"}
-          // border={"5px solid blue"}
-          display={"flex"}
-          justifyContent={"flex-start"}
-          flexWrap={"wrap"}
-          gap={"20px"}
-          // px={"20px"}
+          // border={"5px solid yellow"}
         >
           {dataForTaskInfoPerUser
             ? dataForTaskInfoPerUser.map((user) => {
                 return (
                   <Box
-                    width={"23%"}
-                    mt={2}
-                    mb={8}
+                    width={"100%"}
+                    // mt={2}
+                    // mb={8}
                     // border={"5px solid purple"}
                     _hover={{
                       transform: "translateY(-5px)",

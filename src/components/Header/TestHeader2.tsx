@@ -118,8 +118,8 @@ const Header = () => {
         display="grid"
         gridTemplateColumns={{
           // base: "2fr", // 변경된 부분: 모바일 화면에서 컬럼당 하나로 설정
-          xl: "repeat(7, 1fr)",
-          lg: "repeat(7, 1fr)",
+          xl: "repeat(8, 1fr)",
+          lg: "repeat(8, 1fr)",
           md: "repeat(2, 1fr)",
           sm: "repeat(2, 1fr)",
         }}
@@ -144,7 +144,7 @@ const Header = () => {
           />
         </Box>
 
-        <NavLink
+        {/* <NavLink
           to="/my_task"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -157,7 +157,7 @@ const Header = () => {
           >
             My Task
           </Text>
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
           to="/project_admin"
@@ -219,7 +219,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/test-board"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -232,7 +232,8 @@ const Header = () => {
           >
             Test Board
           </Text>
-        </NavLink>
+        </NavLink> */}
+
         <NavLink
           to="/long-term-plan"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
@@ -247,7 +248,8 @@ const Header = () => {
             long term plan
           </Text>
         </NavLink>
-        <NavLink
+
+        {/* <NavLink
           to="/shortcut"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -275,7 +277,7 @@ const Header = () => {
           >
             ShortCut2
           </Text>
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
           to="/study-note"
@@ -292,7 +294,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/team-management"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -320,7 +322,7 @@ const Header = () => {
           >
             Members Table
           </Text>
-        </NavLink>
+        </NavLink> */}
 
         <Box>
           {!isLoggedIn || logoutSuccess === true ? (
