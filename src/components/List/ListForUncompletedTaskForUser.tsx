@@ -20,10 +20,10 @@ import { ProjectProgress } from "../../types/user/user_types";
 
 interface ListForUncompletedTaskForUserProps {
   ProjectProgressList: ProjectProgress[];
-  currentPageNum: number;
-  task_number_for_one_page: number;
-  totalPageCount: number;
-  setCurrentPageNum: number;
+  currentPageNum: any;
+  task_number_for_one_page: any;
+  totalPageCount: any;
+  setCurrentPageNum: any;
   updateHandlerForTaskInProgress: any;
   updateHandlerForTaskIsTesting: any;
   updateHandlerForTaskStatus: any;

@@ -90,7 +90,7 @@ const UnCompleteTaskListForPersnalTaskStatus = ({
             }
             currentPageNum={currentPageNum}
             setCurrentPageNum={setCurrentPageNum}
-            projectTaskListRefatch={
+            projectTaskListRefetch={
               refetchForUncompletedTaskListDataForSelectedUser
             }
           />
