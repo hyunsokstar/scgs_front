@@ -42,9 +42,9 @@ export default function Home() {
         display={"flex"}
         justifyContent={"flex-start"}
         flexWrap={"wrap"}
-        gap={5}
+        gap={3}
         border={"1px solid gray"}
-        pl={"6%"}
+        p={2}
       >
         <SampleCard
           imageSrc={image_array[0].image_url}

@@ -175,7 +175,7 @@ export interface IUncompletedTaskListForCashPrize {
 
 export interface taskRowForUncompleted {
   score_by_tester?: number;
-  pk: string;
+  id: string;
   writer?: string;
   task_manager: {
     pk: number;
@@ -209,7 +209,7 @@ export interface ITypeForProjectProgressList {
   totalPageCount: number;
   task_number_for_one_page?: number;
   score_by_tester?: number;
-  ProjectProgressList: taskRowForUncompleted[];
+  ProjectProgressList: taskRowForUncompleted[] | any[];
   currentPageNum?: number | undefined;
   setCurrentPageNum?: any;
   count_for_ready?: number;

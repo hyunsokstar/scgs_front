@@ -59,7 +59,7 @@ const ListForUncompletedTaskForUser: React.FC<
             {ProjectProgressList?.map((task: any) => {
               return (
                 <ListItem
-                  key={task.pk}
+                  key={task.id}
                   height={16}
                   border={"1px solid lightgray"}
                   my={0}
@@ -70,14 +70,12 @@ const ListForUncompletedTaskForUser: React.FC<
                   _hover={{ backgroundColor: "gray.100" }}
                   width={"100%"}
                 >
-                  {/* {checkedRowPks.map((pk) => (
-                    <p key={pk}>{pk}</p>
-                  ))} */}
+
                   <Box border={"0px solid yellow"} width={"50px"}>
                     <Checkbox
                       mx={2}
-                      value={task.pk}
-                      isChecked={checkedRowPks.includes(task.pk)}
+                      value={task.id}
+                      isChecked={checkedRowPks.includes(task.id)}
                       onChange={handleCheckboxChange}
                     />
                   </Box>
@@ -92,7 +90,7 @@ const ListForUncompletedTaskForUser: React.FC<
                   <Box border={"0px solid blue"} width={"480px"}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
-                        to={`/project_admin/${task.pk}`}
+                        to={`/project_admin/${task.id}`}
                         style={{ textDecoration: "underline" }}
                       >
                         {task.task}
@@ -110,7 +108,7 @@ const ListForUncompletedTaskForUser: React.FC<
                     <Box border={"0px solid green"} width={"50px"}>
                       <SlideToggleButtonForInProgress
                         onChange={() => {
-                          updateHandlerForTaskInProgress(task.pk);
+                          updateHandlerForTaskInProgress(task.id);
                         }}
                         checked={task.in_progress}
                         is_disabled={task.is_testing}
@@ -120,7 +118,7 @@ const ListForUncompletedTaskForUser: React.FC<
                     <Box border={"0px solid green"} width={"50px"}>
                       <SlideToggleButtonForIsTesting
                         onChange={() => {
-                          updateHandlerForTaskIsTesting(task.pk);
+                          updateHandlerForTaskIsTesting(task.id);
                         }}
                         checked={task.is_testing}
                         is_disabled={!task.in_progress}
@@ -130,7 +128,7 @@ const ListForUncompletedTaskForUser: React.FC<
                     <Box border={"0px solid green"} width={"50px"}>
                       <SlideToggleButton
                         onChange={() => {
-                          updateHandlerForTaskStatus(task.pk);
+                          updateHandlerForTaskStatus(task.id);
                         }}
                         checked={task.task_completed}
                         in_progress={!task.in_progress} // 진행중이 아니면 disabled true
@@ -148,7 +146,7 @@ const ListForUncompletedTaskForUser: React.FC<
                   >
                     <StarRating
                       initialRating={task.importance}
-                      taskPk={task.pk}
+                      taskPk={task.id}
                       onChangeForStarRatingHandler={
                         onChangeForStarRatingHandler
                       }
@@ -163,7 +161,7 @@ const ListForUncompletedTaskForUser: React.FC<
                       <HStack>
                         <Text>{task.started_at_formatted}</Text>
                         <ModalButtonForUpdateProjectTaskStartedAt
-                          taskPk={task.pk}
+                          taskPk={task.id}
                           original_due_date={task.due_date ? task.due_date : ""}
                           started_at={task.started_at ? task.started_at : ""}
                           projectTaskListRefetch={projectTaskListRefetch}
@@ -171,16 +169,10 @@ const ListForUncompletedTaskForUser: React.FC<
                       </HStack>
                     </HStack>
                     <HStack>
-                      <Box textAlign={"center"}>
+                      <Box display={"flex"} gap={2} textAlign={"center"}>
                         <Text>마감</Text>
+                        <Text>{task.due_date_formatted}</Text>
                       </Box>
-
-                      <ModalButtonForUpdateProjectTaskStartedAt
-                        taskPk={task.pk}
-                        original_due_date={task.due_date ? task.due_date : ""}
-                        started_at={task.started_at ? task.started_at : ""}
-                        projectTaskListRefetch={projectTaskListRefetch}
-                      />
                     </HStack>
                   </Box>
                   <Box border={"0px solid blue"} width={"260px"}>
@@ -208,7 +200,7 @@ const ListForUncompletedTaskForUser: React.FC<
                       aria-label="삭제"
                       icon={<FaTrash />}
                       variant="ghost"
-                      onClick={() => deleteHandler(parseInt(task.pk))}
+                      onClick={() => deleteHandler(parseInt(task.id))}
                     />
                   </Box>
                 </ListItem>

@@ -27,16 +27,20 @@ interface IProps {
   modal_text: string;
   current_status: string;
   task: TaskForTaskStatusForToday;
+  refetch?: () => void;
 }
 
 const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
   modal_text,
   current_status,
   task,
+  refetch,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const queryClient = useQueryClient();
   const toast = useToast();
+
+  // console.log("task : ", task);
 
   const getButtonContent = (status: string) => {
     switch (status) {
@@ -57,8 +61,13 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
     updateProjectInProgress,
     {
       onSuccess: (result: any) => {
-        console.log("result : ", result);
-        queryClient.refetchQueries(["getTaskStatusForToday"]);
+        if (refetch) {
+          refetch();
+          console.log("refetch is excuted !");
+          queryClient.refetchQueries(["getTaskStatusForToday"]);
+        } else {
+          queryClient.refetchQueries(["getTaskStatusForToday"]);
+        }
         // queryClient.refetchQueries(["getCompletedTaskList"]);
         // projectTaskListRefatch()
         toast({
@@ -83,9 +92,13 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-
-        queryClient.refetchQueries(["getTaskStatusForToday"]);
-        // queryClient.refetchQueries(["getCompletedTaskList"]);
+        if (refetch) {
+          refetch();
+          queryClient.refetchQueries(["getTaskStatusForToday"]);
+          console.log("refetch is excuted !");
+        } else {
+          queryClient.refetchQueries(["getTaskStatusForToday"]);
+        }
 
         toast({
           status: "success",
@@ -105,7 +118,13 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getTaskStatusForToday"]);
+      if (refetch) {
+        refetch();
+        console.log("refetch is excuted !");
+        queryClient.refetchQueries(["getTaskStatusForToday"]);
+      } else {
+        queryClient.refetchQueries(["getTaskStatusForToday"]);
+      }
 
       toast({
         status: "success",
@@ -185,9 +204,6 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
           <ModalFooter bg="gray.100">
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
-            </Button>
-            <Button variant="ghost" onClick={onClose}>
-              Secondary Action
             </Button>
           </ModalFooter>
         </ModalContent>

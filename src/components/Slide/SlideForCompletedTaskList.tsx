@@ -12,21 +12,27 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { taskRowForUncompleted } from "../../types/project_progress/project_progress_type";
+import ModalButtonForUpdateTaskStatus from "../modal/ModalButtonForUpdateTaskStatus";
 
 interface SlideForUncompletedTaskListProps {
   listData: taskRowForUncompleted[] | any[];
   handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checkedRowPks: any[];
+  refetch?: () => void;
 }
 
-export default function SlideForUncompletedTaskList({
+// 1122
+export default function SlideForCompletedTaskList({
   listData,
   handleCheckboxChange,
   checkedRowPks,
+  refetch,
 }: SlideForUncompletedTaskListProps) {
   const [activeSlide, setActiveSlide] = React.useState(0);
   const numSlides = listData && listData.length | 0;
   const sliderRef = useRef<any>(null);
+
+  // console.log("listData : ", listData);
 
   const handleSlideChange = (index: any) => {
     setActiveSlide(index);
@@ -76,6 +82,7 @@ export default function SlideForUncompletedTaskList({
     return buttons;
   };
 
+  // 2244
   return (
     <Box>
       {listData && listData.length ? (
@@ -127,6 +134,12 @@ export default function SlideForUncompletedTaskList({
                     py={2}
                   >
                     <Badge colorScheme="blue">{row.current_status}</Badge>
+                    <ModalButtonForUpdateTaskStatus
+                      modal_text={"Update Task Progress Status"}
+                      current_status={row.current_status}
+                      task={row}
+                      refetch={refetch}
+                    />
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"}>
                     <Box>

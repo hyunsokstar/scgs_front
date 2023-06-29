@@ -13,17 +13,20 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { taskRowForUncompleted } from "../../types/project_progress/project_progress_type";
+import ModalButtonForUpdateTaskStatus from "../modal/ModalButtonForUpdateTaskStatus";
 
 interface SlideForUncompletedTaskListProps {
   listData: taskRowForUncompleted[];
   handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checkedRowPks: any[];
+  refetch?: () => void;
 }
 
 export default function SlideForUncompletedTaskList({
   listData,
   handleCheckboxChange,
   checkedRowPks,
+  refetch,
 }: SlideForUncompletedTaskListProps) {
   const [activeSlide, setActiveSlide] = React.useState(0);
   const numSlides = listData && listData.length | 0;
@@ -93,7 +96,6 @@ export default function SlideForUncompletedTaskList({
                 textAlign="start"
                 p={2}
                 flexDirection={"column"}
-                gap={2}
               >
                 <Box
                   display={"flex"}
@@ -128,8 +130,14 @@ export default function SlideForUncompletedTaskList({
                   py={2}
                 >
                   <Badge colorScheme="blue">{row.current_status}</Badge>
+                  <ModalButtonForUpdateTaskStatus
+                    modal_text={"Update Task Progress Status"}
+                    current_status={row.current_status}
+                    task={row}
+                    refetch={refetch}
+                  />
                 </Box>
-                <Box display={"flex"} justifyContent={"space-between"}>
+                <Box display={"flex"} justifyContent={"space-between"} mt={2}>
                   <Box>
                     <Box>start:</Box>
                     <Box>{row.started_at_formatted}</Box>
@@ -139,6 +147,10 @@ export default function SlideForUncompletedTaskList({
                     <Box>due_date:</Box>
                     <Box>{row.due_date_formatted}</Box>
                   </Box>
+                </Box>
+                <Box mt={2}>
+                  <Box>remaing_time</Box>
+                  <Box>{row.time_left_to_due_date}</Box>
                 </Box>
               </Card>
             ))

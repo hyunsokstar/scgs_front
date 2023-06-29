@@ -101,7 +101,7 @@ export interface TaskManager {
 }
 
 export interface ProjectProgress {
-  pk: number;
+  id: number;
   task_classification: string;
   task: string;
   writer: string;

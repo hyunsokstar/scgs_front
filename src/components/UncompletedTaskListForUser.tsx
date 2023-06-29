@@ -18,7 +18,7 @@ import { deleteOneProjectTask } from "../apis/user_api";
 import ListForUncompletedTaskForUser from "./List/ListForUncompletedTaskForUser";
 import { ProjectProgress } from "../types/user/user_types";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import SlideForUncompletedTaskList from "./Slide/SlideForCompletedTaskList";
+import SlideForUncompletedTaskList from "./Slide/SlideForUncompletedTaskList";
 
 interface IProps {
   ProjectProgressList: ProjectProgress[];
@@ -275,6 +275,7 @@ function UncompletedTaskListForUser({
           listData={ProjectProgressList}
           handleCheckboxChange={handleCheckboxChange}
           checkedRowPks={checkedRowPks}
+          refetch = {projectTaskListRefetch}
         />
       )}
     </>
