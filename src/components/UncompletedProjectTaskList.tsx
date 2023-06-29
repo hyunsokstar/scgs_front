@@ -270,12 +270,6 @@ function UncompletedProjectTaskList({
     lg: true, // for large screens and up
   });
 
-  const responsive_option_for_direction = useBreakpointValue({
-    base: "column", // for mobile and small screens
-    md: "row", // for medium-sized screens and up
-    lg: "row", // for large screens and up
-  });
-
   // 2244
   if (!taskListData) {
     return <Box>..Loading</Box>;

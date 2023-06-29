@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Button, Checkbox } from "@chakra-ui/react";
 import React, { useState } from "react";
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
 import { typeForUncompletedTaskListForPersonalTaskStatus } from "../types/user/user_types";
@@ -78,6 +78,16 @@ const UnCompleteTaskListForPersnalTaskStatus = ({
 
       {dataForUncompletedTaskListDataForSelectedUser ? (
         <Box>
+          <Box display={"flex"} gap={2} p={2}>
+            <Checkbox />
+            <Button
+              variant={"outline"}
+              _hover={{ backgroundColor: "red.100" }}
+              size={"sm"}
+            >
+              delete for check
+            </Button>
+          </Box>
           <UncompletedTaskListForUser
             ProjectProgressList={
               dataForUncompletedTaskListDataForSelectedUser.ProjectProgressList

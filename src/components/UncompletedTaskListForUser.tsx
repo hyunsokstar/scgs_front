@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Text, Box, useToast } from "@chakra-ui/react";
+import { Text, Box, useToast, useBreakpointValue } from "@chakra-ui/react";
 import {
   updateProjectImportance,
   updateProjectInProgress,
@@ -9,9 +9,10 @@ import {
 } from "../apis/project_progress_api";
 import { deleteOneProjectTask } from "../apis/user_api";
 import ListForUncompletedTaskForUser from "./List/ListForUncompletedTaskForUser";
+import { ProjectProgress } from "../types/user/user_types";
 
 interface IProps {
-  ProjectProgressList: any;
+  ProjectProgressList: ProjectProgress[];
   totalPageCount: number;
   currentPageNum: number;
   setCurrentPageNum: any;
@@ -164,6 +165,7 @@ function UncompletedTaskListForUser({
     console.log("update 핸들러 for task_status check pk : ", taskPk);
   };
 
+  
   if (ProjectProgressList && ProjectProgressList.length === 0) {
     return (
       <Box textAlign="center">
