@@ -79,12 +79,6 @@ export default function SlideForUncompletedTaskList({
     return buttons;
   };
 
-  const is_show_for_mobile = useBreakpointValue({
-    base: false, // for mobile and small screens
-    md: true, // for medium-sized screens and up
-    lg: true, // for large screens and up
-  });
-
   return (
     <ChakraProvider>
       <Slider {...settings} ref={sliderRef}>
@@ -113,8 +107,8 @@ export default function SlideForUncompletedTaskList({
                   <Checkbox
                     mx={2}
                     border={"1px solid black"}
-                    value={row.pk}
-                    isChecked={checkedRowPks.includes(row.pk)}
+                    value={row.id}
+                    isChecked={checkedRowPks.includes(row.id)}
                     onChange={handleCheckboxChange}
                   />
 

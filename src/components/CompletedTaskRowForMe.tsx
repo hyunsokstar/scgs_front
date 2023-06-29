@@ -42,9 +42,9 @@ function CompletedTaskRowForMe({
   projectTaskListRefatch,
   currentPageNum,
   setCurrentPageNum,
+  handleCheckboxChange,
+  checkedRowPks,
 }: ITypeForProjectProgressList): ReactElement {
-  const completedColor = useColorModeValue("green.500", "green.300");
-  const inProgressColor = useColorModeValue("orange.500", "orange.300");
   const queryClient = useQueryClient();
 
   const handleSlideToggleChange = (checked: boolean) => {
@@ -153,7 +153,13 @@ function CompletedTaskRowForMe({
                 <HStack>
                   <Box border={"0px solid yellow"} width={"50px"}>
                     <HStack ml={0}>
-                      <Checkbox mx={2} />
+                      <Checkbox
+                        mx={2}
+                        border={"1px solid black"}
+                        value={task.id}
+                        isChecked={checkedRowPks.includes(task.id)}
+                        onChange={handleCheckboxChange}
+                      />{" "}
                     </HStack>
                   </Box>
                   <Box width={"140px"}>

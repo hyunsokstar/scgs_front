@@ -114,8 +114,8 @@ export default function SlideForCompletedTaskList({
                     <Checkbox
                       mx={2}
                       border={"1px solid black"}
-                      value={row.pk}
-                      isChecked={checkedRowPks.includes(row.pk)}
+                      value={row.id}
+                      isChecked={checkedRowPks.includes(row.id)}
                       onChange={handleCheckboxChange}
                     />
                     <Text fontWeight="bold" fontSize="sm">

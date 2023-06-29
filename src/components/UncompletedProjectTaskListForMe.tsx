@@ -17,6 +17,7 @@ import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRowForMe from "./UncompletedTaskRowForMe";
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
 import ButtonForFilteringTaskForDueDate from "./Button/ButtonForFilteringTaskForDueDate";
+import SlideForUncompletedTaskList from "./Slide/SlideForUncompletedTaskList";
 
 interface Props {}
 
@@ -109,6 +110,12 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
       setCheckedRowPks(checkedRowPks.filter((item) => item !== id));
     }
   };
+
+  const is_show_for_mobile = useBreakpointValue({
+    base: false, // for mobile and small screens
+    md: true, // for medium-sized screens and up
+    lg: true, // for large screens and up
+  });
 
   // 2244
   if (!taskListDataForMe) {
@@ -261,26 +268,41 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
           delete for Check
         </Button>
       </Box>
-      <Box>
-        {taskListDataForMe ? (
-          <Box>
-            <UncompletedTaskRowForMe
-              ProjectProgressList={taskListDataForMe.ProjectProgressList}
-              task_number_for_one_page={
-                taskListDataForMe.task_number_for_one_page
-              }
-              totalPageCount={taskListDataForMe.totalPageCount}
-              currentPageNum={currentPageNum}
-              setCurrentPageNum={setCurrentPageNum}
-              projectTaskListRefatch={projectTaskListRefatch}
-              checkedRowPks={checkedRowPks}
+
+      {is_show_for_mobile ? (
+        <Box>
+          {taskListDataForMe ? (
+            <Box>
+              <UncompletedTaskRowForMe
+                ProjectProgressList={taskListDataForMe.ProjectProgressList}
+                task_number_for_one_page={
+                  taskListDataForMe.task_number_for_one_page
+                }
+                totalPageCount={taskListDataForMe.totalPageCount}
+                currentPageNum={currentPageNum}
+                setCurrentPageNum={setCurrentPageNum}
+                projectTaskListRefatch={projectTaskListRefatch}
+                checkedRowPks={checkedRowPks}
+                handleCheckboxChange={handleCheckboxChange}
+              />
+            </Box>
+          ) : (
+            "no data"
+          )}
+        </Box>
+      ) : (
+        <Box>
+          {taskListDataForMe ? (
+            <SlideForUncompletedTaskList
+              listData={taskListDataForMe.ProjectProgressList}
               handleCheckboxChange={handleCheckboxChange}
+              checkedRowPks={checkedRowPks}
             />
-          </Box>
-        ) : (
-          ""
-        )}
-      </Box>
+          ) : (
+            ""
+          )}
+        </Box>
+      )}
     </Box>
   );
 }
