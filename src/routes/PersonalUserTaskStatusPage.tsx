@@ -5,7 +5,7 @@ import { apiForGetTaskDataForSelectedUser } from "../apis/user_api";
 import HeaderForPersonalTaskStatus from "../components/HeaderForPersonalTaskStatus";
 import UnCompleteTaskListForPersnalTaskStatus from "../components/UnCompleteTaskListForPersnalTaskStatus";
 import { typeForUncompletedTaskListForPersonalTaskStatus } from "../types/user/user_types";
-import CompleteTaskListForPersnalTaskStatus from "../components/CompleteTaskListForPersnalTaskStatus";
+import CompleteTaskListForUser from "../components/CompleteTaskListForUser";
 
 interface Props {}
 
@@ -50,7 +50,7 @@ const PersonalUserTaskStatusPage = (props: Props) => {
       />
       <br />
       <br />
-      <CompleteTaskListForPersnalTaskStatus userPk={userPk} />
+      <CompleteTaskListForUser userPk={userPk} />
     </Box>
   );
 };

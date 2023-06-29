@@ -1,6 +1,9 @@
 import React, { ReactElement, useState } from "react";
 import { apiForGetCompletedTaskListForPersonalTaskStatus } from "../apis/user_api";
-import { typeForCompletedTaskListDataForSelectedUser, typeForUncompletedTaskListForPersonalTaskStatus } from "../types/user/user_types";
+import {
+  typeForCompletedTaskListDataForSelectedUser,
+  typeForUncompletedTaskListForPersonalTaskStatus,
+} from "../types/user/user_types";
 import { useQuery } from "@tanstack/react-query";
 import { Box, Text } from "@chakra-ui/react";
 import CompletedTaskRowForMe from "./CompletedTaskRowForMe";
@@ -10,11 +13,13 @@ interface Props {
   userPk: string | number | undefined;
 }
 
-const CompleteTaskListForPersnalTaskStatus = ({ userPk }: Props) => {
+// 1122
+const CompleteTaskListForUser = ({ userPk }: Props) => {
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+  const [checkedRowPks, setCheckedRowPks] = useState<any[]>([]);
 
   const {
-    data: dataForCompletedTaskListDataForSelectedUser,
+    data: pageProgressListData,
     isLoading: isLoadingForCompletedTaskListDataForSelectedUser,
     refetch: refetchForCompletedTaskListDataForSelectedUser,
   } = useQuery<typeForCompletedTaskListDataForSelectedUser>(
@@ -22,8 +27,20 @@ const CompleteTaskListForPersnalTaskStatus = ({ userPk }: Props) => {
     apiForGetCompletedTaskListForPersonalTaskStatus
   );
 
-  console.log("data check : ", dataForCompletedTaskListDataForSelectedUser);
+  console.log("data check : ", pageProgressListData);
 
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    const pk = parseInt(value, 10);
+
+    if (checked) {
+      setCheckedRowPks([...checkedRowPks, pk]);
+    } else {
+      setCheckedRowPks(checkedRowPks.filter((item) => item !== pk));
+    }
+  };
+
+  // 2244
   return (
     <Box w={"100%"} border={"1px solid black"} p={0} mt={"0px"}>
       <Box
@@ -37,30 +54,32 @@ const CompleteTaskListForPersnalTaskStatus = ({ userPk }: Props) => {
         border={"0px solid green"}
       >
         <Text mb={1} fontSize={"20px"}>
-          완료 리스트 (총:{" "}
-          {dataForCompletedTaskListDataForSelectedUser?.totalPageCount} 개 per
+          Task List For Complete (총:{" "}
+          {pageProgressListData?.totalPageCount} 개 per
           page:
           {
-            dataForCompletedTaskListDataForSelectedUser?.task_number_for_one_page
+            pageProgressListData?.task_number_for_one_page
           }
           )
         </Text>
         <Box textAlign={"right"} m={0}></Box>
       </Box>{" "}
       <Box>
-        {dataForCompletedTaskListDataForSelectedUser ? (
+        {pageProgressListData ? (
           <Box>
             <CompletedTaskRowForPersonalUserTaskStatus
               ProjectProgressList={
-                dataForCompletedTaskListDataForSelectedUser.ProjectProgressList
+                pageProgressListData.ProjectProgressList
               }
               task_number_for_one_page={
-                dataForCompletedTaskListDataForSelectedUser.task_number_for_one_page
+                pageProgressListData.task_number_for_one_page
               }
               totalPageCount={
-                dataForCompletedTaskListDataForSelectedUser.totalPageCount
+                pageProgressListData.totalPageCount
               }
-              projectTaskListRefatch={refetchForCompletedTaskListDataForSelectedUser}
+              projectTaskListRefatch={
+                refetchForCompletedTaskListDataForSelectedUser
+              }
               currentPageNum={currentPageNum}
               setCurrentPageNum={setCurrentPageNum}
             />
@@ -73,4 +92,4 @@ const CompleteTaskListForPersnalTaskStatus = ({ userPk }: Props) => {
   );
 };
 
-export default CompleteTaskListForPersnalTaskStatus;
+export default CompleteTaskListForUser;
