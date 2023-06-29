@@ -72,7 +72,7 @@ function CompletedTaskRowForMe({
 
   const updateHandlerForTaskStatus = (taskPk: string) => {
     updateProjectTaskMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update 핸들러 for task_status check id : ", taskPk);
   };
 
   const updateMutationForProjectImportance = useMutation(
@@ -104,8 +104,8 @@ function CompletedTaskRowForMe({
   };
 
   const deleteMutation = useMutation(
-    (pk: number) => {
-      return deleteOneProjectTask(pk);
+    (id: number) => {
+      return deleteOneProjectTask(id);
     },
     {
       onSettled: () => {
@@ -126,8 +126,8 @@ function CompletedTaskRowForMe({
     }
   );
 
-  const deleteHandelr = (pk: number) => {
-    const response = deleteMutation.mutate(pk);
+  const deleteHandelr = (id: number) => {
+    const response = deleteMutation.mutate(id);
     console.log("response :", response);
     // if (projectTaskListRefatch) {
     //   projectTaskListRefatch();
@@ -141,7 +141,7 @@ function CompletedTaskRowForMe({
           {ProjectProgressList?.map((task) => {
             return (
               <ListItem
-                key={task.pk}
+                key={task.id}
                 height={16}
                 border={"1px solid lightgray"}
                 width={"1600px"}
@@ -163,7 +163,7 @@ function CompletedTaskRowForMe({
                   <Box border={"0px solid blue"} width={"360px"}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
-                        to={`/project_admin/${task.pk}`}
+                        to={`/project_admin/${task.id}`}
                         style={{ textDecoration: "underline" }}
                       >
                         {task.task}
@@ -180,7 +180,7 @@ function CompletedTaskRowForMe({
                   >
                     <SlideToggleButton
                       onChange={() => {
-                        updateHandlerForTaskStatus(task.pk);
+                        updateHandlerForTaskStatus(task.id);
                       }}
                       checked={task.task_completed}
                     />
@@ -195,7 +195,7 @@ function CompletedTaskRowForMe({
                   >
                     <StarRating
                       initialRating={task.importance}
-                      taskPk={task.pk}
+                      taskPk={task.id}
                       onChangeForStarRatingHandler={
                         onChangeForStarRatingHandler
                       }
@@ -245,7 +245,7 @@ function CompletedTaskRowForMe({
                       aria-label="삭제"
                       icon={<FaTrash />}
                       variant="ghost"
-                      onClick={() => deleteHandelr(parseInt(task.pk))}
+                      onClick={() => deleteHandelr(parseInt(task.id))}
                     />
                   </Box>
                 </HStack>

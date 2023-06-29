@@ -80,7 +80,7 @@ function CompletedTaskRowForTester({
 
   const updateHandlerForTaskStatus = (taskPk: string) => {
     updateProjectTaskMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update 핸들러 for task_status check id : ", taskPk);
   };
 
   //   check_result
@@ -107,7 +107,7 @@ function CompletedTaskRowForTester({
 
   const updateHandlerForCheckResultByTester = (taskPk: string) => {
     mutationForUpdateCheckResultByTester.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update 핸들러 for task_status check id : ", taskPk);
   };
 
   const updateMutationForProjectImportance = useMutation(
@@ -139,8 +139,8 @@ function CompletedTaskRowForTester({
   };
 
   const deleteMutation = useMutation(
-    (pk: number) => {
-      return deleteOneProjectTask(pk);
+    (id: number) => {
+      return deleteOneProjectTask(id);
     },
     {
       onSettled: () => {},
@@ -157,8 +157,8 @@ function CompletedTaskRowForTester({
     }
   );
 
-  const deleteHandelr = (pk: number) => {
-    const response = deleteMutation.mutate(pk);
+  const deleteHandelr = (id: number) => {
+    const response = deleteMutation.mutate(id);
     console.log("response :", response);
   };
 
@@ -179,7 +179,7 @@ function CompletedTaskRowForTester({
   );
 
   const handleClickForUpdateScoreByTester = (
-    pk: any,
+    id: any,
     index: number,
     username: string
   ) => {
@@ -199,7 +199,7 @@ function CompletedTaskRowForTester({
     }
 
     mutationForUpdateScoreByTester.mutate({
-      pk,
+      id,
       cashInfoForUpdate: scoreByTesterForUpdate,
       scoreByTesterForUpdate: scoreValues[index],
       username,
@@ -242,7 +242,7 @@ function CompletedTaskRowForTester({
             <ListItem border={"0px solid blue"} flex={2.5}>
               <Text fontSize="sm" fontWeight="bold">
                 <Link
-                  to={`/project_admin/${task.pk}`}
+                  to={`/project_admin/${task.id}`}
                   style={{ textDecoration: "underline" }}
                 >
                   {task.task}
@@ -259,7 +259,7 @@ function CompletedTaskRowForTester({
             >
               <SlideToggleButton
                 onChange={() => {
-                  updateHandlerForTaskStatus(task.pk);
+                  updateHandlerForTaskStatus(task.id);
                 }}
                 checked={task.task_completed}
               />
@@ -273,7 +273,7 @@ function CompletedTaskRowForTester({
             >
               <SlideToggleButton
                 onChange={() => {
-                  updateHandlerForCheckResultByTester(task.pk);
+                  updateHandlerForCheckResultByTester(task.id);
                 }}
                 onColor={"#FADADD"}
                 offColor={"#D3D3D3"}
@@ -313,7 +313,7 @@ function CompletedTaskRowForTester({
                     size="sm"
                     onClick={() =>
                       handleClickForUpdateScoreByTester(
-                        task.pk,
+                        task.id,
                         index,
                         task.task_manager.username
                       )
@@ -330,7 +330,7 @@ function CompletedTaskRowForTester({
                 aria-label="삭제"
                 icon={<FaTrash />}
                 variant="ghost"
-                onClick={() => deleteHandelr(parseInt(task.pk))}
+                onClick={() => deleteHandelr(parseInt(task.id))}
               />
             </ListItem>
           </List>

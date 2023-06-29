@@ -35,6 +35,8 @@ interface IProps {
   setCurrentPageNum: any;
   task_number_for_one_page: number | undefined;
   projectTaskListRefatch: () => void;
+  handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checkedRowPks: number[];
 }
 
 function UncompletedTaskRowForMe({
@@ -44,6 +46,8 @@ function UncompletedTaskRowForMe({
   currentPageNum,
   setCurrentPageNum,
   projectTaskListRefatch,
+  handleCheckboxChange,
+  checkedRowPks,
 }: IProps): ReactElement {
   const completedColor = useColorModeValue("green.500", "green.300");
   const inProgressColor = useColorModeValue("orange.500", "orange.300");
@@ -71,7 +75,7 @@ function UncompletedTaskRowForMe({
 
   const updateHandlerForTaskStatus = (taskPk: string) => {
     updateProjectTaskMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update 핸들러 for task_status check id : ", taskPk);
   };
 
   const updateMutationForProjectImportance = useMutation(
@@ -102,8 +106,8 @@ function UncompletedTaskRowForMe({
   };
 
   const deleteMutation = useMutation(
-    (pk: number) => {
-      return deleteOneProjectTask(pk);
+    (id: number) => {
+      return deleteOneProjectTask(id);
     },
     {
       onSettled: () => {
@@ -124,8 +128,8 @@ function UncompletedTaskRowForMe({
     }
   );
 
-  const deleteHandelr = (pk: number) => {
-    const response = deleteMutation.mutate(pk);
+  const deleteHandelr = (id: number) => {
+    const response = deleteMutation.mutate(id);
     console.log("response :", response);
     // if (projectTaskListRefatch) {
     //   projectTaskListRefatch();
@@ -157,7 +161,7 @@ function UncompletedTaskRowForMe({
 
   const updateHandlerForTaskInProgress = (taskPk: string) => {
     updateProjectTaskInProgressMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update 핸들러 for task_status check id : ", taskPk);
   };
 
   const updateProjectTaskIsTestingMutations = useMutation(
@@ -179,13 +183,15 @@ function UncompletedTaskRowForMe({
 
   const updateHandlerForTaskIsTesting = (taskPk: string) => {
     updateProjectTaskIsTestingMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update 핸들러 for task_status check id : ", taskPk);
   };
 
   if (ProjectProgressList && ProjectProgressList.length === 0) {
     return (
       <Box textAlign="center">
-        <Text fontSize={"48px"} my={3}>No Data Available!</Text>
+        <Text fontSize={"48px"} my={3}>
+          No Data Available!
+        </Text>
       </Box>
     );
   }
@@ -199,7 +205,7 @@ function UncompletedTaskRowForMe({
               // console.log("task.task_manager : ", task.taskmanager);
               return (
                 <ListItem
-                  key={task.pk}
+                  key={task.id}
                   height={16}
                   border={"1px solid lightgray"}
                   my={0}
@@ -211,7 +217,13 @@ function UncompletedTaskRowForMe({
                 >
                   <HStack border={"0px solid green"}>
                     <Box border={"0px solid yellow"} width={"50px"}>
-                      <Checkbox mx={2} />
+                      <Checkbox
+                        mx={2}
+                        border={"1px solid black"}
+                        value={task.id}
+                        isChecked={checkedRowPks.includes(task.id)}
+                        onChange={handleCheckboxChange}
+                      />{" "}
                     </Box>
 
                     <Box border={"0px solid yellow"} width={"100px"}>
@@ -224,7 +236,7 @@ function UncompletedTaskRowForMe({
                     <Box border={"0px solid blue"} width={"480px"}>
                       <Text fontSize="sm" fontWeight="bold">
                         <Link
-                          to={`/project_admin/${task.pk}`}
+                          to={`/project_admin/${task.id}`}
                           style={{ textDecoration: "underline" }}
                         >
                           {task.task}
@@ -242,7 +254,7 @@ function UncompletedTaskRowForMe({
                       <Box border={"0px solid green"} width={"50px"}>
                         <SlideToggleButtonForInProgress
                           onChange={() => {
-                            updateHandlerForTaskInProgress(task.pk);
+                            updateHandlerForTaskInProgress(task.id);
                           }}
                           checked={task.in_progress}
                           is_disabled={task.is_testing}
@@ -252,7 +264,7 @@ function UncompletedTaskRowForMe({
                       <Box border={"0px solid green"} width={"50px"}>
                         <SlideToggleButtonForIsTesting
                           onChange={() => {
-                            updateHandlerForTaskIsTesting(task.pk);
+                            updateHandlerForTaskIsTesting(task.id);
                           }}
                           checked={task.is_testing}
                           is_disabled={!task.in_progress}
@@ -262,7 +274,7 @@ function UncompletedTaskRowForMe({
                       <Box border={"0px solid green"} width={"50px"}>
                         <SlideToggleButton
                           onChange={() => {
-                            updateHandlerForTaskStatus(task.pk);
+                            updateHandlerForTaskStatus(task.id);
                           }}
                           checked={task.task_completed}
                           in_progress={!task.in_progress} // 진행중이 아니면 disabled true
@@ -280,7 +292,7 @@ function UncompletedTaskRowForMe({
                     >
                       <StarRating
                         initialRating={task.importance}
-                        taskPk={task.pk}
+                        taskPk={task.id}
                         onChangeForStarRatingHandler={
                           onChangeForStarRatingHandler
                         }
@@ -295,7 +307,7 @@ function UncompletedTaskRowForMe({
                         <HStack>
                           <Text>{task.started_at_formatted}</Text>
                           <ModalButtonForUpdateProjectTaskStartedAt
-                            taskPk={task.pk}
+                            taskPk={task.id}
                             original_due_date={
                               task.due_date ? task.due_date : ""
                             }
@@ -311,7 +323,7 @@ function UncompletedTaskRowForMe({
                         <Text>{task.due_date_formatted}</Text>
 
                         <ModalButtonForUpdateProjectTaskCompleteDate
-                          taskPk={task.pk}
+                          taskPk={task.id}
                           original_due_date={task.due_date ? task.due_date : ""}
                           started_at={task.started_at ? task.started_at : ""}
                           projectTaskListRefatch={projectTaskListRefatch}
@@ -343,7 +355,7 @@ function UncompletedTaskRowForMe({
                         aria-label="삭제"
                         icon={<FaTrash />}
                         variant="ghost"
-                        onClick={() => deleteHandelr(parseInt(task.pk))}
+                        onClick={() => deleteHandelr(parseInt(task.id))}
                       />
                     </Box>
                   </HStack>

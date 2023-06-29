@@ -29,7 +29,7 @@ Props) => {
     <Box>
       <Button
         variant={"outline"}
-        size={"sm"}
+        size={button_size}
         border={"1px solid black"}
         mb={1}
         _hover={{

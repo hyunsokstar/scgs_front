@@ -14,21 +14,21 @@ import {
 import { DeleteIcon } from "@chakra-ui/icons";
 
 interface DeleteButtonForTestForTaskProps {
-  pk: any;
+  id: any;
   targetInfoToDelete: string;
-  handlerForDelete: (pk: any) => void;
+  handlerForDelete: (id: any) => void;
 }
 
 const CommonDeleteButtonForPk: React.FC<DeleteButtonForTestForTaskProps> = ({
-  pk,
+  id,
   targetInfoToDelete,
   handlerForDelete,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const leastDestructiveRef = React.useRef<HTMLButtonElement | null>(null);
 
-  const confirmDeleteHandler = (pk: string | number) => {
-    handlerForDelete(pk);
+  const confirmDeleteHandler = (id: string | number) => {
+    handlerForDelete(id);
     onClose();
   };
 
@@ -67,7 +67,7 @@ const CommonDeleteButtonForPk: React.FC<DeleteButtonForTestForTaskProps> = ({
             </Button>
             <Button
               colorScheme="red"
-              onClick={() => confirmDeleteHandler(pk)}
+              onClick={() => confirmDeleteHandler(id)}
               ml={3}
               ref={leastDestructiveRef}
             >

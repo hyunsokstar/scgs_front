@@ -38,12 +38,12 @@ const CompleteTaskListForUser = ({ userPk }: Props) => {
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    const pk = parseInt(value, 10);
+    const id = parseInt(value, 10);
 
     if (checked) {
-      setCheckedRowPks([...checkedRowPks, pk]);
+      setCheckedRowPks([...checkedRowPks, id]);
     } else {
-      setCheckedRowPks(checkedRowPks.filter((item) => item !== pk));
+      setCheckedRowPks(checkedRowPks.filter((item) => item !== id));
     }
   };
 
@@ -86,7 +86,7 @@ const CompleteTaskListForUser = ({ userPk }: Props) => {
   ) => {
     const checked = event.target.checked;
     const rowPks =
-      CompletedTaskListData?.ProjectProgressList.map((item) => item.pk) || [];
+      CompletedTaskListData?.ProjectProgressList.map((item) => item.id) || [];
 
     if (checked) {
       setCheckedRowPks([...checkedRowPks, ...rowPks]);

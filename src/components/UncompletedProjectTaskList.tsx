@@ -122,12 +122,12 @@ function UncompletedProjectTaskList({
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    const pk = parseInt(value, 10);
+    const id = parseInt(value, 10);
 
     if (checked) {
-      setCheckedRowPks([...checkedRowPks, pk]);
+      setCheckedRowPks([...checkedRowPks, id]);
     } else {
-      setCheckedRowPks(checkedRowPks.filter((item) => item !== pk));
+      setCheckedRowPks(checkedRowPks.filter((item) => item !== id));
     }
   };
 
@@ -210,7 +210,7 @@ function UncompletedProjectTaskList({
   ) => {
     const checked = event.target.checked;
     const rowPks =
-      taskListData?.ProjectProgressList.map((item) => item.pk) || [];
+      taskListData?.ProjectProgressList.map((item) => item.id) || [];
 
     if (checked) {
       setCheckedRowPks([...checkedRowPks, ...rowPks]);
@@ -679,7 +679,7 @@ function UncompletedProjectTaskList({
       </Box>
 
       {is_show_for_mobile ? (
-        <Box>
+        <Box border={"0px solid blue"}>
           {taskListData ? (
             <UncompletedTaskRow
               ProjectProgressList={filteredData}

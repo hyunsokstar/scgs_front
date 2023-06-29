@@ -61,8 +61,8 @@ function UncompletedTaskRow({
   );
 
   const deleteMutation = useMutation(
-    (pk: number) => {
-      return deleteOneProjectTask(pk);
+    (id: number) => {
+      return deleteOneProjectTask(id);
     },
     {
       onSettled: () => {
@@ -85,8 +85,8 @@ function UncompletedTaskRow({
 
   // console.log("ProjectProgressList : ", ProjectProgressList);
 
-  const deleteHandelr = (pk: number) => {
-    const response = deleteMutation.mutate(pk);
+  const deleteHandelr = (id: number) => {
+    const response = deleteMutation.mutate(id);
     console.log("response :", response);
   };
 
@@ -228,7 +228,7 @@ function UncompletedTaskRow({
 
   const updateHandlerForTaskStatus = (taskPk: string) => {
     updateProjectTaskMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update 핸들러 for task_status check id : ", taskPk);
   };
 
   return (
@@ -241,7 +241,7 @@ function UncompletedTaskRow({
               return (
                 <ListItem
                   width={"1600px"}
-                  key={task.pk}
+                  key={task.id}
                   height={16}
                   border={"0px solid lightgray"}
                   my={0}
@@ -284,7 +284,7 @@ function UncompletedTaskRow({
                   <Box border={"0px solid blue"} width={"440px"}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
-                        to={`/project_admin/${task.pk}`}
+                        to={`/project_admin/${task.id}`}
                         style={{ textDecoration: "underline" }}
                       >
                         {task.task}
@@ -305,7 +305,7 @@ function UncompletedTaskRow({
                     <Text>완료 : &nbsp;</Text>
                     <SlideToggleButton
                       onChange={() => {
-                        updateHandlerForTaskStatus(task.pk);
+                        updateHandlerForTaskStatus(task.id);
                       }}
                       checked={task.task_completed}
                     />
@@ -324,8 +324,8 @@ function UncompletedTaskRow({
                       <SlideToggleButton
                         onChange={() => {
                           update_for_check_for_cash_prize(
-                            task.pk,
-                            task.task_manager?.pk,
+                            task.id,
+                            task.task_manager?.id,
                             task.cash_prize
                           );
                         }}
@@ -337,8 +337,8 @@ function UncompletedTaskRow({
                       <SlideToggleButton
                         onChange={() => {
                           update_for_check_for_cash_prize(
-                            task.pk,
-                            task.task_manager?.pk,
+                            task.id,
+                            task.task_manager?.id,
                             task.cash_prize
                           );
                         }}
@@ -385,7 +385,7 @@ function UncompletedTaskRow({
                           size={"sm"}
                           aria-label={""}
                           ml={2}
-                          onClick={() => updateChallengerListByTaskPk(task.pk)}
+                          onClick={() => updateChallengerListByTaskPk(task.id)}
                         >
                           <CheckIcon boxSize={3} />
                         </Button>
@@ -424,7 +424,7 @@ function UncompletedTaskRow({
                           size="md"
                           mr={0}
                           _hover={{ bg: "blue.600" }}
-                          onClick={() => updateForCashPrize(task.pk)}
+                          onClick={() => updateForCashPrize(task.id)}
                         >
                           입력
                         </Button>
@@ -439,7 +439,7 @@ function UncompletedTaskRow({
                         colorScheme="red"
                         defaultChecked={task.is_task_for_cash_prize}
                         onChange={() =>
-                          update_For_is_task_for_cash_prize(task.pk)
+                          update_For_is_task_for_cash_prize(task.id)
                         }
                       >
                         C
@@ -451,7 +451,7 @@ function UncompletedTaskRow({
                         defaultChecked={task.is_task_for_cash_prize}
                         disabled={true}
                         onChange={() =>
-                          update_For_is_task_for_cash_prize(task.pk)
+                          update_For_is_task_for_cash_prize(task.id)
                         }
                       >
                         C
@@ -464,7 +464,7 @@ function UncompletedTaskRow({
                       aria-label="삭제"
                       icon={<FaTrash />}
                       variant="ghost"
-                      onClick={() => deleteHandelr(parseInt(task.pk))}
+                      onClick={() => deleteHandelr(parseInt(task.id))}
                     />
                   </Box>
                 </ListItem>

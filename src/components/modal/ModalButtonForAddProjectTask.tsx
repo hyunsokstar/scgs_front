@@ -129,14 +129,13 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
     <Box>
       <Button
         onClick={onOpen}
-        size={"xs"}
+        size={"sm"}
         colorScheme="green"
         _hover={{ bg: "green.700" }}
         _active={{ bg: "green.800" }}
         _focus={{ boxShadow: "none" }}
-        fontSize={20}
-        py={5}
-        px={2}
+        fontSize={16}
+        p={3}
       >
         {button_text}
       </Button>

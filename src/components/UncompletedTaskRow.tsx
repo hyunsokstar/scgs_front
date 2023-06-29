@@ -60,15 +60,10 @@ function UncompletedTaskRow({
   projectTaskListRefatch,
   checkedRowPks,
 }: IProps): ReactElement {
-  const completedColor = useColorModeValue("green.500", "green.300");
-  const inProgressColor = useColorModeValue("orange.500", "orange.300");
   const queryClient = useQueryClient();
 
   // console.log("ProjectProgressList : ", ProjectProgressList);
 
-  const handleSlideToggleChange = (checked: boolean) => {
-    console.log(`SlideToggle is now ${checked ? "on" : "off"}`);
-  };
   const toast = useToast();
 
   const updateProjectTaskIsTestingMutations = useMutation(
@@ -91,7 +86,7 @@ function UncompletedTaskRow({
 
   const updateHandlerForTaskIsTesting = (taskPk: string) => {
     updateProjectTaskIsTestingMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update 핸들러 for task_status check id : ", taskPk);
   };
 
   const updateProjectTaskMutations = useMutation(updateProjectTaskCompleted, {
@@ -111,7 +106,7 @@ function UncompletedTaskRow({
 
   const updateHandlerForTaskStatus = (taskPk: string) => {
     updateProjectTaskMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update 핸들러 for task_status check id : ", taskPk);
   };
 
   const updateProjectTaskInProgressMutations = useMutation(
@@ -136,7 +131,7 @@ function UncompletedTaskRow({
 
   const updateHandlerForTaskInProgress = (taskPk: string) => {
     updateProjectTaskInProgressMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update 핸들러 for task_status check id : ", taskPk);
   };
 
   const updateMutationForProjectImportance = useMutation(
@@ -167,8 +162,8 @@ function UncompletedTaskRow({
   };
 
   const deleteMutation = useMutation(
-    (pk: number) => {
-      return deleteOneProjectTask(pk);
+    (id: number) => {
+      return deleteOneProjectTask(id);
     },
     {
       onSettled: () => {
@@ -189,8 +184,8 @@ function UncompletedTaskRow({
     }
   );
 
-  const deleteHandelr = (pk: number) => {
-    const response = deleteMutation.mutate(pk);
+  const deleteHandelr = (id: number) => {
+    const response = deleteMutation.mutate(id);
     console.log("response :", response);
   };
 
@@ -304,17 +299,16 @@ function UncompletedTaskRow({
               return (
                 <List
                   display={"flex"}
-                  flex={1}
                   justifyContent={"space-between"}
                   alignItems={"center"}
-                  width={"2400px"}
+                  width={"2600px"}
                 >
                   <ListItem border={"0px solid yellow"} flex={0.5}>
                     <Checkbox
                       mx={2}
                       border={"1px solid black"}
-                      value={task.pk}
-                      isChecked={checkedRowPks.includes(task.pk)}
+                      value={task.id}
+                      isChecked={checkedRowPks.includes(task.id)}
                       onChange={handleCheckboxChange}
                     />
                   </ListItem>
@@ -334,7 +328,7 @@ function UncompletedTaskRow({
                   <ListItem border={"0px solid blue"} flex={6}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
-                        to={`/project_admin/${task.pk}`}
+                        to={`/project_admin/${task.id}`}
                         style={{ textDecoration: "underline" }}
                       >
                         {task.task}
@@ -359,7 +353,7 @@ function UncompletedTaskRow({
                   >
                     <StarRating
                       initialRating={task.importance}
-                      taskPk={task.pk}
+                      taskPk={task.id}
                       onChangeForStarRatingHandler={
                         onChangeForStarRatingHandler
                       }
@@ -375,7 +369,7 @@ function UncompletedTaskRow({
                   >
                     <SlideToggleButtonForInProgress
                       onChange={() => {
-                        updateHandlerForTaskInProgress(task.pk);
+                        updateHandlerForTaskInProgress(task.id);
                       }}
                       checked={task.in_progress}
                       is_disabled={task.is_testing}
@@ -383,7 +377,7 @@ function UncompletedTaskRow({
 
                     <SlideToggleButtonForIsTesting
                       onChange={() => {
-                        updateHandlerForTaskIsTesting(task.pk);
+                        updateHandlerForTaskIsTesting(task.id);
                       }}
                       checked={task.is_testing}
                       is_disabled={!task.in_progress}
@@ -391,7 +385,7 @@ function UncompletedTaskRow({
 
                     <SlideToggleButton
                       onChange={() => {
-                        updateHandlerForTaskStatus(task.pk);
+                        updateHandlerForTaskStatus(task.id);
                       }}
                       checked={task.task_completed}
                       in_progress={!task.in_progress}
@@ -406,7 +400,7 @@ function UncompletedTaskRow({
                       <HStack>
                         <Text>{task.started_at_formatted}</Text>
                         <ModalButtonForUpdateProjectTaskStartedAt
-                          taskPk={task.pk}
+                          taskPk={task.id}
                           original_due_date={task.due_date ? task.due_date : ""}
                           started_at={task.started_at ? task.started_at : ""}
                           projectTaskListRefatch={projectTaskListRefatch}
@@ -420,7 +414,7 @@ function UncompletedTaskRow({
                       <Text>{task.due_date_formatted}</Text>
 
                       <ModalButtonForUpdateProjectTaskCompleteDate
-                        taskPk={task.pk}
+                        taskPk={task.id}
                         original_due_date={task.due_date ? task.due_date : ""}
                         started_at={task.started_at ? task.started_at : ""}
                         projectTaskListRefatch={projectTaskListRefatch}
@@ -455,7 +449,7 @@ function UncompletedTaskRow({
                       size="lg"
                       colorScheme="red"
                       defaultChecked={task.is_task_for_urgent}
-                      onChange={() => update_For_is_task_for_urgent(task.pk)}
+                      onChange={() => update_For_is_task_for_urgent(task.id)}
                     />
                   </ListItem>
                   <ListItem display={"flex"} flex={1}>
@@ -467,7 +461,7 @@ function UncompletedTaskRow({
                       colorScheme="red"
                       defaultChecked={task.is_task_for_cash_prize}
                       onChange={() =>
-                        update_For_is_task_for_cash_prize(task.pk)
+                        update_For_is_task_for_cash_prize(task.id)
                       }
                     />
                   </ListItem>
@@ -476,10 +470,10 @@ function UncompletedTaskRow({
                       aria-label="삭제"
                       icon={<FaTrash />}
                       variant="ghost"
-                      onClick={() => deleteHandelr(parseInt(task.pk))}
+                      onClick={() => deleteHandelr(parseInt(task.id))}
                     /> */}
                     <CommonDeleteButtonForPk
-                      pk={task.pk}
+                      id={task.id}
                       targetInfoToDelete={task.task}
                       handlerForDelete={deleteHandelr}
                     />

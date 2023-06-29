@@ -54,8 +54,8 @@ function CompletedTaskRow({
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getUncompletedTaskList"]);
-      queryClient.refetchQueries(["getCompletedTaskList"]);
+      queryClient.refetchQueries(["getUncompletedTaskLidt"]);
+      queryClient.refetchQueries(["getCompletedTaskLidt"]);
       // if (projectTaskListRefatch) {
       //   projectTaskListRefatch();
       // }
@@ -70,7 +70,7 @@ function CompletedTaskRow({
 
   const updateHandlerForTaskStatus = (taskPk: string) => {
     updateProjectTaskMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update 핸들러 for task_status check id : ", taskPk);
   };
 
   const updateMutationForProjectImportance = useMutation(
@@ -102,8 +102,8 @@ function CompletedTaskRow({
   };
 
   const deleteMutation = useMutation(
-    (pk: number) => {
-      return deleteOneProjectTask(pk);
+    (id: number) => {
+      return deleteOneProjectTask(id);
     },
     {
       onSettled: () => {
@@ -124,8 +124,8 @@ function CompletedTaskRow({
     }
   );
 
-  const deleteHandelr = (pk: number) => {
-    const response = deleteMutation.mutate(pk);
+  const deleteHandelr = (id: number) => {
+    const response = deleteMutation.mutate(id);
     console.log("response :", response);
     // if (projectTaskListRefatch) {
     //   projectTaskListRefatch();
@@ -136,13 +136,13 @@ function CompletedTaskRow({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const checked = event.target.checked;
-    const rowPks = ProjectProgressList?.map((item) => item.pk) || [];
+    const rowPks = ProjectProgressList?.map((item) => item.id) || [];
 
     if (checked) {
-      // Add all pks to the checkedRowPks array
+      // Add all ids to the checkedRowPks array
       setCheckedRowPks([...checkedRowPks, ...rowPks]);
     } else {
-      // Remove all pks from the checkedRowPks array
+      // Remove all ids from the checkedRowPks array
       setCheckedRowPks([]);
     }
   };
@@ -203,7 +203,7 @@ function CompletedTaskRow({
             ProjectProgressList?.map((task) => {
               return (
                 <ListItem
-                  key={task.pk}
+                  key={task.id}
                   height={16}
                   border={"1px solid lightgray"}
                   width={"1842px"}
@@ -219,8 +219,8 @@ function CompletedTaskRow({
                         <Checkbox
                           mx={2}
                           border={"1px solid black"}
-                          value={task.pk}
-                          isChecked={checkedRowPks?.includes(task.pk)}
+                          value={task.id}
+                          isChecked={checkedRowPks?.includes(task.id)}
                           onChange={handleCheckboxChange}
                         />
                       </HStack>
@@ -234,7 +234,7 @@ function CompletedTaskRow({
                     <Box border={"0px solid blue"} width={"580px"}>
                       <Text fontSize="sm" fontWeight="bold">
                         <Link
-                          to={`/project_admin/${task.pk}`}
+                          to={`/project_admin/${task.id}`}
                           style={{ textDecoration: "underline" }}
                         >
                           {task.task}
@@ -251,7 +251,7 @@ function CompletedTaskRow({
                     >
                       <SlideToggleButton
                         onChange={() => {
-                          updateHandlerForTaskStatus(task.pk);
+                          updateHandlerForTaskStatus(task.id);
                         }}
                         checked={task.task_completed}
                       />
@@ -265,7 +265,7 @@ function CompletedTaskRow({
                         <HStack>
                           <Text>{task.started_at_formatted}</Text>
                           <ModalButtonForUpdateProjectTaskStartedAt
-                            taskPk={task.pk}
+                            taskPk={task.id}
                             original_due_date={
                               task.due_date ? task.due_date : ""
                             }
@@ -284,7 +284,7 @@ function CompletedTaskRow({
                         <Text>{task.completed_at_formatted}</Text>
 
                         <ModalButtonForUpdateProjectTaskCompleteDate
-                          taskPk={task.pk}
+                          taskPk={task.id}
                           original_due_date={task.due_date ? task.due_date : ""}
                           started_at={task.started_at ? task.started_at : ""}
                           projectTaskListRefatch={projectTaskListRefatch}
@@ -332,7 +332,7 @@ function CompletedTaskRow({
                         aria-label="삭제"
                         icon={<FaTrash />}
                         variant="ghost"
-                        onClick={() => deleteHandelr(parseInt(task.pk))}
+                        onClick={() => deleteHandelr(parseInt(task.id))}
                       />
                     </Box>
                   </HStack>

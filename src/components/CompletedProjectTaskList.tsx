@@ -118,12 +118,12 @@ function CompletedProjectTaskList({}: Props): ReactElement {
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    const pk = parseInt(value, 10);
+    const id = parseInt(value, 10);
 
     if (checked) {
-      setCheckedRowPks([...checkedRowPks, pk]);
+      setCheckedRowPks([...checkedRowPks, id]);
     } else {
-      setCheckedRowPks(checkedRowPks.filter((item) => item !== pk));
+      setCheckedRowPks(checkedRowPks.filter((item) => item !== id));
     }
   };
 
@@ -156,7 +156,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
         py={2}
       >
         <Box fontSize={18}>
-          <Text>complted Tasks</Text>
+          <Text>completed Tasks</Text>
           <Text>
             total: {pageProgressListData?.totalPageCount} , per:{" "}
             {pageProgressListData?.task_number_for_one_page} 개

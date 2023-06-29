@@ -76,9 +76,14 @@ export default function SlideForUncompletedTaskList({
         </Button>
       );
     }
-
     return buttons;
   };
+
+  const is_show_for_mobile = useBreakpointValue({
+    base: false, // for mobile and small screens
+    md: true, // for medium-sized screens and up
+    lg: true, // for large screens and up
+  });
 
   return (
     <ChakraProvider>
