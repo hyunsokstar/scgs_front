@@ -50,7 +50,7 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
     ["getTaskListForUpdateImportanceForChecked", checkedRowPks],
     apiForGetTaskListForCheckedPks,
     {
-      enabled: false,
+      enabled: true,
     }
   );
 
@@ -69,8 +69,8 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
           title: "task manager update for check success",
           description: result.message,
         });
-
         queryClient.invalidateQueries(["getUncompletedTaskList"]);
+        onClose();
       },
       onSettled: () => {
         queryClient.refetchQueries([

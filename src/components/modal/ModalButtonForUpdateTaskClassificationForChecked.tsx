@@ -63,7 +63,7 @@ const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
     ["getTaskListForUpdateImportanceForChecked", checkedRowPks],
     apiForGetTaskListForCheckedPks,
     {
-      enabled: false,
+      enabled: true,
     }
   );
 
@@ -83,7 +83,7 @@ const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
           title: "task_classification update success",
           description: result.message,
         });
-
+        onClose();
         queryClient.invalidateQueries(["getUncompletedTaskList"]);
       },
       onSettled: () => {

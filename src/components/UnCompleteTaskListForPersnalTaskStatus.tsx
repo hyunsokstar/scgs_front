@@ -1,9 +1,8 @@
 import { Box } from "@chakra-ui/react";
 import React, { useState } from "react";
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
-import UncompletedTaskRowForMe from "./UncompletedTaskRowForMe";
 import { typeForUncompletedTaskListForPersonalTaskStatus } from "../types/user/user_types";
-import UncompletedTaskRowForPersonalUserTaskStatus from "./UncompletedTaskRowForPersonalUserTaskStatus";
+import UncompletedTaskListForUser from "./UncompletedTaskListForUser";
 
 interface Props {
   dataForUncompletedTaskListDataForSelectedUser?:
@@ -79,7 +78,7 @@ const UnCompleteTaskListForPersnalTaskStatus = ({
 
       {dataForUncompletedTaskListDataForSelectedUser ? (
         <Box>
-          <UncompletedTaskRowForPersonalUserTaskStatus
+          <UncompletedTaskListForUser
             ProjectProgressList={
               dataForUncompletedTaskListDataForSelectedUser.ProjectProgressList
             }

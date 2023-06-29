@@ -1,210 +1,58 @@
-import React, { ReactElement, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React from "react";
 import {
+  Box,
   List,
   ListItem,
   Checkbox,
   Text,
-  useColorModeValue,
-  Box,
-  IconButton,
+  Link,
   HStack,
-  useToast,
+  IconButton,
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
-import StarRating from "./StarRating";
-import SlideToggleButton from "./SlideToggleButton";
-import {
-  updateProjectImportance,
-  updateProjectInProgress,
-  updateProjectIsTesting,
-  updateProjectTaskCompleted,
-} from "../apis/project_progress_api";
-import { Link } from "react-router-dom";
-import { deleteOneProjectTask } from "../apis/user_api";
-import PaginationComponent from "./PaginationComponent";
-import ModalButtonForUpdateProjectTaskCompleteDate from "./modal/ModalButtonForUpdateProjectTaskCompleteDate";
-import ModalButtonForUpdateProjectTaskStartedAt from "./modal/ModalButtonForUpdateProjectTaskStartedAt";
-import SlideToggleButtonForInProgress from "./SlideToggleButton/SlideToggleButtonForInProgress";
-import SlideToggleButtonForIsTesting from "./SlideToggleButton/SlideToggleButtonForIsTesting";
+import PaginationComponent from "../PaginationComponent";
+import ModalButtonForUpdateProjectTaskStartedAt from "../modal/ModalButtonForUpdateProjectTaskStartedAt";
+import StarRating from "../StarRating";
+import SlideToggleButtonForIsTesting from "../SlideToggleButton/SlideToggleButtonForIsTesting";
+import SlideToggleButton from "../SlideToggleButton";
+import SlideToggleButtonForInProgress from "../SlideToggleButton/SlideToggleButtonForInProgress";
+import { ProjectProgress } from "../../types/user/user_types";
 
-interface IProps {
-  ProjectProgressList: any;
-  totalPageCount: number;
+interface ListForUncompletedTaskForUserProps {
+  ProjectProgressList: ProjectProgress[];
   currentPageNum: number;
-  setCurrentPageNum: any;
-  task_number_for_one_page: number | undefined;
-  projectTaskListRefatch: () => void;
+  task_number_for_one_page: number;
+  totalPageCount: number;
+  setCurrentPageNum: number;
+  updateHandlerForTaskInProgress: any;
+  updateHandlerForTaskIsTesting: any;
+  updateHandlerForTaskStatus: any;
+  onChangeForStarRatingHandler: any;
+  deleteHandler: any;
+  projectTaskListRefetch: any;
 }
 
-function UncompletedTaskRowForMe({
+const ListForUncompletedTaskForUser: React.FC<
+  ListForUncompletedTaskForUserProps
+> = ({
   ProjectProgressList,
+  currentPageNum,
   task_number_for_one_page,
   totalPageCount,
-  currentPageNum,
   setCurrentPageNum,
-  projectTaskListRefatch,
-}: IProps): ReactElement {
-  const completedColor = useColorModeValue("green.500", "green.300");
-  const inProgressColor = useColorModeValue("orange.500", "orange.300");
-  const queryClient = useQueryClient();
-
-  const handleSlideToggleChange = (checked: boolean) => {
-    console.log(`SlideToggle is now ${checked ? "on" : "off"}`);
-  };
-  const toast = useToast();
-
-  const updateProjectTaskMutations = useMutation(updateProjectTaskCompleted, {
-    onSuccess: (result: any) => {
-      console.log("result : ", result);
-
-      queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
-      queryClient.refetchQueries([
-        "apiForCompletedTaskListDataForSelectedUser",
-      ]);
-
-      toast({
-        status: "success",
-        title: "task status update success",
-        description: result.message,
-      });
-    },
-  });
-
-  const updateHandlerForTaskStatus = (taskPk: string) => {
-    updateProjectTaskMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
-  };
-
-  const updateMutationForProjectImportance = useMutation(
-    updateProjectImportance,
-    {
-      onSuccess: (result: any) => {
-        // console.log("result : ", result);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
-        }
-        queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
-
-        toast({
-          status: "success",
-          title: "task status update success",
-          description: result.message,
-        });
-      },
-      onError: (err) => {
-        console.log("error : ", err);
-      },
-    }
-  );
-
-  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const onChangeForStarRatingHandler = ({ taskPk, star_count }: any) => {
-    updateMutationForProjectImportance.mutate({ taskPk, star_count });
-  };
-
-  const deleteMutation = useMutation(
-    (pk: number) => {
-      return deleteOneProjectTask(pk);
-    },
-    {
-      onSettled: () => {
-        // setSelectedItems([]);
-      },
-      onSuccess: (data) => {
-        console.log("data : ", data);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
-        }
-        queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
-
-        toast({
-          title: "delete project task 성공!",
-          status: "success",
-        });
-      },
-    }
-  );
-
-  const deleteHandelr = (pk: number) => {
-    const response = deleteMutation.mutate(pk);
-    console.log("response :", response);
-    // if (projectTaskListRefatch) {
-    //   projectTaskListRefatch();
-    // }
-  };
-
-  const updateProjectTaskInProgressMutations = useMutation(
-    updateProjectInProgress,
-    {
-      onSuccess: (result: any) => {
-        console.log("result : ", result);
-
-        // projectTaskListRefatch();
-        queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
-
-        // projectTaskListRefatch()
-
-        toast({
-          status: "success",
-          title: "task status update success",
-          description: result.message,
-        });
-      },
-      onError: (err: any) => {
-        console.log("error : ", err);
-      },
-    }
-  );
-
-  const updateHandlerForTaskInProgress = (taskPk: string) => {
-    updateProjectTaskInProgressMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
-  };
-
-  const updateProjectTaskIsTestingMutations = useMutation(
-    updateProjectIsTesting,
-    {
-      onSuccess: (result: any) => {
-        console.log("result : ", result);
-
-        queryClient.refetchQueries(["apiForGetTaskDataForSelectedUser"]);
-        queryClient.refetchQueries([
-          "apiForCompletedTaskListDataForSelectedUser",
-        ]);
-
-
-        toast({
-          status: "success",
-          title: "task status update success",
-          description: result.message,
-        });
-      },
-    }
-  );
-
-  const updateHandlerForTaskIsTesting = (taskPk: string) => {
-    updateProjectTaskIsTestingMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
-  };
-
-  if (ProjectProgressList && ProjectProgressList.length === 0) {
-    return (
-      <Box textAlign="center">
-        <Text fontSize={"48px"} my={3}>
-          No Data Available!
-        </Text>
-      </Box>
-    );
-  }
-
+  updateHandlerForTaskInProgress,
+  updateHandlerForTaskIsTesting,
+  updateHandlerForTaskStatus,
+  onChangeForStarRatingHandler,
+  deleteHandler,
+  projectTaskListRefetch,
+}) => {
   return (
     <Box border={"0px solid blue"} maxWidth={"100%"}>
       <Box overflowX="auto" width="100%">
         {ProjectProgressList ? (
           <List>
             {ProjectProgressList?.map((task: any) => {
-              // console.log("task.task_manager : ", task.taskmanager);
               return (
                 <ListItem
                   key={task.pk}
@@ -274,7 +122,7 @@ function UncompletedTaskRowForMe({
                           }}
                           checked={task.task_completed}
                           in_progress={!task.in_progress} // 진행중이 아니면 disabled true
-                          is_testing={!task.is_testing} //  testing 중이 아니면
+                          is_testing={!task.is_testing} // testing 중이 아니면
                         />
                       </Box>
                     </Box>
@@ -308,7 +156,7 @@ function UncompletedTaskRowForMe({
                               task.due_date ? task.due_date : ""
                             }
                             started_at={task.started_at ? task.started_at : ""}
-                            projectTaskListRefatch={projectTaskListRefatch}
+                            projectTaskListRefetch={projectTaskListRefetch}
                           />
                         </HStack>
                       </HStack>
@@ -316,13 +164,12 @@ function UncompletedTaskRowForMe({
                         <Box textAlign={"center"}>
                           <Text>마감</Text>
                         </Box>
-                        <Text>{task.due_date_formatted}</Text>
 
-                        <ModalButtonForUpdateProjectTaskCompleteDate
+                        <ModalButtonForUpdateProjectTaskStartedAt
                           taskPk={task.pk}
                           original_due_date={task.due_date ? task.due_date : ""}
                           started_at={task.started_at ? task.started_at : ""}
-                          projectTaskListRefatch={projectTaskListRefatch}
+                          projectTaskListRefetch={projectTaskListRefetch}
                         />
                       </HStack>
                     </Box>
@@ -351,7 +198,7 @@ function UncompletedTaskRowForMe({
                         aria-label="삭제"
                         icon={<FaTrash />}
                         variant="ghost"
-                        onClick={() => deleteHandelr(parseInt(task.pk))}
+                        onClick={() => deleteHandler(parseInt(task.pk))}
                       />
                     </Box>
                   </HStack>
@@ -364,7 +211,6 @@ function UncompletedTaskRowForMe({
         )}
       </Box>
 
-      {/* 페이지 네이션 영역 */}
       <Box mt={5}>
         {ProjectProgressList ? (
           <Box maxW="100%" bg="blue.100" color="red.500" mt={-3.5}>
@@ -381,6 +227,6 @@ function UncompletedTaskRowForMe({
       </Box>
     </Box>
   );
-}
+};
 
-export default UncompletedTaskRowForMe;
+export default ListForUncompletedTaskForUser;

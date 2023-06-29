@@ -60,7 +60,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
     ["getTaskListForCheckedPks", checkedRowPks],
     apiForGetTaskListForCheckedPks,
     {
-      enabled: false,
+      enabled: true,
     }
   );
 
@@ -71,8 +71,8 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
     error,
   } = useQuery<IUserNamesForCreate[]>(["user_names"], getUserNamesForCreate);
 
-  // console.log("checkedRowPks : ", checkedRowPks);
-  // console.log("dataForTaskListForCheckedPks : ", dataForTaskListForCheckedPks);
+  console.log("checkedRowPks : ", checkedRowPks);
+  console.log("dataForTaskListForCheckedPks : ", dataForTaskListForCheckedPks);
   const queryClient = useQueryClient();
 
   const onClose = () => setIsOpen(false);
@@ -91,6 +91,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
           title: "task manager update for check success",
           description: result.message,
         });
+        onClose();
       },
     }
   );
