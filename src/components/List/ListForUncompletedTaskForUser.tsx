@@ -30,6 +30,8 @@ interface ListForUncompletedTaskForUserProps {
   onChangeForStarRatingHandler: any;
   deleteHandler: any;
   projectTaskListRefetch: any;
+  handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checkedRowPks: number[];
 }
 
 const ListForUncompletedTaskForUser: React.FC<
@@ -45,6 +47,8 @@ const ListForUncompletedTaskForUser: React.FC<
   updateHandlerForTaskStatus,
   onChangeForStarRatingHandler,
   deleteHandler,
+  handleCheckboxChange,
+  checkedRowPks,
   projectTaskListRefetch,
 }) => {
   return (
@@ -66,8 +70,16 @@ const ListForUncompletedTaskForUser: React.FC<
                   _hover={{ backgroundColor: "gray.100" }}
                   width={"100%"}
                 >
+                  {/* {checkedRowPks.map((pk) => (
+                    <p key={pk}>{pk}</p>
+                  ))} */}
                   <Box border={"0px solid yellow"} width={"50px"}>
-                    <Checkbox mx={2} />
+                    <Checkbox
+                      mx={2}
+                      value={task.pk}
+                      isChecked={checkedRowPks.includes(task.pk)}
+                      onChange={handleCheckboxChange}
+                    />
                   </Box>
 
                   <Box border={"0px solid yellow"} width={"100px"}>

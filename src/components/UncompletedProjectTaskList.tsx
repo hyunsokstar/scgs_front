@@ -688,8 +688,8 @@ function UncompletedProjectTaskList({
               currentPageNum={currentPageNum}
               setCurrentPageNum={setCurrentPageNum}
               projectTaskListRefatch={projectTaskListRefatch}
-              handleCheckboxChange={handleCheckboxChange}
               checkedRowPks={checkedRowPks}
+              handleCheckboxChange={handleCheckboxChange}
             />
           ) : (
             ""

@@ -19,6 +19,7 @@ const UnCompleteTaskListForPersnalTaskStatus = ({
     useState<string>("");
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
 
+  
   return (
     <Box>
       <Box
@@ -76,38 +77,27 @@ const UnCompleteTaskListForPersnalTaskStatus = ({
         </Box>
       </Box>
 
-      {dataForUncompletedTaskListDataForSelectedUser ? (
-        <Box>
-          <Box display={"flex"} gap={2} p={2}>
-            <Checkbox />
-            <Button
-              variant={"outline"}
-              _hover={{ backgroundColor: "red.100" }}
-              size={"sm"}
-            >
-              delete for check
-            </Button>
-          </Box>
-          <UncompletedTaskListForUser
-            ProjectProgressList={
-              dataForUncompletedTaskListDataForSelectedUser.ProjectProgressList
-            }
-            task_number_for_one_page={
-              dataForUncompletedTaskListDataForSelectedUser.task_number_for_one_page
-            }
-            totalPageCount={
-              dataForUncompletedTaskListDataForSelectedUser.totalPageCount
-            }
-            currentPageNum={currentPageNum}
-            setCurrentPageNum={setCurrentPageNum}
-            projectTaskListRefetch={
-              refetchForUncompletedTaskListDataForSelectedUser
-            }
-          />
-        </Box>
-      ) : (
-        ""
-      )}
+      <Box>
+        <UncompletedTaskListForUser
+          ProjectProgressList={
+            dataForUncompletedTaskListDataForSelectedUser &&
+            dataForUncompletedTaskListDataForSelectedUser.ProjectProgressList
+          }
+          task_number_for_one_page={
+            dataForUncompletedTaskListDataForSelectedUser &&
+            dataForUncompletedTaskListDataForSelectedUser.task_number_for_one_page
+          }
+          totalPageCount={
+            dataForUncompletedTaskListDataForSelectedUser &&
+            dataForUncompletedTaskListDataForSelectedUser.totalPageCount
+          }
+          currentPageNum={currentPageNum}
+          setCurrentPageNum={setCurrentPageNum}
+          projectTaskListRefetch={
+            refetchForUncompletedTaskListDataForSelectedUser
+          }
+        />
+      </Box>
     </Box>
   );
 };
