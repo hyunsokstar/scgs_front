@@ -225,7 +225,6 @@ function TaskListUntilYesterday({
       <Box display={"flex"} flexDirection={"column"} gap={2} p={2}>
         <Box
           width={"100%"}
-          // border={"2px solid blue"}
           display={"grid"}
           gap={2}
           p={2}

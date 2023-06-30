@@ -276,13 +276,7 @@ function UncompletedProjectTaskList({
   }
 
   return (
-    <Box
-      border={"1px solid black"}
-      p={0}
-      mt={2}
-      width={"100%"}
-      // overflowX={"scroll"}
-    >
+    <Box border={"1px solid black"} p={0} mt={2} width={"100%"}>
       <Box
         border={"0px solid pink"}
         display={"grid"}
@@ -298,8 +292,8 @@ function UncompletedProjectTaskList({
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
-          p={3}
-          height={"290px"}
+          // p={3}
+          maxHeight={"290px"}
           overflowY={"scroll"}
         >
           <Box
@@ -308,10 +302,15 @@ function UncompletedProjectTaskList({
             flexDirection={"column"}
             gap={3}
           >
-            <Box borderBottom={"3px solid #9AE6B4"}>
-              <Box>
-                <Text fontSize={20}>
-                  uncomplete task (total: {taskListData?.totalPageCount}, per :{" "}
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              borderBottom={"3px solid #9AE6B4"}
+            >
+              <Box textAlign={"center"}>
+                <Text fontSize={20}>uncomplete task</Text>
+                <Text>
+                  (total: {taskListData?.totalPageCount}, per :{" "}
                   {taskListData?.task_number_for_one_page})
                 </Text>
               </Box>
@@ -327,12 +326,12 @@ function UncompletedProjectTaskList({
                   task_status={"ready"}
                   status_imoge={"⚪"}
                   status_count={taskListData?.count_for_ready}
-                  button_size={"md"}
+                  button_size={"sm"}
                   task_status_for_search={task_status_for_search}
                   set_task_status_for_search={set_task_status_for_search}
                 />
                 <ButtonForShowCountForTaskStatus
-                  button_size={"md"}
+                  button_size={"sm"}
                   task_status={"in_progress"}
                   status_imoge={"🟡"}
                   status_count={taskListData?.count_for_in_progress}
@@ -340,7 +339,7 @@ function UncompletedProjectTaskList({
                   set_task_status_for_search={set_task_status_for_search}
                 />
                 <ButtonForShowCountForTaskStatus
-                  button_size={"md"}
+                  button_size={"sm"}
                   task_status={"testing"}
                   status_imoge={"🟠"}
                   status_count={taskListData?.count_for_in_testing}
@@ -354,6 +353,7 @@ function UncompletedProjectTaskList({
                 <StarRatingForSetFilterOptionForTaskList
                   rating={rating_for_filter_option}
                   setRating={set_rating_for_filter_option}
+                  button_size={"sm"}
                 />
               </Box>
             </Box>
@@ -698,14 +698,23 @@ function UncompletedProjectTaskList({
         </Box>
       ) : (
         <Box>
-          {filteredData ? (
+          {filteredData && filteredData.length ? (
             <SlideForUncompletedTaskList
               listData={filteredData}
               handleCheckboxChange={handleCheckboxChange}
               checkedRowPks={checkedRowPks}
             />
           ) : (
-            "no data"
+            <Box
+              height={"100px"}
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              fontSize={"20px"}
+              bgColor={"orange.100"}
+            >
+              no data
+            </Box>
           )}
         </Box>
       )}

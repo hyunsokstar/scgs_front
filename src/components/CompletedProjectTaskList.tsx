@@ -129,8 +129,8 @@ function CompletedProjectTaskList({}: Props): ReactElement {
 
   const column_option_for_width = useBreakpointValue({
     base: "column", // for mobile and small screens
-    md: "row", // for medium-sized screens and up
-    lg: "row", // for large screens and up
+    md: "column", // for medium-sized screens and up
+    lg: "column", // for large screens and up
   });
 
   const is_show_for_mobile = useBreakpointValue({
@@ -141,109 +141,88 @@ function CompletedProjectTaskList({}: Props): ReactElement {
 
   // 2244
   return (
-    <Box>
-      <Box
-        display={"flex"}
-        flexDirection={column_option_for_width}
-        overflowY={"scroll"}
-        gap={2}
-        border={"1px solid black"}
-        justifyContent={"space-around"}
-        bgColor={"purple.200"}
-        alignItems={"center"}
-        height={["340px", "260px", "260px"]}
-        px={"3"}
-        py={3}
-        width={"100%"}
-      >
-        <Box fontSize={20} width={"300px"}>
-          <Box border={"0px solid blue"} textAlign={"center"}>
+    <Box width={"100%"} border={"1px solid black"}>
+      <Box bg={"purple.100"} width={"100%"}>
+        <Box
+          display={"flex"}
+          flexDirection={"column"}
+          fontSize={"18px"}
+          border={"0px solid blue"}
+          pb={2}
+          gap={2}
+          bg={"purple.100"}
+          mx={"auto"}
+          width={["90%", "90%", "30%", "30%"]}
+        >
+          <Box fontSize={"18px"}>
             <Text>completed Tasks</Text>
             <Text>
               total: {pageProgressListData?.totalPageCount} , per:{" "}
               {pageProgressListData?.task_number_for_one_page} 개
             </Text>
           </Box>
-          <Box border="0px solid green" width={"100%"} p={3}>
+          <Box
+            border="0px solid green"
+            width={"100%"}
+            overflowY={"scroll"}
+            maxHeight={["160px", "160px", "160px"]}
+          >
             <Box
               flexBasis="100%"
-              overflowY={"scroll"}
-              height={"130px"}
               width={"100%"}
               border="0px solid black"
               // p={2}
             >
               {pageProgressListData?.writers_info?.map((writer) => (
                 <Box key={writer.username} fontSize="lg" color="blue.900">
-                  <VStack>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      border="1px solid black"
-                      mb={1}
-                      _hover={{
-                        bg: "#90CDF4",
-                        color: "brown",
-                      }}
-                      onClick={() =>
-                        searchCompletedListforUserName(writer.username)
-                      }
-                      bgColor={
-                        writer.username === username_for_search ? "#90CDF4" : ""
-                      }
-                      width={"100%"}
-                    >
-                      {writer.username} : {writer.task_count}
-                    </Button>
-                  </VStack>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    border="1px solid black"
+                    mb={1}
+                    _hover={{
+                      bg: "#90CDF4",
+                      color: "brown",
+                    }}
+                    onClick={() =>
+                      searchCompletedListforUserName(writer.username)
+                    }
+                    bgColor={
+                      writer.username === username_for_search ? "#90CDF4" : ""
+                    }
+                    width={"100%"}
+                  >
+                    {writer.username} : {writer.task_count}
+                  </Button>
                 </Box>
               ))}
             </Box>
           </Box>
-        </Box>
-
-        <Box>
-          <ButtonsForSelectForTeamTaskListPeriod
-            selectedPeriodOptionForUncompletedTaskList={
-              selectedPeriodOptionForUncompletedTaskList
-            }
-            changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
-          />
 
           <Box>
-            {/* <Box>
-              담당 : &nbsp;
-              <Input
-                size="xs"
-                variant="outline"
-                bg="blue.50"
-                borderColor="gray.300"
-                _focus={{ border: "1px solid blue", boxShadow: "none" }}
-                _hover={{ bg: "green.50", borderColor: "black" }}
-                _placeholder={{ color: "black" }}
-                id="url"
-                width={"100%"}
-                value={filterValueForTaskManager}
-                onChange={handleFilterChangeForTaskManager}
-              />
-            </Box> */}
+            <ButtonsForSelectForTeamTaskListPeriod
+              selectedPeriodOptionForUncompletedTaskList={
+                selectedPeriodOptionForUncompletedTaskList
+              }
+              changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
+            />
+          </Box>
 
-            <Box>
-              업무 : &nbsp;
-              <Input
-                size="xs"
-                variant="outline"
-                bg="blue.50"
-                borderColor="gray.300"
-                _focus={{ border: "1px solid blue", boxShadow: "none" }}
-                _hover={{ bg: "green.50", borderColor: "black" }}
-                _placeholder={{ color: "black" }}
-                id="url"
-                width={"100%"}
-                value={filterValueForTask}
-                onChange={handleFilterChangeForTask}
-              />
-            </Box>
+          <Box>
+            업무 : &nbsp;
+            <Input
+              size="xs"
+              variant="outline"
+              bg="blue.50"
+              borderColor="gray.300"
+              _focus={{ border: "1px solid blue", boxShadow: "none" }}
+              _hover={{ bg: "green.50", borderColor: "black" }}
+              _placeholder={{ color: "black" }}
+              id="url"
+              width={"100%"}
+              value={filterValueForTask}
+              onChange={handleFilterChangeForTask}
+            />
           </Box>
         </Box>
       </Box>

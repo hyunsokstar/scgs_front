@@ -1,6 +1,5 @@
 import {
   Box,
-  Flex,
   Text,
   Icon,
   Button,
@@ -122,6 +121,7 @@ const Header = () => {
           lg: "repeat(8, 1fr)",
           md: "repeat(2, 1fr)",
           sm: "repeat(2, 1fr)",
+          base: "repeat(2, 1fr)",
         }}
         justifyItems="center" // 가운데 정렬
         alignItems="center" // 수직 가운데 정렬
@@ -200,7 +200,7 @@ const Header = () => {
             cursor="pointer"
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
-            Today Task Status
+            Today Status
           </Text>
         </NavLink>
 

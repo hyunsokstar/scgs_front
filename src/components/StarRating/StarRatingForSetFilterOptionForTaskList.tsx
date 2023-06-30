@@ -4,16 +4,17 @@ import { StarIcon } from "@chakra-ui/icons";
 
 type Props = {
   initialRating?: number | string;
-  rating: number
-  setRating: any
+  rating: number;
+  setRating: any;
+  button_size: string;
 };
 
 const StarRatingForSetFilterOptionForTaskList = ({
   initialRating = 1,
   rating,
   setRating,
+  button_size,
 }: Props) => {
-
   const handleClick = (star_count: number) => {
     setRating(star_count);
   };
@@ -26,6 +27,7 @@ const StarRatingForSetFilterOptionForTaskList = ({
 
         return (
           <IconButton
+            size={button_size}
             icon={<StarIcon color={isSelected ? "teal.500" : "gray.300"} />}
             onClick={() => handleClick(starRating)}
             aria-label={`Select ${starRating} star`}
@@ -38,4 +40,3 @@ const StarRatingForSetFilterOptionForTaskList = ({
 };
 
 export default StarRatingForSetFilterOptionForTaskList;
-

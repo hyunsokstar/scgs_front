@@ -49,11 +49,11 @@ function CompletedTaskRow({
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getUncompletedTaskLidt"]);
+      queryClient.refetchQueries(["getUncompletedTaskList"]);
       queryClient.refetchQueries(["getCompletedTaskLidt"]);
-      // if (projectTaskListRefatch) {
-      //   projectTaskListRefatch();
-      // }
+      if (projectTaskListRefatch) {
+        projectTaskListRefatch();
+      }
 
       toast({
         status: "success",
@@ -76,8 +76,8 @@ function CompletedTaskRow({
         if (projectTaskListRefatch) {
           projectTaskListRefatch();
         }
-        // queryClient.refetchQueries(["getUnompletedTaskList"]);
-        // queryClient.refetchQueries(["getCompletedTaskList"]);
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
 
         toast({
           status: "success",

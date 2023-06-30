@@ -1,11 +1,5 @@
-import { Box, Container, Flex, Grid, Image, Text } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
-import CompletedAndPlannedList from "../components/CompletedAndPlannedList";
-import ProjectProgressList from "../components/CompletedProjectTaskList";
-import Counter from "../components/Counter";
+import { Box, useBreakpointValue } from "@chakra-ui/react";
 import SampleCard from "../components/TestCard/SampleCard";
-import TestCard from "../components/TestCard/TestCard";
-import TutorialList from "../components/TutorialList";
 
 const image_array = [
   {
@@ -36,15 +30,22 @@ const image_array = [
 ];
 
 export default function Home() {
+  const column_option_for_responsive = useBreakpointValue({
+    // base: "12fr",
+    xl: "repeat(4, 1fr)",
+    lg: "repeat(4, 1fr)",
+    md: "repeat(2, 1fr)",
+    base: "repeat(1, 1fr)", // 추가
+  });
+
   return (
     <Box>
       <Box
-        display={"flex"}
-        justifyContent={"flex-start"}
-        flexWrap={"wrap"}
-        gap={5}
-        border={"1px solid gray"}
+        width={"100%"}
+        display={"grid"}
+        gap={2}
         p={2}
+        gridTemplateColumns={column_option_for_responsive}
       >
         <SampleCard
           imageSrc={image_array[0].image_url}
@@ -59,7 +60,7 @@ export default function Home() {
           description={"Team Status"}
           linkTo="/team-status"
         />
-        
+
         {/*
         <SampleCard
           imageSrc={image_array[2].image_url}
@@ -88,7 +89,6 @@ export default function Home() {
           description={"업무 통계"}
           linkTo="/task-statics"
         />
-       
       </Box>
     </Box>
   );
