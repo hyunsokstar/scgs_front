@@ -15,7 +15,6 @@ import HeaderForTaskStatusForToday from "../../components/Header/HeaderForTaskSt
 interface Props {}
 
 const TaskLogPage = (props: Props) => {
-  const [currentPageNum, setCurrentPageNum] = useState<number>(1);
   const [userOptionForList, setUserOptionForList] = useState("");
 
   const {
@@ -38,12 +37,12 @@ const TaskLogPage = (props: Props) => {
 
   return (
     <Box>
+      {/* hi */}
       <HeaderForTaskStatusForToday
         data={dataForTaskLogs}
         userOptionForList={userOptionForList}
         setUserOptionForList={setUserOptionForList}
       />
-
       <TaskLogList
         dataForTaskLogs={dataForTaskLogs.TaskLog}
         userOptionForList={userOptionForList}

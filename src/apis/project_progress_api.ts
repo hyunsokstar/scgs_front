@@ -460,17 +460,19 @@ export const apiForGetDataForDailyTaskCountForPersonalUser = ({
     .then((response) => response.data);
 };
 
-export const apiForGetTaskListForCheckedPks = ({
-  queryKey,
-}: QueryFunctionContext) => {
+export const apiForGetTaskListForCheckedPks = ({ queryKey }: QueryFunctionContext) => {
   console.log("task by slide api 요청 확인");
-  
-  const checkedRowPks = queryKey[1] as number[]; // queryKey[1]로부터 checkedRowPks 배열 추출
+
+  const [_, checkedRowPks] = queryKey;
+
+  console.log("checkedRowPks : ", checkedRowPks);
+
+  const numericCheckedRowPks = checkedRowPks.map(Number);
 
   return instance
     .get("project_progress/task-list-for-checked", {
       params: {
-        checkedRowPks: checkedRowPks.join(","),
+        checkedRowPks: numericCheckedRowPks.join("|"),
       },
     })
     .then((response) => {
@@ -482,6 +484,8 @@ export const apiForGetTaskListForCheckedPks = ({
       return response_data;
     });
 };
+
+
 
 export const apiForUpdateTaskDueDateForChecked = ({
   duration_option,

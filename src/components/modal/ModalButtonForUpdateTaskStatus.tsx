@@ -75,6 +75,7 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
           title: "task status update success",
           description: result.message,
         });
+        // onclose();
       },
       onError: (err: any) => {
         console.log("error : ", err);

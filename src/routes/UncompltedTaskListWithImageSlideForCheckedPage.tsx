@@ -13,6 +13,7 @@ const UncompltedTaskListWithImageSlideForCheckedPage = (props: Props) => {
   const queryParams = new URLSearchParams(location.search);
   const checkedRowPks = queryParams.get("checkedRowPks")?.split(",") || [];
   const queryClient = useQueryClient();
+  
   const {
     isLoading,
     data: dataForTaskListForCheckedPks,

@@ -663,7 +663,7 @@ function UncompletedProjectTaskList({
             onClick={handleButtonClick}
             p={2}
           >
-            slide
+            Slide For Check
           </Button>
         ) : (
           ""
@@ -703,6 +703,7 @@ function UncompletedProjectTaskList({
               listData={filteredData}
               handleCheckboxChange={handleCheckboxChange}
               checkedRowPks={checkedRowPks}
+              refetch={projectTaskListRefatch}
             />
           ) : (
             <Box

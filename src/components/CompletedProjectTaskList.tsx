@@ -141,74 +141,45 @@ function CompletedProjectTaskList({}: Props): ReactElement {
 
   // 2244
   return (
-    <Box width={"100%"} border={"1px solid black"}>
-      <Box bg={"purple.100"} width={"100%"}>
+    <Box width={"100%"} border={"2px solid black"}>
+      <Box
+        display={"flex"}
+        flexDirection={["column", "column", "row", "row"]}
+        justifyContent={["center", "center", "space-between", "space-between"]}
+        bg={"purple.100"}
+        width={"100%"}
+        p={3}
+        // border={"5px solid orange"}
+      >
         <Box
           display={"flex"}
-          flexDirection={"column"}
+          flexDirection={["column", "column", "row", "row"]}
+          justifyContent={"space-between"}
+          alignItems={"center"}
           fontSize={"18px"}
-          border={"0px solid blue"}
-          pb={2}
-          gap={2}
+          // border={"5px solid blue"}
+          p={3}
+          gap={5}
           bg={"purple.100"}
-          mx={"auto"}
-          width={["90%", "90%", "30%", "30%"]}
+          width={["100%", "100%", "100%", "100%"]}
         >
-          <Box fontSize={"18px"}>
+          <Box fontSize={"18px"} width={["100%", "100%", "30%", "30%"]}>
             <Text>completed Tasks</Text>
             <Text>
               total: {pageProgressListData?.totalPageCount} , per:{" "}
               {pageProgressListData?.task_number_for_one_page} 개
             </Text>
-          </Box>
-          <Box
-            border="0px solid green"
-            width={"100%"}
-            overflowY={"scroll"}
-            maxHeight={["160px", "160px", "160px"]}
-          >
-            <Box
-              flexBasis="100%"
-              width={"100%"}
-              border="0px solid black"
-              // p={2}
-            >
-              {pageProgressListData?.writers_info?.map((writer) => (
-                <Box key={writer.username} fontSize="lg" color="blue.900">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    border="1px solid black"
-                    mb={1}
-                    _hover={{
-                      bg: "#90CDF4",
-                      color: "brown",
-                    }}
-                    onClick={() =>
-                      searchCompletedListforUserName(writer.username)
-                    }
-                    bgColor={
-                      writer.username === username_for_search ? "#90CDF4" : ""
-                    }
-                    width={"100%"}
-                  >
-                    {writer.username} : {writer.task_count}
-                  </Button>
-                </Box>
-              ))}
+            <Box width={"100%"} border={"1px solid green"}>
+              <ButtonsForSelectForTeamTaskListPeriod
+                selectedPeriodOptionForUncompletedTaskList={
+                  selectedPeriodOptionForUncompletedTaskList
+                }
+                changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
+              />
             </Box>
           </Box>
 
-          <Box>
-            <ButtonsForSelectForTeamTaskListPeriod
-              selectedPeriodOptionForUncompletedTaskList={
-                selectedPeriodOptionForUncompletedTaskList
-              }
-              changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
-            />
-          </Box>
-
-          <Box>
+          <Box width={["100%", "100%", "30%", "30%"]}>
             업무 : &nbsp;
             <Input
               size="xs"
@@ -223,6 +194,38 @@ function CompletedProjectTaskList({}: Props): ReactElement {
               value={filterValueForTask}
               onChange={handleFilterChangeForTask}
             />
+          </Box>
+
+          {/* 헤더 하단 박스 */}
+          <Box
+            width={["100%", "100%", "40%", "30%"]}
+            overflowY={"scroll"}
+            maxHeight={["160px", "160px", "160px"]}
+            // border="5px solid green"
+          >
+            {pageProgressListData?.writers_info?.map((writer) => (
+              <Box key={writer.username} fontSize="lg" color="blue.900">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  border="1px solid black"
+                  mb={1}
+                  _hover={{
+                    bg: "#90CDF4",
+                    color: "brown",
+                  }}
+                  onClick={() =>
+                    searchCompletedListforUserName(writer.username)
+                  }
+                  bgColor={
+                    writer.username === username_for_search ? "#90CDF4" : ""
+                  }
+                  width={"100%"}
+                >
+                  {writer.username} : {writer.task_count}
+                </Button>
+              </Box>
+            ))}
           </Box>
         </Box>
       </Box>

@@ -28,7 +28,7 @@ const TaskLogList: React.FC<TaskLogListProps> = ({
           minutes > 0 ? Array(Math.floor(minutes / 10)).fill("|") : [];
 
         return (
-          <Box>
+          <Box width={"100%"} border={"5px solid red"}>
             {index !== 0 && (
               <Box border={"0px solid black"}>
                 <Text>
@@ -40,7 +40,14 @@ const TaskLogList: React.FC<TaskLogListProps> = ({
               </Box>
             )}
 
-            <ListItem key={taskLog.id} display="flex" alignItems="center">
+            <ListItem
+              key={taskLog.id}
+              display="flex"
+              flexWrap={"wrap"}
+              alignItems="center"
+              border={"5px solid blue"}
+              width={["100%", "100%", "100%", "100%"]}
+            >
               <Box mr={5}> {index + 1} </Box>
               <Text mr={"100px"}>{taskLog.completed_at_formatted}</Text>
               <Avatar

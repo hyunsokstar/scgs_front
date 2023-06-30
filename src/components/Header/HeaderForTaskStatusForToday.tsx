@@ -1,4 +1,4 @@
-import { Box, Table, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import { Box, Table, Tr, Th, Td, useBreakpointValue } from "@chakra-ui/react";
 import TableForUsersTaskCountInfoForTaskLog from "../Table/TableForUsersTaskCountInfoForTaskLog";
 import TableForTaskLogForTasksOfWeekDay from "../Table/TableForTaskLogForTasksOfWeekDay";
 import { ResponseDataForTaskLog } from "../../types/project_progress/project_progress_type";
@@ -25,6 +25,14 @@ const HeaderForTaskStatusForToday: React.FC<
     (total_today_completed_task_count / total_today_task_count) * 100
   );
 
+  const is_show_for_mobile = useBreakpointValue({
+    base: false, // for mobile and small screens
+    md: true, // for medium-sized screens and up
+    lg: true, // for large screens and up
+    sm: false,
+  });
+
+  // 2244
   return (
     <Box
       bg="lightblue"
@@ -46,65 +54,69 @@ const HeaderForTaskStatusForToday: React.FC<
           />
         </Box>
       </Box>
-      <Box flex={["1 0 100%", "1 0 100%", "1 0 33%"]} mb={[4, 4, 0]}>
-        <Box>
-          Today Task Statics
-          <Table
-            variant="striped"
-            colorScheme="black"
-            size="sm"
-            borderRadius="md"
-            border={"1px solid black"}
-            mb={1}
-            width="100%"
-          >
-            <Tr bg={"green.100"}>
-              <Th fontSize="md" textAlign={"center"}>
-                Total
-              </Th>
-              <Th fontSize="md" textAlign={"center"}>
-                완료
-              </Th>
-              <Th fontSize="md" textAlign={"center"}>
-                비완료
-              </Th>
-              <Th fontSize="md" textAlign={"center"}>
-                완료율
-              </Th>
-            </Tr>
-            <Tr>
-              <Td fontSize="md" textAlign={"center"}>
-                {total_today_task_count}
-              </Td>
-              <Td fontSize="md" textAlign={"center"}>
-                {total_today_completed_task_count}
-              </Td>
-              <Td fontSize="md" textAlign={"center"}>
-                {total_today_uncompleted_task_count}
-              </Td>
-              <Td fontSize="md" textAlign={"center"}>
-                {completionRate}%
-              </Td>
-            </Tr>
-            <Tr bg={"green.100"}>
-              <Th fontSize="md" textAlign={"center"} colSpan={2}>
-                업무 시간(from 9:00)
-              </Th>
-              <Th fontSize="md" textAlign={"center"} colSpan={2}>
-                평균 개수(시간당)
-              </Th>
-            </Tr>
-            <Tr>
-              <Td fontSize="md" textAlign={"center"} colSpan={2}>
-                {elapsed_time}
-              </Td>
-              <Td fontSize="md" textAlign={"center"} colSpan={2}>
-                {average_number_per_hour}
-              </Td>
-            </Tr>{" "}
-          </Table>
+      {is_show_for_mobile ? (
+        <Box flex={["1 0 100%", "1 0 100%", "1 0 33%"]} mb={[4, 4, 0]}>
+          <Box>
+            Today Task Statics
+            <Table
+              variant="striped"
+              colorScheme="black"
+              size="sm"
+              borderRadius="md"
+              border={"1px solid black"}
+              mb={1}
+              width="100%"
+            >
+              <Tr bg={"green.100"}>
+                <Th fontSize="md" textAlign={"center"}>
+                  Total
+                </Th>
+                <Th fontSize="md" textAlign={"center"}>
+                  완료
+                </Th>
+                <Th fontSize="md" textAlign={"center"}>
+                  비완료
+                </Th>
+                <Th fontSize="md" textAlign={"center"}>
+                  완료율
+                </Th>
+              </Tr>
+              <Tr>
+                <Td fontSize="md" textAlign={"center"}>
+                  {total_today_task_count}
+                </Td>
+                <Td fontSize="md" textAlign={"center"}>
+                  {total_today_completed_task_count}
+                </Td>
+                <Td fontSize="md" textAlign={"center"}>
+                  {total_today_uncompleted_task_count}
+                </Td>
+                <Td fontSize="md" textAlign={"center"}>
+                  {completionRate}%
+                </Td>
+              </Tr>
+              <Tr bg={"green.100"}>
+                <Th fontSize="md" textAlign={"center"} colSpan={2}>
+                  업무 시간(from 9:00)
+                </Th>
+                <Th fontSize="md" textAlign={"center"} colSpan={2}>
+                  평균 개수(시간당)
+                </Th>
+              </Tr>
+              <Tr>
+                <Td fontSize="md" textAlign={"center"} colSpan={2}>
+                  {elapsed_time}
+                </Td>
+                <Td fontSize="md" textAlign={"center"} colSpan={2}>
+                  {average_number_per_hour}
+                </Td>
+              </Tr>{" "}
+            </Table>
+          </Box>
         </Box>
-      </Box>
+      ) : (
+        ""
+      )}
       <Box flex={["1 0 100%", "1 0 100%", "1 0 33%"]}>
         <TableForUsersTaskCountInfoForTaskLog
           writers={writers}
