@@ -141,41 +141,37 @@ function CompletedProjectTaskList({}: Props): ReactElement {
 
   // 2244
   return (
-    <Container maxW={"100%"} border={"0px solid purple"} p={0} mt={0}>
-      {/* {column_option_for_width} */}
+    <Box>
       <Box
         display={"flex"}
         flexDirection={column_option_for_width}
-        gap={7}
+        overflowY={"scroll"}
+        gap={2}
         border={"1px solid black"}
-        justifyContent={"space-between"}
+        justifyContent={"space-around"}
         bgColor={"purple.200"}
         alignItems={"center"}
-        height={["410px","300px","200px"]}
-        px={2}
-        py={2}
+        height={["340px", "260px", "260px"]}
+        px={"3"}
+        py={3}
+        width={"100%"}
       >
-        <Box fontSize={18}>
-          <Text>completed Tasks</Text>
-          <Text>
-            total: {pageProgressListData?.totalPageCount} , per:{" "}
-            {pageProgressListData?.task_number_for_one_page} 개
-          </Text>
-        </Box>
-        <Box border="0px solid green">
-          <Box
-            display="flex"
-            justifyContent={"center"}
-            alignItems="center"
-            height="30px"
-          >
+        <Box fontSize={20} width={"300px"}>
+          <Box border={"0px solid blue"} textAlign={"center"}>
+            <Text>completed Tasks</Text>
+            <Text>
+              total: {pageProgressListData?.totalPageCount} , per:{" "}
+              {pageProgressListData?.task_number_for_one_page} 개
+            </Text>
+          </Box>
+          <Box border="0px solid green" width={"100%"} p={3}>
             <Box
-              flexBasis="70%"
+              flexBasis="100%"
               overflowY={"scroll"}
-              height={"160px"}
-              width={"300px"}
-              border="1px solid black"
-              p={2}
+              height={"130px"}
+              width={"100%"}
+              border="0px solid black"
+              // p={2}
             >
               {pageProgressListData?.writers_info?.map((writer) => (
                 <Box key={writer.username} fontSize="lg" color="blue.900">
@@ -206,7 +202,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
           </Box>
         </Box>
 
-        <Box px={3}>
+        <Box>
           <ButtonsForSelectForTeamTaskListPeriod
             selectedPeriodOptionForUncompletedTaskList={
               selectedPeriodOptionForUncompletedTaskList
@@ -214,8 +210,8 @@ function CompletedProjectTaskList({}: Props): ReactElement {
             changeHandler={changeHandlerForSelectPeriodOptionForTeamTask}
           />
 
-          <Box mt={2}>
-            <Box>
+          <Box>
+            {/* <Box>
               담당 : &nbsp;
               <Input
                 size="xs"
@@ -226,11 +222,11 @@ function CompletedProjectTaskList({}: Props): ReactElement {
                 _hover={{ bg: "green.50", borderColor: "black" }}
                 _placeholder={{ color: "black" }}
                 id="url"
-                w={"300px"}
+                width={"100%"}
                 value={filterValueForTaskManager}
                 onChange={handleFilterChangeForTaskManager}
               />
-            </Box>
+            </Box> */}
 
             <Box>
               업무 : &nbsp;
@@ -243,7 +239,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
                 _hover={{ bg: "green.50", borderColor: "black" }}
                 _placeholder={{ color: "black" }}
                 id="url"
-                w={"300px"}
+                width={"100%"}
                 value={filterValueForTask}
                 onChange={handleFilterChangeForTask}
               />
@@ -255,7 +251,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
       {/* {is_show_for_mobile ? "모바일" : "큰화면"} */}
       {!is_show_for_mobile ? (
         <Box>
-          <Box w={"100%"} border={"0px solid red"}></Box>
+          <Box width={"100%"} border={"0px solid red"}></Box>
           {pageProgressListData ? (
             <CompletedTaskRow
               ProjectProgressList={filteredData}
@@ -287,7 +283,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
           )}
         </Box>
       )}
-    </Container>
+    </Box>
   );
 }
 

@@ -310,7 +310,7 @@ function UncompletedProjectTaskList({
           >
             <Box borderBottom={"3px solid #9AE6B4"}>
               <Box>
-                <Text fontSize={16}>
+                <Text fontSize={20}>
                   uncomplete task (total: {taskListData?.totalPageCount}, per :{" "}
                   {taskListData?.task_number_for_one_page})
                 </Text>
@@ -627,7 +627,8 @@ function UncompletedProjectTaskList({
         display={"flex"}
         justifyContent={"space-between"}
         alignItems={"center"}
-        p={2}
+        px={2}
+        pb={1}
         gap={2}
         // border={"5px solid blue"}
       >
@@ -660,7 +661,7 @@ function UncompletedProjectTaskList({
             bg={"blue.100"}
             size={"sm"}
             onClick={handleButtonClick}
-            p={4}
+            p={2}
           >
             slide
           </Button>
@@ -670,7 +671,7 @@ function UncompletedProjectTaskList({
 
         <ModalButtonForAddProjectTaskWithDuedateOption
           button_text="register"
-          size={"md"}
+          size={"sm"}
           projectTaskListRefatch={projectTaskListRefatch}
           bgColor="red.300"
           hoverColor="red.500"

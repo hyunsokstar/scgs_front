@@ -163,9 +163,9 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
   return (
     <Box>
       <Button
-        bg={"red.100"}
+        bg={bgColor}
         size={size}
-        p={3}
+        p={2}
         border={"2px solid black"}
         borderRadius="md"
         _hover={{

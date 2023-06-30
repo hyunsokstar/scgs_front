@@ -42,7 +42,7 @@ export default function Home() {
         display={"flex"}
         justifyContent={"flex-start"}
         flexWrap={"wrap"}
-        gap={3}
+        gap={5}
         border={"1px solid gray"}
         p={2}
       >

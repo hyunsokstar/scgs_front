@@ -62,12 +62,12 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
         {profile_image ? (
           <Image
             src={profile_image}
-            style={{ width: "520px", height: "220px", objectFit: "inherit" }}
+            style={{ width: "100%", height: "220px", objectFit: "inherit" }}
             alt={username}
           />
         ) : (
           <Image
-            style={{ width: "500px", height: "220px", objectFit: "inherit" }}
+            style={{ width: "100%", height: "220px", objectFit: "inherit" }}
             src={
               "https://i.namu.wiki/i/Xs9CYSwgkCiuPpWsF2SzzKOQc41SQo3X87mZn6uc6Zrm62y3wMGgI2SWbaVv5bipvRExh5zv8evHR5dekKZKbA.webp"
             }

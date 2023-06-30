@@ -23,7 +23,7 @@ import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdat
 import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 import ModalButtonForAddProjectTaskWithDuedateOption from "./modal/ModalButtonForAddProjectTaskWithDuedateOption";
 import RadioButtonForGroupByOptionForTaskListUntilYesterday from "./Button/RadioButtonForGroupByOptionForTaskListUntilYesterday";
-import SlideForUncompletedTaskList from "./Slide/SlideForCompletedTaskList";
+import SlideForUncompletedTaskList from "./Slide/SlideForUncompletedTaskList";
 
 interface Props {
   basic_due_date_option?:
@@ -167,6 +167,7 @@ function TaskListUntilYesterday({
       | "undetermined"
       | "noon"
       | "evening"
+      | "night"
       | "tomorrow"
       | "day-after-tomorrow"
       | "this-week"
@@ -188,6 +189,14 @@ function TaskListUntilYesterday({
     base: false, // for mobile and small screens
     md: true, // for medium-sized screens and up
     lg: true, // for large screens and up
+  });
+
+  const column_option_for_responsive = useBreakpointValue({
+    // base: "12fr",
+    xl: "repeat(8, 1fr)",
+    lg: "repeat(6, 1fr)",
+    md: "repeat(4, 1fr)",
+    base: "repeat(2, 1fr)", // 추가
   });
 
   // 2244
@@ -213,20 +222,21 @@ function TaskListUntilYesterday({
         </Box>
       </Box>
       {/* 0629 */}
-      <Box
-        display={"flex"}
-        flexDirection={["column", "row", "row"]}
-        gap={2}
-        flexWrap={"wrap"}
-        p={2}
-      >
-        <Box gap={2} display="flex" flexWrap={"wrap"}>
+      <Box display={"flex"} flexDirection={"column"} gap={2} p={2}>
+        <Box
+          width={"100%"}
+          // border={"2px solid blue"}
+          display={"grid"}
+          gap={2}
+          p={2}
+          gridTemplateColumns={column_option_for_responsive}
+        >
           <Button
             variant="outline"
             size="sm"
-            backgroundColor="purple.50"
+            backgroundColor="red.100"
             _hover={{ backgroundColor: "purple.100" }}
-            mr={2}
+            width={"100%"}
             onClick={() =>
               handlerForUpdateTaskDuedateForChecked("undetermined")
             }
@@ -239,7 +249,8 @@ function TaskListUntilYesterday({
             size="sm"
             backgroundColor="purple.50"
             _hover={{ backgroundColor: "purple.100" }}
-            mr={2}
+            width={"100%"}
+            flex={1}
             onClick={() => handlerForUpdateTaskDuedateForChecked("noon")}
           >
             Due Date Noon
@@ -250,7 +261,20 @@ function TaskListUntilYesterday({
             size="sm"
             backgroundColor="purple.50"
             _hover={{ backgroundColor: "purple.100" }}
-            mr={2}
+            width={"100%"}
+            flex={1}
+            onClick={() => handlerForUpdateTaskDuedateForChecked("night")}
+          >
+            Due Date Night
+          </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
+            backgroundColor="purple.50"
+            _hover={{ backgroundColor: "purple.100" }}
+            width={"100%"}
+            flex={1}
             onClick={() => handlerForUpdateTaskDuedateForChecked("evening")}
           >
             Due Date Evening
@@ -261,10 +285,11 @@ function TaskListUntilYesterday({
             size="sm"
             backgroundColor="purple.50"
             _hover={{ backgroundColor: "purple.100" }}
-            mr={2}
+            width={"100%"}
+            flex={1}
             onClick={() => handlerForUpdateTaskDuedateForChecked("tomorrow")}
           >
-            Due Date Tomorrow
+            Due Tomorrow
           </Button>
 
           <Button
@@ -272,12 +297,13 @@ function TaskListUntilYesterday({
             size="sm"
             backgroundColor="purple.50"
             _hover={{ backgroundColor: "purple.100" }}
-            mr={2}
+            width={"100%"}
+            flex={1}
             onClick={() =>
               handlerForUpdateTaskDuedateForChecked("day-after-tomorrow")
             }
           >
-            Due Date Day After Tomorrow
+            Due After Tomorrow
           </Button>
 
           <Button
@@ -285,10 +311,11 @@ function TaskListUntilYesterday({
             size="sm"
             backgroundColor="purple.50"
             _hover={{ backgroundColor: "purple.100" }}
-            mr={2}
+            width={"100%"}
+            flex={1}
             onClick={() => handlerForUpdateTaskDuedateForChecked("this-week")}
           >
-            Due Date This Week
+            Due This Week
           </Button>
 
           <Button
@@ -296,44 +323,59 @@ function TaskListUntilYesterday({
             size="sm"
             backgroundColor="purple.50"
             _hover={{ backgroundColor: "purple.100" }}
-            mr={2}
+            width={"100%"}
+            flex={1}
             onClick={() => handlerForUpdateTaskDuedateForChecked("this-month")}
           >
-            Due Date This Month
+            Due This Month
           </Button>
         </Box>
-        <Box display={"flex"} flexWrap={"wrap"} gap={2}>
+        <Box
+          width={"100%"}
+          // border={"2px solid blue"}
+          display={"grid"}
+          gap={2}
+          p={2}
+          gridTemplateColumns={column_option_for_responsive}
+        >
           <Button
-            variant="outline"
             size="sm"
-            backgroundColor="red.50"
+            // width={"100px"}
+            backgroundColor="red.100"
             _hover={{ backgroundColor: "red.100" }}
-            mr={2}
             onClick={deleteTaskForChecked}
           >
             Delete
           </Button>
 
-          <ModalButtonForUpdateTaskManagerForChecked
-            size={"sm"}
-            button_text="Change Assignee"
-            checkedRowPks={checkedRowPks}
-            setCheckedRowPks={setCheckedRowPks}
-          />
+          <Box flex={1}>
+            <ModalButtonForUpdateTaskManagerForChecked
+              size={"sm"}
+              button_text="Change Assignee"
+              checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+            />
+          </Box>
 
-          <ModalButtonForUpdateImortanceForChecked
-            button_text="Update Priority"
-            size={"sm"}
-            checkedRowPks={checkedRowPks}
-            setCheckedRowPks={setCheckedRowPks}
-          />
+          <Box flex={1}>
+            <ModalButtonForUpdateImortanceForChecked
+              button_text="Update Priority"
+              size={"sm"}
+              button_width="100%"
+              checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+            />
+          </Box>
 
-          <ModalButtonForUpdateTaskClassificationForChecked
-            button_text="Update Classification"
-            size={"sm"}
-            checkedRowPks={checkedRowPks}
-            setCheckedRowPks={setCheckedRowPks}
-          />
+          <Box flex={1}>
+            <ModalButtonForUpdateTaskClassificationForChecked
+              button_text="Update Classification"
+              size={"sm"}
+              button_width="100%"
+              checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+            />
+          </Box>
         </Box>
         <Box display={"flex"} gap={2} justifyContent={"space-between"}>
           <Checkbox size="lg" colorScheme="blue" />
@@ -341,7 +383,7 @@ function TaskListUntilYesterday({
             button_text="Add Task For Team Project"
             size={"sm"}
             projectTaskListRefatch={projectTaskListRefatch}
-            bgColor="red.300"
+            bgColor="blue.300"
             hoverColor="red.500"
             hoverTextColor="yellow"
           />

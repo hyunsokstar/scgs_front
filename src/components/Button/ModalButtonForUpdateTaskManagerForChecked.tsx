@@ -112,9 +112,9 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
       <Button
         variant="outline"
         size={size}
-        width={"100%"}
         backgroundColor="red.50"
         _hover={{ backgroundColor: "red.100" }}
+        width={"100%"}
         onClick={onOpen}
       >
         {button_text}

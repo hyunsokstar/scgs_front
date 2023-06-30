@@ -41,13 +41,8 @@ function CompletedTaskRow({
   setCurrentPageNum,
   projectTaskListRefatch,
 }: ITypeForProjectProgressList): ReactElement {
-  const completedColor = useColorModeValue("green.500", "green.300");
-  const inProgressColor = useColorModeValue("orange.500", "orange.300");
   const queryClient = useQueryClient();
 
-  const handleSlideToggleChange = (checked: boolean) => {
-    console.log(`SlideToggle is now ${checked ? "on" : "off"}`);
-  };
   const toast = useToast();
 
   const updateProjectTaskMutations = useMutation(updateProjectTaskCompleted, {
@@ -178,7 +173,7 @@ function CompletedTaskRow({
 
   // 2244
   return (
-    <Box border={"0px solid blue"} maxWidth={"100%"}>
+    <Box border={"0px solid blue"} width={"100%"}>
       {/* <Box display={"flex"} justifyContent={"flex-start"} gap={2} my={2}>
         <Checkbox
           m={2}
@@ -206,14 +201,14 @@ function CompletedTaskRow({
                   key={task.id}
                   height={16}
                   border={"1px solid lightgray"}
-                  width={"1842px"}
+                  width={"2600px"}
                   my={0}
                   display={"flex"}
                   alignItems={"center"}
                   _hover={{ backgroundColor: "gray.100" }}
                 >
                   <HStack>
-                    <Box border={"0px solid yellow"} width={"50px"}>
+                    <Box border={"0px solid yellow"}>
                       <HStack ml={0}>
                         {/* <Checkbox mx={2} /> */}
                         <Checkbox
@@ -225,13 +220,13 @@ function CompletedTaskRow({
                         />
                       </HStack>
                     </Box>
-                    <Box width={"140px"}>
+                    <Box border={"0px solid blue"} width={"200px"}>
                       <Text color={"blue.600"}>
                         {task.task_manager.username}
                       </Text>
                       <Text color={"tomato"}>{task.writer}</Text>
                     </Box>
-                    <Box border={"0px solid blue"} width={"580px"}>
+                    <Box border={"0px solid blue"} width={"1000px"}>
                       <Text fontSize="sm" fontWeight="bold">
                         <Link
                           to={`/project_admin/${task.id}`}
@@ -247,7 +242,7 @@ function CompletedTaskRow({
                       display={"flex"}
                       justifyContent={"flex-start"}
                       border={"0px solid green"}
-                      width={"120px"}
+                      width={"100px"}
                     >
                       <SlideToggleButton
                         onChange={() => {
@@ -257,7 +252,7 @@ function CompletedTaskRow({
                       />
                     </Box>
 
-                    <Box border={"0px solid blue"} width={"310px"}>
+                    <Box border={"0px solid blue"} width={"280px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>시작</Text>
@@ -276,7 +271,7 @@ function CompletedTaskRow({
                       </HStack>
                     </Box>
 
-                    <Box border={"0px solid blue"} width={"310px"}>
+                    <Box border={"0px solid blue"} width={"280px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>완료 시점</Text>
@@ -292,7 +287,7 @@ function CompletedTaskRow({
                       </HStack>
                     </Box>
 
-                    <Box border={"0px solid blue"} width={"200px"}>
+                    <Box border={"0px solid blue"} width={"280px"}>
                       <HStack>
                         <Box textAlign={"center"}>
                           <Text>소요 시간</Text>
@@ -303,31 +298,9 @@ function CompletedTaskRow({
                           </Text>
                         </Box>
                       </HStack>
-
-                      {/* <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>경과</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.elapsed_time_from_started_at}</Text>
-                      </Box>
-                    </HStack> */}
-
-                      {/* <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>남은 시간</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.time_left_to_due_date}</Text>
-                      </Box>
-                    </HStack> */}
                     </Box>
 
-                    {/* <Box border={"0px solid blue"} width={"170px"}>
-                    업무 평점 부여
-                  </Box> */}
-
-                    <Box>
+                    <Box border={"0px solid blue"} width={"240px"}>
                       <IconButton
                         aria-label="삭제"
                         icon={<FaTrash />}

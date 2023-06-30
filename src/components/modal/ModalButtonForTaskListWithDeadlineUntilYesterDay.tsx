@@ -78,6 +78,7 @@ const ModalButtonForTaskListWithDeadlineUntilYesterDay: React.FC<
               >
                 Close
               </Button>
+              <Button colorScheme="teal">Save</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
