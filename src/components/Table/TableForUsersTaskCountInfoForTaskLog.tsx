@@ -22,7 +22,7 @@ const TableForUsersTaskCountInfoForTaskLog: React.FC<
     <Table
       variant="striped"
       colorScheme="black"
-      size="md"
+      size="sm"
       borderRadius="md"
       border={"1px solid black"}
     >

@@ -36,13 +36,14 @@ const TaskLogPage = (props: Props) => {
   }
 
   return (
-    <Box>
+    <Box height={"1000px"} overflowY={"scroll"}>
       {/* hi */}
       <HeaderForTaskStatusForToday
         data={dataForTaskLogs}
         userOptionForList={userOptionForList}
         setUserOptionForList={setUserOptionForList}
       />
+      <br />
       <TaskLogList
         dataForTaskLogs={dataForTaskLogs.TaskLog}
         userOptionForList={userOptionForList}
