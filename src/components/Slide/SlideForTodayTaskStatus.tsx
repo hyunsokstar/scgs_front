@@ -47,7 +47,7 @@ export default function SlideForTodayTaskStatus({ taskData }: IProps) {
     
 
     const dataForTaskList = [
-      { title: "until-morning", todos: taskData?.morning_tasks },
+      { title: "until-noon", todos: taskData?.morning_tasks },
       { title: "until-evening", todos: taskData?.afternoon_tasks },
       { title: "until-night", todos: taskData?.night_tasks },
     ];

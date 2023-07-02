@@ -26,6 +26,27 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+export const apiForUpdateTaskDueDateByPk = ({
+  id,
+  due_date_option,
+}: any) => {
+
+  return instance
+    .put(
+      `/project_progress/${id}/update-due-date-by-due-date-option`,
+      { due_date_option },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const createRefImageForExtraTask = ({ image_url, taskPk }: any) => {
   console.log("createProfilePhoto check !!!!!");
 
@@ -311,6 +332,7 @@ export const apiForUpdateTaskUrlForExtraTaskForPk = ({
       return response.data;
     });
 };
+
 export const apiForUpdateTaskUrlForTaskForPk = ({
   pk,
   taskUrlForUpdate,
@@ -444,7 +466,7 @@ export const apiForgetTaskStatusForToday = () => {
   };
 
   return instance.request(config).then((response) => {
-    console.log("response for getProgectTasksStatusData: ", response);
+    // console.log("response for getProgectTasksStatusData: ", response);
     return response.data;
   });
 };

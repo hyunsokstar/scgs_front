@@ -1,17 +1,21 @@
 import React from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Box, Button, useToast } from "@chakra-ui/react";
+import { apiForUpdateTaskDueDateByPk } from "../../apis/project_progress_api";
 
 interface ButtonsForChangeDueDateForTaskForTodayProps {
   id: number;
-  title: "until-morning" | "until-evening" | "until-night";
+  title: "until-noon" | "until-evening" | "until-night";
 }
 
 const ButtonsForChangeDueDateForTaskForToday: React.FC<
   ButtonsForChangeDueDateForTaskForTodayProps
 > = ({ id, title }) => {
   let morningIcon, noonIcon, nightIcon;
+  const queryClient = useQueryClient();
+  const toast = useToast();
 
-  if (title === "until-morning") {
+  if (title === "until-noon") {
     noonIcon = "🌛";
     nightIcon = "🌌";
   } else if (title === "until-evening") {
@@ -22,10 +26,28 @@ const ButtonsForChangeDueDateForTaskForToday: React.FC<
     noonIcon = "🌛";
   }
 
+  const mutationForUpdateTaskDueDateByPk = useMutation(
+    apiForUpdateTaskDueDateByPk,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        queryClient.refetchQueries(["getTaskStatusForToday"]);
+
+        toast({
+          status: "success",
+          title: "task due date update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
   const buttonHandlerForChangeDueDateForTaskForToday = (
     id: number,
-    due_date_option: "until-morning" | "until-evening" | "until-night"
+    due_date_option: "until-noon" | "until-evening" | "until-night"
   ) => {
+    mutationForUpdateTaskDueDateByPk.mutate({ id, due_date_option });
     console.log(`id : ${id} due_date_option : ${due_date_option}`);
   };
 
@@ -37,7 +59,7 @@ const ButtonsForChangeDueDateForTaskForToday: React.FC<
           size="sm"
           _hover={{ backgroundColor: "yellow.100" }}
           onClick={() =>
-            buttonHandlerForChangeDueDateForTaskForToday(id, "until-morning")
+            buttonHandlerForChangeDueDateForTaskForToday(id, "until-noon")
           }
         >
           {morningIcon}
