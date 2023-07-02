@@ -32,18 +32,15 @@ const LongTermPlan = (props: Props) => {
 
   console.log("data_for_long_term_plan : ", data_for_long_term_plan);
 
-  const buttonHandlerForCratePlan = () => {
-    console.log("계획 추가 버튼 클릭");
-  };
-
   return (
     <Box
       border={"1px solid purple"}
       display={"flex"}
       flexDirection={"column"}
       gap={3}
+      px={"auto"}
     >
-      <Box textAlign={"right"} mt={2}>
+      <Box textAlign={"right"} m={2}>
         {isLoggedIn ? (
           <ModalButtonForCreatePlan button_text={"계획 추가"} />
         ) : (

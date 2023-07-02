@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick-theme.css";
 import {
   Box,
   Avatar,
-  ChakraProvider,
   Button,
   Card,
   Text,
@@ -80,21 +79,21 @@ export default function SlideForUncompletedTaskList({
   };
 
   return (
-    <ChakraProvider>
+    <Box>
       <Slider {...settings} ref={sliderRef}>
         {listData
           ? listData.map((row, index) => (
               <Card
                 key={index}
-                border="1px solid"
-                borderColor="gray.200"
-                height="100%"
+                height="46vh"
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
                 textAlign="start"
-                p={2}
                 flexDirection={"column"}
+                backgroundColor="gray.50"
+                p={2}
+                // border={"5px solid blue"}
               >
                 <Box
                   display={"flex"}
@@ -136,15 +135,19 @@ export default function SlideForUncompletedTaskList({
                     refetch={refetch}
                   />
                 </Box>
-                <Box display={"flex"} justifyContent={"space-between"} mt={2}>
+                <Box
+                  display={"flex"}
+                  justifyContent={"space-between"}
+                  mt={2}
+                >
                   <Box>
                     <Box>start:</Box>
-                    <Box>{row.started_at_formatted}</Box>
+                    <Box fontSize={"14px"}>{row.started_at_formatted}</Box>
                   </Box>
 
                   <Box>
                     <Box>due_date:</Box>
-                    <Box>{row.due_date_formatted}</Box>
+                    <Box fontSize={"14px"}>{row.due_date_formatted}</Box>
                   </Box>
                 </Box>
                 <Box mt={2}>
@@ -165,6 +168,6 @@ export default function SlideForUncompletedTaskList({
           Next
         </Button>
       </Box>
-    </ChakraProvider>
+    </Box>
   );
 }

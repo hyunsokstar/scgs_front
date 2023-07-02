@@ -29,6 +29,7 @@ import TableForStaticsForTodayTaskStatus from "../components/Table/TableForStati
 import ModalButtonForTaskListWithDeadlineUntilYesterDay from "../components/modal/ModalButtonForTaskListWithDeadlineUntilYesterDay";
 import TableForTaskLogForTasksOfWeekDay from "../components/Table/TableForTaskLogForTasksOfWeekDay";
 import TableForTaskManagersForTasksForToday from "../components/Table/TableForTaskManagersForTasksForToday";
+import SlideForTodayTaskStatus from "../components/Slide/SlideForTodayTaskStatus";
 
 type Time = "morning_tasks" | "afternoon_tasks" | "night_tasks";
 const Tasks: Time[] = ["morning_tasks", "afternoon_tasks", "night_tasks"];
@@ -66,7 +67,7 @@ const TodayTaskStatusPage = () => {
 
   const [tasks, setTasks] = useState<any>(initialTasks);
 
-  console.log("dataForTaskStatusForToday : ", dataForTaskStatusForToday);
+  console.log("tasks : ", tasks);
 
   useEffect(() => {
     if (dataForTaskStatusForToday) {
@@ -190,10 +191,17 @@ const TodayTaskStatusPage = () => {
 
   const column_option_for_responsive = useBreakpointValue({
     base: "column", // for mobile and small screens
-    md: "row", // for medium-sized screens and up 
+    md: "row", // for medium-sized screens and up
     lg: "row", // for large screens and up
   });
 
+  const is_show_for_mobile = useBreakpointValue({
+    base: false, // for mobile and small screens
+    md: true, // for medium-sized screens and up
+    lg: true, // for large screens and up
+  });
+
+  // 2244
   return (
     <Box width={"100%"} border={"0px solid purple"}>
       <Box
@@ -202,8 +210,8 @@ const TodayTaskStatusPage = () => {
         fontWeight="bold"
         textAlign="center"
         bg={"yellow.200"}
-        py={3}
-        mb={2}
+        py={6}
+        my={2}
       >
         Today Task Status Page
       </Box>{" "}
@@ -219,6 +227,7 @@ const TodayTaskStatusPage = () => {
         bg="gray.200"
         // border={"1px solid blue"}
         width={"100%"}
+        p={2}
       >
         <Box width={"100%"} overflowX={"auto"}>
           <Box mb={1}>
@@ -277,104 +286,109 @@ const TodayTaskStatusPage = () => {
           </Box>
         </Box>
 
-        <Box width={"full"} overflowX={"auto"}>
-          task status for today
+        <Box width={"full"} overflowY={"scroll"} maxHeight={"140px"}>
           <TableForTaskManagersForTasksForToday
             task_managers_data={dataForTaskStatusForToday?.task_managers_data}
           />
         </Box>
       </Box>
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Box
-          style={{
-            display: "flex",
-            flexDirection: column_option_for_responsive,
-            justifyContent: "space-around",
-            width: "100%",
-          }}
-        >
-          {Tasks.map((Time, i) => (
-            <Droppable droppableId={Time} key={i}>
-              {(provided: DroppableProvided) => (
-                <Box
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                  style={{
-                    backgroundColor: teamColors[Time],
-                    width: "100%",
-                    padding: "10px",
-                    margin: "1%",
-                    borderRadius: "10px",
-                    boxSizing: "border-box",
-                  }}
-                >
+      {/* fix */}
+      {is_show_for_mobile ? (
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: column_option_for_responsive,
+              justifyContent: "space-around",
+              width: "100%",
+            }}
+          >
+            {Tasks.map((Time, i) => (
+              <Droppable droppableId={Time} key={i}>
+                {(provided: DroppableProvided) => (
                   <Box
-                    bg={taskColors[Time]}
-                    p={3}
-                    borderRadius="md"
-                    shadow="md"
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={{
+                      backgroundColor: teamColors[Time],
+                      width: "100%",
+                      padding: "10px",
+                      margin: "1%",
+                      borderRadius: "10px",
+                      boxSizing: "border-box",
+                    }}
                   >
-                    <Heading size="md" color="white">
-                      {Time}
-                    </Heading>
-
-                    <ModalButtonForAddProjectTaskWithDuedateOption
-                      projectTaskListRefatch={
-                        refetchForGetProgectTasksStatusForToday
-                      }
-                      button_text={"Create"}
-                      due_date_option_for_button={Time}
-                      size={"md"}
-                    />
-                  </Box>
-                  {tasks[Time].length ? (
-                    tasks[Time].map((task: any, index: any) => (
-                      <Draggable
-                        key={task.id ? task.id.toString() : index}
-                        draggableId={task.id ? task.id.toString() : index}
-                        index={index}
-                      >
-                        {(provided: DraggableProvided) => (
-                          <p
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            ref={provided.innerRef}
-                            style={{
-                              padding: "10px",
-                              margin: "10px 0",
-                              backgroundColor: "white",
-                              borderRadius: "5px",
-                              ...provided.draggableProps.style,
-                            }}
-                          >
-                            <RowForTaskSttusForToday task={task} />
-                          </p>
-                        )}
-                      </Draggable>
-                    ))
-                  ) : (
                     <Box
-                      fontSize={"20px"}
-                      bgColor={"white"}
-                      display={"flex"}
-                      justifyContent={"center"}
-                      alignItems={"center"}
-                      p={2}
-                      // height={"200px"}
+                      bg={taskColors[Time]}
+                      p={3}
+                      borderRadius="md"
+                      shadow="md"
+                      display="flex"
+                      justifyContent="space-between"
+                      alignItems="center"
                     >
-                      no data
+                      <Heading size="md" color="white">
+                        {Time}
+                      </Heading>
+
+                      <ModalButtonForAddProjectTaskWithDuedateOption
+                        projectTaskListRefatch={
+                          refetchForGetProgectTasksStatusForToday
+                        }
+                        button_text={"Create"}
+                        due_date_option_for_button={Time}
+                        size={"md"}
+                      />
                     </Box>
-                  )}
-                  {provided.placeholder}
-                </Box>
-              )}
-            </Droppable>
-          ))}
+                    {tasks[Time].length ? (
+                      tasks[Time].map((task: any, index: any) => (
+                        <Draggable
+                          key={task.id ? task.id.toString() : index}
+                          draggableId={task.id ? task.id.toString() : index}
+                          index={index}
+                        >
+                          {(provided: DraggableProvided) => (
+                            <p
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                              style={{
+                                padding: "10px",
+                                margin: "10px 0",
+                                backgroundColor: "white",
+                                borderRadius: "5px",
+                                ...provided.draggableProps.style,
+                              }}
+                            >
+                              <RowForTaskSttusForToday task={task} />
+                            </p>
+                          )}
+                        </Draggable>
+                      ))
+                    ) : (
+                      <Box
+                        fontSize={"20px"}
+                        bgColor={"white"}
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                        p={2}
+                      >
+                        no data
+                      </Box>
+                    )}
+                    {provided.placeholder}
+                  </Box>
+                )}
+              </Droppable>
+            ))}
+          </Box>
+        </DragDropContext>
+      ) : (
+        <Box mt={2} mb={10}>
+          <SlideForTodayTaskStatus taskData={tasks} />
         </Box>
-      </DragDropContext>
+      )}
     </Box>
   );
 };

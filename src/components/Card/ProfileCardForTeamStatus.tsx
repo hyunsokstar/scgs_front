@@ -4,9 +4,11 @@ import {
   Image,
   Text,
   Badge,
-  Grid,
-  Spacer,
+  Table,
   IconButton,
+  Tbody,
+  Tr,
+  Td,
 } from "@chakra-ui/react";
 import { GrTask, GrKeyboard } from "react-icons/gr";
 
@@ -48,15 +50,12 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
 }) => {
   return (
     <Box
-      // maxW="sm"
-      // mx={2}
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
-      height={"530px"}
+      height={"460px"}
       bgColor={"white"}
       width={"100%"}
-      // _hover={{border:"3px solid blue"}}
     >
       <Box width={"100%"} border={"1px solid green"}>
         {profile_image ? (
@@ -76,7 +75,7 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
         )}
       </Box>
 
-      <Box p="6">
+      <Box p="3">
         <Box
           display="flex"
           justifyContent={"space-between"}
@@ -107,27 +106,16 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
           </Box>
           {/* <Spacer /> */}
         </Box>
-
-        <Box mt={2}>
+        {/* <Box mt={2}>
           <Grid templateColumns="repeat(2, 1fr)" gap={2} mt={3}>
             <Text>전체</Text>
-            <Text>오늘</Text>
             <Box>
               <Text fontSize="sm">total: {total_count_for_task}</Text>
               <Text fontSize="sm">비완료: {count_for_uncompleted_task}</Text>
               <Text fontSize="sm">완료 : {count_for_completed_task}</Text>
             </Box>
-            <Box>
-              <Text fontSize="sm">total: {total_count_for_task_for_today}</Text>
-              <Text fontSize="sm">
-                비완료: {count_for_uncompleted_task_for_today}
-              </Text>
-              <Text fontSize="sm">
-                완료 : {count_for_completed_task_for_today}
-              </Text>
-            </Box>
 
-            <text>상금 총계</text>
+            <Text>상금 총계</Text>
             <Text fontSize="sm">{total_rewards} 원</Text>
           </Grid>
           <Box mt={2}>
@@ -153,6 +141,62 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
                   size={"md"}
                 />
               </Link>
+            </Box>
+          </Box>
+        </Box> */}
+
+        <Box mt={1}>
+          <Table variant="striped" size="sm">
+            <Tbody>
+              <Tr>
+                <Td>total:</Td>
+                <Td>{total_count_for_task}</Td>
+                <Td>{total_count_for_task_for_today}</Td>
+              </Tr>
+              <Tr>
+                <Td>비완료:</Td>
+                <Td>{count_for_uncompleted_task}</Td>
+                <Td>{count_for_uncompleted_task_for_today}</Td>
+              </Tr>
+              <Tr>
+                <Td>완료:</Td>
+                <Td>{count_for_completed_task}</Td>
+                <Td>{count_for_completed_task_for_today}</Td>
+              </Tr>
+            </Tbody>
+            <Tr>
+              <Td>현재 작업</Td>
+              <Td colSpan={"2"}>{currentTask} </Td>
+            </Tr>
+          </Table>
+
+          {/* <Box mt={1}>
+            <Text fontSize="md">{currentTask}</Text>
+          </Box> */}
+
+          <Box textAlign="right" mt={3}>
+            <Box
+              display="flex"
+              justifyContent="space-around"
+              alignItems={"center"}
+            >
+              <Link to={`/team-status/${id}`}>
+                <IconButton
+                  variant="outline"
+                  aria-label="Task"
+                  icon={<GrTask />}
+                  size="md"
+                />
+              </Link>
+              <Link to={`/task-statics-for-personal-user/${id}`}>
+                <IconButton
+                  variant="outline"
+                  aria-label="Planner"
+                  icon={<BsBarChartFill />}
+                  size="md"
+                />
+              </Link>
+              💰 : {total_rewards} 원
             </Box>
           </Box>
         </Box>

@@ -114,9 +114,9 @@ function UncompletedTaskRow({
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        queryClient.refetchQueries(["getUncompletedTaskList"]);
-        // queryClient.refetchQueries(["getCompletedTaskList"]);
-        // projectTaskListRefatch()
+        // queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
+        projectTaskListRefatch()
         toast({
           status: "success",
           title: "task status update success",
@@ -292,7 +292,7 @@ function UncompletedTaskRow({
   // 2244
   return (
     <>
-      <Box border={"0px solid blue"} overflowX={"scroll"}>
+      <Box overflowX={"scroll"} border={"0px solid blue"}>
         {ProjectProgressList
           ? ProjectProgressList.map((task: any) => {
               // console.log("task.task_manager : ", task.taskmanager);

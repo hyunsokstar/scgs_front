@@ -54,7 +54,6 @@ const TaskInfosPerMember = (props: Props) => {
       </Box>{" "}
       <Box py={"20px"} px={"auto"} bgColor={"black"} textAlign={"center"}>
         <Box
-          // mx={"auto"}
           width={"98%"}
           display={"grid"}
           gridTemplateColumns={{
@@ -65,9 +64,7 @@ const TaskInfosPerMember = (props: Props) => {
             sm: "repeat(1, 1fr)",
           }}
           gap={"24px"}
-          // px={"auto"}
           mx={"auto"}
-          // border={"5px solid yellow"}
         >
           {dataForTaskInfoPerUser
             ? dataForTaskInfoPerUser.map((user) => {

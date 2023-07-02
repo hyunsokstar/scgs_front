@@ -501,3 +501,26 @@ export type typeForDueDateOption =
   | "until-the-day-after-tomorrow"
   | "until-this-week"
   | "until-this-month";
+
+export interface Task {
+  id: number;
+  task: string;
+  in_progress: boolean;
+  is_testing: boolean;
+  order: number;
+  task_manager: {
+    pk: number;
+    username: string;
+    profile_image: string | null;
+  };
+  task_completed: boolean;
+  current_status: string;
+  is_urgent_request: boolean;
+  is_task_for_cash_prize: boolean;
+  due_date: string;
+}
+
+export interface IPropsForCardForTodayTaskListBySlide {
+  title: string;
+  todos: Task[];
+}

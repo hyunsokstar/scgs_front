@@ -30,7 +30,7 @@ function TableForTaskManagersForTasksForToday({ task_managers_data }: Props) {
           </Td>
         </Tr>
       </Thead>
-      <Tbody>
+      <Tbody >
         {task_managers_data ? (
           task_managers_data.map((data, index) => (
             <Tr key={index}>

@@ -1,11 +1,11 @@
+import { useEffect, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   Text,
   Icon,
   Button,
   HStack,
-  Container,
-  LightMode,
   useDisclosure,
   Menu,
   MenuButton,
@@ -13,19 +13,21 @@ import {
   MenuList,
   MenuItem,
   useToast,
+  ButtonGroup,
+  IconButton,
+  Circle,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { getMe, logOutApi } from "../../api";
+
+import { logOutApi } from "../../api";
 import useUser from "../../lib/useUser";
-import { login, logout } from "../../reducers/userSlice";
 import LoginModal from "../LoginModal";
 import SignUpModal from "../SignUpModal";
-import { useSelector } from "react-redux";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { login, logout } from "../../reducers/userSlice";
 import { RootState } from "../../store";
 
 const Header = () => {
@@ -139,7 +141,7 @@ const Header = () => {
           <Icon
             as={AiFillHome}
             color={isHomePage ? "yellow.300" : "white"}
-            boxSize="3rem"
+            boxSize="2rem"
             mr="1rem"
           />
         </Box>
@@ -326,29 +328,38 @@ const Header = () => {
 
         <Box>
           {!isLoggedIn || logoutSuccess === true ? (
-            <Container p={2}>
-              <Button onClick={onLoginOpen} size={"md"}>
-                로그인
-              </Button>
-              <LightMode>
-                <Button
-                  ml={2}
-                  colorScheme={"red"}
-                  onClick={onSignUpOpen}
-                  size={"md"}
-                >
-                  회원 가입
-                </Button>
-              </LightMode>
-            </Container>
+            <ButtonGroup spacing={2} size={["sm", "sm", "md", "md"]}>
+              <IconButton
+                onClick={onLoginOpen}
+                aria-label="로그인"
+                icon={<FaSignInAlt />}
+                variant="solid"
+                colorScheme="blue"
+              />
+
+              <IconButton
+                onClick={onSignUpOpen}
+                aria-label="회원 가입"
+                icon={<FaUserPlus />}
+                variant="solid"
+                colorScheme="red"
+              />
+            </ButtonGroup>
           ) : (
             <Box>
               <HStack mr={2}>
                 <Text color={"orange.500"} fontSize={"2xl"}></Text>
                 <Menu>
                   <MenuButton>
-                    <Avatar src={user?.profile_image} height="44px" />
+                    <Circle size="38px" bg="blue.500">
+                      <Avatar
+                        src={user?.profile_image}
+                        height="34px"
+                        width="34px"
+                      />
+                    </Circle>
                   </MenuButton>
+
                   <MenuList>
                     <MenuItem onClick={() => goToUserProfile(user?.pk)}>
                       유저 프로필

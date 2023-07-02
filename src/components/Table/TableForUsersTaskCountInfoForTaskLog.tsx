@@ -33,6 +33,7 @@ const TableForUsersTaskCountInfoForTaskLog: React.FC<
               size="sm"
               variant="outline"
               _hover={{ bg: "blue.500", color: "white" }}
+              width={"100%"}
               onClick={() => handleWriterClick("")}
             >
               default
@@ -51,6 +52,7 @@ const TableForUsersTaskCountInfoForTaskLog: React.FC<
                   userOptionForList === writerData.writer ? "red.200" : ""
                 }
                 _hover={{ bg: "blue.500", color: "white" }}
+                width={"100%"}
                 onClick={() => handleWriterClick(writerData.writer)}
               >
                 {writerData.writer}

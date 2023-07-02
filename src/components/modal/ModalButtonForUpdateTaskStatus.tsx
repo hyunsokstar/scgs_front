@@ -63,7 +63,6 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
       onSuccess: (result: any) => {
         if (refetch) {
           refetch();
-          console.log("refetch is excuted !");
           queryClient.refetchQueries(["getTaskStatusForToday"]);
         } else {
           queryClient.refetchQueries(["getTaskStatusForToday"]);
@@ -120,8 +119,9 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
       console.log("result : ", result);
 
       if (refetch) {
-        refetch();
         console.log("refetch is excuted !");
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
         queryClient.refetchQueries(["getTaskStatusForToday"]);
       } else {
         queryClient.refetchQueries(["getTaskStatusForToday"]);

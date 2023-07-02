@@ -1,60 +1,7 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React from "react";
 import PlanCard from "./PlanCard";
 import { list_for_long_term_plan } from "../../types/type_for_plan_maker";
-
-const cardData = [
-  {
-    title: "Card 1",
-    description: "This is the description of card 1.",
-    writer: "John Doe",
-  },
-  {
-    title: "Card 2",
-    description: "This is the description of card 2.",
-    writer: "Jane Smith",
-  },
-  {
-    title: "Card 3",
-    description: "This is the description of card 3.",
-    writer: "Bob Johnson",
-  },
-  {
-    title: "Card 4",
-    description: "This is the description of card 1.",
-    writer: "John Doe",
-  },
-  {
-    title: "Card 5",
-    description: "This is the description of card 2.",
-    writer: "Jane Smith",
-  },
-  {
-    title: "Card 6",
-    description: "This is the description of card 3.",
-    writer: "Bob Johnson",
-  },
-  {
-    title: "Card 7",
-    description: "This is the description of card 1.",
-    writer: "John Doe",
-  },
-  {
-    title: "Card 8",
-    description: "This is the description of card 2.",
-    writer: "Jane Smith",
-  },
-  {
-    title: "Card 9",
-    description: "This is the description of card 3.",
-    writer: "Bob Johnson",
-  },
-  {
-    title: "Card 10",
-    description: "This is the description of card 3.",
-    writer: "Bob Johnson",
-  },
-];
 
 interface Props {
   topic: string;
@@ -62,28 +9,42 @@ interface Props {
 }
 
 const PlanCardContainer = ({ topic, cardDataArray }: Props) => {
-  console.log("cardDataArray : ", cardDataArray);
+  console.log("cardDataArray: ", cardDataArray);
 
   return (
-    <Box border={"0px solid blue"}>
-      <Box textAlign={"center"} px={"auto"} my={2}>
-        <Box fontSize={"30px"} fontFamily={"sans-serif"} fontWeight={"bold"} color={"blue.500"}>
+    <Box border="0px solid blue">
+      <Box textAlign="center">
+        <Box
+          fontSize={["20px", "30px"]} // Font size for mobile and larger screens
+          fontFamily="sans-serif"
+          fontWeight="bold"
+          color="blue.500"
+          bg="gray.200" // Background color
+          height={["40px", "50px"]} // Height of the panel for mobile and larger screens
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          px={3} // Horizontal padding for mobile and larger screens
+        >
           {topic}
         </Box>
       </Box>
 
       <Box
-        display={"flex"}
-        justifyContent={"flex-start"}
-        border={"0px solid green"}
-        flexWrap={"wrap"}
-        width={"92%"}
-        gap={3}
-        mx={"auto"}
+        display="flex"
+        justifyContent="center" // Center align the cards horizontally
+        flexWrap="wrap"
+        width="100%"
         my={2}
+        gap={3}
+        // border="1px solid green"
       >
         {cardDataArray.map((row, index) => (
-          <Box key={row.pk} mb={1} width={"30%"} mx={3}>
+          <Box
+            key={row.pk}
+            mb={1}
+            width={["90%", "90%", "100%", "100%"]}
+          >
             <PlanCard
               pk={row.pk}
               title={row.title}
@@ -93,7 +54,7 @@ const PlanCardContainer = ({ topic, cardDataArray }: Props) => {
               created_at={row.created_at}
             />
           </Box>
-        ))}{" "}
+        ))}
       </Box>
     </Box>
   );

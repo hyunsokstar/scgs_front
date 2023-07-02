@@ -259,6 +259,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
               listData={filteredData}
               handleCheckboxChange={handleCheckboxChange}
               checkedRowPks={checkedRowPks}
+              refetch={projectTaskListRefatch}
             />
           ) : (
             "no data"

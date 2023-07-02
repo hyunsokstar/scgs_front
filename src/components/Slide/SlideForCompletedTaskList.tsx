@@ -92,16 +92,14 @@ export default function SlideForCompletedTaskList({
               listData.map((row, index) => (
                 <Card
                   key={index}
-                  border="1px solid"
-                  borderColor="gray.200"
-                  height="100%"
+                  height="46vh"
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
                   textAlign="start"
                   flexDirection={"column"}
-                  gap={2}
-                  p={1}
+                  backgroundColor="gray.50"
+                  p={2}
                 >
                   <Box
                     display={"flex"}

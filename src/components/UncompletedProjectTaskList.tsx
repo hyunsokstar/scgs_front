@@ -290,105 +290,97 @@ function UncompletedProjectTaskList({
           bg={"green.200"}
           flex={1}
           display={"flex"}
+          flexDirection={"column"}
           justifyContent={"center"}
           alignItems={"center"}
-          // p={3}
-          maxHeight={"290px"}
-          overflowY={"scroll"}
+          width={"100%"}
+          pt={2}
+          gap={3}
+          // border={"5px solid blue"}
         >
-          <Box
-            // border={"5px solid blue"}
-            display={"flex"}
-            flexDirection={"column"}
-            gap={3}
-          >
+          <Box display={"flex"} borderBottom={"3px solid #9AE6B4"}>
+            <Box textAlign={"center"}>
+              <Text fontSize={20}>uncomplete task</Text>
+              <Text>
+                (total: {taskListData?.totalPageCount}, per :{" "}
+                {taskListData?.task_number_for_one_page})
+              </Text>
+            </Box>
+          </Box>
+          <Box borderBottom={"3px solid #9AE6B4"}>
             <Box
               display={"flex"}
-              flexDirection={"column"}
-              borderBottom={"3px solid #9AE6B4"}
+              justifyContent={"flex-start"}
+              gap={3}
+              borderBottom={"1px solid #9AE6B4"}
             >
-              <Box textAlign={"center"}>
-                <Text fontSize={20}>uncomplete task</Text>
-                <Text>
-                  (total: {taskListData?.totalPageCount}, per :{" "}
-                  {taskListData?.task_number_for_one_page})
-                </Text>
-              </Box>
+              <ButtonForShowCountForTaskStatus
+                task_status={"ready"}
+                status_imoge={"⚪"}
+                status_count={taskListData?.count_for_ready}
+                button_size={"sm"}
+                task_status_for_search={task_status_for_search}
+                set_task_status_for_search={set_task_status_for_search}
+              />
+              <ButtonForShowCountForTaskStatus
+                button_size={"sm"}
+                task_status={"in_progress"}
+                status_imoge={"🟡"}
+                status_count={taskListData?.count_for_in_progress}
+                task_status_for_search={task_status_for_search}
+                set_task_status_for_search={set_task_status_for_search}
+              />
+              <ButtonForShowCountForTaskStatus
+                button_size={"sm"}
+                task_status={"testing"}
+                status_imoge={"🟠"}
+                status_count={taskListData?.count_for_in_testing}
+                task_status_for_search={task_status_for_search}
+                set_task_status_for_search={set_task_status_for_search}
+              />
             </Box>
-            <Box borderBottom={"3px solid #9AE6B4"}>
-              <Box
-                display={"flex"}
-                justifyContent={"flex-start"}
-                gap={3}
-                borderBottom={"1px solid #9AE6B4"}
-              >
-                <ButtonForShowCountForTaskStatus
-                  task_status={"ready"}
-                  status_imoge={"⚪"}
-                  status_count={taskListData?.count_for_ready}
-                  button_size={"sm"}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-                <ButtonForShowCountForTaskStatus
-                  button_size={"sm"}
-                  task_status={"in_progress"}
-                  status_imoge={"🟡"}
-                  status_count={taskListData?.count_for_in_progress}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-                <ButtonForShowCountForTaskStatus
-                  button_size={"sm"}
-                  task_status={"testing"}
-                  status_imoge={"🟠"}
-                  status_count={taskListData?.count_for_in_testing}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-              </Box>
+          </Box>
+          <Box borderBottom={"3px solid #9AE6B4"}>
+            <Box>
+              <StarRatingForSetFilterOptionForTaskList
+                rating={rating_for_filter_option}
+                setRating={set_rating_for_filter_option}
+                button_size={"sm"}
+              />
             </Box>
-            <Box borderBottom={"3px solid #9AE6B4"}>
-              <Box>
-                <StarRatingForSetFilterOptionForTaskList
-                  rating={rating_for_filter_option}
-                  setRating={set_rating_for_filter_option}
-                  button_size={"sm"}
-                />
-              </Box>
-            </Box>
-            <Box height="30px" borderBottom={"3px solid #9AE6B4"}>
-              <Box>
-                {taskListData?.writers_info?.map((writer) => {
-                  return (
-                    <Box fontSize="lg" color="blue.900">
-                      <HStack>
-                        <Button
-                          variant={"outline"}
-                          size={"sm"}
-                          // border={"1px solid black"}
-                          mb={1}
-                          _hover={{
-                            bg: "#90CDF4",
-                            color: "brown",
-                          }}
-                          onClick={() =>
-                            searchUncompletedListforUserName(writer.username)
-                          }
-                          bgColor={
-                            writer.username === username_for_search
-                              ? "#90CDF4"
-                              : ""
-                          }
-                        >
-                          {writer.username} : {writer.task_count}
-                        </Button>
-                      </HStack>
-                    </Box>
-                  );
-                })}
-              </Box>
-            </Box>
+          </Box>
+          <Box
+            height="140px"
+            width={"90%"}
+            borderBottom={"3px solid #9AE6B4"}
+            maxHeight={"240px"}
+            overflowY={"scroll"}
+          >
+            {taskListData?.writers_info?.map((writer) => {
+              return (
+                <Box fontSize="lg" color="blue.900">
+                  <Button
+                    variant={"outline"}
+                    size={"sm"}
+                    // border={"1px solid black"}
+                    mb={1}
+                    width={"98%"}
+                    _hover={{
+                      bg: "#90CDF4",
+                      color: "brown",
+                    }}
+                    onClick={() =>
+                      searchUncompletedListforUserName(writer.username)
+                    }
+                    bgColor={
+                      writer.username === username_for_search ? "#90CDF4" : ""
+                    }
+                  >
+                    {writer.username} : {writer.task_count}
+                  </Button>
+                </Box>
+              );
+            })}
           </Box>
         </Box>
 
