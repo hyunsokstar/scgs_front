@@ -284,6 +284,20 @@ function UncompletedTaskRow({
     }
   };
 
+  type DueDateOption = "until-noon" | "until-evening" | "until-night";
+
+  function getDueDateEmoji(dueDateOption: DueDateOption): string {
+    if (dueDateOption === "until-noon") {
+      return "☀️";
+    } else if (dueDateOption === "until-evening") {
+      return "🌛";
+    } else if (dueDateOption === "until-night") {
+      return "🌌";
+    } else {
+      return "?";
+    }
+  }
+
   // 2244
   return (
     <>
@@ -339,9 +353,10 @@ function UncompletedTaskRow({
                       </Badge>
                     </Text>
                   </ListItem>
+                  {/* fix */}
                   <ListItem border={"0px solid blue"} flex={1}>
                     <Text fontSize="sm">
-                      {task.due_date_option_for_today}
+                      {getDueDateEmoji(task.due_date_option_for_today)}
                     </Text>
                   </ListItem>
                   {/* <ListItem
@@ -466,7 +481,6 @@ function UncompletedTaskRow({
                     />
                   </ListItem>
                   <ListItem>
-
                     <CommonDeleteButtonForPk
                       id={task.id}
                       targetInfoToDelete={task.task}
