@@ -201,6 +201,7 @@ export interface taskRowForUncompleted {
   is_task_for_cash_prize: boolean;
   is_task_for_urgent: boolean;
   cash_prize?: number;
+  due_date_option_for_today: "until-noon" | "until-evening" | "until-afternoon";
 }
 
 export interface ITypeForProjectProgressList {

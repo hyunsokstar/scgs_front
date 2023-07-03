@@ -10,7 +10,6 @@ import {
   IconButton,
   HStack,
   useToast,
-  Spacer,
   VStack,
 } from "@chakra-ui/react";
 import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
@@ -195,8 +194,6 @@ function CompletedTaskRowForTester({
     } else if (scoreValues[index] < originalScoreValues[index]) {
       scoreByTesterForUpdate = scoreValues[index] - originalScoreValues[index];
     }
-
-    alert(id);
 
     mutationForUpdateScoreByTester.mutate({
       id,

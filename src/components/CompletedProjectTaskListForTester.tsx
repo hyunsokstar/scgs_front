@@ -6,7 +6,7 @@ import { ITypeForProjectProgressList } from "../types/project_progress/project_p
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
 import CompletedTaskRowForTester from "./CompletedTaskRowForTester";
-import SlideForCompletedTaskList from "./Slide/SlideForCompletedTaskList";
+import SlideForCompletedTaskListForTest from "./Slide/SlideForCompletedTaskListForTest";
 
 interface Props {}
 
@@ -154,10 +154,14 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
                 </Text>
               </Box>
               <Box maxHeight={"200px"} overflowY={"scroll"}>
-                <Table variant="striped" size={"sm"}>
+                <Table
+                  variant="unstyled"
+                  border={"1px solid black"}
+                  size={"sm"}
+                >
                   <Tbody>
                     {pageProgressListData?.writers_info?.map((writer) => (
-                      <Tr key={writer.username}>
+                      <Tr key={writer.username} border={"1px solid black"}>
                         <Td>{writer.username}</Td>
                         <Td>{writer.task_count}</Td>
                         <Td>{writer.cash} won</Td>
@@ -248,8 +252,8 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
       ) : (
         <Box>
           {/* slide */}
-          {filteredData && filteredData.length  ? (
-            <SlideForCompletedTaskList
+          {filteredData && filteredData.length ? (
+            <SlideForCompletedTaskListForTest
               listData={filteredData}
               handleCheckboxChange={handleCheckboxChange}
               checkedRowPks={checkedRowPks}

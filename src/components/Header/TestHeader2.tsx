@@ -221,7 +221,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
-        {/* <NavLink
+        <NavLink
           to="/team-status"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -234,7 +234,7 @@ const Header = () => {
           >
             Team Status
           </Text>
-        </NavLink> */}
+        </NavLink>
 
         <NavLink
           to="/long-term-plan"
@@ -251,7 +251,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
-        {/* <NavLink
+        <NavLink
           to="/shortcut"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -265,7 +265,7 @@ const Header = () => {
             ShortCut
           </Text>
         </NavLink>
-
+        {/*
         <NavLink
           to="/shortcut2"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}

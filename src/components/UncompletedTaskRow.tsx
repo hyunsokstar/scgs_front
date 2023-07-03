@@ -339,6 +339,11 @@ function UncompletedTaskRow({
                       </Badge>
                     </Text>
                   </ListItem>
+                  <ListItem border={"0px solid blue"} flex={1}>
+                    <Text fontSize="sm">
+                      {task.due_date_option_for_today}
+                    </Text>
+                  </ListItem>
                   {/* <ListItem
                     border={"0px solid blue"}
                     display={"flex"}

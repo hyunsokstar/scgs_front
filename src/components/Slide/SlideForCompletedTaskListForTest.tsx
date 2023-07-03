@@ -1,18 +1,24 @@
-import React, { useRef } from "react";
+import React, { ChangeEvent, useRef, useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
-  Box,
   Avatar,
+  Box,
+  Badge,
   Button,
   Card,
-  Text,
-  Badge,
   Checkbox,
+  Text,
+  useToast,
+  Input,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { taskRowForUncompleted } from "../../types/project_progress/project_progress_type";
 import ModalButtonForUpdateTaskStatus from "../modal/ModalButtonForUpdateTaskStatus";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiForUpdateScoreByTester } from "../../apis/project_progress_api";
 
 interface SlideForUncompletedTaskListProps {
   listData: taskRowForUncompleted[] | any[];
@@ -22,17 +28,27 @@ interface SlideForUncompletedTaskListProps {
 }
 
 // 1122
-export default function SlideForCompletedTaskList({
+function SlideForCompletedTaskListForTest({
   listData,
   handleCheckboxChange,
   checkedRowPks,
   refetch,
 }: SlideForUncompletedTaskListProps) {
+  const queryClient = useQueryClient();
+  const toast = useToast();
   const [activeSlide, setActiveSlide] = React.useState(0);
   const numSlides = listData && listData.length | 0;
   const sliderRef = useRef<any>(null);
+  const [originalScoreValues, setOriginalScoreValues] = useState<number[]>([]);
+  const [scoreValues, setScoreValues] = useState<number[]>([]);
 
   // console.log("listData : ", listData);
+  useEffect(() => {
+    const initialScores =
+      listData?.map((task) => task.score_by_tester ?? 0) || [];
+    setOriginalScoreValues(initialScores);
+    setScoreValues(initialScores);
+  }, [listData]);
 
   const handleSlideChange = (index: any) => {
     setActiveSlide(index);
@@ -70,7 +86,8 @@ export default function SlideForCompletedTaskList({
           size="sm"
           variant={isActive ? "solid" : "outline"}
           colorScheme="gray"
-          mx={1} // 버튼들 간의 간격 조절
+          mr={1} // 버튼들 간의 간격 조절
+          mb={1}
           border="1px solid blue"
           onClick={() => handleSlideChange(i)}
         >
@@ -80,6 +97,54 @@ export default function SlideForCompletedTaskList({
     }
 
     return buttons;
+  };
+
+  const handleChangeForScoreByTester = (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const updatedScoreValues = [...scoreValues];
+    updatedScoreValues[index] = parseInt(e.target.value);
+    setScoreValues(updatedScoreValues);
+  };
+
+  const mutationForUpdateScoreByTester = useMutation(
+    apiForUpdateScoreByTester,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        queryClient.refetchQueries(["getCompletedTaskListForTester"]);
+
+        toast({
+          status: "success",
+          title: "task score update success",
+          description: result.message,
+        });
+      },
+    }
+  );
+
+  const handleClickForUpdateScoreByTester = (
+    id: any,
+    index: number,
+    username: string
+  ) => {
+    let scoreByTesterForUpdate;
+    if (scoreValues[index] === originalScoreValues[index]) {
+      alert("이전값과 같으므로 업데이트 하지 않겠습니다");
+      return;
+    } else if (scoreValues[index] > originalScoreValues[index]) {
+      scoreByTesterForUpdate = scoreValues[index] - originalScoreValues[index];
+    } else if (scoreValues[index] < originalScoreValues[index]) {
+      scoreByTesterForUpdate = scoreValues[index] - originalScoreValues[index];
+    }
+
+    mutationForUpdateScoreByTester.mutate({
+      id,
+      cashInfoForUpdate: scoreByTesterForUpdate,
+      scoreByTesterForUpdate: scoreValues[index],
+      username,
+    });
   };
 
   // 2244
@@ -154,6 +219,30 @@ export default function SlideForCompletedTaskList({
                     <Box>elapsed_time</Box>
                     <Box>{row.elapsed_time_from_started_at}</Box>
                   </Box>
+                  <Box mt={2}>
+                    <InputGroup size="sm" width={"98%"}>
+                      <Input
+                        border={"1px solid black"}
+                        defaultValue={row.score_by_tester}
+                        onChange={(e) => handleChangeForScoreByTester(e, index)}
+                      />
+                      <InputRightElement width="60px" mr={-2}>
+                        <Button
+                          border={"1px solid green"}
+                          size="sm"
+                          onClick={() =>
+                            handleClickForUpdateScoreByTester(
+                              row.id,
+                              index,
+                              row.task_manager.username
+                            )
+                          }
+                        >
+                          평가
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
+                  </Box>
                 </Card>
               ))
             ) : (
@@ -164,8 +253,7 @@ export default function SlideForCompletedTaskList({
             <Button variant={"outline"} size={"sm"} onClick={prevSlide}>
               Prev
             </Button>
-            {/* {renderCustomPaging()} */}
-            <Box display="grid" gridTemplateColumns="repeat(5, 1fr)" gap={1}>
+            <Box display="grid" gridTemplateColumns="repeat(5, 1fr)" mx={2} my={1}>
               {renderCustomPaging()}
             </Box>{" "}
             <Button variant={"outline"} size={"sm"} onClick={nextSlide}>
@@ -179,3 +267,5 @@ export default function SlideForCompletedTaskList({
     </Box>
   );
 }
+
+export default SlideForCompletedTaskListForTest;
