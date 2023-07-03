@@ -72,7 +72,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
   } = useQuery<IUserNamesForCreate[]>(["user_names"], getUserNamesForCreate);
 
   // console.log("checkedRowPks : ", checkedRowPks);
-  console.log("dataForTaskListForCheckedPks : ", dataForTaskListForCheckedPks);
+  // console.log("dataForTaskListForCheckedPks : ", dataForTaskListForCheckedPks);
   const queryClient = useQueryClient();
 
   const onClose = () => setIsOpen(false);

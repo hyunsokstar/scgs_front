@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import {
   Box,
   Modal,
@@ -11,7 +9,10 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiForUpdateTaskDueDate } from "../../apis/project_progress_api";
 
 type DueDateOption = "until-noon" | "until-evening" | "until-night";
 
@@ -21,6 +22,7 @@ interface IProps {
   modal_title: string;
   modal_size: string;
   button_width?: string;
+  taskId: any;
 }
 
 const ModalButtonForUpdateDueDateOptionForToday = ({
@@ -29,19 +31,47 @@ const ModalButtonForUpdateDueDateOptionForToday = ({
   button_text,
   button_size,
   button_width,
+  taskId,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const queryClient = useQueryClient();
+  const toast = useToast();
 
-  const buttonHandlerForUpdateDueDateOptionForToday = (selectedOption: DueDateOption) => {
-    // Handle button click based on selected option
-    // Example:
-    if (selectedOption === "until-noon") {
-      // Handle until-noon option
-    } else if (selectedOption === "until-evening") {
-      // Handle until-evening option
-    } else if (selectedOption === "until-night") {
-      // Handle until-night option
+  //   alert(taskId)
+  //   console.log("taskId ::", taskId);
+
+  const mutationForUpdateTaskDueDate = useMutation(
+    ({ taskPk, duration_option }: any) => {
+      return apiForUpdateTaskDueDate({
+        taskPk,
+        duration_option,
+      });
+    },
+    {
+      onSettled: () => {},
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "Update Task Due Date 성공!",
+          status: "success",
+          description: data.message,
+        });
+
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
+        onClose();
+      },
     }
+  );
+
+  const buttonHandlerForUpdateDueDateOptionForToday = (
+    selectedOption: DueDateOption
+  ) => {
+    console.log("taskId :::::::::::::::::::::::: ", taskId);
+    mutationForUpdateTaskDueDate.mutate({
+      taskPk: taskId,
+      duration_option: selectedOption,
+    });
   };
 
   return (
@@ -70,7 +100,9 @@ const ModalButtonForUpdateDueDateOptionForToday = ({
                   variant="outline"
                   _hover={{ bg: "lightblue" }}
                   size={"sm"}
-                  onClick={() => buttonHandlerForUpdateDueDateOptionForToday("until-noon")}
+                  onClick={() =>
+                    buttonHandlerForUpdateDueDateOptionForToday("until-noon")
+                  }
                 >
                   ☀️
                 </Button>
@@ -80,7 +112,9 @@ const ModalButtonForUpdateDueDateOptionForToday = ({
                   variant="outline"
                   _hover={{ bg: "lightblue" }}
                   size={"sm"}
-                  onClick={() => buttonHandlerForUpdateDueDateOptionForToday("until-evening")}
+                  onClick={() =>
+                    buttonHandlerForUpdateDueDateOptionForToday("until-evening")
+                  }
                 >
                   🌛
                 </Button>
@@ -90,7 +124,9 @@ const ModalButtonForUpdateDueDateOptionForToday = ({
                   variant="outline"
                   _hover={{ bg: "lightblue" }}
                   size={"sm"}
-                  onClick={() => buttonHandlerForUpdateDueDateOptionForToday("until-night")}
+                  onClick={() =>
+                    buttonHandlerForUpdateDueDateOptionForToday("until-night")
+                  }
                 >
                   🌌
                 </Button>

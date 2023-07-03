@@ -483,7 +483,6 @@ export const apiForGetDataForDailyTaskCountForPersonalUser = ({
 };
 
 export const apiForGetTaskListForCheckedPks = ({ queryKey }: QueryFunctionContext) => {
-  console.log("task by slide api 요청 확인");
 
   const [_, checkedRowPks] = queryKey;
 
@@ -506,7 +505,28 @@ export const apiForGetTaskListForCheckedPks = ({ queryKey }: QueryFunctionContex
     });
 };
 
+export const apiForUpdateTaskDueDate = ({
+  taskPk,
+  duration_option,
+}: any) => {
+  console.log("apiForUpdateTaskDueDate check !!!!!!!!!!!!!");
+  console.log("taskPk: ", taskPk);
 
+  return instance
+    .put(
+      "project_progress/update-task-due-date",
+      {
+        taskPk,
+        duration_option,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
 
 export const apiForUpdateTaskDueDateForChecked = ({
   duration_option,

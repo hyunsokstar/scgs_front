@@ -31,6 +31,7 @@ import ModalButtonForUpdateProjectTaskStartedAt from "./modal/ModalButtonForUpda
 import SlideToggleButtonForInProgress from "./SlideToggleButton/SlideToggleButtonForInProgress";
 import SlideToggleButtonForIsTesting from "./SlideToggleButton/SlideToggleButtonForIsTesting";
 import CommonDeleteButtonForPk from "./Button/CommonDeleteButtonForPk";
+import ModalButtonForUpdateDueDateOptionForToday from "./modal/ModalButtonForUpdateDueDateOptionForToday";
 
 interface IProps {
   ProjectProgressList: taskRowForUncompleted[];
@@ -353,13 +354,22 @@ function UncompletedTaskRow({
                   </ListItem>
                   {/* fix */}
                   <ListItem border={"0px solid blue"} flex={1}>
-                    <Button
+                    {/* <Button
                       variant="outline"
                       _hover={{ bg: "lightblue" }}
                       size={"sm"}
                     >
                       {getDueDateEmoji(task.due_date_option_for_today)}
-                    </Button>
+                    </Button> */}
+                    <ModalButtonForUpdateDueDateOptionForToday
+                      taskId={task.id}
+                      button_text={getDueDateEmoji(
+                        task.due_date_option_for_today
+                      )}
+                      button_size={"sm"}
+                      modal_title={"modal for update due date"}
+                      modal_size={"5xl"}
+                    />
                   </ListItem>
                   {/* <ListItem
                     border={"0px solid blue"}

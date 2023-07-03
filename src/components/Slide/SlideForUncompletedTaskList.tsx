@@ -13,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import { taskRowForUncompleted } from "../../types/project_progress/project_progress_type";
 import ModalButtonForUpdateTaskStatus from "../modal/ModalButtonForUpdateTaskStatus";
-import ModalButtonForErrorReportForNote from "../modal/ModalButtonForErrorReportForNote";
 import ModalButtonForUpdateDueDateOptionForToday from "../modal/ModalButtonForUpdateDueDateOptionForToday";
 
 interface SlideForUncompletedTaskListProps {
@@ -33,7 +32,7 @@ const SlideForUncompletedTaskList = ({
   const numSlides = listData && listData.length | 0;
   const sliderRef = useRef<any>(null);
 
-  console.log("listData :;:; ", listData);
+  // console.log("listData :;:; ", listData);
 
   const handleSlideChange = (index: any) => {
     setActiveSlide(index);
@@ -149,6 +148,7 @@ const SlideForUncompletedTaskList = ({
                 <Badge colorScheme="blue">{row.current_status}</Badge>
                 <Box display={"flex"} gap={2} alignItems={"center"}>
                   <ModalButtonForUpdateDueDateOptionForToday
+                    taskId = {row.id}
                     button_text={getDueDateEmoji(row.due_date_option_for_today)}
                     button_size={"sm"}
                     modal_title={"modal for update due date"}
