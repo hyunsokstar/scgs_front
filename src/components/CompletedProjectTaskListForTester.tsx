@@ -1,11 +1,12 @@
-import { Box, Button, Container, Flex, Input, Text } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
 import React, { ReactElement, useState, useEffect } from "react";
+import { Box, Grid, Input, Text, useBreakpointValue } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import { getCompletedTaskList } from "../apis/project_progress_api";
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
 import CompletedTaskRowForTester from "./CompletedTaskRowForTester";
+import SlideForCompletedTaskList from "./Slide/SlideForCompletedTaskList";
 
 interface Props {}
 
@@ -20,7 +21,7 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
   const {
     isLoading,
     data: pageProgressListData,
-    refetch: projectTaskListRefatch,
+    refetch: projectTaskListRefetch,
   } = useQuery<ITypeForProjectProgressList>(
     [
       "getCompletedTaskListForTester",
@@ -37,10 +38,11 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
     pageProgressListData?.ProjectProgressList
   );
 
-  // filterValueForTask
   const [filterValueForTaskManager, setFilterValueForTaskManager] =
-    useState<any>();
-  const [filterValueForTask, setFilterValueForTask] = useState<any>();
+    useState<string>("");
+  const [filterValueForTask, setFilterValueForTask] = useState<string>("");
+
+  const [checkedRowPks, setCheckedRowPks] = useState<any[]>([]);
 
   useEffect(() => {
     setFilteredData(pageProgressListData?.ProjectProgressList);
@@ -59,7 +61,6 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
       setFilteredData(filteredData);
     } else {
       setFilteredData(pageProgressListData?.ProjectProgressList);
-      console.log("filterValueForTask : ", filterValueForTask);
     }
   };
 
@@ -84,7 +85,6 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
       setFilteredData(filteredData);
     } else {
       setFilteredData(pageProgressListData?.ProjectProgressList);
-      console.log("filterValueForTaskManager : ", filterValueForTaskManager);
     }
   };
 
@@ -96,80 +96,81 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
     updateFilteredDataForTaskManager(value);
   };
 
+  const direction_option_for_mobile = useBreakpointValue({
+    base: "1fr",
+    sm: "repeat(1, 1fr)",
+    md: "repeat(3, 1fr)",
+    lg: "repeat(3, 1fr)",
+  });
+
+  const is_show_for_mobile = useBreakpointValue({
+    base: true, // for mobile and small screens
+    md: false, // for medium-sized screens and up
+    lg: false, // for large screens and up
+  });
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    const id = parseInt(value, 10);
+
+    if (checked) {
+      setCheckedRowPks([...checkedRowPks, id]);
+    } else {
+      setCheckedRowPks(checkedRowPks.filter((item) => item !== id));
+    }
+  };
+
+  // 2244
   return (
-    <Container maxW={"100%"} border={"0px solid purple"} p={0} mt={0}>
-      <Box
+    <Box width={"100%"} border={"0px solid purple"} p={0} mt={0}>
+      {/* Grid for boxes 1 and 2 */}
+      <Grid
+        templateColumns={direction_option_for_mobile}
+        gap={4}
         border={"0px solid black"}
-        display="flex"
-        justifyContent={"space-between"}
         bgColor={"#C9A66B"}
         alignItems={"center"}
         px={2}
         py={2}
       >
+        {/* Box 1 */}
         <Box border={"0px solid green"}>
           <Box
-            border={"0px solid blue"}
+            // border={"5px solid blue"}
             display={"flex"}
             flexDirection={"column"}
             justifyContent={"flex-start"}
             alignItems={"center"}
             gap={2}
+            width={"100%"}
+            px={2}
           >
-            <Box border="0px solid red">
-              <Table border="0px" variant={"unstyled"}>
-                <Thead>
-                  <Tr>
-                    <Th colSpan={2}>
-                      {" "}
-                      <Box fontSize={22}>
-                        Complete Task List For Tester (total:{" "}
-                        {pageProgressListData?.totalPageCount} , per_page:{" "}
-                        {pageProgressListData?.task_number_for_one_page} ){" "}
-                      </Box>
-                    </Th>
-                  </Tr>
-                </Thead>
-                <Tbody border={"0px solid green"}>
-                  <Tr height="30px">
-                    <Td>
-                      <Text>task manager:</Text>
-                    </Td>
-                    <Td>
-                      {/* {pageProgressListData?.writers_info?.map((writer) => {
-                        return (
-                          <Text fontSize="lg" color="blue.900">
-                            {writer.username}: {writer.task_count}  :{" "}
-                            {writer.cash} won
-                          </Text>
-                        );
-                      })} */}
-                      <Table variant="unstyled">
-                        <Thead>
-                          <Tr>
-                            <Th>Username</Th>
-                            <Th>Task Count</Th>
-                            <Th>Cash</Th>
-                          </Tr>
-                        </Thead>
-                        <Tbody>
-                          {pageProgressListData?.writers_info?.map((writer) => (
-                            <Tr key={writer.username}>
-                              <Td>{writer.username}</Td>
-                              <Td>{writer.task_count}</Td>
-                              <Td>{writer.cash} won</Td>
-                            </Tr>
-                          ))}
-                        </Tbody>
-                      </Table>
-                    </Td>
-                  </Tr>
-                </Tbody>
-              </Table>
+            <Box border="0px solid red" width={"100%"}>
+              <Box fontSize={16}>
+                <Text>TaskListForTest</Text>
+                <Text>
+                  (total: {pageProgressListData?.totalPageCount} , per_page:{" "}
+                  {pageProgressListData?.task_number_for_one_page} ){" "}
+                </Text>
+              </Box>
+              <Box maxHeight={"200px"} overflowY={"scroll"}>
+                <Table variant="striped" size={"sm"}>
+                  <Tbody>
+                    {pageProgressListData?.writers_info?.map((writer) => (
+                      <Tr key={writer.username}>
+                        <Td>{writer.username}</Td>
+                        <Td>{writer.task_count}</Td>
+                        <Td>{writer.cash} won</Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </Box>
             </Box>
           </Box>
         </Box>
 
+        {/* Box 2 */}
         <Box>
           <ButtonsForSelectForTeamTaskListPeriod
             selectedPeriodOptionForUncompletedTaskList={
@@ -215,27 +216,51 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
           </Box>
         </Box>
 
-        <Box textAlign={"right"} m={0}>
-          3영역
+        {/* Box 3 */}
+        {is_show_for_mobile ? (
+          <Box textAlign={"right"} m={0}>
+            3영역
+          </Box>
+        ) : null}
+      </Grid>
+
+      {/* fix */}
+      {!is_show_for_mobile ? (
+        <Box>
+          {pageProgressListData ? (
+            <CompletedTaskRowForTester
+              ProjectProgressList={filteredData}
+              totalPageCount={pageProgressListData.totalPageCount}
+              task_number_for_one_page={
+                pageProgressListData.task_number_for_one_page
+              }
+              projectTaskListRefetch={projectTaskListRefetch}
+              currentPageNum={currentPageNum}
+              setCurrentPageNum={setCurrentPageNum}
+              handleCheckboxChange={handleCheckboxChange}
+              checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+            />
+          ) : (
+            ""
+          )}
         </Box>
-      </Box>
-      <Box>
-        {pageProgressListData ? (
-          <CompletedTaskRowForTester
-            ProjectProgressList={filteredData}
-            totalPageCount={pageProgressListData.totalPageCount}
-            task_number_for_one_page={
-              pageProgressListData.task_number_for_one_page
-            }
-            projectTaskListRefatch={projectTaskListRefatch}
-            currentPageNum={currentPageNum}
-            setCurrentPageNum={setCurrentPageNum}
-          />
-        ) : (
-          ""
-        )}
-      </Box>
-    </Container>
+      ) : (
+        <Box>
+          {/* slide */}
+          {filteredData && filteredData.length  ? (
+            <SlideForCompletedTaskList
+              listData={filteredData}
+              handleCheckboxChange={handleCheckboxChange}
+              checkedRowPks={checkedRowPks}
+              refetch={projectTaskListRefetch}
+            />
+          ) : (
+            "no data"
+          )}
+        </Box>
+      )}
+    </Box>
   );
 }
 

@@ -127,12 +127,6 @@ function CompletedProjectTaskList({}: Props): ReactElement {
     }
   };
 
-  const column_option_for_width = useBreakpointValue({
-    base: "column", // for mobile and small screens
-    md: "column", // for medium-sized screens and up
-    lg: "column", // for large screens and up
-  });
-
   const is_show_for_mobile = useBreakpointValue({
     base: true, // for mobile and small screens
     md: false, // for medium-sized screens and up

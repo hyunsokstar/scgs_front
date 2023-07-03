@@ -23,11 +23,11 @@ const TableForStaticsForTodayTaskStatus: React.FC<TableProps> = ({
       <Table
         variant="striped"
         colorScheme="black"
-        size="sm"
+        size={["xs","sm","sm"]}
         borderRadius="xs"
         bg={"blue.100"}
         border={"1px solid black"}
-        width={["max","100%","100%","100%"]}
+        width={["100%","100%","100%","100%"]}
       >
         {" "}
         {/* 내부 영역 배경색을 white로 설정 */}

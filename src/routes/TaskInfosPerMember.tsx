@@ -1,6 +1,6 @@
 import React from "react";
 import { ProfileCardForTeamStatus } from "../components/Card/ProfileCardForTeamStatus";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { TypeForDataForTaskInfoPerUser } from "../types/user/user_types";
 import { apiForgetDataForTaskInfoPerUser } from "../apis/user_api";
@@ -44,12 +44,17 @@ const TaskInfosPerMember = (props: Props) => {
         // border={"5px solid yellow"}
       >
         <Box
-          fontSize="30px"
-          fontWeight="bold"
-          textAlign="center"
-          color="black"
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          textAlign={"center"}
+          height={"120px"}
+          width={"100%"}
+          // border={"2px solid blue"}
         >
-          Team Members' Work Status
+          <Text fontSize="32px" fontWeight="bold">
+            Team Members' Work Status
+          </Text>
         </Box>
       </Box>{" "}
       <Box py={"20px"} px={"auto"} bgColor={"black"} textAlign={"center"}>

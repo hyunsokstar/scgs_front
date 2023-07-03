@@ -71,10 +71,10 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
         // projectTaskListRefatch()
         toast({
           status: "success",
-          title: "task status update success",
+          title: "task status update success2",
           description: result.message,
         });
-        // onclose();
+        // onClose();
       },
       onError: (err: any) => {
         console.log("error : ", err);
@@ -111,7 +111,7 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
 
   const updateHandlerForTaskIsTesting = (taskPk: string) => {
     updateProjectTaskIsTestingMutations.mutate(taskPk);
-    console.log("update 핸들러 for task_status check pk : ", taskPk);
+    console.log("update for testing : ", taskPk);
   };
 
   const updateProjectTaskMutations = useMutation(updateProjectTaskCompleted, {
@@ -132,6 +132,7 @@ const ModalButtonForUpdateTaskStatus: React.FC<IProps> = ({
         title: "task status update success",
         description: result.message,
       });
+      onClose();
     },
   });
 

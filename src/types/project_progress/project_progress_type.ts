@@ -521,6 +521,6 @@ export interface Task {
 }
 
 export interface IPropsForCardForTodayTaskListBySlide {
-  title: string;
+  title: "until-noon" | "until-evening" | "until-night";
   todos: Task[];
 }

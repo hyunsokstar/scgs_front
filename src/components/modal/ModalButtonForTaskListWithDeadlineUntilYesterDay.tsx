@@ -13,7 +13,6 @@ import {
   extendTheme,
   ColorModeScript,
 } from "@chakra-ui/react";
-import UncompletedProjectTaskList from "../UncompletedProjectTaskList";
 import TaskListUntilYesterday from "../TaskListUntilYesterday";
 
 const colors = {
@@ -42,8 +41,7 @@ const ModalButtonForTaskListWithDeadlineUntilYesterDay: React.FC<
   };
 
   return (
-    <ChakraProvider theme={theme}>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+    <Box>
       <Box>
         <Button
           variant="outline"
@@ -66,7 +64,6 @@ const ModalButtonForTaskListWithDeadlineUntilYesterDay: React.FC<
               <TaskListUntilYesterday
                 basic_due_date_option={"until-yesterday"}
               />
-              
             </ModalBody>
             <ModalFooter>
               <Button
@@ -83,7 +80,7 @@ const ModalButtonForTaskListWithDeadlineUntilYesterDay: React.FC<
           </ModalContent>
         </Modal>
       </Box>
-    </ChakraProvider>
+    </Box>
   );
 };
 

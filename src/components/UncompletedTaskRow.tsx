@@ -13,12 +13,7 @@ import {
   useToast,
   Badge,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, WarningIcon, CalendarIcon } from "@chakra-ui/icons";
-import {
-  IResponseTypeForProjectTaskUpdate,
-  ITypeForProjectProgressList,
-  taskRowForUncompleted,
-} from "../types/project_progress/project_progress_type";
+import { taskRowForUncompleted } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
 import SlideToggleButton from "./SlideToggleButton";
@@ -116,7 +111,7 @@ function UncompletedTaskRow({
         console.log("result : ", result);
         // queryClient.refetchQueries(["getUncompletedTaskList"]);
         queryClient.refetchQueries(["getCompletedTaskList"]);
-        projectTaskListRefatch()
+        projectTaskListRefatch();
         toast({
           status: "success",
           title: "task status update success",
@@ -344,7 +339,7 @@ function UncompletedTaskRow({
                       </Badge>
                     </Text>
                   </ListItem>
-                  <ListItem
+                  {/* <ListItem
                     border={"0px solid blue"}
                     display={"flex"}
                     justifyContent={"flex-start"}
@@ -358,7 +353,7 @@ function UncompletedTaskRow({
                         onChangeForStarRatingHandler
                       }
                     />
-                  </ListItem>
+                  </ListItem> */}
                   <ListItem
                     display={"flex"}
                     border="0px solid green"
@@ -466,12 +461,7 @@ function UncompletedTaskRow({
                     />
                   </ListItem>
                   <ListItem>
-                    {/* <IconButton
-                      aria-label="삭제"
-                      icon={<FaTrash />}
-                      variant="ghost"
-                      onClick={() => deleteHandelr(parseInt(task.id))}
-                    /> */}
+
                     <CommonDeleteButtonForPk
                       id={task.id}
                       targetInfoToDelete={task.task}

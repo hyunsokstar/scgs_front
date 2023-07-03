@@ -2,7 +2,6 @@ import React, { ReactElement, useState, useEffect } from "react";
 import {
   Box,
   Button,
-  HStack,
   Text,
   Input,
   useToast,
@@ -28,15 +27,15 @@ import {
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
 import UncompletedTaskRow from "./UncompletedTaskRow";
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
-import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForSetFilterOptionForTaskList";
 import ModalButtonForAddProjectTaskWithDuedateOption from "./modal/ModalButtonForAddProjectTaskWithDuedateOption";
 import SelectBoxForDueDateForUnompletedTaskForChecked from "./Button/SelectBoxForDueDateForUnompletedTaskForChecked";
 import ButtonsForSelectOptionForDueDateForUncompletedTaskList from "./Button/ButtonsForSelectOptionForDueDateForUncompletedTaskList";
 import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
-import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
 import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 import { useNavigate } from "react-router-dom";
 import SlideForUncompletedTaskList from "./Slide/SlideForUncompletedTaskList";
+import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForSetFilterOptionForTaskList";
+import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
 
 interface Props {
   basic_due_date_option?: typeForDueDateOption;
@@ -340,7 +339,7 @@ function UncompletedProjectTaskList({
               />
             </Box>
           </Box>
-          <Box borderBottom={"3px solid #9AE6B4"}>
+          {/* <Box borderBottom={"3px solid #9AE6B4"}>
             <Box>
               <StarRatingForSetFilterOptionForTaskList
                 rating={rating_for_filter_option}
@@ -348,13 +347,12 @@ function UncompletedProjectTaskList({
                 button_size={"sm"}
               />
             </Box>
-          </Box>
+          </Box> */}
           <Box
-            height="140px"
             width={"90%"}
             borderBottom={"3px solid #9AE6B4"}
-            maxHeight={"240px"}
             overflowY={"scroll"}
+            maxHeight="240px"
           >
             {taskListData?.writers_info?.map((writer) => {
               return (
@@ -466,9 +464,9 @@ function UncompletedProjectTaskList({
                       onChange={setGroupByOption}
                     >
                       <Stack direction="row">
-                        <Radio value="option1">Option 1</Radio>
-                        <Radio value="option2">Option 2</Radio>
-                        <Radio value="option3">Option 3</Radio>
+                        <Radio value="member">member</Radio>
+                        <Radio value="importance">importance</Radio>
+                        {/* <Radio value="option3">Option 3</Radio> */}
                       </Stack>
                     </RadioGroup>
                   </Box>
@@ -599,13 +597,13 @@ function UncompletedProjectTaskList({
           setCheckedRowPks={setCheckedRowPks}
         />
 
-        <ModalButtonForUpdateImortanceForChecked
+        {/* <ModalButtonForUpdateImortanceForChecked
           button_text={"update importance"}
           button_width={"100%"}
           size={"xs"}
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
-        />
+        /> */}
 
         <ModalButtonForUpdateTaskClassificationForChecked
           button_text={"update task for class"}
@@ -615,6 +613,7 @@ function UncompletedProjectTaskList({
           setCheckedRowPks={setCheckedRowPks}
         />
       </Box>
+      
       <Box
         display={"flex"}
         justifyContent={"space-between"}
@@ -635,6 +634,7 @@ function UncompletedProjectTaskList({
           />
         </Box>
         <Box>
+
           <SelectBoxForDueDateForUnompletedTaskForChecked
             checkedRowPks={checkedRowPks}
             setCheckedRowPks={setCheckedRowPks}

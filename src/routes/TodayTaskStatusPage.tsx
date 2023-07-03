@@ -7,7 +7,6 @@ import {
   DraggableProvided,
   DroppableProvided,
 } from "react-beautiful-dnd";
-import { AxiosResponse } from "axios";
 import {
   apiForUpdateTaskDueDateAndOrder,
   apiForgetTaskStatusForToday,
@@ -15,11 +14,9 @@ import {
 import RowForTaskSttusForToday from "../components/Row/row";
 import {
   Box,
-  Button,
   Text,
   Heading,
   useToast,
-  HStack,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import ModalButtonForAddProjectTaskWithDuedateOption from "../components/modal/ModalButtonForAddProjectTaskWithDuedateOption";
@@ -205,15 +202,15 @@ const TodayTaskStatusPage = () => {
   return (
     <Box width={"100%"} border={"0px solid purple"}>
       <Box
-        fontSize="2xl"
+        fontSize="3xl"
         color={"black"}
         fontWeight="bold"
         textAlign="center"
         bg={"yellow.200"}
-        py={6}
+        py={10}
         my={2}
       >
-        Today Task Status Page
+        Today Task Status
       </Box>{" "}
       <Box
         display={"grid"}
@@ -225,11 +222,12 @@ const TodayTaskStatusPage = () => {
         }}
         gap={2}
         bg="gray.200"
-        // border={"1px solid blue"}
         width={"100%"}
-        p={2}
+        p={4}
+        // border={"5px solid blue"}
+        // mx={2}
       >
-        <Box width={"100%"} overflowX={"auto"}>
+        <Box width={"100%"}>
           <Box mb={1}>
             {dataForTaskStatusForToday &&
               dataForTaskStatusForToday?.today_info.date}
@@ -250,21 +248,21 @@ const TodayTaskStatusPage = () => {
 
         <Box
           color="teal.800"
-          height={"100%"}
-          width={"full"}
+          // height={"100%"}
+          width={"100%"}
           // mx={"auto"}
           // border={"1px solid red"}
         >
           <Text>task status for this week</Text>
           <Box display={"flex"} gap={2}>
-            오늘 이전 비완료 :
+            <Text mb={1}>오늘 이전 비완료 :</Text>
             <ModalButtonForTaskListWithDeadlineUntilYesterDay
               buttonText={
                 dataForTaskStatusForToday?.task_count_for_uncompleted_task_until_yesterday
               }
             />
           </Box>
-          <Box>
+          <Box width={"100%"}>
             <TableForStaticsForTodayTaskStatus
               toal_task_count_for_today={
                 dataForTaskStatusForToday?.toal_task_count_for_today
@@ -286,7 +284,7 @@ const TodayTaskStatusPage = () => {
           </Box>
         </Box>
 
-        <Box width={"full"} overflowY={"scroll"} maxHeight={"140px"}>
+        <Box width={"100%"} overflowY={"scroll"} maxHeight={"160px"}>
           <TableForTaskManagersForTasksForToday
             task_managers_data={dataForTaskStatusForToday?.task_managers_data}
           />

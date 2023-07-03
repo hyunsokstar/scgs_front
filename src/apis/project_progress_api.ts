@@ -487,7 +487,6 @@ export const apiForGetTaskListForCheckedPks = ({ queryKey }: QueryFunctionContex
 
   const [_, checkedRowPks] = queryKey;
 
-  console.log("checkedRowPks : ", checkedRowPks);
 
   const numericCheckedRowPks = checkedRowPks.map(Number);
 
@@ -1010,14 +1009,14 @@ export const updateProjectTaskCompleted = (taskPk: string) => {
 };
 
 export const apiForUpdateScoreByTester = ({
-  pk,
+  id,
   scoreByTesterForUpdate,
   cashInfoForUpdate,
   username,
 }: any) => {
   console.log(
     "parameter check for apiForUpdateScoreByTester : ",
-    pk,
+    id,
     scoreByTesterForUpdate,
     cashInfoForUpdate,
     username
@@ -1025,7 +1024,7 @@ export const apiForUpdateScoreByTester = ({
 
   return instance
     .put(
-      `/project_progress/${pk}/score-update-by-tester`,
+      `/project_progress/${id}/score-update-by-tester`,
       {
         score_by_tester: scoreByTesterForUpdate,
         cashInfoForUpdate,

@@ -21,15 +21,17 @@ interface SlideForUncompletedTaskListProps {
   refetch?: () => void;
 }
 
-export default function SlideForUncompletedTaskList({
+const SlideForUncompletedTaskList = ({
   listData,
   handleCheckboxChange,
   checkedRowPks,
   refetch,
-}: SlideForUncompletedTaskListProps) {
+}: SlideForUncompletedTaskListProps) => {
   const [activeSlide, setActiveSlide] = React.useState(0);
   const numSlides = listData && listData.length | 0;
   const sliderRef = useRef<any>(null);
+
+  console.log("listData :;:; ", listData);
 
   const handleSlideChange = (index: any) => {
     setActiveSlide(index);
@@ -80,94 +82,96 @@ export default function SlideForUncompletedTaskList({
 
   return (
     <Box>
-      <Slider {...settings} ref={sliderRef}>
-        {listData
-          ? listData.map((row, index) => (
-              <Card
-                key={index}
-                height="46vh"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                textAlign="start"
-                flexDirection={"column"}
-                backgroundColor="gray.50"
-                p={2}
-                // border={"5px solid blue"}
+      {listData && listData.length > 0 ? (
+        <Slider {...settings} ref={sliderRef}>
+          {listData.map((row, index) => (
+            <Card
+              key={index}
+              height="46vh"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              textAlign="start"
+              flexDirection={"column"}
+              backgroundColor="gray.50"
+              p={2}
+              // border={"5px solid blue"}
+            >
+              <Box
+                display={"flex"}
+                gap={2}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+                bg={"yellow.100"}
+                p={1}
               >
-                <Box
-                  display={"flex"}
-                  gap={2}
-                  justifyContent={"space-between"}
-                  alignItems={"center"}
-                  bg={"yellow.100"}
-                  p={1}
-                >
-                  <Checkbox
-                    mx={2}
-                    border={"1px solid black"}
-                    value={row.id}
-                    isChecked={checkedRowPks.includes(row.id)}
-                    onChange={handleCheckboxChange}
-                  />
+                <Checkbox
+                  mx={2}
+                  border={"1px solid black"}
+                  value={row.id}
+                  isChecked={checkedRowPks && checkedRowPks.includes(row.id)}
+                  onChange={handleCheckboxChange}
+                />
 
-                  <Text fontWeight="bold" fontSize="sm">
-                    ({index + 1}) {row.task}
-                  </Text>
-                  <Avatar
-                    src={row.task_manager.profile_image}
-                    name={row.task_manager.username}
-                    size="sm"
-                    // mb={2}
-                  />
+                <Text fontWeight="bold" fontSize="sm">
+                  ({index + 1}) {row.task}
+                </Text>
+                <Avatar
+                  src={row.task_manager.profile_image}
+                  name={row.task_manager.username}
+                  size="sm"
+                  // mb={2}
+                />
+              </Box>
+              <Box
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+                py={2}
+              >
+                <Badge colorScheme="blue">{row.current_status}</Badge>
+                <ModalButtonForUpdateTaskStatus
+                  modal_text={"Update Task Progress Status"}
+                  current_status={row.current_status}
+                  task={row}
+                  refetch={refetch}
+                />
+              </Box>
+              <Box display={"flex"} justifyContent={"space-between"} mt={2}>
+                <Box>
+                  <Box>start:</Box>
+                  <Box fontSize={"14px"}>{row.started_at_formatted}</Box>
                 </Box>
-                <Box
-                  display={"flex"}
-                  justifyContent={"space-between"}
-                  alignItems={"center"}
-                  py={2}
-                >
-                  <Badge colorScheme="blue">{row.current_status}</Badge>
-                  <ModalButtonForUpdateTaskStatus
-                    modal_text={"Update Task Progress Status"}
-                    current_status={row.current_status}
-                    task={row}
-                    refetch={refetch}
-                  />
-                </Box>
-                <Box
-                  display={"flex"}
-                  justifyContent={"space-between"}
-                  mt={2}
-                >
-                  <Box>
-                    <Box>start:</Box>
-                    <Box fontSize={"14px"}>{row.started_at_formatted}</Box>
-                  </Box>
 
-                  <Box>
-                    <Box>due_date:</Box>
-                    <Box fontSize={"14px"}>{row.due_date_formatted}</Box>
-                  </Box>
+                <Box>
+                  <Box>due_date:</Box>
+                  <Box fontSize={"14px"}>{row.due_date_formatted}</Box>
                 </Box>
-                <Box mt={2}>
-                  <Box>remaing_time</Box>
-                  <Box>{row.time_left_to_due_date}</Box>
-                </Box>
-              </Card>
-            ))
-          : "no data"}
-      </Slider>
+              </Box>
+              <Box mt={2}>
+                <Box>remaing_time</Box>
+                <Box>{row.time_left_to_due_date}</Box>
+              </Box>
+            </Card>
+          ))}
+        </Slider>
+      ) : (
+        <Text>No data</Text>
+      )}
 
       <Box display="flex" justifyContent="center" alignItems="center" m={2}>
         <Button variant={"outline"} size={"sm"} onClick={prevSlide}>
           Prev
         </Button>
-        {renderCustomPaging()}
+        <Box display="grid" gridTemplateColumns="repeat(5, 1fr)" gap={1}>
+          {renderCustomPaging()}
+        </Box>{" "}
         <Button variant={"outline"} size={"sm"} onClick={nextSlide}>
           Next
         </Button>
       </Box>
     </Box>
   );
-}
+};
+
+export default SlideForUncompletedTaskList;

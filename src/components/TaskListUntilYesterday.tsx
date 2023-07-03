@@ -38,9 +38,9 @@ interface Props {
 }
 
 // 1122
-function TaskListUntilYesterday({
+const TaskListUntilYesterday = ({
   basic_due_date_option,
-}: Props): ReactElement {
+}: Props) => {
   // const theme = useTheme();
   const queryClient = useQueryClient();
 
@@ -48,7 +48,6 @@ function TaskListUntilYesterday({
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
   const [
     selectedPeriodOptionForUncompletedTaskList,
-    setSelectedPeriodOptionForUncompletedTaskList,
   ] = useState("all");
   const [username_for_search, set_username_for_search] = useState<string>();
   const [task_status_for_search, set_task_status_for_search] =
@@ -200,28 +199,13 @@ function TaskListUntilYesterday({
   });
 
   // 2244
-  if (!taskListData) {
-    return <Box>..Loading</Box>;
-  }
+  // if (!taskListData) {
+  //   return <Box>..Loading</Box>;
+  // }
 
   return (
     <Box w={"100%"} border={"1px solid purple"}>
-      <Box
-        border={"1px solid black"}
-        display="flex"
-        justifyContent={"space-between"}
-        bgColor={"green.200"}
-        alignItems={"center"}
-        p={2}
-      >
-        <Box width={"35%"} display="flex" flexDirection="row" p={2}>
-          <RadioButtonForGroupByOptionForTaskListUntilYesterday
-            groupByOption={groupByOption}
-            setGroupByOption={setGroupByOption}
-          />
-        </Box>
-      </Box>
-      {/* 0629 */}
+    
       <Box display={"flex"} flexDirection={"column"} gap={2} p={2}>
         <Box
           width={"100%"}
@@ -262,9 +246,9 @@ function TaskListUntilYesterday({
             _hover={{ backgroundColor: "purple.100" }}
             width={"100%"}
             flex={1}
-            onClick={() => handlerForUpdateTaskDuedateForChecked("night")}
+            onClick={() => handlerForUpdateTaskDuedateForChecked("evening")}
           >
-            Due Date Night
+            Due Date Evening
           </Button>
 
           <Button
@@ -274,9 +258,9 @@ function TaskListUntilYesterday({
             _hover={{ backgroundColor: "purple.100" }}
             width={"100%"}
             flex={1}
-            onClick={() => handlerForUpdateTaskDuedateForChecked("evening")}
+            onClick={() => handlerForUpdateTaskDuedateForChecked("night")}
           >
-            Due Date Evening
+            Due Date Night
           </Button>
 
           <Button
@@ -356,7 +340,7 @@ function TaskListUntilYesterday({
             />
           </Box>
 
-          <Box flex={1}>
+          {/* <Box flex={1}>
             <ModalButtonForUpdateImortanceForChecked
               button_text="Update Priority"
               size={"sm"}
@@ -364,7 +348,7 @@ function TaskListUntilYesterday({
               checkedRowPks={checkedRowPks}
               setCheckedRowPks={setCheckedRowPks}
             />
-          </Box>
+          </Box> */}
 
           <Box flex={1}>
             <ModalButtonForUpdateTaskClassificationForChecked

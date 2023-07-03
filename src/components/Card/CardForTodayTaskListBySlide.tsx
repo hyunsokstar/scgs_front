@@ -4,15 +4,12 @@ import {
   Checkbox,
   Flex,
   Heading,
-  IconButton,
   List,
   ListItem,
   Text,
-  Icon,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { IPropsForCardForTodayTaskListBySlide } from "../../types/project_progress/project_progress_type";
-import { MdSwapHoriz } from "react-icons/md";
 import ButtonsForChangeDueDateForTaskForToday from "../Buttons/ButtonsForChangeDueDateForTaskForToday";
 
 const CardForTodayTaskListBySlide = ({
@@ -20,6 +17,23 @@ const CardForTodayTaskListBySlide = ({
   todos,
 }: IPropsForCardForTodayTaskListBySlide) => {
   const [checkedRows, setCheckedRows] = useState([]);
+  console.log("todos : ", todos);
+
+  function getBackgroundColor(
+    title: "until-noon" | "until-evening" | "until-night"
+  ) {
+    let backgroundColor = "orange.100"; // 기본 배경색
+
+    if (title === "until-noon") {
+      backgroundColor = "yellow.100"; // 배경색을 변경하는 조건 1
+    } else if (title === "until-evening") {
+      backgroundColor = "blue.200"; // 배경색을 변경하는 조건 2
+    } else if (title === "until-night") {
+      backgroundColor = "orange.200"; // 배경색을 변경하는 조건 3
+    }
+
+    return backgroundColor;
+  }
 
   // todo1: Function to handle checkbox toggle for all rows
   const handleAllCheckboxToggle = () => {
@@ -34,7 +48,7 @@ const CardForTodayTaskListBySlide = ({
   };
 
   // todo2: Function to handle checkbox toggle for individual rows
-  const handleRowCheckboxToggle = (todoId) => {
+  const handleRowCheckboxToggle = (todoId: number) => {
     if (checkedRows.includes(todoId)) {
       // If the row is already checked, uncheck it
       setCheckedRows(checkedRows.filter((id) => id !== todoId));
@@ -63,7 +77,7 @@ const CardForTodayTaskListBySlide = ({
           justifyContent={"flex-start"}
           alignItems={"center"}
           gap={2}
-          bg={"orange.100"}
+          bg={getBackgroundColor(title)} // 배경색을 함수로 연결
           p={2}
         >
           <Checkbox
@@ -71,11 +85,6 @@ const CardForTodayTaskListBySlide = ({
             onChange={handleAllCheckboxToggle}
           />
           <Text>{title}</Text>
-          {/* {checkedRows.length === todos.length ? (
-            <ButtonsForChangeDueDateForTaskForToday title={title} />
-          ) : (
-            <Box></Box>
-          )} */}
         </Heading>
 
         <Box borderRadius="md" mb={10}>
@@ -108,11 +117,22 @@ const CardForTodayTaskListBySlide = ({
                         title={title}
                       />
 
-                      <Avatar
-                        src={todo.task_manager.profile_image}
-                        alt={todo.task_manager.username}
-                        size="sm"
-                      />
+                      {todo.task_manager ? (
+                        <Avatar
+                          src={todo?.task_manager.profile_image}
+                          name={todo?.task_manager.username}
+                          size="sm"
+                        />
+                      ) : (
+                        <Avatar
+                          name={todo.task_manager?.username
+                            .charAt(0)
+                            .toUpperCase()}
+                          size="sm"
+                          bg="teal.500"
+                          color="white"
+                        />
+                      )}
                     </Box>
                     <Box bgColor={"blue.50"} px={1}>
                       {todo.task}

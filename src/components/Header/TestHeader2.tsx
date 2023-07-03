@@ -192,21 +192,6 @@ const Header = () => {
         </NavLink>
 
         <NavLink
-          to="/team-status"
-          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-        >
-          <Text
-            fontSize="xl"
-            fontWeight="medium"
-            mr={{ base: 0, md: "1rem" }}
-            cursor="pointer"
-            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
-          >
-            Team Status
-          </Text>
-        </NavLink>
-
-        <NavLink
           to="/task-log"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -221,7 +206,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
-        {/* <NavLink
+        <NavLink
           to="/test-board"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -233,6 +218,21 @@ const Header = () => {
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
             Test Board
+          </Text>
+        </NavLink>
+
+        {/* <NavLink
+          to="/team-status"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            Team Status
           </Text>
         </NavLink> */}
 

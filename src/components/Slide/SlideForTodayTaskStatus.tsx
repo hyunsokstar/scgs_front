@@ -37,14 +37,12 @@ export default function SlideForTodayTaskStatus({ taskData }: IProps) {
   const numSlides = 3;
   const sliderRef = useRef<any>(null);
 
-  const [dataForTaskListForChecked, setDataForTaskListForChecked] = useState<
+  const [dataForTaskList, setDataForTaskList] = useState<
     { title: string; todos: Task[] }[]
   >([]);
 
   useEffect(() => {
-
     console.log("taskData :", taskData);
-    
 
     const dataForTaskList = [
       { title: "until-noon", todos: taskData?.morning_tasks },
@@ -56,7 +54,7 @@ export default function SlideForTodayTaskStatus({ taskData }: IProps) {
     );
     
     if (dataForTaskList) {
-      setDataForTaskListForChecked(dataForTaskList);
+      setDataForTaskList(dataForTaskList);
     }
 
   }, [taskData]);
@@ -112,7 +110,7 @@ export default function SlideForTodayTaskStatus({ taskData }: IProps) {
   return (
     <Box>
       <Slider {...settings} ref={sliderRef}>
-        {dataForTaskListForChecked ? dataForTaskListForChecked.map((task, index) => (
+        {dataForTaskList ? dataForTaskList.map((task, index) => (
           <Box
             key={index}
             border="1px solid"

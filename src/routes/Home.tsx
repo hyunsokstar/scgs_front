@@ -39,14 +39,19 @@ export default function Home() {
   });
 
   return (
-    <Box>
+    <Box border={"0px solid blue"} px={"auto"}>
       <Box
         width={"100%"}
         display={"grid"}
-        gap={2}
-        p={2}
         gridTemplateColumns={column_option_for_responsive}
+        justifyItems="center"  // 그리드 아이템을 수평으로 중앙 정렬
+        alignItems="center"   // 그리드 아이템을 수직으로 중앙 정렬
+        gap={2}
+        mx={"auto"}
+        px={2}
+        // border={"5px solid red"}
       >
+
         <SampleCard
           imageSrc={image_array[0].image_url}
           title={"My Task"}
