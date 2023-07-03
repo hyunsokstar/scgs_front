@@ -5,11 +5,9 @@ import {
   ListItem,
   Checkbox,
   Text,
-  useColorModeValue,
+  Button,
   Box,
-  IconButton,
   HStack,
-  VStack,
   useToast,
   Badge,
 } from "@chakra-ui/react";
@@ -355,9 +353,13 @@ function UncompletedTaskRow({
                   </ListItem>
                   {/* fix */}
                   <ListItem border={"0px solid blue"} flex={1}>
-                    <Text fontSize="sm">
+                    <Button
+                      variant="outline"
+                      _hover={{ bg: "lightblue" }}
+                      size={"sm"}
+                    >
                       {getDueDateEmoji(task.due_date_option_for_today)}
-                    </Text>
+                    </Button>
                   </ListItem>
                   {/* <ListItem
                     border={"0px solid blue"}

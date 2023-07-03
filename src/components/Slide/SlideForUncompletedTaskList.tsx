@@ -13,6 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { taskRowForUncompleted } from "../../types/project_progress/project_progress_type";
 import ModalButtonForUpdateTaskStatus from "../modal/ModalButtonForUpdateTaskStatus";
+import ModalButtonForErrorReportForNote from "../modal/ModalButtonForErrorReportForNote";
+import ModalButtonForUpdateDueDateOptionForToday from "../modal/ModalButtonForUpdateDueDateOptionForToday";
 
 interface SlideForUncompletedTaskListProps {
   listData: taskRowForUncompleted[];
@@ -80,6 +82,21 @@ const SlideForUncompletedTaskList = ({
     return buttons;
   };
 
+  type DueDateOption = "until-noon" | "until-evening" | "until-night";
+
+  function getDueDateEmoji(dueDateOption: DueDateOption): string {
+    if (dueDateOption === "until-noon") {
+      return "☀️";
+    } else if (dueDateOption === "until-evening") {
+      return "🌛";
+    } else if (dueDateOption === "until-night") {
+      return "🌌";
+    } else {
+      return "?";
+    }
+  }
+
+  // 2244
   return (
     <Box>
       {listData && listData.length > 0 ? (
@@ -130,12 +147,21 @@ const SlideForUncompletedTaskList = ({
                 py={2}
               >
                 <Badge colorScheme="blue">{row.current_status}</Badge>
-                <ModalButtonForUpdateTaskStatus
-                  modal_text={"Update Task Progress Status"}
-                  current_status={row.current_status}
-                  task={row}
-                  refetch={refetch}
-                />
+                <Box display={"flex"} gap={2} alignItems={"center"}>
+                  <ModalButtonForUpdateDueDateOptionForToday
+                    button_text={getDueDateEmoji(row.due_date_option_for_today)}
+                    button_size={"sm"}
+                    modal_title={"modal for update due date"}
+                    modal_size={"5xl"} 
+                  />
+
+                  <ModalButtonForUpdateTaskStatus
+                    modal_text={"Update Task Progress Status"}
+                    current_status={row.current_status}
+                    task={row}
+                    refetch={refetch}
+                  />
+                </Box>
               </Box>
               <Box display={"flex"} justifyContent={"space-between"} mt={2}>
                 <Box>

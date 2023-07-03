@@ -81,7 +81,7 @@ export default function Home() {
           linkTo="/data-grid/users"
         /> */}
 
-        <SampleCard
+        {/* <SampleCard
           imageSrc={image_array[4].image_url}
           title={"Wanted"}
           description={"Wanted"}
@@ -93,7 +93,7 @@ export default function Home() {
           title={"업무 통계"}
           description={"업무 통계"}
           linkTo="/task-statics"
-        />
+        /> */}
       </Box>
     </Box>
   );
