@@ -127,11 +127,12 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
       <Grid
         templateColumns={direction_option_for_mobile}
         gap={4}
-        border={"0px solid black"}
+        border={"1px solid black"}
         bgColor={"#C9A66B"}
         alignItems={"center"}
         px={2}
         py={2}
+        width={"100%"}
       >
         {/* Box 1 */}
         <Box border={"0px solid green"}>
@@ -158,6 +159,7 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
                   variant="unstyled"
                   border={"1px solid black"}
                   size={"sm"}
+                  width={"90%"}
                 >
                   <Tbody>
                     {pageProgressListData?.writers_info?.map((writer) => (
@@ -195,7 +197,7 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
                 _hover={{ bg: "green.50", borderColor: "black" }}
                 _placeholder={{ color: "black" }}
                 id="url"
-                w={"300px"}
+                w={"80%"}
                 value={filterValueForTaskManager}
                 onChange={handleFilterChangeForTaskManager}
               />
@@ -212,7 +214,7 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
                 _hover={{ bg: "green.50", borderColor: "black" }}
                 _placeholder={{ color: "black" }}
                 id="url"
-                w={"300px"}
+                w={"80%"}
                 value={filterValueForTask}
                 onChange={handleFilterChangeForTask}
               />

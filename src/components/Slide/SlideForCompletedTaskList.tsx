@@ -3,15 +3,19 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
-  Box,
   Avatar,
+  Box,
+  Badge,
   Button,
   Card,
-  Text,
-  Badge,
   Checkbox,
+  Image,
+  Text,
 } from "@chakra-ui/react";
-import { taskRowForUncompleted } from "../../types/project_progress/project_progress_type";
+import {
+  TestResultImageForCompleted,
+  taskRowForUncompleted,
+} from "../../types/project_progress/project_progress_type";
 import ModalButtonForUpdateTaskStatus from "../modal/ModalButtonForUpdateTaskStatus";
 
 interface SlideForUncompletedTaskListProps {
@@ -32,7 +36,7 @@ export default function SlideForCompletedTaskList({
   const numSlides = listData && listData.length | 0;
   const sliderRef = useRef<any>(null);
 
-  // console.log("listData : ", listData);
+  console.log("listData :::::::::::::::::::: ", listData);
 
   const handleSlideChange = (index: any) => {
     setActiveSlide(index);
@@ -132,12 +136,26 @@ export default function SlideForCompletedTaskList({
                     py={2}
                   >
                     <Badge colorScheme="blue">{row.current_status}</Badge>
-                    <ModalButtonForUpdateTaskStatus
-                      modal_text={"Update Task Progress Status"}
-                      current_status={row.current_status}
-                      task={row}
-                      refetch={refetch}
-                    />
+                    <Box display={"flex"} gap={2}>
+                      {row.is_for_today ? (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          _hover={{ bg: "lightblue" }}
+                          color={"orange.500"}
+                        >
+                          T
+                        </Button>
+                      ) : (
+                        ""
+                      )}
+                      <ModalButtonForUpdateTaskStatus
+                        modal_text={"Update Task Progress Status"}
+                        current_status={row.current_status}
+                        task={row}
+                        refetch={refetch}
+                      />
+                    </Box>
                   </Box>
                   <Box display={"flex"} justifyContent={"space-between"}>
                     <Box>
@@ -154,6 +172,34 @@ export default function SlideForCompletedTaskList({
                     <Box>elapsed_time</Box>
                     <Box>{row.elapsed_time_from_started_at}</Box>
                   </Box>
+
+                  {/* fix 0705 */}
+                  <Box>참고 이미지 22</Box>
+                  <Box>
+                    <Box display={"flex"} gap={2}>
+                      {row.test_result_images.length
+                        ? row.test_result_images.map(
+                            (img: TestResultImageForCompleted) => (
+                              <Box
+                                key={img.id}
+                                w="50px"
+                                h="50px"
+                                // onClick={() => openImageInNewTab(img.image_url)}
+                                cursor="pointer"
+                              >
+                                <Image
+                                  src={img.image_url}
+                                  alt="Task Image"
+                                  w="100%"
+                                  h="100%"
+                                  objectFit="cover"
+                                />
+                              </Box>
+                            )
+                          )
+                        : "no images"}
+                    </Box>
+                  </Box>
                 </Card>
               ))
             ) : (
@@ -165,7 +211,12 @@ export default function SlideForCompletedTaskList({
               Prev
             </Button>
             {/* {renderCustomPaging()} */}
-            <Box display="grid" gridTemplateColumns="repeat(5, 1fr)" gap={1}>
+            <Box
+              display="grid"
+              gridTemplateColumns="repeat(5, 1fr)"
+              gap={1}
+              justifyContent="center"
+            >
               {renderCustomPaging()}
             </Box>{" "}
             <Button variant={"outline"} size={"sm"} onClick={nextSlide}>

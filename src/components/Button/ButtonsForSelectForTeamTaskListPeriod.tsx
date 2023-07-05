@@ -32,7 +32,7 @@ const ButtonsForSelectForTeamTaskListPeriod = ({
       display="flex"
       flexWrap="wrap"
       gap={2}
-      width="100%"
+      width="94%"
       border="1px solid purple"
     >
       {/* {selectedPeriodOptionForUncompletedTaskList} */}

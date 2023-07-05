@@ -6,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import { apiForGetTaskLogList } from "../../apis/project_progress_api";
 import {
   ResponseDataForTaskLog,
-  TypeForTaskLog,
 } from "../../types/project_progress/project_progress_type";
 import TaskLogList from "../../components/List/TaskLogList";
 import HeaderForTaskStatusForToday from "../../components/Header/HeaderForTaskStatusForToday";

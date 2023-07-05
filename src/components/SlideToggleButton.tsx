@@ -33,7 +33,7 @@ const SlideToggleButton: React.FC<SlideToggleButtonProps> = ({
   }, [in_progress, is_testing, is_disabled]);
 
   const handleToggleChange = (checked: boolean) => {
-    setIsChecked(checked);
+    // setIsChecked(checked);
     onChange(checked);
   };
 

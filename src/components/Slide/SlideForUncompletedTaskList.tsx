@@ -1,19 +1,27 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
+  Badge,
   Box,
   Avatar,
   Button,
   Card,
-  Text,
-  Badge,
   Checkbox,
+  Grid,
+  Image,
+  IconButton,
+  Text,
+  useToast,
 } from "@chakra-ui/react";
 import { taskRowForUncompleted } from "../../types/project_progress/project_progress_type";
 import ModalButtonForUpdateTaskStatus from "../modal/ModalButtonForUpdateTaskStatus";
 import ModalButtonForUpdateDueDateOptionForToday from "../modal/ModalButtonForUpdateDueDateOptionForToday";
+import { FiUpload, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
+import { getUploadURL, uploadImage } from "../../api";
+import { createRefImageForTask } from "../../apis/project_progress_api";
 
 interface SlideForUncompletedTaskListProps {
   listData: taskRowForUncompleted[];
@@ -22,16 +30,22 @@ interface SlideForUncompletedTaskListProps {
   refetch?: () => void;
 }
 
+// 1122
 const SlideForUncompletedTaskList = ({
   listData,
   handleCheckboxChange,
   checkedRowPks,
   refetch,
 }: SlideForUncompletedTaskListProps) => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
   const [activeSlide, setActiveSlide] = React.useState(0);
   const numSlides = listData && listData.length | 0;
   const sliderRef = useRef<any>(null);
-
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const fileInputRef = useRef(null);
+  const [taskId, setTaskId] = useState<Number>();
   // console.log("listData :;:; ", listData);
 
   const handleSlideChange = (index: any) => {
@@ -95,6 +109,79 @@ const SlideForUncompletedTaskList = ({
     }
   }
 
+  function openImageInNewTab(imageUrl) {
+    window.open(imageUrl, "_blank");
+  }
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
+  const mutationForCreateImageForTask = useMutation(createRefImageForTask, {
+    onSuccess: (result) => {
+      console.log("result : ", result);
+      // setIsUploadingForRefImage(false);
+      // refetchForTaskDetail();
+      queryClient.refetchQueries(["getUncompletedTaskList"]);
+      setSelectedFile(null);
+      
+      toast({
+        status: "success",
+        title: "Profile Image uploaded!",
+        description: "Feel free to upload more images.",
+        isClosable: true,
+      });
+    },
+  });
+
+  const mutationForUploadImage = useMutation(uploadImage, {
+    onSuccess: ({ result }: any) => {
+      console.log("result : ", result);
+      console.log("result.variants[0] : ", result.variants[0]);
+
+      mutationForCreateImageForTask.mutate({
+        taskPk: taskId,
+        image_url: `https://imagedelivery.net/GDnsAXwwoW7vpBbDviU8VA/${result.id}/public`,
+      });
+    },
+  });
+
+  const getImageUploadUrlMutation = useMutation(getUploadURL, {
+    onSuccess: (result: any) => {
+      console.log("result : ", result);
+      console.log("file to upload", selectedFile);
+
+      mutationForUploadImage.mutate({
+        uploadURL: result.uploadURL,
+        file: selectedFile,
+      });
+    },
+  });
+
+  // fix2 0705
+  const buttonHandlerForConfirmFileUpload = (taskId: number) => {
+    console.log("button click check ??");
+
+    if (selectedFile) {
+      setTaskId(taskId);
+      console.log("selectedFile : ", selectedFile);
+      getImageUploadUrlMutation.mutate();
+    } else {
+      if (fileInputRef.current) {
+        console.log("button click check !!");
+        
+        fileInputRef.current.click();
+      }
+    }
+  };
+
+  const handleCancelFile = () => {
+    setSelectedFile(null); // 선택한 파일 초기화
+  };
+
   // 2244
   return (
     <Box>
@@ -103,7 +190,7 @@ const SlideForUncompletedTaskList = ({
           {listData.map((row, index) => (
             <Card
               key={index}
-              height="46vh"
+              height="50vh"
               display="flex"
               justifyContent="center"
               alignItems="center"
@@ -148,11 +235,11 @@ const SlideForUncompletedTaskList = ({
                 <Badge colorScheme="blue">{row.current_status}</Badge>
                 <Box display={"flex"} gap={2} alignItems={"center"}>
                   <ModalButtonForUpdateDueDateOptionForToday
-                    taskId = {row.id}
+                    taskId={row.id}
                     button_text={getDueDateEmoji(row.due_date_option_for_today)}
                     button_size={"sm"}
                     modal_title={"modal for update due date"}
-                    modal_size={"5xl"} 
+                    modal_size={"5xl"}
                   />
 
                   <ModalButtonForUpdateTaskStatus
@@ -178,6 +265,82 @@ const SlideForUncompletedTaskList = ({
                 <Box>remaing_time</Box>
                 <Box>{row.time_left_to_due_date}</Box>
               </Box>
+              {/* fix */}
+              <Box display="flex" justifyContent="space-between">
+                <Box>
+                  {selectedFile ? selectedFile.name : "참고 이미지 리스트"}
+                </Box>
+                {selectedFile ? (
+                  <Box>
+                    <IconButton
+                      aria-label="파일 업로드"
+                      icon={<FiCheckCircle />}
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => buttonHandlerForConfirmFileUpload(row.id)}
+                    />
+                    <IconButton
+                      aria-label="파일 취소"
+                      icon={<FiXCircle />}
+                      size="sm"
+                      variant="ghost"
+                      onClick={handleCancelFile}
+                    />
+                  </Box>
+                ) : (
+                  <IconButton
+                    aria-label="파일 업로드"
+                    icon={<FiUpload />}
+                    size="sm"
+                    variant="ghost"
+                    _hover={{ bgColor: "blue.100" }}
+                    onClick={buttonHandlerForConfirmFileUpload}
+                  />
+                )}
+                <input
+                  id="file-input"
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                  ref={fileInputRef}
+                />
+              </Box>
+
+              <Box mt={1}>
+                {row.task_images.length ? (
+                  <Box>
+                    <Grid
+                      templateColumns="repeat(4, 1fr)"
+                      gap="2"
+                      justifyContent="center"
+                    >
+                      {row.task_images.map((row: string) => (
+                        <Box key={row.id} w="50px" h="50px">
+                          <Box
+                            key={row.id}
+                            w="50px"
+                            h="50px"
+                            onClick={() => openImageInNewTab(row.image_url)}
+                            cursor="pointer"
+                          >
+                            <Image
+                              src={row.image_url}
+                              alt="Task Image"
+                              w="100%"
+                              h="100%"
+                              objectFit="cover"
+                            />
+                          </Box>
+                        </Box>
+                      ))}
+                    </Grid>
+                  </Box>
+                ) : (
+                  <Box bg={"orange.100"} fontSize={"14px"}>
+                    no images
+                  </Box>
+                )}
+              </Box>
             </Card>
           ))}
         </Slider>
@@ -189,7 +352,12 @@ const SlideForUncompletedTaskList = ({
         <Button variant={"outline"} size={"sm"} onClick={prevSlide}>
           Prev
         </Button>
-        <Box display="grid" gridTemplateColumns="repeat(5, 1fr)" gap={1}>
+        <Box
+          display="grid"
+          gridTemplateColumns="repeat(5, 1fr)"
+          gap={1}
+          justifyContent="center"
+        >
           {renderCustomPaging()}
         </Box>{" "}
         <Button variant={"outline"} size={"sm"} onClick={nextSlide}>

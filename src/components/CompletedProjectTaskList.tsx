@@ -1,16 +1,10 @@
 import React, { ReactElement, useState, useEffect } from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Input,
-  VStack,
-  Text,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Box, Button, Input, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { getCompletedTaskList } from "../apis/project_progress_api";
-import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
+import {
+  ITypeForResponseForDataForCompletedTask,
+} from "../types/project_progress/project_progress_type";
 
 import CompletedTaskRow from "./CompletedTaskRow";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
@@ -34,7 +28,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
     isLoading,
     data: pageProgressListData,
     refetch: projectTaskListRefatch,
-  } = useQuery<ITypeForProjectProgressList>(
+  } = useQuery<ITypeForResponseForDataForCompletedTask>(
     [
       "getCompletedTaskList",
       currentPageNum,
@@ -163,7 +157,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
               total: {pageProgressListData?.totalPageCount} , per:{" "}
               {pageProgressListData?.task_number_for_one_page} 개
             </Text>
-            <Box width={"100%"} border={"1px solid green"}>
+            <Box width={"100%"} border={"0px solid green"}>
               <ButtonsForSelectForTeamTaskListPeriod
                 selectedPeriodOptionForUncompletedTaskList={
                   selectedPeriodOptionForUncompletedTaskList

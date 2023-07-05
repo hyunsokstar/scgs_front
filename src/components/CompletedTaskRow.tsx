@@ -237,6 +237,27 @@ function CompletedTaskRow({
                       </Text>
                     </Box>
 
+                    <Box border={"0px solid blue"} width={"100px"}>
+                      <Text fontSize="sm" fontWeight="bold">
+                        <Link
+                          to={`/project_admin/${task.id}`}
+                          style={{ textDecoration: "underline" }}
+                        >
+                          {task.is_for_today ? (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              _hover={{ bg: "lightblue" }}
+                            >
+                              T
+                            </Button>
+                          ) : (
+                            ""
+                          )}{" "}
+                        </Link>
+                      </Text>
+                    </Box>
+
                     {/* task_completed update */}
                     <Box
                       display={"flex"}

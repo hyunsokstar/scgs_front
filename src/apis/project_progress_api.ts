@@ -8,6 +8,7 @@ import {
   FormTypeForCreateTest,
   FormTypeForExtraTask,
   IFormTypeForProjectProgress,
+  ITypeForProjectProgressForCompleted,
   ITypeForTaskDetailUpdate,
   typeForDueDateUpdateForChecked,
   typeForParameterForUpdateTaskClassificationForChecked,

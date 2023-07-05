@@ -1,17 +1,14 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getOneProjectTask } from "../apis/user_api";
 import {
   IOneTaskForProjectTaskType,
-  ITypeForTaskDetailUpdate,
   ITypeForTaskDetailUpdateForm,
 } from "../types/project_progress/project_progress_type";
-import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
 import { Box, useToast, Heading, Text } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import {
   apiForCreateTaskUrlForTask,

@@ -23,32 +23,30 @@ const TableForStaticsForTodayTaskStatus: React.FC<TableProps> = ({
       <Table
         variant="striped"
         colorScheme="black"
-        size={["xs","sm","sm"]}
+        size={["xs", "sm", "sm"]}
         borderRadius="xs"
-        bg={"blue.100"}
-        border={"1px solid black"}
-        width={["100%","100%","100%","100%"]}
+        bg="blue.100"
+        border="1px solid black"
+        width={["100%", "100%", "100%", "100%"]}
       >
-        {" "}
-        {/* 내부 영역 배경색을 white로 설정 */}
         <Thead>
           <Tr>
-            <Th>전체</Th>
-            <Th>⚪</Th>
-            <Th>🟡</Th>
-            <Th>🟠</Th>
-            <Th>✔️</Th>
-            <Th>진행</Th>
+            <Th textAlign="center">전체</Th>
+            <Th textAlign="center">⚪</Th>
+            <Th textAlign="center">🟡</Th>
+            <Th textAlign="center">🟠</Th>
+            <Th textAlign="center">✔️</Th>
+            <Th textAlign="center">진행</Th>
           </Tr>
         </Thead>
         <Tbody>
           <Tr>
-            <Td>{toal_task_count_for_today}</Td>
-            <Td>{task_count_for_ready}</Td>
-            <Td>{task_count_for_in_progress}</Td>
-            <Td>{task_count_for_testing}</Td>
-            <Td>{task_count_for_completed}</Td>
-            <Td>{progress_rate} %</Td>
+            <Td textAlign="center">{toal_task_count_for_today}</Td>
+            <Td textAlign="center">{task_count_for_ready}</Td>
+            <Td textAlign="center">{task_count_for_in_progress}</Td>
+            <Td textAlign="center">{task_count_for_testing}</Td>
+            <Td textAlign="center">{task_count_for_completed}</Td>
+            <Td textAlign="center">{progress_rate} %</Td>
           </Tr>
         </Tbody>
       </Table>

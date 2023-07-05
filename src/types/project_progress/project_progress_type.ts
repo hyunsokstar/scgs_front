@@ -1,6 +1,63 @@
 // task_completed update
 import { Switch, SwitchProps } from "@chakra-ui/react";
 
+export interface TaskManagerForCompleted {
+  pk: number;
+  username: string;
+  profile_image: null | string;
+}
+
+export interface TestResultImageForCompleted {
+  pk: number;
+  image_url: string;
+}
+
+export interface ITypeForProjectProgressForCompleted {
+  id: number;
+  writer: string;
+  task: string;
+  task_images: any[];
+  task_description: string;
+  task_manager: TaskManagerForCompleted;
+  importance: number;
+  is_testing: boolean;
+  in_progress: boolean;
+  task_completed: boolean;
+  current_status: string;
+  due_date: string;
+  task_classification: string;
+  started_at: string;
+  started_at_formatted: string;
+  completed_at_formatted: string;
+  due_date_formatted: string;
+  elapsed_time_from_started_at: string;
+  time_consumed_from_start_to_complete: string;
+  time_left_to_due_date: string;
+  check_result_by_tester: boolean;
+  score_by_tester: number;
+  is_task_for_cash_prize: boolean;
+  is_task_for_urgent: boolean;
+  cash_prize: number;
+  due_date_option_for_today: string;
+  is_for_today: boolean;
+  test_result_images: TestResultImageForCompleted[];
+}
+
+
+export interface WriterInfo {
+  username: string;
+  profile_image: null | string;
+  cash: number;
+  task_count: number;
+}
+
+export interface ITypeForResponseForDataForCompletedTask {
+  ProjectProgressList: ProjectProgress[];
+  totalPageCount: number;
+  writers_info: WriterInfo[];
+  task_number_for_one_page: number;
+}
+
 export interface FormTypeForCreateCommentForTask {
   taskPk: string | number;
   comment: string;
@@ -173,6 +230,11 @@ export interface IUncompletedTaskListForCashPrize {
   count_for_in_testing?: number;
 }
 
+interface TestResultImageForCompletedTask {
+  pk: number;
+  image_url: string;
+}
+
 export interface taskRowForUncompleted {
   score_by_tester?: number;
   id: string;
@@ -184,6 +246,7 @@ export interface taskRowForUncompleted {
   };
   task_classification: string;
   task: string;
+  task_images: string[];
   in_progress: boolean;
   is_testing: boolean;
   task_completed: boolean;
@@ -202,6 +265,8 @@ export interface taskRowForUncompleted {
   is_task_for_urgent: boolean;
   cash_prize?: number;
   due_date_option_for_today: "until-noon" | "until-evening" | "until-night";
+  is_for_today?: boolean;
+  test_result_images?: TestResultImageForCompletedTask[];
 }
 
 export interface ITypeForProjectProgressList {

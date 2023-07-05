@@ -12,8 +12,6 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { taskRowForUncompleted } from "../types/project_progress/project_progress_type";
-import { FaTrash } from "react-icons/fa";
-import StarRating from "./StarRating";
 import SlideToggleButton from "./SlideToggleButton";
 import {
   updateProjectImportance,
@@ -67,7 +65,7 @@ function UncompletedTaskRow({
         console.log("result : ", result);
 
         queryClient.refetchQueries(["getUncompletedTaskList"]);
-        // queryClient.refetchQueries(["getCompletedTaskList"]);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
 
         toast({
           status: "success",
@@ -108,7 +106,7 @@ function UncompletedTaskRow({
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        // queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
         queryClient.refetchQueries(["getCompletedTaskList"]);
         projectTaskListRefatch();
         toast({
@@ -325,6 +323,7 @@ function UncompletedTaskRow({
                     flexDirection={"column"}
                     border={"0px solid yellow"}
                     flex={1.5}
+                    gap={1}
                   >
                     <Text color={"blue.600"} textAlign={"start"}>
                       {task.task_manager?.username}
@@ -333,7 +332,7 @@ function UncompletedTaskRow({
                       {task.writer}
                     </Text>
                   </ListItem>
-                  <ListItem border={"0px solid blue"} flex={6}>
+                  <ListItem display={"flex"} gap={1} border={"0px solid blue"} flex={6}>
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
                         to={`/project_admin/${task.id}`}
@@ -351,25 +350,43 @@ function UncompletedTaskRow({
                         {task.task_classification}
                       </Badge>
                     </Text>
+                    {/* <Button
+                      variant="outline"
+                      size="xs"
+                      p={1}
+                      fontSize={"10px"}
+                      _hover={{ bg: "lightblue" }}
+                      color={"orange.500"}
+                    >
+                      {task.importance}
+                    </Button> */}
                   </ListItem>
                   {/* fix */}
                   <ListItem border={"0px solid blue"} flex={1}>
-                    {/* <Button
-                      variant="outline"
-                      _hover={{ bg: "lightblue" }}
-                      size={"sm"}
-                    >
-                      {getDueDateEmoji(task.due_date_option_for_today)}
-                    </Button> */}
-                    <ModalButtonForUpdateDueDateOptionForToday
-                      taskId={task.id}
-                      button_text={getDueDateEmoji(
-                        task.due_date_option_for_today
+                    <Box display={"flex"} gap={2}>
+                      {task.is_for_today ? (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          _hover={{ bg: "lightblue" }}
+                          color={"orange.500"}
+                        >
+                          T
+                        </Button>
+                      ) : (
+                        ""
                       )}
-                      button_size={"sm"}
-                      modal_title={"modal for update due date"}
-                      modal_size={"5xl"}
-                    />
+
+                      <ModalButtonForUpdateDueDateOptionForToday
+                        taskId={task.id}
+                        button_text={getDueDateEmoji(
+                          task.due_date_option_for_today
+                        )}
+                        button_size={"sm"}
+                        modal_title={"modal for update due date"}
+                        modal_size={"5xl"}
+                      />
+                    </Box>
                   </ListItem>
                   {/* <ListItem
                     border={"0px solid blue"}

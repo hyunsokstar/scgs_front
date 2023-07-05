@@ -97,15 +97,15 @@ const HeaderForTaskStatusForToday: React.FC<
           </Tr>
           <Tr bg={"green.100"}>
             <Th
-              fontSize="md"
+              fontSize="sm"
               textAlign={"center"}
               colSpan={is_show_for_mobile ? 2 : 3}
             >
-              업무 시간(9:00 ~ 19:00)
+              9:00 ~ 19:00
             </Th>
             {is_show_for_mobile && (
               <Th fontSize="md" textAlign={"center"} colSpan={2}>
-                평균 개수(시간당)
+                average
               </Th>
             )}
           </Tr>

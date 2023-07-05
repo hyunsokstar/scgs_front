@@ -25,10 +25,11 @@ const TableForUsersTaskCountInfoForTaskLog: React.FC<
       size="sm"
       borderRadius="md"
       border={"1px solid black"}
+      // textAlign={"center"}
     >
       <Tbody>
         <Tr>
-          <Td>
+          <Td textAlign={"center"}>
             <Button
               size="sm"
               variant="outline"
@@ -39,12 +40,12 @@ const TableForUsersTaskCountInfoForTaskLog: React.FC<
               default
             </Button>
           </Td>
-          <Td>All User</Td>
+          <Td textAlign={"center"}>All User</Td>
         </Tr>
 
         {writers.map((writerData, index) => (
           <Tr key={index}>
-            <Td>
+            <Td textAlign={"center"}>
               <Button
                 size="sm"
                 variant="outline"
@@ -58,7 +59,7 @@ const TableForUsersTaskCountInfoForTaskLog: React.FC<
                 {writerData.writer}
               </Button>
             </Td>
-            <Td>{writerData.count}</Td>
+            <Td textAlign={"center"}>{writerData.count}</Td>
           </Tr>
         ))}
       </Tbody>

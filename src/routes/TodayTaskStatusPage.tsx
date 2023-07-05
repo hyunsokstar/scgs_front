@@ -228,14 +228,23 @@ const TodayTaskStatusPage = () => {
         // mx={2}
       >
         <Box width={"100%"}>
-          <Box mb={1}>
-            {dataForTaskStatusForToday &&
-              dataForTaskStatusForToday?.today_info.date}
+          <Box display={"flex"} gap={2} mb={1}>
+            <Text>
+              {dataForTaskStatusForToday &&
+                dataForTaskStatusForToday?.today_info.date}
+            </Text>
+            <Text>
+              {dataForTaskStatusForToday &&
+                dataForTaskStatusForToday?.today_info.dayOfWeek}
+            </Text>
 
-            {dataForTaskStatusForToday &&
-              dataForTaskStatusForToday?.today_info.dayOfWeek}
+            <ModalButtonForTaskListWithDeadlineUntilYesterDay
+              buttonText={
+                dataForTaskStatusForToday?.task_count_for_uncompleted_task_until_yesterday
+              }
+            />
           </Box>
-
+          
           {dataForTaskStatusForToday && (
             <TableForTaskLogForTasksOfWeekDay
               today_info={dataForTaskStatusForToday?.today_info}
@@ -248,20 +257,10 @@ const TodayTaskStatusPage = () => {
 
         <Box
           color="teal.800"
-          // height={"100%"}
           width={"100%"}
           // mx={"auto"}
           // border={"1px solid red"}
         >
-          <Text>task status for this week</Text>
-          <Box display={"flex"} gap={2}>
-            <Text mb={1}>오늘 이전 비완료 :</Text>
-            <ModalButtonForTaskListWithDeadlineUntilYesterDay
-              buttonText={
-                dataForTaskStatusForToday?.task_count_for_uncompleted_task_until_yesterday
-              }
-            />
-          </Box>
           <Box width={"100%"}>
             <TableForStaticsForTodayTaskStatus
               toal_task_count_for_today={
