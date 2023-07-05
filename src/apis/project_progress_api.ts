@@ -8,7 +8,6 @@ import {
   FormTypeForCreateTest,
   FormTypeForExtraTask,
   IFormTypeForProjectProgress,
-  ITypeForProjectProgressForCompleted,
   ITypeForTaskDetailUpdate,
   typeForDueDateUpdateForChecked,
   typeForParameterForUpdateTaskClassificationForChecked,
@@ -27,6 +26,27 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+// TestResultImageForCompletedTask
+export const createResultImageForCompletedTask = ({ image_url, taskPk }: any) => {
+  console.log("createProfilePhoto check !!!!!");
+
+  return instance
+    .post(
+      "medias/create-result-image-for-completed-task",
+      { taskPk, image_url },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => {
+      console.log("response for createRefImageForTask api: ", response.data);
+
+      return response.data;
+    });
+};
+
 export const apiForUpdateTaskDueDateByPk = ({
   id,
   due_date_option,
@@ -1525,7 +1545,6 @@ export const createRefImageForTask = ({ image_url, taskPk }: any) => {
     )
     .then((response) => {
       console.log("response for createRefImageForTask api: ", response.data);
-
       return response.data;
     });
 };

@@ -597,13 +597,13 @@ function UncompletedProjectTaskList({
           setCheckedRowPks={setCheckedRowPks}
         />
 
-        {/* <ModalButtonForUpdateImortanceForChecked
+        <ModalButtonForUpdateImortanceForChecked
           button_text={"update importance"}
           button_width={"100%"}
           size={"xs"}
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
-        /> */}
+        />
 
         <ModalButtonForUpdateTaskClassificationForChecked
           button_text={"update task for class"}

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -9,14 +9,22 @@ import {
   Button,
   Card,
   Checkbox,
+  Grid,
+  IconButton,
   Image,
+  Spinner,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import {
   TestResultImageForCompleted,
   taskRowForUncompleted,
 } from "../../types/project_progress/project_progress_type";
 import ModalButtonForUpdateTaskStatus from "../modal/ModalButtonForUpdateTaskStatus";
+import { FiUpload, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
+import { getUploadURL, uploadImage } from "../../api";
+import { createResultImageForCompletedTask } from "../../apis/project_progress_api";
 
 interface SlideForUncompletedTaskListProps {
   listData: taskRowForUncompleted[] | any[];
@@ -35,6 +43,14 @@ export default function SlideForCompletedTaskList({
   const [activeSlide, setActiveSlide] = React.useState(0);
   const numSlides = listData && listData.length | 0;
   const sliderRef = useRef<any>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [taskId, setTaskId] = useState<Number>();
+  const fileInputRef = useRef(null);
+
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
+  const [isUploading, setIsUploading] = useState(false);
 
   console.log("listData :::::::::::::::::::: ", listData);
 
@@ -85,6 +101,84 @@ export default function SlideForCompletedTaskList({
 
     return buttons;
   };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
+  const handleCancelFile = () => {
+    setSelectedFile(null); // 선택한 파일 초기화
+  };
+
+  const buttonHandlerForSelectFile = () => {
+    console.log("hi");
+    if (fileInputRef.current) {
+      console.log("button click check !!");
+
+      fileInputRef.current.click();
+    }
+  };
+
+  const mutationForCreateResultImageForCompletedTask = useMutation(
+    createResultImageForCompletedTask,
+    {
+      onSuccess: (result) => {
+        console.log("result : ", result);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
+        setSelectedFile(null);
+
+        toast({
+          status: "success",
+          title: "image upload success",
+          description: "image upload success",
+          isClosable: true,
+        });
+        setIsUploading(false);
+      },
+    }
+  );
+
+  const mutationForUploadImage = useMutation(uploadImage, {
+    onSuccess: ({ result }: any) => {
+      console.log("result : ", result);
+      console.log("result.variants[0] : ", result.variants[0]);
+
+      mutationForCreateResultImageForCompletedTask.mutate({
+        taskPk: taskId,
+        image_url: `https://imagedelivery.net/GDnsAXwwoW7vpBbDviU8VA/${result.id}/public`,
+      });
+    },
+  });
+
+  const getImageUploadUrlMutation = useMutation(getUploadURL, {
+    onSuccess: (result: any) => {
+      setIsUploading(true);
+      console.log("result : ", result);
+      console.log("file to upload", selectedFile);
+
+      mutationForUploadImage.mutate({
+        uploadURL: result.uploadURL,
+        file: selectedFile,
+      });
+    },
+  });
+
+  const buttonHandlerForConfirmFileUpload = (taskId: number) => {
+    console.log("button click check ??");
+
+    if (selectedFile) {
+      setTaskId(taskId);
+      console.log("selectedFile : ", selectedFile);
+      getImageUploadUrlMutation.mutate();
+    }
+  };
+
+  function openImageInNewTab(imageUrl) {
+    window.open(imageUrl, "_blank");
+  }
 
   // 2244
   return (
@@ -174,9 +268,55 @@ export default function SlideForCompletedTaskList({
                   </Box>
 
                   {/* fix 0705 */}
-                  <Box>참고 이미지 22</Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Box>
+                      {selectedFile ? selectedFile.name : "참고 이미지 리스트"}
+                      {isUploading && <Spinner size="md" />}
+                    </Box>
+                    {selectedFile ? (
+                      <Box>
+                        <IconButton
+                          aria-label="파일 업로드"
+                          icon={<FiCheckCircle />}
+                          size="sm"
+                          variant="ghost"
+                          onClick={() =>
+                            buttonHandlerForConfirmFileUpload(row.id)
+                          }
+                        />
+                        <IconButton
+                          aria-label="파일 취소"
+                          icon={<FiXCircle />}
+                          size="sm"
+                          variant="ghost"
+                          onClick={handleCancelFile}
+                        />
+                      </Box>
+                    ) : (
+                      <IconButton
+                        aria-label="파일 업로드"
+                        icon={<FiUpload />}
+                        size="sm"
+                        variant="ghost"
+                        _hover={{ bgColor: "blue.100" }}
+                        onClick={buttonHandlerForSelectFile}
+                      />
+                    )}
+                    <input
+                      id="file-input"
+                      type="file"
+                      style={{ display: "none" }}
+                      onChange={handleFileChange}
+                      ref={fileInputRef}
+                    />
+                  </Box>
                   <Box>
-                    <Box display={"flex"} gap={2}>
+                    <Grid
+                      templateColumns="repeat(4, 1fr)"
+                      gap="2"
+                      justifyContent="center"
+                    >
+                      {" "}
                       {row.test_result_images.length
                         ? row.test_result_images.map(
                             (img: TestResultImageForCompleted) => (
@@ -193,12 +333,15 @@ export default function SlideForCompletedTaskList({
                                   w="100%"
                                   h="100%"
                                   objectFit="cover"
+                                  onClick={() =>
+                                    openImageInNewTab(img.image_url)
+                                  }
                                 />
                               </Box>
                             )
                           )
                         : "no images"}
-                    </Box>
+                    </Grid>
                   </Box>
                 </Card>
               ))

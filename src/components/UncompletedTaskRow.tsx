@@ -338,7 +338,7 @@ function UncompletedTaskRow({
                         to={`/project_admin/${task.id}`}
                         style={{ textDecoration: "underline" }}
                       >
-                        {task.task}
+                        {task.task} 
                       </Link>
                       &nbsp;&nbsp;
                       <Badge
@@ -348,6 +348,14 @@ function UncompletedTaskRow({
                         p={1}
                       >
                         {task.task_classification}
+                      </Badge>
+                      <Badge
+                        size="md"
+                        fontSize={"10px"}
+                        mx={1}
+                        p={1}
+                      >
+                        {task.importance}
                       </Badge>
                     </Text>
                     {/* <Button

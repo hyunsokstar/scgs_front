@@ -48,13 +48,13 @@ const TableForTaskListForChecked: React.FC<Props> = ({
         </Thead>
         <Tbody>
           {data.map((task) => (
-            <Tr key={task.pk}>
+            <Tr key={task.id}>
               <Td>
                 <Checkbox
                   size="md"
                   colorScheme="green"
-                  value={task.pk}
-                  isChecked={checkedRowPks.includes(task.pk)}
+                  value={task.id}
+                  isChecked={checkedRowPks.includes(task.id)}
                   onChange={handleCheckboxChange}
                 />
               </Td>

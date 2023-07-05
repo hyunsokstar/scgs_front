@@ -3,15 +3,16 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
+  Avatar,
   Badge,
   Box,
-  Avatar,
   Button,
   Card,
   Checkbox,
   Grid,
   Image,
   IconButton,
+  Spinner,
   Text,
   useToast,
 } from "@chakra-ui/react";
@@ -46,6 +47,8 @@ const SlideForUncompletedTaskList = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef(null);
   const [taskId, setTaskId] = useState<Number>();
+  const [isUploading, setIsUploading] = useState(false);
+
   // console.log("listData :;:; ", listData);
 
   const handleSlideChange = (index: any) => {
@@ -120,20 +123,20 @@ const SlideForUncompletedTaskList = ({
     }
   };
 
+  // ref 0705
   const mutationForCreateImageForTask = useMutation(createRefImageForTask, {
     onSuccess: (result) => {
       console.log("result : ", result);
-      // setIsUploadingForRefImage(false);
-      // refetchForTaskDetail();
       queryClient.refetchQueries(["getUncompletedTaskList"]);
       setSelectedFile(null);
-      
+
       toast({
         status: "success",
-        title: "Profile Image uploaded!",
-        description: "Feel free to upload more images.",
+        title: "image upload success",
+        description: "image upload success",
         isClosable: true,
       });
+      setIsUploading(false);
     },
   });
 
@@ -153,6 +156,7 @@ const SlideForUncompletedTaskList = ({
     onSuccess: (result: any) => {
       console.log("result : ", result);
       console.log("file to upload", selectedFile);
+      setIsUploading(true);
 
       mutationForUploadImage.mutate({
         uploadURL: result.uploadURL,
@@ -172,7 +176,7 @@ const SlideForUncompletedTaskList = ({
     } else {
       if (fileInputRef.current) {
         console.log("button click check !!");
-        
+
         fileInputRef.current.click();
       }
     }
@@ -269,6 +273,7 @@ const SlideForUncompletedTaskList = ({
               <Box display="flex" justifyContent="space-between">
                 <Box>
                   {selectedFile ? selectedFile.name : "참고 이미지 리스트"}
+                  {isUploading && <Spinner size="md" />}
                 </Box>
                 {selectedFile ? (
                   <Box>
