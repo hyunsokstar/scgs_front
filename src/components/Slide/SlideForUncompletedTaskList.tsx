@@ -242,7 +242,7 @@ const SlideForUncompletedTaskList = ({
                     taskId={row.id}
                     button_text={getDueDateEmoji(row.due_date_option_for_today)}
                     button_size={"sm"}
-                    modal_title={"modal for update due date"}
+                    modal_title={"update due date"}
                     modal_size={"5xl"}
                   />
 

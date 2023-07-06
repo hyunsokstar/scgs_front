@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Box,
   Modal,
@@ -10,12 +11,10 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
 
 import {
   apiForGetTaskListForCheckedPks,
   apiForUpdateTaskClassificationForChecked,
-  apiForUpdateTaskImportanceForChecked,
 } from "../../apis/project_progress_api";
 import { typeForTaskListForChecked } from "../../types/project_progress/project_progress_type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -103,6 +102,26 @@ const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
     });
   };
 
+  const onOpen = () => {
+    if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
+      toast({
+        status: "warning",
+        title: "Please select at least one item",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
+      setIsOpen(false);
+    }
+  }, [dataForTaskListForCheckedPks]);
+
   // 2244
   return (
     <Box>
@@ -112,7 +131,7 @@ const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
         variant="outline"
         backgroundColor="red.50"
         _hover={{ backgroundColor: "red.100" }}
-        onClick={() => setIsOpen(true)}
+        onClick={() => onOpen()}
       >
         {button_text}
       </Button>
@@ -120,9 +139,9 @@ const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
       <Modal isOpen={isOpen} onClose={onClose} size="5xl">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader bg="purple.300">Update Importance</ModalHeader>
+          <ModalHeader bg="green.100">Update Classification</ModalHeader>
           <ModalCloseButton colorScheme="gray" />
-          <ModalBody bg="purple.200">
+          <ModalBody bg="gray.50">
             <Box mb={3}>
               {dataForTaskListForCheckedPks ? (
                 <TableForTaskListForChecked
@@ -143,7 +162,6 @@ const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
               alignItems={"center"}
               mt={5}
             >
-              {/* 업데이트용 컴퍼넌트 33*/}
               <Box>
                 <RadioButtonsForSelectTaskClassification
                   selectedClassification={selectedClassification}
@@ -160,7 +178,7 @@ const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
             </Box>
           </ModalBody>
 
-          <ModalFooter bg="purple.300">hyun</ModalFooter>
+          <ModalFooter bg="green.100">hyun</ModalFooter>
         </ModalContent>
       </Modal>
     </Box>

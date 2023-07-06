@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import {
   Box,
   Button,
@@ -10,7 +10,6 @@ import {
   ModalFooter,
   IconButton,
   Select,
-  VStack,
   useToast,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
@@ -71,12 +70,22 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
     error,
   } = useQuery<IUserNamesForCreate[]>(["user_names"], getUserNamesForCreate);
 
-  // console.log("checkedRowPks : ", checkedRowPks);
-  // console.log("dataForTaskListForCheckedPks : ", dataForTaskListForCheckedPks);
   const queryClient = useQueryClient();
 
   const onClose = () => setIsOpen(false);
-  const onOpen = () => setIsOpen(true);
+  const onOpen = () => {
+    if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
+      toast({
+        status: "warning",
+        title: "Please select at least one item",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+    } else {
+      setIsOpen(true);
+    }
+  };
 
   const mutationForUpdateTaskManagerForCheckedTasks = useMutation(
     apiForUpdateTaskManagerForCheckedTasks,
@@ -97,14 +106,17 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
   );
 
   const updateTaskManagerForCheckedTasks = () => {
-    // console.log("checkedRowPks : ", checkedRowPks);
-    console.log("selectedManager : ", selectedManager);
-
     mutationForUpdateTaskManagerForCheckedTasks.mutate({
       checkedRowPks,
       selectedManagerPk: parseInt(selectedManager),
     });
   };
+
+  useEffect(() => {
+    if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
+      setIsOpen(false);
+    }
+  }, [dataForTaskListForCheckedPks]);
 
   // 2244
   return (
@@ -122,9 +134,9 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
 
       <Modal isOpen={isOpen} onClose={onClose} size="5xl">
         <ModalOverlay />
-        <ModalContent bg="gray.100">
-          <ModalHeader bg="red.200">
-            Modal For Update Task Manger For Checked
+        <ModalContent bg="gray.50">
+          <ModalHeader bg="green.100">
+            Update Task Manger
             <IconButton
               aria-label="Close modal"
               icon={<CloseIcon />}
@@ -188,7 +200,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
               {/* 업데이트 버튼 추가 */}
             </Box>
           </ModalBody>
-          <ModalFooter bg="blue.200">Modal Footer</ModalFooter>
+          <ModalFooter bg="green.100">Modal Footer</ModalFooter>
         </ModalContent>
       </Modal>
     </Box>

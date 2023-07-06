@@ -7,8 +7,10 @@ import {
   Th,
   Thead,
   Tr,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { IOneTaskForProjectTaskType } from "../../types/project_progress/project_progress_type";
+import TextForCharacterLimit from "../Text/TextForCharacterLimit";
 
 type Props = {
   data: IOneTaskForProjectTaskType[];
@@ -16,7 +18,6 @@ type Props = {
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
-// 1122
 const TableForTaskListForChecked: React.FC<Props> = ({
   data,
   checkedRowPks,
@@ -24,22 +25,45 @@ const TableForTaskListForChecked: React.FC<Props> = ({
 }) => {
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    const pk = parseInt(value, 10);
+    const id = parseInt(value, 10);
 
     if (checked) {
-      setCheckedRowPks([...checkedRowPks, pk]);
+      setCheckedRowPks([...checkedRowPks, id]);
     } else {
-      setCheckedRowPks(checkedRowPks.filter((item) => item !== pk));
+      setCheckedRowPks(checkedRowPks.filter((item) => item !== id));
     }
   };
-  // 2244
+
+  const isAllChecked = data.length > 0 && data.length === checkedRowPks.length;
+
+  const handleSelectAllChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.target;
+
+    if (checked) {
+      setCheckedRowPks(data.map((task) => task.id));
+    } else {
+      setCheckedRowPks([]);
+    }
+  };
+
+  const is_show_for_mobile = useBreakpointValue({
+    base: true, // for mobile and small screens
+    md: false, // for medium-sized screens and up
+    lg: false, // for large screens and up
+  });
+
   return (
     <Box overflowX="auto">
       <Table variant="outline" size="sm">
         <Thead bgColor={"yellow.100"}>
           <Tr>
             <Th>
-              <Checkbox size="lg" colorScheme="orange"></Checkbox>{" "}
+              <Checkbox
+                size="lg"
+                colorScheme="orange"
+                isChecked={isAllChecked}
+                onChange={handleSelectAllChange}
+              />
             </Th>
             <Th>작성자</Th>
             <Th>작업 내용</Th>
@@ -59,7 +83,13 @@ const TableForTaskListForChecked: React.FC<Props> = ({
                 />
               </Td>
               <Td>{task.task_manager.username}</Td>
-              <Td>{task.task}</Td>
+              <Td>
+                {is_show_for_mobile ? (
+                  <TextForCharacterLimit text={task.task} />
+                ) : (
+                  task.task
+                )}
+              </Td>
               <Td>{task.current_status}</Td>
             </Tr>
           ))}

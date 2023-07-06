@@ -1,3 +1,4 @@
+import { useState, useEffect  } from "react";
 import {
   Box,
   Modal,
@@ -11,8 +12,6 @@ import {
   Spacer,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import StarRatingForUpdateImportanceForChecked from "../StarRating/StarRatingForUpdateImportanceForChecked";
 import {
   apiForGetTaskListForCheckedPks,
@@ -21,6 +20,7 @@ import {
 import { typeForTaskListForChecked } from "../../types/project_progress/project_progress_type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
+// import { useForm } from "react-hook-form";
 
 type ModalButtonForUpdateImortanceForCheckedProps = {
   button_text: string;
@@ -45,7 +45,7 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
   const {
     isLoading,
     data: dataForTaskListForCheckedPks,
-    refetch: refatchForTaskListForCheckedPks,
+    refetch: refetchForTaskListForCheckedPks,
   } = useQuery<typeForTaskListForChecked>(
     ["getTaskListForUpdateImportanceForChecked", checkedRowPks],
     apiForGetTaskListForCheckedPks,
@@ -88,6 +88,26 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
     });
   };
 
+  const handleOpenModal = () => {
+    if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
+      toast({
+        status: "warning",
+        title: "Please select at least one item",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
+      setIsOpen(false);
+    }
+  }, [dataForTaskListForCheckedPks]);
+
   return (
     <Box>
       <Button
@@ -96,7 +116,7 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
         variant="outline"
         backgroundColor="red.50"
         _hover={{ backgroundColor: "red.100" }}
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpenModal}
       >
         {button_text}
       </Button>
@@ -104,9 +124,9 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
       <Modal isOpen={isOpen} onClose={onClose} size="5xl">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader bg="purple.300">Update Importance</ModalHeader>
+          <ModalHeader bg="green.100">Update Importance</ModalHeader>
           <ModalCloseButton colorScheme="gray" />
-          <ModalBody bg="purple.200">
+          <ModalBody bg="gray.50">
             <Box mb={3}>
               {dataForTaskListForCheckedPks ? (
                 <TableForTaskListForChecked
@@ -130,6 +150,7 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
               <StarRatingForUpdateImportanceForChecked
                 rating={rating}
                 setRating={setRating}
+                button_size={"sm"}
                 checkedRowPks={checkedRowPks}
               />
 
@@ -145,7 +166,7 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
             </Box>
           </ModalBody>
 
-          <ModalFooter bg="purple.300">hyun</ModalFooter>
+          <ModalFooter bg="green.50">hyun</ModalFooter>
         </ModalContent>
       </Modal>
     </Box>
