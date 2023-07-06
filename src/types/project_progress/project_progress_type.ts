@@ -43,7 +43,6 @@ export interface ITypeForProjectProgressForCompleted {
   test_result_images: TestResultImageForCompleted[];
 }
 
-
 export interface WriterInfo {
   username: string;
   profile_image: null | string;
@@ -267,6 +266,7 @@ export interface taskRowForUncompleted {
   due_date_option_for_today: "until-noon" | "until-evening" | "until-night";
   is_for_today?: boolean;
   test_result_images?: TestResultImageForCompletedTask[];
+  task_comments: ITaskComment[];
 }
 
 export interface ITypeForProjectProgressList {

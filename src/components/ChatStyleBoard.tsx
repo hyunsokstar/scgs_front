@@ -234,9 +234,9 @@ interface User {
 }
 
 type IProps = {
-  task_comments: ITaskComment[];
-  task_manager: User | undefined;
   taskPk: number | string;
+  task_manager: User | undefined;
+  task_comments: ITaskComment[];
   refetch: () => void;
 };
 

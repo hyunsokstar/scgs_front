@@ -23,6 +23,7 @@ import { FiUpload, FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
 import { getUploadURL, uploadImage } from "../../api";
 import { createRefImageForTask } from "../../apis/project_progress_api";
+import ModalButtonForBriefingBoard from "../modal/ModalButtonForBriefingBoard";
 
 interface SlideForUncompletedTaskListProps {
   listData: taskRowForUncompleted[];
@@ -265,9 +266,23 @@ const SlideForUncompletedTaskList = ({
                   <Box fontSize={"14px"}>{row.due_date_formatted}</Box>
                 </Box>
               </Box>
-              <Box mt={2}>
-                <Box>remaing_time</Box>
-                <Box>{row.time_left_to_due_date}</Box>
+              <Box display={"flex"} justifyContent={"space-between"}>
+                <Box>
+                  <Box>remaining_time</Box>
+                  <Box>{row.time_left_to_due_date}</Box>
+                </Box>
+                <Box>
+                  <ModalButtonForBriefingBoard
+                    button_text={"chat"}
+                    button_size={"xs"}
+                    modal_title={"brieging board"}
+                    modal_size={"6xl"}
+                    taskPk={row.id}
+                    task_manager={row.task_manager}
+                    task_comments={row.task_comments}
+                    refetch={refetch}
+                  />
+                </Box>
               </Box>
               {/* fix */}
               <Box display="flex" justifyContent="space-between">
