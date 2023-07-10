@@ -3,8 +3,6 @@ import { Avatar, Box, Button } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import NoteSlideForStudyNoteSpecificPage from "../../components/ImageSlide/NoteSlideForStudyNoteSpecificPage";
-
-import TinyMCEEditor from "../../components/RichEditor/TinyMCEEditor";
 import { StudyNoteData } from "../../types/study_note_type";
 import { apiForGetStuyNoteContentList } from "../../apis/study_note_api";
 import ModalButtonForInsertYoutubeContentsForNote from "../../components/modal/ModalButtonForInsertYoutubeContentsForNote";
@@ -167,6 +165,7 @@ const NoteContentsByImageSlidePage = (props: Props) => {
               }
               note_title={""}
               note_writer={""}
+              is_authority_for_note={is_authority_for_note}
             />
           ) : (
             "no data"

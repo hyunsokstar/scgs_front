@@ -18,6 +18,8 @@ import PlayerForYouTube from "../Player/PlayerForYouTube";
 import CreateFormForStudyNoteForSlide from "../Form/CreateFormForStudyNoteForSlide";
 import { DataForStudyNoteContent } from "../../types/study_note_type";
 import { useNavigate } from "react-router-dom";
+import ModalButtonForUpdateStudyNoteSubtitle from "../Button/ModalButtonForUpdateStudyNoteSubtitle";
+import ModalButtonForUpdateStudyNoteContent from "../Button/ModalButtonForUpdateStudyNoteContent";
 
 interface IProps {
   study_note_pk: string | undefined;
@@ -25,6 +27,7 @@ interface IProps {
   dataForNoteContentListForPage: DataForStudyNoteContent[];
   note_title: string;
   note_writer: string;
+  is_authority_for_note: boolean;
 }
 
 export default function NoteSlideForStudyNoteSpecificPage({
@@ -33,6 +36,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
   dataForNoteContentListForPage,
   note_title,
   note_writer,
+  is_authority_for_note,
 }: IProps) {
   const navigate = useNavigate();
   const [activeSlide, setActiveSlide] = useState(0);
@@ -145,14 +149,15 @@ export default function NoteSlideForStudyNoteSpecificPage({
         {dataForSlides.map((note, index) => {
           if (note.content_option === "subtitle_for_page") {
             return (
-              <Box border={"0px solid blue"} key={note.pk}>
+              <Box border={"0px solid blue"} key={note.pk} height={"100%"}>
                 <Box width={"100%"} bg={"yellow.100"} border={"0px solid pink"}>
                   <Box
                     display={"flex"}
                     justifyContent={"center"}
                     alignItems={"center"}
-                    height={"60vh"}
+                    height={"68vh"}
                     userSelect="text"
+                    border={"1px solid green"}
                   >
                     {note.youtube_url ? (
                       <Box display={"flex"} width={"100%"}>
@@ -194,13 +199,29 @@ export default function NoteSlideForStudyNoteSpecificPage({
                     {note.ref_url2}
                   </Box>
                 </Box>
+                <Box display={"flex"} justifyContent={"flex-end"} p={2}>
+                  {is_authority_for_note ? (
+                    <ModalButtonForUpdateStudyNoteSubtitle
+                      modal_title={"update subtitle"}
+                      button_text={"update subtitle"}
+                      pk={note.pk}
+                      title={note.title}
+                      ref_url1={note.ref_url1}
+                      ref_url2={note.ref_url2}
+                      content={note.content}
+                      youtube_url={note.youtube_url}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </Box>
               </Box>
             );
           } else if (note.content_option === "note_content") {
             return (
               <Box
                 key={note.pk}
-                border="0px solid black"
+                border="1px solid black"
                 borderColor="gray.200"
                 display="flex"
                 justifyContent="center"
@@ -218,12 +239,26 @@ export default function NoteSlideForStudyNoteSpecificPage({
                 <Box
                   dangerouslySetInnerHTML={{ __html: note.content }}
                   overflowY={"scroll"}
-                  height={"580px"}
+                  height={"60vh"}
                   sx={{
                     lineHeight: "1.5", // 줄 간격을 조절하는 CSS 속성
                     fontSize: "14px", // 텍스트의 크기를 조절하는 CSS 속성
                   }}
+                  border={"1px solid green"}
                 />
+                <Box display={"flex"} justifyContent={"flex-end"} p={2}>
+                  {is_authority_for_note ? (
+                    <ModalButtonForUpdateStudyNoteContent
+                      button_text={"update content"}
+                      pk={note.pk}
+                      title={note.title}
+                      file_name={note.file_name}
+                      content={note.content}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </Box>
               </Box>
             );
           } else if (note.content_option === "youtube") {
@@ -272,7 +307,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
         display="flex"
         justifyContent="center"
         alignItems={"center"}
-        height={"50px"}
+        height={"100px"}
         border={"1px solid black"}
         mt={1}
       >
@@ -280,7 +315,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
           display="flex"
           justifyContent="center"
           alignItems="center"
-          mt={1}
+          // mt={1}
           gap={1}
         >
           <Button onClick={() => changePage("first")}>F</Button>

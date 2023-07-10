@@ -132,7 +132,7 @@ const CreateFormForStudyNoteForSlide = ({
               isInvalid={errors.title != null}
             />
           </FormControl>
-          <FormControl mt={4}>
+          <FormControl mt={1}>
             <FormLabel>File</FormLabel>
             <Input
               type="text"
@@ -143,7 +143,7 @@ const CreateFormForStudyNoteForSlide = ({
           </FormControl>
         </HStack>
 
-        <FormControl mt={4}>
+        <FormControl mt={1}>
           <FormLabel>Content</FormLabel>
           <Box zIndex={9999}>
             <TinyMCEEditor
@@ -153,7 +153,7 @@ const CreateFormForStudyNoteForSlide = ({
           </Box>
         </FormControl>
       </Box>
-      <Box mt={5}>
+      <Box mt={2}>
         <Flex justify="space-between" w="100%">
           <Button
             variant="outline"

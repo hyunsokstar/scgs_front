@@ -69,14 +69,15 @@ const TinyMCEEditor: React.FC<Props> = ({
   };
 
   return (
-    <Box sx={{ height: "100%", overflowY: 'scroll' }}>
+    <Box sx={{ height: "60vh", overflowY: 'scroll' }}>
       <Editor
         apiKey={apiKey}
         value={initialValue}
         onEditorChange={handleEditorChange}
         init={{
-          height: 500,
+          height: "100%",
           menubar: true,
+          paste_webkit_styles: "color",
           plugins: [
             'advlist autolink lists link image charmap print preview anchor',
             'searchreplace visualblocks code fullscreen',
@@ -87,7 +88,7 @@ const TinyMCEEditor: React.FC<Props> = ({
             'bold italic forecolor backcolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | code styleselect | help',
-          content_style: 'body { font-size: 14px; background-color: #f2f2f2; line-height: 1.5; }',
+          content_style: 'body { font-size: 14px; background-color: white; line-height: 1.5; }',
           style_formats: [
             { title: 'Inline Code', inline: 'code' },
             { title: 'Code Block', block: 'pre', classes: 'prettyprint linenums' }  

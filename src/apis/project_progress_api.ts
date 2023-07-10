@@ -27,7 +27,10 @@ interface ICommentTextUpdateApiParameter {
 
 // 1122
 // TestResultImageForCompletedTask
-export const createResultImageForCompletedTask = ({ image_url, taskPk }: any) => {
+export const createResultImageForCompletedTask = ({
+  image_url,
+  taskPk,
+}: any) => {
   console.log("createProfilePhoto check !!!!!");
 
   return instance
@@ -47,11 +50,7 @@ export const createResultImageForCompletedTask = ({ image_url, taskPk }: any) =>
     });
 };
 
-export const apiForUpdateTaskDueDateByPk = ({
-  id,
-  due_date_option,
-}: any) => {
-
+export const apiForUpdateTaskDueDateByPk = ({ id, due_date_option }: any) => {
   return instance
     .put(
       `/project_progress/${id}/update-due-date-by-due-date-option`,
@@ -503,10 +502,10 @@ export const apiForGetDataForDailyTaskCountForPersonalUser = ({
     .then((response) => response.data);
 };
 
-export const apiForGetTaskListForCheckedPks = ({ queryKey }: QueryFunctionContext) => {
-
+export const apiForGetTaskListForCheckedPks = ({
+  queryKey,
+}: QueryFunctionContext) => {
   const [_, checkedRowPks] = queryKey;
-
 
   const numericCheckedRowPks = checkedRowPks.map(Number);
 
@@ -526,10 +525,7 @@ export const apiForGetTaskListForCheckedPks = ({ queryKey }: QueryFunctionContex
     });
 };
 
-export const apiForUpdateTaskDueDate = ({
-  taskPk,
-  duration_option,
-}: any) => {
+export const apiForUpdateTaskDueDate = ({ taskPk, duration_option }: any) => {
   console.log("apiForUpdateTaskDueDate check !!!!!!!!!!!!!");
   console.log("taskPk: ", taskPk);
 
@@ -1393,6 +1389,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
     isForUrgent,
     checkForCashPrize,
     groupByOption,
+    is_task_due_date_has_passed,
   ] = queryKey;
 
   return instance
@@ -1407,6 +1404,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         isForUrgent,
         checkForCashPrize,
         groupByOption,
+        is_task_due_date_has_passed,
       },
     })
     .then((response) => {

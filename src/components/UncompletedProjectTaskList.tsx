@@ -67,6 +67,8 @@ function UncompletedProjectTaskList({
   const [isForUrgent, setIsForUrgent] = useState(false);
   const [checkForCashPrize, setCheckForCashPrize] = useState(false);
   const [groupByOption, setGroupByOption] = React.useState<string>("");
+  const [is_task_due_date_has_passed, set_is_task_due_date_has_passed] =
+    React.useState<boolean>(false);
 
   const {
     isLoading,
@@ -84,6 +86,7 @@ function UncompletedProjectTaskList({
       isForUrgent,
       checkForCashPrize,
       groupByOption,
+      is_task_due_date_has_passed,
     ],
     getUncompletedTaskList,
     {
@@ -312,42 +315,61 @@ function UncompletedProjectTaskList({
               justifyContent={"flex-start"}
               gap={3}
               borderBottom={"1px solid #9AE6B4"}
+              flexDirection={"column"}
             >
-              <ButtonForShowCountForTaskStatus
-                task_status={"ready"}
-                status_imoge={"⚪"}
-                status_count={taskListData?.count_for_ready}
-                button_size={"sm"}
-                task_status_for_search={task_status_for_search}
-                set_task_status_for_search={set_task_status_for_search}
-              />
-              <ButtonForShowCountForTaskStatus
-                button_size={"sm"}
-                task_status={"in_progress"}
-                status_imoge={"🟡"}
-                status_count={taskListData?.count_for_in_progress}
-                task_status_for_search={task_status_for_search}
-                set_task_status_for_search={set_task_status_for_search}
-              />
-              <ButtonForShowCountForTaskStatus
-                button_size={"sm"}
-                task_status={"testing"}
-                status_imoge={"🟠"}
-                status_count={taskListData?.count_for_in_testing}
-                task_status_for_search={task_status_for_search}
-                set_task_status_for_search={set_task_status_for_search}
-              />
+              <Box display={"flex"} gap={2}></Box>
+              <Box display={"flex"} gap={2}>
+                <Button
+                  size="xs"
+                  variant={"outline"}
+                  border={"1px solid black"}
+                  onClick={() => {
+                    set_is_task_due_date_has_passed(false);
+                    set_task_status_for_search("");
+                    set_username_for_search("");
+                    set_due_date_option_for_filtering("");
+                    setIsForUrgent(false);
+                    setCheckForCashPrize(false);
+                  }}
+                >
+                  reset
+                </Button>
+
+                <ButtonForShowCountForTaskStatus
+                  task_status={"ready"}
+                  status_imoge={"⚪"}
+                  status_count={taskListData?.count_for_ready}
+                  button_size={"xs"}
+                  task_status_for_search={task_status_for_search}
+                  set_task_status_for_search={set_task_status_for_search}
+                />
+                <ButtonForShowCountForTaskStatus
+                  button_size={"xs"}
+                  task_status={"in_progress"}
+                  status_imoge={"🟡"}
+                  status_count={taskListData?.count_for_in_progress}
+                  task_status_for_search={task_status_for_search}
+                  set_task_status_for_search={set_task_status_for_search}
+                />
+                <ButtonForShowCountForTaskStatus
+                  button_size={"xs"}
+                  task_status={"testing"}
+                  status_imoge={"🟠"}
+                  status_count={taskListData?.count_for_in_testing}
+                  task_status_for_search={task_status_for_search}
+                  set_task_status_for_search={set_task_status_for_search}
+                />
+                <Button
+                  size="xs"
+                  variant={"outline"}
+                  border={"1px solid black"}
+                  onClick={() => set_is_task_due_date_has_passed(true)}
+                >
+                  dhp : x
+                </Button>
+              </Box>
             </Box>
           </Box>
-          {/* <Box borderBottom={"3px solid #9AE6B4"}>
-            <Box>
-              <StarRatingForSetFilterOptionForTaskList
-                rating={rating_for_filter_option}
-                setRating={set_rating_for_filter_option}
-                button_size={"sm"}
-              />
-            </Box>
-          </Box> */}
           <Box
             width={"90%"}
             borderBottom={"3px solid #9AE6B4"}
@@ -613,7 +635,7 @@ function UncompletedProjectTaskList({
           setCheckedRowPks={setCheckedRowPks}
         />
       </Box>
-      
+
       <Box
         display={"flex"}
         justifyContent={"space-between"}
@@ -634,7 +656,6 @@ function UncompletedProjectTaskList({
           />
         </Box>
         <Box>
-
           <SelectBoxForDueDateForUnompletedTaskForChecked
             checkedRowPks={checkedRowPks}
             setCheckedRowPks={setCheckedRowPks}

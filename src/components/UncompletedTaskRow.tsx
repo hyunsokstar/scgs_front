@@ -370,7 +370,7 @@ function UncompletedTaskRow({
                     </Button> */}
                   </ListItem>
                   {/* fix */}
-                  <ListItem border={"0px solid blue"} flex={1}>
+                  <ListItem border={"0px solid blue"} flex={1.5}>
                     <Box display={"flex"} gap={2}>
                       {task.is_for_today ? (
                         <Button
