@@ -48,6 +48,8 @@ const StudyNoteDetail2 = (props: Props) => {
   const { study_note_pk, note_page_num } = useParams();
   const dispatch = useDispatch();
   const [topValue, setTopValue] = useState(270);
+  const [savedPageNumForCurrentPage, setSavedPageNumForCurrentPage] =
+    useState(0);
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -80,15 +82,17 @@ const StudyNoteDetail2 = (props: Props) => {
       "apiForGetStuyNoteContentList",
       study_note_pk,
       currentPage,
-      "apiForGetStuyNoteContentList",
     ],
-    apiForGetStuyNoteContentList
-    // {
-    //   cacheTime: 0, // cacheTime을 0으로 설정하여 캐싱을 해제
-    // }
+    apiForGetStuyNoteContentList,
+    {
+      enabled:true
+    }
   );
 
   useEffect(() => {
+    if (isLoggedIn) {
+      mutationForInitializeSavedPageNumForThisNote.mutate({ study_note_pk });
+    }
     if (note_page_num) {
       dispatch(initializeCurrentPage(parseInt(note_page_num)));
     }
@@ -159,10 +163,11 @@ const StudyNoteDetail2 = (props: Props) => {
         toast({
           title: "Classroom registration success!",
           status: "success",
-          description: data,
+          description: data.save_page_num,
           duration: 2000,
           isClosable: true,
         });
+        setSavedPageNumForCurrentPage(data.save_page_num);
       },
       onError: (error: any) => {
         console.log("error : ", error.response.data);
@@ -194,12 +199,57 @@ const StudyNoteDetail2 = (props: Props) => {
 
   const buttonHandlerForRegisterClassRoomForStudyNote = () => {
     // alert(study_note_pk);
-    const current_page = note_page_num;
-    mutationForRegisterClassRoomForStudyNote.mutate({
-      study_note_pk,
-      current_page,
-    });
+
+    if (isLoggedIn) {
+      const current_page = note_page_num;
+      mutationForRegisterClassRoomForStudyNote.mutate({
+        study_note_pk,
+        current_page,
+      });
+    } else {
+      alert("현재 페이지를 저장 하려면 로그인이 필요 합니다.");
+      return;
+    }
   };
+
+  const mutationForInitializeSavedPageNumForThisNote = useMutation(
+    apiForLoadSavedPageForThisNote,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data2 : ", data);
+
+        // toast({
+        //   title: "load save page success!",
+        //   status: "success",
+        //   description: data.current_page,
+        //   duration: 2000,
+        //   isClosable: true,
+        // });
+        setSavedPageNumForCurrentPage(data.current_page);
+        // navigate(`/study-note/${study_note_pk}/${data.current_page}`);
+      },
+      onError: (error: any) => {
+        console.log("error : ", error);
+        console.log("error : ", error.response.data);
+
+        // if(error.response.data)
+
+        console.log("error type: ", error.response.data.message_type);
+        console.log("error message", error.response.data.message);
+
+        toast({
+          title: "error",
+          description: error.response.data,
+          status: "warning",
+          duration: 2000,
+          isClosable: true,
+        });
+      },
+    }
+  );
 
   const mutationForLoadSavedPageForThisNote = useMutation(
     apiForLoadSavedPageForThisNote,
@@ -208,7 +258,7 @@ const StudyNoteDetail2 = (props: Props) => {
         console.log("mutation starting");
       },
       onSuccess: (data) => {
-        console.log("data: ", data);
+        console.log("data 11: ", data.current_page);
 
         toast({
           title: "load save page success!",
@@ -217,6 +267,7 @@ const StudyNoteDetail2 = (props: Props) => {
           duration: 2000,
           isClosable: true,
         });
+        // setSavedPageNumForCurrentPage(data.save_page_num);
         navigate(`/study-note/${study_note_pk}/${data.current_page}`);
       },
       onError: (error: any) => {
@@ -418,33 +469,48 @@ const StudyNoteDetail2 = (props: Props) => {
           gap={3}
           my={2}
         >
-          <Box>writer:{response_data_for_api?.note_user_name}</Box>
           <Box>
-            <Box>note subject:</Box>
-            <Box>{response_data_for_api?.note_title}</Box>
+            <Text as="span" color="purple.500" fontWeight="bold">
+              Writer:
+            </Text>{" "}
+            {response_data_for_api?.note_user_name}
+          </Box>{" "}
+          <Box>
+            <Box>
+              <Text as="span" color="blue.500" fontWeight="bold">
+                Title:
+              </Text>{" "}
+              {response_data_for_api?.note_title}
+            </Box>
+            <Box>
+              <Text as="span" color="green.500" fontStyle="italic">
+                SubTitle:
+              </Text>{" "}
+              {response_data_for_api?.subtitle_for_page}
+            </Box>
           </Box>
-          <Box>page: {currentPage}</Box>
+          {/* <Box>page: {currentPage}</Box> */}
           <Box>
             <Box>CoWriters: </Box>
-            <Box display={"flex"} gap={2} alignItems={"center"}>
+            <Box display="flex" gap={2} alignItems="center">
               {response_data_for_api &&
-              response_data_for_api.co_writers_for_approved.length
-                ? response_data_for_api?.co_writers_for_approved.map((row) => {
-                    return (
-                      <Box display={"flex"} gap={2} alignItems={"center"}>
-                        <Box>
-                          <Avatar
-                            name={row.username}
-                            src={row.profile_image}
-                            size="sm"
-                            ml={"2px"}
-                          />
-                        </Box>
-                        <Box>{row.username}</Box>
-                      </Box>
-                    );
-                  })
-                : " no cowriters"}
+              response_data_for_api.co_writers_for_approved.length ? (
+                response_data_for_api.co_writers_for_approved.map((row) => (
+                  <Box display="flex" gap={2} alignItems="center" key={row.id}>
+                    <Box>
+                      <Avatar
+                        name={row.username}
+                        src={row.profile_image}
+                        size="sm"
+                        ml="2px"
+                      />
+                    </Box>
+                    {/* <Text>{row.username}</Text> */}
+                  </Box>
+                ))
+              ) : (
+                <Text>no cowriters</Text>
+              )}
             </Box>
           </Box>
         </Box>
@@ -487,8 +553,7 @@ const StudyNoteDetail2 = (props: Props) => {
             alignItems={"center"}
             flexDirection={"column"}
             border={"0px solid black"}
-            // pt={1824}
-            // height={"100vh"}
+
           >
             {response_data_for_api &&
             response_data_for_api.data_for_study_note_contents.length ? (
@@ -529,6 +594,9 @@ const StudyNoteDetail2 = (props: Props) => {
                         ref_url1={row.ref_url1}
                         ref_url2={row.ref_url2}
                         youtube_url={row.youtube_url}
+                        refetch_for_study_note_content_list={
+                          refetch_for_study_note_content_list
+                        }
                       />
                     );
                   } else if (row.content_option === "youtube") {
@@ -587,7 +655,7 @@ const StudyNoteDetail2 = (props: Props) => {
               size={"sm"}
               onClick={buttonHandlerForLoadSavedPageForThisNote}
             >
-              load page
+              load page ({savedPageNumForCurrentPage})
             </Button>
           </Box>
           <Box

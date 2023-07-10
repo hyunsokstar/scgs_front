@@ -1,15 +1,9 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement } from "react";
 
-interface Props {
-    
-}
+interface Props {}
 
 function QAPage({}: Props): ReactElement {
-    return (
-        <div>
-            qa
-        </div>
-    )
+  return <div>qa</div>;
 }
 
-export default QAPage
+export default QAPage;

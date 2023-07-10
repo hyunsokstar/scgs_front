@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
   Box,
-  ChakraProvider,
   Button,
   Text,
   Table,
@@ -13,12 +12,12 @@ import {
   Tr,
   useToast,
 } from "@chakra-ui/react";
-import { DataForStudyNoteContent } from "../../types/study_note_type";
-import PlayerForYouTube from "../Player/PlayerForYouTube";
-import CreateFormForStudyNoteForSlide from "../Form/CreateFormForStudyNoteForSlide";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { IoIosSkipBackward, IoIosFastforward } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import PlayerForYouTube from "../Player/PlayerForYouTube";
+import CreateFormForStudyNoteForSlide from "../Form/CreateFormForStudyNoteForSlide";
+import { DataForStudyNoteContent } from "../../types/study_note_type";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   study_note_pk: string | undefined;
@@ -28,7 +27,6 @@ interface IProps {
   note_writer: string;
 }
 
-// 1122
 export default function NoteSlideForStudyNoteSpecificPage({
   study_note_pk,
   note_page_num,
@@ -37,7 +35,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
   note_writer,
 }: IProps) {
   const navigate = useNavigate();
-  const [activeSlide, setActiveSlide] = React.useState(0);
+  const [activeSlide, setActiveSlide] = useState(0);
   const numSlides = dataForNoteContentListForPage.length + 1;
   const sliderRef = useRef<any>(null);
   const [dataForSlides, setDataForSlides] = useState<any>([]);
@@ -53,7 +51,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
     ];
 
     setDataForSlides(dataForSlidesForUpdate);
-  }, [dataForNoteContentListForPage]);
+  }, [dataForNoteContentListForPage, dataForSlides]);
 
   const handleSlideChange = (index: any) => {
     setActiveSlide(index);
@@ -105,6 +103,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
 
     return buttons;
   };
+
   const changePage = (option: string) => {
     if (option === "previous") {
       if (note_page_num && parseInt(note_page_num) > 1) {
@@ -112,8 +111,8 @@ export default function NoteSlideForStudyNoteSpecificPage({
         navigate(`/study-note/${study_note_pk}/${page_to_move}/slide`);
       } else {
         toast({
-          title: "Warnning !",
-          description: "1 페이지 이하로는 이동 불가능 합니다",
+          title: "Warning!",
+          description: "Cannot go below page 1",
           status: "warning",
           duration: 2000,
           isClosable: true,
@@ -141,7 +140,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
   };
 
   return (
-    <ChakraProvider>
+    <Box height={"100%"}>
       <Slider {...settings} ref={sliderRef}>
         {dataForSlides.map((note, index) => {
           if (note.content_option === "subtitle_for_page") {
@@ -183,7 +182,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
                 </Box>
                 <Box
                   display={"flex"}
-                  height={"2vh"}
+                  // height={"2vh"}
                   bg={"blue.100"}
                   alignItems={"center"}
                   p={3}
@@ -203,7 +202,6 @@ export default function NoteSlideForStudyNoteSpecificPage({
                 key={note.pk}
                 border="0px solid black"
                 borderColor="gray.200"
-                // height="100%"
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
@@ -211,8 +209,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
               >
                 <Box bg={"yellow.100"} display={"flex"} p={3} fontSize={"16px"}>
                   <Box width={"50%"}>
-                    title:
-                    <Text>{note.title}</Text>
+                    title:<Text>{note.title}</Text>
                   </Box>
                   <Box width={"50%"}>
                     file :<Text>{note.file_name}</Text>
@@ -221,7 +218,11 @@ export default function NoteSlideForStudyNoteSpecificPage({
                 <Box
                   dangerouslySetInnerHTML={{ __html: note.content }}
                   overflowY={"scroll"}
-                  height={"60vh"}
+                  height={"580px"}
+                  sx={{
+                    lineHeight: "1.5", // 줄 간격을 조절하는 CSS 속성
+                    fontSize: "14px", // 텍스트의 크기를 조절하는 CSS 속성
+                  }}
                 />
               </Box>
             );
@@ -275,41 +276,40 @@ export default function NoteSlideForStudyNoteSpecificPage({
         border={"1px solid black"}
         mt={1}
       >
-        <ChakraProvider>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          mt={1}
+          gap={1}
+        >
+          <Button onClick={() => changePage("first")}>F</Button>
+          <Button>
+            <IoIosSkipBackward onClick={() => changePage("previous")} />
+          </Button>
+          <Button onClick={prevSlide}>
+            <AiOutlineLeft />
+          </Button>
+          {/* <Box display="flex" flexWrap="wrap" w="70%" mx="auto">
+            {renderCustomPaging()}
+          </Box> */}
           <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            mt={1}
-            gap={1}
+            display="grid"
+            gridTemplateColumns="repeat(5, 1fr)"
+            mx={2}
+            my={1}
           >
-            <Button onClick={() => changePage("first")}>F</Button>
-            <Button>
-              <IoIosSkipBackward onClick={() => changePage("previous")} />
-            </Button>
-
-            <Button onClick={prevSlide}>
-              <AiOutlineLeft />
-            </Button>
-            <Box
-              display="flex"
-              flexWrap="wrap"
-              w="70%" // 화면의 70% 넓이로 설정
-              mx="auto" // 중앙 정렬을 위해 mx="auto" 설정
-            >
-              {renderCustomPaging()}
-            </Box>
-            <Button onClick={nextSlide}>
-              <AiOutlineRight />
-            </Button>
-
-            <Button>
-              <IoIosFastforward onClick={() => changePage("next")} />
-            </Button>
-            <Button onClick={() => changePage("last")}>L</Button>
-          </Box>
-        </ChakraProvider>
+            {renderCustomPaging()}
+          </Box>{" "}
+          <Button onClick={nextSlide}>
+            <AiOutlineRight />
+          </Button>
+          <Button>
+            <IoIosFastforward onClick={() => changePage("next")} />
+          </Button>
+          <Button onClick={() => changePage("last")}>L</Button>
+        </Box>
       </Box>
-    </ChakraProvider>
+    </Box>
   );
 }

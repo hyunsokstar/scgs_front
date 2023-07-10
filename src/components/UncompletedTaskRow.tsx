@@ -181,20 +181,20 @@ function UncompletedTaskRow({
     console.log("response :", response);
   };
 
-  const rowColor = (task_status: string) => {
-    // console.log("task_staus : ", task_status);
+  // const rowColor = (task_status: string) => {
+  //   // console.log("task_staus : ", task_status);
 
-    if (task_status === "ready") {
-      return "white";
-    }
+  //   if (task_status === "ready") {
+  //     return "white";
+  //   }
 
-    if (task_status === "in_progress") {
-      return "rgba(255, 255, 0, 0.2)";
-    }
-    if (task_status === "testing") {
-      return "rgba(255, 165, 0, 0.2)";
-    }
-  };
+  //   if (task_status === "in_progress") {
+  //     return "rgba(255, 255, 0, 0.2)";
+  //   }
+  //   if (task_status === "testing") {
+  //     return "rgba(255, 165, 0, 0.2)";
+  //   }
+  // };
 
   const update_mutation_for_is_task_for_cash_prize = useMutation(
     update_task_for_is_task_for_cash_prize,
@@ -332,13 +332,18 @@ function UncompletedTaskRow({
                       {task.writer}
                     </Text>
                   </ListItem>
-                  <ListItem display={"flex"} gap={1} border={"0px solid blue"} flex={6}>
+                  <ListItem
+                    display={"flex"}
+                    gap={1}
+                    border={"0px solid blue"}
+                    flex={6}
+                  >
                     <Text fontSize="sm" fontWeight="bold">
                       <Link
                         to={`/project_admin/${task.id}`}
                         style={{ textDecoration: "underline" }}
                       >
-                        {task.task} 
+                        {task.task}
                       </Link>
                       &nbsp;&nbsp;
                       <Badge
@@ -349,12 +354,7 @@ function UncompletedTaskRow({
                       >
                         {task.task_classification}
                       </Badge>
-                      <Badge
-                        size="md"
-                        fontSize={"10px"}
-                        mx={1}
-                        p={1}
-                      >
+                      <Badge size="md" fontSize={"10px"} mx={1} p={1}>
                         {task.importance}
                       </Badge>
                     </Text>
@@ -380,6 +380,31 @@ function UncompletedTaskRow({
                           color={"orange.500"}
                         >
                           T
+                        </Button>
+                      ) : (
+                        ""
+                      )}
+
+                      {task.is_due_date_has_passed ? (
+                        <ModalButtonForUpdateDueDateOptionForToday
+                          button_text={"DHP"}
+                          button_size={"sm"}
+                          modal_title={"update due date to today"}
+                          modal_size={"5xl"}
+                          taskId={task.id}
+                        />
+                      ) : (
+                        ""
+                      )}
+
+                      {task.d_day_count ? (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          _hover={{ bg: "lightblue" }}
+                          color={"blue.500"}
+                        >
+                          D - {task.d_day_count}
                         </Button>
                       ) : (
                         ""

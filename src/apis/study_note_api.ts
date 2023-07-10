@@ -21,7 +21,36 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForUpdateErrorReportForNote
+// apiForUpdateStudyNoteSubtitle
+export const apiForUpdateStudyNoteSubtitle = ({
+  pk,
+  title,
+  content,
+  ref_url1,
+  ref_url2,
+  youtube_url
+}: any) => {
+  return instance
+    .put(
+      `/study-note/content/${pk}/update-subtitle`,
+      {
+        title,
+        content,
+        ref_url1,
+        ref_url2,
+        youtube_url
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      return response.data;
+    });
+};
+
 
 export const apiForDeleteErrorReportByPk = (error_report_pk: string | number) => {
   console.log("error_report_pk : ", error_report_pk);
@@ -581,7 +610,6 @@ export const apiForGetStudyNoteList = async ({
   params.append("selectedNoteWriter", selectedNoteWriter as string); // Add selectedNoteWriter to
 
   return await instance.get(`study-note/?${params}`).then((response) => {
-    console.log("response.data : ", response.data);
     return response.data;
   });
 };
@@ -598,7 +626,6 @@ export const apiForGetStudyNoteListForCopyMode = async ({
   return await instance
     .get(`study-note/get-study-note-list-for-copy-mode?${params}`)
     .then((response) => {
-      console.log("response.data : ", response.data);
       return response.data;
     });
 };
@@ -804,7 +831,6 @@ export const apiForGetStuyNoteContentList = async ({
   queryKey,
 }: QueryFunctionContext) => {
   const [_, study_note_pk, currentPage] = queryKey;
-  // console.log("study_note_pk : ", study_note_pk);
 
   return await instance
     .get(`study-note/${study_note_pk}/${currentPage}`, {

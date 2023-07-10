@@ -57,6 +57,7 @@ const NoteContentsByImageSlidePage = (props: Props) => {
         justifyContent={"space-between"}
         alignItems={"center"}
         p={1}
+        // border={"5px solid brown"}
       >
         <Box>
           <Box>{dataForNoteContentListForPage?.note_title}</Box>
@@ -152,11 +153,11 @@ const NoteContentsByImageSlidePage = (props: Props) => {
       </Box>
       <Box
         display={"flex"}
-        flexDirection={"column"}
-        gap={3}
-        border={"1px solid blue"}
+        // flexDirection={"column"}
+        border={"0px solid yellow"}
+        height={"100%"}
       >
-        <Box width={"100%"} border={"0px solid green"}>
+        <Box width={"100%"} height={"100%"} border={"0px solid blue"}>
           {dataForNoteContentListForPage ? (
             <NoteSlideForStudyNoteSpecificPage
               study_note_pk={study_note_pk}

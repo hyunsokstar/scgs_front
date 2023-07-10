@@ -1,14 +1,9 @@
 import {
   Box,
   CloseButton,
-  Table,
-  Tbody,
-  Td,
-  Tr,
   Text,
   useToast,
-  IconButton,
-  Flex,
+  Input,
   Spacer,
   InputGroup,
   InputRightElement,
@@ -20,11 +15,8 @@ import {
   apiForOrderMinusOneForNoteContent,
   apiForOrderPlusOneForNoteContent,
 } from "../../apis/study_note_api";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import IconButtonForCopyText from "../IconButtonForCopyText";
-import { CheckIcon } from "@chakra-ui/icons";
 import CheckboxComponentForList from "../CheckBox/CheckboxComponentForList";
-import { useEffect, useState } from "react";
 import ModalButtonForUpdateStudyNoteContent from "../Button/ModalButtonForUpdateStudyNoteContent";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
@@ -99,8 +91,6 @@ const CardForStudyNoteContent = ({
 
         window.location.reload();
 
-        // queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
-
         toast({
           title: "order update 성공!",
           status: "success",
@@ -120,8 +110,6 @@ const CardForStudyNoteContent = ({
 
         window.location.reload();
 
-        // queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
-
         toast({
           title: "order update 성공!",
           status: "success",
@@ -129,16 +117,6 @@ const CardForStudyNoteContent = ({
       },
     }
   );
-
-  const order_plus_1_for_note_content = (order_pk: number) => {
-    console.log("hi");
-    mutation_for_order_plus_1_for_note_content.mutate(order_pk);
-  };
-
-  const order_minus_1_for_note_content = (order_pk: number) => {
-    console.log("hi");
-    mutation_for_order_minus_1_for_note_content.mutate(order_pk);
-  };
 
   // 2244
   return (
@@ -169,34 +147,7 @@ const CardForStudyNoteContent = ({
         />
 
         <Text>step ({order})</Text>
-        {/* {is_authority_for_note ? (
-          <Flex gap={1} ml={2} my={1}>
-            {order !== 1 ? (
-              <IconButton
-                aria-label="up"
-                variant="outline"
-                icon={<FaChevronUp />}
-                border={"1px solid blue"}
-                _hover={{ bg: PastelColor.hoverBg }}
-                size={"sm"}
-                onClick={() => order_minus_1_for_note_content(pk)}
-              />
-            ) : (
-              ""
-            )}
-            <IconButton
-              aria-label="up"
-              variant="outline"
-              icon={<FaChevronDown />}
-              border={"1px solid blue"}
-              _hover={{ bg: PastelColor.hoverBg }}
-              size={"sm"}
-              onClick={() => order_plus_1_for_note_content(pk)}
-            />
-          </Flex>
-        ) : (
-          ""
-        )} */}
+
         <Text ml={2}>{title}</Text>
         <Spacer />
 
@@ -210,32 +161,22 @@ const CardForStudyNoteContent = ({
           ""
         )}
       </Box>
-      <Box my="4">
-        <Table variant="simple">
-          <Tbody>
-            <Tr>
-              <Td w={"3%"}>file:</Td>
-              <Td position={"relative"}>
-                <InputGroup>
-                  <Text>{file_name}</Text>
-                  <InputRightElement>
-                    <Box position={"absolute"} right={-6} top={-7} zIndex={1}>
-                      <IconButtonForCopyText text={file_name} />
-                    </Box>
-                  </InputRightElement>
-                </InputGroup>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td colSpan={2} position={"relative"}>
-                <Box position={"absolute"} right={0} top={0} zIndex={1}>
-                  <IconButtonForCopyText text={content} />
-                </Box>
-                <div dangerouslySetInnerHTML={{ __html: content }}></div>
-              </Td>
-            </Tr>
-          </Tbody>
-        </Table>
+      <Box my={2}>
+        <Box mb={2}>
+          <InputGroup>
+            <Input value={file_name} isTruncated />
+            <InputRightElement>
+              <Box zIndex={1}>
+                <IconButtonForCopyText text={file_name} />
+              </Box>
+            </InputRightElement>
+          </InputGroup>
+        </Box>
+        <Box
+          maxHeight={"390px"}
+          overflowY={"scroll"}
+          dangerouslySetInnerHTML={{ __html: content }}
+        ></Box>
       </Box>
       <Box display="flex" justifyContent="space-between">
         <Box display={"flex"} gap={2} alignItems={"center"} ml={2}>
@@ -247,7 +188,7 @@ const CardForStudyNoteContent = ({
 
         {is_authority_for_note ? (
           <ModalButtonForUpdateStudyNoteContent
-            button_text={"update for note content"}
+            button_text={"update content"}
             pk={pk}
             title={title}
             file_name={file_name}

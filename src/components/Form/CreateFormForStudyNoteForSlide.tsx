@@ -96,7 +96,7 @@ const CreateFormForStudyNoteForSlide = ({
 
   // 2244
   return (
-    <Box>
+    <Box height={"100%"} border={"1px solid black"}>
       <Box>
         <FormControl display="none">
           <Input

@@ -141,7 +141,7 @@ function ModalButtonForStudyNoteContentOrdering({
         <ModalContent>
           <ModalHeader borderBottom="1px" borderColor="gray.100">
             <HStack>
-              <Box>Ordering</Box>
+              <Box>Modal For Ordering</Box>
               <Spacer />
               <Box textAlign={"right"}>
                 <IconButton

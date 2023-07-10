@@ -265,6 +265,8 @@ export interface taskRowForUncompleted {
   cash_prize?: number;
   due_date_option_for_today: "until-noon" | "until-evening" | "until-night";
   is_for_today?: boolean;
+  is_due_date_has_passed: boolean;
+  d_day_count: string;
   test_result_images?: TestResultImageForCompletedTask[];
   task_comments: ITaskComment[];
 }

@@ -10,19 +10,9 @@ import {
   FormErrorMessage,
   FormLabel,
   HStack,
-  IconButton,
   Input,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Textarea,
-  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { CloseIcon } from "@chakra-ui/icons";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForUpdateStudyNoteContent } from "../../apis/study_note_api";

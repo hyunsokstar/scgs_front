@@ -1,9 +1,8 @@
 import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Box } from "@chakra-ui/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // 임포트 위치 최상단
+import { useMutation } from "@tanstack/react-query"; // 임포트 위치 최상단
 import { getUploadURL, uploadImage } from "../../api";
-
 
 interface Props {
   initialValue?: string;
@@ -70,7 +69,7 @@ const TinyMCEEditor: React.FC<Props> = ({
   };
 
   return (
-    <Box sx={{ height: "500px", overflowY: 'scroll' }}>
+    <Box sx={{ height: "100%", overflowY: 'scroll' }}>
       <Editor
         apiKey={apiKey}
         value={initialValue}
@@ -79,13 +78,20 @@ const TinyMCEEditor: React.FC<Props> = ({
           height: 500,
           menubar: true,
           plugins: [
-            // ...
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
           ],
           toolbar:
-            // ...
-          images_upload_handler,
-          paste_data_images: true,
-          content_style: '.mce-menu { z-index: 9999; }',
+            'undo redo | formatselect | ' +
+            'bold italic forecolor backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | code styleselect | help',
+          content_style: 'body { font-size: 14px; background-color: #f2f2f2; line-height: 1.5; }',
+          style_formats: [
+            { title: 'Inline Code', inline: 'code' },
+            { title: 'Code Block', block: 'pre', classes: 'prettyprint linenums' }  
+          ],
           ...init,
         }}
       />

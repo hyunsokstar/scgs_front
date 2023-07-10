@@ -59,7 +59,6 @@ export const api_for_get_long_term_plan_list = async ({
   const [_, pageNum] = queryKey;
 
   return await instance.get(`plan-maker/?page=${pageNum}`).then((response) => {
-    console.log("response.data : ", response.data);
     return response.data;
   });
 };

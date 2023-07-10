@@ -20,7 +20,6 @@ export const get_api_docu_list = async ({
   const [_, pageNum] = queryKey;
   return await instance.get(`api-docu/?page=${pageNum}`).then((response) => {
   // return await instance.get("api-docu/?page=2").then((response) => {
-    console.log("response.data : ", response.data);
     return response.data;
   });
 };

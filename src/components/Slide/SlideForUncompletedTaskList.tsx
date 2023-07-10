@@ -239,6 +239,44 @@ const SlideForUncompletedTaskList = ({
               >
                 <Badge colorScheme="blue">{row.current_status}</Badge>
                 <Box display={"flex"} gap={2} alignItems={"center"}>
+                  {row.is_for_today ? (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      _hover={{ bg: "lightblue" }}
+                      color={"orange.500"}
+                    >
+                      T
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+
+                  {row.is_due_date_has_passed ? (
+                    <ModalButtonForUpdateDueDateOptionForToday
+                      button_text={"DHP"}
+                      button_size={"sm"}
+                      modal_title={"update due date to today"}
+                      modal_size={"5xl"}
+                      taskId={row.id}
+                    />
+                  ) : (
+                    ""
+                  )}
+
+                  {row.d_day_count ? (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      _hover={{ bg: "lightblue" }}
+                      color={"blue.500"}
+                    >
+                      D - {row.d_day_count}
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+
                   <ModalButtonForUpdateDueDateOptionForToday
                     taskId={row.id}
                     button_text={getDueDateEmoji(row.due_date_option_for_today)}

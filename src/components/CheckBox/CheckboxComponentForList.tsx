@@ -49,20 +49,3 @@ const CheckboxComponentForList = ({
 };
 
 export default CheckboxComponentForList;
-
-// const [checkedValues, setCheckedValues] = useState<number[]>([]);
-
-// rows.map((row) => (
-//   <CheckboxComponent
-//     size="lg"
-//     border={"1px solid green"}
-//     colorScheme="green"
-//     defaultChecked
-//     mr={1}
-//     value={row.pk}
-//     setCheckedValues={setCheckedValues}
-//   />
-// ));
-
-// // Access the checked values
-// console.log(checkedValues);

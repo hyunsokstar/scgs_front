@@ -21,7 +21,6 @@ export const api_for_get_shortcut_list2 = async ({
 }: QueryFunctionContext): Promise<ShortcutsResponse> => {
   const [_, pageNum] = queryKey;
   return await instance.get(`shortcut2/?page=${pageNum}`).then((response) => {
-    console.log("response.data : ", response.data);
     return response.data;
   });
 };

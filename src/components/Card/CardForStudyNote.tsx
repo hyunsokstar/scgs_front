@@ -2,11 +2,13 @@ import {
   Box,
   Button,
   IconButton,
+  Icon,
   Grid,
   Text,
   useColorModeValue,
   useToast,
   useBreakpointValue,
+  Avatar,
 } from "@chakra-ui/react";
 import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
@@ -29,8 +31,8 @@ import ModalButtonForBriefingBoardForNote from "../modal/ModalButtonForBriefingB
 import ModalButtonForUpdateStudyNote from "../modal/ModalButtonForUpdateStudyNote";
 import ModalButtonForClassRoomListForStudyNote from "../modal/ModalButtonForClassRoomListForStudyNote";
 import ModalButtonForQnAList from "../modal/ModalButtonForQnAList";
-import { MdLocalPolice } from "react-icons/md";
 import ModalButtonForErrorReportForNote from "../modal/ModalButtonForErrorReportForNote";
+import { AiOutlineEye, AiOutlineHeart } from "react-icons/ai";
 
 interface IProps {
   pk: any;
@@ -83,8 +85,6 @@ const CardForStudyNote: React.FC<IProps> = ({
     md: "50%", // for medium-sized screens and up
     lg: "50%", // for small screens and up
   });
-
-  console.log("note_cowriters : ", note_cowriters);
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -190,12 +190,10 @@ const CardForStudyNote: React.FC<IProps> = ({
           transform: "translateY(-2px)",
         }}
         height={"100%"}
-        // border={"5px solid purple"}
         display={"flex"}
         flexDirection={"column"}
       >
         <Box
-          // border={"5px solid pink"}
           display={"flex"}
           justifyContent="space-between"
           flexDirection={note_header_direction}
@@ -205,6 +203,11 @@ const CardForStudyNote: React.FC<IProps> = ({
           width={"100%"}
         >
           <Box display={"flex"} gap={2}>
+            {writer.profile_image ? (
+              <Avatar size="sm" src={writer.profile_image} />
+            ) : (
+              <Avatar size="sm" name={writer.username} />
+            )}
             <Text fontSize="xl" fontWeight="bold">
               {title} ({count_for_note_contents})
             </Text>
@@ -254,9 +257,7 @@ const CardForStudyNote: React.FC<IProps> = ({
           id={"note-content-card"}
           defaultValue={"note-content-card"}
           gap={2}
-          // border={"5px solid yellow"}
           height={"400px"}
-          // flexGrow={1}
           flexDirection={note_card_direction}
         >
           <Box
@@ -352,14 +353,12 @@ const CardForStudyNote: React.FC<IProps> = ({
             // p={2}
             gap={2}
             bg={"gray.100"}
-            // border={"5px solid blue"}
             display={"flex"}
             justifyContent={"space-around"}
             width={note_card_width}
           >
             <Grid
               templateColumns="repeat(2, 1fr)"
-              // border={"1px solid gray"}
               gap={2}
               width={"100%"}
               p={2}
@@ -473,11 +472,30 @@ const CardForStudyNote: React.FC<IProps> = ({
             <Text>1st: {first_category}</Text>
             <Text>2nd: {second_category}</Text>
           </Box>
+          <Box display={"flex"} gap={3}>
+            <Box display="flex" alignItems="center" justifyContent="flex-end">
+              <IconButton
+                variant="outline"
+                size={"sm"}
+                colorScheme="blue"
+                aria-label="View count"
+                icon={<Icon as={AiOutlineEye} />}
+                marginRight={2}
+              />
+              <Text>2</Text>
+            </Box>
 
-          <Box textAlign={"right"}>
-            <Text fontSize="sm" textAlign="right">
-              written by {writer ? writer.username : "no user"}
-            </Text>
+            <Box display="flex" alignItems="center" justifyContent="flex-end">
+              <IconButton
+                variant="outline"
+                size={"sm"}
+                colorScheme="red"
+                aria-label="Like count"
+                icon={<Icon as={AiOutlineHeart} />}
+                marginRight={2}
+              />
+              <Text>2</Text>
+            </Box>
           </Box>
         </Box>
       </Box>

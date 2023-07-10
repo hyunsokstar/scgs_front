@@ -41,6 +41,7 @@ export interface CoWriter {
 
 export interface StudyNoteData {
   note_title: string;
+  subtitle_for_page: string;
   question_count_for_current_page: number;
   note_user_name: string;
   exist_page_numbers: number[];

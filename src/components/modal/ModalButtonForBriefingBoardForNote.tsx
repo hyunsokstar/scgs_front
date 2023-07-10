@@ -60,7 +60,7 @@ const ModalButtonForBriefingBoardForNote = ({
     }
   );
 
-  console.log("dataForGetCommentListForNote : ", dataForGetCommentListForNote);
+  // console.log("dataForGetCommentListForNote : ", dataForGetCommentListForNote);
 
   const createMutationForTaskComment = useMutation(apiForCreateCommentForNote, {
     onMutate: () => {

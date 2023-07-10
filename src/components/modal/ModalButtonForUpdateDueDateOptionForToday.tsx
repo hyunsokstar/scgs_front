@@ -17,7 +17,7 @@ import { apiForUpdateTaskDueDate } from "../../apis/project_progress_api";
 type DueDateOption = "until-noon" | "until-evening" | "until-night";
 
 interface IProps {
-  button_text: "☀️" | "🌛" | "🌌";
+  button_text: "DHP" | "☀️" | "🌛" | "🌌";
   button_size: string;
   modal_title: string;
   modal_size: string;

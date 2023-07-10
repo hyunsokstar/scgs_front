@@ -218,6 +218,10 @@ function CompletedProjectTaskList({}: Props): ReactElement {
         </Box>
       </Box>
 
+      <Box>
+        allcheck
+      </Box>
+
       {/* {is_show_for_mobile ? "모바일" : "큰화면"} */}
       {!is_show_for_mobile ? (
         <Box>

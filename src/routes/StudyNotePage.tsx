@@ -7,6 +7,7 @@ import {
   Select,
   IconButton,
   useBreakpointValue,
+  Spacer,
 } from "@chakra-ui/react";
 import { FaSync } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
@@ -89,11 +90,6 @@ const StudyNotePage = () => {
     set_second_category("");
   };
 
-  const note_buttons_direction = useBreakpointValue({
-    base: "column", // for mobile and small screens
-    md: "row", // for medium-sized screens and up
-  });
-
   if (studyNoteLoading || !studyNoteData) {
     return <div>Loading study notes...</div>;
   }
@@ -168,19 +164,9 @@ const StudyNotePage = () => {
           aria-label="Refresh"
           px={2}
         />
-        <Box
-          display={"flex"}
-          justifyContent={"space-between"}
-          width={"100%"}
-          gap={2}
-          flexDirection={note_buttons_direction}
-        >
-          <Box>
-            <ModalButtonForAddStudyNote
-              button_size={"sm"}
-              button_text={"add study note"}
-            />
-          </Box>
+
+        <Spacer />
+        <Box display={"flex"} justifyContent={"space-between"} gap={2}>
           <Box>
             {isLoggedIn ? (
               <Link to={`/study-note/table-mode-for-update-page`}>
@@ -196,14 +182,21 @@ const StudyNotePage = () => {
                     marginRight: "10px",
                   }}
                 >
-                  Table Mode For Note Copy
+                  Copy Mode
                 </Button>
               </Link>
             ) : (
               ""
             )}
           </Box>
+          <Box>
+            <ModalButtonForAddStudyNote
+              button_size={"sm"}
+              button_text={"add note"}
+            />
+          </Box>
         </Box>
+        {/* </Box> */}
       </Box>
 
       <Box border={"0px solid purple"}>

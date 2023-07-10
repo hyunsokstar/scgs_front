@@ -64,10 +64,6 @@ const ModalButtonForRegisterErrorReportForNote = ({
       // cacheTime: 0, // 캐싱 비활성화
     }
   );
-  console.log(
-    "dataForGetErrorReportListForStudyNote : ",
-    dataForGetErrorReportListForStudyNote
-  );
 
   const mutationForCreateErrorReportForNote = useMutation(
     apiForCreateErrorReportForNote,
