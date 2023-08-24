@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, Icon, IconButton, useToast } from "@chakra-ui/react";
+import { Box, Text, IconButton, useToast } from "@chakra-ui/react";
 import { MdContentCopy } from "react-icons/md";
 
 interface IconButtonForCopyFileNameProps {
@@ -39,10 +39,9 @@ const IconButtonForCopyFileName: FC<IconButtonForCopyFileNameProps> = ({
   };
 
   return (
-    <Box>
+    <Box mr={12}>
       <IconButton
         aria-label="Copy file name to clipboard"
-        icon={<Icon as={MdContentCopy} />}
         onClick={handleCopy}
         colorScheme={colorScheme}
         size={size}
@@ -50,7 +49,9 @@ const IconButtonForCopyFileName: FC<IconButtonForCopyFileNameProps> = ({
         _hover={{
           backgroundColor: `${colorScheme}.100`,
         }}
-      />
+      >
+        <Text>F</Text>
+      </IconButton>
     </Box>
   );
 };

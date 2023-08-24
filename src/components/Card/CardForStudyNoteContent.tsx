@@ -8,6 +8,7 @@ import {
   InputGroup,
   InputRightElement,
   Avatar,
+  Flex,
 } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -20,6 +21,7 @@ import CheckboxComponentForList from "../CheckBox/CheckboxComponentForList";
 import ModalButtonForUpdateStudyNoteContent from "../Button/ModalButtonForUpdateStudyNoteContent";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
+import IconButtonForCopyFileName from "../IconButtonForCopyFileName";
 
 const PastelColor = {
   bg: "#C7E5F0",
@@ -162,16 +164,18 @@ const CardForStudyNoteContent = ({
         )}
       </Box>
       <Box my={2}>
-        <Box mb={2}>
+        <Box mb={2} display="flex" justifyContent="flex-end">
           <InputGroup>
             <Input value={file_name} isTruncated />
             <InputRightElement>
-              <Box zIndex={1}>
+              <Flex alignItems="center">
                 <IconButtonForCopyText text={file_name} />
-              </Box>
+                <IconButtonForCopyFileName filePath={file_name} />
+              </Flex>
             </InputRightElement>
           </InputGroup>
         </Box>
+
         <Box
           maxHeight={"390px"}
           overflowY={"scroll"}

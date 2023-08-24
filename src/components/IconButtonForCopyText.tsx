@@ -49,7 +49,7 @@ const IconButtonForCopyText: FC<IconButtonForCopyTextProps> = ({
   };
 
   return (
-    <Box>
+    <Box mr={1}>
       <IconButton
         aria-label="Copy to clipboard"
         icon={<Icon as={MdContentCopy} />}
