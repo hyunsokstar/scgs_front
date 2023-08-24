@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import TinyMCEEditor from "../RichEditor/TinyMCEEditor";
 import {
@@ -43,6 +43,11 @@ const ModalButtonForUpdateStudyNoteContent: React.FC<
     useState<string>(content);
 
   const queryClient = useQueryClient();
+
+
+  useEffect(() => {
+    set_note_content_content(content)
+  }, [content])
 
   const mutationForUpdateStudyNoteContent = useMutation(
     apiForUpdateStudyNoteContent,
