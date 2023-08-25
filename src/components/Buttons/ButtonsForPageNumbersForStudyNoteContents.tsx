@@ -485,24 +485,26 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         ""
       )}
 
-      <Button
-        variant="outline"
-        size={"sm"}
-        colorScheme="yellow"
-        _hover={{ bg: "yellow.100" }}
-        onClick={() =>
-          // alert("선택한 페이지들을 왼쪽 페이지로 인서트")
-          buttonHandlerForUpdateNoteContentsPageForSelected("add_whitespace")
-        }
-        style={{
-          backgroundColor: "transparent",
-          marginRight: "10px",
-        }}
-      >
-        whitespace
-      </Button>
-
       {!editMode ? <Box ml={2}>page numbers : </Box> : ""}
+
+      {!pageNumbersToMove.length && pageNumbersToEdit.length !== 0 && (
+        <Button
+          variant="outline"
+          size={"sm"}
+          colorScheme="yellow"
+          _hover={{ bg: "yellow.100" }}
+          onClick={() =>
+            buttonHandlerForUpdateNoteContentsPageForSelected("add_whitespace")
+          }
+          style={{
+            backgroundColor: "transparent",
+            marginRight: "10px",
+          }}
+        >
+          add_whitespaces
+        </Button>
+      )}
+
       <Box display={"flex"} flexDirection={"column"} ml={3}>
         <Box>
           {pageNumbersToEdit.length === pageNumbersToMove.length &&
@@ -556,6 +558,22 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
                   }}
                 >
                   Switch
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  colorScheme="yellow"
+                  _hover={{ bg: "yellow.100" }}
+                  onClick={() =>
+                    buttonHandlerForUpdateNoteContentsPageForSelected("insert")
+                  }
+                  style={{
+                    backgroundColor: "transparent",
+                    marginRight: "10px",
+                  }}
+                >
+                  Insert
                 </Button>
               </Box>
             )}
