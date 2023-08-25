@@ -22,6 +22,7 @@ import ModalButtonForUpdateStudyNoteContent from "../Button/ModalButtonForUpdate
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import IconButtonForCopyFileName from "../IconButtonForCopyFileName";
+import IconButtonForCopyCode from "../IconButtonForCopyCode";
 
 const PastelColor = {
   bg: "#C7E5F0",
@@ -171,6 +172,7 @@ const CardForStudyNoteContent = ({
               <Flex alignItems="center">
                 <IconButtonForCopyText text={file_name} />
                 <IconButtonForCopyFileName filePath={file_name} />
+                <IconButtonForCopyCode code={content} />
               </Flex>
             </InputRightElement>
           </InputGroup>

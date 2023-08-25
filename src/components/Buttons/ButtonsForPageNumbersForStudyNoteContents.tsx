@@ -63,7 +63,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
   );
 
   const [pagesData, setpagesData] = useState(
-    Array.from({ length: 50 }, (_, i) => i + 1)
+    Array.from({ length: 100 }, (_, i) => i + 1)
   );
 
   const [editMode, setEditMode] = useState<boolean | undefined>();
@@ -484,6 +484,23 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
       ) : (
         ""
       )}
+
+      <Button
+        variant="outline"
+        size={"sm"}
+        colorScheme="yellow"
+        _hover={{ bg: "yellow.100" }}
+        onClick={() =>
+          // alert("선택한 페이지들을 왼쪽 페이지로 인서트")
+          buttonHandlerForUpdateNoteContentsPageForSelected("add_whitespace")
+        }
+        style={{
+          backgroundColor: "transparent",
+          marginRight: "10px",
+        }}
+      >
+        whitespace
+      </Button>
 
       {!editMode ? <Box ml={2}>page numbers : </Box> : ""}
       <Box display={"flex"} flexDirection={"column"} ml={3}>
