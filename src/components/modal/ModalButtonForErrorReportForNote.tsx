@@ -13,16 +13,10 @@ import {
   Button,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
 import { apiForGetErrorReportListForStudyNote } from "../../apis/study_note_api";
 import { ErrorReportForStudyNoteData } from "../../types/study_note_type";
 import TableForErrorReportListForStudyNote from "../Table/TableForErrorReportListForStudyNote";
-// import {
-//   QnARow,
-// } from "../../types/study_note_type";
-// import {
-//   apiForGetQnABoardList,
-// } from "../../apis/study_note_api";
+
 
 interface IProps {
   button_text: string;
@@ -60,16 +54,6 @@ const ModalButtonForErrorReportForNote = ({
   // 2244
   return (
     <>
-      {/* <Button
-        variant={"outline"}
-        onClick={onOpen}
-        border={"1px solid black"}
-        _hover={{ bgColor: "yellow.100" }}
-        size={button_size}
-        width={button_width}
-      >
-        {button_text} ({count_for_qna_boards})
-      </Button> */}
 
       <Button
         aria-label="Confirm"
@@ -89,15 +73,14 @@ const ModalButtonForErrorReportForNote = ({
           <ModalHeader>{modal_title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {/* fix 0623 */}
-            {/* dataForGetErrorReportListForStudyNote */}
-
+            
             <TableForErrorReportListForStudyNote
               data={
                 dataForGetErrorReportListForStudyNote &&
                 dataForGetErrorReportListForStudyNote
               }
             />
+
           </ModalBody>
           <ModalFooter>
             <Button type="submit" colorScheme="blue" mr={3}>

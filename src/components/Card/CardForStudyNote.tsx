@@ -33,6 +33,7 @@ import ModalButtonForClassRoomListForStudyNote from "../modal/ModalButtonForClas
 import ModalButtonForQnAList from "../modal/ModalButtonForQnAList";
 import ModalButtonForErrorReportForNote from "../modal/ModalButtonForErrorReportForNote";
 import { AiOutlineEye, AiOutlineHeart } from "react-icons/ai";
+import ModalButtonForFaqListForNote from "../modal/ModalButtonForFaqListForNote";
 
 interface IProps {
   pk: any;
@@ -446,6 +447,17 @@ const CardForStudyNote: React.FC<IProps> = ({
               </Box>
 
               <Box>
+                <ModalButtonForFaqListForNote
+                  button_text={"Faq"}
+                  button_size={"sm"}
+                  button_width={"100%"}
+                  modal_title={`${title} 에 대한 faq`}
+                  study_note_pk={pk}
+                  modal_size={""}
+                />
+              </Box>
+
+              <Box>
                 <ModalButtonForErrorReportForNote
                   button_text={"🚨 error report"}
                   button_size={"sm"}
@@ -455,6 +467,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                   modal_size={""}
                 />
               </Box>
+
             </Grid>
           </Box>
         </Box>
