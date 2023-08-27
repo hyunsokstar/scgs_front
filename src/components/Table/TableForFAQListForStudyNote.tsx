@@ -13,7 +13,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { QnARow } from "../../types/study_note_type";
+import { FAQRow } from "../../types/study_note_type";
 import ModalForQuestionDetailForNote from "../modal/ModalForQuestionDetailForNote"; // 모달 컴포넌트를 임포트하세요.
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -21,15 +21,16 @@ import ModalButtonForUpdateQuestionForNote from "../modal/ModalButtonForUpdateQu
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForDeleteQuestionForNote } from "../../apis/study_note_api";
 import ModalButtonForAddQuestionForStudNote from "../modal/ModalButtonForAddQuestionForStudNote";
+import ModalForFAQDetailForNote from "../modal/ModalForFAQDetailForNote";
 
-interface TabelForQnaListForStudyNoteProps {
+interface TabelForFAQListForStudyNoteProps {
   study_note_pk: number | string | undefined;
-  data: QnARow[] | undefined;
+  data: FAQRow[] | undefined;
   refetchForGetQnABoardList: () => void;
 }
 
-const TableForQnaListForStudyNote: React.FC<
-  TabelForQnaListForStudyNoteProps
+const TableForFAQListForStudyNote: React.FC<
+TabelForFAQListForStudyNoteProps
 > = ({ study_note_pk, data, refetchForGetQnABoardList }) => {
   const toast = useToast();
 
@@ -40,28 +41,19 @@ const TableForQnaListForStudyNote: React.FC<
   );
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedQuestion, setSelectedQuestion] = useState<QnARow | null>(null);
+  const [faqData, setFaqData] = useState<FAQRow | null>(null);
 
   // todo
   // data 이 바뀌면 현재 열린 모달의 question 도 바뀌도록 하기
   // 모달은 아래에 onClick 으로 열린 ModalForQuestionDetailForNote 모달
 
-  // useEffect(() => {
-  //   if (isOpen && selectedQuestion) {
-  //     const updatedQuestion = data?.find(
-  //       (question) => question.pk === selectedQuestion.pk
-  //     );
-  //     setSelectedQuestion(updatedQuestion || null);
-  //   }
-  // }, [data]);
-
-  const openModal = (question: QnARow) => {
-    setSelectedQuestion(question);
+  const openModal = (question: FAQRow) => {
+    setFaqData(question);
     setIsOpen(true);
   };
 
   const closeModal = () => {
-    setSelectedQuestion(null);
+    setFaqData(null);
     setIsOpen(false);
   };
 
@@ -177,15 +169,15 @@ const TableForQnaListForStudyNote: React.FC<
 
       {/* 모달 컴포넌트 */}
       {isOpen && (
-        <ModalForQuestionDetailForNote
+        <ModalForFAQDetailForNote
           isOpen={isOpen}
           closeModal={closeModal}
-          question={selectedQuestion}
-          refetchForGetQnABoardList={refetchForGetQnABoardList}
+          faqData = {faqData}
+          refetchForGetQnABoardList = {refetchForGetQnABoardList}
         />
       )}
     </Box>
   );
 };
 
-export default TableForQnaListForStudyNote;
+export default TableForFAQListForStudyNote;

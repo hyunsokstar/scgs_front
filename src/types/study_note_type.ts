@@ -214,6 +214,18 @@ export interface AnswerForQaBoard {
   created_at_formatted: string;
 }
 
+
+export interface FAQRow {
+  pk: number;
+  study_note: number;
+  title: string;
+  content: string;
+  page: number;
+  writer: number;
+  created_at_formatted: string;
+  updated_at: string;
+}
+
 export interface QnARow {
   pk: string;
   study_note: number;

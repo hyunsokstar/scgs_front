@@ -268,6 +268,18 @@ export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
     });
 };
 
+export const apiForGetFAQBoardList = ({ queryKey }: QueryFunctionContext) => {
+  const [_, study_note_pk, note_page_num] = queryKey;
+  console.log("note_page_num : ", note_page_num);
+  return instance
+    .get(`/study-note/${study_note_pk}/FAQBoard`, {
+      params: { note_page_num },
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
 export const apiForLoadSavedPageForThisNote = ({ study_note_pk }: any) => {
   console.log("study_note_pk : ", study_note_pk);
   return instance

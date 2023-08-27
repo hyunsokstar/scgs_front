@@ -59,8 +59,6 @@ const ModalButtonForQnAList = ({
     }
   );
 
-  // console.log("dataForGetQnABoardList : ", dataForGetQnABoardList);
-
   // 2244
   return (
     <>
