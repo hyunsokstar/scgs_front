@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import {
   Box,
   Modal,
@@ -21,7 +20,6 @@ import { useForm } from "react-hook-form";
 import {
   QueryClient,
   useMutation,
-  useQueryClient,
 } from "@tanstack/react-query";
 import { apiForCreateQuestionForNote } from "../../apis/study_note_api";
 import { useSelector } from "react-redux";

@@ -22,6 +22,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForDeleteQuestionForNote } from "../../apis/study_note_api";
 import ModalButtonForAddQuestionForStudNote from "../modal/ModalButtonForAddQuestionForStudNote";
 import ModalForFAQDetailForNote from "../modal/ModalForFAQDetailForNote";
+import ModalButtonForAddFaqForStudyNote from "../modal/ModalButtonForAddFaqForStudyNote";
 
 interface TabelForFAQListForStudyNoteProps {
   study_note_pk: number | string | undefined;
@@ -30,7 +31,7 @@ interface TabelForFAQListForStudyNoteProps {
 }
 
 const TableForFAQListForStudyNote: React.FC<
-TabelForFAQListForStudyNoteProps
+  TabelForFAQListForStudyNoteProps
 > = ({ study_note_pk, data, refetchForGetQnABoardList }) => {
   const toast = useToast();
 
@@ -87,13 +88,13 @@ TabelForFAQListForStudyNoteProps
   return (
     <Box>
       <Box display={"flex"} justifyContent={"flex-end"} p={2}>
-        <ModalButtonForAddQuestionForStudNote
-          button_text={"Add Question"}
-          button_size={"sm"}
-          modal_title={"modal for add question"}
+        
+        <ModalButtonForAddFaqForStudyNote
+          button_text={"add faq"}
+          button_size={"lg"}
+          modal_title={"add faq"}
           modal_size={"6xl"}
           study_note_pk={study_note_pk}
-          refetchForGetQnABoardList={refetchForGetQnABoardList}
         />
       </Box>
 
@@ -172,8 +173,8 @@ TabelForFAQListForStudyNoteProps
         <ModalForFAQDetailForNote
           isOpen={isOpen}
           closeModal={closeModal}
-          faqData = {faqData}
-          refetchForGetQnABoardList = {refetchForGetQnABoardList}
+          faqData={faqData}
+          refetchForGetQnABoardList={refetchForGetQnABoardList}
         />
       )}
     </Box>
