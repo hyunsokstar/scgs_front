@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   Box,
   Modal,
@@ -10,13 +9,12 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Input,
-  Textarea,
-  FormErrorMessage,
-  FormControl,
   useDisclosure,
   useToast,
+  Input,
+  Textarea,
 } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
 
 interface Props {
   button_text: string;
@@ -34,6 +32,20 @@ const ModalButtonForAddFaqForStudyNote = ({
   study_note_pk,
 }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const onSubmit = (data: any) => {
+    // 데이터 처리 로직
+    console.log(data);
+    onClose();
+  };
 
   return (
     <>
@@ -53,27 +65,31 @@ const ModalButtonForAddFaqForStudyNote = ({
           <ModalHeader>{modal_title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Box>add faq body</Box>
-          </ModalBody>
-          <ModalFooter>
-            <Box display={"flex"} gap={2} width={"100%"}>
-              <Button
-                type="submit"
-                colorScheme="blue"
-                mr={3}
-                // onClick={handleSubmit(onSubmit)}
-                width={"50%"}
-              >
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Box marginBottom="1rem">
+                <Input
+                  {...register("title", { required: true })}
+                  placeholder="Title"
+                />
+                {errors.title && (
+                  <span style={{ color: "red" }}>This field is required</span>
+                )}
+              </Box>
+              <Box marginBottom="1rem">
+                <Textarea
+                  {...register("content", { required: true })}
+                  placeholder="Content"
+                />
+                {errors.content && (
+                  <span style={{ color: "red" }}>This field is required</span>
+                )}
+              </Box>
+              <Button type="submit" colorScheme="blue" marginRight="10px">
                 Submit
               </Button>
-              <Button
-                //   onClick={onClose}
-                width={"50%"}
-              >
-                Cancel
-              </Button>
-            </Box>
-          </ModalFooter>
+              <Button onClick={onClose}>Cancel</Button>
+            </form>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>
