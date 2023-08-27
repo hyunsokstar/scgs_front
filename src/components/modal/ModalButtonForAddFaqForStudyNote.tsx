@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Modal,
@@ -7,14 +7,13 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
   Button,
   useDisclosure,
   useToast,
   Input,
-  Textarea,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import TinyMCEEditor from "../RichEditor/TinyMCEEditor";
 
 interface Props {
   button_text: string;
@@ -33,6 +32,7 @@ const ModalButtonForAddFaqForStudyNote = ({
 }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  const [note_content, set_note_content] = useState<string>("");
 
   const {
     handleSubmit,
@@ -43,10 +43,17 @@ const ModalButtonForAddFaqForStudyNote = ({
 
   const onSubmit = (data: any) => {
     // 데이터 처리 로직
-    console.log(data);
+    console.log("title :", data.title);
+    console.log("note_content : ", note_content);
+    reset();
     onClose();
   };
 
+  const handleContentChange = (value: string) => {
+    set_note_content(value);
+  };
+
+  // 2244
   return (
     <>
       <Button
@@ -71,18 +78,17 @@ const ModalButtonForAddFaqForStudyNote = ({
                   {...register("title", { required: true })}
                   placeholder="Title"
                 />
+
                 {errors.title && (
                   <span style={{ color: "red" }}>This field is required</span>
                 )}
               </Box>
+
               <Box marginBottom="1rem">
-                <Textarea
-                  {...register("content", { required: true })}
-                  placeholder="Content"
+                <TinyMCEEditor
+                  onChange={handleContentChange}
+                  apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
                 />
-                {errors.content && (
-                  <span style={{ color: "red" }}>This field is required</span>
-                )}
               </Box>
               <Button type="submit" colorScheme="blue" marginRight="10px">
                 Submit

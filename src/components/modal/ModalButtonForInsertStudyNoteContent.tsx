@@ -106,10 +106,6 @@ function ModalButtonForInsertStudyNoteContent({
     setModalIsOpen(false);
   };
 
-  const handleContentChange = (value: string) => {
-    set_note_content_content(value);
-  };
-
   const customStyles = {
     content: {
       top: "49%",
@@ -129,6 +125,10 @@ function ModalButtonForInsertStudyNoteContent({
     overlay: {
       zIndex: 500, // 모달보다 작은 z-index 값을 지정합니다.
     },
+  };
+
+  const handleContentChange = (value: string) => {
+    set_note_content_content(value);
   };
 
   return (
