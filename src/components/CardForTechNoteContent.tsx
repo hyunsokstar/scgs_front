@@ -15,7 +15,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import TinyMCEEditor from "./RichEditor/TinyMCEEditor";
 import { CheckIcon, CopyIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFordeleteTechNoteContentByPk } from "../apis/tech_note_api";

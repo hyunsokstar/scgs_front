@@ -214,19 +214,19 @@ export interface AnswerForQaBoard {
   created_at_formatted: string;
 }
 
-export interface FAQRow {
-  pk: number;
-  study_note: number;
-  title: string;
-  content: string;
-  writer: {
-    pk: number;
-    username: string;
-    profile_image: null | string;
-  };
-  created_at_formatted: string;
-  updated_at: string;
-}
+// export interface FAQRow {
+//   pk: number;
+//   study_note: number;
+//   title: string;
+//   content: string;
+//   writer: {
+//     pk: number;
+//     username: string;
+//     profile_image: null | string;
+//   };
+//   created_at_formatted: string;
+//   updated_at: string;
+// }
 
 export interface QnARow {
   pk: string;

@@ -153,7 +153,7 @@ const TableForFAQListForStudyNote: React.FC<
           ) : (
             <Tr>
               <Td colSpan={5} fontSize={"30px"} textAlign={"center"} py={10}>
-                There is No Question!
+                There is No FaqList
               </Td>
             </Tr>
           )}

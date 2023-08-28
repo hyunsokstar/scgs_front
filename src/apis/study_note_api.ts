@@ -278,11 +278,12 @@ export const apiForCreateQuestionForNote = ({
     .then((response) => response.data);
 
 export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
-  const [_, study_note_pk, note_page_num] = queryKey;
-  console.log("note_page_num : ", note_page_num);
+  const [_, study_note_pk, pageNum] = queryKey;
+  console.log("pageNum : ", pageNum);
+
   return instance
     .get(`/study-note/${study_note_pk}/qa-list`, {
-      params: { note_page_num },
+      params: { pageNum },
     })
     .then((response) => {
       return response.data;
@@ -290,12 +291,24 @@ export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
 };
 
 export const apiForGetFAQBoardList = ({ queryKey }: QueryFunctionContext) => {
-  const [_, study_note_pk] = queryKey;
+  const [_, study_note_pk, pageNum] = queryKey;
   return instance
     .get(`/study-note/${study_note_pk}/FAQBoard`, {
+      params: { pageNum:pageNum },
     })
     .then((response) => {
-      return response.data;
+      console.log("response : ", response);
+      
+      const response_data = {
+        faqList: response.data.faqList,
+        perPage: response.data.perPage,
+        totalFaqCount: response.data.totalFaqCount
+      }
+
+      console.log("response_data : ", response_data);
+      
+      return response_data
+      // return response.data;
     });
 };
 

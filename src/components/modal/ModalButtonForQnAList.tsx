@@ -29,7 +29,6 @@ interface IProps {
   modal_title: string;
   modal_size: string;
   study_note_pk: string | undefined;
-  note_page_num?: any;
   count_for_qna_boards: number | undefined;
 }
 
@@ -41,17 +40,17 @@ const ModalButtonForQnAList = ({
   button_size,
   button_width,
   study_note_pk,
-  note_page_num,
   count_for_qna_boards,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [pageNum, setPageNum] = useState(1)
 
   const {
     isLoading: isLoadingForGetQnABoardList,
     data: dataForGetQnABoardList,
     refetch: refetchForGetQnABoardList,
   } = useQuery<QnARow[]>(
-    ["apiForGetQnABoardList", study_note_pk, note_page_num],
+    ["apiForGetQnABoardList", study_note_pk, pageNum],
     apiForGetQnABoardList,
     {
       enabled: true,

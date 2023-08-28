@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Modal,
@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FAQRow } from "../../types/study_note_type";
 import { apiForGetFAQBoardList } from "../../apis/study_note_api";
 import TableForFAQListForStudyNote from "../Table/TableForFAQListForStudyNote";
+import PaginationComponent from "../PaginationComponent";
 
 interface IProps {
   button_text: string;
@@ -33,19 +34,22 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
   study_note_pk,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [pageNum, setPageNum] = useState(1);
 
   const {
     isLoading: isLoadingForGetFAQBoardList,
-    data: dataForGetFAQBoardList,
+    data: faqData,
     refetch: refetchForGetFAQBoardList,
-  } = useQuery<FAQRow[]>(
-    ["apiForGetFAQBoardList", study_note_pk],
+  } = useQuery<any>(
+    ["apiForGetFAQBoardList", study_note_pk, pageNum],
     apiForGetFAQBoardList,
     {
       enabled: true,
       cacheTime: 0, // 캐싱 비활성화
     }
   );
+
+  console.log("faqData : ", faqData);
 
   return (
     <>
@@ -67,12 +71,26 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
           <ModalHeader>{modal_title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            {faqData ? (
+              <TableForFAQListForStudyNote
+                study_note_pk={study_note_pk}
+                data={faqData.faqList}
+                refetchForGetQnABoardList={refetchForGetFAQBoardList}
+              />
+            ) : (
+              ""
+            )}
 
-            <TableForFAQListForStudyNote
-              study_note_pk={study_note_pk}
-              data={dataForGetFAQBoardList}
-              refetchForGetQnABoardList={refetchForGetFAQBoardList}
-            />
+            {faqData ? (
+              <PaginationComponent
+                current_page_num={pageNum}
+                setCurrentPageNum={setPageNum}
+                total_page_num={faqData.totalFaqCount}
+                task_number_for_one_page={faqData.perPage}
+              />
+            ) : (
+              ""
+            )}
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Cancel</Button>
