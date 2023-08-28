@@ -142,7 +142,6 @@ const CardForTechNoteContent = ({
           height="300px"
           overflowY="scroll"
         >
-          {/* rome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
           <div dangerouslySetInnerHTML={{ __html: content }} />
         </Box>
       </Box>

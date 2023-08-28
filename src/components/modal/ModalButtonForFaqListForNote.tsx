@@ -14,7 +14,6 @@ import { useQuery } from "@tanstack/react-query";
 import { FAQRow } from "../../types/study_note_type";
 import { apiForGetFAQBoardList } from "../../apis/study_note_api";
 import TableForFAQListForStudyNote from "../Table/TableForFAQListForStudyNote";
-import ModalButtonForAddFaqForStudyNote from "./ModalButtonForAddFaqForStudyNote";
 
 interface IProps {
   button_text: string;

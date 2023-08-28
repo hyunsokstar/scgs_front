@@ -34,16 +34,15 @@ const ModalButtonForAddFaqForStudyNote = ({
 }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  
+
   const {
-      handleSubmit,
+    handleSubmit,
     register,
     formState: { errors },
     reset,
   } = useForm();
   const queryClient = useQueryClient();
   const [note_content, set_note_content] = useState<string>("");
-
 
   const mutationForCreateFaq = useMutation(apiForCreateStudyNoteFaq, {
     onMutate: () => {
@@ -114,11 +113,13 @@ const ModalButtonForAddFaqForStudyNote = ({
                 )}
               </Box>
 
-              <Box marginBottom="1rem">
-                <TinyMCEEditor
-                  onChange={handleContentChange}
-                  apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
-                />
+              <Box marginBottom="1">
+                <Box style={{ zIndex: 9999 }}>
+                  <TinyMCEEditor
+                    onChange={handleContentChange}
+                    apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
+                  />
+                </Box>
               </Box>
 
               <Button type="submit" colorScheme="blue" marginRight="10px">

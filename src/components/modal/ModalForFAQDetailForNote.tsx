@@ -47,7 +47,7 @@ const ModalForFAQDetailForNote: React.FC<ModalForFAQDetailForNoteProps> = ({
                 <Td>
                   <strong>Content:</strong>
                 </Td>
-                <Td>{faqData.content}</Td>
+                <Td dangerouslySetInnerHTML={{ __html: faqData.content }}></Td>
               </Tr>
             </Table>
           </Box>
