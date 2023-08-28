@@ -14,13 +14,11 @@ import {
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FAQRow } from "../../types/study_note_type";
-import ModalForQuestionDetailForNote from "../modal/ModalForQuestionDetailForNote"; // 모달 컴포넌트를 임포트하세요.
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import ModalButtonForUpdateQuestionForNote from "../modal/ModalButtonForUpdateQuestionForNote";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForDeleteQuestionForNote } from "../../apis/study_note_api";
-import ModalButtonForAddQuestionForStudNote from "../modal/ModalButtonForAddQuestionForStudNote";
 import ModalForFAQDetailForNote from "../modal/ModalForFAQDetailForNote";
 import ModalButtonForAddFaqForStudyNote from "../modal/ModalButtonForAddFaqForStudyNote";
 
@@ -45,9 +43,6 @@ const TableForFAQListForStudyNote: React.FC<
   const [faqData, setFaqData] = useState<FAQRow | null>(null);
 
   // todo
-  // data 이 바뀌면 현재 열린 모달의 question 도 바뀌도록 하기
-  // 모달은 아래에 onClick 으로 열린 ModalForQuestionDetailForNote 모달
-
   const openModal = (question: FAQRow) => {
     setFaqData(question);
     setIsOpen(true);
@@ -104,10 +99,8 @@ const TableForFAQListForStudyNote: React.FC<
             <Th>
               <Checkbox />
             </Th>
-            <Th>Title</Th>
-            {/* <Th>Content</Th> */}
+            <Th>Title2</Th>
             <Th>Writer</Th>
-            <Th>Page</Th>
             <Th>Created At</Th>
             <Th>Update / Delete</Th>
           </Tr>
@@ -132,7 +125,6 @@ const TableForFAQListForStudyNote: React.FC<
                 </Td>
                 {/* <Td>{row.content}</Td> */}
                 <Td>{row.writer.username}</Td>
-                <Td>{row.page}</Td>
                 <Td>{row.created_at_formatted}</Td>
                 <Td>
                   <Box display={"flex"} gap={2}>

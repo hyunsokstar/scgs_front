@@ -23,7 +23,6 @@ interface IProps {
   modal_title: string;
   modal_size: string;
   study_note_pk: any;
-  note_page_num?: any;
 }
 
 const ModalButtonFaqForNote: React.FC<IProps> = ({
@@ -33,7 +32,6 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
   button_size,
   button_width,
   study_note_pk,
-  note_page_num,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -42,7 +40,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
     data: dataForGetFAQBoardList,
     refetch: refetchForGetFAQBoardList,
   } = useQuery<FAQRow[]>(
-    ["apiForFAQRow", study_note_pk, note_page_num],
+    ["apiForGetFAQBoardList", study_note_pk],
     apiForGetFAQBoardList,
     {
       enabled: true,

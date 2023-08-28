@@ -14,6 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import TinyMCEEditor from "../RichEditor/TinyMCEEditor";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiForCreateStudyNoteFaq } from "../../apis/study_note_api";
 
 interface Props {
   button_text: string;
@@ -32,21 +34,49 @@ const ModalButtonForAddFaqForStudyNote = ({
 }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  const [note_content, set_note_content] = useState<string>("");
-
+  
   const {
-    handleSubmit,
+      handleSubmit,
     register,
     formState: { errors },
     reset,
   } = useForm();
+  const queryClient = useQueryClient();
+  const [note_content, set_note_content] = useState<string>("");
+
+
+  const mutationForCreateFaq = useMutation(apiForCreateStudyNoteFaq, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
+      queryClient.refetchQueries(["apiForGetFAQBoardList"]);
+
+      toast({
+        title: "create faq success",
+        status: "success",
+      });
+
+      reset();
+      onClose();
+    },
+    onError: (error: any) => {
+      console.log("error.response : ", error.response);
+      console.log("mutation has an error", error.response.data);
+    },
+  });
 
   const onSubmit = (data: any) => {
     // 데이터 처리 로직
     console.log("title :", data.title);
     console.log("note_content : ", note_content);
-    reset();
-    onClose();
+    // mutationForCreateStudyNote
+    mutationForCreateFaq.mutate({
+      study_note_pk: study_note_pk,
+      title: data.title,
+      content: note_content,
+    });
   };
 
   const handleContentChange = (value: string) => {
@@ -90,6 +120,7 @@ const ModalButtonForAddFaqForStudyNote = ({
                   apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
                 />
               </Box>
+
               <Button type="submit" colorScheme="blue" marginRight="10px">
                 Submit
               </Button>

@@ -21,7 +21,28 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForUpdateStudyNoteSubtitle
+// apiForCreateStudyNoteContents
+export const apiForCreateStudyNoteFaq = ({
+  study_note_pk,
+  title,
+  content,
+}: any) =>
+  instance
+    .post(
+      `/study-note/${study_note_pk}/FAQBoard/add`,
+      {
+        study_note_pk,
+        title,
+        content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForUpdateStudyNoteSubtitle = ({
   pk,
   title,
@@ -269,11 +290,9 @@ export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
 };
 
 export const apiForGetFAQBoardList = ({ queryKey }: QueryFunctionContext) => {
-  const [_, study_note_pk, note_page_num] = queryKey;
-  console.log("note_page_num : ", note_page_num);
+  const [_, study_note_pk] = queryKey;
   return instance
     .get(`/study-note/${study_note_pk}/FAQBoard`, {
-      params: { note_page_num },
     })
     .then((response) => {
       return response.data;

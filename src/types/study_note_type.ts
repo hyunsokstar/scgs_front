@@ -214,14 +214,16 @@ export interface AnswerForQaBoard {
   created_at_formatted: string;
 }
 
-
 export interface FAQRow {
   pk: number;
   study_note: number;
   title: string;
   content: string;
-  page: number;
-  writer: number;
+  writer: {
+    pk: number;
+    username: string;
+    profile_image: null | string;
+  };
   created_at_formatted: string;
   updated_at: string;
 }
@@ -243,7 +245,7 @@ export interface QnARow {
 }
 
 export interface ErrorReportForStudyNoteData {
-  pk:number;
+  pk: number;
   study_note: number;
   writer: UserProfileImage;
   page: number;
