@@ -56,22 +56,29 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
 
   const handleSearch = () => {
     if (searchWords.trim() !== "") {
-      // refetchForGetFAQBoardList({ throwOnError: true });
+      refetchForGetFAQBoardList({ throwOnError: true });
+      setIsButtonClicked(false);
     }
     refetchForGetFAQBoardList({ throwOnError: true });
+    setIsButtonClicked(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    setIsButtonClicked(false)
     if (event.key === "Enter") {
+      setIsButtonClicked(true);
       handleSearch();
     }
   };
 
+  const handleSearchWord = (searchWords: string) => {
+    console.log("searchWords : ", searchWords);
+    setsearchWords(searchWords);
+  };
+
   useEffect(() => {
-    refetchForGetFAQBoardList()
-    setsearchWords("")
-  }, [isOpen])
+    refetchForGetFAQBoardList();
+    setsearchWords("");
+  }, [isOpen]);
 
   return (
     <>
@@ -97,7 +104,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
               <Input
                 placeholder="Search..."
                 value={searchWords}
-                onChange={(e) => setsearchWords(e.target.value)}
+                onChange={(e) => handleSearchWord(e.target.value)}
                 onKeyDown={handleKeyDown}
               />
               <InputRightElement width="auto" mr={1}>
