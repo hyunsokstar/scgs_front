@@ -91,8 +91,6 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
                 placeholder="Search..."
                 value={searchWords}
                 onChange={(e) => setsearchWords(e.target.value)}
-              onKeyDown={handleKeyDown}
-
               />
               <InputRightElement width="auto" mr={1}>
                 <Button
