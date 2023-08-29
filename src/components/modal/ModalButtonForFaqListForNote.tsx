@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Modal,
@@ -38,6 +38,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [pageNum, setPageNum] = useState(1);
   const [searchWords, setsearchWords] = useState("");
+  const [isSearchButtonClicked, setIsButtonClicked] = useState(false);
 
   const {
     isLoading: isLoadingForGetFAQBoardList,
@@ -47,7 +48,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
     ["apiForGetFAQBoardList", study_note_pk, pageNum, searchWords],
     apiForGetFAQBoardList,
     {
-      enabled: true,
+      enabled: isSearchButtonClicked,
       cacheTime: 0, // 캐싱 비활성화
     }
   );
@@ -55,16 +56,22 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
 
   const handleSearch = () => {
     if (searchWords.trim() !== "") {
-      refetchForGetFAQBoardList({ throwOnError: true });
+      // refetchForGetFAQBoardList({ throwOnError: true });
     }
-    // alert("검색 버튼 클릭 : "+ searchWords)
+    refetchForGetFAQBoardList({ throwOnError: true });
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    setIsButtonClicked(false)
     if (event.key === "Enter") {
       handleSearch();
     }
   };
+
+  useEffect(() => {
+    refetchForGetFAQBoardList()
+    setsearchWords("")
+  }, [isOpen])
 
   return (
     <>
@@ -91,12 +98,14 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
                 placeholder="Search..."
                 value={searchWords}
                 onChange={(e) => setsearchWords(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
               <InputRightElement width="auto" mr={1}>
                 <Button
                   colorScheme="blue"
                   size="sm"
                   onClick={() => {
+                    setIsButtonClicked(true);
                     handleSearch();
                   }}
                 >
