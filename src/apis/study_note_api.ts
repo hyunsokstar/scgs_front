@@ -49,7 +49,7 @@ export const apiForUpdateStudyNoteSubtitle = ({
   content,
   ref_url1,
   ref_url2,
-  youtube_url
+  youtube_url,
 }: any) => {
   return instance
     .put(
@@ -59,7 +59,7 @@ export const apiForUpdateStudyNoteSubtitle = ({
         content,
         ref_url1,
         ref_url2,
-        youtube_url
+        youtube_url,
       },
       {
         headers: {
@@ -72,17 +72,20 @@ export const apiForUpdateStudyNoteSubtitle = ({
     });
 };
 
-
-export const apiForDeleteErrorReportByPk = (error_report_pk: string | number) => {
+export const apiForDeleteErrorReportByPk = (
+  error_report_pk: string | number
+) => {
   console.log("error_report_pk : ", error_report_pk);
-  return instance
-    // .delete(`project_progress/comment/${commentPk}`, {
+  return (
+    instance
+      // .delete(`project_progress/comment/${commentPk}`, {
       .delete(`study-note/error-report/${error_report_pk}/delete`, {
         headers: {
-        "X-CSRFToken": Cookie.get("csrftoken") || "",
-      },
-    })
-    .then((response) => response.data);
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      })
+      .then((response) => response.data)
+  );
 };
 
 export const apiForUpdateErrorReportForNote = ({ errorPk, content }: any) => {
@@ -291,24 +294,22 @@ export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
 };
 
 export const apiForGetFAQBoardList = ({ queryKey }: QueryFunctionContext) => {
-  const [_, study_note_pk, pageNum] = queryKey;
+  const [_, study_note_pk, pageNum, searchWords] = queryKey;
   return instance
     .get(`/study-note/${study_note_pk}/FAQBoard`, {
-      params: { pageNum:pageNum },
+      params: { pageNum: pageNum, searchWords },
     })
     .then((response) => {
       console.log("response : ", response);
-      
+
       const response_data = {
         faqList: response.data.faqList,
         perPage: response.data.perPage,
-        totalFaqCount: response.data.totalFaqCount
-      }
+        totalFaqCount: response.data.totalFaqCount,
+      };
 
       console.log("response_data : ", response_data);
-      
-      return response_data
-      // return response.data;
+      return response_data;
     });
 };
 

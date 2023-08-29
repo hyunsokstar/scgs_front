@@ -9,9 +9,11 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
+  Input,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { FAQRow } from "../../types/study_note_type";
 import { apiForGetFAQBoardList } from "../../apis/study_note_api";
 import TableForFAQListForStudyNote from "../Table/TableForFAQListForStudyNote";
 import PaginationComponent from "../PaginationComponent";
@@ -35,21 +37,34 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [pageNum, setPageNum] = useState(1);
+  const [searchWords, setsearchWords] = useState("");
 
   const {
     isLoading: isLoadingForGetFAQBoardList,
     data: faqData,
     refetch: refetchForGetFAQBoardList,
   } = useQuery<any>(
-    ["apiForGetFAQBoardList", study_note_pk, pageNum],
+    ["apiForGetFAQBoardList", study_note_pk, pageNum, searchWords],
     apiForGetFAQBoardList,
     {
       enabled: true,
       cacheTime: 0, // 캐싱 비활성화
     }
   );
-
   console.log("faqData : ", faqData);
+
+  const handleSearch = () => {
+    if (searchWords.trim() !== "") {
+      refetchForGetFAQBoardList({ throwOnError: true });
+    }
+    // alert("검색 버튼 클릭 : "+ searchWords)
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
     <>
@@ -71,6 +86,27 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
           <ModalHeader>{modal_title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <InputGroup>
+              <Input
+                placeholder="Search..."
+                value={searchWords}
+                onChange={(e) => setsearchWords(e.target.value)}
+              onKeyDown={handleKeyDown}
+
+              />
+              <InputRightElement width="auto" mr={1}>
+                <Button
+                  colorScheme="blue"
+                  size="sm"
+                  onClick={() => {
+                    handleSearch();
+                  }}
+                >
+                  Search
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+
             {faqData ? (
               <TableForFAQListForStudyNote
                 study_note_pk={study_note_pk}
