@@ -63,7 +63,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
     {
       onSuccess: (result: any) => {
         console.log("result for search: ", result);
-        setFaqList(result)
+        setFaqList(result.data)
 
         toast({
           status: "success",
