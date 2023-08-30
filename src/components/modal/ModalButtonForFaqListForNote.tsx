@@ -12,11 +12,14 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  useToast,  
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { apiForGetFAQBoardList } from "../../apis/study_note_api";
+import { apiForGetFAQBoardList, apiForSearchFaqListBySearchWords } from "../../apis/study_note_api";
 import TableForFAQListForStudyNote from "../Table/TableForFAQListForStudyNote";
 import PaginationComponent from "../PaginationComponent";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 
 interface IProps {
   button_text: string;
@@ -35,51 +38,73 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
   button_width,
   study_note_pk,
 }: IProps) => {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [pageNum, setPageNum] = useState(1);
   const [searchWords, setsearchWords] = useState("");
-  const [isSearchButtonClicked, setIsButtonClicked] = useState(false);
 
   const {
     isLoading: isLoadingForGetFAQBoardList,
     data: faqData,
     refetch: refetchForGetFAQBoardList,
   } = useQuery<any>(
-    ["apiForGetFAQBoardList", study_note_pk, pageNum, searchWords],
+    ["apiForGetFAQBoardList", study_note_pk, pageNum],
     apiForGetFAQBoardList,
     {
-      enabled: isSearchButtonClicked,
+      enabled: true,
       cacheTime: 0, // 캐싱 비활성화
     }
   );
-  console.log("faqData : ", faqData);
+  const [faqList, setFaqList] = useState([]);
+  // console.log("faqData : ", faqData);
+
+  const mutationForSearchFaqListBySearchWords = useMutation(
+    apiForSearchFaqListBySearchWords,
+    {
+      onSuccess: (result: any) => {
+        console.log("result for search: ", result);
+        setFaqList(result)
+
+        toast({
+          status: "success",
+          title: "search faq list !!",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
 
   const handleSearch = () => {
-    if (searchWords.trim() !== "") {
-      refetchForGetFAQBoardList({ throwOnError: true });
-      setIsButtonClicked(false);
-    }
-    refetchForGetFAQBoardList({ throwOnError: true });
-    setIsButtonClicked(false);
+
+    // console.log("handleSearch check : ", searchWords);
+
+    mutationForSearchFaqListBySearchWords.mutate({
+      study_note_pk,
+      searchWords
+    })
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      setIsButtonClicked(true);
       handleSearch();
     }
   };
 
   const handleSearchWord = (searchWords: string) => {
-    console.log("searchWords : ", searchWords);
+    // console.log("handleSearchWord searchWords : ", searchWords);
     setsearchWords(searchWords);
   };
 
   useEffect(() => {
-    refetchForGetFAQBoardList();
-    setsearchWords("");
-  }, [isOpen]);
+    if (faqData) {
+      setFaqList(faqData.faqList);
+    }
+  }, [faqData]);
 
+  // 2244
   return (
     <>
       <Button
@@ -112,7 +137,6 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
                   colorScheme="blue"
                   size="sm"
                   onClick={() => {
-                    setIsButtonClicked(true);
                     handleSearch();
                   }}
                 >
@@ -121,10 +145,10 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
               </InputRightElement>
             </InputGroup>
 
-            {faqData ? (
+            {faqList ? (
               <TableForFAQListForStudyNote
                 study_note_pk={study_note_pk}
-                data={faqData.faqList}
+                data={faqList}
                 refetchForGetQnABoardList={refetchForGetFAQBoardList}
               />
             ) : (

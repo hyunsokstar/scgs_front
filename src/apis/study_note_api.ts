@@ -21,6 +21,22 @@ const instance = axios.create({
 });
 
 // 1122
+
+// api 함수 for search
+export const apiForSearchFaqListBySearchWords = ({
+  study_note_pk,
+  searchWords,
+}: any) => {
+  return instance
+    .get(`study-note/${study_note_pk}/faq/search`, {
+      params: {
+        study_note_pk: study_note_pk,
+        searchWords: searchWords,
+      },
+    })
+    .then((response) => response.data);
+};
+
 // apiForCreateStudyNoteContents
 export const apiForCreateStudyNoteFaq = ({
   study_note_pk,
@@ -282,7 +298,7 @@ export const apiForCreateQuestionForNote = ({
 
 export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
   const [_, study_note_pk, pageNum] = queryKey;
-  console.log("pageNum : ", pageNum);
+  // console.log("pageNum : ", pageNum);
 
   return instance
     .get(`/study-note/${study_note_pk}/qa-list`, {
@@ -294,10 +310,10 @@ export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
 };
 
 export const apiForGetFAQBoardList = ({ queryKey }: QueryFunctionContext) => {
-  const [_, study_note_pk, pageNum, searchWords] = queryKey;
+  const [_, study_note_pk, pageNum] = queryKey;
   return instance
     .get(`/study-note/${study_note_pk}/FAQBoard`, {
-      params: { pageNum: pageNum, searchWords },
+      params: { pageNum: pageNum},
     })
     .then((response) => {
       console.log("response : ", response);
@@ -308,7 +324,7 @@ export const apiForGetFAQBoardList = ({ queryKey }: QueryFunctionContext) => {
         totalFaqCount: response.data.totalFaqCount,
       };
 
-      console.log("response_data : ", response_data);
+      // console.log("response_data : ", response_data);
       return response_data;
     });
 };
