@@ -21,6 +21,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForDeleteQuestionForNote } from "../../apis/study_note_api";
 import ModalForFAQDetailForNote from "../modal/ModalForFAQDetailForNote";
 import ModalButtonForAddFaqForStudyNote from "../modal/ModalButtonForAddFaqForStudyNote";
+import ModalButtonForUpdateFaqForNote from "../modal/ModalButtonForUpdateFaqForNote";
 
 interface TabelForFAQListForStudyNoteProps {
   study_note_pk: number | string | undefined;
@@ -128,16 +129,14 @@ const TableForFAQListForStudyNote: React.FC<
                 <Td>{row.created_at_formatted}</Td>
                 <Td>
                   <Box display={"flex"} gap={2}>
-                    <ModalButtonForUpdateQuestionForNote
+                    <ModalButtonForUpdateFaqForNote
                       button_text={"update question"}
                       button_size={"sm"}
                       modal_title={"update question"}
                       modal_size={"6xl"}
-                      study_note_pk={study_note_pk}
                       pk={row.pk}
                       title={row.title}
                       content={row.content}
-                      page={row.page}
                     />
                     <IconButton
                       onClick={() => buttonHandlerForDeleteQuestion(row.pk)}
@@ -160,7 +159,6 @@ const TableForFAQListForStudyNote: React.FC<
         </Tbody>
       </Table>
 
-      {/* 모달 컴포넌트 */}
       {isOpen && (
         <ModalForFAQDetailForNote
           isOpen={isOpen}

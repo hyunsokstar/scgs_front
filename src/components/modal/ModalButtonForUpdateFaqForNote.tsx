@@ -1,6 +1,14 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import TinyMCEEditor from "../RichEditor/TinyMCEEditor";
 import {
+  useDisclosure,
   Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  IconButton,
+  Input,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -8,20 +16,14 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-  Button,
-  useDisclosure,
-  IconButton,
-  Input,
-  Textarea,
   Stack,
   useToast,
 } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { EditIcon } from "@chakra-ui/icons";
-import { apiForUpdateQuestionForNote } from "../../apis/study_note_api";
 
-interface IProps {
+interface Props {
   button_text: string;
   button_size: string;
   modal_title: string;
@@ -29,11 +31,9 @@ interface IProps {
   pk: string;
   title: string;
   content: string;
-  page: number;
 }
 
-// 1122
-const ModalButtonForUpdateQuestionForNote = ({
+const ModalButtonForUpdateFaqForNote = ({
   modal_title,
   modal_size,
   button_text,
@@ -41,45 +41,24 @@ const ModalButtonForUpdateQuestionForNote = ({
   pk,
   title,
   content,
-  page,
-}: IProps) => {
-
-  // alert(pk)
-
+}: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast();
-  const { handleSubmit, register } = useForm();
   const queryClient = useQueryClient();
+  const toast = useToast();
+  const { handleSubmit, register, formState } = useForm();
+  const [note_content, set_note_content] = useState<string>(content);
 
-  const mutationForUpdateQuestionForNote = useMutation(
-    apiForUpdateQuestionForNote,
-    {
-      onSuccess: (result: any) => {
-        console.log("result : ", result);
-        queryClient.refetchQueries(["apiForGetQnABoardList"]);
-        toast({
-          status: "success",
-          title: "question update success",
-          description: result.message,
-        });
-        onClose();
-      },
-      onError: (err) => {
-        console.log("error : ", err);
-      },
-    }
-  );
+  const handleContentChange = (value: string) => {
+    set_note_content(value);
+  };
 
   const onSubmit = (data: any) => {
-    // alert("이거 실행 되나?")
-    console.log(data); // Form 데이터 처리 예시
-    mutationForUpdateQuestionForNote.mutate({
-      question_pk: data.pk,
-      title: data.title,
-      content: data.content,
-      page: data.page,
-    });
+    console.log(data); // Form 입력 data 확인
   };
+
+  useEffect(() => {
+    set_note_content(content)
+  }, [content])
 
   return (
     <Box>
@@ -105,18 +84,18 @@ const ModalButtonForUpdateQuestionForNote = ({
                   {...register("title")}
                   placeholder="Title"
                 />
-                <Textarea
-                  defaultValue={content}
-                  {...register("content")}
-                  placeholder="Content"
-                />
-                <Input
-                  width={"20%"}
-                  defaultValue={page}
-                  {...register("page")}
-                  placeholder="Page"
-                />
               </Stack>
+
+              <FormControl isInvalid={!!formState.errors.content}>
+                <FormLabel htmlFor="content">Content</FormLabel>
+                <Box zIndex={9999}>
+                  <TinyMCEEditor
+                    initialValue={note_content}
+                    onChange={handleContentChange}
+                    apiKey="mj1ss81rnxfcig1ol8gp6j8oui9jpkp61hw3m901pbt14ei1"
+                  />
+                </Box>
+              </FormControl>
             </ModalBody>
             <ModalFooter>
               <Button type="submit" colorScheme="blue" mr={3}>
@@ -131,4 +110,4 @@ const ModalButtonForUpdateQuestionForNote = ({
   );
 };
 
-export default ModalButtonForUpdateQuestionForNote;
+export default ModalButtonForUpdateFaqForNote;
