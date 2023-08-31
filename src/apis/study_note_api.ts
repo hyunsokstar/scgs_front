@@ -22,6 +22,30 @@ const instance = axios.create({
 
 // 1122
 
+// apiForUpdateNoteFaq
+export const apiForUpdateNoteFaq = ({
+  pk,
+  title,
+  content,
+}: any) => {
+  return instance
+    .put(
+      `/study-note/faq/${pk}/update`,
+      {
+        title: title,
+        content: content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      return response.data;
+    });
+};
+
 // api 함수 for search
 export const apiForSearchFaqListBySearchWords = ({
   study_note_pk,
@@ -316,7 +340,6 @@ export const apiForGetFAQBoardList = ({ queryKey }: QueryFunctionContext) => {
       params: { pageNum: pageNum},
     })
     .then((response) => {
-      console.log("response : ", response);
 
       const response_data = {
         faqList: response.data.faqList,

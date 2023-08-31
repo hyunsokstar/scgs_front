@@ -22,6 +22,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { EditIcon } from "@chakra-ui/icons";
+import { apiForUpdateNoteFaq } from "../../apis/study_note_api";
 
 interface Props {
   button_text: string;
@@ -52,13 +53,49 @@ const ModalButtonForUpdateFaqForNote = ({
     set_note_content(value);
   };
 
+  // mutationForUpdateFaq
+
+  const mutationForUpdateNoteFaq = useMutation(apiForUpdateNoteFaq, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
+        queryClient.refetchQueries(["apiForGetFAQBoardList"]);
+
+      toast({
+        title: "update succes for study note content!",
+        status: "success",
+      });
+
+      onClose();
+    },
+    onError: (error: any) => {
+      console.log("error.message : ", error.message);
+
+      toast({
+        title: "Error!",
+        description: error.message || "An error occurred.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+  });
+
   const onSubmit = (data: any) => {
     console.log(data); // Form 입력 data 확인
+
+    mutationForUpdateNoteFaq.mutate({
+      pk,
+      title: data.title,
+      content: note_content,
+    });
   };
 
   useEffect(() => {
-    set_note_content(content)
-  }, [content])
+    set_note_content(content);
+  }, [content]);
 
   return (
     <Box>
