@@ -22,6 +22,17 @@ const instance = axios.create({
 
 // 1122
 
+export const apiForDeleteNoteFaq = (faqPk: string | number) => {
+  // console.log("faqPk : ", faqPk);
+  return instance
+    .delete(`study-note/faq/${faqPk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 // apiForUpdateNoteFaq
 export const apiForUpdateNoteFaq = ({
   pk,

@@ -16,9 +16,8 @@ import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FAQRow } from "../../types/study_note_type";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import ModalButtonForUpdateQuestionForNote from "../modal/ModalButtonForUpdateQuestionForNote";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiForDeleteQuestionForNote } from "../../apis/study_note_api";
+import { apiForDeleteNoteFaq } from "../../apis/study_note_api";
 import ModalForFAQDetailForNote from "../modal/ModalForFAQDetailForNote";
 import ModalButtonForAddFaqForStudyNote from "../modal/ModalButtonForAddFaqForStudyNote";
 import ModalButtonForUpdateFaqForNote from "../modal/ModalButtonForUpdateFaqForNote";
@@ -54,10 +53,9 @@ const TableForFAQListForStudyNote: React.FC<
     setIsOpen(false);
   };
 
-  const mutationForDeleteQuestionForNote = useMutation(
+  const mutationForDeleteNoteFaq = useMutation(
     (pk: string | number) => {
-      // return deleteOneCommentForTaskByPkApi(pk);
-      return apiForDeleteQuestionForNote(pk);
+      return apiForDeleteNoteFaq(pk);
     },
     {
       onSettled: () => {
@@ -66,7 +64,7 @@ const TableForFAQListForStudyNote: React.FC<
       onSuccess: (data) => {
         console.log("data : ", data);
 
-        queryClient.refetchQueries(["apiForGetQnABoardList"]);
+        queryClient.refetchQueries(["apiForGetFAQBoardList"]);
 
         toast({
           title: "delete comment 성공!",
@@ -76,9 +74,9 @@ const TableForFAQListForStudyNote: React.FC<
     }
   );
 
-  const buttonHandlerForDeleteQuestion = (pk: any) => {
+  const buttonHandlerForDeleteFaq = (pk: any) => {
     console.log("delete button click !", pk);
-    mutationForDeleteQuestionForNote.mutate(pk);
+    mutationForDeleteNoteFaq.mutate(pk);
   };
 
   return (
@@ -139,7 +137,7 @@ const TableForFAQListForStudyNote: React.FC<
                       content={row.content}
                     />
                     <IconButton
-                      onClick={() => buttonHandlerForDeleteQuestion(row.pk)}
+                      onClick={() => buttonHandlerForDeleteFaq(row.pk)}
                       aria-label="Delete"
                       icon={<DeleteIcon />}
                       size="sm"
