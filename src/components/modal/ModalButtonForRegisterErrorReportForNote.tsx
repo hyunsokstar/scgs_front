@@ -54,9 +54,9 @@ const ModalButtonForRegisterErrorReportForNote = ({
 
   const {
     isLoading: isLoadingForGetErrorReportListForStudyNote,
-    data: dataForGetErrorReportListForStudyNote,
+    data: dataForErrorReportList,
     refetch: refetchForGetErrorReportListForStudyNote,
-  } = useQuery<ErrorReportForStudyNoteData[]>(
+  } = useQuery<any[]>(
     ["apiForGetErrorReportListForPageForStudyNote", study_note_pk, currentPage],
     apiForGetErrorReportListForPageForStudyNote,
     {
@@ -64,6 +64,9 @@ const ModalButtonForRegisterErrorReportForNote = ({
       // cacheTime: 0, // 캐싱 비활성화
     }
   );
+
+  console.log("dataForErrorReportList : ", dataForErrorReportList);
+  
 
   const mutationForCreateErrorReportForNote = useMutation(
     apiForCreateErrorReportForNote,
@@ -132,8 +135,8 @@ const ModalButtonForRegisterErrorReportForNote = ({
           <ModalBody>
             <TableForErrorReportListForStudyNote
               data={
-                dataForGetErrorReportListForStudyNote &&
-                dataForGetErrorReportListForStudyNote
+                dataForErrorReportList &&
+                dataForErrorReportList
               }
               refetchForGetErrorReportListForStudyNote={
                 refetchForGetErrorReportListForStudyNote

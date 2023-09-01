@@ -12,15 +12,15 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Input,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import {
-  QnARow,
-} from "../../types/study_note_type";
-import {
-  apiForGetQnABoardList,
-} from "../../apis/study_note_api";
+import { QnARow } from "../../types/study_note_type";
+import { apiForGetQnABoardList } from "../../apis/study_note_api";
 import TableForQnaListForStudyNote from "../Table/TableForQnaListForStudyNote";
+import PaginationComponent from "../PaginationComponent";
 
 interface IProps {
   button_text: string;
@@ -43,13 +43,13 @@ const ModalButtonForQnAList = ({
   count_for_qna_boards,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [pageNum, setPageNum] = useState(1)
+  const [pageNum, setPageNum] = useState(1);
 
   const {
     isLoading: isLoadingForGetQnABoardList,
-    data: dataForGetQnABoardList,
+    data: dataForGetQa,
     refetch: refetchForGetQnABoardList,
-  } = useQuery<QnARow[]>(
+  } = useQuery<any[]>(
     ["apiForGetQnABoardList", study_note_pk, pageNum],
     apiForGetQnABoardList,
     {
@@ -57,6 +57,8 @@ const ModalButtonForQnAList = ({
       cacheTime: 0, // 캐싱 비활성화
     }
   );
+
+  console.log("dataForGetQa : ", dataForGetQa);
 
   // 2244
   return (
@@ -77,12 +79,36 @@ const ModalButtonForQnAList = ({
           <ModalHeader>{modal_title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {/* fix 0623 */}
+            {/* todo: 검색 버튼을 위한 input 추가 with chakra-ui 인풋 추가 하고 인풋 오른쪽 끝에 addone 으로 search 버튼 추가 */}
+            <InputGroup>
+              <Input
+                type="text"
+                placeholder="검색어를 입력하세요"
+                // 여기에 검색어를 처리할 상태나 함수를 연결하세요
+              />
+              <InputRightElement width="4.5rem">
+                <Button colorScheme="blue" h="1.75rem" size="sm">
+                  검색
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+
             <TableForQnaListForStudyNote
               study_note_pk={study_note_pk}
-              data={dataForGetQnABoardList}
+              data={dataForGetQa?.qaList}
               refetchForGetQnABoardList={refetchForGetQnABoardList}
             />
+
+            {dataForGetQa ? (
+              <PaginationComponent
+                current_page_num={pageNum}
+                setCurrentPageNum={setPageNum}
+                total_page_num={dataForGetQa.totalQaCount}
+                task_number_for_one_page={dataForGetQa.perPage}
+              />
+            ) : (
+              ""
+            )}
           </ModalBody>
           <ModalFooter>
             <Button type="submit" colorScheme="blue" mr={3}>

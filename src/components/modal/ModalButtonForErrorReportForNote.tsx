@@ -16,7 +16,7 @@ import {
 import { apiForGetErrorReportListForStudyNote } from "../../apis/study_note_api";
 import { ErrorReportForStudyNoteData } from "../../types/study_note_type";
 import TableForErrorReportListForStudyNote from "../Table/TableForErrorReportListForStudyNote";
-
+import PaginationComponent from "../PaginationComponent";
 
 interface IProps {
   button_text: string;
@@ -37,24 +37,24 @@ const ModalButtonForErrorReportForNote = ({
   study_note_pk,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [pageNum, setPageNum] = useState(1);
 
   const {
     isLoading: isLoadingForGetErrorReportListForStudyNote,
-    data: dataForGetErrorReportListForStudyNote,
+    data: dataForErrorReport,
     refetch: refetchForGetErrorReportListForStudyNote,
-  } = useQuery<ErrorReportForStudyNoteData[]>(
-    ["apiForGetErrorReportListForStudyNote", study_note_pk],
+  } = useQuery<any>(
+    ["apiForGetErrorReportListForStudyNote", study_note_pk, pageNum],
     apiForGetErrorReportListForStudyNote,
     {
       enabled: true,
-      // cacheTime: 0, // 캐싱 비활성화
     }
   );
+  console.log("dataForErrorReport : ", dataForErrorReport);
 
   // 2244
   return (
     <>
-
       <Button
         aria-label="Confirm"
         variant="outline"
@@ -73,13 +73,23 @@ const ModalButtonForErrorReportForNote = ({
           <ModalHeader>{modal_title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            
             <TableForErrorReportListForStudyNote
-              data={
-                dataForGetErrorReportListForStudyNote &&
-                dataForGetErrorReportListForStudyNote
+              data={dataForErrorReport && dataForErrorReport.errorReportList}
+              refetchForGetErrorReportListForStudyNote={
+                refetchForGetErrorReportListForStudyNote
               }
             />
+
+            {dataForErrorReport ? (
+              <PaginationComponent
+                current_page_num={pageNum}
+                setCurrentPageNum={setPageNum}
+                total_page_num={dataForErrorReport.totalErrorReportCount}
+                task_number_for_one_page={dataForErrorReport.perPage}
+              />
+            ) : (
+              ""
+            )}
 
           </ModalBody>
           <ModalFooter>

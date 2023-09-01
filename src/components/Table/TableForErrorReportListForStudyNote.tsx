@@ -27,7 +27,7 @@ import { RootState } from "../../store";
 import ErrorReportTableRow from "../Row/ErrorReportTableRow";
 
 interface TableForErrorReportListForStudyNoteProps {
-  data: ErrorReportForStudyNoteData[] | undefined;
+  data: any[] | undefined;
   refetchForGetErrorReportListForStudyNote: () => void;
 }
 
@@ -111,6 +111,9 @@ const TableForErrorReportListForStudyNote: React.FC<
   const openModalForReportDetail = () => {
     // alert("컨텐트 클릭");
   };
+
+  console.log("data : ", data);
+  
 
   // 2244
   return (

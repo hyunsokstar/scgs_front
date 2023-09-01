@@ -34,11 +34,7 @@ export const apiForDeleteNoteFaq = (faqPk: string | number) => {
 };
 
 // apiForUpdateNoteFaq
-export const apiForUpdateNoteFaq = ({
-  pk,
-  title,
-  content,
-}: any) => {
+export const apiForUpdateNoteFaq = ({ pk, title, content }: any) => {
   return instance
     .put(
       `/study-note/faq/${pk}/update`,
@@ -184,11 +180,24 @@ export const apiForCreateErrorReportForNote = ({
 export const apiForGetErrorReportListForStudyNote = ({
   queryKey,
 }: QueryFunctionContext) => {
-  const [_, study_note_pk] = queryKey;
+  const [_, study_note_pk, pageNum] = queryKey;
   return instance
-    .get(`/study-note/${study_note_pk}/error-report-list`, {})
+    .get(`/study-note/${study_note_pk}/error-report-list`, {
+      params: { pageNum },
+    })
     .then((response) => {
-      return response.data;
+
+      const response_data = {
+        errorReportList: response.data.errorReportList,
+        perPage: response.data.perPage,
+        totalErrorReportCount: response.data.totalErrorReportCount,
+      };
+
+      console.log("response_data : ", response_data);
+      
+
+      // return response.data;
+      return response_data;
     });
 };
 
@@ -201,7 +210,15 @@ export const apiForGetErrorReportListForPageForStudyNote = ({
   return instance
     .get(`/study-note/${study_note_pk}/error-report/${currentPage}`, {})
     .then((response) => {
+
+      // const response_data = {
+      //   errorReportList: response.data.errorReportList,
+      //   perPage: response.data.perPage,
+      //   totalErrorReportCount: response.data.totalErrorReportCount,
+      // };
+
       return response.data;
+      // return response_data;
     });
 };
 
@@ -340,6 +357,10 @@ export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
       params: { pageNum },
     })
     .then((response) => {
+
+      console.log("response for qa : ", response);
+      
+
       return response.data;
     });
 };
@@ -348,10 +369,9 @@ export const apiForGetFAQBoardList = ({ queryKey }: QueryFunctionContext) => {
   const [_, study_note_pk, pageNum] = queryKey;
   return instance
     .get(`/study-note/${study_note_pk}/FAQBoard`, {
-      params: { pageNum: pageNum},
+      params: { pageNum: pageNum },
     })
     .then((response) => {
-
       const response_data = {
         faqList: response.data.faqList,
         perPage: response.data.perPage,
