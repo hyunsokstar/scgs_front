@@ -24,6 +24,7 @@ import {
 } from "../../apis/study_note_api";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import ErrorReportTableRow from "../Row/ErrorReportTableRow";
 
 interface TableForErrorReportListForStudyNoteProps {
   data: ErrorReportForStudyNoteData[] | undefined;
@@ -107,6 +108,10 @@ const TableForErrorReportListForStudyNote: React.FC<
     });
   };
 
+  const openModalForReportDetail = () => {
+    // alert("컨텐트 클릭");
+  };
+
   // 2244
   return (
     <Box overflowX="auto" overflowY="scroll" height="400px">
@@ -117,96 +122,26 @@ const TableForErrorReportListForStudyNote: React.FC<
             <Th>Page</Th>
             <Th>Content</Th>
             <Th>Is Resolved</Th>
-            <Th>Created At</Th>
             <Th>update/delete</Th>
           </Tr>
         </Thead>
         <Tbody>
+          
           {data && data.length !== 0 ? (
             data.map((item, index) => (
-              <Tr
+              <ErrorReportTableRow
                 key={item.created_at_formatted}
-                bgColor={editingIndex === index ? "yellow.100" : ""}
-              >
-                <Td>
-                  {item.writer.profile_image ? (
-                    <Avatar
-                      size="sm"
-                      name={item.writer.username}
-                      src={item.writer.profile_image}
-                    />
-                  ) : (
-                    <Text>{item.writer.username}</Text>
-                  )}
-                </Td>
-                <Td>{item.page}</Td>
-                <Td>
-                  {editingIndex === index ? (
-                    <Textarea
-                      value={updatedContent}
-                      onChange={(e) => setUpdatedContent(e.target.value)}
-                      autoFocus
-                    />
-                  ) : (
-                    item.content
-                  )}
-                </Td>
-                <Td>{item.is_resolved ? "Yes" : "No"}</Td>
-                <Td>{item.created_at_formatted}</Td>
-                <Td>
-                  {editingIndex === index ? (
-                    <Box display="flex" gap={2}>
-                      <IconButton
-                        variant="outline"
-                        border="1px solid black"
-                        _hover={{ bgColor: "blue.100" }}
-                        aria-label="Confirm"
-                        icon={<CheckIcon />}
-                        colorScheme="blue"
-                        onClick={() => handleConfirmClick(item.pk)}
-                      />
-                      <IconButton
-                        variant="outline"
-                        border="1px solid black"
-                        _hover={{ bgColor: "blue.100" }}
-                        aria-label="Cancel"
-                        icon={<CloseIcon />}
-                        colorScheme="red"
-                        onClick={handleCancelClick}
-                      />
-                    </Box>
-                  ) : (
-                    <Box>
-                      {loginUser.username === item.writer.username ? (
-                        <Box display={"flex"} gap={2}>
-                          <IconButton
-                            variant="outline"
-                            border="1px solid black"
-                            _hover={{ bgColor: "blue.100" }}
-                            aria-label="Edit"
-                            icon={<EditIcon />}
-                            colorScheme="blue"
-                            onClick={() => handleEditClick(index, item.content)}
-                          />
-                          <IconButton
-                            variant="outline"
-                            border="1px solid black"
-                            _hover={{ bgColor: "blue.100" }}
-                            aria-label="Delete"
-                            icon={<DeleteIcon />}
-                            colorScheme="red"
-                            onClick={() =>
-                              buttonHandlerForDeleteErrorReportByPk(item.pk)
-                            }
-                          />
-                        </Box>
-                      ) : (
-                        ""
-                      )}
-                    </Box>
-                  )}
-                </Td>
-              </Tr>
+                item={item}
+                index={index}
+                editingIndex={editingIndex}
+                updatedContent={updatedContent}
+                handleEditClick={handleEditClick}
+                handleCancelClick={handleCancelClick}
+                handleConfirmClick={handleConfirmClick}
+                buttonHandlerForDeleteErrorReportByPk={buttonHandlerForDeleteErrorReportByPk}
+                openModalForReportDetail={openModalForReportDetail}
+                loginUser={loginUser}
+              />
             ))
           ) : (
             <Tr>
