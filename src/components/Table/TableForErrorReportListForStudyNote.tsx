@@ -115,41 +115,39 @@ const TableForErrorReportListForStudyNote: React.FC<
   // 2244
   return (
     <Box overflowX="auto" overflowY="scroll" height="400px">
-      <Table variant="simple" width={"100%"}>
-        <Tbody width={"100%"}>
-          {data && data.length !== 0 ? (
-            data.map((item, index) => (
-              <ErrorReportTableRow
-                key={item.created_at_formatted}
-                item={item}
-                index={index}
-                editingIndex={editingIndex}
-                updatedContent={updatedContent}
-                handleEditClick={handleEditClick}
-                handleCancelClick={handleCancelClick}
-                handleConfirmClick={handleConfirmClick}
-                buttonHandlerForDeleteErrorReportByPk={buttonHandlerForDeleteErrorReportByPk}
-                openModalForReportDetail={openModalForReportDetail}
-                loginUser={loginUser}
-              />
-            ))
-          ) : (
-            <Tr>
-              <Td colSpan={6}>
-                <Center h="100px" bgColor="gray.100">
-                  <Box
-                    fontSize="xl"
-                    fontWeight="bold"
-                    fontFamily="Helvetica Neue, Arial, sans-serif"
-                  >
-                    No data
-                  </Box>
-                </Center>
-              </Td>
-            </Tr>
-          )}
-        </Tbody>
-      </Table>
+      <Box width="100%">
+        {data && data.length !== 0 ? (
+          data.map((item, index) => (
+            <ErrorReportTableRow
+              key={item.created_at_formatted}
+              item={item}
+              index={index}
+              editingIndex={editingIndex}
+              updatedContent={updatedContent}
+              handleEditClick={handleEditClick}
+              handleCancelClick={handleCancelClick}
+              handleConfirmClick={handleConfirmClick}
+              buttonHandlerForDeleteErrorReportByPk={
+                buttonHandlerForDeleteErrorReportByPk
+              }
+              openModalForReportDetail={openModalForReportDetail}
+              loginUser={loginUser}
+            />
+          ))
+        ) : (
+          <Box>
+            <Center h="100px" bgColor="gray.100">
+              <Box
+                fontSize="xl"
+                fontWeight="bold"
+                fontFamily="Helvetica Neue, Arial, sans-serif"
+              >
+                No data
+              </Box>
+            </Center>
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 };
