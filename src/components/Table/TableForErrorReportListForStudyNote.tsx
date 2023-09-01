@@ -115,18 +115,8 @@ const TableForErrorReportListForStudyNote: React.FC<
   // 2244
   return (
     <Box overflowX="auto" overflowY="scroll" height="400px">
-      <Table variant="simple">
-        <Thead>
-          <Tr>
-            <Th>Writer</Th>
-            <Th>Page</Th>
-            <Th>Content</Th>
-            <Th>Is Resolved</Th>
-            <Th>update/delete</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          
+      <Table variant="simple" width={"100%"}>
+        <Tbody width={"100%"}>
           {data && data.length !== 0 ? (
             data.map((item, index) => (
               <ErrorReportTableRow
