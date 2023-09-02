@@ -96,15 +96,14 @@ const CardForStudyNote: React.FC<IProps> = ({
       return apiFordeleteOneStudyNote(pk);
     },
     {
-      onSettled: () => {
-        // setSelectedItems([]);
-      },
       onSuccess: (data) => {
         console.log("data : ", data);
+        // alert("삭제 성공")
 
         if (studyNoteListRefatch) {
           studyNoteListRefatch();
         }
+        
         queryClient.refetchQueries(["apiForgetStudyNoteList"]);
 
         toast({

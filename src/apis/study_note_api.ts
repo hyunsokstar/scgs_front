@@ -510,7 +510,6 @@ export const apiForUpdateCommentForNote = ({ commentPk, commentText }: any) => {
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
       return response.data;
     });
 };
@@ -535,7 +534,6 @@ export const apiForCreateCommentForNote = ({
     .then((response) => response.data);
 
 export const deleteOneCommentForNoteByPkApi = (commentPk: string | number) => {
-  // console.log("commentPk : ", commentPk);
   return instance
     .delete(`study-note/comment/${commentPk}/delete`, {
       headers: {
@@ -545,7 +543,6 @@ export const deleteOneCommentForNoteByPkApi = (commentPk: string | number) => {
     .then((response) => response.data);
 };
 
-// ForStudyNoteBriefingBoard
 export const apiForEditModeForStudyNoteBriefingBoard = (commentPk: any) => {
   console.log(
     "apiForEditModeForStudyNoteBriefingBoard 실행 check : ",
