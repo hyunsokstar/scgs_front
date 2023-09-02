@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import {
@@ -11,12 +11,18 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  InputGroup,
+  Input,
+  InputRightElement,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import { apiForGetErrorReportListForStudyNote } from "../../apis/study_note_api";
+import { apiForGetErrorReportListForStudyNote, apiForSearchErrorReportListBySearchWords } from "../../apis/study_note_api";
 import { ErrorReportForStudyNoteData } from "../../types/study_note_type";
 import TableForErrorReportListForStudyNote from "../Table/TableForErrorReportListForStudyNote";
 import PaginationComponent from "../PaginationComponent";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 
 interface IProps {
   button_text: string;
@@ -37,7 +43,10 @@ const ModalButtonForErrorReportForNote = ({
   study_note_pk,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();  
   const [pageNum, setPageNum] = useState(1);
+  const [errorReportList, setErrorReportList] = useState("");
+  const [searchWords, setSearchWords] = useState("");
 
   const {
     isLoading: isLoadingForGetErrorReportListForStudyNote,
@@ -51,6 +60,38 @@ const ModalButtonForErrorReportForNote = ({
     }
   );
   console.log("dataForErrorReport : ", dataForErrorReport);
+  
+  const mutationForSearchErrorReportListBySearchWords = useMutation(
+    apiForSearchErrorReportListBySearchWords,
+    {
+      onSuccess: (result: any) => {
+        console.log("result for search: ", result);
+        setErrorReportList(result.data)
+
+        toast({
+          status: "success",
+          title: "search faq list !!",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+  const handleSearch = () => {
+    mutationForSearchErrorReportListBySearchWords.mutate({
+      study_note_pk,
+      searchWords
+    })
+  };
+
+  useEffect(() => {
+    if (dataForErrorReport) {
+      setErrorReportList(dataForErrorReport.errorReportList);
+    }
+  }, [dataForErrorReport]);
 
   // 2244
   return (
@@ -73,8 +114,33 @@ const ModalButtonForErrorReportForNote = ({
           <ModalHeader>{modal_title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <InputGroup mb={2}>
+              {/* todo input 에서 엔터 치거나 검색 버튼 클릭하면 검색 함수로 연결 */}
+              <Input
+                type="text"
+                placeholder="검색어를 입력하세요"
+                value={searchWords}
+                onChange={(e) => setSearchWords(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSearch(); // 엔터 키를 누르면 검색 함수를 호출합니다.
+                  }
+                }}
+              />
+              <InputRightElement width="4.5rem">
+                <Button
+                  colorScheme="blue"
+                  h="1.75rem"
+                  size="sm"
+                  onClick={handleSearch}
+                >
+                  검색
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+
             <TableForErrorReportListForStudyNote
-              data={dataForErrorReport && dataForErrorReport.errorReportList}
+              data={errorReportList && errorReportList}
               refetchForGetErrorReportListForStudyNote={
                 refetchForGetErrorReportListForStudyNote
               }
@@ -90,7 +156,6 @@ const ModalButtonForErrorReportForNote = ({
             ) : (
               ""
             )}
-
           </ModalBody>
           <ModalFooter>
             <Button type="submit" colorScheme="blue" mr={3}>

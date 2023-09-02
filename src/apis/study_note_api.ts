@@ -21,6 +21,47 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForSearchStudyNoteListBySearchWords
+export const apiForSearchStudyNoteListBySearchWords = ({
+  searchWords,
+}: any) => {
+  return instance
+    .get(`study-note/search`, {
+      params: {
+        // study_note_pk: study_note_pk,
+        searchWords: searchWords,
+      },
+    })
+    .then((response) => response.data);
+};
+
+export const apiForSearchErrorReportListBySearchWords = ({
+  study_note_pk,
+  searchWords,
+}: any) => {
+  return instance
+    .get(`study-note/${study_note_pk}/error-report/search`, {
+      params: {
+        study_note_pk: study_note_pk,
+        searchWords: searchWords,
+      },
+    })
+    .then((response) => response.data);
+};
+
+export const apiForSearchQnaListBySearchWords = ({
+  study_note_pk,
+  searchWords,
+}: any) => {
+  return instance
+    .get(`study-note/${study_note_pk}/qna/search`, {
+      params: {
+        study_note_pk: study_note_pk,
+        searchWords: searchWords,
+      },
+    })
+    .then((response) => response.data);
+};
 
 export const apiForDeleteNoteFaq = (faqPk: string | number) => {
   // console.log("faqPk : ", faqPk);

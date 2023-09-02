@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
-  Flex,
   Text,
   Button,
   Select,
   IconButton,
-  useBreakpointValue,
   Spacer,
+  InputGroup,
+  Input,
+  InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import { FaSync } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
-import { apiForGetStudyNoteList } from "../apis/study_note_api";
+import { apiForGetStudyNoteList, apiForSearchStudyNoteListBySearchWords } from "../apis/study_note_api";
 import CardForStudyNote from "../components/Card/CardForStudyNote";
 import ModalButtonForAddStudyNote from "../components/modal/ModalButtonForAddStudyNote";
 import { TypeForNote, TypeForNoteList } from "../types/study_note_type";
@@ -19,12 +21,17 @@ import { Link } from "react-router-dom";
 import PaginationComponent from "../components/PaginationComponent";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+// 1122
 const StudyNotePage = () => {
+  const toast = useToast();  
   const [pageNum, setPageNum] = useState(1);
   const [selectedNoteWriter, setSelectedNoteWriter] = useState("");
   const [first_category, set_first_category] = useState("");
   const [second_category, set_second_category] = useState("");
+  const [searchWords, setSearchWords] = useState("");
+  const [studyNoteList, setStudyNoteList] = useState<TypeForNote[]>([]);  
 
   const firstCategoryOptions = [
     { value: "frontend", label: "Frontend" },
@@ -66,7 +73,7 @@ const StudyNotePage = () => {
 
   const {
     isLoading: studyNoteLoading,
-    data: studyNoteData,
+    data: dataForStudyNote,
     refetch: studyNoteListRefatch,
   } = useQuery<TypeForNoteList>(
     [
@@ -82,7 +89,7 @@ const StudyNotePage = () => {
     }
   );
 
-  console.log("studyNoteData : ", studyNoteData);
+  console.log("dataForStudyNote : ", dataForStudyNote);
 
   const buttonHandlerForRefreshFilterOption = () => {
     setSelectedNoteWriter("");
@@ -90,14 +97,70 @@ const StudyNotePage = () => {
     set_second_category("");
   };
 
-  if (studyNoteLoading || !studyNoteData) {
+  // mutationForSearchStudyNoteListBySearchWords
+  const mutationForSearchStudyNoteListBySearchWords = useMutation(
+    apiForSearchStudyNoteListBySearchWords,
+    {
+      onSuccess: (result: any) => {
+        console.log("result for search: ", result);
+        setStudyNoteList(result.data);
+
+        toast({
+          status: "success",
+          title: "search search note list !!",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+  const handleSearch = () => {
+    // alert("검색 버튼 클릭");
+    mutationForSearchStudyNoteListBySearchWords.mutate({
+      searchWords,
+    });
+  };
+
+  useEffect(() => {
+    if (dataForStudyNote) {
+      setStudyNoteList(dataForStudyNote.noteList);
+    }
+  }, [dataForStudyNote]);
+
+  if (studyNoteLoading || !dataForStudyNote) {
     return <div>Loading study notes...</div>;
   }
 
   return (
     <Box>
       <Text align={"center"} fontSize={"5xl"}>
-        Tech Note !!
+        {/* Tech Note !! */}
+        <InputGroup my={3}>
+          <Input
+            type="text"
+            placeholder="검색어를 입력하세요"
+            value={searchWords}
+            onChange={(e) => setSearchWords(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch(); // 엔터 키를 누르면 검색 함수를 호출합니다.
+              }
+            }}
+          />
+          <InputRightElement width="4.5rem">
+            <Button
+              colorScheme="blue"
+              h="1.75rem"
+              size="sm"
+              onClick={handleSearch}
+            >
+              검색
+            </Button>
+          </InputRightElement>
+        </InputGroup>
       </Text>
 
       <Box
@@ -110,13 +173,13 @@ const StudyNotePage = () => {
         gap={2}
       >
         <Box>
-          {studyNoteData ? (
+          {dataForStudyNote ? (
             <Select
               placeholder="Select a User"
               size={"sm"}
               onChange={handleSelectedNoteWriter}
             >
-              {studyNoteData.note_writers.map((user) => (
+              {dataForStudyNote.note_writers.map((user) => (
                 <option key={user} value={user}>
                   {user}
                 </option>
@@ -214,36 +277,38 @@ const StudyNotePage = () => {
           width={"100%"}
           // mx={"auto"}
         >
-          {studyNoteData.noteList.map((note: TypeForNote) => (
-            <CardForStudyNote
-              pk={note.pk}
-              key={note.title}
-              title={note.title}
-              description={note.description}
-              writer={note.writer}
-              note_cowriters={note.note_cowriters}
-              count_for_note_contents={note.count_for_note_contents}
-              count_for_note_comments={note.count_for_note_comments}
-              count_for_qna_boards={note.count_for_qna_boards}
-              count_for_note_contents_for_subtitle={
-                note.count_for_note_contents_for_subtitle
-              }
-              count_for_class_list={note.count_for_class_list}
-              first_category={note.first_category}
-              second_category={note.second_category}
-              studyNoteListRefatch={studyNoteListRefatch}
-            />
-          ))}
+          {studyNoteList
+            ? studyNoteList.map((note: TypeForNote) => (
+                <CardForStudyNote
+                  pk={note.pk}
+                  key={note.title}
+                  title={note.title}
+                  description={note.description}
+                  writer={note.writer}
+                  note_cowriters={note.note_cowriters}
+                  count_for_note_contents={note.count_for_note_contents}
+                  count_for_note_comments={note.count_for_note_comments}
+                  count_for_qna_boards={note.count_for_qna_boards}
+                  count_for_note_contents_for_subtitle={
+                    note.count_for_note_contents_for_subtitle
+                  }
+                  count_for_class_list={note.count_for_class_list}
+                  first_category={note.first_category}
+                  second_category={note.second_category}
+                  studyNoteListRefatch={studyNoteListRefatch}
+                />
+              ))
+            : ""}
         </Box>
       </Box>
 
       <Box mt={5}>
-        {studyNoteData.noteList ? (
+        {dataForStudyNote.noteList ? (
           <PaginationComponent
             current_page_num={pageNum}
             setCurrentPageNum={setPageNum}
-            total_page_num={studyNoteData?.totalPageCount}
-            task_number_for_one_page={studyNoteData?.note_count_per_page}
+            total_page_num={dataForStudyNote?.totalPageCount}
+            task_number_for_one_page={dataForStudyNote?.note_count_per_page}
           />
         ) : (
           ""

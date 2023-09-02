@@ -15,10 +15,13 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
-import { apiForGetQnABoardList } from "../../apis/study_note_api";
+import { apiForGetQnABoardList, apiForSearchQnaListBySearchWords } from "../../apis/study_note_api";
 import TableForQnaListForStudyNote from "../Table/TableForQnaListForStudyNote";
 import PaginationComponent from "../PaginationComponent";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 
 interface IProps {
   button_text: string;
@@ -41,8 +44,9 @@ const ModalButtonForQnAList = ({
   count_for_qna_boards,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();  
   const [pageNum, setPageNum] = useState(1);
-  const [searchWords, setSearchWords] = useState(""); // 검색어 상태 추가
+  const [searchWords, setSearchWords] = useState("");
 
   const [qnaList, setQnaList] = useState([]);
 
@@ -61,17 +65,42 @@ const ModalButtonForQnAList = ({
 
   console.log("dataForQa : ", dataForQa);
 
-  const handleSearch = async () => {
-    alert("검색 버튼 클릭");
+  const mutationForSearchQnaListBySearchWords = useMutation(
+    apiForSearchQnaListBySearchWords,
+    {
+      onSuccess: (result: any) => {
+        console.log("result for search: ", result);
+        setQnaList(result.data)
+
+        toast({
+          status: "success",
+          title: "search faq list !!",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
+  const handleSearch = () => {
+    // alert("검색 버튼 클릭");
+    mutationForSearchQnaListBySearchWords.mutate({
+      study_note_pk,
+      searchWords
+    })
+    
   };
 
+
+  // 2244
   useEffect(() => {
     if (dataForQa) {
       setQnaList(dataForQa.qaList);
     }
   }, [dataForQa]);
 
-  // 2244
   return (
     <>
       <Button
