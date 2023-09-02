@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import {
@@ -16,8 +16,6 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
-import { QnARow } from "../../types/study_note_type";
 import { apiForGetQnABoardList } from "../../apis/study_note_api";
 import TableForQnaListForStudyNote from "../Table/TableForQnaListForStudyNote";
 import PaginationComponent from "../PaginationComponent";
@@ -44,10 +42,13 @@ const ModalButtonForQnAList = ({
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [pageNum, setPageNum] = useState(1);
+  const [searchWords, setSearchWords] = useState(""); // 검색어 상태 추가
+
+  const [qnaList, setQnaList] = useState([]);
 
   const {
     isLoading: isLoadingForGetQnABoardList,
-    data: dataForGetQa,
+    data: dataForQa,
     refetch: refetchForGetQnABoardList,
   } = useQuery<any[]>(
     ["apiForGetQnABoardList", study_note_pk, pageNum],
@@ -58,7 +59,17 @@ const ModalButtonForQnAList = ({
     }
   );
 
-  console.log("dataForGetQa : ", dataForGetQa);
+  console.log("dataForQa : ", dataForQa);
+
+  const handleSearch = async () => {
+    alert("검색 버튼 클릭");
+  };
+
+  useEffect(() => {
+    if (dataForQa) {
+      setQnaList(dataForQa.qaList);
+    }
+  }, [dataForQa]);
 
   // 2244
   return (
@@ -79,15 +90,26 @@ const ModalButtonForQnAList = ({
           <ModalHeader>{modal_title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {/* todo: 검색 버튼을 위한 input 추가 with chakra-ui 인풋 추가 하고 인풋 오른쪽 끝에 addone 으로 search 버튼 추가 */}
             <InputGroup>
+              {/* todo input 에서 엔터 치거나 검색 버튼 클릭하면 검색 함수로 연결 */}
               <Input
                 type="text"
                 placeholder="검색어를 입력하세요"
-                // 여기에 검색어를 처리할 상태나 함수를 연결하세요
+                value={searchWords}
+                onChange={(e) => setSearchWords(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSearch(); // 엔터 키를 누르면 검색 함수를 호출합니다.
+                  }
+                }}
               />
               <InputRightElement width="4.5rem">
-                <Button colorScheme="blue" h="1.75rem" size="sm">
+                <Button
+                  colorScheme="blue"
+                  h="1.75rem"
+                  size="sm"
+                  onClick={handleSearch}
+                >
                   검색
                 </Button>
               </InputRightElement>
@@ -95,16 +117,16 @@ const ModalButtonForQnAList = ({
 
             <TableForQnaListForStudyNote
               study_note_pk={study_note_pk}
-              data={dataForGetQa?.qaList}
+              data={qnaList ? qnaList : []}
               refetchForGetQnABoardList={refetchForGetQnABoardList}
             />
 
-            {dataForGetQa ? (
+            {dataForQa ? (
               <PaginationComponent
                 current_page_num={pageNum}
                 setCurrentPageNum={setPageNum}
-                total_page_num={dataForGetQa.totalQaCount}
-                task_number_for_one_page={dataForGetQa.perPage}
+                total_page_num={dataForQa.totalQaCount}
+                task_number_for_one_page={dataForQa.perPage}
               />
             ) : (
               ""

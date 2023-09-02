@@ -165,6 +165,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
             ) : (
               ""
             )}
+            
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Cancel</Button>
