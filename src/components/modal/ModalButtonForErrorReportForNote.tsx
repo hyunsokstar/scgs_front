@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import {
   Box,
+  Center,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -17,11 +18,13 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { apiForGetErrorReportListForStudyNote, apiForSearchErrorReportListBySearchWords } from "../../apis/study_note_api";
+import {
+  apiForGetErrorReportListForStudyNote,
+  apiForSearchErrorReportListBySearchWords,
+} from "../../apis/study_note_api";
 import TableForErrorReportListForStudyNote from "../Table/TableForErrorReportListForStudyNote";
 import PaginationComponent from "../PaginationComponent";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 
 interface IProps {
   button_text: string;
@@ -42,9 +45,9 @@ const ModalButtonForErrorReportForNote = ({
   study_note_pk,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast();  
+  const toast = useToast();
   const [pageNum, setPageNum] = useState(1);
-  const [errorReportList, setErrorReportList] = useState("");
+  const [errorReportList, setErrorReportList] = useState([]);
   const [searchWords, setSearchWords] = useState("");
 
   const {
@@ -59,13 +62,13 @@ const ModalButtonForErrorReportForNote = ({
     }
   );
   console.log("dataForErrorReport : ", dataForErrorReport);
-  
+
   const mutationForSearchErrorReportListBySearchWords = useMutation(
     apiForSearchErrorReportListBySearchWords,
     {
       onSuccess: (result: any) => {
         console.log("result for search: ", result);
-        setErrorReportList(result.data)
+        setErrorReportList(result.data);
 
         toast({
           status: "success",
@@ -82,8 +85,8 @@ const ModalButtonForErrorReportForNote = ({
   const handleSearch = () => {
     mutationForSearchErrorReportListBySearchWords.mutate({
       study_note_pk,
-      searchWords
-    })
+      searchWords,
+    });
   };
 
   useEffect(() => {
@@ -91,6 +94,10 @@ const ModalButtonForErrorReportForNote = ({
       setErrorReportList(dataForErrorReport.errorReportList);
     }
   }, [dataForErrorReport]);
+
+  if (!dataForErrorReport) {
+    return <Box>Loading..</Box>;
+  }
 
   // 2244
   return (
@@ -138,28 +145,20 @@ const ModalButtonForErrorReportForNote = ({
               </InputRightElement>
             </InputGroup>
 
-
-            {/* {errorReportList ? errorReportList.length : ""} */}
-            <TableForErrorReportListForStudyNote
-              data={dataForErrorReport && errorReportList}
-              refetchForGetErrorReportListForStudyNote={
-                refetchForGetErrorReportListForStudyNote
-              }
-            />
-
-
-{/* {dataForQa ? (
-              <PaginationComponent
-                current_page_num={pageNum}
-                setCurrentPageNum={setPageNum}
-                total_page_num={dataForQa.totalQaCount}
-                task_number_for_one_page={dataForQa.perPage}
+            {errorReportList.length ? (
+              <TableForErrorReportListForStudyNote
+                data={errorReportList && errorReportList}
+                refetchForGetErrorReportListForStudyNote={
+                  refetchForGetErrorReportListForStudyNote
+                }
               />
             ) : (
-              ""
-            )} */}
+              <Center h="300px" bg="teal.200">
+                <Box fontSize="2xl">There is no error report data</Box>
+              </Center>
+            )}
 
-            {dataForErrorReport ? (
+            {errorReportList.length ? (
               <PaginationComponent
                 current_page_num={pageNum}
                 setCurrentPageNum={setPageNum}

@@ -103,7 +103,7 @@ const CardForStudyNote: React.FC<IProps> = ({
         if (studyNoteListRefatch) {
           studyNoteListRefatch();
         }
-        
+
         queryClient.refetchQueries(["apiForgetStudyNoteList"]);
 
         toast({
@@ -220,6 +220,18 @@ const CardForStudyNote: React.FC<IProps> = ({
                 pk={pk}
                 textAlign="center" // 수정된 부분
               />
+
+              <Button
+                variant={"outline"}
+                size={"sm"}
+                border={"1px solid black"}
+                _hover={{ bgColor: "yellow.100" }}
+                onClick={() => buttonHandlerForMoveSlidePageForThisNote(pk)}
+                textAlign="center" // 수정된 부분
+              >
+                Slide
+              </Button>
+
               <ModalButtonForUpdateStudyNote
                 button_text={"update for study note"}
                 button_size={"sm"}
@@ -357,12 +369,7 @@ const CardForStudyNote: React.FC<IProps> = ({
             justifyContent={"space-around"}
             width={note_card_width}
           >
-            <Grid
-              templateColumns="repeat(2, 1fr)"
-              gap={2}
-              width={"100%"}
-              p={2}
-            >
+            <Grid templateColumns="repeat(2, 1fr)" gap={2} width={"100%"} p={2}>
               <Box width={"100%"}>
                 <Button
                   variant={"outline"}
@@ -385,13 +392,11 @@ const CardForStudyNote: React.FC<IProps> = ({
                 <Button
                   variant={"outline"}
                   size={"sm"}
+                  width="100%"
                   border={"1px solid black"}
-                  _hover={{ bgColor: "yellow.100" }}
-                  onClick={() => buttonHandlerForMoveSlidePageForThisNote(pk)}
-                  width="100%" // 수정된 부분
-                  textAlign="center" // 수정된 부분
+                  onClick={() => alert("아직 구현 안됨")}
                 >
-                  Slide
+                  Suggestion
                 </Button>
               </Box>
 
@@ -466,7 +471,6 @@ const CardForStudyNote: React.FC<IProps> = ({
                   modal_size={""}
                 />
               </Box>
-
             </Grid>
           </Box>
         </Box>
