@@ -61,7 +61,7 @@ const ModalButtonForErrorReportForNote = ({
       enabled: true,
     }
   );
-  console.log("dataForErrorReport : ", dataForErrorReport);
+  // console.log("dataForErrorReport : ", dataForErrorReport);
 
   const mutationForSearchErrorReportListBySearchWords = useMutation(
     apiForSearchErrorReportListBySearchWords,
@@ -121,7 +121,6 @@ const ModalButtonForErrorReportForNote = ({
           <ModalCloseButton />
           <ModalBody>
             <InputGroup mb={2}>
-              {/* todo input 에서 엔터 치거나 검색 버튼 클릭하면 검색 함수로 연결 */}
               <Input
                 type="text"
                 placeholder="검색어를 입력하세요"

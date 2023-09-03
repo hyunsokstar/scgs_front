@@ -4,12 +4,16 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionItem,
+  Avatar,
   Box,
-  Flex,
+  Button,
+  IconButton,
+  Input,
   Image,
   Text,
   useToast,
   VStack,
+  HStack,
 } from "@chakra-ui/react";
 import { useMutation, QueryClient } from "@tanstack/react-query";
 import { EditIcon, DeleteIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
@@ -38,7 +42,7 @@ const TableForErrorReportListForStudyNote: React.FC<
   const [openAccordion, setOpenAccordion] = useState<boolean[]>(
     Array(errorReportList?.length).fill(false)
   );
-  
+
   const toggleAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);
   };
@@ -115,21 +119,23 @@ const TableForErrorReportListForStudyNote: React.FC<
     // alert("컨텐트 클릭");
   };
 
-  console.log("errorReportList ::::: ", errorReportList);
+  // console.log("errorReportList ::::: ", errorReportList);
 
   // 2244
   return (
-    <Box overflowX="auto" overflowY="scroll" height="400px">
+    <Box overflowX="auto" overflowY="scroll" height="100%">
       {errorReportList?.map((report, index) => (
         <Accordion allowToggle key={report.pk}>
           <AccordionItem>
             <h2>
-              <AccordionButton onClick={() => {
-                // Toggle the accordion for this row and close others
-                const newOpenAccordion = openAccordion.slice();
-                newOpenAccordion[index] = !newOpenAccordion[index];
-                setOpenAccordion(newOpenAccordion);
-              }}>
+              <AccordionButton
+                onClick={() => {
+                  // Toggle the accordion for this row and close others
+                  const newOpenAccordion = openAccordion.slice();
+                  newOpenAccordion[index] = !newOpenAccordion[index];
+                  setOpenAccordion(newOpenAccordion);
+                }}
+              >
                 <Box
                   p={4}
                   borderWidth="1px"
@@ -149,20 +155,57 @@ const TableForErrorReportListForStudyNote: React.FC<
                     mr={4}
                   />
                   <Text>Page {report.page}</Text>
-                  <Text>{report.content}</Text>
+                  <Text>
+                    {report.content} ({report.comments.length})
+                  </Text>
                   <Text>{report.created_at_formatted}</Text>
                 </Box>
               </AccordionButton>
             </h2>
-            {openAccordion[index] && (
-              <AccordionPanel>
-                <VStack p={4} spacing={2}>
-                  <Text>Sample Comment 1</Text>
-                  <Text>Sample Comment 2</Text>
-                  <Text>Sample Comment 3</Text>
-                </VStack>
-              </AccordionPanel>
-            )}
+            <AccordionPanel>
+              <VStack p={2} >
+                {/* {console.log("report.comments:", report.comments)} */}
+                {/* todo 댓글 추가를 위한 input 과 addone submit button(오른쪽) 추가 */}
+                {/* 댓글 추가를 위한 입력란과 추가 버튼 */}
+                <HStack mt={0} width={"100%"}>
+                  <Input placeholder="댓글 추가" />
+                  <Button colorScheme="blue">추가</Button>
+                </HStack>
+
+                {report.comments && report.comments.length > 0 ? (
+                  <Box width="100%">
+                    {report.comments.map((comment) => (
+                      <HStack
+                        key={comment.pk}
+                        p={2}
+                        border="1px"
+                        borderColor="gray.200"
+                        borderRadius="md"
+                        align="center"
+                        justify="space-between" // 요소 사이의 간격을 space-between으로 설정
+                      >
+                        <Avatar
+                          size="md"
+                          name={comment.writer.username}
+                          src={comment.writer.profile_image}
+                        />
+
+                        <Text>{comment.content}</Text>
+                        <Text>{comment.created_at_formatted}</Text>
+                        <IconButton
+                          size="sm"
+                          colorScheme="red"
+                          aria-label="삭제"
+                          icon={<DeleteIcon />}
+                        />
+                      </HStack>
+                    ))}
+                  </Box>
+                ) : (
+                  <Text>No comments</Text>
+                )}
+              </VStack>
+            </AccordionPanel>
           </AccordionItem>
         </Accordion>
       ))}
