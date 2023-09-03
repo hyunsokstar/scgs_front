@@ -18,7 +18,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { apiForGetErrorReportListForStudyNote, apiForSearchErrorReportListBySearchWords } from "../../apis/study_note_api";
-import { ErrorReportForStudyNoteData } from "../../types/study_note_type";
 import TableForErrorReportListForStudyNote from "../Table/TableForErrorReportListForStudyNote";
 import PaginationComponent from "../PaginationComponent";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -139,12 +138,26 @@ const ModalButtonForErrorReportForNote = ({
               </InputRightElement>
             </InputGroup>
 
+
+            {/* {errorReportList ? errorReportList.length : ""} */}
             <TableForErrorReportListForStudyNote
-              data={errorReportList && errorReportList}
+              data={dataForErrorReport && errorReportList}
               refetchForGetErrorReportListForStudyNote={
                 refetchForGetErrorReportListForStudyNote
               }
             />
+
+
+{/* {dataForQa ? (
+              <PaginationComponent
+                current_page_num={pageNum}
+                setCurrentPageNum={setPageNum}
+                total_page_num={dataForQa.totalQaCount}
+                task_number_for_one_page={dataForQa.perPage}
+              />
+            ) : (
+              ""
+            )} */}
 
             {dataForErrorReport ? (
               <PaginationComponent

@@ -63,7 +63,7 @@ const ModalButtonForQnAList = ({
     }
   );
 
-  console.log("dataForQa : ", dataForQa);
+  // console.log("dataForQa : ", dataForQa);  
 
   const mutationForSearchQnaListBySearchWords = useMutation(
     apiForSearchQnaListBySearchWords,

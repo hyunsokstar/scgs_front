@@ -24,6 +24,7 @@ const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
   study_note_pk,
 }) => {
   const toast = useToast();
+  const queryClient = useQueryClient();
 
   const mutationForRegisterClassRoomForStudyNote = useMutation(
     apiForRegisterClassRoomForStudyNote,
@@ -40,15 +41,17 @@ const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
           duration: 2000,
           isClosable: true,
         });
+
+        queryClient.refetchQueries(["apiForGetClassRoomList"]);
       },
       onError: (error: any) => {
         console.log("error : ", error.response.data);
-        
+
         console.log("error type: ", error.response.data.message_type);
         console.log("error message", error.response.data.message);
 
         const errorMessage = error.response.data.message; // Adjust the error message field based on your API response structure
-        if(error.response.data.message_type === "warnning"){
+        if (error.response.data.message_type === "warnning") {
           toast({
             title: "recored is already exists",
             description: errorMessage,
@@ -65,7 +68,6 @@ const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
             isClosable: true,
           });
         }
-
       },
     }
   );
@@ -85,7 +87,7 @@ const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
       <Box display={"flex"} justifyContent={"space-between"}>
         <Button>All Check</Button>
         <Button onClick={buttonHandlerForRegisterClassRoomForStudyNote}>
-          Create
+          ClassRoom Register
         </Button>
       </Box>
       <Table variant="simple">

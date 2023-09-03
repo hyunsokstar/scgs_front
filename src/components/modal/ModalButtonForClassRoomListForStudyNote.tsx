@@ -13,7 +13,6 @@ import {
   Button,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
 import { ITypeForClassRoomRowForStudyNote } from "../../types/study_note_type";
 import { apiForGetClassRoomList } from "../../apis/study_note_api";
 import TableForClassRoomListForStudyNote from "../Table/TableForClassRoomListForStudyNote";
@@ -82,6 +81,7 @@ const ModalButtonForClassRoomListForStudyNote = ({
               dataForGetClassRoomList={
                 dataForGetClassRoomList && dataForGetClassRoomList
               }
+              refetchForGetClassRoomList = {refetchForGetClassRoomList}
             />
           </ModalBody>
           <ModalFooter>

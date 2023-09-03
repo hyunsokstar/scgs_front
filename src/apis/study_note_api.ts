@@ -228,6 +228,9 @@ export const apiForGetErrorReportListForStudyNote = ({
     })
     .then((response) => {
 
+      console.log("response for error report list : ",response);
+      
+
       const response_data = {
         errorReportList: response.data.errorReportList,
         perPage: response.data.perPage,
@@ -398,10 +401,7 @@ export const apiForGetQnABoardList = ({ queryKey }: QueryFunctionContext) => {
       params: { pageNum },
     })
     .then((response) => {
-
-      console.log("response for qa : ", response);
-      
-
+      // console.log("response for qa : ", response);
       return response.data;
     });
 };

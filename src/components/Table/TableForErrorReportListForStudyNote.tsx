@@ -91,7 +91,7 @@ const TableForErrorReportListForStudyNote: React.FC<
       },
       onSuccess: (result) => {
         refetchForGetErrorReportListForStudyNote();
-        setEditingIndex(null);
+        // setEditingIndex(null);
 
         toast({
           title: "delete error report success",
@@ -112,45 +112,17 @@ const TableForErrorReportListForStudyNote: React.FC<
     // alert("컨텐트 클릭");
   };
 
-  console.log("data : ", data);
-  
+  console.log("data for error table : ", data);
 
   // 2244
   return (
     <Box overflowX="auto" overflowY="scroll" height="400px">
-      <Box width="100%">
-        {data && data.length !== 0 ? (
-          data.map((item, index) => (
-            <ErrorReportTableRow
-              key={item.created_at_formatted}
-              item={item}
-              index={index}
-              editingIndex={editingIndex}
-              updatedContent={updatedContent}
-              handleEditClick={handleEditClick}
-              handleCancelClick={handleCancelClick}
-              handleConfirmClick={handleConfirmClick}
-              buttonHandlerForDeleteErrorReportByPk={
-                buttonHandlerForDeleteErrorReportByPk
-              }
-              openModalForReportDetail={openModalForReportDetail}
-              loginUser={loginUser}
-            />
-          ))
-        ) : (
-          <Box>
-            <Center h="100px" bgColor="gray.100">
-              <Box
-                fontSize="xl"
-                fontWeight="bold"
-                fontFamily="Helvetica Neue, Arial, sans-serif"
-              >
-                No data
-              </Box>
-            </Center>
-          </Box>
-        )}
-      </Box>
+      {/* {data ? "table" + data.length : ""} */}
+      {data
+        ? data.map((row) => {
+            return <Box>{row.content}</Box>
+          })
+        : ""}
     </Box>
   );
 };

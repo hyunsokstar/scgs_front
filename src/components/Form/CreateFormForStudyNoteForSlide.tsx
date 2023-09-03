@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Button,
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   Flex,
   useToast,
   Box,
@@ -61,7 +60,7 @@ const CreateFormForStudyNoteForSlide = ({
         if (refetch) {
           refetch();
         } else {
-          queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
+          queryClient.refetchQueries(["apiForGetClassRoomList"]);
         }
 
         reset();
