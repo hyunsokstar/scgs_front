@@ -147,7 +147,7 @@ const ModalButtonForErrorReportForNote = ({
 
             {errorReportList.length ? (
               <TableForErrorReportListForStudyNote
-                data={errorReportList && errorReportList}
+                errorReportList={errorReportList && errorReportList}
                 refetchForGetErrorReportListForStudyNote={
                   refetchForGetErrorReportListForStudyNote
                 }

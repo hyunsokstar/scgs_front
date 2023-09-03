@@ -228,8 +228,7 @@ export const apiForGetErrorReportListForStudyNote = ({
     })
     .then((response) => {
 
-      console.log("response for error report list : ",response);
-      
+      // console.log("response for error report list : ",response);      
 
       const response_data = {
         errorReportList: response.data.errorReportList,
@@ -237,8 +236,7 @@ export const apiForGetErrorReportListForStudyNote = ({
         totalErrorReportCount: response.data.totalErrorReportCount,
       };
 
-      console.log("response_data : ", response_data);
-      
+      // console.log("response_data : ", response_data);      
 
       // return response.data;
       return response_data;

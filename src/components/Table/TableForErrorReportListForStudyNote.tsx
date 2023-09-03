@@ -1,23 +1,18 @@
 import { useState } from "react";
 import {
+  Accordion,
+  AccordionButton,
+  AccordionPanel,
+  AccordionItem,
   Box,
-  Table,
+  Flex,
+  Image,
   Text,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Center,
-  Avatar,
-  IconButton,
-  Textarea,
-  Button,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
 import { useMutation, QueryClient } from "@tanstack/react-query";
 import { EditIcon, DeleteIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { ErrorReportForStudyNoteData } from "../../types/study_note_type";
 import {
   apiForDeleteErrorReportByPk,
   apiForUpdateErrorReportForNote,
@@ -27,18 +22,26 @@ import { RootState } from "../../store";
 import ErrorReportTableRow from "../Row/ErrorReportTableRow";
 
 interface TableForErrorReportListForStudyNoteProps {
-  data: any[] | undefined;
+  errorReportList: any[] | undefined;
   refetchForGetErrorReportListForStudyNote: () => void;
 }
 
 // 1122
 const TableForErrorReportListForStudyNote: React.FC<
   TableForErrorReportListForStudyNoteProps
-> = ({ data, refetchForGetErrorReportListForStudyNote }) => {
+> = ({ errorReportList, refetchForGetErrorReportListForStudyNote }) => {
   const queryClient = new QueryClient();
   const toast = useToast();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [updatedContent, setUpdatedContent] = useState<string>("");
+
+  const [openAccordion, setOpenAccordion] = useState<boolean[]>(
+    Array(errorReportList?.length).fill(false)
+  );
+  
+  const toggleAccordion = () => {
+    setIsAccordionOpen(!isAccordionOpen);
+  };
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -112,17 +115,57 @@ const TableForErrorReportListForStudyNote: React.FC<
     // alert("컨텐트 클릭");
   };
 
-  console.log("data for error table : ", data);
+  console.log("errorReportList ::::: ", errorReportList);
 
   // 2244
   return (
     <Box overflowX="auto" overflowY="scroll" height="400px">
-      {/* {data ? "table" + data.length : ""} */}
-      {data
-        ? data.map((row) => {
-            return <Box>{row.content}</Box>
-          })
-        : ""}
+      {errorReportList?.map((report, index) => (
+        <Accordion allowToggle key={report.pk}>
+          <AccordionItem>
+            <h2>
+              <AccordionButton onClick={() => {
+                // Toggle the accordion for this row and close others
+                const newOpenAccordion = openAccordion.slice();
+                newOpenAccordion[index] = !newOpenAccordion[index];
+                setOpenAccordion(newOpenAccordion);
+              }}>
+                <Box
+                  p={4}
+                  borderWidth="1px"
+                  borderRadius="md"
+                  boxShadow="md"
+                  mb={4}
+                  alignItems="center"
+                  display="flex"
+                  justifyContent="space-between"
+                  w="100%"
+                >
+                  <Image
+                    src={report.writer.profile_image}
+                    alt={`Profile Image of ${report.writer.username}`}
+                    boxSize="50px"
+                    borderRadius="full"
+                    mr={4}
+                  />
+                  <Text>Page {report.page}</Text>
+                  <Text>{report.content}</Text>
+                  <Text>{report.created_at_formatted}</Text>
+                </Box>
+              </AccordionButton>
+            </h2>
+            {openAccordion[index] && (
+              <AccordionPanel>
+                <VStack p={4} spacing={2}>
+                  <Text>Sample Comment 1</Text>
+                  <Text>Sample Comment 2</Text>
+                  <Text>Sample Comment 3</Text>
+                </VStack>
+              </AccordionPanel>
+            )}
+          </AccordionItem>
+        </Accordion>
+      ))}
     </Box>
   );
 };
