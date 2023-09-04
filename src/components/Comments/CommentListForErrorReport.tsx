@@ -1,22 +1,79 @@
 import React, { useState } from "react";
 import {
-  VStack,
-  HStack,
-  Input,
+  Avatar,
   Button,
   Box,
-  Avatar,
-  Text,
+  HStack,
   IconButton,
+  Input,
+  Text,
+  useToast,
+  VStack,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
-import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-function CommentListForErrorReport({ report }) {
+import axios from "axios";
+import { apiForAddCommentForErrorReportForNote, apiForAddCommentForQuestionForNote } from "../../apis/study_note_api";
+
+interface IComment {
+  pk: number;
+  error_report: number;
+  writer: {
+    pk: number;
+    username: string;
+    profile_image: string | null;
+  };
+  content: string;
+  created_at: string;
+  created_at_formatted: string;
+}
+
+interface CommentListProps {
+  error_report_pk: number; // Define the prop for report_pk
+  comments: IComment[]; // Define the prop for comments
+}
+
+// todo props 어떻게 받아? comments 는 IComment[] 임
+function CommentListForErrorReport({
+  error_report_pk,
+  comments,
+}: CommentListProps) {
+  const queryClient = useQueryClient();
+  const toast = useToast();
   const [newComment, setNewComment] = useState("");
 
+  const mutationForAddCommentForErrorReportForNote = useMutation(
+    apiForAddCommentForErrorReportForNote,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "comment 추가",
+          description: data.message,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        queryClient.refetchQueries(["apiForGetErrorReportListForStudyNote"]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
+
   const handleCommentSubmit = async () => {
-    alert(newComment);
+    mutationForAddCommentForErrorReportForNote.mutate({
+      error_report_pk,
+      content: newComment,
+    });
+    // alert(newComment + error_report_pk);
   };
 
   return (
@@ -32,9 +89,9 @@ function CommentListForErrorReport({ report }) {
         </Button>
       </HStack>
 
-      {report.comments && report.comments.length > 0 ? (
+      {comments && comments.length > 0 ? (
         <Box width="100%">
-          {report.comments.map((comment) => (
+          {comments.map((comment: IComment) => (
             <HStack
               key={comment.pk}
               p={2}

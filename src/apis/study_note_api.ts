@@ -23,14 +23,14 @@ const instance = axios.create({
 // 1122
 // apiForAddCommentForErrorReportForNote 구현중
 export const apiForAddCommentForErrorReportForNote = ({
-  question_pk,
+  error_report_pk,
   content,
 }: any) => {
   // alert(content);
 
   return instance
     .post(
-      `/study-note/qa-board/${question_pk}/add-comment`,
+      `/study-note/error-report/${error_report_pk}/comment/add`,
       { content },
       {
         headers: {
@@ -40,7 +40,6 @@ export const apiForAddCommentForErrorReportForNote = ({
     )
     .then((response) => response.data);
 };
-
 
 export const apiForSearchStudyNoteListBySearchWords = ({
   searchWords,
@@ -247,8 +246,7 @@ export const apiForGetErrorReportListForStudyNote = ({
       params: { pageNum },
     })
     .then((response) => {
-
-      // console.log("response for error report list : ",response);      
+      // console.log("response for error report list : ",response);
 
       const response_data = {
         errorReportList: response.data.errorReportList,
@@ -256,7 +254,7 @@ export const apiForGetErrorReportListForStudyNote = ({
         totalErrorReportCount: response.data.totalErrorReportCount,
       };
 
-      // console.log("response_data : ", response_data);      
+      // console.log("response_data : ", response_data);
 
       // return response.data;
       return response_data;
@@ -272,7 +270,6 @@ export const apiForGetErrorReportListForPageForStudyNote = ({
   return instance
     .get(`/study-note/${study_note_pk}/error-report/${currentPage}`, {})
     .then((response) => {
-
       // const response_data = {
       //   errorReportList: response.data.errorReportList,
       //   perPage: response.data.perPage,

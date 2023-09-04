@@ -165,7 +165,7 @@ const TableForErrorReportListForStudyNote: React.FC<
             </h2>
             <AccordionPanel>
               {/* 댓글 영역 for 에러 레포트 */}
-              <CommentListForErrorReport report={report} />
+              <CommentListForErrorReport error_report_pk = {report.pk} comments={report.comments} />
             </AccordionPanel>
           </AccordionItem>
         </Accordion>

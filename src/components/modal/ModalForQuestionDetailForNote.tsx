@@ -30,7 +30,7 @@ import {
 } from "../../apis/study_note_api";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-// import { apiForAddCommentForQuestionForNote } from "../../apis/study_note_api";
+
 
 interface ModalForQuestionDetailForNoteProps {
   isOpen: boolean;
