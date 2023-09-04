@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -46,6 +46,7 @@ const ModalForQuestionDetailForNote: React.FC<
   const queryClient = useQueryClient();
   const toast = useToast();
   const [contentForComment, setContentForComment] = useState("");
+  const [questionInfo, setQuestionInfo] = useState();
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -105,15 +106,17 @@ const ModalForQuestionDetailForNote: React.FC<
       },
       onSuccess: (data) => {
         console.log("data : ", data);
+        refetchForGetQnABoardList()
+        queryClient.refetchQueries(["apiForGetQnABoardList"]);
 
         toast({
-          title: "Task URL 추가",
-          description: "Task URL을 추가하였습니다.",
+          title: "질문에 대해 댓글 추가",
+          description: "질문에 대해 댓글을 추가하였습니다.",
           status: "success",
           duration: 2000,
           isClosable: true,
         });
-        queryClient.refetchQueries(["apiForGetQnABoardList"]);
+
       },
       onError: (error: any) => {
         console.log("error.response : ", error);
@@ -164,6 +167,12 @@ const ModalForQuestionDetailForNote: React.FC<
     mutationForDeleteCommentForQuestionForNote.mutate(pk)
   };
 
+  useEffect(() => {
+    if(question){
+      setQuestionInfo(question)
+    }
+  }, [question])
+
   // 2244
   return (
     <Modal isOpen={isOpen} onClose={closeModal} size="6xl">
@@ -174,7 +183,7 @@ const ModalForQuestionDetailForNote: React.FC<
         <ModalBody>
           <Box display={"flex"} flexDirection={"column"} height={"68vh"}>
             <Box bgColor={"blue.100"} border={"1px solid green"}>
-              {question && (
+              {questionInfo && (
                 <Box>
                   <Table>
                     <Tr>
@@ -182,7 +191,7 @@ const ModalForQuestionDetailForNote: React.FC<
                         <Box>
                           <strong>Title:</strong>
                         </Box>
-                        {question.title}
+                        {questionInfo.title}
                       </Td>
                       <Td width={"50%"}>
                         <Box
@@ -192,11 +201,11 @@ const ModalForQuestionDetailForNote: React.FC<
                         >
                           <Box>
                             <Text fontWeight="bold">Writer:</Text>
-                            {question.writer.username}
+                            {questionInfo.writer.username}
                           </Box>
                           <Box>
                             <Text fontWeight="bold">Page:</Text>
-                            {question.page}
+                            {questionInfo.page}
                           </Box>
                         </Box>
                       </Td>
@@ -206,7 +215,7 @@ const ModalForQuestionDetailForNote: React.FC<
                         <Box>
                           <strong>Content:</strong>
                         </Box>
-                        <Box mt={2}>{question.content}</Box>
+                        <Box mt={2}>{questionInfo.content}</Box>
                       </Td>
                     </Tr>
                   </Table>
@@ -215,7 +224,7 @@ const ModalForQuestionDetailForNote: React.FC<
             </Box>
             <Box mt={10} overflowY={"auto"}>
               <Box display={"flex"} justifyContent={"space-between"}>
-                <Box>Comment for Question</Box>
+                <Box>Comment for questionInfo</Box>
               </Box>
               <Box>
                 <Table mt={4} variant="striped" colorScheme="gray">
@@ -228,8 +237,8 @@ const ModalForQuestionDetailForNote: React.FC<
                   </Thead>
                   <Tbody>
                     {/* rome-ignore lint/complexity/useOptionalChain: <explanation> */}
-                    {question &&
-                      question.answers_for_qa_board.map(
+                    {questionInfo &&
+                      questionInfo.answers_for_qa_board.map(
                         (row: AnswerForQaBoard, rowIndex) => (
                           <Tr key={row.pk}>
                             <Td>
@@ -238,13 +247,6 @@ const ModalForQuestionDetailForNote: React.FC<
                                 gap={2}
                                 alignItems={"center"}
                               >
-                                {/* <Avatar
-                                name={row.writer.username}
-                                src={row.writer.profile_image}
-                                size="sm"
-                                mr={2}
-                              />{" "}
-                              <Box>{row.content}</Box> */}
 
                                 {editingRowIndex === rowIndex ? (
                                   <Box

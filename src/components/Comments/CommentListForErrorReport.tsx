@@ -14,7 +14,7 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import axios from "axios";
-import { apiForAddCommentForErrorReportForNote, apiForAddCommentForQuestionForNote } from "../../apis/study_note_api";
+import { apiForAddCommentForErrorReportForNote, apiForAddCommentForQuestionForNote, apiForDeleteCommentForErrorReort } from "../../apis/study_note_api";
 
 interface IComment {
   pk: number;
@@ -67,8 +67,30 @@ function CommentListForErrorReport({
     }
   );
 
-  const handleCommentDelete = (commentPk) => {
-    alert(commentPk);
+  const mutationForDeleteCommentForErrorReport = useMutation(
+    (commentPk: string | number) => {
+      return apiForDeleteCommentForErrorReort(commentPk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["apiForGetErrorReportListForStudyNote"]);
+
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+  
+  const handleCommentDelete = (commentPk: any) => {
+    // alert(commentPk);
+    mutationForDeleteCommentForErrorReport.mutate(commentPk)
   };
 
   const handleCommentSubmit = async () => {
@@ -79,8 +101,8 @@ function CommentListForErrorReport({
   };
 
   return (
-    <VStack p={0} bgColor={"blue.50"}>
-      <HStack mt={0} width={"100%"}>
+    <VStack p={0}>
+      <HStack mt={0} width={"100%"} bgColor={"yellow.50"}>
         <Input
           placeholder="댓글 추가"
           value={newComment}
@@ -92,7 +114,7 @@ function CommentListForErrorReport({
       </HStack>
 
       {comments && comments.length > 0 ? (
-        <Box width="100%">
+        <Box width="100%" bgColor={"blue.50"}>
           {comments.map((comment: IComment) => (
             <HStack
               key={comment.pk}

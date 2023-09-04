@@ -155,11 +155,10 @@ const TableForErrorReportListForStudyNote: React.FC<
                     borderRadius="full"
                     mr={4}
                   />
-                  <Text>Page {report.page}</Text>
                   <Text>
                     {report.content} ({report.comments.length})
                   </Text>
-                  <Text>{report.created_at_formatted}</Text>
+                  <Text>{report.page} , {report.created_at_formatted}</Text>
                 </Box>
               </AccordionButton>
             </h2>

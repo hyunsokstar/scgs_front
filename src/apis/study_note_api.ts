@@ -21,6 +21,18 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForDeleteCommentForErrorReort
+export const apiForDeleteCommentForErrorReort = (commentPk: string | number) => {
+  // console.log("faqPk : ", faqPk);
+  return instance
+    .delete(`study-note/error-report/comment/${commentPk}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 // apiForAddCommentForErrorReportForNote 구현중
 export const apiForAddCommentForErrorReportForNote = ({
   error_report_pk,

@@ -46,14 +46,14 @@ const TableForQnaListForStudyNote: React.FC<
   // data 이 바뀌면 현재 열린 모달의 question 도 바뀌도록 하기
   // 모달은 아래에 onClick 으로 열린 ModalForQuestionDetailForNote 모달
 
-  // useEffect(() => {
-  //   if (isOpen && selectedQuestion) {
-  //     const updatedQuestion = data?.find(
-  //       (question) => question.pk === selectedQuestion.pk
-  //     );
-  //     setSelectedQuestion(updatedQuestion || null);
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (isOpen && selectedQuestion) {
+      const updatedQuestion = data?.find(
+        (question) => question.pk === selectedQuestion.pk
+      );
+      setSelectedQuestion(updatedQuestion || null);
+    }
+  }, [data]);
 
   const openModal = (question: QnARow) => {
     setSelectedQuestion(question);
