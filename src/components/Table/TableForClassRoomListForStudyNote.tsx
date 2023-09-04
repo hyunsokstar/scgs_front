@@ -16,15 +16,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   apiForDeleteClassRegistrationForNote,
   apiForRegisterClassRoomForStudyNote,
+  apiForWithdrawClassRoomForNote,
 } from "../../apis/study_note_api";
 
 interface TableComponentProps {
   dataForGetClassRoomList: ITypeForClassRoomRowForStudyNote[] | undefined;
+  is_registered: boolean;
   study_note_pk: any;
 }
 
 const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
   dataForGetClassRoomList,
+  is_registered,
   study_note_pk,
 }) => {
   const toast = useToast();
@@ -90,6 +93,34 @@ const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
     });
   };
 
+  // mutationForWithdrawClassRoomForStudyNote
+  const mutationForWithdrawClassRoomForStudyNote = useMutation(
+    (study_note_pk: string | number) => {
+      return apiForWithdrawClassRoomForNote(study_note_pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["apiForGetClassRoomList"]);
+
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+
+  const buttonHandlerForWithdrawClassRoomForStudyNote = () => {
+    const current_page = 1;
+    mutationForWithdrawClassRoomForStudyNote.mutate(study_note_pk);
+  };
+
   const mutationForDeleteClassRegistrationForNote = useMutation(
     (classRoomId: string | number) => {
       // return deleteOneCommentForTaskByPkApi(pk);
@@ -102,7 +133,7 @@ const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
       onSuccess: (data) => {
         console.log("data : ", data);
 
-        queryClient.refetchQueries(["apiForGetQnABoardList"]);
+        queryClient.refetchQueries(["apiForGetClassRoomList"]);
 
         toast({
           title: "delete comment 성공!",
@@ -122,9 +153,17 @@ const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
     <Box>
       <Box display={"flex"} justifyContent={"space-between"}>
         <Button>All Check</Button>
-        <Button onClick={buttonHandlerForRegisterClassRoomForStudyNote}>
-          ClassRoom Register
-        </Button>
+
+        {/* is_registered */}
+        {is_registered ? (
+          <Button onClick={buttonHandlerForWithdrawClassRoomForStudyNote}>
+          withdraw 
+        </Button>          
+        ) : (
+          <Button onClick={buttonHandlerForRegisterClassRoomForStudyNote}>
+            Register
+          </Button>
+        )}
       </Box>
       <Table variant="simple">
         <Thead>
@@ -134,7 +173,7 @@ const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
             <Th>Writer</Th>
             <Th>Is Approved</Th>
             <Th>Created At</Th>
-            <Th>Actions</Th> {/* 삭제 아이콘을 표시할 열 추가 */}
+            {/* <Th>Actions</Th> */}
           </Tr>
         </Thead>
         <Tbody>
@@ -147,13 +186,12 @@ const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
                 <Td>{row.is_approved ? "Yes" : "No"}</Td>
                 <Td>{row.created_at_formatted}</Td>
                 <Td>
-                  {/* 삭제 아이콘 추가 및 핸들러 함수 연결 */}
-                  <Icon
+                  {/* <Icon
                     as={FaTrash}
                     cursor="pointer"
                     color="red.500"
                     onClick={() => handleDelete(row.id)}
-                  />
+                  /> */}
                 </Td>
               </Tr>
             ))}

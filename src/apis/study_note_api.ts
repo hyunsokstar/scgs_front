@@ -21,7 +21,22 @@ const instance = axios.create({
 });
 
 // 1122
-export const apiForDeleteClassRegistrationForNote = (classRoomId: string | number) => {
+// mutationForWithdrawClassRoomForStudyNote
+export const apiForWithdrawClassRoomForNote = (
+  study_note_pk: string | number
+) => {
+  return instance
+    .delete(`study-note/${study_note_pk}/classroom/withdraw`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+export const apiForDeleteClassRegistrationForNote = (
+  classRoomId: string | number
+) => {
   return instance
     .delete(`study-note/classroom/${classRoomId}/delete`, {
       headers: {
@@ -31,7 +46,9 @@ export const apiForDeleteClassRegistrationForNote = (classRoomId: string | numbe
     .then((response) => response.data);
 };
 
-export const apiForDeleteCommentForErrorReort = (commentPk: string | number) => {
+export const apiForDeleteCommentForErrorReort = (
+  commentPk: string | number
+) => {
   // console.log("faqPk : ", faqPk);
   return instance
     .delete(`study-note/error-report/comment/${commentPk}/delete`, {
@@ -474,6 +491,7 @@ export const apiForLoadSavedPageForThisNote = ({ study_note_pk }: any) => {
 export const apiForRegisterClassRoomForStudyNote = ({
   study_note_pk,
   current_page = 1,
+  registration_option,
 }: any) =>
   instance
     .post(
@@ -490,6 +508,8 @@ export const apiForRegisterClassRoomForStudyNote = ({
     )
     .then((response) => response.data);
 
+// "is_registered": is_registered,
+// "class_room_list": serializer.data
 export const apiForGetClassRoomList = ({ queryKey }: QueryFunctionContext) => {
   const [_, study_note_pk] = queryKey;
   // console.log("pageNum : ", pageNum);

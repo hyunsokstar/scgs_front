@@ -41,7 +41,7 @@ const ModalButtonForClassRoomListForStudyNote = ({
 
   const {
     isLoading: isLoadingForGetClassRoomList,
-    data: dataForGetClassRoomList,
+    data: dataForClassRoom,
     refetch: refetchForGetClassRoomList,
   } = useQuery<ITypeForClassRoomRowForStudyNote[]>(
     ["apiForGetClassRoomList", study_note_pk],
@@ -76,11 +76,13 @@ const ModalButtonForClassRoomListForStudyNote = ({
           <ModalBody>
             {/* fix 0616 */}
             {/* 여기에 subject list */}
+            {/* withdraw is_registered*/}
             <TableForClassRoomListForStudyNote
               study_note_pk={study_note_pk ? study_note_pk : 1}
               dataForGetClassRoomList={
-                dataForGetClassRoomList && dataForGetClassRoomList
+                dataForClassRoom && dataForClassRoom.class_room_list
               }
+              is_registered={dataForClassRoom.is_registered}
               refetchForGetClassRoomList = {refetchForGetClassRoomList}
             />
           </ModalBody>
