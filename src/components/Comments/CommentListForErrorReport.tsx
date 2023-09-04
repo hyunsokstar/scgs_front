@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import axios from "axios";
 import { apiForAddCommentForErrorReportForNote, apiForAddCommentForQuestionForNote } from "../../apis/study_note_api";
@@ -34,7 +34,6 @@ interface CommentListProps {
   comments: IComment[]; // Define the prop for comments
 }
 
-// todo props 어떻게 받아? comments 는 IComment[] 임
 function CommentListForErrorReport({
   error_report_pk,
   comments,
@@ -68,12 +67,15 @@ function CommentListForErrorReport({
     }
   );
 
+  const handleCommentDelete = (commentPk) => {
+    alert(commentPk);
+  };
+
   const handleCommentSubmit = async () => {
     mutationForAddCommentForErrorReportForNote.mutate({
       error_report_pk,
       content: newComment,
     });
-    // alert(newComment + error_report_pk);
   };
 
   return (
@@ -113,6 +115,7 @@ function CommentListForErrorReport({
                 colorScheme="red"
                 aria-label="삭제"
                 icon={<DeleteIcon />}
+                onClick={() => handleCommentDelete(comment.pk)}
               />
             </HStack>
           ))}
