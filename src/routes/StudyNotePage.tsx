@@ -89,7 +89,7 @@ const StudyNotePage = () => {
     }
   );
 
-  console.log("dataForStudyNote : ", dataForStudyNote);
+  // console.log("dataForStudyNote : ", dataForStudyNote);
 
   const buttonHandlerForRefreshFilterOption = () => {
     setSelectedNoteWriter("");

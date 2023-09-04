@@ -24,6 +24,7 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import ErrorReportTableRow from "../Row/ErrorReportTableRow";
+import CommentListForErrorReport from "../Comments/CommentListForErrorReport";
 
 interface TableForErrorReportListForStudyNoteProps {
   errorReportList: any[] | undefined;
@@ -163,48 +164,8 @@ const TableForErrorReportListForStudyNote: React.FC<
               </AccordionButton>
             </h2>
             <AccordionPanel>
-              <VStack p={2} >
-                {/* {console.log("report.comments:", report.comments)} */}
-                {/* todo 댓글 추가를 위한 input 과 addone submit button(오른쪽) 추가 */}
-                {/* 댓글 추가를 위한 입력란과 추가 버튼 */}
-                <HStack mt={0} width={"100%"}>
-                  <Input placeholder="댓글 추가" />
-                  <Button colorScheme="blue">추가</Button>
-                </HStack>
-
-                {report.comments && report.comments.length > 0 ? (
-                  <Box width="100%">
-                    {report.comments.map((comment) => (
-                      <HStack
-                        key={comment.pk}
-                        p={2}
-                        border="1px"
-                        borderColor="gray.200"
-                        borderRadius="md"
-                        align="center"
-                        justify="space-between" // 요소 사이의 간격을 space-between으로 설정
-                      >
-                        <Avatar
-                          size="md"
-                          name={comment.writer.username}
-                          src={comment.writer.profile_image}
-                        />
-
-                        <Text>{comment.content}</Text>
-                        <Text>{comment.created_at_formatted}</Text>
-                        <IconButton
-                          size="sm"
-                          colorScheme="red"
-                          aria-label="삭제"
-                          icon={<DeleteIcon />}
-                        />
-                      </HStack>
-                    ))}
-                  </Box>
-                ) : (
-                  <Text>No comments</Text>
-                )}
-              </VStack>
+              {/* 댓글 영역 for 에러 레포트 */}
+              <CommentListForErrorReport report={report} />
             </AccordionPanel>
           </AccordionItem>
         </Accordion>

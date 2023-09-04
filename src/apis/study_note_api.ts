@@ -21,7 +21,27 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForSearchStudyNoteListBySearchWords
+// apiForAddCommentForErrorReportForNote 구현중
+export const apiForAddCommentForErrorReportForNote = ({
+  question_pk,
+  content,
+}: any) => {
+  // alert(content);
+
+  return instance
+    .post(
+      `/study-note/qa-board/${question_pk}/add-comment`,
+      { content },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
+
 export const apiForSearchStudyNoteListBySearchWords = ({
   searchWords,
 }: any) => {
