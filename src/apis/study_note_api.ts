@@ -21,7 +21,16 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForDeleteCommentForErrorReort
+export const apiForDeleteClassRegistrationForNote = (classRoomId: string | number) => {
+  return instance
+    .delete(`study-note/classroom/${classRoomId}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForDeleteCommentForErrorReort = (commentPk: string | number) => {
   // console.log("faqPk : ", faqPk);
   return instance
