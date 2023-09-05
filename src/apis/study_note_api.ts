@@ -22,22 +22,44 @@ const instance = axios.create({
 
 // 1122
 // apiForGetSuggestionListForNote
-export const apiForGetSuggestionListForNote = ({ queryKey }: QueryFunctionContext) => {
+
+// apiForCreateStudyNoteFaq
+export const apiForCreateStudyNoteSuggestion = ({
+  study_note_pk,
+  title,
+  content,
+}: any) =>
+  instance
+    .post(
+      `/study-note/${study_note_pk}/suggestion/add`,
+      {
+        title,
+        content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
+export const apiForGetSuggestionListForNote = ({
+  queryKey,
+}: QueryFunctionContext) => {
   const [_, study_note_pk, pageNum] = queryKey;
-  
+
   return instance
     .get(`/study-note/${study_note_pk}/suggestion`, {
       params: { pageNum: pageNum },
     })
     .then((response) => {
 
-      console.log("response for suggestion : ", response.data);
-
-      const response_data = {
-        faqList: response.data.faqList,
-        perPage: response.data.perPage,
-        totalFaqCount: response.data.totalFaqCount,
-      };
+      // response_data = {
+      //   suggestionList: serializer.data,
+      //   totalSuggestionCount: self.totalSuggestionCount,
+      //   perPage: self.perPage,
+      // };
 
       return response.data;
     });
@@ -187,7 +209,7 @@ export const apiForSearchFaqListBySearchWords = ({
     .then((response) => response.data);
 };
 
-// apiForCreateStudyNoteContents
+// apiForCreateStudyNoteFaq
 export const apiForCreateStudyNoteFaq = ({
   study_note_pk,
   title,

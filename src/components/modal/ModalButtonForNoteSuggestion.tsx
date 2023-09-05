@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Modal,
@@ -13,6 +13,8 @@ import {
 import { apiForGetSuggestionListForNote } from "../../apis/study_note_api";
 import { useQuery } from "@tanstack/react-query";
 import SuggestionListForNote from "../List/SuggestionListForNote";
+import ModalButtonForCreateSuggestion from "./ModalButtonForCreateSuggestion";
+import PaginationComponent from "../PaginationComponent";
 
 interface ModalButtonProps {
   button_text: string;
@@ -30,8 +32,7 @@ function ModalButtonForNoteSuggestion(props: ModalButtonProps) {
     props;
   const [isOpen, setIsOpen] = useState(false);
   const [pageNum, setPageNum] = useState(1);
-
-  // alert(study_note_pk);
+  const [suggestionList, setSuggestionList] = useState([]);
 
   const {
     isLoading: isLoadingForGetsuggestion,
@@ -46,7 +47,12 @@ function ModalButtonForNoteSuggestion(props: ModalButtonProps) {
     }
   );
 
-  console.log("suggestionData : ", suggestionData);
+  // console.log("suggestionData : ", suggestionData);
+  useEffect(() => {
+    if(suggestionData){
+      setSuggestionList(suggestionData.suggestionList);
+    }
+  }, [suggestionData])
 
   return (
     <Box>
@@ -69,10 +75,37 @@ function ModalButtonForNoteSuggestion(props: ModalButtonProps) {
 
           <ModalBody>
             <Box>
-              <SuggestionListForNote
-                suggestionList={suggestionData?.suggestionList}
-              />
+              <Box display={"flex"} justifyContent={"flex-end"} mr={2}>
+                {/* todo 건의사항 모달 버튼 추가 */}
+                <ModalButtonForCreateSuggestion
+                  study_note_pk={study_note_pk}
+                  modal_title={"건의 사항"}
+                  modal_size={"5xl"}
+                  button_text="건의 사항 추가"
+                />
+              </Box>
+
+              {suggestionData ? (
+                <SuggestionListForNote
+                  suggestionList={suggestionData?.suggestionList}
+                />
+              ) : (
+                "no data"
+              )}
             </Box>
+
+            {suggestionData ? (
+              <PaginationComponent
+                current_page_num={pageNum}
+                setCurrentPageNum={setPageNum}
+                total_page_num={suggestionData.totalSuggestionCount}
+                task_number_for_one_page={suggestionData.perPage}
+              />
+            ) : (
+              ""
+            )}
+
+
           </ModalBody>
 
           <ModalFooter>
