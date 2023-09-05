@@ -21,7 +21,20 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForGetSuggestionListForNote
+// apiForSearchSurgesttionListBySearchWords
+export const apiForSearchSurgesttionListBySearchWords = ({
+  study_note_pk,
+  searchWords,
+}: any) => {
+  return instance
+    .get(`study-note/${study_note_pk}/suggestion/search`, {
+      params: {
+        study_note_pk: study_note_pk,
+        searchWords: searchWords,
+      },
+    })
+    .then((response) => response.data);
+};
 
 // apiForCreateStudyNoteFaq
 export const apiForCreateStudyNoteSuggestion = ({
@@ -195,6 +208,8 @@ export const apiForUpdateNoteFaq = ({ pk, title, content }: any) => {
 };
 
 // api 함수 for search
+
+// apiForSearchSurgesttionListBySearchWords
 export const apiForSearchFaqListBySearchWords = ({
   study_note_pk,
   searchWords,

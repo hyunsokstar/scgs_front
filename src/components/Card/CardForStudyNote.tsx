@@ -455,6 +455,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                   button_text={"Suggestion"}
                   button_size={"sm"}
                   button_width={"100%"}
+                  modal_title={"건의 사항"}
                   modal_size="full"
                   study_note_pk={pk}
                 />

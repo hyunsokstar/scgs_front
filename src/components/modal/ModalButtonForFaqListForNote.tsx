@@ -79,9 +79,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
   );
 
   const handleSearch = () => {
-
     // console.log("handleSearch check : ", searchWords);
-
     mutationForSearchFaqListBySearchWords.mutate({
       study_note_pk,
       searchWords
