@@ -55,6 +55,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
       cacheTime: 0, // 캐싱 비활성화
     }
   );
+  
   const [faqList, setFaqList] = useState([]);
   // console.log("faqData : ", faqData);
 

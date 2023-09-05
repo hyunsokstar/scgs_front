@@ -34,6 +34,7 @@ import ModalButtonForQnAList from "../modal/ModalButtonForQnAList";
 import ModalButtonForErrorReportForNote from "../modal/ModalButtonForErrorReportForNote";
 import { AiOutlineEye, AiOutlineHeart } from "react-icons/ai";
 import ModalButtonForFaqListForNote from "../modal/ModalButtonForFaqListForNote";
+import ModalButtonForNoteSuggestion from "../modal/ModalButtonForNoteSuggestion";
 
 interface IProps {
   pk: any;
@@ -389,18 +390,6 @@ const CardForStudyNote: React.FC<IProps> = ({
               </Box>
 
               <Box>
-                <Button
-                  variant={"outline"}
-                  size={"sm"}
-                  width="100%"
-                  border={"1px solid black"}
-                  onClick={() => alert("아직 구현 안됨")}
-                >
-                  Suggestion
-                </Button>
-              </Box>
-
-              <Box>
                 <ModalButtonForSubtititleListForNoteContent
                   modal_title={`${title}'s subtitle list`}
                   button_text={"SubTitle"}
@@ -458,6 +447,16 @@ const CardForStudyNote: React.FC<IProps> = ({
                   modal_title={`${title} 에 대한 faq`}
                   study_note_pk={pk}
                   modal_size={""}
+                />
+              </Box>
+
+              <Box>
+                <ModalButtonForNoteSuggestion
+                  button_text={"Suggestion"}
+                  button_size={"sm"}
+                  button_width={"100%"}
+                  modal_size="full"
+                  study_note_pk={pk}
                 />
               </Box>
 

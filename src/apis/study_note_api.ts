@@ -21,7 +21,28 @@ const instance = axios.create({
 });
 
 // 1122
-// mutationForWithdrawClassRoomForStudyNote
+// apiForGetSuggestionListForNote
+export const apiForGetSuggestionListForNote = ({ queryKey }: QueryFunctionContext) => {
+  const [_, study_note_pk, pageNum] = queryKey;
+  
+  return instance
+    .get(`/study-note/${study_note_pk}/suggestion`, {
+      params: { pageNum: pageNum },
+    })
+    .then((response) => {
+
+      console.log("response for suggestion : ", response.data);
+
+      const response_data = {
+        faqList: response.data.faqList,
+        perPage: response.data.perPage,
+        totalFaqCount: response.data.totalFaqCount,
+      };
+
+      return response.data;
+    });
+};
+
 export const apiForWithdrawClassRoomForNote = (
   study_note_pk: string | number
 ) => {
