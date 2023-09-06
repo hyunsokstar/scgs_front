@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { backendApi } from "../apis/common_api";
-
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import {
@@ -21,6 +21,47 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForGetCommentListForSuggestionForNote 구현중
+export const apiForGetCommentListForSuggestionForNote = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, suggestionPk] = queryKey;
+  
+  return instance
+  .get(`/study-note/suggestion/${suggestionPk}/comment`, {
+      params: { },
+    })
+    .then((response) => {
+
+      // response_data = {
+      //   suggestionList: serializer.data,
+      //   totalSuggestionCount: self.totalSuggestionCount,
+      //   perPage: self.perPage,
+      // };
+
+      return response.data;
+    });
+};
+
+export const apiForAddCommentForSuggestionForNote = ({
+  suggestionPk,
+  content,
+}: any) => {
+  // alert(content);
+
+  return instance
+    .post(
+      `/study-note/suggestion/${suggestionPk}/comment/add`,
+      { content },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 // apiForSearchSurgesttionListBySearchWords
 export const apiForSearchSurgesttionListBySearchWords = ({
   study_note_pk,
@@ -115,7 +156,7 @@ export const apiForDeleteCommentForErrorReort = (
     .then((response) => response.data);
 };
 
-// apiForAddCommentForErrorReportForNote 구현중
+// apiForAddCommentForSuggestionForNote 구현중
 export const apiForAddCommentForErrorReportForNote = ({
   error_report_pk,
   content,

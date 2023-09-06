@@ -31,9 +31,9 @@ interface ModalButtonProps {
 
 // 1122
 function ModalButtonForNoteSuggestion(props: ModalButtonProps) {
+  const toast = useToast();
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
-  const toast = useToast();
 
   const {
     button_text,

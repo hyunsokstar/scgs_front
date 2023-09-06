@@ -12,8 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import axios from "axios";
 import { apiForAddCommentForErrorReportForNote, apiForAddCommentForQuestionForNote, apiForDeleteCommentForErrorReort } from "../../apis/study_note_api";
 
 interface IComment {
