@@ -7,10 +7,15 @@ import {
   IconButton,
   Spacer,
   Tooltip,
-  Input,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DeleteIcon, EditIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import {
+  apiForDeleteCommentForFaqBoard,
+  apiForUpdateCommentForFaq,
+} from "../../apis/study_note_api";
 
 interface Comment {
   writer: {
@@ -30,6 +35,8 @@ interface IProps {
 }
 
 const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editedContent, setEditedContent] = useState<string>("");
 
@@ -43,7 +50,32 @@ const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {
     }
   };
 
-  const handleSaveClick = (index: number) => {
+  // mutationForUpdateCommentForFaq
+  const mutationForUpdateCommentForFaq = useMutation(
+    apiForUpdateCommentForFaq,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        queryClient.refetchQueries(["apiForGetCommentListForFaqBoard"]);
+
+        toast({
+          status: "success",
+          title: "check result update success",
+          description: result.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
+  const handleSaveClick = (index: number, id: any) => {
+    // alert(id);
+    mutationForUpdateCommentForFaq.mutate({
+      commentPk: id,
+      editedContent,
+    });
+
     setEditingIndex(null);
     setEditedContent("");
   };
@@ -53,6 +85,40 @@ const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {
     setEditedContent("");
   };
 
+  // mutationForDeleteCommentForFaq
+  const mutationForDeleteUserTaskComment = useMutation(
+    (pk: string | number) => {
+      // return deleteOneCommentForTaskByPkApi(pk);
+      return apiForDeleteCommentForFaqBoard(pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["apiForGetCommentListForFaqBoard"]);
+
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+          description: data.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
+  // console.log("commentList check ::::::::::", commentList);
+  // handlerForCommentDeleteButton
+  const handlerForCommentDeleteButton = (commentPk: string | number) => {
+    // alert("delete button click");
+    mutationForDeleteUserTaskComment.mutate(commentPk);
+  };
+
+  // 2244
   return (
     <Box mt={4}>
       {commentList ? (
@@ -77,7 +143,7 @@ const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {
                     icon={<CheckIcon color="green.500" boxSize={6} />} // 체크 아이콘의 색상을 초록색으로, 크기를 조절합니다.
                     size="sm"
                     aria-label="Save Comment"
-                    onClick={() => handleSaveClick(index)}
+                    onClick={() => handleSaveClick(index, comment.id)}
                     marginRight="4px"
                   />
                   <IconButton
@@ -97,8 +163,7 @@ const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {
               )}
             </Box>
             <Spacer />
-            {editingIndex === index ? // 수정 중일 때는 삭제 버튼 숨기기
-            null : (
+            {editingIndex === index ? null : ( // 수정 중일 때는 삭제 버튼 숨기기
               <Tooltip label="수정">
                 <IconButton
                   icon={<EditIcon />}
@@ -109,16 +174,13 @@ const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {
                 />
               </Tooltip>
             )}
-            {editingIndex === index ? // 수정 중일 때는 삭제 버튼 숨기기
-            null : (
+            {editingIndex === index ? null : ( // 수정 중일 때는 삭제 버튼 숨기기
               <Tooltip label="삭제">
                 <IconButton
                   icon={<DeleteIcon />}
                   size="sm"
                   aria-label="Delete Comment"
-                  onClick={() => {
-                    // 삭제 로직을 추가하세요.
-                  }}
+                  onClick={() => handlerForCommentDeleteButton(comment.id)}
                 />
               </Tooltip>
             )}

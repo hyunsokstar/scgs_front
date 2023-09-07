@@ -74,6 +74,7 @@ const ModalForSuggestionDetailForNote: React.FC<ModalProps> = ({
 
   // suggestionPk,
   // content,
+  // mutationForUpdateCommentForFaq
   const mutationForAddCommentForSuggestionForNote = useMutation(
     apiForAddCommentForSuggestionForNote,
     {

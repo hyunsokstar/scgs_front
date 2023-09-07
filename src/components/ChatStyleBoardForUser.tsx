@@ -109,7 +109,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
     });
   };
 
-  // const deleteCommentMutationByPk = useMutation(
+  // mutationForDeleteCommentForFaq
   const mutationForDeleteUserTaskComment = useMutation(
     (pk: string | number) => {
       // return deleteOneCommentForTaskByPkApi(pk);

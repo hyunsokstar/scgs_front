@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { backendApi } from "../apis/common_api";
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
@@ -21,6 +20,38 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForDeleteCommentForFaqBoard
+export const apiForDeleteCommentForFaqBoard = (commentPk: string | number) => {
+  console.log("commentPk : ", commentPk);
+  return instance
+      .delete(`/study-note/faq-board/comment/${commentPk}/delete`, {
+        headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+export const apiForUpdateCommentForFaq = ({
+  commentPk,
+  editedContent,
+}: any) => {
+  return instance
+    .put(
+      `/study-note/faq-board/comment/${commentPk}/update`,
+      { editedContent },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const apiForAddCommentForFaqBoardForNote = ({
   faqPk,
   content,
