@@ -46,8 +46,6 @@ const ModalForSuggestionDetailForNote: React.FC<ModalProps> = ({
   onClose,
   suggestion,
   suggestionPk,
-  title,
-  content,
 }) => {
   const toast = useToast();
   const queryClient = useQueryClient();

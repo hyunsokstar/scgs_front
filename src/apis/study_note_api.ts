@@ -21,6 +21,28 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForGetCommentListForFaqBoardForNote
+export const apiForGetCommentListForFaqBoardForNote = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, faqPk] = queryKey;
+  
+  return instance
+  .get(`/study-note/faq-board/${faqPk}/comment`, {
+      params: { },
+    })
+    .then((response) => {
+
+      // response_data = {
+      //   suggestionList: serializer.data,
+      //   totalSuggestionCount: self.totalSuggestionCount,
+      //   perPage: self.perPage,
+      // };
+
+      return response.data;
+    });
+};
+
 // apiForGetCommentListForSuggestionForNote 구현중
 export const apiForGetCommentListForSuggestionForNote = ({
   queryKey,

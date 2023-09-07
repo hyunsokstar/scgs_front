@@ -1,4 +1,5 @@
 import React from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Modal,
   ModalOverlay,
@@ -12,6 +13,9 @@ import {
   Td,
 } from "@chakra-ui/react";
 import { FAQRow } from "../../types/study_note_type";
+import { apiForGetCommentListForFaqBoardForNote } from "../../apis/study_note_api";
+import CommentListForFaqBoard from "../Comments/CommentListForFaqBoard";
+
 
 interface ModalForFAQDetailForNoteProps {
   isOpen: boolean;
@@ -26,12 +30,30 @@ const ModalForFAQDetailForNote: React.FC<ModalForFAQDetailForNoteProps> = ({
   faqData,
 }) => {
 
+  const {
+    isLoading: isLoadingForGetComment,
+    data: commentData,
+    refetch: refetchForGetCommentData,
+  } = useQuery<any>(
+    ["apiForGetCommentListForFaqBoard", faqData.pk],
+    apiForGetCommentListForFaqBoardForNote,
+    {
+      enabled: true,
+      cacheTime: 0, // 캐싱 비활성화
+    }
+  );
+
+  console.log("faqData.pk : ", faqData.pk);
+
+  console.log("commentData :::::::::: ", commentData);
+  
+
   return (
     <Modal isOpen={isOpen} onClose={closeModal} size="7xl">
       <ModalOverlay />
       <ModalContent>
 
-        <ModalHeader>FAQDetail: {faqData.title}</ModalHeader>
+        <ModalHeader>FAQDetail </ModalHeader>
         <ModalCloseButton />
 
         <ModalBody>
@@ -51,6 +73,9 @@ const ModalForFAQDetailForNote: React.FC<ModalForFAQDetailForNoteProps> = ({
               </Tr>
             </Table>
           </Box>
+
+          <CommentListForFaqBoard commentList={commentData?.comments} />
+
         </ModalBody>
 
       </ModalContent>

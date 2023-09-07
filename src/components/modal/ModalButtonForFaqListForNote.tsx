@@ -57,7 +57,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
   );
   
   const [faqList, setFaqList] = useState([]);
-  // console.log("faqData : ", faqData);
+  console.log("faqList ::::::::::::::::::::::::::: ", faqList);
 
   const mutationForSearchFaqListBySearchWords = useMutation(
     apiForSearchFaqListBySearchWords,
