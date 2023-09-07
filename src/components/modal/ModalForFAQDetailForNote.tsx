@@ -111,7 +111,7 @@ const ModalForFAQDetailForNote: React.FC<ModalForFAQDetailForNoteProps> = ({
     <Modal isOpen={isOpen} onClose={closeModal} size="7xl">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>FAQDetail </ModalHeader>
+        <ModalHeader>FAQDetail</ModalHeader>
         <ModalCloseButton />
 
         <ModalBody>

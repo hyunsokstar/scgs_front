@@ -84,7 +84,7 @@ const ModalForSuggestionDetailForNote: React.FC<ModalProps> = ({
         console.log("data : ", data);
 
         toast({
-          title: "comment 추가",
+          title: "comment 추가 !!",
           description: data.message,
           status: "success",
           duration: 2000,
