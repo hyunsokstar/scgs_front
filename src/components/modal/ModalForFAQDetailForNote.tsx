@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Modal,
@@ -8,14 +8,21 @@ import {
   ModalCloseButton,
   ModalBody,
   Box,
+  InputGroup,
+  Input,
+  InputRightElement,
+  Button,
   Table,
   Tr,
   Td,
+  useToast,
 } from "@chakra-ui/react";
 import { FAQRow } from "../../types/study_note_type";
-import { apiForGetCommentListForFaqBoardForNote } from "../../apis/study_note_api";
+import {
+  apiForAddCommentForFaqBoardForNote,
+  apiForGetCommentListForFaqBoardForNote,
+} from "../../apis/study_note_api";
 import CommentListForFaqBoard from "../Comments/CommentListForFaqBoard";
-
 
 interface ModalForFAQDetailForNoteProps {
   isOpen: boolean;
@@ -29,6 +36,9 @@ const ModalForFAQDetailForNote: React.FC<ModalForFAQDetailForNoteProps> = ({
   closeModal,
   faqData,
 }) => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const [comment, setComment] = useState(""); // 댓글 내용을 저장할 상태
 
   const {
     isLoading: isLoadingForGetComment,
@@ -43,16 +53,64 @@ const ModalForFAQDetailForNote: React.FC<ModalForFAQDetailForNoteProps> = ({
     }
   );
 
-  console.log("faqData.pk : ", faqData.pk);
+  // console.log("faqData.pk : ", faqData.pk);
+  // console.log("commentData :::::::::: ", commentData);
 
-  console.log("commentData :::::::::: ", commentData);
-  
+  const mutationForAddCommentForFaqBoardForNote = useMutation(
+    apiForAddCommentForFaqBoardForNote,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "comment 추가",
+          description: data.message,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        queryClient.refetchQueries(["apiForGetCommentListForFaqBoard"]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
+
+  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 댓글 내용이 변경될 때 상태 업데이트
+    setComment(e.target.value);
+  };
+
+  const handleSubmitComment = () => {
+    // 댓글을 제출하는 함수
+    if (comment.trim() === "") {
+      alert("댓글 내용을 입력하세요.");
+      return;
+    }
+    // alert(comment)
+    mutationForAddCommentForFaqBoardForNote.mutate({
+      faqPk: faqData.pk,
+      content: comment,
+    });
+    setComment("");
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 엔터 키를 눌렀을 때만 처리
+    if (e.key === "Enter") {
+      handleSubmitComment();
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={closeModal} size="7xl">
       <ModalOverlay />
       <ModalContent>
-
         <ModalHeader>FAQDetail </ModalHeader>
         <ModalCloseButton />
 
@@ -74,10 +132,26 @@ const ModalForFAQDetailForNote: React.FC<ModalForFAQDetailForNoteProps> = ({
             </Table>
           </Box>
 
+          <InputGroup mt={4}>
+            <Input
+              placeholder="댓글을 입력하세요..."
+              value={comment}
+              onChange={handleCommentChange}
+              onKeyDown={handleKeyPress}
+            />
+            <InputRightElement width="auto" mr={1}>
+              <Button
+                colorScheme="blue"
+                size="sm"
+                onClick={handleSubmitComment}
+              >
+                댓글 추가
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+
           <CommentListForFaqBoard commentList={commentData?.comments} />
-
         </ModalBody>
-
       </ModalContent>
     </Modal>
   );

@@ -21,6 +21,24 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForAddCommentForFaqBoardForNote = ({
+  faqPk,
+  content,
+}: any) => {
+
+  return instance
+    .post(
+      `/study-note/faq-board/${faqPk}/comment/add`,
+      { content },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 // apiForGetCommentListForFaqBoardForNote
 export const apiForGetCommentListForFaqBoardForNote = ({
   queryKey,
@@ -65,6 +83,7 @@ export const apiForGetCommentListForSuggestionForNote = ({
     });
 };
 
+// apiForAddCommentForFaqBoardForNote
 export const apiForAddCommentForSuggestionForNote = ({
   suggestionPk,
   content,

@@ -150,7 +150,7 @@ const ModalForSuggestionDetailForNote: React.FC<ModalProps> = ({
               </Button>
             </InputRightElement>
           </InputGroup>
-          {suggestionPk}
+
           <CommentListForSuggestion commentList={commentData?.comments} />
         </ModalBody>
         <ModalFooter>
