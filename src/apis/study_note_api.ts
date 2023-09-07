@@ -20,6 +20,27 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForUpdateCommentForSuggestion
+export const apiForUpdateCommentForSuggestion = ({
+  commentPk,
+  editedContent,
+}: any) => {
+  return instance
+    .put(
+      `/study-note/suggestion/comment/${commentPk}/update`,
+      { editedContent },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 // apiForDeleteCommentForFaqBoard
 export const apiForDeleteCommentForFaqBoard = (commentPk: string | number) => {
   console.log("commentPk : ", commentPk);
@@ -32,6 +53,7 @@ export const apiForDeleteCommentForFaqBoard = (commentPk: string | number) => {
     .then((response) => response.data);
 };
 
+// apiForUpdateCommentForSuggestion
 export const apiForUpdateCommentForFaq = ({
   commentPk,
   editedContent,

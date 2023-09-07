@@ -50,7 +50,7 @@ const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {
     }
   };
 
-  // mutationForUpdateCommentForFaq
+  // mutationForUpdateCommentForSuggestion
   const mutationForUpdateCommentForFaq = useMutation(
     apiForUpdateCommentForFaq,
     {
@@ -71,6 +71,8 @@ const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {
 
   const handleSaveClick = (index: number, id: any) => {
     // alert(id);
+
+    // mutationForUpdateCommentForSuggestion
     mutationForUpdateCommentForFaq.mutate({
       commentPk: id,
       editedContent,

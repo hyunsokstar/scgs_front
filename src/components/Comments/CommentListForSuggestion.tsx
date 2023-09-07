@@ -10,6 +10,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiForUpdateCommentForSuggestion } from "../../apis/study_note_api";
 
 interface Comment {
   writer: {
@@ -28,6 +30,7 @@ const CommentListForSuggestion: React.FC<CommentListForSuggestionProps> = ({
   commentList,
 }) => {
   const toast = useToast();
+  const queryClient = useQueryClient();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editedContent, setEditedContent] = useState<string>("");
 
@@ -40,10 +43,33 @@ const CommentListForSuggestion: React.FC<CommentListForSuggestionProps> = ({
     }
   };
 
-  const handleSaveClick = (index: number) => {
+  const mutationForUpdateCommentForSuggestion = useMutation(
+    apiForUpdateCommentForSuggestion,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        queryClient.refetchQueries(["apiForGetCommentListForSuggestion"]);
+
+        toast({
+          status: "success",
+          title: "check result update success",
+          description: result.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
+  const handleSaveClick = (index: number, commentId: string | number) => {
     // Add logic to save the comment here, using editedContent.
     setEditingIndex(null);
-    // You can perform any necessary cleanup or actions after saving.
+
+    // mutationForUpdateCommentForSuggestion
+    mutationForUpdateCommentForSuggestion.mutate({
+      commentPk: commentId,
+      editedContent,
+    });
   };
 
   const handleCancelClick = () => {
@@ -77,34 +103,32 @@ const CommentListForSuggestion: React.FC<CommentListForSuggestionProps> = ({
                   )}
                 </Box>
                 <Box>
-                  <Tooltip label={editingIndex === index ? "저장" : "수정"}>
-                    <IconButton
-                      icon={
-                        editingIndex === index ? (
-                          <CheckIcon boxSize={6} />
-                        ) : (
-                          <EditIcon boxSize={6} />
-                        )
-                      }
-                      size="sm"
-                      aria-label={
-                        editingIndex === index ? "Save Comment" : "Edit Comment"
-                      }
-                      onClick={() => {
-                        if (editingIndex === index) {
-                          handleSaveClick(index);
-                        } else {
-                          handleEditClick(index, comment.content);
-                        }
-                      }}
-                      mr={2} // Increase spacing between icons
-                    />
-                  </Tooltip>
+                  {editingIndex === index ? (
+                    <Tooltip label="저장">
+                      <IconButton
+                        icon={<CheckIcon boxSize={6} color="green.500" />}
+                        size="sm"
+                        aria-label="Save Comment"
+                        onClick={() => handleSaveClick(index, comment.id)}
+                        mr={2}
+                      />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip label="수정">
+                      <IconButton
+                        icon={<EditIcon boxSize={6} color="green.500" />}
+                        size="sm"
+                        aria-label="Edit Comment"
+                        onClick={() => handleEditClick(index, comment.content)}
+                        mr={2}
+                      />
+                    </Tooltip>
+                  )}
 
                   {editingIndex === null ? (
                     <Tooltip label="삭제">
                       <IconButton
-                        icon={<DeleteIcon boxSize={6} />}
+                        icon={<DeleteIcon boxSize={6} color="red.500" />}
                         size="sm"
                         aria-label="Delete Comment"
                         onClick={() => {
@@ -117,7 +141,7 @@ const CommentListForSuggestion: React.FC<CommentListForSuggestionProps> = ({
                   {editingIndex === index ? (
                     <Tooltip label="취소">
                       <IconButton
-                        icon={<CloseIcon boxSize={6} />}
+                        icon={<CloseIcon boxSize={6} color="orange.500" />}
                         size="sm"
                         aria-label="Cancel Edit"
                         onClick={handleCancelClick}
@@ -126,7 +150,7 @@ const CommentListForSuggestion: React.FC<CommentListForSuggestionProps> = ({
                   ) : null}
                 </Box>
               </Flex>
-              <Text fontSize="sm" color="gray.500" mt={2}> {/* Add margin to separate comments */}
+              <Text fontSize="sm" color="gray.500" mt={2}>
                 {comment.created_at}
               </Text>
             </Box>
