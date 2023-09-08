@@ -20,6 +20,57 @@ const instance = axios.create({
 });
 
 // 1122
+
+export const apiForUpdateSuggestion = ({ pk, title, content }: any) => {
+  // alert(pk)
+  return instance
+    .put(
+      `/study-note/suggestion/${pk}/update`,
+      {
+        title: title,
+        content: content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      return response.data;
+    });
+};
+
+// apiForDeleteSuggestionForNote
+export const apiForDeleteSuggestionForNote = (suggestionPk: string | number) => {
+  // console.log("commentPk : ", commentPk);
+  // alert("삭제")
+  // alert(suggestionPk)
+  return instance
+      // .delete(`/study-note/faq-board/comment/${commentPk}/delete`, {
+      .delete(`/study-note/suggestion/${suggestionPk}/delete`, {
+        headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+}
+
+
+export const apiForDeleteCommentForSuggestion = (commentPk: string | number) => {
+  // console.log("commentPk : ", commentPk);
+  // alert("삭제")
+  // alert(commentPk)
+  return instance
+      // .delete(`/study-note/faq-board/comment/${commentPk}/delete`, {
+      .delete(`/study-note/suggestion/comment/${commentPk}/delete`, {
+        headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 // apiForUpdateCommentForSuggestion
 export const apiForUpdateCommentForSuggestion = ({
   commentPk,
@@ -41,7 +92,7 @@ export const apiForUpdateCommentForSuggestion = ({
     });
 };
 
-// apiForDeleteCommentForFaqBoard
+// apiForDeleteCommentForSuggestion
 export const apiForDeleteCommentForFaqBoard = (commentPk: string | number) => {
   console.log("commentPk : ", commentPk);
   return instance
@@ -120,17 +171,13 @@ export const apiForGetCommentListForSuggestionForNote = ({
 }: QueryFunctionContext) => {
   const [_, suggestionPk] = queryKey;
   
+  console.log("suggestionPk : ", suggestionPk);
+
   return instance
   .get(`/study-note/suggestion/${suggestionPk}/comment`, {
       params: { },
     })
     .then((response) => {
-
-      // response_data = {
-      //   suggestionList: serializer.data,
-      //   totalSuggestionCount: self.totalSuggestionCount,
-      //   perPage: self.perPage,
-      // };
 
       return response.data;
     });
@@ -322,7 +369,7 @@ export const apiForDeleteNoteFaq = (faqPk: string | number) => {
     .then((response) => response.data);
 };
 
-// apiForUpdateNoteFaq
+// apiForUpdateSuggestion
 export const apiForUpdateNoteFaq = ({ pk, title, content }: any) => {
   return instance
     .put(

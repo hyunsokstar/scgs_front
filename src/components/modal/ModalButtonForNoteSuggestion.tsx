@@ -14,7 +14,10 @@ import {
   InputRightElement,
   useToast,
 } from "@chakra-ui/react";
-import { apiForGetSuggestionListForNote, apiForSearchSurgesttionListBySearchWords } from "../../apis/study_note_api";
+import {
+  apiForGetSuggestionListForNote,
+  apiForSearchSurgesttionListBySearchWords,
+} from "../../apis/study_note_api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import SuggestionListForNote from "../List/SuggestionListForNote";
 import ModalButtonForCreateSuggestion from "./ModalButtonForCreateSuggestion";
@@ -66,7 +69,7 @@ function ModalButtonForNoteSuggestion(props: ModalButtonProps) {
     {
       onSuccess: (result: any) => {
         console.log("result for search: ", result);
-        setSuggestionList(result.data)
+        setSuggestionList(result.data);
 
         toast({
           status: "success",
@@ -146,7 +149,7 @@ function ModalButtonForNoteSuggestion(props: ModalButtonProps) {
                 </InputRightElement>
               </InputGroup>
 
-              <Box display={"flex"} justifyContent={"flex-end"} mr={2}>
+              <Box display={"flex"} justifyContent={"flex-end"} my={2} mr={2}>
                 <ModalButtonForCreateSuggestion
                   study_note_pk={study_note_pk}
                   modal_title={"건의 사항"}

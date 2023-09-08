@@ -87,7 +87,7 @@ const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {
     setEditedContent("");
   };
 
-  // mutationForDeleteCommentForFaq
+  // mutationForDeleteCommentForSuggestion
   const mutationForDeleteUserTaskComment = useMutation(
     (pk: string | number) => {
       // return deleteOneCommentForTaskByPkApi(pk);
@@ -113,8 +113,6 @@ const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {
     }
   );
 
-  // console.log("commentList check ::::::::::", commentList);
-  // handlerForCommentDeleteButton
   const handlerForCommentDeleteButton = (commentPk: string | number) => {
     // alert("delete button click");
     mutationForDeleteUserTaskComment.mutate(commentPk);

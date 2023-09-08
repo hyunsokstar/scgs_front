@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiForUpdateCommentForSuggestion } from "../../apis/study_note_api";
+import { apiForDeleteCommentForSuggestion, apiForUpdateCommentForSuggestion } from "../../apis/study_note_api";
 
 interface Comment {
   writer: {
@@ -77,6 +77,38 @@ const CommentListForSuggestion: React.FC<CommentListForSuggestionProps> = ({
     // Add logic to handle canceling the edit, such as resetting editedContent.
   };
 
+  // mutationForDeleteCommentForSuggestion
+  const mutationForDeleteCommentForSuggestion = useMutation(
+    (pk: string | number) => {
+      // return deleteOneCommentForTaskByPkApi(pk);
+      return apiForDeleteCommentForSuggestion(pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["apiForGetCommentListForSuggestion"]);
+
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+          description: data.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
+  const handlerForCommentDeleteButton = (commentPk: string | number) => {
+    alert(commentPk);
+    mutationForDeleteCommentForSuggestion.mutate(commentPk);
+  };
+
+  // 1122
   return (
     <Box mt={4}>
       {commentList ? (
@@ -131,9 +163,7 @@ const CommentListForSuggestion: React.FC<CommentListForSuggestionProps> = ({
                         icon={<DeleteIcon boxSize={6} color="red.500" />}
                         size="sm"
                         aria-label="Delete Comment"
-                        onClick={() => {
-                          // Add logic to delete the comment here.
-                        }}
+                        onClick={() => handlerForCommentDeleteButton(comment.id)}
                       />
                     </Tooltip>
                   ) : null}

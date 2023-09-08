@@ -59,8 +59,8 @@ const ModalForSuggestionDetailForNote: React.FC<ModalProps> = ({
     ["apiForGetCommentListForSuggestion", suggestionPk],
     apiForGetCommentListForSuggestionForNote,
     {
-      enabled: true,
-      cacheTime: 0, // 캐싱 비활성화
+      enabled: !!suggestionPk, // suggestionPk가 존재할 때만 쿼리를 활성화
+      // cacheTime: 0, // 캐싱 비활성화
     }
   );
 
