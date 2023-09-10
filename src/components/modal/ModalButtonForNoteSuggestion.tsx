@@ -51,6 +51,8 @@ function ModalButtonForNoteSuggestion(props: ModalButtonProps) {
   const [suggestionList, setSuggestionList] = useState([]);
   const [searchWords, setsearchWords] = useState("");
 
+  // apiForGetSuggestionListForBoard
+  // const [pageNum, setPageNum] = useState(1);
   const {
     isLoading: isLoadingForGetsuggestion,
     data: suggestionData,

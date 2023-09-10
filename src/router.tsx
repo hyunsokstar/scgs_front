@@ -64,7 +64,7 @@ import UncompltedTaskListWithImageSlideForCheckedPage from "./routes/UncompltedT
 import StudyNoteDetail2 from "./routes/StudyNoteDetail2";
 import TableModeForUpdatePage from "./routes/TableModeForUpdatePage";
 import NoteContentsByImageSlidePage from "./routes/Slide/NoteContentsByImageSlidePage";
-// import UsersPage from "./routes/user/UsersPage";
+import SuggestionBoardPage from "./routes/SuggestionBoardPage";
 
 const router = createBrowserRouter([
   {
@@ -78,8 +78,13 @@ const router = createBrowserRouter([
       },
       {
         path: "api-docu",
-        element: <ApiDocuPage />,
+        element: <ApiDocuPage />
       },
+      {
+        path: "board/suggestions",
+        element: <SuggestionBoardPage />
+      },
+
       {
         path: "study-note",
         element: <StudyNotePage />,
