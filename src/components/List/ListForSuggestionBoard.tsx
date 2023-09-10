@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Checkbox,
@@ -11,10 +11,21 @@ import {
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { TypeForSuggestionsForBoard } from "../../types/board_type";
+import ModalForSuggestionListForBoard from "../modal/ModalForSuggestionListForBoard";
 
 const ListForSuggestionBoard: React.FC<TypeForSuggestionsForBoard> = ({
   suggestions,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleTitleClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <VStack spacing={2} align="stretch">
       {suggestions
@@ -39,6 +50,8 @@ const ListForSuggestionBoard: React.FC<TypeForSuggestionsForBoard> = ({
                 fontWeight="bold"
                 color="teal.500"
                 textAlign="center"
+                _hover={{ cursor: "pointer", textDecoration: "underline" }}
+                onClick={handleTitleClick}
               >
                 {suggestion.title}
               </Text>
@@ -51,6 +64,13 @@ const ListForSuggestionBoard: React.FC<TypeForSuggestionsForBoard> = ({
             </Flex>
           ))
         : "no suggestion"}
+
+
+      <ModalForSuggestionListForBoard
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
+      
     </VStack>
   );
 };
