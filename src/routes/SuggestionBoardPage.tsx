@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ListForSuggestionBoard from "../components/List/ListForSuggestionBoard";
+import ListForSuggestionForBoard from "../components/List/ListForSuggestionForBoard";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiForGetSuggestionListForBoard } from "../apis/board_api";
 import { ITypeForDataForSuggestions } from "../types/board_type";
@@ -41,7 +41,7 @@ const SuggestionBoardPage = () => {
       </Box>
 
       {dataForSuggestions ? (
-        <ListForSuggestionBoard
+        <ListForSuggestionForBoard
           suggestions={
             dataForSuggestions ? dataForSuggestions.listForSuggestion : []
           }

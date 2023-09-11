@@ -296,6 +296,21 @@ const Header = () => {
           </Text>
         </NavLink>
 
+        <NavLink
+          to="/board/suggestions"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            Suggestion
+          </Text>
+        </NavLink>        
+
         {/* <NavLink
           to="/team-management"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}

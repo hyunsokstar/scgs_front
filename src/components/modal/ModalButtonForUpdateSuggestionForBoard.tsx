@@ -21,7 +21,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { EditIcon } from "@chakra-ui/icons";
 import TinyMCEEditor from "../RichEditor/TinyMCEEditor";
-import { apiForUpdateSuggestion } from "../../apis/study_note_api";
+import { apiForUpdateSuggestionForBoard } from "../../apis/board_api";
 
 interface Props {
   modal_title: string;
@@ -33,7 +33,7 @@ interface Props {
   content: string;
 }
 
-const ModalButtonForUpdateSuggestion = ({
+const ModalButtonForUpdateSuggestionForBoard = ({
   modal_title,
   modal_size,
   button_text,
@@ -46,43 +46,47 @@ const ModalButtonForUpdateSuggestion = ({
   const queryClient = useQueryClient();
   const toast = useToast();
   const { handleSubmit, register, formState } = useForm();
-  const [suggestion_content, set_suggestion_content] = useState<string>(content); // 변경: note_content -> suggestion_content
+  const [suggestion_content, set_suggestion_content] =
+    useState<string>(content); // 변경: note_content -> suggestion_content
 
   const handleContentChange = (value: string) => {
     set_suggestion_content(value); // 변경: note_content -> suggestion_content
   };
 
-  // mutationForUpdateSuggestion
-  const mutationForUpdateSuggestion = useMutation(apiForUpdateSuggestion, {
-    onMutate: () => {
-      console.log("mutation starting");
-    },
-    onSuccess: (data) => {
-      console.log("data : ", data);
-      queryClient.refetchQueries(["apiForGetSuggestionList"]);
-      toast({
-        title: "Update successful for suggestion content!",
-        status: "success",
-      });
-      onClose();
-      // 추가: 업데이트 후 실행할 콜백 함수 호출
-    },
-    onError: (error: any) => {
-      console.log("error.message : ", error.message);
-      toast({
-        title: "Error!",
-        description: error.message || "An error occurred.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-    },
-  });
+  // mutationForUpdateSuggestionForBoard
+  const mutationForUpdateSuggestionForBoard = useMutation(
+    apiForUpdateSuggestionForBoard,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["apiForGetSuggestionListForBoard"]);
+        toast({
+          title: "Update successful for suggestion content!",
+          status: "success",
+        });
+        onClose();
+        // 추가: 업데이트 후 실행할 콜백 함수 호출
+      },
+      onError: (error: any) => {
+        console.log("error.message : ", error.message);
+        toast({
+          title: "Error!",
+          description: error.message || "An error occurred.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      },
+    }
+  );
 
   const onSubmit = (data: any) => {
     console.log(data); // Form 입력 data 확인
 
-    mutationForUpdateSuggestion.mutate({
+    mutationForUpdateSuggestionForBoard.mutate({
       pk,
       title: data.title,
       content: suggestion_content, // 변경: note_content -> suggestion_content
@@ -143,4 +147,4 @@ const ModalButtonForUpdateSuggestion = ({
   );
 };
 
-export default ModalButtonForUpdateSuggestion;
+export default ModalButtonForUpdateSuggestionForBoard;

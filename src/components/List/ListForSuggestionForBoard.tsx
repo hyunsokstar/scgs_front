@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   Checkbox,
   Avatar,
@@ -7,18 +8,24 @@ import {
   IconButton,
   VStack,
   Spacer,
+  useToast,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { TypeForSuggestionRow } from "../../types/board_type";
 import ModalForSuggestionDetailForBoard from "../modal/ModalForSuggestionDetailForBoard";
+import ModalButtonForUpdateSuggestionForBoard from "../modal/ModalButtonForUpdateSuggestionForBoard";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiForDeleteSuggestionForBoard } from "../../apis/board_api";
 
 interface ITypeForPropsForSuggestionList {
   suggestions: TypeForSuggestionRow[];
 }
 
-const ListForSuggestionBoard: React.FC<ITypeForPropsForSuggestionList> = ({
+const ListForSuggestionForBoard: React.FC<ITypeForPropsForSuggestionList> = ({
   suggestions,
 }) => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSuggestion, setSelectedSuggestion] =
     useState<TypeForSuggestionRow>();
@@ -33,6 +40,38 @@ const ListForSuggestionBoard: React.FC<ITypeForPropsForSuggestionList> = ({
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  // mutationForDeleteSuggestionForNote
+  const mutationForDeleteCommentForSuggestion = useMutation(
+    (suggestionPk: string | number) => {
+      return apiForDeleteSuggestionForBoard(suggestionPk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["apiForGetSuggestionListForBoard"]);
+
+        toast({
+          // title: "delete comment 성공!",
+          status: "success",
+          description: data.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
+  // 삭제 핸들러 함수
+  const handleDelete = (suggestionPk: number) => {
+    // alert(suggestionPk);
+    // 실제로 삭제할 로직을 추가하세요.
+    mutationForDeleteCommentForSuggestion.mutate(suggestionPk);
   };
 
   return (
@@ -68,8 +107,24 @@ const ListForSuggestionBoard: React.FC<ITypeForPropsForSuggestionList> = ({
               <Text fontSize="sm" ml={2}>
                 {suggestion.created_at_formatted}
               </Text>
-              <IconButton aria-label="Edit" icon={<EditIcon />} ml={2} />
-              <IconButton aria-label="Delete" icon={<DeleteIcon />} ml={2} />
+              <ModalButtonForUpdateSuggestionForBoard
+                modal_title={"update suggestion"}
+                modal_size={"5xl"}
+                button_text={"update suggestion"}
+                button_size={"md"}
+                pk={suggestion.id}
+                title={suggestion.title}
+                content={suggestion.content}
+              />{" "}
+              <IconButton
+                aria-label={"삭제"}
+                onClick={() => handleDelete(suggestion.id)} // 이 부분에 삭제 핸들러 함수 호출
+                icon={<DeleteIcon />}
+                size={"md"}
+                _hover={{ bgColor: "red.100" }}
+                variant="ghost"
+                // bgColor="red.100" // bgColor를 red.100으로 설정
+              />{" "}
             </Flex>
           ))
         : "no suggestion"}
@@ -87,4 +142,4 @@ const ListForSuggestionBoard: React.FC<ITypeForPropsForSuggestionList> = ({
   );
 };
 
-export default ListForSuggestionBoard;
+export default ListForSuggestionForBoard;

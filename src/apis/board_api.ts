@@ -9,6 +9,47 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+
+// 1122
+// apiForDeleteSuggestionForBoard
+export const apiForDeleteSuggestionForBoard = (suggestionPk: string | number) => {
+  // console.log("commentPk : ", commentPk);
+  // alert("삭제")
+  // alert(suggestionPk)
+  return instance
+      // .delete(`/study-note/faq-board/comment/${commentPk}/delete`, {
+      .delete(`/board/suggestion/${suggestionPk}/delete`, {
+        headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+}
+
+
+// apiForUpdateSuggestionForBoard
+export const apiForUpdateSuggestionForBoard = ({ pk, title, content }: any) => {
+  // alert(pk)
+  return instance
+    .put(
+      `/board/suggestion/${pk}/update`,
+      {
+        title: title,
+        content: content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      return response.data;
+    });
+};
+
+
+
 export const apiForGetSuggestionListForBoard = ({
   queryKey,
 }: QueryFunctionContext) => {
