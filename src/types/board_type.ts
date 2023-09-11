@@ -18,3 +18,16 @@ export interface ITypeForDataForSuggestions {
   totalCountForSuggestionList: number;
   perPage: number;
 }
+
+export interface ITypeForCommentListForSuggestionForBoard {
+  comments: Array<{
+    id: number;
+    writer: {
+      pk: number;
+      username: string;
+      profile_image: string | null;
+    };
+    content: string;
+    created_at: string;
+  }>;
+}

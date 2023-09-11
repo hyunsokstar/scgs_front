@@ -11,6 +11,44 @@ const instance = axios.create({
 
 
 // 1122
+// apiForGetCommentListForSuggestionForBoard 구현중
+export const apiForGetCommentListForSuggestionForBoard = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, suggestionId] = queryKey;
+  
+  console.log("suggestionId : ", suggestionId);
+
+  return instance
+  .get(`/board/suggestion/${suggestionId}/comment`, {
+      params: { },
+    })
+    .then((response) => {
+
+      return response.data;
+    });
+};
+
+// apiForAddCommentForFaqBoardForNote
+export const apiForAddCommentForSuggestionForBoard = ({
+  suggestionPk,
+  content,
+}: any) => {
+  // alert(content);
+
+  return instance
+    .post(
+      `/study-note/suggestion/${suggestionPk}/comment/add`,
+      { content },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 // apiForDeleteSuggestionForBoard
 export const apiForDeleteSuggestionForBoard = (suggestionPk: string | number) => {
   // console.log("commentPk : ", commentPk);

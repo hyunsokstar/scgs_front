@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Box,
   Button,
   Modal,
   ModalBody,
@@ -13,6 +14,8 @@ import {
   Textarea, // 추가
 } from "@chakra-ui/react";
 import { TypeForSuggestionRow } from "../../types/board_type";
+import ContainerForCommentForSuggestion from "../Container/ContainerForCommentForSuggestionForBoard";
+import { apiForGetCommentListForSuggestionForNote } from "../../apis/study_note_api";
 
 interface ITypeForSuggestionDetailForBoard {
   isOpen: boolean;
@@ -23,6 +26,8 @@ interface ITypeForSuggestionDetailForBoard {
 const ModalForSuggestionDetailForBoard: React.FC<
   ITypeForSuggestionDetailForBoard
 > = ({ isOpen, onClose, selectedSuggestion }) => {
+
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="full">
       <ModalOverlay />
@@ -33,16 +38,16 @@ const ModalForSuggestionDetailForBoard: React.FC<
           <Text fontSize="2xl" fontWeight="bold">
             {selectedSuggestion.title}
           </Text>
-          <Text mt={2}>{selectedSuggestion.content}</Text>
+          <Box
+            dangerouslySetInnerHTML={{ __html: selectedSuggestion.content }}
+            style={{ minHeight: "200px", border: "1px solid gray" }}
+          ></Box>
           <Divider my={4} /> {/* 구분선 추가 */}
-          <Text fontSize="lg" fontWeight="bold">
-            댓글
-          </Text>
-          {/* 댓글 입력 영역 */}
-          <Textarea placeholder="댓글을 입력하세요" size="sm" resize="vertical" />
-          <Button mt={2} size="sm">
-            댓글 달기
-          </Button>
+          <ContainerForCommentForSuggestion suggestionId={selectedSuggestion.id}/>
+          <Divider my={4} /> {/* 구분선 추가 */}
+
+          {/* <CommentListForSuggestionForBoard /> */}
+
         </ModalBody>
       </ModalContent>
     </Modal>
