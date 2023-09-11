@@ -218,7 +218,7 @@ export const apiForSearchSurgesttionListBySearchWords = ({
     .then((response) => response.data);
 };
 
-// apiForCreateStudyNoteFaq
+// apiForCreateStudySuggestionForBoard
 export const apiForCreateStudyNoteSuggestion = ({
   study_note_pk,
   title,

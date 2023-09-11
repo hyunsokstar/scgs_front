@@ -32,6 +32,7 @@ interface ModalButtonProps {
   study_note_pk: any;
 }
 
+
 // 1122
 function ModalButtonForNoteSuggestion(props: ModalButtonProps) {
   const toast = useToast();

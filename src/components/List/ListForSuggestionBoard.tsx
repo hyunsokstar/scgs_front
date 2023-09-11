@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Box,
   Checkbox,
   Avatar,
   Text,
@@ -10,16 +9,26 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { TypeForSuggestionsForBoard } from "../../types/board_type";
-import ModalForSuggestionListForBoard from "../modal/ModalForSuggestionListForBoard";
+import { TypeForSuggestionRow } from "../../types/board_type";
+import ModalForSuggestionDetailForBoard from "../modal/ModalForSuggestionDetailForBoard";
 
-const ListForSuggestionBoard: React.FC<TypeForSuggestionsForBoard> = ({
+interface ITypeForPropsForSuggestionList {
+  suggestions: TypeForSuggestionRow[];
+}
+
+const ListForSuggestionBoard: React.FC<ITypeForPropsForSuggestionList> = ({
   suggestions,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedSuggestion, setSelectedSuggestion] =
+    useState<TypeForSuggestionRow>();
 
-  const handleTitleClick = () => {
-    setIsModalOpen(true);
+  const handleTitleClick = (suggestion: TypeForSuggestionRow) => {
+    if (suggestion) {
+      // 선택된 제안이 존재하는 경우에만 모달을 열도록 합니다.
+      setIsModalOpen(true);
+      setSelectedSuggestion(suggestion);
+    }
   };
 
   const handleCloseModal = () => {
@@ -29,7 +38,7 @@ const ListForSuggestionBoard: React.FC<TypeForSuggestionsForBoard> = ({
   return (
     <VStack spacing={2} align="stretch">
       {suggestions
-        ? suggestions.map((suggestion) => (
+        ? suggestions.map((suggestion: TypeForSuggestionRow) => (
             <Flex
               key={suggestion.id}
               borderWidth="1px"
@@ -51,13 +60,13 @@ const ListForSuggestionBoard: React.FC<TypeForSuggestionsForBoard> = ({
                 color="teal.500"
                 textAlign="center"
                 _hover={{ cursor: "pointer", textDecoration: "underline" }}
-                onClick={handleTitleClick}
+                onClick={() => handleTitleClick(suggestion)} // 함수를 직접 호출하는 대신 콜백으로 전달
               >
                 {suggestion.title}
               </Text>
               <Spacer />
               <Text fontSize="sm" ml={2}>
-                {suggestion.createdAt}
+                {suggestion.created_at_formatted}
               </Text>
               <IconButton aria-label="Edit" icon={<EditIcon />} ml={2} />
               <IconButton aria-label="Delete" icon={<DeleteIcon />} ml={2} />
@@ -65,12 +74,15 @@ const ListForSuggestionBoard: React.FC<TypeForSuggestionsForBoard> = ({
           ))
         : "no suggestion"}
 
-
-      <ModalForSuggestionListForBoard
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
-      
+      {selectedSuggestion ? (
+        <ModalForSuggestionDetailForBoard
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          selectedSuggestion={selectedSuggestion}
+        />
+      ) : (
+        ""
+      )}
     </VStack>
   );
 };

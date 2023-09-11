@@ -2,28 +2,10 @@ import React, { useState } from "react";
 import ListForSuggestionBoard from "../components/List/ListForSuggestionBoard";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiForGetSuggestionListForBoard } from "../apis/board_api";
-import { TypeForSuggestionsForBoard } from "../types/board_type";
-
-// const suggestions: Suggestion[] = [
-//   {
-//     id: 1,
-//     title: "첫 번째 제안",
-//     author: "사용자1",
-//     createdAt: "2023-09-10 10:00",
-//   },
-//   {
-//     id: 2,
-//     title: "두 번째 제안",
-//     author: "사용자2",
-//     createdAt: "2023-09-10 11:30",
-//   },
-//   {
-//     id: 3,
-//     title: "세 번째 제안",
-//     author: "사용자3",
-//     createdAt: "2023-09-10 14:15",
-//   },
-// ];
+import { ITypeForDataForSuggestions } from "../types/board_type";
+import PaginationComponent from "../components/PaginationComponent";
+import ModalButtonForCreateSuggestionForBoard from "../components/modal/ModalButtonForCreateSuggestionForBoard";
+import { Box } from "@chakra-ui/react";
 
 // 1122
 const SuggestionBoardPage = () => {
@@ -31,9 +13,9 @@ const SuggestionBoardPage = () => {
 
   const {
     isLoading: isLoadingForGetsuggestion,
-    data: suggestionData,
+    data: dataForSuggestions,
     refetch: refetchForGetsuggestion,
-  } = useQuery<TypeForSuggestionsForBoard>(
+  } = useQuery<ITypeForDataForSuggestions>(
     ["apiForGetSuggestionListForBoard", pageNum],
     apiForGetSuggestionListForBoard,
     {
@@ -42,13 +24,42 @@ const SuggestionBoardPage = () => {
     }
   );
 
-  console.log("suggestionData : ", suggestionData);
+  console.log("dataForSuggestions : ", dataForSuggestions);
 
   // 2244
   return (
     <div>
       <h1>제안 게시판</h1>
-      <ListForSuggestionBoard suggestions={suggestionData} />
+
+      {/* 건의사항 추가 버튼 추가 , 모달 컴퍼넌트로 추가 해야 됨 컴퍼넌트 이름 ModalButtonForCreateSuggestionForBoard */}
+      <Box display="flex" justifyContent="right" m={2}>
+        <ModalButtonForCreateSuggestionForBoard
+          modal_title={"건의 사항"}
+          modal_size={"5xl"}
+          button_text="건의 추가"
+        />
+      </Box>
+
+      {dataForSuggestions ? (
+        <ListForSuggestionBoard
+          suggestions={
+            dataForSuggestions ? dataForSuggestions.listForSuggestion : []
+          }
+        />
+      ) : (
+        "no suggestions"
+      )}
+
+      {dataForSuggestions ? (
+        <PaginationComponent
+          current_page_num={pageNum}
+          setCurrentPageNum={setPageNum}
+          total_page_num={dataForSuggestions.totalCountForSuggestionList}
+          task_number_for_one_page={dataForSuggestions.perPage}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

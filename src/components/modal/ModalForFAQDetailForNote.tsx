@@ -17,7 +17,6 @@ import {
   Td,
   useToast,
 } from "@chakra-ui/react";
-import { FAQRow } from "../../types/study_note_type";
 import {
   apiForAddCommentForFaqBoardForNote,
   apiForGetCommentListForFaqBoardForNote,
@@ -82,17 +81,14 @@ const ModalForFAQDetailForNote: React.FC<ModalForFAQDetailForNoteProps> = ({
   );
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 댓글 내용이 변경될 때 상태 업데이트
     setComment(e.target.value);
   };
 
   const handleSubmitComment = () => {
-    // 댓글을 제출하는 함수
     if (comment.trim() === "") {
       alert("댓글 내용을 입력하세요.");
       return;
     }
-    // alert(comment)
     mutationForAddCommentForFaqBoardForNote.mutate({
       faqPk: faqData.pk,
       content: comment,

@@ -19,8 +19,35 @@ export const apiForGetSuggestionListForBoard = ({
       params: { pageNum: pageNum },
     })
     .then((response) => {
+
+        // response_data = {
+        //     "listForSuggestion": serializer.data,
+        //     "totalCountForSuggestionList": self.totalCountForSuggestionList,
+        //     "perPage": self.perPage,
+        // }
+
       console.log("response : ", response);
 
       return response.data;
     });
 };
+
+// apiForCreateSuggestionForBoard
+export const apiForCreateSuggestionForBoard = ({
+  title,
+  content,
+}: any) =>
+  instance
+    .post(
+      `/board/suggestion/add`,
+      {
+        title,
+        content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
