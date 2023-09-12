@@ -9,8 +9,42 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-
 // 1122
+// apiForUpdateCommentForSuggestionForBoard
+
+// apiForDeleteCommentForSuggestionForBoard
+export const apiForDeleteCommentForSuggestionForBoard = (commentPk: string | number) => {
+  console.log("commentPk : ", commentPk);
+  return instance
+      .delete(`/board/suggestion/comment/${commentPk}/delete`, {
+        headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+
+export const apiForUpdateCommentForSuggestionForBoard = ({
+  id,
+  editedContent,
+}: any) => {
+  return instance
+    .put(
+      `/board/suggestion/comment/${id}/update`,
+      { editedContent },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
 // apiForGetCommentListForSuggestionForBoard 구현중
 export const apiForGetCommentListForSuggestionForBoard = ({
   queryKey,

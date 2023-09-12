@@ -50,7 +50,7 @@ const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {
     }
   };
 
-  // mutationForUpdateCommentForSuggestion
+  // mutationForUpdateCommentForSuggestinForBoard
   const mutationForUpdateCommentForFaq = useMutation(
     apiForUpdateCommentForFaq,
     {

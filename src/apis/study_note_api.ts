@@ -93,7 +93,7 @@ export const apiForUpdateCommentForSuggestion = ({
     });
 };
 
-// apiForDeleteCommentForSuggestion
+// apiForDeleteCommentForSuggestionForBoard
 export const apiForDeleteCommentForFaqBoard = (commentPk: string | number) => {
   console.log("commentPk : ", commentPk);
   return instance
@@ -105,7 +105,7 @@ export const apiForDeleteCommentForFaqBoard = (commentPk: string | number) => {
     .then((response) => response.data);
 };
 
-// apiForUpdateCommentForSuggestion
+// apiForUpdateCommentForSuggestionForBoard
 export const apiForUpdateCommentForFaq = ({
   commentPk,
   editedContent,
@@ -184,7 +184,7 @@ export const apiForGetCommentListForSuggestionForNote = ({
     });
 };
 
-// apiForAddCommentForFaqBoardForNote
+// apiForAddCommentForSuggestion
 export const apiForAddCommentForSuggestionForNote = ({
   suggestionPk,
   content,
