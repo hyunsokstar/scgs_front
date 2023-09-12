@@ -10,20 +10,35 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForUpdateCommentForSuggestionForBoard
+export const apiForCreateCommentForSuggestionForBoard = ({
+  suggestionId,
+  content,
+}: any) => {
+  return instance
+    .post(
+      `/board/suggestion/${suggestionId}/comment/create`,
+      { content },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
 
-// apiForDeleteCommentForSuggestionForBoard
-export const apiForDeleteCommentForSuggestionForBoard = (commentPk: string | number) => {
+export const apiForDeleteCommentForSuggestionForBoard = (
+  commentPk: string | number
+) => {
   console.log("commentPk : ", commentPk);
   return instance
-      .delete(`/board/suggestion/comment/${commentPk}/delete`, {
-        headers: {
+    .delete(`/board/suggestion/comment/${commentPk}/delete`, {
+      headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",
       },
     })
     .then((response) => response.data);
 };
-
 
 export const apiForUpdateCommentForSuggestionForBoard = ({
   id,
@@ -50,54 +65,36 @@ export const apiForGetCommentListForSuggestionForBoard = ({
   queryKey,
 }: QueryFunctionContext) => {
   const [_, suggestionId] = queryKey;
-  
+
   console.log("suggestionId : ", suggestionId);
 
   return instance
-  .get(`/board/suggestion/${suggestionId}/comment`, {
-      params: { },
+    .get(`/board/suggestion/${suggestionId}/comment`, {
+      params: {},
     })
     .then((response) => {
-
       return response.data;
     });
 };
 
-// apiForAddCommentForFaqBoardForNote
-export const apiForAddCommentForSuggestionForBoard = ({
-  suggestionPk,
-  content,
-}: any) => {
-  // alert(content);
-
-  return instance
-    .post(
-      `/study-note/suggestion/${suggestionPk}/comment/add`,
-      { content },
-      {
-        headers: {
-          "X-CSRFToken": Cookie.get("csrftoken") || "",
-        },
-      }
-    )
-    .then((response) => response.data);
-};
-
 // apiForDeleteSuggestionForBoard
-export const apiForDeleteSuggestionForBoard = (suggestionPk: string | number) => {
+export const apiForDeleteSuggestionForBoard = (
+  suggestionPk: string | number
+) => {
   // console.log("commentPk : ", commentPk);
   // alert("삭제")
   // alert(suggestionPk)
-  return instance
+  return (
+    instance
       // .delete(`/study-note/faq-board/comment/${commentPk}/delete`, {
       .delete(`/board/suggestion/${suggestionPk}/delete`, {
         headers: {
-        "X-CSRFToken": Cookie.get("csrftoken") || "",
-      },
-    })
-    .then((response) => response.data);
-}
-
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      })
+      .then((response) => response.data)
+  );
+};
 
 // apiForUpdateSuggestionForBoard
 export const apiForUpdateSuggestionForBoard = ({ pk, title, content }: any) => {
@@ -120,8 +117,6 @@ export const apiForUpdateSuggestionForBoard = ({ pk, title, content }: any) => {
     });
 };
 
-
-
 export const apiForGetSuggestionListForBoard = ({
   queryKey,
 }: QueryFunctionContext) => {
@@ -132,12 +127,11 @@ export const apiForGetSuggestionListForBoard = ({
       params: { pageNum: pageNum },
     })
     .then((response) => {
-
-        // response_data = {
-        //     "listForSuggestion": serializer.data,
-        //     "totalCountForSuggestionList": self.totalCountForSuggestionList,
-        //     "perPage": self.perPage,
-        // }
+      // response_data = {
+      //     "listForSuggestion": serializer.data,
+      //     "totalCountForSuggestionList": self.totalCountForSuggestionList,
+      //     "perPage": self.perPage,
+      // }
 
       console.log("response : ", response);
 
@@ -146,10 +140,7 @@ export const apiForGetSuggestionListForBoard = ({
 };
 
 // apiForCreateSuggestionForBoard
-export const apiForCreateSuggestionForBoard = ({
-  title,
-  content,
-}: any) =>
+export const apiForCreateSuggestionForBoard = ({ title, content }: any) =>
   instance
     .post(
       `/board/suggestion/add`,

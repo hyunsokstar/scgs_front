@@ -107,7 +107,7 @@ const CommentListForSuggestionForBoard: React.FC<CommentListProps> = ({
           isClosable: true,
         });
       },
-      onError: (error) => {
+      onError: (error: any) => {
         console.log("error : ", error.response.data.message);
         
         toast({

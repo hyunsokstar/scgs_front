@@ -52,9 +52,8 @@ const ModalForFAQDetailForNote: React.FC<ModalForFAQDetailForNoteProps> = ({
     }
   );
 
-  // console.log("faqData.pk : ", faqData.pk);
-  // console.log("commentData :::::::::: ", commentData);
 
+  // mutationForAddCommentForSuggestionForBoard
   const mutationForAddCommentForFaqBoardForNote = useMutation(
     apiForAddCommentForFaqBoardForNote,
     {
