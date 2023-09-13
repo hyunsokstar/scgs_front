@@ -136,7 +136,7 @@ const ListForFaqForBoard: React.FC<IPropsForFaqList> = ({ faqList }) => {
       <ModalForFaqDetailForBoard
         isOpen={isModalOpen}
         onClose={closeModal}
-        faqId={selectedFaq?.pk}
+        faqId={selectedFaq?.id}
         title={selectedFaq?.title || ""}
         content={selectedFaq?.content || ""}
       />

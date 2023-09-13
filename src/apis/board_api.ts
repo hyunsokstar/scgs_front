@@ -10,6 +10,23 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForGetCommentListForFaqForBoard 구현중
+export const apiForGetCommentListForFaqForBoard = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, faqId] = queryKey;
+
+  console.log("faqId : ", faqId);
+
+  return instance
+    .get(`board/faq-board/${faqId}/comment`, {
+      params: {},
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
 // apiForDeleteFaqForBoard
 export const apiForDeleteFaqForBoard = (faqId: string | number) => {
   // console.log("faqId : ", faqId);

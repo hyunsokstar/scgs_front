@@ -359,7 +359,6 @@ export const apiForSearchQnaListBySearchWords = ({
     .then((response) => response.data);
 };
 
-// apiForDeleteFaqForBoard
 export const apiForDeleteNoteFaq = (faqPk: string | number) => {
   // console.log("faqPk : ", faqPk);
   return instance

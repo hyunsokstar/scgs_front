@@ -15,6 +15,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import CommentListForFaqBoardForBoard from "../Comments/CommentListForFaqBoardForBoard";
+import { apiForGetCommentListForFaqForBoard } from "../../apis/board_api";
 
 interface Suggestion {
   pk: number;
@@ -41,26 +43,26 @@ const ModalForFaqDetailForBoard: React.FC<ModalProps> = ({
   onClose,
   faqId,
   title,
-  content
+  content,
 }) => {
   const toast = useToast();
   const queryClient = useQueryClient();
   const [comment, setComment] = useState("");
 
-  //   const {
-  //     isLoading: isLoadingForGetComment,
-  //     data: commentData,
-  //     refetch: refetchForGetCommentData,
-  //   } = useQuery<any>(
-  //     ["apiForGetCommentListForSuggestion", suggestionPk],
-  //     apiForGetCommentListForSuggestionForNote,
-  //     {
-  //       enabled: !!suggestionPk, // suggestionPk가 존재할 때만 쿼리를 활성화
-  //       // cacheTime: 0, // 캐싱 비활성화
-  //     }
-  //   );
+  const {
+    isLoading: isLoadingForGetComment,
+    data: commentData,
+    refetch: refetchForGetCommentData,
+  } = useQuery<any>(
+    ["apiForGetCommentListForFaqForBoard", faqId],
+    apiForGetCommentListForFaqForBoard,
+    {
+      enabled: !!faqId, // suggestionPk가 존재할 때만 쿼리를 활성화
+      // cacheTime: 0, // 캐싱 비활성화
+    }
+  );
 
-  //   console.log("commentData : ", commentData);
+  console.log("commentData : ", commentData);
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 댓글 내용이 변경될 때 상태 업데이트
@@ -145,7 +147,9 @@ const ModalForFaqDetailForBoard: React.FC<ModalProps> = ({
               </InputRightElement>
             </InputGroup>
 
-            {/* <CommentListForSuggestion commentList={commentData?.comments} /> */}
+            <CommentListForFaqBoardForBoard
+              commentList={commentData?.comments}
+            />
           </Box>
         </ModalBody>
         <ModalFooter>
