@@ -12,10 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DeleteIcon, EditIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import {
-  apiForDeleteCommentForFaqBoard,
-  apiForUpdateCommentForFaq,
-} from "../../apis/study_note_api";
+import { apiForUpdateCommentForFaqForBoard } from "../../apis/board_api";
 
 interface Comment {
   writer: {
@@ -50,33 +47,33 @@ const CommentListForFaqBoardForBoard: React.FC<IProps> = ({ commentList }) => {
     }
   };
 
-  // mutationForUpdateCommentForSuggestinForBoard
-//   const mutationForUpdateCommentForFaq = useMutation(
-//     apiForUpdateCommentForFaq,
-//     {
-//       onSuccess: (result: any) => {
-//         console.log("result : ", result);
-//         queryClient.refetchQueries(["apiForGetCommentListForFaqBoard"]);
+  // mutationForUpdateCommentForFaqForBoard
+  const mutationForUpdateCommentForFaqForBoard = useMutation(
+    apiForUpdateCommentForFaqForBoard,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        queryClient.refetchQueries(["apiForGetCommentListForFaqForBoard"]);
 
-//         toast({
-//           status: "success",
-//           title: "check result update success",
-//           description: result.message,
-//           duration: 1800,
-//           isClosable: true,
-//         });
-//       },
-//     }
-//   );
+        toast({
+          status: "success",
+          title: "check result update success",
+          description: result.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
 
-  const handleSaveClick = (index: number, id: any) => {
-    // alert(id);
+  const handleSaveClick = (index: number, commentId: any) => {
+    // alert(commentId);
 
     // mutationForUpdateCommentForSuggestion
-    // mutationForUpdateCommentForFaq.mutate({
-    //   commentPk: id,
-    //   editedContent,
-    // });
+    mutationForUpdateCommentForFaqForBoard.mutate({
+      commentId: commentId,
+      editedContent,
+    });
 
     setEditingIndex(null);
     setEditedContent("");

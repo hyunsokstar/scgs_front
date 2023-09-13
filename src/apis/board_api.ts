@@ -10,6 +10,47 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForUpdateCommentForFaqForBoard
+export const apiForUpdateCommentForFaqForBoard = ({
+  commentId,
+  editedContent,
+}: any) => {
+  return instance
+    .put(
+      `/board/faq-board/comment/${commentId}/update`,
+      { editedContent },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      // console.log("response : ", response);
+      return response.data;
+    });
+};
+
+// apiForCreateCommentForFaqForBoard 구현중
+export const apiForCreateCommentForFaqForBoard = ({
+  faqId,
+  content,
+}: any) => {
+  // alert(content);
+
+  return instance
+    .post(
+      `/board/faq-board/${faqId}/comment/create`,
+      { content },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 // apiForGetCommentListForFaqForBoard 구현중
 export const apiForGetCommentListForFaqForBoard = ({
   queryKey,

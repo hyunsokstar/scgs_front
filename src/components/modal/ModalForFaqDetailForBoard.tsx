@@ -17,6 +17,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import CommentListForFaqBoardForBoard from "../Comments/CommentListForFaqBoardForBoard";
 import { apiForGetCommentListForFaqForBoard } from "../../apis/board_api";
+import TextAreaForCreateCommentForFaqForBoard from "../TextArea/TextAreaForCreateCommentForFaqForBoard";
 
 interface Suggestion {
   pk: number;
@@ -109,13 +110,6 @@ const ModalForFaqDetailForBoard: React.FC<ModalProps> = ({
     setComment("");
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // 엔터 키를 눌렀을 때만 처리
-    if (e.key === "Enter") {
-      handleSubmitComment();
-    }
-  };
-
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="full">
       <ModalOverlay />
@@ -128,25 +122,9 @@ const ModalForFaqDetailForBoard: React.FC<ModalProps> = ({
               dangerouslySetInnerHTML={{ __html: content }}
               style={{ minHeight: "200px", border: "1px solid gray" }}
             ></Box>
-            {/* 댓글 추가 인풋 */}
-            <InputGroup mt={4}>
-              <Input
-                placeholder="댓글을 입력하세요..."
-                //   value={comment}
-                onChange={handleCommentChange}
-                onKeyDown={handleKeyPress}
-              />
-              <InputRightElement width="auto" mr={1}>
-                <Button
-                  colorScheme="blue"
-                  size="sm"
-                  onClick={handleSubmitComment}
-                >
-                  댓글 추가
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-
+            {/* 댓글 추가용 인풋 */}
+            <TextAreaForCreateCommentForFaqForBoard faqId={faqId} />
+            
             <CommentListForFaqBoardForBoard
               commentList={commentData?.comments}
             />

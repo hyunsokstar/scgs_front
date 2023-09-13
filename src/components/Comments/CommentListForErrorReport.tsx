@@ -40,6 +40,7 @@ function CommentListForErrorReport({
   const toast = useToast();
   const [newComment, setNewComment] = useState("");
 
+  // mutationForCreateCommentForFaqForBoard
   const mutationForAddCommentForErrorReportForNote = useMutation(
     apiForAddCommentForErrorReportForNote,
     {
