@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DeleteIcon, EditIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { apiForUpdateCommentForFaqForBoard } from "../../apis/board_api";
+import { apiForDeleteForCommentForFaqForBoard, apiForUpdateCommentForFaqForBoard } from "../../apis/board_api";
 
 interface Comment {
   writer: {
@@ -84,35 +84,45 @@ const CommentListForFaqBoardForBoard: React.FC<IProps> = ({ commentList }) => {
     setEditedContent("");
   };
 
-  // mutationForDeleteCommentForSuggestion
-//   const mutationForDeleteUserTaskComment = useMutation(
-//     (pk: string | number) => {
-//       // return deleteOneCommentForTaskByPkApi(pk);
-//       return apiForDeleteCommentForFaqBoard(pk);
-//     },
-//     {
-//       onSettled: () => {
-//         // setSelectedItems([]);
-//       },
-//       onSuccess: (data) => {
-//         console.log("data : ", data);
+  // mutationForDeleteCommentForFaqForBoard
+  const mutationForDeleteCommentForFaqForBoard = useMutation(
+    (faqId: string | number) => {
+      // apiForDeleteForCommentForFaqForBoard
+      return apiForDeleteForCommentForFaqForBoard(faqId);
+    },
+    {
+      onSettled: () => {
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
 
-//         queryClient.refetchQueries(["apiForGetCommentListForFaqBoard"]);
+        queryClient.refetchQueries(["apiForGetCommentListForFaqForBoard"]);
 
-//         toast({
-//           title: "delete comment 성공!",
-//           status: "success",
-//           description: data.message,
-//           duration: 1800,
-//           isClosable: true,
-//         });
-//       },
-//     }
-//   );
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+          description: data.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+      onError: (error: any) => {
+        console.log("error : ", error);
 
-  const handlerForCommentDeleteButton = (commentPk: string | number) => {
-    // alert("delete button click");
-    // mutationForDeleteUserTaskComment.mutate(commentPk);
+        toast({
+          title: "Error!",
+          description: error.response.data.message || "An error occurred.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
+  const handlerForCommentDeleteButton = (commentId: string | number) => {
+    // alert(commentId);
+    mutationForDeleteCommentForFaqForBoard.mutate(commentId);
   };
 
   // 2244

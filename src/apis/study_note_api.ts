@@ -21,6 +21,7 @@ const instance = axios.create({
 
 // 1122
 
+
 // apiForUpdateSuggestionForBoard
 export const apiForUpdateSuggestion = ({ pk, title, content }: any) => {
   // alert(pk)
@@ -93,7 +94,7 @@ export const apiForUpdateCommentForSuggestion = ({
     });
 };
 
-// apiForDeleteCommentForSuggestionForBoard
+// apiForDeleteCommentForFaqForBoard
 export const apiForDeleteCommentForFaqBoard = (commentPk: string | number) => {
   console.log("commentPk : ", commentPk);
   return instance
