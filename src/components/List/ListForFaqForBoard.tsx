@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { ITypeForFaqRow } from "../../types/board_type";
+import ModalButtonForUpdateFaqForBoard from "../modal/ModalButtonForUpdateFaqForBoard";
 
 interface IPropsForFaqList {
   faqList: ITypeForFaqRow[];
@@ -51,12 +52,11 @@ const ListForFaqForBoard: React.FC<IPropsForFaqList> = ({ faqList }) => {
               {faq.title}
             </Text>
             <Spacer />
-            <Box display={"flex"} gap={2}>
-              <IconButton
-                aria-label="수정"
-                // 수정 핸들러 함수 호출
-                // 아이콘을 클릭하면 수정 이벤트를 처리하는 함수를 호출해야 합니다.
-                icon={<EditIcon />}
+            <Box display={"flex"} alignItems={"center"} gap={2}>
+              <ModalButtonForUpdateFaqForBoard
+                id={faq.id}
+                title={faq.title}
+                content={faq.content}
               />
               <IconButton
                 aria-label="삭제"

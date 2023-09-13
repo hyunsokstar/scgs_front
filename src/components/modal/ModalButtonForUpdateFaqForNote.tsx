@@ -54,7 +54,6 @@ const ModalButtonForUpdateFaqForNote = ({
   };
 
   // mutationForUpdateFaq
-
   const mutationForUpdateNoteFaq = useMutation(apiForUpdateNoteFaq, {
     onMutate: () => {
       console.log("mutation starting");
