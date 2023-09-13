@@ -10,6 +10,38 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForDeleteFaqForBoard
+export const apiForDeleteFaqForBoard = (faqId: string | number) => {
+  // console.log("faqId : ", faqId);
+  return instance
+    .delete(`board/faq-board/${faqId}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+// apiForUpdateFaqForBoard
+export const apiForUpdateFaqForBoard = ({ id, title, content }: any) => {
+  return instance
+    .put(
+      `/board/faq-board/${id}/update`,
+      {
+        title: title,
+        content: content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      return response.data;
+    });
+};
+
 // apiForGetFaqListForBoard
 export const apiForGetFaqListForBoard = ({
   queryKey,

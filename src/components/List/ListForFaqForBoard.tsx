@@ -7,16 +7,65 @@ import {
   Checkbox,
   Spacer,
   IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { ITypeForFaqRow } from "../../types/board_type";
 import ModalButtonForUpdateFaqForBoard from "../modal/ModalButtonForUpdateFaqForBoard";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiForDeleteFaqForBoard } from "../../apis/board_api";
 
 interface IPropsForFaqList {
   faqList: ITypeForFaqRow[];
 }
 
 const ListForFaqForBoard: React.FC<IPropsForFaqList> = ({ faqList }) => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
+  const mutationForDeleteFaqForBoard = useMutation(
+    (pk: string | number) => {
+      return apiForDeleteFaqForBoard(pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["apiForGetSuggestionListForFaq"]);
+
+        toast({
+          title: "delete faq 성공!",
+          status: "success",
+        });
+      },
+      onError: (error:any) => {
+        console.error("FAQ 삭제 오류:", error);
+        if (
+          error.response.data.message
+        ) {
+          toast({
+            title: "FAQ 삭제 실패",
+            description: error.response.data.message,
+            status: "error",
+          });
+        } else {
+          toast({
+            title: "FAQ 삭제 실패",
+            status: "error",
+          });
+        }
+      },
+    }
+  );
+
+  const handleDeleteFaq = (faqId: number) => {
+    console.log(`Delete FAQ with ID: ${faqId}`);
+    mutationForDeleteFaqForBoard.mutate(faqId);
+  };
+
   return (
     <VStack spacing={2} align="stretch">
       {faqList.length === 0 ? (
@@ -47,7 +96,6 @@ const ListForFaqForBoard: React.FC<IPropsForFaqList> = ({ faqList }) => {
               color="teal.500"
               textAlign="center"
               _hover={{ cursor: "pointer", textDecoration: "underline" }}
-              // 클릭 이벤트 핸들러 추가
             >
               {faq.title}
             </Text>
@@ -60,9 +108,11 @@ const ListForFaqForBoard: React.FC<IPropsForFaqList> = ({ faqList }) => {
               />
               <IconButton
                 aria-label="삭제"
-                // 삭제 핸들러 함수 호출
-                // 아이콘을 클릭하면 삭제 이벤트를 처리하는 함수를 호출해야 합니다.
                 icon={<DeleteIcon />}
+                size="sm"
+                _hover={{ bgColor: "red.100" }}
+                variant="ghost"
+                onClick={() => handleDeleteFaq(faq.id)} // 딜리트 핸들러 함수 호출
               />
             </Box>
           </Box>

@@ -20,6 +20,8 @@ import {
 import { EditIcon } from "@chakra-ui/icons";
 import TinyMCEEditor from "../RichEditor/TinyMCEEditor";
 import { useForm } from "react-hook-form"; // react-hook-form 임포트 추가
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiForUpdateFaqForBoard } from "../../apis/board_api";
 
 interface Props {
   id: string | number;
@@ -32,10 +34,11 @@ const ModalButtonForUpdateFaqForBoard: React.FC<Props> = ({
   title,
   content,
 }) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [contentForUpdate, setContentForUpdate] = React.useState<string>(
-    content
-  );
+  const [contentForUpdate, setContentForUpdate] =
+    React.useState<string>(content);
 
   // react-hook-form 초기화
   const { handleSubmit, register, getValues } = useForm();
@@ -44,17 +47,47 @@ const ModalButtonForUpdateFaqForBoard: React.FC<Props> = ({
     setContentForUpdate(value);
   };
 
+  // mutationForUpdateFaqForBoard
+  const mutationForUpdateFaqForBoard = useMutation(apiForUpdateFaqForBoard, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
+      queryClient.refetchQueries(["apiForGetSuggestionListForFaq"]);
+
+      toast({
+        title: "update succes for study note content!",
+        description: data.message,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+
+      onClose();
+    },
+    onError: (error: any) => {
+      console.log("error.message : ", error.message);
+
+      toast({
+        title: "Error!",
+        description: error.message || "An error occurred.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    },
+  });
+
   const onSubmit = (data: any) => {
     console.log(data); // Form 입력 데이터 확인
-
     // title 값 가져오기
     const titleValue = getValues("title");
-
-    // mutationForUpdateNoteFaq.mutate({
-    //   pk,
-    //   title: titleValue,
-    //   content: contentForUpdate,
-    // });
+    mutationForUpdateFaqForBoard.mutate({
+      id,
+      title: titleValue,
+      content: contentForUpdate,
+    });
   };
 
   return (
@@ -77,7 +110,11 @@ const ModalButtonForUpdateFaqForBoard: React.FC<Props> = ({
               <Stack spacing={4}>
                 <input type="hidden" value={id} />
                 {/* react-hook-form을 사용하여 title 필드 등록 */}
-                <Input {...register("title")} defaultValue={title} placeholder="제목" />
+                <Input
+                  {...register("title")}
+                  defaultValue={title}
+                  placeholder="제목"
+                />
               </Stack>
 
               <FormControl isInvalid={false}>
@@ -93,10 +130,10 @@ const ModalButtonForUpdateFaqForBoard: React.FC<Props> = ({
               </FormControl>
             </ModalBody>
             <ModalFooter>
-              {/* <Button type="submit" colorScheme="blue" mr={3}>
-                수정하기
-              </Button> */}
-              <Button onClick={onClose}>취소</Button>
+              <Box display={"flex"} gap={2}>
+                <Button type="submit">등록</Button>
+                <Button onClick={onClose}>취소</Button>
+              </Box>
             </ModalFooter>
           </form>
         </ModalContent>
