@@ -88,8 +88,8 @@ const ListForSuggestionForBoard: React.FC<ITypeForPropsForSuggestionList> = ({
             >
               <Checkbox size="sm" mr={2} />
               <Avatar
-                name={suggestion.writer.username}
-                src={suggestion.writer.profile_image}
+                name={suggestion.writer?.username ? suggestion.writer.username : "u"}
+                src={suggestion.writer?.profile_image}
                 size="sm"
               />
               <Text

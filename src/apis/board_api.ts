@@ -10,6 +10,29 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForGetFaqListForBoard
+export const apiForGetFaqListForBoard = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, pageNum] = queryKey;
+
+  return instance
+    .get(`/board/faq-board`, {
+      params: { pageNum: pageNum },
+    })
+    .then((response) => {
+      // response_data = {
+      //     "listForSuggestion": serializer.data,
+      //     "totalCountForSuggestionList": self.totalCountForSuggestionList,
+      //     "perPage": self.perPage,
+      // }
+
+      console.log("response : ", response);
+
+      return response.data;
+    });
+};
+
 export const apiForCreateCommentForSuggestionForBoard = ({
   suggestionId,
   content,
@@ -117,6 +140,7 @@ export const apiForUpdateSuggestionForBoard = ({ pk, title, content }: any) => {
     });
 };
 
+// apiForGetFaqListForBoard
 export const apiForGetSuggestionListForBoard = ({
   queryKey,
 }: QueryFunctionContext) => {

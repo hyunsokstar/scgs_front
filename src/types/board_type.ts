@@ -1,3 +1,23 @@
+// 1122
+export interface ITypeForFaqRow {
+  id: number;
+  title: string;
+  content: string;
+  writer: {
+    pk: number;
+    username: string;
+    profile_image: string | null;
+  };
+  created_at_formatted: string;
+  updated_at_formatted: string;
+}
+
+export interface ITypeForDataForFaq {
+  listForFaqBoard: ITypeForFaqRow[];
+  totalCountForFaqBoard: number;
+  perPage: number;
+}
+
 export interface Writer {
   pk: number;
   username: string;

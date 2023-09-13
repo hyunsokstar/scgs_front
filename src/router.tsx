@@ -65,6 +65,7 @@ import StudyNoteDetail2 from "./routes/StudyNoteDetail2";
 import TableModeForUpdatePage from "./routes/TableModeForUpdatePage";
 import NoteContentsByImageSlidePage from "./routes/Slide/NoteContentsByImageSlidePage";
 import SuggestionBoardPage from "./routes/SuggestionBoardPage";
+import FAQBoardPage from "./routes/FAQBoardPage";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +85,12 @@ const router = createBrowserRouter([
         path: "board/suggestions",
         element: <SuggestionBoardPage />
       },
+
+      {
+        path: "board/faq-board",
+        element: <FAQBoardPage />
+      },
+
 
       {
         path: "study-note",
