@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 import { TypeForSuggestionRow } from "../../types/board_type";
 import ContainerForCommentForSuggestion from "../Container/ContainerForCommentForSuggestionForBoard";
-import { apiForGetCommentListForSuggestionForNote } from "../../apis/study_note_api";
 
 interface ITypeForSuggestionDetailForBoard {
   isOpen: boolean;

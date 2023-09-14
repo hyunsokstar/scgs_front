@@ -12,8 +12,9 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { TypeForSuggestionRow } from "../../types/board_type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import ModalForChallengeDetale from "../modal/ModalForChallengeDetale";
+import { ITypeForChallengeRow } from "../../types/type_for_challenge";
 
 interface ITypeForPropsForSuggestionList {
   challengeList: ITypeForChallengeRow[];
@@ -26,13 +27,13 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChallenge, setSelectedChange] =
-    useState<TypeForSuggestionRow>();
+    useState<ITypeForChallengeRow>();
 
-  const handleTitleClick = (suggestion: TypeForSuggestionRow) => {
-    if (suggestion) {
+  const handleTitleClick = (challenge: ITypeForChallengeRow) => {
+    if (challenge) {
       // 선택된 제안이 존재하는 경우에만 모달을 열도록 합니다.
+      setSelectedChange(challenge);
       setIsModalOpen(true);
-      setSelectedChange(suggestion);
     }
   };
 
@@ -95,7 +96,7 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
               color="teal.500"
               textAlign="center"
               _hover={{ cursor: "pointer", textDecoration: "underline" }}
-              // onClick={() => handleTitleClick(challenge)}
+              onClick={() => handleTitleClick(challenge)}
             >
               {challenge.title}
             </Text>
@@ -132,14 +133,14 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
         </Center>
       )}
 
-      {selectedChallenge
-        ? // <ModalForchallengeDetailForBoard
-          //   isOpen={isModalOpen}
-          //   onClose={handleCloseModal}
-          //   selectedchallenge={selectedchallenge}
-          // />
-          ""
-        : ""}
+      {selectedChallenge ? (
+        <ModalForChallengeDetale
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
+      ) : (
+        ""
+      )}
     </VStack>
   );
 };
