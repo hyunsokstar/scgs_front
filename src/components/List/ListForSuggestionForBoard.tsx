@@ -88,8 +88,8 @@ const ListForSuggestionForBoard: React.FC<ITypeForPropsForSuggestionList> = ({
             >
               <Checkbox size="sm" mr={2} />
               <Avatar
-                name={suggestion.writer?.username ? suggestion.writer.username : "u"}
-                src={suggestion.writer.profile_image}
+                name={suggestion.writer?.username || "u"} // username이 없을 경우 "u"를 기본값으로 사용
+                src={suggestion.writer?.profile_image || ""} // profile_image가 없을 경우 빈 문자열을 기본값으로 사용
                 size="sm"
               />
               <Text

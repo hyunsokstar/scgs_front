@@ -13,8 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import ModalForChallengeDetale from "../modal/ModalForChallengeDetale";
 import { ITypeForChallengeRow } from "../../types/type_for_challenge";
+import ModalForChallengeDetail from "../modal/ModalForChallengeDetail";
 
 interface ITypeForPropsForSuggestionList {
   challengeList: ITypeForChallengeRow[];
@@ -134,7 +134,7 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
       )}
 
       {selectedChallenge ? (
-        <ModalForChallengeDetale
+        <ModalForChallengeDetail
           isOpen={isModalOpen}
           onClose={handleCloseModal}
         />
