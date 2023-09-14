@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiForGetChallengeList } from "../apis/challenge_api";
 import ListForChallege from "../components/List/ListForChalleges";
 import { ITypeForChallengeData } from "../types/type_for_challenge";
+import PaginationComponent from "../components/PaginationComponent";
 
 interface Props {}
 
@@ -12,7 +13,7 @@ const ChallengesPage = (props: Props) => {
 
   const {
     isLoading: isLoadingForGetChallenge,
-    data: dataForChallenge = { listForChallenge: [] },
+    data: dataForChallenge,
     refetch: refetchForGetChallenge,
   } = useQuery<ITypeForChallengeData>(
     ["apiForGetChallengeList", pageNum],
@@ -30,7 +31,22 @@ const ChallengesPage = (props: Props) => {
       <Heading as="h1" textAlign="center" fontSize="2xl" mb={4}>
         Challenges
       </Heading>
-      <ListForChallege challengeList={dataForChallenge.listForChallenge} />
+      <ListForChallege
+        challengeList={
+          dataForChallenge ? dataForChallenge?.listForChallenge : []
+        }
+      />
+
+      {dataForChallenge ? (
+        <PaginationComponent
+          current_page_num={pageNum}
+          setCurrentPageNum={setPageNum}
+          total_page_num={dataForChallenge.totalCountForChallengeList}
+          task_number_for_one_page={dataForChallenge.perPage}
+        />
+      ) : (
+        ""
+      )}
     </Box>
   );
 };

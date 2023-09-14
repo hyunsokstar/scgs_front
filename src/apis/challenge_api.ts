@@ -9,25 +9,22 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+export const apiForGetChallengeList = ({ queryKey }: QueryFunctionContext) => {
+  const [_, pageNum] = queryKey;
 
-export const apiForGetChallengeList = ({
-    queryKey,
-  }: QueryFunctionContext) => {
-    const [_, pageNum] = queryKey;
-  
-    return instance
-      .get("", {
-        params: { pageNum: pageNum },
-      })
-      .then((response) => {
-        // response_data = {
-        //     "listForSuggestion": serializer.data,
-        //     "totalCountForSuggestionList": self.totalCountForSuggestionList,
-        //     "perPage": self.perPage,
-        // }
-  
-        console.log("response : ", response);
-  
-        return response.data;
-      });
-  };
+  return instance
+    .get("", {
+      params: { pageNum: pageNum },
+    })
+    .then((response) => {
+      // response_data = {
+      //   listForChallenge: serializer.data,
+      //   totalCountForChallengeList: self.totalCountForChallengeList,
+      //   perPage: self.perPage,
+      // };
+
+      console.log("response : ", response);
+
+      return response.data;
+    });
+};
