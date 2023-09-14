@@ -10,6 +10,22 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForCreateFaqForBoard
+export const apiForCreateFaqForBoard = ({ title, content }: any) =>
+  instance
+    .post(
+      `/board/faq-bard/create`,
+      {
+        title,
+        content,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
 
 export const apiForDeleteForCommentForFaqForBoard = (commentPk: string | number) => {
   console.log("commentPk : ", commentPk);
@@ -265,7 +281,7 @@ export const apiForGetSuggestionListForBoard = ({
     });
 };
 
-// apiForCreateSuggestionForBoard
+// apiForCreateFaqForBoard
 export const apiForCreateSuggestionForBoard = ({ title, content }: any) =>
   instance
     .post(

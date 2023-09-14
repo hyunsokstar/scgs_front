@@ -66,6 +66,7 @@ import TableModeForUpdatePage from "./routes/TableModeForUpdatePage";
 import NoteContentsByImageSlidePage from "./routes/Slide/NoteContentsByImageSlidePage";
 import SuggestionBoardPage from "./routes/SuggestionBoardPage";
 import FAQBoardPage from "./routes/FAQBoardPage";
+import ChallengesPage from "./routes/ChallengesPage";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +85,11 @@ const router = createBrowserRouter([
       {
         path: "board/suggestions",
         element: <SuggestionBoardPage />
+      },
+
+      {
+        path: "challenges",
+        element: <ChallengesPage />
       },
 
       {

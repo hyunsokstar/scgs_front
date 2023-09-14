@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Box,
+  Center,
   Text,
   VStack,
   Avatar,
@@ -81,9 +82,9 @@ const ListForFaqForBoard: React.FC<IPropsForFaqList> = ({ faqList }) => {
     <Box>
       <VStack spacing={2} align="stretch">
         {faqList.length === 0 ? (
-          <Box p={2} textAlign="center">
-            데이터가 없습니다.
-          </Box>
+          <Center h="300px" fontSize="2xl" fontWeight="bold" color="gray.500">
+            No FAQ list available
+          </Center>
         ) : (
           faqList.map((faq) => (
             <Box
@@ -140,7 +141,6 @@ const ListForFaqForBoard: React.FC<IPropsForFaqList> = ({ faqList }) => {
         title={selectedFaq?.title || ""}
         content={selectedFaq?.content || ""}
       />
-
     </Box>
   );
 };

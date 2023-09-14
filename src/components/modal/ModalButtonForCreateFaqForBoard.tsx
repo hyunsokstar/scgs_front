@@ -15,7 +15,7 @@ import {
 import { CloseIcon } from "@chakra-ui/icons";
 import TinyMCEEditor from "../RichEditor/TinyMCEEditor";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiForCreateSuggestionForBoard } from "../../apis/board_api";
+import { apiForCreateFaqForBoard } from "../../apis/board_api";
 
 type ModalSize = "xs" | "sm" | "md" | "lg" | "xl" | "5xl" | "full"; // ModalSize 타입 정의
 
@@ -25,7 +25,7 @@ interface ModalButtonProps {
   button_text: string;
 }
 
-function ModalButtonForCreateSuggestionForBoard({
+function ModalButtonForCreateFaqForBoard({
   modal_size,
   modal_title,
   button_text,
@@ -56,14 +56,14 @@ function ModalButtonForCreateSuggestionForBoard({
   };
 
   const mutationForCreateSuggestionForBoard = useMutation(
-    apiForCreateSuggestionForBoard,
+    apiForCreateFaqForBoard,
     {
       onMutate: () => {
         console.log("mutation starting");
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        queryClient.refetchQueries(["apiForGetSuggestionListForBoard"]);
+        queryClient.refetchQueries(["apiForGetSuggestionListForFaq"]);
 
         toast({
           title: "건의 사항 추가 성공",
@@ -135,4 +135,4 @@ function ModalButtonForCreateSuggestionForBoard({
   );
 }
 
-export default ModalButtonForCreateSuggestionForBoard;
+export default ModalButtonForCreateFaqForBoard;
