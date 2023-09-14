@@ -258,7 +258,7 @@ export const apiForUpdateSuggestionForBoard = ({ pk, title, content }: any) => {
     });
 };
 
-// apiForGetFaqListForBoard
+// apiForGetChallengeList
 export const apiForGetSuggestionListForBoard = ({
   queryKey,
 }: QueryFunctionContext) => {

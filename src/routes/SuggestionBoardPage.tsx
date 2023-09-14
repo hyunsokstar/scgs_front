@@ -24,6 +24,7 @@ const SuggestionBoardPage = () => {
     }
   );
 
+
   console.log("dataForSuggestions : ", dataForSuggestions);
 
   // 2244
