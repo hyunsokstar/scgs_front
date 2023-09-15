@@ -14,7 +14,7 @@ export const apiForUpdateChallengeMainImage = ({
   challengeId,
   file
 }: any) => {
-  console.log("createProfilePhoto check !!!!!");
+  console.log("api for create challenge main image check !!");
 
   return instance
     .put(

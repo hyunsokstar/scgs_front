@@ -10,6 +10,7 @@ interface IPropTypes {
 }
 
 const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
+  const queryClient = useQueryClient();
   const [isDragging, setIsDragging] = useState(false);
   const toast = useToast();
 
@@ -21,6 +22,8 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
 
   // 업로드용 url
   const [uploadUrlToCloud, setUploadUrlToCloud] = useState("");
+
+  const [isShowForButtons, setIsShowForButtons] = useState(false);
 
   const createProfilePhotoMutation = useMutation(
     apiForUpdateChallengeMainImage,
@@ -37,6 +40,19 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
           duration: 2000,
           isClosable: true,
         });
+
+        setIsShowForButtons(true);
+      },
+      onError: (error: any) => {
+        console.error("Error occurred for create image: ", error); // 에러 메시지 출력
+        toast({
+          status: "error",
+          title: "Error",
+          description: error.response.data.message,
+          duration: 2000,
+          isClosable: true,
+        });
+        // 필요한 다른 에러 처리 작업 수행 가능
       },
     }
   );
@@ -48,10 +64,14 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
       const uploaded_image = result.variants[0];
       console.log("uploaded_image : ", uploaded_image);
 
+      setThumbnailImage(uploaded_image)
+
       createProfilePhotoMutation.mutate({
         challengeId: selectedChallenge.id,
         file: uploaded_image,
       });
+
+      queryClient.refetchQueries(["apiForGetChallengeList"]);
     },
 
     onError: (error: any) => {
@@ -69,6 +89,7 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
         uploadURL: uploadUrlToCloud,
         file: imageFileToUpload,
       });
+      
     } else {
       alert("업로드할 이미지가 없습니다");
     }
@@ -79,6 +100,7 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
     // 이 함수를 구현해야 합니다.
     setThumbnailImage("");
     setUploadUrlToCloud("");
+    setIsShowForButtons(true); // 등록 취소 버튼 보이게
   };
 
   const getImageUploadUrlMutation = useMutation(getUploadURL, {
@@ -98,6 +120,8 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
     e.preventDefault();
     const imageFile = e.dataTransfer.files[0]; // 드롭된 파일
     console.log("image dropped:", imageFile);
+
+    setIsShowForButtons(false); // 등록 취소 버튼 보이게
 
     // 미리 보기용 이미지 상태값으로 설정
     setThumbnailImage(URL.createObjectURL(imageFile));
@@ -130,9 +154,9 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
   return (
     <Box w="100%" h="100%">
       {/* {uploadUrlToCloud ? uploadUrlToCloud : ""} */}
-      {selectedChallenge.main_image
+      {/* {selectedChallenge.main_image
         ? selectedChallenge.main_image
-        : "이미지 없음"}
+        : "이미지 없음"} */}
       <Box
         border={`2px dashed ${isDragging ? "red" : "lightgray"}`} // 점선 스타일 및 색상 설정
         borderStyle={isDragging ? "dashed" : "solid"} // 드래그 중일 때 점선 스타일, 그 외에는 실선 스타일
@@ -151,20 +175,23 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
       >
         {thumbNailImage ? (
           <>
-            {/* 우측 상단에 버튼 추가 */}
-            <Box position="absolute" top={0} right={0} zIndex={2}>
-              <Button size={"xs"} onClick={() => uploadImageHandler()}>
-                등록
-              </Button>
-              <Button
-                size={"xs"}
-                ml={2}
-                mr={1}
-                onClick={() => cancleImageUpload()}
-              >
-                취소
-              </Button>
-            </Box>
+            {!isShowForButtons ? (
+              <Box position="absolute" top={0} right={0} zIndex={2}>
+                <Button size={"xs"} onClick={() => uploadImageHandler()}>
+                  등록
+                </Button>
+                <Button
+                  size={"xs"}
+                  ml={2}
+                  mr={1}
+                  onClick={() => cancleImageUpload()}
+                >
+                  취소
+                </Button>
+              </Box>
+            ) : (
+              ""
+            )}
             {/* 업로드할 이미지 */}
             <Image
               src={thumbNailImage}
@@ -181,6 +208,7 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
             alt="Uploaded Image"
             maxH="100%"
             maxW="100%"
+            fallbackSrc="https://t3.ftcdn.net/jpg/03/34/83/22/360_F_334832255_IMxvzYRygjd20VlSaIAFZrQWjozQH6BQ.jpg"
           />
         )}
       </Box>
