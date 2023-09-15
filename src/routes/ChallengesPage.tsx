@@ -5,6 +5,7 @@ import { apiForGetChallengeList } from "../apis/challenge_api";
 import ListForChallege from "../components/List/ListForChalleges";
 import { ITypeForChallengeData } from "../types/type_for_challenge";
 import PaginationComponent from "../components/PaginationComponent";
+import ModalButtonForCreateChallenge from "../components/modal/ModalButtonForCreateChallenge";
 
 interface Props {}
 
@@ -31,6 +32,11 @@ const ChallengesPage = (props: Props) => {
       <Heading as="h1" textAlign="center" fontSize="2xl" my={3}>
         Challenges
       </Heading>
+
+      <Box display={"flex"} justifyContent={"flex-end"} my={2}>
+        <ModalButtonForCreateChallenge />
+      </Box>
+
       <ListForChallege
         challengeList={
           dataForChallenge ? dataForChallenge?.listForChallenge : []

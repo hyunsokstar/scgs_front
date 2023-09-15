@@ -25,7 +25,7 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
 
   const [isShowForButtons, setIsShowForButtons] = useState(false);
 
-  const createProfilePhotoMutation = useMutation(
+  const mutationForUpdateMainImageForChallenge = useMutation(
     apiForUpdateChallengeMainImage,
     {
       onSuccess: (result) => {
@@ -66,7 +66,7 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
 
       setThumbnailImage(uploaded_image)
 
-      createProfilePhotoMutation.mutate({
+      mutationForUpdateMainImageForChallenge.mutate({
         challengeId: selectedChallenge.id,
         file: uploaded_image,
       });
@@ -105,14 +105,7 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
 
   const getImageUploadUrlMutation = useMutation(getUploadURL, {
     onSuccess: (data: any) => {
-      // console.log("data : ", data);
-
       setUploadUrlToCloud(data.uploadURL);
-
-      // uploadImageMutation.mutate({
-      //     uploadURL: data.uploadURL,
-      //     file: file_to_upload,
-      // });
     },
   });
 

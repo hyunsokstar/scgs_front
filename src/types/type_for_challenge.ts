@@ -18,3 +18,10 @@ export interface ITypeForChallengeData {
     totalCountForChallengeList: number;
     perPage: number;
 }
+
+export interface ITypeForCreateChallengeParameter {
+    title: string;
+    subtitle: string;
+    description: string;
+    main_image: string;
+}
