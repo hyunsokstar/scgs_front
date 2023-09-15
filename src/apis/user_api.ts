@@ -97,7 +97,7 @@ export const apiForUpdateEditModeForStudyNoteContent = (
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -163,6 +163,7 @@ export const getProfile = ({ queryKey }: QueryFunctionContext) => {
   return instance.get(`users/${userPk}`).then((response) => response.data);
 };
 
+// apiForUpdateChallengeMainImage
 export const createProfilePhoto = ({
   file,
   userPk,

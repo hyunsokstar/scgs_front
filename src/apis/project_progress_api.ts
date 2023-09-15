@@ -62,7 +62,6 @@ export const apiForUpdateTaskDueDateByPk = ({ id, due_date_option }: any) => {
       }
     )
     .then((response): AxiosResponse => {
-      console.log("response : ", response);
       return response.data;
     });
 };
@@ -176,7 +175,7 @@ export const apiForupdateTesterListForExtraTask = (testPk: string | number) => {
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -196,7 +195,7 @@ export const apiForUpdateTestPassedForExtraTask = (taskPk: string | number) => {
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -220,7 +219,7 @@ export const apiForUpdateCommentForExtraTask = ({
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -600,7 +599,7 @@ export const updateCashPrizeForTask = ({
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -619,7 +618,7 @@ export const update_task_for_is_task_for_cash_prize = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -638,7 +637,7 @@ export const update_task_for_is_task_for_urgent = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -710,7 +709,7 @@ export const updateCommentTextForTaskApi = ({
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -732,7 +731,7 @@ export const updateMutationForCommentEditModeApi = (
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -751,7 +750,7 @@ export const updateTestPassedForTestForTask = (taskPk: string | number) => {
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -770,7 +769,7 @@ export const updateChallengerListByTaskPkApi = (testPk: string | number) => {
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -789,7 +788,7 @@ export const updateTesterListByTestPkApi = (testPk: string | number) => {
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -843,7 +842,7 @@ export const updateExtraTaskImportance = ({ taskPk, star_count }: any) => {
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -868,7 +867,7 @@ export const updateExtraTaskStatusUsingSelectBox = ({
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -997,7 +996,7 @@ export const updateProjectImportance = ({ taskPk, star_count }: any) => {
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -1021,7 +1020,7 @@ export const updateProjectStatusByDrag = ({ taskPk, status_to_move }: any) => {
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -1040,7 +1039,7 @@ export const updateProjectTaskCompleted = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -1162,7 +1161,7 @@ export const api_for_update_check_for_cash_prize = ({
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -1179,7 +1178,7 @@ export const apiForUpdateTaskCheckResultByTester = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -1198,7 +1197,7 @@ export const updateProjectInProgress = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -1217,7 +1216,7 @@ export const updateProjectIsTesting = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -1477,7 +1476,7 @@ export const updateProjectDueDate = ({ taskPk, due_date }: any) => {
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -1501,7 +1500,7 @@ export const updateProjectStartedAt = ({
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };

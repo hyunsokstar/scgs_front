@@ -115,7 +115,7 @@ function Estimates({}: Props): ReactElement {
     const deleteEstimateHandelrForCheckBox = () => {
         const response = deleteMutationForCheck.mutate(selectedItems);
         setSelectedItems([]);
-        // console.log("response : ", response);
+        
     };
 
     function handleCheckboxChange(id: number) {

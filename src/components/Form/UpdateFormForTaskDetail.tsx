@@ -24,7 +24,6 @@ import InputListForTaskUrlsForTask from "../List/InputListForTaskUrlsForTask";
 import { AddIcon } from "@chakra-ui/icons";
 import { FaTimes } from "react-icons/fa";
 import Datetime from "react-datetime";
-import ModalButtonForShowReferImagesForTask from "../modal/ModalButtonForShowReferImagesForTask";
 
 interface props {
   handleAddTaskUrl: any;
@@ -288,16 +287,6 @@ const UpdateFormForTaskDetail = ({
               onDrop={handleDrop}
               border={"1px solid green"}
             >
-              {/* <Box border={"1px solid green"} textAlign={"center"}>
-                <ModalButtonForShowReferImagesForTask
-                  modalSize={"7xl"}
-                  refer_images={refer_images}
-                  buttonText="Refer Image Slide"
-                  buttonWidth={"100%"}
-                  buttonSize="sm"
-                />
-              </Box> */}
-
               {refer_images && refer_images.length ? (
                 refer_images.map((row: any) => {
                   return (

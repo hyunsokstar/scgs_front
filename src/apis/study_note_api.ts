@@ -89,7 +89,7 @@ export const apiForUpdateCommentForSuggestion = ({
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -122,7 +122,7 @@ export const apiForUpdateCommentForFaq = ({
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -491,7 +491,7 @@ export const apiForUpdateErrorReportForNote = ({ errorPk, content }: any) => {
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -597,7 +597,7 @@ export const apiForUpdateCommentForQuestionForNote = ({
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -658,7 +658,7 @@ export const apiForUpdateQuestionForNote = ({
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };

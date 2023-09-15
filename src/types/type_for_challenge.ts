@@ -3,6 +3,7 @@ export interface ITypeForChallengeRow {
     title: string;
     subtitle: string;
     description: string;
+    main_image: string;
     writer: {
         pk: number;
         username: string;

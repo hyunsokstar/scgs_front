@@ -14,8 +14,21 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import ImageBoxForChallengeDetail from "../ImageBox/ImageBoxForChallengeDetail";
+import { ITypeForChallengeRow } from "../../types/type_for_challenge";
 
-const ModalForChallengeDetail: React.FC<any> = ({ isOpen, onClose }) => {
+interface IPropTypes {
+  selectedChallenge: ITypeForChallengeRow;
+  isOpen: boolean; // isOpen을 boolean 타입으로 지정
+  onClose: () => void; // onClose는 함수 타입으로 지정
+}
+
+const ModalForChallengeDetail: React.FC<any> = ({
+  selectedChallenge,
+  isOpen,
+  onClose,
+}: IPropTypes) => {
+  // alert(selectedChallenge);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="full">
       <ModalOverlay />
@@ -31,7 +44,7 @@ const ModalForChallengeDetail: React.FC<any> = ({ isOpen, onClose }) => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <ImageBoxForChallengeDetail />
+              <ImageBoxForChallengeDetail selectedChallenge={selectedChallenge} />
             </Box>
 
             <Divider orientation="vertical" borderColor="gray.300" />

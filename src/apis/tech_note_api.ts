@@ -59,7 +59,7 @@ export const createNoteContent = ({
 export const getTechNoteList = ({ queryKey }: QueryFunctionContext) => {
   const [_, pageNum] = queryKey;
   return instance.get(`tech_note/?page=${pageNum}`).then((response) => {
-    // console.log("response : ", response);
+    
     const response_data = {
       total_count_for_tech_note_table_rows:
         response.data.total_count_for_tech_note_table_rows,
@@ -92,7 +92,7 @@ export const updateTechNoteInfoByPk = ({
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -128,7 +128,7 @@ export const createApiForTechNoteList = ({
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };
@@ -155,7 +155,7 @@ export const createTechNoteForTask = ({
       }
     )
     .then((response): any => {
-      // console.log("response : ", response);
+      
       return response.data;
     });
 };

@@ -54,7 +54,6 @@ export const apiForUpdateCommentForFaqForBoard = ({
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
       return response.data;
     });
 };
@@ -145,8 +144,6 @@ export const apiForGetFaqListForBoard = ({
       //     "perPage": self.perPage,
       // }
 
-      console.log("response : ", response);
-
       return response.data;
     });
 };
@@ -196,7 +193,6 @@ export const apiForUpdateCommentForSuggestionForBoard = ({
       }
     )
     .then((response): AxiosResponse => {
-      // console.log("response : ", response);
       return response.data;
     });
 };
@@ -274,8 +270,6 @@ export const apiForGetSuggestionListForBoard = ({
       //     "totalCountForSuggestionList": self.totalCountForSuggestionList,
       //     "perPage": self.perPage,
       // }
-
-      console.log("response : ", response);
 
       return response.data;
     });

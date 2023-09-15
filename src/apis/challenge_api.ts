@@ -9,6 +9,30 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+// 1122
+export const apiForUpdateChallengeMainImage = ({
+  challengeId,
+  file
+}: any) => {
+  console.log("createProfilePhoto check !!!!!");
+
+  return instance
+    .put(
+      `${challengeId}/update/main_image`,
+      { image_to_update: file },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => {
+      console.log("response.data api: ", response.data);
+
+      return response.data;
+    });
+};
+
 export const apiForGetChallengeList = ({ queryKey }: QueryFunctionContext) => {
   const [_, pageNum] = queryKey;
 
@@ -23,7 +47,6 @@ export const apiForGetChallengeList = ({ queryKey }: QueryFunctionContext) => {
       //   perPage: self.perPage,
       // };
 
-      console.log("response : ", response);
 
       return response.data;
     });

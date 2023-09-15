@@ -135,6 +135,7 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
 
       {selectedChallenge ? (
         <ModalForChallengeDetail
+          selectedChallenge={selectedChallenge}
           isOpen={isModalOpen}
           onClose={handleCloseModal}
         />
