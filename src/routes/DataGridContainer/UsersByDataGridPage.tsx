@@ -70,9 +70,6 @@ const columns = [
     name: "profile_image",
     // rome-ignore lint/suspicious/noExplicitAny: <explanation>
     formatter: ({ row, column }: any) => {
-      // console.log("row : ", row);
-      // console.log("column : ", column);
-
       return (
         <HStack>
           <Img
@@ -99,20 +96,7 @@ const columns = [
     key: "position",
     name: "Position",
     editor: SelectBoxEditor,
-    // rome-ignore lint/suspicious/noExplicitAny: <explanation>
-    // formatter: ({ row, column }: any) => {
-    //   return (
-    //     <Box>
-    //       {/* {row[column.key].position_name === ""
-    //         ? ""
-    //         : row[column.key] === 1
-    //         ? "frontend"
-    //         : "backend"} */}
-    //         {row.position.position_name}
-    //     </Box>
-    // );
   },
-  // },
 ];
 
 // 1122
