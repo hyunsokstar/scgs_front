@@ -67,7 +67,6 @@ const CreateFormForChallenge: React.FC<IPropTypes> = ({
         duration: 2000,
         isClosable: true,
       });
-
     },
     onError: (error: any) => {
       console.error("Error occurred for create image: ", error); // 에러 메시지 출력

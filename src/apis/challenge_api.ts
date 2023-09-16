@@ -11,6 +11,32 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForCreateEvaluateCriteriaForChallenge = ({
+  challengeId,
+  rowsDataForChallenge,
+}: any) => {
+  console.log("challengeId : ", challengeId);
+  console.log("rowsDataForChallenge : ", rowsDataForChallenge);
+
+  return instance
+    .post(
+      `${challengeId}/save`,
+      {
+        rowsDataForChallenge,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => {
+      console.log("response.data api: ", response.data);
+
+      return response.data;
+    });
+};
+
 export const apiForCreateChallenge = ({
   title,
   subtitle,
