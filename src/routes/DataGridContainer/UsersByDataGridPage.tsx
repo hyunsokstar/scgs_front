@@ -117,6 +117,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
     data: usersListData,
     error,
   } = useQuery<IUserRow[]>(["users_list2"], getUsersList);
+  
   const [gridRows, setGridRows] = useState<IUserRow[]>();
   const queryClient = useQueryClient();
 

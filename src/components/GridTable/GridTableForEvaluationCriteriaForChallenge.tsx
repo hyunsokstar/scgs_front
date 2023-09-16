@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DataGrid from "react-data-grid";
 import { Box } from "@chakra-ui/react";
+import { ITypeForChallengeRow } from "../../types/type_for_challenge";
 
-interface EvaluationCriteria {
+interface IProps {
+  selectedChallenge: ITypeForChallengeRow;
+}
+
+interface IEvaluationCriteria {
   id: number;
   item_description: string;
 }
@@ -12,22 +17,30 @@ const columns = [
   { key: "item_description", name: "평가 기준" },
 ];
 
-const rows: EvaluationCriteria[] = [
-  { id: 1, item_description: "next13을 잘 활용 했나?" },
-  { id: 2, item_description: "fastapi를 잘 활용 했나?" },
-  { id: 3, item_description: "게시판의 여러 가지 기능이 잘 구현 되었나?" },
-  { id: 4, item_description: "UI가 훌륭한가?" },
-  { id: 5, item_description: "검색 기능이 잘 구현 되었나?" },
-];
+const GridTableForEvaluationCriteriaForChallenge: React.FC<IProps> = ({
+  selectedChallenge,
+}: IProps) => {
+  // 평가 기준 데이터를 저장할 상태와 초기값 설정
+  const [evaluationCriterials, setEvaluationCriterials] = useState<
+    IEvaluationCriteria[]
+  >([]);
 
-const GridTableForEvaluationCriteriaForChallenge: React.FC = () => {
+  useEffect(() => {
+    // selectedChallenge가 변경될 때마다 평가 기준 데이터 업데이트
+    setEvaluationCriterials(selectedChallenge.evaluation_criterials || []);
+  }, [selectedChallenge]);
+
   return (
     <Box>
-      <DataGrid
-        columns={columns}
-        rows={rows}
-        rowHeight={40}
-      />
+      {evaluationCriterials.length > 0 ? (
+        <DataGrid
+          columns={columns}
+          rows={evaluationCriterials}
+          rowHeight={40}
+        />
+      ) : (
+        <div>평가 기준 데이터가 없습니다.</div>
+      )}
     </Box>
   );
 };

@@ -37,16 +37,15 @@ const ContentForChallenge: React.FC<Props> = ({ selectedChallenge }) => {
           <Tr>
             <Td width="30%">Criteria</Td>
             <Td width="70%">
-
-            <Box display={"flex"} justifyContent={"flex-end"} mb={2}>
-                <ModalButtonForAddEvalutationCriteriaForChallenge />
-            </Box>
+              <Box display={"flex"} justifyContent={"flex-end"} mb={2}>
+                <ModalButtonForAddEvalutationCriteriaForChallenge
+                  selectedChallenge={selectedChallenge}
+                />
+              </Box>
 
               <ListForEvaluationCriteriaForChallenge
                 selectedChallenge={selectedChallenge}
               />
-
-
             </Td>
           </Tr>
         </Tbody>

@@ -1,10 +1,25 @@
-import { Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import GridTableForEvaluationCriteriaForChallenge from "../GridTable/GridTableForEvaluationCriteriaForChallenge";
+import { ITypeForChallengeRow } from "../../types/type_for_challenge";
 
-interface Props {}
+interface Props {
+  selectedChallenge: ITypeForChallengeRow;
+}
 
-const ModalButtonForAddEvalutationCriteriaForChallenge = (props: Props) => {
+const ModalButtonForAddEvalutationCriteriaForChallenge = ({
+  selectedChallenge,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onOpen = () => setIsOpen(true);
@@ -28,19 +43,16 @@ const ModalButtonForAddEvalutationCriteriaForChallenge = (props: Props) => {
       <Modal isOpen={isOpen} onClose={onClose} size="6xl">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader bgColor={"blue.100"}>평가 기준 추가</ModalHeader>
+          <ModalHeader bgColor={"red.100"}>평가 기준 추가</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            
-            <GridTableForEvaluationCriteriaForChallenge />
-
+            <GridTableForEvaluationCriteriaForChallenge selectedChallenge={selectedChallenge} />
           </ModalBody>
 
           <ModalFooter>
             <Button colorScheme="red" onClick={onClose}>
               닫기
             </Button>
-            {/* 다른 모달 버튼 액션을 여기에 추가하세요 */}
           </ModalFooter>
         </ModalContent>
       </Modal>
