@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import DataGrid from "react-data-grid";
 import { Box } from "@chakra-ui/react";
-import { ITypeForChallengeRow } from "../../types/type_for_challenge";
+import {
+  ITypeForChallengeRow,
+  ITypeForEvaluationCriteriaRow,
+} from "../../types/type_for_challenge";
 
 interface IProps {
   selectedChallenge: ITypeForChallengeRow;
-}
-
-interface IEvaluationCriteria {
-  id: number;
-  item_description: string;
 }
 
 const columns = [
@@ -17,16 +15,14 @@ const columns = [
   { key: "item_description", name: "평가 기준" },
 ];
 
-const GridTableForEvaluationCriteriaForChallenge: React.FC<IProps> = ({
+const GridTableForUpdateEvaluationCriteriaForChallenge: React.FC<IProps> = ({
   selectedChallenge,
 }: IProps) => {
-  // 평가 기준 데이터를 저장할 상태와 초기값 설정
   const [evaluationCriterials, setEvaluationCriterials] = useState<
-    IEvaluationCriteria[]
+    ITypeForEvaluationCriteriaRow[]
   >([]);
 
   useEffect(() => {
-    // selectedChallenge가 변경될 때마다 평가 기준 데이터 업데이트
     setEvaluationCriterials(selectedChallenge.evaluation_criterials || []);
   }, [selectedChallenge]);
 
@@ -39,10 +35,10 @@ const GridTableForEvaluationCriteriaForChallenge: React.FC<IProps> = ({
           rowHeight={40}
         />
       ) : (
-        <div>평가 기준 데이터가 없습니다.</div>
+        <Box>평가 기준 데이터가 없습니다.</Box>
       )}
     </Box>
   );
 };
 
-export default GridTableForEvaluationCriteriaForChallenge;
+export default GridTableForUpdateEvaluationCriteriaForChallenge;

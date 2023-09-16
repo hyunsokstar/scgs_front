@@ -31,3 +31,8 @@ export interface ITypeForCreateChallengeParameter {
   description: string;
   main_image: string;
 }
+
+export interface ITypeForEvaluationCriteriaRow {
+  id: number;
+  item_description: string;
+}

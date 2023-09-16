@@ -10,7 +10,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import GridTableForEvaluationCriteriaForChallenge from "../GridTable/GridTableForEvaluationCriteriaForChallenge";
+import GridTableForUpdateEvaluationCriteriaForChallenge from "../GridTable/GridTableForUpdateEvaluationCriteriaForChallenge";
 import { ITypeForChallengeRow } from "../../types/type_for_challenge";
 
 interface Props {
@@ -46,7 +46,9 @@ const ModalButtonForAddEvalutationCriteriaForChallenge = ({
           <ModalHeader bgColor={"red.100"}>평가 기준 추가</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <GridTableForEvaluationCriteriaForChallenge selectedChallenge={selectedChallenge} />
+            <GridTableForUpdateEvaluationCriteriaForChallenge
+              selectedChallenge={selectedChallenge}
+            />
           </ModalBody>
 
           <ModalFooter>
