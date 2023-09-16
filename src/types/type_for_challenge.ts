@@ -1,6 +1,7 @@
 export interface IEvaluationCriteria {
   id: number;
   item_description: string;
+  selected?: boolean;
 }
 
 export interface ITypeForChallengeRow {
