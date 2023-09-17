@@ -20,7 +20,7 @@ interface Props {
 const ContentForChallenge: React.FC<Props> = ({ selectedChallenge }) => {
   return (
     <>
-      <Table>
+      <Table size={"sm"}>
         <Tbody>
           <Tr>
             <Td width="30%">Title</Td>

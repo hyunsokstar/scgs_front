@@ -12,7 +12,7 @@ const ListForEvaluationCriteriaForChallenge: React.FC<ListForEvaluationCriteriaF
   return (
     <>
       {selectedChallenge.evaluation_criterials.length > 0 ? (
-        <List spacing={2} maxHeight="200px" overflowY="scroll">
+        <List spacing={2} maxHeight="150px" overflowY="scroll">
           {selectedChallenge.evaluation_criterials.map((criteria) => (
             <ListItem key={criteria.id}>{criteria.item_description}</ListItem>
           ))}

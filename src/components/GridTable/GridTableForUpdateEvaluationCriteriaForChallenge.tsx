@@ -44,6 +44,8 @@ const GridTableForUpdateEvaluationCriteriaForChallenge: React.FC<IProps> = ({
   selectedChallenge,
 }: IProps) => {
   const toast = useToast();
+  const queryClient = useQueryClient();
+
   const [rowsDataForEvaluateCriteria, setRowsDataForEvaluateCriteria] =
     useState<ITypeForEvaluationCriteriaRow[]>([]);
 
@@ -76,7 +78,7 @@ const GridTableForUpdateEvaluationCriteriaForChallenge: React.FC<IProps> = ({
     {
       onSuccess: (result) => {
         console.log("result : ", result);
-        // queryClient.refetchQueries(["apiForGetChallengeList"]);
+        queryClient.refetchQueries(["apiForGetDetailForChallenge", selectedChallenge.id]);
 
         toast({
           status: "success",

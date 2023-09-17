@@ -22,7 +22,6 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
 
   // 업로드용 url
   const [uploadUrlToCloud, setUploadUrlToCloud] = useState("");
-
   const [isShowForButtons, setIsShowForButtons] = useState(false);
 
   const mutationForUpdateMainImageForChallenge = useMutation(
@@ -151,7 +150,7 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
         ? selectedChallenge.main_image
         : "이미지 없음"} */}
       <Box
-        border={`2px dashed ${isDragging ? "red" : "lightgray"}`} // 점선 스타일 및 색상 설정
+        // border={`2px dashed ${isDragging ? "red" : "lightgray"}`} // 점선 스타일 및 색상 설정
         borderStyle={isDragging ? "dashed" : "solid"} // 드래그 중일 때 점선 스타일, 그 외에는 실선 스타일
         w="90%"
         height="90%"

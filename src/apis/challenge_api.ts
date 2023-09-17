@@ -3,17 +3,36 @@ import { backendApi } from "../apis/common_api";
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import {} from "../types/study_note_type";
-import { ITypeForCreateChallengeParameter, ITypeForEvaluationCriteriaRow } from "../types/type_for_challenge";
+import {
+  ITypeForCreateChallengeParameter,
+  ITypeForEvaluationCriteriaRow,
+} from "../types/type_for_challenge";
 
 const instance = axios.create({
   baseURL: `${backendApi}/api/v1/challenges`,
   withCredentials: true,
 });
-
 // 1122
+
+export const apiForGetDetailForChallenge = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, challengeId] = queryKey;
+
+  return instance.get(`${challengeId}/detail`, {}).then((response) => {
+    // response_data = {
+    //   listForChallenge: serializer.data,
+    //   totalCountForChallengeList: self.totalCountForChallengeList,
+    //   perPage: self.perPage,
+    // };
+
+    return response.data;
+  });
+};
+
 interface IParameterTypeForSaveEvalutationCriteria {
   challengeId: number | string;
-  RowsDataForSave: ITypeForEvaluationCriteriaRow[]
+  RowsDataForSave: ITypeForEvaluationCriteriaRow[];
 }
 
 export const apiForCreateEvaluateCriteriaForChallenge = ({

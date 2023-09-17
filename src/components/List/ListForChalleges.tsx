@@ -125,8 +125,6 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
         ))
       ) : (
         <Center h="50vh">
-          {" "}
-          {/* 화면 세로 중앙에 정렬 */}
           <Text fontSize="xl" fontWeight="bold" color="gray.500">
             No challenges available
           </Text>
@@ -135,6 +133,7 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
 
       {selectedChallenge ? (
         <ModalForChallengeDetail
+          challengeId={selectedChallenge.id}
           selectedChallenge={selectedChallenge}
           isOpen={isModalOpen}
           onClose={handleCloseModal}
