@@ -3,7 +3,7 @@ import { backendApi } from "../apis/common_api";
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import {} from "../types/study_note_type";
-import { ITypeForCreateChallengeParameter } from "../types/type_for_challenge";
+import { ITypeForCreateChallengeParameter, ITypeForEvaluationCriteriaRow } from "../types/type_for_challenge";
 
 const instance = axios.create({
   baseURL: `${backendApi}/api/v1/challenges`,
@@ -11,18 +11,23 @@ const instance = axios.create({
 });
 
 // 1122
+interface IParameterTypeForSaveEvalutationCriteria {
+  challengeId: number | string;
+  RowsDataForSave: ITypeForEvaluationCriteriaRow[]
+}
+
 export const apiForCreateEvaluateCriteriaForChallenge = ({
   challengeId,
-  rowsDataForChallenge,
+  RowsDataForSave,
 }: any) => {
   console.log("challengeId : ", challengeId);
-  console.log("rowsDataForChallenge : ", rowsDataForChallenge);
+  console.log("rowsDataForChallenge for save: ", RowsDataForSave);
 
   return instance
     .post(
-      `${challengeId}/save`,
+      `${challengeId}/evaluation-criteria/save`,
       {
-        rowsDataForChallenge,
+        RowsDataForSave,
       },
       {
         headers: {
@@ -31,7 +36,7 @@ export const apiForCreateEvaluateCriteriaForChallenge = ({
       }
     )
     .then((response) => {
-      console.log("response.data api: ", response.data);
+      console.log("response.data at api", response.data);
 
       return response.data;
     });

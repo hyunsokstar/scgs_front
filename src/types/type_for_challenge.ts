@@ -34,6 +34,7 @@ export interface ITypeForCreateChallengeParameter {
 }
 
 export interface ITypeForEvaluationCriteriaRow {
-  id: number;
+  id: number | string;
   item_description: string;
+  selected?: boolean; 
 }

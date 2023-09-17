@@ -24,8 +24,7 @@ const ChallengesPage = (props: Props) => {
       cacheTime: 0,
     }
   );
-
-  console.log("dataForChallenge : ", dataForChallenge);
+  // console.log("dataForChallenge : ", dataForChallenge);
 
   return (
     <Box>
