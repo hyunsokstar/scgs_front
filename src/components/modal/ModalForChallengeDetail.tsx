@@ -112,7 +112,7 @@ const ModalForChallengeDetail: React.FC<any> = ({
             >
               <Box display={"flex"} justifyContent={"flex-end"} my2={2}>
                 {dataForChallengeDetail &&
-                !dataForChallengeDetail.is_exist_for_evaluation_result ? (
+                dataForChallengeDetail.is_exist_for_evaluation_result === false ? (
                   <ButtonForRegisterChallenge
                     challengeId={dataForChallengeDetail?.id}
                   />
@@ -123,6 +123,7 @@ const ModalForChallengeDetail: React.FC<any> = ({
 
               {dataForChallengeDetail ? (
                 <TableForEvalutationResultListForChallenge
+                  challengeId={challengeId}
                   evaluationResults={dataForChallengeDetail.evaluation_results}
                 />
               ) : (
