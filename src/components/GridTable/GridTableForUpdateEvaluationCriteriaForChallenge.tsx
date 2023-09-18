@@ -62,7 +62,7 @@ const GridTableForUpdateEvaluationCriteriaForChallenge: React.FC<IProps> = ({
 
   const addRow = () => {
     // UUID 생성
-    const newId = uuidv4();
+    // const newId = uuidv4();
 
     // 새로운 행 추가
     const newRow: ITypeForEvaluationCriteriaRow = {

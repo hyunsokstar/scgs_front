@@ -42,7 +42,13 @@ export interface ITypeForCreateChallengeParameter {
 export interface ITypeForEvaluationCriteriaRow {
   id: number | string;
   item_description: string;
-  selected?: boolean; 
+  selected?: boolean;
+}
+
+interface EvaluationResults {
+  [username: string]: {
+    [criteria: string]: "pass" | "fail" | "undecided";
+  };
 }
 
 export interface ITypeForChallengeDetail {
@@ -55,4 +61,5 @@ export interface ITypeForChallengeDetail {
   created_at: string;
   created_at_formatted: string;
   evaluation_criterials: IEvaluationCriteria[];
+  evaluation_results: EvaluationResults;
 }
