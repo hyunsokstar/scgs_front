@@ -55,6 +55,7 @@ function ModalButtonForCreateFaqForBoard({
     setContent(newContent);
   };
 
+  // mutationForRegisterChallenge 
   const mutationForCreateSuggestionForBoard = useMutation(
     apiForCreateFaqForBoard,
     {

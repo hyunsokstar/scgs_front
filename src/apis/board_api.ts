@@ -10,7 +10,7 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForCreateFaqForBoard
+// apiForRegisterForChallenge
 export const apiForCreateFaqForBoard = ({ title, content }: any) =>
   instance
     .post(

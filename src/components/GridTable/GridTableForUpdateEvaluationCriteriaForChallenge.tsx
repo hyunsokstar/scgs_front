@@ -153,9 +153,6 @@ const GridTableForUpdateEvaluationCriteriaForChallenge: React.FC<IProps> = ({
           save
         </Button>
 
-        {/* <Button variant="outline" size="sm" onClick={deleteHandler}>
-          delete
-        </Button> */}
       </Box>
 
       {rowsDataForEvaluateCriteria.length > 0 ? (

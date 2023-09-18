@@ -1,22 +1,62 @@
-import React from 'react';
-import { Button } from '@chakra-ui/react';
+import React from "react";
+import { Button, useToast } from "@chakra-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiForRegisterForChallenge } from "../../apis/challenge_api";
 
 interface IProps {
   challengeId: string;
 }
 
 const ButtonForRegisterChallenge: React.FC<IProps> = ({ challengeId }) => {
+  const toast = useToast();
+
+  const queryClient = useQueryClient();
+
+  // mutationForRegisterChallenge
+  const mutationForCreateSuggestionForBoard = useMutation(
+    apiForRegisterForChallenge,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["apiForGetDetailForChallenge"]);
+
+        toast({
+          title: "challenge register 성공",
+          description: data.message,
+          status: "success",
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+
+        // 에러 메시지를 토스트로 표시
+        toast({
+          title: "에러 발생",
+          description: error.response.data.message, // 에러 메시지를 사용
+          status: "error",
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
   const handleButtonClick = () => {
-    // 버튼이 클릭되었을 때 실행될 동작을 여기에 추가합니다.
-    // 예를 들어, 클릭 시 어떤 함수를 호출하거나 상태를 변경할 수 있습니다.
-    alert(`Clicked on Register for Challenge ${challengeId}`);
+    // alert(`Clicked on Register for Challenge ${challengeId}`);
+    mutationForCreateSuggestionForBoard.mutate({ challengeId });
   };
 
   return (
     <Button
       variant="outline" // outlined 스타일
       size="sm" // 작은 크기
-      _hover={{ bg: 'teal.400' }} // 호버 시 배경색 변경
+      _hover={{ bg: "teal.400" }} // 호버 시 배경색 변경
       onClick={handleButtonClick} // 클릭 이벤트 설정
     >
       Register for Challenge {challengeId}

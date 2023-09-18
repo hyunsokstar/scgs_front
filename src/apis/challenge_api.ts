@@ -14,6 +14,20 @@ const instance = axios.create({
 });
 // 1122
 
+// apiForRegisterForChallenge
+export const apiForRegisterForChallenge = ({ challengeId }: any) =>
+  instance
+    .post(
+      `/${challengeId}/register`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForGetDetailForChallenge = ({
   queryKey,
 }: QueryFunctionContext) => {
