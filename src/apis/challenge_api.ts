@@ -13,6 +13,15 @@ const instance = axios.create({
   withCredentials: true,
 });
 // 1122
+export const apiForWithDrawlForChallenge = (challengeId: number | string) => {
+  return instance
+    .delete(`${challengeId}/withdrawl`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
 
 // apiForRegisterForChallenge
 export const apiForRegisterForChallenge = ({ challengeId }: any) =>

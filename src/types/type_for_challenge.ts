@@ -62,4 +62,5 @@ export interface ITypeForChallengeDetail {
   created_at_formatted: string;
   evaluation_criterials: IEvaluationCriteria[];
   evaluation_results: EvaluationResults;
+  is_exist_for_evaluation_result: boolean;
 }

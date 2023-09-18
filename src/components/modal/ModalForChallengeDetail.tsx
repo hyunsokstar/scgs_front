@@ -24,6 +24,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForGetDetailForChallenge } from "../../apis/challenge_api";
 import TableForEvalutationResultListForChallenge from "../Table/TableForEvalutationResultListForChallenge";
 import ButtonForRegisterChallenge from "../Button/ButtonForRegisterChallenge";
+import ButtonForWithDrawlForChallenge from "../Button/ButtonForWithDrawlForChallenge";
 
 interface IPropTypes {
   selectedChallenge: ITypeForChallengeRow;
@@ -110,12 +111,17 @@ const ModalForChallengeDetail: React.FC<any> = ({
               border="2px dashed blue"
             >
               <Box display={"flex"} justifyContent={"flex-end"} my2={2}>
-                <ButtonForRegisterChallenge
-                  challengeId={dataForChallengeDetail?.id}
-                />
+                {dataForChallengeDetail &&
+                !dataForChallengeDetail.is_exist_for_evaluation_result ? (
+                  <ButtonForRegisterChallenge
+                    challengeId={dataForChallengeDetail?.id}
+                  />
+                ) : (
+                  <ButtonForWithDrawlForChallenge challengeId={challengeId} />
+                )}
               </Box>
 
-              {dataForChallengeDetail?.evaluation_results ? (
+              {dataForChallengeDetail ? (
                 <TableForEvalutationResultListForChallenge
                   evaluationResults={dataForChallengeDetail.evaluation_results}
                 />

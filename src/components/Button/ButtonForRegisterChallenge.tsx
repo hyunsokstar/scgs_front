@@ -59,7 +59,7 @@ const ButtonForRegisterChallenge: React.FC<IProps> = ({ challengeId }) => {
       _hover={{ bg: "teal.400" }} // 호버 시 배경색 변경
       onClick={handleButtonClick} // 클릭 이벤트 설정
     >
-      Register for Challenge {challengeId}
+      Register for Challenge {challengeId} ?
       {/* 버튼 텍스트와 기능을 필요에 따라 수정하세요. */}
     </Button>
   );
