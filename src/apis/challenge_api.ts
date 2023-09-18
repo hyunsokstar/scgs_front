@@ -4,6 +4,7 @@ import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import {} from "../types/study_note_type";
 import {
+  IParameterTyperForApiForUpdateForEvaluateResultForChallenge,
   ITypeForCreateChallengeParameter,
   ITypeForEvaluationCriteriaRow,
 } from "../types/type_for_challenge";
@@ -13,6 +14,36 @@ const instance = axios.create({
   withCredentials: true,
 });
 // 1122
+
+// apiForUpdateEvaluateResultForChallenge
+export const apiForUpdateEvaluateResultForChallenge = ({
+  challengeId,
+  userName,
+  criteria,
+}: IParameterTyperForApiForUpdateForEvaluateResultForChallenge) => {
+  console.log(
+    "challengeId, username, criteria : ",
+    challengeId,
+    userName,
+    criteria
+  );
+
+  return instance
+    .put(
+      `/${challengeId}/update/evaluate-result`,
+      { userName, criteria },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
 export const apiForWithDrawlForChallenge = (challengeId: number | string) => {
   return instance
     .delete(`${challengeId}/withdrawl`, {

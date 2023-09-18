@@ -1,3 +1,11 @@
+// api type
+export interface IParameterTyperForApiForUpdateForEvaluateResultForChallenge {
+  challengeId: number | string;
+  userName: string;
+  criteria: string;
+}
+
+// 그외
 export interface IWriter {
   pk: number;
   username: string;
