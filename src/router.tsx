@@ -67,6 +67,7 @@ import NoteContentsByImageSlidePage from "./routes/Slide/NoteContentsByImageSlid
 import SuggestionBoardPage from "./routes/SuggestionBoardPage";
 import FAQBoardPage from "./routes/FAQBoardPage";
 import ChallengesPage from "./routes/ChallengesPage";
+import SurveyPage from "./routes/SurveyPage";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Home />,
+      },
+      {
+        path: "survey",
+        element: <SurveyPage />,
       },
       {
         path: "api-docu",
