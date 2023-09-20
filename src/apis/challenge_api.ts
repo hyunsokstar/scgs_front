@@ -68,6 +68,7 @@ export const apiForRegisterForChallenge = ({ challengeId }: any) =>
     )
     .then((response) => response.data);
 
+// apiForGetDetailForSurvey
 export const apiForGetDetailForChallenge = ({
   queryKey,
 }: QueryFunctionContext) => {

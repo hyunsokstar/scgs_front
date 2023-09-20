@@ -20,23 +20,37 @@ const instance = axios.create({
 });
 
 // 1122
-export const apiForGetSurveyList = ({
-    queryKey,
-  }: QueryFunctionContext) => {
-    const [_, pageNum] = queryKey;
-  
-    return instance
-      .get(``, {
-        params: { pageNum: pageNum },
-      })
-      .then((response) => {
-  
-        // response_data = {
-        //   suggestionList: serializer.data,
-        //   totalSuggestionCount: self.totalSuggestionCount,
-        //   perPage: self.perPage,
-        // };
-  
-        return response.data;
-      });
-  };
+// apiForGetDetailForSurvey
+export const apiForGetDetailForSurvey = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, selectedSurveyId] = queryKey;
+
+  return instance.get(`${selectedSurveyId}`, {}).then((response) => {
+    // response_data = {
+    //   listForChallenge: serializer.data,
+    //   totalCountForChallengeList: self.totalCountForChallengeList,
+    //   perPage: self.perPage,
+    // };
+
+    return response.data;
+  });
+};
+
+export const apiForGetSurveyList = ({ queryKey }: QueryFunctionContext) => {
+  const [_, pageNum] = queryKey;
+
+  return instance
+    .get(``, {
+      params: { pageNum: pageNum },
+    })
+    .then((response) => {
+      // response_data = {
+      //   suggestionList: serializer.data,
+      //   totalSuggestionCount: self.totalSuggestionCount,
+      //   perPage: self.perPage,
+      // };
+
+      return response.data;
+    });
+};
