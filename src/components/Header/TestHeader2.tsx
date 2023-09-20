@@ -322,7 +322,7 @@ const Header = () => {
             cursor="pointer"
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
-            Survey
+            survey
           </Text>
         </NavLink>
 

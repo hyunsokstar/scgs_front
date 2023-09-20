@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -14,8 +14,11 @@ import {
   Spacer,
   List,
   ListItem,
-  ListIcon,
   Button,
+  Input,
+  InputGroup,
+  InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { ISurvey, ISurveyOption } from "../../types/type_for_survey";
@@ -30,6 +33,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import useUser from "../../lib/useUser";
 
 interface ModalForSurveyDetailProps {
   isOpen: boolean;
@@ -37,11 +41,17 @@ interface ModalForSurveyDetailProps {
   selectedSurveyId: number | null;
 }
 
+// 1122
 const ModalForSurveyDetail: React.FC<ModalForSurveyDetailProps> = ({
   isOpen,
   onClose,
   selectedSurveyId,
 }) => {
+  const toast = useToast();
+
+  const { userLoading, user, isLoggedIn } = useUser();
+  const [newOption, setNewOption] = useState("");
+
   const { isLoading: isLoadingForSurveyDetail, data: dataForForSurveyDetail } =
     useQuery<ISurvey>(
       ["apiForGetDetailForSurvey", selectedSurveyId],
@@ -50,6 +60,30 @@ const ModalForSurveyDetail: React.FC<ModalForSurveyDetailProps> = ({
         enabled: true,
       }
     );
+
+  // 보기 추가 버튼 클릭 핸들러 함수
+  const handleAddView = () => {
+    console.log("새로운 옵션:", newOption);
+
+    if (newOption.length === 0) {
+      // 글자수가 0이면 Toast 메시지 표시
+      toast({
+        title: "추가할 보기를 입력해주세요",
+        status: "error",
+        duration: 3000, // 메시지 자동 닫힘 시간 (3초)
+        isClosable: true,
+        position: "top", // 화면 상단에 표시
+      });
+      return;
+    }
+
+    if (dataForForSurveyDetail?.survey_options.length >= 5) {
+      alert("보기를 5개 이상 입력 할수 없습니다");
+      return;
+    }
+    // newOption 초기화
+    setNewOption("");
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="6xl">
@@ -62,7 +96,6 @@ const ModalForSurveyDetail: React.FC<ModalForSurveyDetailProps> = ({
           {selectedSurveyId !== null && dataForForSurveyDetail && (
             <Box>
               <VStack alignItems="flex-start" spacing={4}>
-                {/* Writer Avatar and Title */}
                 <HStack spacing={4}>
                   <Avatar
                     size="lg"
@@ -79,6 +112,7 @@ const ModalForSurveyDetail: React.FC<ModalForSurveyDetailProps> = ({
                       dataForForSurveyDetail.created_at
                     ).toLocaleDateString()}
                   </Text>
+                  <Spacer />
                 </HStack>
 
                 <Box
@@ -89,6 +123,38 @@ const ModalForSurveyDetail: React.FC<ModalForSurveyDetailProps> = ({
                 >
                   {/* Survey Options */}
                   <Box width={"50%"}>
+                    <Box>
+                      <InputGroup my={1}>
+                        <Input
+                          placeholder="addone"
+                          value={newOption}
+                          onChange={(e) => setNewOption(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              handleAddView();
+                            }
+                          }}
+                        />
+
+                        <InputRightElement width="auto">
+                          {user?.username ===
+                          dataForForSurveyDetail?.writer?.username ? (
+                            <Button
+                              colorScheme="teal"
+                              size="sm"
+                              _hover={{ bg: "teal.500" }}
+                              m={1}
+                              onClick={handleAddView}
+                            >
+                              보기 추가
+                            </Button>
+                          ) : (
+                            <Box>""</Box>
+                          )}
+                        </InputRightElement>
+                      </InputGroup>
+                    </Box>
+
                     <List spacing={2}>
                       {dataForForSurveyDetail.survey_options.map(
                         (option: ISurveyOption, index: number) => (
