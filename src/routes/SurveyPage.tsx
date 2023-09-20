@@ -1,33 +1,52 @@
-import React from 'react';
+import React, { useState } from "react";
 import {
   Box,
+  Center,
   Heading,
   Text,
   Button,
   Stack,
   VStack,
   HStack,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { apiForGetSurveyList } from "../apis/survey_api";
+import ListForSurvey from "../components/List/ListForSurvey";
 
 interface Props {}
 
 const SurveyPage = (props: Props) => {
+  const [pageNum, setPageNum] = useState(1);
+
+  const {
+    isLoading: loadingForSuveryList,
+    data: dataForSurveyList,
+    refetch: refetchForSurveyListData,
+  } = useQuery<any>(["apiForGetSurveyList", pageNum], apiForGetSurveyList, {
+    enabled: true,
+    cacheTime: 0, // 캐싱 비활성화
+  });
+
+  if (dataForSurveyList) {
+    console.log("dataForSurveyList : ", dataForSurveyList);
+  }
+
   return (
     <Box p={4}>
-      <Heading as="h1" size="xl" mb={4}>
-        Welcome to Survey Page
-      </Heading>
-      <Text fontSize="lg" mb={4}>
-        This is a simple survey page designed with Chakra UI and TypeScript.
-      </Text>
+      <Center>
+        <Box textAlign="center" p={3}>
+          <Text fontSize="4xl" fontWeight="bold" mb={3}>
+            Survey
+          </Text>
+        </Box>
+      </Center>
+
       <VStack spacing={4}>
-        <Button colorScheme="teal" size="lg">
-          Start Survey
-        </Button>
-        <HStack spacing={2}>
-          <Text>Already have an account?</Text>
-          <Button variant="link">Login</Button>
-        </HStack>
+        {dataForSurveyList ? (
+          <ListForSurvey surveys={dataForSurveyList} />
+        ) : (
+          "no data"
+        )}
       </VStack>
     </Box>
   );

@@ -48,12 +48,6 @@ const SuggestionListForNote: React.FC<SuggestionListProps> = ({
   const [selectedSuggestion, setSelectedSuggestion] =
     useState<Suggestion | null>(null);
 
-  // 수정 핸들러 함수
-  const handleEdit = (pk: number) => {
-    alert(`수정 아이콘을 클릭했습니다. PK: ${pk}`);
-    // 실제로 수정할 로직을 추가하세요.
-  };
-
   // mutationForDeleteSuggestionForNote
   const mutationForDeleteCommentForSuggestion = useMutation(
     (suggestionPk: string | number) => {
