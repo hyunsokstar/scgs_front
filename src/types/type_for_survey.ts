@@ -1,4 +1,32 @@
-export interface ISurvey {
+interface IUser {
+  pk: number;
+  username: string;
+  profile_image: string;
+}
+
+interface ISurveyOption {
+  id: number;
+  content: string;
+  survey: number;
+}
+
+interface ISurvey {
+  id: number;
+  title: string;
+  description: string;
+  writer: IUser;
+  survey_options: ISurveyOption[];
+  created_at: string;
+}
+
+interface ISurveyList extends Array<ISurvey> {}
+
+export interface ISurveyOptionCount {
+  option_content: string;
+  count: number;
+}
+
+export interface ISurveyDetail {
   id: number;
   title: string;
   description: string;
@@ -8,19 +36,16 @@ export interface ISurvey {
     profile_image: string;
   } | null;
   created_at: string;
-  count_for_1th_option: number; // 추가
-  count_for_2th_option: number; // 추가
-  count_for_3th_option: number; // 추가
-  count_for_4th_option: number; // 추가
-  count_for_5th_option: number; // 추가
+  survey_options: ISurveyOption[];
+  count_for_options: ISurveyOptionCount[];
 }
 
-export interface ISurveyOption {
-  id: number;       // 옵션의 고유 ID
-  content: string; // 옵션의 내용 또는 텍스트
-  survey: number;  // 옵션이 속한 설문 조사의 ID
+export interface parameteryForCreateSurveyOption {
+  surveyId: any;
+  newOption: string;
 }
 
-
-
-  
+export interface parameteryForCreateSurveyAnswer {
+  surveyId: any;
+  surveyOptionId: any;
+}

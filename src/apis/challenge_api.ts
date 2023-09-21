@@ -54,7 +54,7 @@ export const apiForWithDrawlForChallenge = (challengeId: number | string) => {
     .then((response) => response.data);
 };
 
-// apiForRegisterForChallenge
+// apiForCreateSurveyOptionForSurvey
 export const apiForRegisterForChallenge = ({ challengeId }: any) =>
   instance
     .post(

@@ -52,7 +52,7 @@ const ModalButtonForUpdateSuggestion = ({
     set_suggestion_content(value); // 변경: note_content -> suggestion_content
   };
 
-  // mutationForUpdateSuggestion
+  // mutationForUpdateSugg
   const mutationForUpdateSuggestion = useMutation(apiForUpdateSuggestion, {
     onMutate: () => {
       console.log("mutation starting");

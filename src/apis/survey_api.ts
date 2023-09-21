@@ -13,6 +13,10 @@ import {
   IFormTypeForCreateYoutubeContentForNote,
   FormTypeForCreateCommentForNote,
 } from "../types/study_note_type";
+import {
+  parameteryForCreateSurveyOption,
+  parameteryForCreateSurveyAnswer,
+} from "../types/type_for_survey";
 
 const instance = axios.create({
   baseURL: `${backendApi}/api/v1/survey`,
@@ -20,6 +24,44 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForCreateSurveyAnswer = ({
+  surveyId,
+  surveyOptionId,
+}: parameteryForCreateSurveyAnswer) =>
+  instance
+    .post(
+      `survey-answer/create`,
+      {
+        surveyId,
+        surveyOptionId,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
+// apiForCreateSurveyOptionForSurvey
+export const apiForCreateSurveyOptionForSurvey = ({
+  surveyId,
+  newOption,
+}: parameteryForCreateSurveyOption) =>
+  instance
+    .post(
+      `/${surveyId}/survey-option/create`,
+      {
+        newOption,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 // apiForGetDetailForSurvey
 export const apiForGetDetailForSurvey = ({
   queryKey,

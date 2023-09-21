@@ -12,7 +12,7 @@ const ButtonForRegisterChallenge: React.FC<IProps> = ({ challengeId }) => {
 
   const queryClient = useQueryClient();
 
-  // mutationForRegisterChallenge
+  // mutationForCreateSurvey
   const mutationForCreateSuggestionForBoard = useMutation(
     apiForRegisterForChallenge,
     {
