@@ -26,8 +26,6 @@ import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  createCommentForTaskApi,
-  deleteOneCommentForTaskByPkApi,
   updateCommentTextForTaskApi,
   updateMutationForCommentEditModeApi,
 } from "../apis/project_progress_api";
@@ -109,7 +107,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
     });
   };
 
-  // mutationForDeleteCommentForFaq
+  // mutationForDeleteSurvey
   const mutationForDeleteUserTaskComment = useMutation(
     (pk: string | number) => {
       // return deleteOneCommentForTaskByPkApi(pk);

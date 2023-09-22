@@ -4,13 +4,13 @@ interface IUser {
   profile_image: string;
 }
 
-interface ISurveyOption {
+export interface ISurveyOption {
   id: number;
   content: string;
   survey: number;
 }
 
-interface ISurvey {
+export interface ISurveyRow {
   id: number;
   title: string;
   description: string;
@@ -19,7 +19,11 @@ interface ISurvey {
   created_at: string;
 }
 
-interface ISurveyList extends Array<ISurvey> {}
+export interface ITypeForDataForSurveyList {
+  listForSurvey: ISurveyRow[];
+  totalCountForSurveyList: number;
+  perPage: number;
+}
 
 export interface ISurveyOptionCount {
   option_content: string;
@@ -48,4 +52,9 @@ export interface parameteryForCreateSurveyOption {
 export interface parameteryForCreateSurveyAnswer {
   surveyId: any;
   surveyOptionId: any;
+}
+
+export interface IParameterTypeForCreateSurvey {
+  title: string;
+  description: string;
 }

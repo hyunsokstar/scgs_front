@@ -23,7 +23,7 @@ export const apiForGetAllUserNames = () =>
     return response.data;
   });
 
-
+// apiForDeleteSurvey
 export const apiForDeleteUserTaskCommentForPk = (commentPk: string | number) => {
   console.log("commentPk : ", commentPk);
   return instance

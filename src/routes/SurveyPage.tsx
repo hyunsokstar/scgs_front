@@ -1,36 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
-  Center,
-  Heading,
-  Text,
   Button,
-  Stack,
+  Center,
+  Text,
   VStack,
-  HStack,
+  useToast,
+  Input,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiForGetSurveyList } from "../apis/survey_api";
 import ListForSurvey from "../components/List/ListForSurvey";
+import ModalButtonForCreateSurvey from "../components/modal/ModalButtonForCreateSurvey";
+import {
+  ISurveyRow,
+  ITypeForDataForSurveyList,
+} from "../types/type_for_survey";
+import PaginationComponent from "../components/PaginationComponent";
 
 interface Props {}
 
 const SurveyPage = (props: Props) => {
   const [pageNum, setPageNum] = useState(1);
 
+  // step 11
+  const [surveyList, setSurveyList] = useState<ISurveyRow[]>();
+  const [searchWords, setsearchWords] = useState("");
+
   const {
     isLoading: loadingForSuveryList,
     data: dataForSurveyList,
     refetch: refetchForSurveyListData,
-  } = useQuery<any>(["apiForGetSurveyList", pageNum], apiForGetSurveyList, {
-    enabled: true,
-    cacheTime: 0, // 캐싱 비활성화
-  });
+  } = useQuery<ITypeForDataForSurveyList>(
+    ["apiForGetSurveyList", pageNum],
+    apiForGetSurveyList,
+    {
+      enabled: true,
+      cacheTime: 0, // 캐싱 비활성화
+    }
+  );
 
   if (dataForSurveyList) {
     console.log("dataForSurveyList : ", dataForSurveyList);
   }
 
+  const handleSearch = () => {
+    // console.log("handleSearch check : ", searchWords);
+    mutationForSearchSuggestionListBySearchWords.mutate({
+      study_note_pk,
+      searchWords,
+    });
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  const handleSearchWord = (searchWords: string) => {
+    // console.log("handleSearchWord searchWords : ", searchWords);
+    setsearchWords(searchWords);
+  };
+
+  // step 22
+  useEffect(() => {
+    if (dataForSurveyList) {
+      setSurveyList(dataForSurveyList?.listForSurvey);
+    }
+  }, [dataForSurveyList]);
+
+  // 2244
   return (
     <Box p={4}>
       <Center>
@@ -41,11 +83,53 @@ const SurveyPage = (props: Props) => {
         </Box>
       </Center>
 
+      <Box
+        display={"flex"}
+        justifyContent={"flex-end"}
+        flexDirection={"column"}
+        gap={2}
+        mb={2}
+      >
+        <ModalButtonForCreateSurvey />
+
+        <InputGroup>
+          <Input
+            placeholder="Search..."
+            value={searchWords}
+            onChange={(e) => handleSearchWord(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <InputRightElement width="auto" mr={1}>
+            <Button
+              colorScheme="blue"
+              size="sm"
+              onClick={() => {
+                handleSearch();
+              }}
+            >
+              Search
+            </Button>
+          </InputRightElement>
+        </InputGroup>
+      </Box>
+
+      {/* step 33 */}
       <VStack spacing={4}>
         {dataForSurveyList ? (
-          <ListForSurvey surveys={dataForSurveyList} />
+          <ListForSurvey surveys={surveyList ? surveyList : []} />
         ) : (
           "no data"
+        )}
+
+        {dataForSurveyList ? (
+          <PaginationComponent
+            current_page_num={pageNum}
+            setCurrentPageNum={setPageNum}
+            total_page_num={dataForSurveyList?.totalCountForSurveyList}
+            task_number_for_one_page={dataForSurveyList.perPage}
+          />
+        ) : (
+          ""
         )}
       </VStack>
     </Box>

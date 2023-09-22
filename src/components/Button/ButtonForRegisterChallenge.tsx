@@ -9,10 +9,8 @@ interface IProps {
 
 const ButtonForRegisterChallenge: React.FC<IProps> = ({ challengeId }) => {
   const toast = useToast();
-
   const queryClient = useQueryClient();
 
-  // mutationForCreateSurvey
   const mutationForCreateSuggestionForBoard = useMutation(
     apiForRegisterForChallenge,
     {
@@ -48,7 +46,6 @@ const ButtonForRegisterChallenge: React.FC<IProps> = ({ challengeId }) => {
   );
 
   const handleButtonClick = () => {
-    // alert(`Clicked on Register for Challenge ${challengeId}`);
     mutationForCreateSuggestionForBoard.mutate({ challengeId });
   };
 

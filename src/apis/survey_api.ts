@@ -2,20 +2,11 @@ import axios, { AxiosResponse } from "axios";
 import { backendApi } from "../apis/common_api";
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
-import {
-  IFormTypeForCreateSubjectTitleForPage,
-  ListPropsForContentOrdering,
-  parameterForSearchContentListForStudynote,
-  StudyNoteContentFormData,
-  type_for_insert_study_note,
-  type_for_parameter_for_delete_pages_for_study_note,
-  typeForParameterForApiForCopySelectedNotesToMyNote,
-  IFormTypeForCreateYoutubeContentForNote,
-  FormTypeForCreateCommentForNote,
-} from "../types/study_note_type";
+
 import {
   parameteryForCreateSurveyOption,
   parameteryForCreateSurveyAnswer,
+  IParameterTypeForCreateSurvey,
 } from "../types/type_for_survey";
 
 const instance = axios.create({
@@ -24,6 +15,36 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForDeleteSurvey
+export const apiForDeleteSurvey = (surveyId: string | number) => {
+  console.log("surveyId : ", surveyId);
+  return instance
+    // .delete(`project_progress/comment/${surveyId}`, {
+      .delete(`${surveyId}/delete`, {
+        headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+// apiForCreateSurvey
+export const apiForCreateSurvey = ({
+  title,
+  description,
+}: IParameterTypeForCreateSurvey) =>
+  instance
+    .post(
+      `/create`,
+      { title, description },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForCreateSurveyAnswer = ({
   surveyId,
   surveyOptionId,
