@@ -5,13 +5,13 @@ import {
   Center,
   Text,
   VStack,
-  useToast,
   Input,
   InputGroup,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { apiForGetSurveyList } from "../apis/survey_api";
+import { apiForGetSurveyList, apiForSearchSurveyListBySearchWords } from "../apis/survey_api";
 import ListForSurvey from "../components/List/ListForSurvey";
 import ModalButtonForCreateSurvey from "../components/modal/ModalButtonForCreateSurvey";
 import {
@@ -23,8 +23,8 @@ import PaginationComponent from "../components/PaginationComponent";
 interface Props {}
 
 const SurveyPage = (props: Props) => {
+  const toast = useToast();
   const [pageNum, setPageNum] = useState(1);
-
   // step 11
   const [surveyList, setSurveyList] = useState<ISurveyRow[]>();
   const [searchWords, setsearchWords] = useState("");
@@ -46,10 +46,28 @@ const SurveyPage = (props: Props) => {
     console.log("dataForSurveyList : ", dataForSurveyList);
   }
 
+  const mutationForSurveyListBySearchWords = useMutation(
+    apiForSearchSurveyListBySearchWords,
+    {
+      onSuccess: (result: any) => {
+        console.log("result for search: ", result);
+        setSurveyList(result.data);
+
+        toast({
+          status: "success",
+          title: "search faq list !!",
+          description: result.message,
+        });
+      },
+      onError: (err) => {
+        console.log("error : ", err);
+      },
+    }
+  );
+
   const handleSearch = () => {
-    // console.log("handleSearch check : ", searchWords);
-    mutationForSearchSuggestionListBySearchWords.mutate({
-      study_note_pk,
+    console.log("handleSearch check : ", searchWords);
+    mutationForSurveyListBySearchWords.mutate({
       searchWords,
     });
   };
@@ -65,6 +83,7 @@ const SurveyPage = (props: Props) => {
     setsearchWords(searchWords);
   };
 
+  
   // step 22
   useEffect(() => {
     if (dataForSurveyList) {

@@ -15,6 +15,19 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForSearchSurveyListBySearchWords
+export const apiForSearchSurveyListBySearchWords = ({
+  searchWords,
+}: any) => {
+  return instance
+    .get(`search`, {
+      params: {
+        searchWords: searchWords,
+      },
+    })
+    .then((response) => response.data);
+};
+
 // apiForDeleteSurvey
 export const apiForDeleteSurvey = (surveyId: string | number) => {
   console.log("surveyId : ", surveyId);

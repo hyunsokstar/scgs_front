@@ -205,7 +205,7 @@ export const apiForAddCommentForSuggestionForNote = ({
     .then((response) => response.data);
 };
 
-// apiForSearchSurgesttionListBySearchWords
+// apiForSearchSurveyListBySearchWords
 export const apiForSearchSurgesttionListBySearchWords = ({
   study_note_pk,
   searchWords,
