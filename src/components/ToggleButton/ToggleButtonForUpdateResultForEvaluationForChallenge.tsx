@@ -93,7 +93,6 @@ const ToggleButtonForUpdateResultForEvaluationForChallenge: React.FC<
       isChecked={isChecked}
       onChange={handleChange}
     >
-      {option}
     </Switch>
   );
 };

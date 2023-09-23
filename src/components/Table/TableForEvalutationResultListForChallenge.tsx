@@ -1,6 +1,7 @@
 import React from "react";
 import { Table, Thead, Tbody, Tr, Th, Td, Box } from "@chakra-ui/react";
 import ToggleButtonForUpdateResultForEvaluationForChallenge from "../ToggleButton/ToggleButtonForUpdateResultForEvaluationForChallenge";
+import { ChallengeResultRow } from "../../types/type_for_challenge";
 
 interface IProps {
   challengeId: number | string;
@@ -9,11 +10,13 @@ interface IProps {
       [criteria: string]: string;
     };
   };
+  challenge_results: ChallengeResultRow[];
 }
 
 const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
   challengeId,
   evaluationResults,
+  challenge_results,
 }: IProps) => {
   if (!evaluationResults || Object.keys(evaluationResults).length === 0) {
     return <div>No data for 평가 결과</div>;
@@ -57,7 +60,15 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                   </Box>
                 ))}
               </Td>
-              <Td>pass?</Td>
+              <Td>
+                {challenge_results
+                  ? challenge_results.map((row) => {
+                      if (row.challenger.username === username) {
+                        return <Box>{row.pass_status ? "passed" : "fail"}</Box>;
+                      }
+                    })
+                  : "no result"}
+              </Td>
             </Tr>
           ))}
         </Tbody>

@@ -125,11 +125,12 @@ const ModalForChallengeDetail: React.FC<any> = ({
                 <TableForEvalutationResultListForChallenge
                   challengeId={challengeId}
                   evaluationResults={dataForChallengeDetail.evaluation_results}
+                  challenge_results = {selectedChallenge.challenge_results}
                 />
               ) : (
                 "no data for 평가 결과"
               )}
-              
+
             </Box>
           </Flex>
         </ModalBody>

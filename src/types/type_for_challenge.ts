@@ -18,12 +18,23 @@ export interface IEvaluationCriteria {
   selected?: boolean;
 }
 
+export interface ChallengeResultRow {
+  id: number;
+  challenger: IWriter;
+  challenge: number;
+  pass_status: boolean;
+  comment: string;
+  created_at: string; // ISO 8601 형식의 날짜 문자열
+  created_at_formatted: string;
+}
+
 export interface ITypeForChallengeRow {
   id: number;
   title: string;
   subtitle: string;
   description: string;
   main_image: string;
+  challenge_results: ChallengeResultRow[];
   writer: {
     pk: number;
     username: string;
