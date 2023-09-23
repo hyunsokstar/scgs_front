@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Button, Image, Text, Stack, Badge } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Image,
+  Text,
+  Stack,
+  Badge,
+  Spacer,
+} from "@chakra-ui/react";
 
 interface EvaluationCriterion {
   id: number;
@@ -59,27 +67,36 @@ const CardForChallengeList: React.FC<CardProps> = ({
 
       {/* 텍스트 내용 컨테이너 */}
       <Box mt="2" height="60%">
-        {" "}
-        {/* 텍스트 내용 컨테이너 높이 60% */}
-        <Box fontWeight="semibold" as="h4" lineHeight="tight">
-          {title}
+        <Box display={"flex"} gap={2}>
+          <Text fontSize={"3xl"}>{title}</Text>
+          <Spacer />
+          <Button
+            onClick={clickEvent}
+            variant={"outline"}
+            border={"1px solid black"}
+            size={"sm"}
+          >
+            detail
+          </Button>
         </Box>
         <Text color="gray.500">{subtitle}</Text>
-        <Text>{description}</Text>
         <Text color="gray.500">작성일: {createdAtFormatted}</Text>
         <Box>
           {evaluationCriterials.length > 0 && (
-            <Stack mt={2} spacing={2}>
-              {evaluationCriterials.map((criterion) => (
-                <Badge key={criterion.id} colorScheme="teal">
-                  {criterion.item_description}
-                </Badge>
+            <Stack mt={2} spacing={0} overflowY={"scroll"} height={"100px"}>
+              {evaluationCriterials.map((criterion, index) => (
+                <Box>
+                  {index + 1}
+                  <Badge key={criterion.id} colorScheme="teal">
+                    {criterion.item_description}
+                  </Badge>
+                </Box>
               ))}
             </Stack>
           )}
         </Box>
         <Box display={"flex"} justifyContent={"flex-end"} m={2}>
-          <Button onClick={clickEvent}>입장</Button>
+          {/* <Button onClick={clickEvent}>입장</Button> */}
         </Box>
       </Box>
     </Box>
