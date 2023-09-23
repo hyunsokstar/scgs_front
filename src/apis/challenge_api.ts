@@ -178,11 +178,6 @@ export const apiForGetChallengeList = ({ queryKey }: QueryFunctionContext) => {
       params: { pageNum: pageNum },
     })
     .then((response) => {
-      // response_data = {
-      //   listForChallenge: serializer.data,
-      //   totalCountForChallengeList: self.totalCountForChallengeList,
-      //   perPage: self.perPage,
-      // };
 
       return response.data;
     });

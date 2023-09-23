@@ -20,7 +20,6 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
   }
 
   console.log("evaluationResults : ", evaluationResults);
-  
 
   const usernames = Object.keys(evaluationResults);
   const criteriaSet = new Set<string>();
@@ -38,25 +37,27 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
         <Thead>
           <Tr>
             <Th>Username</Th>
-            {[...criteriaSet].map((criteria) => (
-              <Th key={criteria}>{criteria}</Th>
-            ))}
+            <Th>crieteria</Th>
+            <Th>passed</Th>
           </Tr>
         </Thead>
         <Tbody>
           {usernames.map((username) => (
             <Tr key={username}>
               <Td>{username}</Td>
-              {[...criteriaSet].map((criteria) => (
-                <Td key={criteria}>
-                  <ToggleButtonForUpdateResultForEvaluationForChallenge
-                    challengeId={challengeId}
-                    userName = {username}
-                    criteria = {criteria}
-                    option={evaluationResults[username][criteria]}
-                  />
-                </Td>
-              ))}
+              <Td key={username}>
+                {[...criteriaSet].map((criteria) => (
+                  <Box mt={2}>
+                    <ToggleButtonForUpdateResultForEvaluationForChallenge
+                      challengeId={challengeId}
+                      userName={username}
+                      criteria={criteria}
+                      option={evaluationResults[username][criteria]}
+                    />
+                  </Box>
+                ))}
+              </Td>
+              <Td>pass?</Td>
             </Tr>
           ))}
         </Tbody>

@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 
-import {
-  Center,
-  Text,
-  VStack,
-  useToast,
-  Grid,
-  Box,
-} from "@chakra-ui/react";
+import { Center, Text, VStack, useToast, Grid, Box } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ITypeForChallengeRow } from "../../types/type_for_challenge";
 import ModalForChallengeDetail from "../modal/ModalForChallengeDetail";
@@ -61,7 +54,9 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
                 mainImage={challenge.main_image}
                 evaluationCriterials={challenge.evaluation_criterials}
                 createdAtFormatted={challenge.created_at_formatted}
-                clickEvent = {() => handleTitleClick(challenge)}
+                started_at={challenge.started_at}
+                deadline={challenge.deadline}
+                clickEvent={() => handleTitleClick(challenge)}
               />
             </Box>
           ))}

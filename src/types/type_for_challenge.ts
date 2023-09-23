@@ -32,6 +32,8 @@ export interface ITypeForChallengeRow {
   created_at: string;
   created_at_formatted: string;
   evaluation_criterials: IEvaluationCriteria[];
+  started_at: string;
+  deadline: string;
 }
 
 export interface ITypeForChallengeData {

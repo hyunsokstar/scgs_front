@@ -22,6 +22,8 @@ interface CardProps {
   evaluationCriterials: EvaluationCriterion[];
   createdAtFormatted: string;
   clickEvent: any;
+  started_at: string;
+  deadline: string;
 }
 
 // 이미지 컨테이너 스타일
@@ -40,7 +42,16 @@ const imageStyle = {
   width: "100%",
   height: "100%",
   objectFit: "fill",
+  border:"2px solid black"
 };
+
+function formatDateString(dateString: string): string {
+  const date = new Date(dateString);
+  const year = date.getFullYear().toString().substr(-2);
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${day}-${month}-${year}`;
+}
 
 const CardForChallengeList: React.FC<CardProps> = ({
   title,
@@ -50,7 +61,12 @@ const CardForChallengeList: React.FC<CardProps> = ({
   evaluationCriterials,
   createdAtFormatted,
   clickEvent,
+  started_at,
+  deadline,
 }) => {
+  const formattedStartedAt = formatDateString(started_at);
+  const formattedDeadline = formatDateString(deadline);
+
   return (
     <Box
       height="100%" // 전체 Box 크기 350px로 설정
@@ -80,7 +96,8 @@ const CardForChallengeList: React.FC<CardProps> = ({
           </Button>
         </Box>
         <Text color="gray.500">{subtitle}</Text>
-        <Text color="gray.500">작성일: {createdAtFormatted}</Text>
+        <Text color="gray.500">시작: {formattedStartedAt}</Text>
+        <Text color="gray.500">마감: {formattedDeadline}</Text>
         <Box>
           {evaluationCriterials.length > 0 && (
             <Stack mt={2} spacing={0} overflowY={"scroll"} height={"100px"}>

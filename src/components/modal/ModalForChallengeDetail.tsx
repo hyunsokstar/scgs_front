@@ -38,9 +38,7 @@ const ModalForChallengeDetail: React.FC<any> = ({
   challengeId,
   isOpen,
   onClose,
-}: IPropTypes) => {  
-
-
+}: IPropTypes) => {
   const {
     isLoading: isLoadingForGetChallengeDetail,
     data: dataForChallengeDetail,
@@ -103,18 +101,18 @@ const ModalForChallengeDetail: React.FC<any> = ({
             </Flex>
           )}
           <Divider orientation="horizontal" borderColor="gray.300" />
-          <Flex width="100%" height="60%" gap={2}>
+          <Flex width="100%" height="60%" gap={2} mt={1}>
             <Box
               w="100%"
               height="100%"
               p={2}
-              // margin={2}
               textAlign="center" // 텍스트 가운데 정렬
               border="2px dashed blue"
             >
               <Box display={"flex"} justifyContent={"flex-end"} my2={2}>
                 {dataForChallengeDetail &&
-                dataForChallengeDetail.is_exist_for_evaluation_result === false ? (
+                dataForChallengeDetail.is_exist_for_evaluation_result ===
+                  false ? (
                   <ButtonForRegisterChallenge
                     challengeId={dataForChallengeDetail?.id}
                   />
@@ -131,6 +129,7 @@ const ModalForChallengeDetail: React.FC<any> = ({
               ) : (
                 "no data for 평가 결과"
               )}
+              
             </Box>
           </Flex>
         </ModalBody>
