@@ -57,7 +57,7 @@ const ModalForChallengeDetail: React.FC<any> = ({
     <Modal isOpen={isOpen} onClose={onClose} size="full">
       <ModalOverlay />
       <ModalContent height={"100%"}>
-        <ModalHeader>challengeDetail3 id: {challengeId}</ModalHeader>
+        <ModalHeader>challengeDetail Modal id: {challengeId}</ModalHeader>
         <ModalCloseButton />
         <ModalBody border={"5px solid blue"} height={"100%"}>
           {isLoadingForGetChallengeDetail ? ( // 로딩 중일 때

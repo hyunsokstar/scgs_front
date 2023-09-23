@@ -42,14 +42,14 @@ const imageStyle = {
   width: "100%",
   height: "100%",
   objectFit: "fill",
-  border:"2px solid black"
+  border: "2px solid black",
 };
 
 function formatDateString(dateString: string): string {
   const date = new Date(dateString);
   const year = date.getFullYear().toString().substr(-2);
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
   return `${day}-${month}-${year}`;
 }
 
@@ -78,7 +78,17 @@ const CardForChallengeList: React.FC<CardProps> = ({
     >
       {/* 이미지 컨테이너 */}
       <Box style={imageContainerStyle}>
-        {mainImage && <Image src={mainImage} alt={title} style={imageStyle} />}
+        {mainImage ? (
+          <Image src={mainImage} alt={title} style={imageStyle} />
+        ) : (
+          <Image
+            src={
+              "https://t4.ftcdn.net/jpg/00/89/55/15/240_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg"
+            }
+            alt={title}
+            style={imageStyle}
+          />
+        )}
       </Box>
 
       {/* 텍스트 내용 컨테이너 */}

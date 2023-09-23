@@ -15,7 +15,28 @@ const instance = axios.create({
 });
 // 1122
 
-// apiForUpdateEvaluateResultForChallenge
+export const apiForUpdateForPassedForChallegeResult = ({
+  challengeResultId,
+}: any) => {
+  console.log("challengeId for update passed for challenge result : ", challengeResultId);
+
+  return instance
+    .put(
+      `/${challengeResultId}/passed/update`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
+// apiForUpdateForPassedForChallengeResult
 export const apiForUpdateEvaluateResultForChallenge = ({
   challengeId,
   userName,

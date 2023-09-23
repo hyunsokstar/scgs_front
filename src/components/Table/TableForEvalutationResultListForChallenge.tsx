@@ -1,7 +1,8 @@
 import React from "react";
-import { Table, Thead, Tbody, Tr, Th, Td, Box } from "@chakra-ui/react";
+import { Text, Table, Thead, Tbody, Tr, Th, Td, Box } from "@chakra-ui/react";
 import ToggleButtonForUpdateResultForEvaluationForChallenge from "../ToggleButton/ToggleButtonForUpdateResultForEvaluationForChallenge";
 import { ChallengeResultRow } from "../../types/type_for_challenge";
+import ToggleButtonForUpdatePassedForChallengeResult from "../ToggleButton/ToggleButtonForUpdatePassedForChallengeResult";
 
 interface IProps {
   challengeId: number | string;
@@ -34,6 +35,8 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
     });
   });
 
+  console.log("criteriaSet : ", criteriaSet);
+
   return (
     <Box width="100%">
       <Table size="sm">
@@ -50,7 +53,13 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
               <Td>{username}</Td>
               <Td key={username}>
                 {[...criteriaSet].map((criteria) => (
-                  <Box mt={2}>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"space-between"}
+                    gap={2}
+                    m={2}
+                  >
+                    <Text>{criteria}</Text>
                     <ToggleButtonForUpdateResultForEvaluationForChallenge
                       challengeId={challengeId}
                       userName={username}
@@ -64,7 +73,15 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                 {challenge_results
                   ? challenge_results.map((row) => {
                       if (row.challenger.username === username) {
-                        return <Box>{row.pass_status ? "passed" : "fail"}</Box>;
+                        // return <Box>{row.pass_status ? "passed" : "fail"}</Box>;
+                        return (
+                          <Box>
+                            <ToggleButtonForUpdatePassedForChallengeResult
+                              challengeResultId={row.id}
+                              passed={row.pass_status}
+                            />
+                          </Box>
+                        );
                       }
                     })
                   : "no result"}
