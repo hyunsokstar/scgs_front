@@ -38,8 +38,9 @@ const ModalForChallengeDetail: React.FC<any> = ({
   challengeId,
   isOpen,
   onClose,
-}: IPropTypes) => {
-  
+}: IPropTypes) => {  
+
+
   const {
     isLoading: isLoadingForGetChallengeDetail,
     data: dataForChallengeDetail,

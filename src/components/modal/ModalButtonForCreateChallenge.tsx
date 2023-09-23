@@ -24,7 +24,9 @@ const ChallengeModal = () => {
 
   return (
     <Box>
+      
       <Button onClick={openModal}>Create Challenge</Button>
+
       <Modal isOpen={isOpen} onClose={closeModal} size="lg">
         <ModalOverlay />
         <ModalContent>

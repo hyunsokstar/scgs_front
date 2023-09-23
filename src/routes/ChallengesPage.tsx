@@ -28,7 +28,7 @@ const ChallengesPage = (props: Props) => {
 
   return (
     <Box>
-      <Heading as="h1" textAlign="center" fontSize="2xl" my={3}>
+      <Heading as="h1" textAlign="center" fontSize="5xl" my={3}>
         Challenges
       </Heading>
 

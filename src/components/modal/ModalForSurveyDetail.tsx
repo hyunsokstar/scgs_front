@@ -25,16 +25,6 @@ import {
   apiForCreateSurveyOptionForSurvey,
   apiForGetDetailForSurvey,
 } from "../../apis/survey_api";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 import useUser from "../../lib/useUser";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ISurveyDetail } from "../../types/type_for_survey";
