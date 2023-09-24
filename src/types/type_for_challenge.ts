@@ -26,6 +26,9 @@ export interface ChallengeResultRow {
   comment: string;
   created_at: string; // ISO 8601 형식의 날짜 문자열
   created_at_formatted: string;
+  github_url1: string;
+  github_url2: string;
+  note_url: string;
 }
 
 export interface ITypeForChallengeRow {
@@ -85,6 +88,9 @@ export interface ITypeForChallengeDetail {
   evaluation_results: EvaluationResults;
   is_exist_for_evaluation_result: boolean;
   challenge_results: ChallengeResultRow[];
+  github_url1: string;
+  github_url2: string;
+  note_url: string;
 }
 
 export interface IParameterTypeForUpdateChallenge {

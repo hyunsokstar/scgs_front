@@ -3,6 +3,8 @@ import { Text, Table, Thead, Tbody, Tr, Th, Td, Box } from "@chakra-ui/react";
 import ToggleButtonForUpdateResultForEvaluationForChallenge from "../ToggleButton/ToggleButtonForUpdateResultForEvaluationForChallenge";
 import { ChallengeResultRow } from "../../types/type_for_challenge";
 import ToggleButtonForUpdatePassedForChallengeResult from "../ToggleButton/ToggleButtonForUpdatePassedForChallengeResult";
+import LinkButtonsForReferenceForChallengeResult from "../Buttons/LinkButtonsForReferenceForChallengeResult";
+import { Row } from "react-data-grid";
 
 interface IProps {
   challengeId: number | string;
@@ -46,6 +48,7 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
             <Th>Username</Th>
             <Th>crieteria</Th>
             <Th>passed</Th>
+            <Th>reference</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -70,23 +73,42 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                   </Box>
                 ))}
               </Td>
-              <Td>
-                {challenge_results
-                  ? challenge_results.map((row) => {
-                      if (row.challenger.username === username) {
-                        // return <Box>{row.pass_status ? "passed" : "fail"}</Box>;
-                        return (
-                          <Box>
-                            <ToggleButtonForUpdatePassedForChallengeResult
-                              challengeResultId={row.id}
-                              passed={row.pass_status}
+
+              {challenge_results
+                ? challenge_results.map((row) => {
+                    if (row.challenger.username === username) {
+                      // return <Box>{row.pass_status ? "passed" : "fail"}</Box>;
+                      return (
+                        <>
+                          <Td>
+                            {challenge_results
+                              ? challenge_results.map((row) => {
+                                  if (row.challenger.username === username) {
+                                    // return <Box>{row.pass_status ? "passed" : "fail"}</Box>;
+                                    return (
+                                      <Box>
+                                        <ToggleButtonForUpdatePassedForChallengeResult
+                                          challengeResultId={row.id}
+                                          passed={row.pass_status}
+                                        />
+                                      </Box>
+                                    );
+                                  }
+                                })
+                              : "no result"}
+                          </Td>
+                          <Td>
+                            <LinkButtonsForReferenceForChallengeResult
+                              github_url1={row.github_url1}
+                              github_url2={row.github_url2}
+                              note_url={row.note_url}
                             />
-                          </Box>
-                        );
-                      }
-                    })
-                  : "no result"}
-              </Td>
+                          </Td>
+                        </>
+                      );
+                    }
+                  })
+                : "no result"}
             </Tr>
           ))}
         </Tbody>
