@@ -36,6 +36,7 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
   });
 
   console.log("criteriaSet : ", criteriaSet);
+  console.log("challenge_results : ", challenge_results);
 
   return (
     <Box width="100%">

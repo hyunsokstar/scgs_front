@@ -8,7 +8,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getCompletedTaskListForMe } from "../apis/project_progress_api";
+import { apiForDeleteTasksForChecked, getCompletedTaskListForMe } from "../apis/project_progress_api";
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
 import CompletedTaskRowForMe from "./CompletedTaskRowForMe";
 import SlideForUncompletedTaskList from "./Slide/SlideForUncompletedTaskList";

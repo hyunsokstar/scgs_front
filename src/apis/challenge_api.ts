@@ -14,6 +14,19 @@ const instance = axios.create({
   withCredentials: true,
 });
 // 1122
+export const apiForDeleteChallengeByPk = (
+  challenge_id: string | number
+) => {
+  console.log("challenge_id : ", challenge_id);
+
+  return instance
+    .delete(`${challenge_id}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
 
 export const apiForUpdateForPassedForChallegeResult = ({
   challengeResultId,

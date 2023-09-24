@@ -7,7 +7,13 @@ import {
   Stack,
   Badge,
   Spacer,
+  IconButton,
+  useToast,
 } from "@chakra-ui/react";
+import useUser from "../../lib/useUser";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiForDeleteChallengeByPk } from "../../apis/challenge_api";
 
 interface EvaluationCriterion {
   id: number;
@@ -15,6 +21,7 @@ interface EvaluationCriterion {
 }
 
 interface CardProps {
+  challengeId: string | number;
   title: string;
   subtitle: string;
   description: string;
@@ -24,6 +31,7 @@ interface CardProps {
   clickEvent: any;
   started_at: string;
   deadline: string;
+  username: string;
 }
 
 // 이미지 컨테이너 스타일
@@ -53,7 +61,9 @@ function formatDateString(dateString: string): string {
   return `${day}-${month}-${year}`;
 }
 
+// 1122
 const CardForChallengeList: React.FC<CardProps> = ({
+  challengeId,
   title,
   subtitle,
   description,
@@ -63,10 +73,40 @@ const CardForChallengeList: React.FC<CardProps> = ({
   clickEvent,
   started_at,
   deadline,
+  username,
 }) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+  const { userLoading, user: loginUser, isLoggedIn } = useUser();
+
   const formattedStartedAt = formatDateString(started_at);
   const formattedDeadline = formatDateString(deadline);
 
+  const mutationForDeleteChallenge = useMutation(
+    (challengeId: string | number) => {
+      return apiForDeleteChallengeByPk(challengeId);
+    },
+    {
+      onSettled: () => {},
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["apiForGetChallengeList"]);
+
+        toast({
+          title: "Delete Challenge success!",
+          status: "success",
+          description: data.message,
+        });
+      },
+    }
+  );
+
+  const deleteChallengeHandler = (challengeId: string | number) => {
+    // alert(challengeId);
+    mutationForDeleteChallenge.mutate(challengeId);
+  };
+
+  // 2244
   return (
     <Box
       height="100%" // 전체 Box 크기 350px로 설정
@@ -104,6 +144,18 @@ const CardForChallengeList: React.FC<CardProps> = ({
           >
             detail
           </Button>
+
+          {loginUser?.username === username ? (
+            <IconButton
+              icon={<DeleteIcon />}
+              variant={"outline"}
+              size={"sm"}
+              onClick={() => deleteChallengeHandler(challengeId)}
+              aria-label={""}
+            />
+          ) : (
+            ""
+          )}
         </Box>
         <Text color="gray.500">{subtitle}</Text>
         <Text color="gray.500">시작: {formattedStartedAt}</Text>

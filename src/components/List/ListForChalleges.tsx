@@ -48,6 +48,8 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
             <Box key={challenge.id} height={"500px"}>
               <CardForChallengeList
                 key={challenge.id}
+                challengeId = {challenge.id}
+                username = {challenge.writer?.username}
                 title={challenge.title}
                 subtitle={challenge.subtitle}
                 description={challenge.description}
