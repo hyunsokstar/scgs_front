@@ -1,10 +1,22 @@
 import React from "react";
-import { Text, Table, Thead, Tbody, Tr, Th, Td, Box } from "@chakra-ui/react";
+import {
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Box,
+  Button,
+  IconButton,
+} from "@chakra-ui/react";
 import ToggleButtonForUpdateResultForEvaluationForChallenge from "../ToggleButton/ToggleButtonForUpdateResultForEvaluationForChallenge";
 import { ChallengeResultRow } from "../../types/type_for_challenge";
 import ToggleButtonForUpdatePassedForChallengeResult from "../ToggleButton/ToggleButtonForUpdatePassedForChallengeResult";
 import LinkButtonsForReferenceForChallengeResult from "../Buttons/LinkButtonsForReferenceForChallengeResult";
-import { Row } from "react-data-grid";
+import { EditIcon } from "@chakra-ui/icons"; // 수정 아이콘을 가져오기
+import useUser from "../../lib/useUser";
 
 interface IProps {
   challengeId: number | string;
@@ -21,6 +33,8 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
   evaluationResults,
   challenge_results,
 }: IProps) => {
+  const { userLoading, user: loginUser, isLoggedIn } = useUser();
+
   if (!evaluationResults || Object.keys(evaluationResults).length === 0) {
     return <div>No data for 평가 결과</div>;
   }
@@ -98,11 +112,23 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                               : "no result"}
                           </Td>
                           <Td>
-                            <LinkButtonsForReferenceForChallengeResult
-                              github_url1={row.github_url1}
-                              github_url2={row.github_url2}
-                              note_url={row.note_url}
-                            />
+                            <Box display={"flex"} gap={2}>
+                              <LinkButtonsForReferenceForChallengeResult
+                                github_url1={row.github_url1}
+                                github_url2={row.github_url2}
+                                note_url={row.note_url}
+                              />
+                              {row.challenger.username ===
+                              loginUser.username ? (
+                                <IconButton
+                                  size="md"
+                                  icon={<EditIcon />}
+                                  colorScheme="orange"
+                                ></IconButton>
+                              ) : (
+                                ""
+                              )}
+                            </Box>
                           </Td>
                         </>
                       );
