@@ -4,6 +4,7 @@ import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import {} from "../types/study_note_type";
 import {
+  IParameterTypeForUpdateChallengeMetaInfo,
   IParameterTyperForApiForUpdateForEvaluateResultForChallenge,
   ITypeForCreateChallengeParameter,
   ITypeForEvaluationCriteriaRow,
@@ -13,8 +14,35 @@ const instance = axios.create({
   baseURL: `${backendApi}/api/v1/challenges`,
   withCredentials: true,
 });
+
 // 1122
-// apiForUpdateChallenge
+export const apiForUpdateChallengeResultMetaInfo = ({
+  challengeResultId,
+  github_url1,
+  github_url2,
+  note_url,
+}: IParameterTypeForUpdateChallengeMetaInfo) => {
+  alert(challengeResultId)
+  return instance
+    .put(
+      `challenge-result/${challengeResultId}/update`,
+      {
+        github_url1,
+        github_url2,
+        note_url,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      return response.data;
+    });
+};
+
+// apiForUpdateChallengeMetaInfo
 export const apiForUpdateChallenge = ({
   challengeId,
   title,

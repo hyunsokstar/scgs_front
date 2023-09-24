@@ -40,7 +40,7 @@ const ModalButtonForUpdateChallenge: React.FC<
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { handleSubmit, register } = useForm<FormValues>(); // 사용할 FormValues 타입을 지정
 
-  // mutationForUpdateChallenge
+  // mutationForUpdateChallengeResultMetaInfo
   const mutationForUpdateChallenge = useMutation(apiForUpdateChallenge, {
     onMutate: () => {
       console.log("mutation starting");

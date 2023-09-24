@@ -99,3 +99,10 @@ export interface IParameterTypeForUpdateChallenge {
   subtitle: string;
   description: string;
 }
+
+export interface IParameterTypeForUpdateChallengeMetaInfo {
+  challengeResultId: string | number;
+  github_url1: string;
+  github_url2: string;
+  note_url: string;
+}

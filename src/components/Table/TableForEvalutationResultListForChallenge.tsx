@@ -122,7 +122,7 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                               {row.challenger.username ===
                               loginUser.username ? (
                                 <ModalButtonForUpdateChallengeResultMetaInfo
-                                  challengeId={challengeId}
+                                  challengeResultId={row.id}
                                   github_url1={row.github_url1}
                                   github_url2={row.github_url2}
                                   note_url={row.note_url}
