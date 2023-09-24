@@ -17,6 +17,7 @@ import ToggleButtonForUpdatePassedForChallengeResult from "../ToggleButton/Toggl
 import LinkButtonsForReferenceForChallengeResult from "../Buttons/LinkButtonsForReferenceForChallengeResult";
 import { EditIcon } from "@chakra-ui/icons"; // 수정 아이콘을 가져오기
 import useUser from "../../lib/useUser";
+import ModalButtonForUpdateChallengeResultMetaInfo from "../modal/ModalButtonForUpdateChallengeResultMetaInfo";
 
 interface IProps {
   challengeId: number | string;
@@ -90,7 +91,7 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
 
               {challenge_results
                 ? challenge_results.map((row) => {
-                    if (row.challenger.username === username) {
+                    if (row.challenger.username) {
                       // return <Box>{row.pass_status ? "passed" : "fail"}</Box>;
                       return (
                         <>
@@ -120,11 +121,12 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                               />
                               {row.challenger.username ===
                               loginUser.username ? (
-                                <IconButton
-                                  size="md"
-                                  icon={<EditIcon />}
-                                  colorScheme="orange"
-                                ></IconButton>
+                                <ModalButtonForUpdateChallengeResultMetaInfo
+                                  challengeId={challengeId}
+                                  github_url1={row.github_url1}
+                                  github_url2={row.github_url2}
+                                  note_url={row.note_url}
+                                />
                               ) : (
                                 ""
                               )}
