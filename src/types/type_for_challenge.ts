@@ -84,5 +84,12 @@ export interface ITypeForChallengeDetail {
   evaluation_criterials: IEvaluationCriteria[];
   evaluation_results: EvaluationResults;
   is_exist_for_evaluation_result: boolean;
-  challenge_results: ChallengeResultRow[];  
+  challenge_results: ChallengeResultRow[];
+}
+
+export interface IParameterTypeForUpdateChallenge {
+  challengeId: string | number;
+  title: string;
+  subtitle: string;
+  description: string;
 }

@@ -233,7 +233,7 @@ export const apiForDeleteSuggestionForBoard = (
   );
 };
 
-// apiForUpdateSuggestionForBoard
+// apiForUpdateChallenge
 export const apiForUpdateSuggestionForBoard = ({ pk, title, content }: any) => {
   // alert(pk)
   return instance

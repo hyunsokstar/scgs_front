@@ -14,6 +14,7 @@ import useUser from "../../lib/useUser";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForDeleteChallengeByPk } from "../../apis/challenge_api";
+import ModalButtonForUpdateChallenge from "../modal/ModalButtonForUpdateChallenge";
 
 interface EvaluationCriterion {
   id: number;
@@ -146,13 +147,22 @@ const CardForChallengeList: React.FC<CardProps> = ({
           </Button>
 
           {loginUser?.username === username ? (
-            <IconButton
-              icon={<DeleteIcon />}
-              variant={"outline"}
-              size={"sm"}
-              onClick={() => deleteChallengeHandler(challengeId)}
-              aria-label={""}
-            />
+            <>
+              <IconButton
+                icon={<DeleteIcon />}
+                variant={"outline"}
+                size={"sm"}
+                onClick={() => deleteChallengeHandler(challengeId)}
+                aria-label={""}
+              />
+
+              <ModalButtonForUpdateChallenge
+              challengeId = {challengeId}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+              />
+            </>
           ) : (
             ""
           )}

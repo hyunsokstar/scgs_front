@@ -14,9 +14,34 @@ const instance = axios.create({
   withCredentials: true,
 });
 // 1122
-export const apiForDeleteChallengeByPk = (
-  challenge_id: string | number
-) => {
+// apiForUpdateChallenge
+export const apiForUpdateChallenge = ({
+  challengeId,
+  title,
+  subtitle,
+  description,
+}: any) => {
+  // alert(pk)
+  return instance
+    .put(
+      `${challengeId}/update`,
+      {
+        title: title,
+        subtitle: subtitle,
+        description: description,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): any => {
+      return response.data;
+    });
+};
+
+export const apiForDeleteChallengeByPk = (challenge_id: string | number) => {
   console.log("challenge_id : ", challenge_id);
 
   return instance
@@ -31,7 +56,10 @@ export const apiForDeleteChallengeByPk = (
 export const apiForUpdateForPassedForChallegeResult = ({
   challengeResultId,
 }: any) => {
-  console.log("challengeId for update passed for challenge result : ", challengeResultId);
+  console.log(
+    "challengeId for update passed for challenge result : ",
+    challengeResultId
+  );
 
   return instance
     .put(
@@ -212,7 +240,6 @@ export const apiForGetChallengeList = ({ queryKey }: QueryFunctionContext) => {
       params: { pageNum: pageNum },
     })
     .then((response) => {
-
       return response.data;
     });
 };
