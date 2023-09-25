@@ -151,7 +151,7 @@ const CardForChallengeList: React.FC<CardProps> = ({
       <Box mt="2" height="60%">
         <Box display={"flex"} gap={2}>
           <Avatar size="md" name={username} src={profile_image || ""} />
-          <Text fontSize={"3xl"}>{title}</Text>
+          <Text fontSize={"xl"}>{title}</Text>
           <Spacer />
           <Button
             onClick={clickEvent}

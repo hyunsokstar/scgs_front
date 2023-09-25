@@ -10,11 +10,11 @@ const ListForEvaluationCriteriaForChallenge: React.FC<
   ListForEvaluationCriteriaForChallengeProps
 > = ({ selectedChallenge }) => {
   return (
-    <Box height={"100%"}>
+    <Box height={"100%"} width={"100%"} >
       {selectedChallenge.evaluation_criterials.length > 0 ? (
-        <List spacing={2} height="100%" overflowY="scroll">
+        <List spacing={2} width={"100%"}>
           {selectedChallenge.evaluation_criterials.map((criteria, index) => (
-            <ListItem key={criteria.id}>
+            <ListItem key={criteria.id} textAlign={"start"} ml={2}>
               <Button variant="outline" size="sm" mr={2}>
                 {index + 1}
               </Button>{" "}

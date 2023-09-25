@@ -54,13 +54,13 @@ const ContentForChallenge: React.FC<Props> = ({ selectedChallenge }) => {
         gap={2}
         // border="1px dashed blue"
       >
-        <Box display="flex" justifyContent="flex-end" m={2}>
+        <Box width={"100%"} display="flex" justifyContent="flex-end" m={2}>
           <ModalButtonForAddEvalutationCriteriaForChallenge
             selectedChallenge={selectedChallenge}
           />
         </Box>
-        <Box height="100%">
-          평가 기준:
+        평가 기준:
+        <Box width={"100%"} height="100%" overflowY={"scroll"}>
           <ListForEvaluationCriteriaForChallenge
             selectedChallenge={selectedChallenge}
           />
