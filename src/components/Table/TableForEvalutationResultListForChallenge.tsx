@@ -8,8 +8,6 @@ import {
   Th,
   Td,
   Box,
-  Button,
-  IconButton,
 } from "@chakra-ui/react";
 import ToggleButtonForUpdateResultForEvaluationForChallenge from "../ToggleButton/ToggleButtonForUpdateResultForEvaluationForChallenge";
 import {
@@ -141,6 +139,7 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                           </Td>
                           <Td>
                             <ModalButtonForCommentList
+                              challengeId={challengeId}
                               commentListForChallenge={challenge_comments}
                             />
                           </Td>
