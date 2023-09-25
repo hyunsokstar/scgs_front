@@ -126,6 +126,7 @@ const ModalForChallengeDetail: React.FC<any> = ({
                   challengeId={challengeId}
                   evaluationResults={dataForChallengeDetail.evaluation_results}
                   challenge_results = {dataForChallengeDetail ? dataForChallengeDetail.challenge_results: []}
+                  challenge_comments = {dataForChallengeDetail ? dataForChallengeDetail.challenge_comments: []}
                 />
               ) : (
                 "no data for 평가 결과"

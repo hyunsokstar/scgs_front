@@ -55,7 +55,7 @@ const ModalButtonForUpdateChallengeResultMetaInfo: React.FC<
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        queryClient.refetchQueries(["apiForGetChallengeList"]);
+        queryClient.refetchQueries(["apiForGetDetailForChallenge"]);
         toast({
           title: "Update successful for suggestion content!",
           status: "success",

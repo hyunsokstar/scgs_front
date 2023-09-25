@@ -75,6 +75,14 @@ interface EvaluationResults {
   };
 }
 
+export interface ChallengeCommentRow {
+  id: number;
+  challenge: number;
+  commenter: IWriter;
+  commenter_classfication: string;
+  comment: string;
+}
+
 export interface ITypeForChallengeDetail {
   id: number;
   title: string;
@@ -88,6 +96,7 @@ export interface ITypeForChallengeDetail {
   evaluation_results: EvaluationResults;
   is_exist_for_evaluation_result: boolean;
   challenge_results: ChallengeResultRow[];
+  challenge_comments: ChallengeCommentRow[]
   github_url1: string;
   github_url2: string;
   note_url: string;

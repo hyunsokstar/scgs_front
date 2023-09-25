@@ -79,7 +79,7 @@ const ModalButtonForUpdateChallenge: React.FC<
 
   return (
     <>
-      <Button onClick={onOpen}>모달 열기 for {challengeId}</Button>
+      <Button onClick={onOpen}>update</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

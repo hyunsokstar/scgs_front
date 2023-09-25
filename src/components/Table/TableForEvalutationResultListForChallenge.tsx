@@ -12,12 +12,13 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import ToggleButtonForUpdateResultForEvaluationForChallenge from "../ToggleButton/ToggleButtonForUpdateResultForEvaluationForChallenge";
-import { ChallengeResultRow } from "../../types/type_for_challenge";
+import { ChallengeCommentRow, ChallengeResultRow } from "../../types/type_for_challenge";
 import ToggleButtonForUpdatePassedForChallengeResult from "../ToggleButton/ToggleButtonForUpdatePassedForChallengeResult";
 import LinkButtonsForReferenceForChallengeResult from "../Buttons/LinkButtonsForReferenceForChallengeResult";
 import { EditIcon } from "@chakra-ui/icons"; // 수정 아이콘을 가져오기
 import useUser from "../../lib/useUser";
 import ModalButtonForUpdateChallengeResultMetaInfo from "../modal/ModalButtonForUpdateChallengeResultMetaInfo";
+import ModalButtonForCommentList from "../modal/ModalButtonForCommentList";
 
 interface IProps {
   challengeId: number | string;
@@ -27,12 +28,14 @@ interface IProps {
     };
   };
   challenge_results: ChallengeResultRow[];
+  challenge_comments: ChallengeCommentRow[]
 }
 
 const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
   challengeId,
   evaluationResults,
   challenge_results,
+  challenge_comments
 }: IProps) => {
   const { userLoading, user: loginUser, isLoggedIn } = useUser();
 
@@ -61,9 +64,10 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
         <Thead>
           <Tr>
             <Th>Username</Th>
-            <Th>crieteria</Th>
-            <Th>passed</Th>
-            <Th>reference</Th>
+            <Th>Evalutation Crieteria</Th>
+            <Th>Passed</Th>
+            <Th>Reference</Th>
+            <Th>Comment</Th>            
           </Tr>
         </Thead>
         <Tbody>
@@ -131,6 +135,9 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                                 ""
                               )}
                             </Box>
+                          </Td>
+                          <Td>
+                            <ModalButtonForCommentList commentListForChallenge={challenge_comments}/>
                           </Td>
                         </>
                       );
