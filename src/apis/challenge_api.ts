@@ -17,6 +17,18 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForDeleteCommentForChallenge = (commentId: string | number) => {
+  console.log("commentId : ", commentId);
+
+  return instance
+    .delete(`/challenge-comment/${commentId}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForCreateCommentForChallenge = ({
   challengeId,
   commentText,

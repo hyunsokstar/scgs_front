@@ -22,7 +22,12 @@ import {
 import { ChatIcon } from "@chakra-ui/icons";
 import { ChallengeCommentRow } from "../../types/type_for_challenge";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiForCreateCommentForChallenge } from "../../apis/challenge_api";
+import {
+  apiForCreateCommentForChallenge,
+  apiForDeleteCommentForChallenge,
+} from "../../apis/challenge_api";
+import { DeleteIcon } from "@chakra-ui/icons";
+import useUser from "../../lib/useUser";
 
 type ModalButtonForCommentListProps = {
   challengeId: string | number;
@@ -39,6 +44,8 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
   const queryClient = useQueryClient();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [commentText, setCommentText] = useState<string>("");
+
+  const { userLoading, user: loginUser, isLoggedIn } = useUser();
 
   const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCommentText(event.target.value);
@@ -87,6 +94,33 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
     });
   };
 
+  // mutationForDeleteCommentForChallenge
+  const mutationForDeleteCommentForChallenge = useMutation(
+    (pk: string | number) => {
+      // return apiForDeleteCommentForChallenge(pk);
+      return apiForDeleteCommentForChallenge(pk);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["apiForGetDetailForChallenge"]);
+
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+        });
+      },
+    }
+  );
+
+  const handleDeleteComment = (commentId: any) => {
+    mutationForDeleteCommentForChallenge.mutate(commentId);
+  };
+
   return (
     <>
       <IconButton
@@ -123,7 +157,7 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
                       key={comment.id}
                       display="flex"
                       justifyContent={alignment}
-                      alignItems="flex-start"
+                      alignItems="center"
                       bg={bgColor}
                       p={2}
                       borderRadius="lg"
@@ -132,6 +166,20 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
                         <strong>{comment.writer.username}</strong>
                         <br />
                         {comment.comment}
+                      </Box>
+                      <Box display={"flex"} alignItems={"center"}>
+                        {comment.writer.username === loginUser.username ? (
+                          <IconButton
+                            icon={<DeleteIcon />}
+                            aria-label="삭제"
+                            colorScheme="red"
+                            size="sm"
+                            ml={2}
+                            onClick={() => handleDeleteComment(comment.id)}
+                          />
+                        ) : (
+                          ""
+                        )}
                       </Box>
                     </ListItem>
                   );

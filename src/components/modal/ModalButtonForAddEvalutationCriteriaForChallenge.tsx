@@ -30,7 +30,7 @@ const ModalButtonForAddEvalutationCriteriaForChallenge = ({
       <Box>
         <Button
           variant="outlined"
-          size="md"
+          size="sm"
           _hover={{ backgroundColor: "green.100", borderColor: "green" }}
           border="1px"
           borderColor="green"

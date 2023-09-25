@@ -10,9 +10,9 @@ const ListForEvaluationCriteriaForChallenge: React.FC<ListForEvaluationCriteriaF
   selectedChallenge,
 }) => {
   return (
-    <>
+    <Box height={"100%"}>
       {selectedChallenge.evaluation_criterials.length > 0 ? (
-        <List spacing={2} maxHeight="150px" overflowY="scroll">
+        <List spacing={2} height="100%" overflowY="scroll">
           {selectedChallenge.evaluation_criterials.map((criteria) => (
             <ListItem key={criteria.id}>{criteria.item_description}</ListItem>
           ))}
@@ -22,7 +22,7 @@ const ListForEvaluationCriteriaForChallenge: React.FC<ListForEvaluationCriteriaF
           <Text>No evaluation criteria available.</Text>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 
