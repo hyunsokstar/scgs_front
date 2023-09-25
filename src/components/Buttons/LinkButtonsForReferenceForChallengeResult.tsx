@@ -21,6 +21,7 @@ const LinkButtonsForReferenceForChallengeResult: React.FC<
             colorScheme={github_url1 ? "teal" : "gray"}
             isDisabled={!github_url1}
           />
+          
         </Link>
       </Tooltip>
 

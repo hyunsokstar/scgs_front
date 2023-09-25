@@ -54,7 +54,7 @@ const SuggestionListForNote: React.FC<SuggestionListProps> = ({
   // mutationForDeleteCommentForChallenge
   const mutationForDeleteCommentForSuggestion = useMutation(
     (suggestionPk: string | number) => {
-      // return deleteOneCommentForTaskByPkApi(pk);
+      // return apiForDeleteCommentForChallenge(pk);
       return apiForDeleteSuggestionForNote(suggestionPk);
     },
     {

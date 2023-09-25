@@ -152,8 +152,8 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
       <Box
         // border={`2px dashed ${isDragging ? "red" : "lightgray"}`} // 점선 스타일 및 색상 설정
         borderStyle={isDragging ? "dashed" : "solid"} // 드래그 중일 때 점선 스타일, 그 외에는 실선 스타일
-        w="90%"
-        height="90%"
+        w="100%"
+        height="100%"
         display="flex"
         justifyContent="center"
         alignItems="center"
@@ -188,8 +188,9 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
             <Image
               src={thumbNailImage}
               alt="Uploaded Image"
-              maxH="100%"
-              maxW="100%"
+              h="100%"
+              w="100%"
+              objectFit={"contain"}
             />
           </>
         ) : isDragging ? (
@@ -198,8 +199,9 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
           <Image
             src={selectedChallenge.main_image}
             alt="Uploaded Image"
-            maxH="100%"
-            maxW="100%"
+            h="100%"
+            w="100%"
+            objectFit={"fill"}
             fallbackSrc="https://t3.ftcdn.net/jpg/03/34/83/22/360_F_334832255_IMxvzYRygjd20VlSaIAFZrQWjozQH6BQ.jpg"
           />
         )}

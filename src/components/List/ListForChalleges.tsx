@@ -50,6 +50,7 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
                 key={challenge.id}
                 challengeId = {challenge.id}
                 username = {challenge.writer?.username}
+                profile_image = {challenge.writer?.profile_image}
                 title={challenge.title}
                 subtitle={challenge.subtitle}
                 description={challenge.description}

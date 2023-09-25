@@ -123,13 +123,17 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
 
   return (
     <>
-      <IconButton
+      <Button
         size="md"
-        icon={<ChatIcon />}
         colorScheme="blue"
         onClick={onOpen}
-        aria-label={"comments"}
-      />
+        leftIcon={<ChatIcon />}
+        rightIcon={<span>({commentListForChallenge.length})</span>}
+        aria-label="comments"
+      >
+        Comment
+      </Button>
+
       <Modal isOpen={isOpen} onClose={onClose} size="5xl">
         <ModalOverlay />
         <ModalContent>
