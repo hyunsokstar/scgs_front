@@ -12,7 +12,10 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import ToggleButtonForUpdateResultForEvaluationForChallenge from "../ToggleButton/ToggleButtonForUpdateResultForEvaluationForChallenge";
-import { ChallengeCommentRow, ChallengeResultRow } from "../../types/type_for_challenge";
+import {
+  ChallengeCommentRow,
+  ChallengeResultRow,
+} from "../../types/type_for_challenge";
 import ToggleButtonForUpdatePassedForChallengeResult from "../ToggleButton/ToggleButtonForUpdatePassedForChallengeResult";
 import LinkButtonsForReferenceForChallengeResult from "../Buttons/LinkButtonsForReferenceForChallengeResult";
 import { EditIcon } from "@chakra-ui/icons"; // 수정 아이콘을 가져오기
@@ -28,14 +31,14 @@ interface IProps {
     };
   };
   challenge_results: ChallengeResultRow[];
-  challenge_comments: ChallengeCommentRow[]
+  challenge_comments: ChallengeCommentRow[];
 }
 
 const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
   challengeId,
   evaluationResults,
   challenge_results,
-  challenge_comments
+  challenge_comments,
 }: IProps) => {
   const { userLoading, user: loginUser, isLoggedIn } = useUser();
 
@@ -67,7 +70,7 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
             <Th>Evalutation Crieteria</Th>
             <Th>Passed</Th>
             <Th>Reference</Th>
-            <Th>Comment</Th>            
+            <Th>Comment</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -137,7 +140,9 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                             </Box>
                           </Td>
                           <Td>
-                            <ModalButtonForCommentList commentListForChallenge={challenge_comments}/>
+                            <ModalButtonForCommentList
+                              commentListForChallenge={challenge_comments}
+                            />
                           </Td>
                         </>
                       );

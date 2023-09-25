@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Box,
   Button,
   IconButton,
   Modal,
@@ -41,16 +42,32 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
           <ModalHeader>댓글 목록</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <VStack spacing={4}>
+            <VStack spacing={4} align="stretch">
               <List spacing={3}>
-                {commentListForChallenge.map((comment) => (
-                  <ListItem key={comment.id}>
-                    <strong>댓글 작성자:</strong> {comment.commenter.username}
-                    <br />
-                    <strong>댓글 내용:</strong> {comment.comment}
-                    {/* 다른 댓글 관련 정보를 렌더링하려면 여기에 추가 */}
-                  </ListItem>
-                ))}
+                {commentListForChallenge.map((comment) => {
+                  const isCommenter = comment.writer_classfication === "commenter";
+                  const alignment = isCommenter ? "flex-start" : "flex-end";
+                  const bgColor = isCommenter ? "blue.100" : "gray.200";
+                  const textColor = isCommenter ? "blue.900" : "gray.700";
+
+                  return (
+                    <ListItem
+                      key={comment.id}
+                      display="flex"
+                      justifyContent={alignment}
+                      alignItems="flex-start"
+                      bg={bgColor}
+                      p={2}
+                      borderRadius="lg"
+                    >
+                      <Box>
+                        <strong>{comment.writer.username}</strong>
+                        <br />
+                        {comment.comment}
+                      </Box>
+                    </ListItem>
+                  );
+                })}
               </List>
             </VStack>
           </ModalBody>

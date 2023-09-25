@@ -78,8 +78,8 @@ interface EvaluationResults {
 export interface ChallengeCommentRow {
   id: number;
   challenge: number;
-  commenter: IWriter;
-  commenter_classfication: string;
+  writer: IWriter;
+  writer_classfication: string;
   comment: string;
 }
 
