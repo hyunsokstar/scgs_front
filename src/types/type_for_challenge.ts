@@ -96,7 +96,7 @@ export interface ITypeForChallengeDetail {
   evaluation_results: EvaluationResults;
   is_exist_for_evaluation_result: boolean;
   challenge_results: ChallengeResultRow[];
-  challenge_comments: ChallengeCommentRow[]
+  challenge_comments: ChallengeCommentRow[];
   github_url1: string;
   github_url2: string;
   note_url: string;
@@ -118,5 +118,6 @@ export interface IParameterTypeForUpdateChallengeMetaInfo {
 
 export interface IPrameterForApiForCreateChallengeComment {
   challengeId: string | number;
+  participant_username: string;
   commentText: string;
 }

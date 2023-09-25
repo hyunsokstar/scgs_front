@@ -19,12 +19,13 @@ const instance = axios.create({
 // 1122
 export const apiForCreateCommentForChallenge = ({
   challengeId,
-  commentText
+  commentText,
+  participant_username,
 }: IPrameterForApiForCreateChallengeComment) => {
   return instance
     .post(
       `${challengeId}/challenge-comment/create`,
-      { commentText },
+      { commentText, participant_username },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",

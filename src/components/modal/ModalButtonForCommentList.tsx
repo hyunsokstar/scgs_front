@@ -26,13 +26,14 @@ import { apiForCreateCommentForChallenge } from "../../apis/challenge_api";
 
 type ModalButtonForCommentListProps = {
   challengeId: string | number;
+  participant_username: string;
   commentListForChallenge: ChallengeCommentRow[];
 };
 
-// 1122
 const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
   challengeId,
   commentListForChallenge,
+  participant_username,
 }) => {
   const toast = useToast();
   const queryClient = useQueryClient();
@@ -49,7 +50,6 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
     }
   };
 
-  // mutationForCreateCommentForChallenge
   const mutationForCreateCommentForChallenge = useMutation(
     apiForCreateCommentForChallenge,
     {
@@ -78,18 +78,13 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
   );
 
   const handleSubmitComment = () => {
-    // 댓글 입력 상태(commentText)를 서버로 전송하거나 처리하는 코드를 추가하세요.
-    // 여기에서는 간단하게 콘솔에 댓글 내용을 출력하는 예시를 보여줍니다.
     console.log("댓글 내용:", commentText);
 
-    // 댓글을 성공적으로 저장하면 입력 필드를 비웁니다.
-    // mutationForAddCommentForSuggestionForNote.mutate({})
     mutationForCreateCommentForChallenge.mutate({
       challengeId,
       commentText,
+      participant_username,
     });
-
-    // setCommentText("");
   };
 
   return (
@@ -113,7 +108,14 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
                   const isCommenter =
                     comment.writer_classfication === "commenter";
                   const alignment = isCommenter ? "flex-start" : "flex-end";
-                  const bgColor = isCommenter ? "blue.100" : "gray.200";
+                  const bgColor =
+                    comment.writer_classfication === "commenter"
+                      ? "red.100"
+                      : comment.writer_classfication === "challenger"
+                      ? "blue.100"
+                      : comment.writer_classfication === "participant"
+                      ? "yellow.100"
+                      : "gray.200";
                   const textColor = isCommenter ? "blue.900" : "gray.700";
 
                   return (
@@ -137,7 +139,6 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
               </List>
             </VStack>
 
-            {/* Input과 Submit 버튼 추가 */}
             <InputGroup mt={4}>
               <Input
                 placeholder="댓글을 입력하세요..."

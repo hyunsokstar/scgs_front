@@ -140,6 +140,7 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                           <Td>
                             <ModalButtonForCommentList
                               challengeId={challengeId}
+                              participant_username = {row.challenger.username}
                               commentListForChallenge={challenge_comments}
                             />
                           </Td>
