@@ -185,7 +185,7 @@ export const apiForGetCommentListForSuggestionForNote = ({
     });
 };
 
-// apiForAddCommentForSuggestion
+// apiForCreateCommentForSuggestion
 export const apiForAddCommentForSuggestionForNote = ({
   suggestionPk,
   content,

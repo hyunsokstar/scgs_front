@@ -6,6 +6,7 @@ import {} from "../types/study_note_type";
 import {
   IParameterTypeForUpdateChallengeMetaInfo,
   IParameterTyperForApiForUpdateForEvaluateResultForChallenge,
+  IPrameterForApiForCreateChallengeComment,
   ITypeForCreateChallengeParameter,
   ITypeForEvaluationCriteriaRow,
 } from "../types/type_for_challenge";
@@ -16,13 +17,30 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForCreateCommentForChallenge = ({
+  challengeId,
+  commentText
+}: IPrameterForApiForCreateChallengeComment) => {
+  return instance
+    .post(
+      `${challengeId}/challenge-comment/create`,
+      { commentText },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 export const apiForUpdateChallengeResultMetaInfo = ({
   challengeResultId,
   github_url1,
   github_url2,
   note_url,
 }: IParameterTypeForUpdateChallengeMetaInfo) => {
-  alert(challengeResultId)
+  alert(challengeResultId);
   return instance
     .put(
       `challenge-result/${challengeResultId}/update`,

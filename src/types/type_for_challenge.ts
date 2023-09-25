@@ -115,3 +115,8 @@ export interface IParameterTypeForUpdateChallengeMetaInfo {
   github_url2: string;
   note_url: string;
 }
+
+export interface IPrameterForApiForCreateChallengeComment {
+  challengeId: string | number;
+  commentText: string;
+}

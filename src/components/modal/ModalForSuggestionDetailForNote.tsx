@@ -66,13 +66,12 @@ const ModalForSuggestionDetailForNote: React.FC<ModalProps> = ({
 
   console.log("commentData : ", commentData);
 
-
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 댓글 내용이 변경될 때 상태 업데이트
     setComment(e.target.value);
   };
 
-  // mutationForUpdateForCommentForSuggestionForBoard
+  // mutationForCreateCommentForChallenge
   const mutationForAddCommentForSuggestionForNote = useMutation(
     apiForAddCommentForSuggestionForNote,
     {

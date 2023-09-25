@@ -17,19 +17,25 @@ import {
   VStack,
   List,
   ListItem,
+  useToast,
 } from "@chakra-ui/react";
 import { ChatIcon } from "@chakra-ui/icons";
 import { ChallengeCommentRow } from "../../types/type_for_challenge";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiForCreateCommentForChallenge } from "../../apis/challenge_api";
 
 type ModalButtonForCommentListProps = {
   challengeId: string | number;
   commentListForChallenge: ChallengeCommentRow[];
 };
 
+// 1122
 const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
   challengeId,
   commentListForChallenge,
 }) => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [commentText, setCommentText] = useState<string>("");
 
@@ -43,13 +49,47 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
     }
   };
 
+  // mutationForCreateCommentForChallenge
+  const mutationForCreateCommentForChallenge = useMutation(
+    apiForCreateCommentForChallenge,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "comment 추가 !!",
+          description: data.message,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        setCommentText("");
+
+        queryClient.refetchQueries(["apiForGetDetailForChallenge"]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
+
   const handleSubmitComment = () => {
     // 댓글 입력 상태(commentText)를 서버로 전송하거나 처리하는 코드를 추가하세요.
     // 여기에서는 간단하게 콘솔에 댓글 내용을 출력하는 예시를 보여줍니다.
     console.log("댓글 내용:", commentText);
 
     // 댓글을 성공적으로 저장하면 입력 필드를 비웁니다.
-    setCommentText("");
+    // mutationForAddCommentForSuggestionForNote.mutate({})
+    mutationForCreateCommentForChallenge.mutate({
+      challengeId,
+      commentText,
+    });
+
+    // setCommentText("");
   };
 
   return (
