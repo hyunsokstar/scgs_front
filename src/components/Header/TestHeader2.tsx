@@ -407,6 +407,9 @@ const Header = () => {
                 variant="solid"
                 colorScheme="red"
               />
+
+              {/* 간단 회원 가입을 위한 아이콘 버튼 추가 */}
+
             </ButtonGroup>
           ) : (
             <Box>

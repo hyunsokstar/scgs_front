@@ -104,7 +104,7 @@ export const apiForUpdateEditModeForStudyNoteContent = (
 
 // 타입 추가
 export interface ISingup {
-  name: string;
+  name?: string;
   username: string;
   email: string;
   password: string;
@@ -206,11 +206,11 @@ export const usernameLogIn = ({
     )
     .then((response) => response.data);
 
-export const signUp = ({ name, username, email, password }: ISingup) =>
+export const signUp = ({ username, email, password }: ISingup) =>
   instance
     .post(
       `/users/`,
-      { name, username, email, password },
+      { username, email, password },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",

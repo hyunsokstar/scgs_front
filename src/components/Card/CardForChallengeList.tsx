@@ -194,7 +194,7 @@ const CardForChallengeList: React.FC<CardProps> = ({
         </Box>
         <Box height={"45%"} border={"1px solid lightgray"}>
           {evaluationCriterials.length > 0 && (
-            <Stack mt={0} spacing={0} overflowY={"scroll"} height={"100%"} gap={1} m={1}>
+            <Stack mt={0} spacing={0} overflowY={"scroll"} height={"100%"} gap={1} p={1}>
               {evaluationCriterials.map((criterion, index) => (
                 <Box display={"flex"} gap={2}>
                   <Button variant={"outline"} size={"xs"}>
