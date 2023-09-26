@@ -42,7 +42,8 @@ interface CardProps {
 const imageContainerStyle = {
   position: "relative",
   overflow: "hidden",
-  height: "50%", // 이미지 컨테이너 높이 40%
+  height: "50%",
+  borderRadius: "5px",
 };
 
 // 이미지 스타일
@@ -130,7 +131,7 @@ const CardForChallengeList: React.FC<CardProps> = ({
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
-      p={4}
+      p={0.5}
       position="relative"
       border={"2px solid green"}
     >
