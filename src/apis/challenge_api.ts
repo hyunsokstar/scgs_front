@@ -79,6 +79,8 @@ export const apiForUpdateChallenge = ({
   title,
   subtitle,
   description,
+  started_at,
+  deadline
 }: any) => {
   // alert(pk)
   return instance
@@ -88,6 +90,8 @@ export const apiForUpdateChallenge = ({
         title: title,
         subtitle: subtitle,
         description: description,
+        started_at,
+        deadline
       },
       {
         headers: {

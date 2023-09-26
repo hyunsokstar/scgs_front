@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Modal,
@@ -14,16 +14,20 @@ import {
   Input,
   Textarea,
   useToast,
+  Box,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForUpdateChallenge } from "../../apis/challenge_api";
+import Datetime from "react-datetime";
 
-type ModalButtonForUpdateChallengeProps = {
+type IProps = {
   challengeId: string | number;
   title: string;
   subtitle: string;
   description: string;
+  started_at: string;
+  deadline: string;
 };
 
 type FormValues = {
@@ -32,13 +36,22 @@ type FormValues = {
   description: string;
 };
 
-const ModalButtonForUpdateChallenge: React.FC<
-  ModalButtonForUpdateChallengeProps
-> = ({ challengeId, title, subtitle, description }) => {
+// 1122
+const ModalButtonForUpdateChallenge: React.FC<IProps> = ({
+  challengeId,
+  title,
+  subtitle,
+  description,
+  started_at,
+  deadline,
+}) => {
   const queryClient = useQueryClient();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { handleSubmit, register } = useForm<FormValues>(); // 사용할 FormValues 타입을 지정
+
+  const [startedAtForUpdate, setStartedAtForUpdate] = useState<string>();
+  const [deadlineForUpdate, setDeadlineForUpdate] = useState<string>();
 
   // mutationForUpdateChallengeResultMetaInfo
   const mutationForUpdateChallenge = useMutation(apiForUpdateChallenge, {
@@ -74,13 +87,32 @@ const ModalButtonForUpdateChallenge: React.FC<
       title: data.title,
       subtitle: data.subtitle,
       description: data.description,
+      started_at: startedAtForUpdate,
+      deadline: deadlineForUpdate,
     });
   };
 
+  const dateFormat = "YY년 MM월 DD일 HH시 mm분";
+
+  const isValidDate = (current: any) => {
+    return current.isAfter(new Date());
+  };
+
+  const changeHandlerForStartedAt = (newDate: any) => {
+    setStartedAtForUpdate(newDate);
+  };
+
+  const changeHandlerForDedaline = (newDate: any) => {
+    setDeadlineForUpdate(newDate);
+  };
+
+  // 2244
   return (
     <>
-      <Button onClick={onOpen}>update</Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Button onClick={onOpen} variant={"outline"} size={"sm"}>
+        U
+      </Button>
+      <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>챌린지 수정</ModalHeader>
@@ -101,6 +133,24 @@ const ModalButtonForUpdateChallenge: React.FC<
                   {...register("description")}
                   defaultValue={description}
                 />
+              </FormControl>
+
+              <FormControl mt={"3"}>
+                <FormLabel>기간</FormLabel>
+                <Box display={"flex"} justifyContent={"space-between"}>
+                  <Datetime
+                    initialValue={started_at}
+                    isValidDate={isValidDate}
+                    dateFormat={dateFormat}
+                    onChange={changeHandlerForStartedAt}
+                  />
+                  <Datetime
+                    initialValue={deadline}
+                    isValidDate={isValidDate}
+                    dateFormat={dateFormat}
+                    onChange={changeHandlerForDedaline}
+                  />
+                </Box>
               </FormControl>
             </ModalBody>
             <ModalFooter>
