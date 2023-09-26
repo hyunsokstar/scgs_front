@@ -8,6 +8,7 @@ import {
   Th,
   Td,
   Box,
+  Button,
 } from "@chakra-ui/react";
 import ToggleButtonForUpdateResultForEvaluationForChallenge from "../ToggleButton/ToggleButtonForUpdateResultForEvaluationForChallenge";
 import {
@@ -76,22 +77,31 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
             <Tr key={username}>
               <Td>{username}</Td>
               <Td key={username}>
-                {[...criteriaSet].map((criteria) => (
-                  <Box
-                    display={"flex"}
-                    justifyContent={"space-between"}
-                    gap={2}
-                    m={2}
-                  >
-                    <Text>{criteria}</Text>
-                    <ToggleButtonForUpdateResultForEvaluationForChallenge
-                      challengeId={challengeId}
-                      userName={username}
-                      criteria={criteria}
-                      option={evaluationResults[username][criteria]}
-                    />
-                  </Box>
-                ))}
+                <Box
+                  overflowY={"scroll"}
+                  height={"180px"}
+                  border={"1px solid lightgray"}
+                >
+                  {[...criteriaSet].map((criteria, index) => (
+                    <Box
+                      display={"flex"}
+                      justifyContent={"space-between"}
+                      gap={2}
+                      m={2}
+                    >
+                      <Button variant="outline" size="xs">
+                        {index + 1}
+                      </Button>
+                      <Text>{criteria}</Text>
+                      <ToggleButtonForUpdateResultForEvaluationForChallenge
+                        challengeId={challengeId}
+                        userName={username}
+                        criteria={criteria}
+                        option={evaluationResults[username][criteria]}
+                      />
+                    </Box>
+                  ))}
+                </Box>
               </Td>
 
               {challenge_results
@@ -125,7 +135,6 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                                 note_url={row.note_url}
                               />
 
-                              
                               {row.challenger.username ===
                               loginUser.username ? (
                                 <ModalButtonForUpdateChallengeResultMetaInfo
@@ -142,7 +151,7 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                           <Td>
                             <ModalButtonForCommentList
                               challengeId={challengeId}
-                              participant_username = {row.challenger.username}
+                              participant_username={row.challenger.username}
                               commentListForChallenge={challenge_comments}
                             />
                           </Td>

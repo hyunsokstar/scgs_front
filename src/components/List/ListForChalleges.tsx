@@ -48,9 +48,9 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
             <Box key={challenge.id} height={"500px"}>
               <CardForChallengeList
                 key={challenge.id}
-                challengeId = {challenge.id}
-                username = {challenge.writer?.username}
-                profile_image = {challenge.writer?.profile_image}
+                challengeId={challenge.id}
+                username={challenge.writer?.username}
+                profile_image={challenge.writer?.profile_image}
                 title={challenge.title}
                 subtitle={challenge.subtitle}
                 description={challenge.description}
@@ -59,6 +59,9 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
                 createdAtFormatted={challenge.created_at_formatted}
                 started_at={challenge.started_at}
                 deadline={challenge.deadline}
+                count_for_challenge_results={
+                  challenge.count_for_challenge_results
+                }
                 clickEvent={() => handleTitleClick(challenge)}
               />
             </Box>

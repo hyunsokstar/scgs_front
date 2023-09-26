@@ -35,6 +35,7 @@ interface CardProps {
   deadline: string;
   username: string;
   profile_image: string;
+  count_for_challenge_results: number;
 }
 
 // 이미지 컨테이너 스타일
@@ -90,6 +91,7 @@ const CardForChallengeList: React.FC<CardProps> = ({
   deadline,
   username,
   profile_image,
+  count_for_challenge_results
 }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -208,7 +210,9 @@ const CardForChallengeList: React.FC<CardProps> = ({
             </Stack>
           )}
         </Box>
-        <Box display={"flex"} justifyContent={"flex-end"} m={2}></Box>
+        <Box display={"flex"} justifyContent={"flex-end"} m={2}>
+          <Text>참가자수: {count_for_challenge_results}명</Text>
+        </Box>
       </Box>
     </Box>
   );

@@ -48,6 +48,7 @@ export interface ITypeForChallengeRow {
   evaluation_criterials: IEvaluationCriteria[];
   started_at: string;
   deadline: string;
+  count_for_challenge_results: number
 }
 
 export interface ITypeForChallengeData {
