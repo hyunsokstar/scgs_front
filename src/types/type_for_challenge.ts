@@ -138,3 +138,9 @@ export interface IPrameterForUpdateChallengeRef {
   urlText: string;
   descriptionText: string;
 }
+
+export interface IPrameterForCreateChallengeRef {
+  challengeId: string | number;
+  urlText: string;
+  descriptionText: string;
+}

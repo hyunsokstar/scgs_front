@@ -7,6 +7,7 @@ import {
   IParameterTypeForUpdateChallengeMetaInfo,
   IParameterTyperForApiForUpdateForEvaluateResultForChallenge,
   IPrameterForApiForCreateChallengeComment,
+  IPrameterForCreateChallengeRef,
   IPrameterForUpdateChallengeRef,
   ITypeForCreateChallengeParameter,
   ITypeForEvaluationCriteriaRow,
@@ -18,13 +19,30 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForCreateChallengeRef
+export const apiForCreateChallengeRef = ({
+  challengeId,
+  urlText,
+  descriptionText,
+}: IPrameterForCreateChallengeRef) =>
+  instance
+    .post(
+      `${challengeId}/challenge-ref/create`,
+      { urlText, descriptionText },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 // apiForUpdateChallengeRef
 export const apiForUpdateChallengeRef = ({
   challengeRefId,
   urlText,
   descriptionText,
 }: IPrameterForUpdateChallengeRef) => {
-
   return instance
     .put(
       `/challenge-ref/${challengeRefId}/update`,
@@ -220,7 +238,7 @@ export const apiForWithDrawlForChallenge = (challengeId: number | string) => {
     .then((response) => response.data);
 };
 
-// apiForCreateSurveyOptionForSurvey
+// apiForCreateChallengeRef
 export const apiForRegisterForChallenge = ({ challengeId }: any) =>
   instance
     .post(

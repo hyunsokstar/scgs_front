@@ -8,7 +8,6 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-
 } from "@chakra-ui/react";
 import { FaEdit, FaCheck, FaTimes, FaTrash } from "react-icons/fa";
 import {
@@ -18,6 +17,7 @@ import {
 import { apiForGetChallengeRefsList } from "../../apis/challenge_api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ListForChallengeRef from "../List/ListForChallengeRef";
+import ModalButtonForCreateChallengeRef from "./ModalButtonForCreateChallengeRef";
 
 interface IProps {
   buttonLabel: string;
@@ -60,9 +60,11 @@ const ModalButtonForChallengeRefList: React.FC<IProps> = ({
       <Modal isOpen={isOpen} size="5xl" onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>ChallengeRefList</ModalHeader>
+          <ModalHeader>ChallengeRefList Modal</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <ModalButtonForCreateChallengeRef challengeId={challengeId} />
+
             <ListForChallengeRef
               challengeRefList={
                 dataForChallengeRef ? dataForChallengeRef.challengeRefList : []
