@@ -73,7 +73,7 @@ export const apiForDeleteCommentForSuggestion = (commentPk: string | number) => 
     .then((response) => response.data);
 };
 
-// apiForUpdateCommentForSuggestion
+// apiForUpdateChallengeRef
 export const apiForUpdateCommentForSuggestion = ({
   commentPk,
   editedContent,

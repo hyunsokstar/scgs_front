@@ -132,3 +132,9 @@ export interface IPrameterForApiForCreateChallengeComment {
   participant_username: string;
   commentText: string;
 }
+
+export interface IPrameterForUpdateChallengeRef {
+  challengeRefId: string | number;
+  urlText: string;
+  descriptionText: string;
+}

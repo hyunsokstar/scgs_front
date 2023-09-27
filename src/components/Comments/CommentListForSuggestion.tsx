@@ -43,11 +43,14 @@ const CommentListForSuggestion: React.FC<CommentListForSuggestionProps> = ({
     }
   };
 
+  // mutationForUpdateChallengeRef
   const mutationForUpdateCommentForSuggestion = useMutation(
+    // apiForUpdateChallengeRef
     apiForUpdateCommentForSuggestion,
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
+        // apiForGetChallengeRefsList
         queryClient.refetchQueries(["apiForGetCommentListForSuggestion"]);
 
         toast({

@@ -7,6 +7,7 @@ import {
   IParameterTypeForUpdateChallengeMetaInfo,
   IParameterTyperForApiForUpdateForEvaluateResultForChallenge,
   IPrameterForApiForCreateChallengeComment,
+  IPrameterForUpdateChallengeRef,
   ITypeForCreateChallengeParameter,
   ITypeForEvaluationCriteriaRow,
 } from "../types/type_for_challenge";
@@ -17,6 +18,28 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForUpdateChallengeRef
+export const apiForUpdateChallengeRef = ({
+  challengeRefId,
+  urlText,
+  descriptionText,
+}: IPrameterForUpdateChallengeRef) => {
+
+  return instance
+    .put(
+      `/challenge-ref/${challengeRefId}/update`,
+      { urlText, descriptionText },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      return response.data;
+    });
+};
+
 // apiForGetChallengeRefsList
 export const apiForGetChallengeRefsList = ({
   queryKey,
@@ -98,7 +121,7 @@ export const apiForUpdateChallenge = ({
   subtitle,
   description,
   started_at,
-  deadline
+  deadline,
 }: any) => {
   // alert(pk)
   return instance
@@ -109,7 +132,7 @@ export const apiForUpdateChallenge = ({
         subtitle: subtitle,
         description: description,
         started_at,
-        deadline
+        deadline,
       },
       {
         headers: {

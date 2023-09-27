@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Table,
   Thead,
@@ -10,40 +11,79 @@ import {
   Link,
   IconButton,
   Box,
+  useToast,
 } from "@chakra-ui/react";
 import { FaEdit, FaCheck, FaTimes, FaTrash } from "react-icons/fa";
 import { IChallengeRefRow } from "../../types/type_for_challenge";
+import { apiForUpdateChallengeRef } from "../../apis/challenge_api";
 
 interface IProps {
   challengeRefList: IChallengeRefRow[];
 }
 
+// 1122
 const ListForChallengeRef = ({ challengeRefList }: IProps) => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
   const [editingRow, setEditingRow] = useState(-1); // -1은 수정 중이 아님을 나타내는 값
-  const [commentText, setCommentText] = useState<string>("");
+  const [urlText, setUrlText] = useState<string>("");
+  const [descriptionText, setDescriptionText] = useState<string>("");
 
-  const inputRef = useRef<HTMLInputElement | null>(null); // input 요소에 대한 ref를 생성
+  const inputRef = useRef<HTMLInputElement | null>(null); // URL input 요소에 대한 ref를 생성
+  const descriptionInputRef = useRef<HTMLInputElement | null>(null); // Description input 요소에 대한 ref를 생성
 
   useEffect(() => {
-    // 에디트 모드일 때 input에 자동 포커스
+    // 에디트 모드일 때 URL input에 자동 포커스
     if (editingRow !== -1 && inputRef.current) {
       inputRef.current.focus();
+    }
+    // 에디트 모드일 때 Description input에 자동 포커스
+    if (editingRow !== -1 && descriptionInputRef.current) {
+      descriptionInputRef.current.focus();
     }
   }, [editingRow]);
 
   const handleEditClick = (index: number) => {
     setEditingRow(index);
-    setCommentText(challengeRefList[index].description); // 에디트 모드로 진입할 때 commentText를 해당 행의 description으로 초기화
+    setUrlText(challengeRefList[index].url); // 에디트 모드로 진입할 때 commentText를 해당 행의 URL로 초기화
+    setDescriptionText(challengeRefList[index].description); // 에디트 모드로 진입할 때 descriptionText를 해당 행의 description으로 초기화
   };
 
   const handleCancelClick = () => {
     setEditingRow(-1); // 수정 취소하고 행을 수정 중이 아님으로 설정
-    setCommentText(""); // 수정 취소 시 commentText 초기화
+    setUrlText(""); // 수정 취소 시 commentText 초기화
+    setDescriptionText(""); // 수정 취소 시 descriptionText 초기화
   };
 
-  const handleSaveClick = (index: number, updatedUrl: string) => {
+  // mutationForUpdateChallengeRef
+  const mutationForUpdateChallengeRef = useMutation(
+    // apiForUpdateChallengeRef
+    apiForUpdateChallengeRef,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        // apiForGetChallengeRefsList
+        queryClient.refetchQueries(["apiForGetChallengeRefsList"]);
+
+        toast({
+          status: "success",
+          title: "check result update success",
+          description: result.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
+  const handleSaveClick = ({ index, challengeRefId }: any) => {
     setEditingRow(-1); // 수정을 완료하고 행을 수정 중이 아님으로 설정
     // TODO: 수정한 내용을 저장하는 로직을 추가하세요.
+    mutationForUpdateChallengeRef.mutate({
+      challengeRefId,
+      urlText,
+      descriptionText,
+    });
   };
 
   const handleDeleteClick = (index: number) => {
@@ -69,8 +109,10 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
                 <Td>
                   {editingRow === index ? (
                     <Input
-                      ref={inputRef} // input 요소에 ref 추가
+                      ref={inputRef} // URL input 요소에 ref 추가
                       defaultValue={item.url}
+                      value={urlText}
+                      onChange={(e) => setUrlText(e.target.value)}
                     />
                   ) : (
                     <Link href={item.url} isExternal>
@@ -81,8 +123,9 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
                 <Td>
                   {editingRow === index ? (
                     <Input
-                      value={commentText}
-                      onChange={(e) => setCommentText(e.target.value)} // input 값 변경 시 commentText 업데이트
+                      ref={descriptionInputRef} // Description input 요소에 ref 추가
+                      value={descriptionText}
+                      onChange={(e) => setDescriptionText(e.target.value)} // Description input 값 변경 시 descriptionText 업데이트
                     />
                   ) : (
                     item.description
@@ -96,14 +139,10 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
                         icon={<FaCheck />}
                         mr={2}
                         onClick={() =>
-                          handleSaveClick(
+                          handleSaveClick({
                             index,
-                            (
-                              document.getElementById(
-                                `url-input-${index}`
-                              ) as HTMLInputElement
-                            ).value
-                          )
+                            challengeRefId: item.id,
+                          })
                         }
                         variant={"outline"}
                       />
