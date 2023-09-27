@@ -4,6 +4,7 @@ import { ITypeForChallengeRow } from "../../types/type_for_challenge";
 import ListForEvaluationCriteriaForChallenge from "../List/ListForEvaluationCriteriaForChallenge";
 import ModalButtonForAddEvalutationCriteriaForChallenge from "../modal/ModalButtonForAddEvalutationCriteriaForChallenge";
 import ModalButtonForChallengeRefList from "../modal/ModalButtonForChallengeRefList";
+import ModalButtonForChallengerRefList from "../modal/ModalButtonForChallengerRefList";
 
 interface Props {
   selectedChallenge: ITypeForChallengeRow;
@@ -48,6 +49,20 @@ const ContentForChallenge: React.FC<Props> = ({ selectedChallenge }) => {
                     <ModalButtonForChallengeRefList
                       challengeId={selectedChallenge.id}
                       buttonLabel={"challenge ref"}
+                    />
+                  ) : (
+                    "no ref"
+                  )}
+                </Td>
+              </Tr>
+
+              <Tr>
+                <Td>Challenger Refs</Td>
+                <Td>
+                  {selectedChallenge ? (
+                    <ModalButtonForChallengerRefList
+                      challengeId={selectedChallenge.id}
+                      buttonLabel={"challenger ref"}
                     />
                   ) : (
                     "no ref"

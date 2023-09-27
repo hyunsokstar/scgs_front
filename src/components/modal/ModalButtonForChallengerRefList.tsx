@@ -10,10 +10,8 @@ import {
   ModalFooter,
 } from "@chakra-ui/react";
 import { FaEdit, FaCheck, FaTimes, FaTrash } from "react-icons/fa";
-import {
-  ITypeForChallengeRefData,
-} from "../../types/type_for_challenge";
-import { apiForGetChallengeRefsList } from "../../apis/challenge_api";
+import { ITypeForChallengeRefData, ITypeForChallengerRefData } from "../../types/type_for_challenge";
+import { apiForGetChallengerRefsList } from "../../apis/challenge_api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ListForChallengeRef from "../List/ListForChallengeRef";
 import ModalButtonForCreateChallengeRef from "./ModalButtonForCreateChallengeRef";
@@ -24,7 +22,7 @@ interface IProps {
 }
 
 // 1122
-const ModalButtonForChallengeRefList: React.FC<IProps> = ({
+const ModalButtonForChallengerRefList: React.FC<IProps> = ({
   buttonLabel,
   challengeId,
 }) => {
@@ -33,12 +31,12 @@ const ModalButtonForChallengeRefList: React.FC<IProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const {
-    isLoading: isLoadingForGetChallengeRef,
-    data: dataForChallengeRef,
+    isLoading: isLoadingForGetChallengerRef,
+    data: dataForChallengerRef,
     refetch: refetchForGetChallengeRef,
-  } = useQuery<ITypeForChallengeRefData>(
-    ["apiForGetChallengeRefsList", challengeId],
-    apiForGetChallengeRefsList,
+  } = useQuery<ITypeForChallengerRefData>(
+    ["apiForGetChallengerRefsList", challengeId],
+    apiForGetChallengerRefsList,
     {
       enabled: true,
       cacheTime: 0,
@@ -66,7 +64,9 @@ const ModalButtonForChallengeRefList: React.FC<IProps> = ({
 
             <ListForChallengeRef
               challengeRefList={
-                dataForChallengeRef ? dataForChallengeRef.challengeRefList : []
+                dataForChallengerRef
+                  ? dataForChallengerRef.challengerRefList
+                  : []
               }
             />
           </ModalBody>
@@ -81,4 +81,4 @@ const ModalButtonForChallengeRefList: React.FC<IProps> = ({
   );
 };
 
-export default ModalButtonForChallengeRefList;
+export default ModalButtonForChallengerRefList;

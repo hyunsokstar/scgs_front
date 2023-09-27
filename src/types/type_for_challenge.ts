@@ -1,3 +1,20 @@
+export interface IWriter {
+  pk: number;
+  username: string;
+  profile_image: string | null;
+}
+
+export interface IChallengerRefRow {
+  id: number;
+  writer: IWriter;
+  url: string;
+  description: string;
+}
+
+export interface ITypeForChallengerRefData {
+  challengerRefList: IChallengerRefRow[];
+}
+
 export interface IChallengeRefRow {
   id: number;
   url: string;
@@ -5,7 +22,7 @@ export interface IChallengeRefRow {
 }
 
 export interface ITypeForChallengeRefData {
-  challengeRefList: IChallengeRefRow[]
+  challengeRefList: IChallengeRefRow[];
 }
 
 // api type
@@ -16,11 +33,6 @@ export interface IParameterTyperForApiForUpdateForEvaluateResultForChallenge {
 }
 
 // 그외
-export interface IWriter {
-  pk: number;
-  username: string;
-  profile_image: string | null;
-}
 
 export interface IEvaluationCriteria {
   id: number;
@@ -58,7 +70,7 @@ export interface ITypeForChallengeRow {
   evaluation_criterials: IEvaluationCriteria[];
   started_at: string;
   deadline: string;
-  count_for_challenge_results: number
+  count_for_challenge_results: number;
 }
 
 export interface ITypeForChallengeData {

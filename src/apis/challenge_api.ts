@@ -19,6 +19,24 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForGetChallengerRefsList = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, challengeId] = queryKey;
+
+  return instance
+    .get(`${challengeId}/challenger-ref/list`, {})
+    .then((response) => {
+      // response_data = {
+      //   listForChallenge: serializer.data,
+      //   totalCountForChallengeList: self.totalCountForChallengeList,
+      //   perPage: self.perPage,
+      // };
+      return response.data;
+    });
+};
+
+
 // apiForDeleteChallengeRef
 export const apiForDeleteChallengeRef = (challengeRefId: string | number) => {
   console.log("challengeRefId : ", challengeRefId);
