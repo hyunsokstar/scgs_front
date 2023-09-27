@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Table,
   Thead,
@@ -20,14 +20,25 @@ interface IProps {
 
 const ListForChallengeRef = ({ challengeRefList }: IProps) => {
   const [editingRow, setEditingRow] = useState(-1); // -1은 수정 중이 아님을 나타내는 값
+  const [commentText, setCommentText] = useState<string>("");
+
+  const inputRef = useRef<HTMLInputElement | null>(null); // input 요소에 대한 ref를 생성
+
+  useEffect(() => {
+    // 에디트 모드일 때 input에 자동 포커스
+    if (editingRow !== -1 && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [editingRow]);
 
   const handleEditClick = (index: number) => {
     setEditingRow(index);
-    // mutationForUpdateUrlForChallengeRef
+    setCommentText(challengeRefList[index].description); // 에디트 모드로 진입할 때 commentText를 해당 행의 description으로 초기화
   };
 
   const handleCancelClick = () => {
     setEditingRow(-1); // 수정 취소하고 행을 수정 중이 아님으로 설정
+    setCommentText(""); // 수정 취소 시 commentText 초기화
   };
 
   const handleSaveClick = (index: number, updatedUrl: string) => {
@@ -39,7 +50,6 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
     // TODO: 항목을 삭제하는 로직을 추가하세요.
   };
 
-  //2244
   return (
     <Box>
       <Table variant="simple">
@@ -48,8 +58,7 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
             <Th>Index</Th>
             <Th>URL</Th>
             <Th>Description</Th>
-            <Th>수정/확인/취소/삭제</Th>{" "}
-            {/* 수정, 확인, 취소, 삭제 버튼 열 추가 */}
+            <Th>수정/확인/취소/삭제</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -59,16 +68,28 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
                 <Td>{index + 1}</Td>
                 <Td>
                   {editingRow === index ? (
-                    <Input defaultValue={item.url} /> // 수정 중인 행은 Input으로 표시
+                    <Input
+                      ref={inputRef} // input 요소에 ref 추가
+                      defaultValue={item.url}
+                    />
                   ) : (
                     <Link href={item.url} isExternal>
                       {item.url}
                     </Link>
                   )}
                 </Td>
-                <Td>{item.description}</Td>
                 <Td>
-                  {editingRow === index ? ( // 수정 중일 때는 확인/취소 아이콘을 표시
+                  {editingRow === index ? (
+                    <Input
+                      value={commentText}
+                      onChange={(e) => setCommentText(e.target.value)} // input 값 변경 시 commentText 업데이트
+                    />
+                  ) : (
+                    item.description
+                  )}
+                </Td>
+                <Td>
+                  {editingRow === index ? (
                     <>
                       <IconButton
                         aria-label="확인"
@@ -99,13 +120,13 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
                         aria-label="수정"
                         icon={<FaEdit />}
                         mr={2}
-                        onClick={() => handleEditClick(index)} // 수정 버튼을 누르면 해당 행을 수정 중으로 설정
+                        onClick={() => handleEditClick(index)}
                         variant={"outline"}
                       />
                       <IconButton
                         aria-label="삭제"
                         icon={<FaTrash />}
-                        onClick={() => handleDeleteClick(index)} // 삭제 버튼을 누르면 해당 항목을 삭제variant={"outline"}
+                        onClick={() => handleDeleteClick(index)}
                         variant={"outline"}
                       />
                     </>
