@@ -19,6 +19,20 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForDeleteChallengeRef
+export const apiForDeleteChallengeRef = (challengeRefId: string | number) => {
+  console.log("challengeRefId : ", challengeRefId);
+
+  return instance
+    .delete(`challenge-ref/${challengeRefId}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+
 // apiForCreateChallengeRef
 export const apiForCreateChallengeRef = ({
   challengeId,

@@ -15,7 +15,10 @@ import {
 } from "@chakra-ui/react";
 import { FaEdit, FaCheck, FaTimes, FaTrash } from "react-icons/fa";
 import { IChallengeRefRow } from "../../types/type_for_challenge";
-import { apiForUpdateChallengeRef } from "../../apis/challenge_api";
+import {
+  apiForDeleteChallengeRef,
+  apiForUpdateChallengeRef,
+} from "../../apis/challenge_api";
 
 interface IProps {
   challengeRefList: IChallengeRefRow[];
@@ -86,8 +89,45 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
     });
   };
 
-  const handleDeleteClick = (index: number) => {
+  const mutationForDeleteChallengeRef = useMutation(
+    (challengeRefId: string | number) => {
+      // return apiForDeleteCommentForChallenge(pk);
+      return apiForDeleteChallengeRef(challengeRefId);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onError: (error) => {
+        // Handle the error here
+        console.error("Error deleting challengeRef:", error);
+        toast({
+          title: "Error deleting challengeRef",
+          status: "error",
+          description: "An error occurred while deleting the challengeRef.",
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+      onSuccess: (result) => {
+        console.log("data : ", result);
+        queryClient.refetchQueries(["apiForGetChallengeRefsList"]);
+  
+        toast({
+          title: "Delete challengeRef success!",
+          status: "success",
+          description: result.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
+  
+
+  const handleDeleteClick = (challengeRefId: any) => {
     // TODO: 항목을 삭제하는 로직을 추가하세요.
+    mutationForDeleteChallengeRef.mutate(challengeRefId);
   };
 
   return (
@@ -165,7 +205,7 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
                       <IconButton
                         aria-label="삭제"
                         icon={<FaTrash />}
-                        onClick={() => handleDeleteClick(index)}
+                        onClick={() => handleDeleteClick(item.id)}
                         variant={"outline"}
                       />
                     </>
