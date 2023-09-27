@@ -5,7 +5,7 @@ export interface IChallengeRefRow {
 }
 
 export interface ITypeForChallengeRefData {
-  challenge_refs: IChallengeRefRow[]
+  challengeRefList: IChallengeRefRow[]
 }
 
 // api type
