@@ -13,6 +13,9 @@ import {
   Textarea,
   useDisclosure,
   useToast,
+  FormControl, // 추가
+  FormLabel, // 추가
+  FormErrorMessage, // 추가
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -108,17 +111,31 @@ const ModalButtonForCreateChallengeRef: React.FC<IProps> = ({
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>
-              <Input
-                {...register("url", { required: true })}
-                placeholder="URL"
-              />
-              {errors.url && <span>URL is required</span>}
+              <FormControl mb={4}>
+                {" "}
+                {/* 추가: FormControl로 감싸고 간격 추가 */}
+                <FormLabel>URL</FormLabel>
+                <Input
+                  {...register("url", { required: true })}
+                  placeholder="URL"
+                />
+                <FormErrorMessage>
+                  {errors.url && "URL is required"}
+                </FormErrorMessage>
+              </FormControl>
 
-              <Textarea
-                {...register("description", { required: true })}
-                placeholder="Description"
-              />
-              {errors.description && <span>Description is required</span>}
+              <FormControl mb={4}>
+                {" "}
+                {/* 추가: FormControl로 감싸고 간격 추가 */}
+                <FormLabel>Description</FormLabel>
+                <Textarea
+                  {...register("description", { required: true })}
+                  placeholder="Description"
+                />
+                <FormErrorMessage>
+                  {errors.description && "Description is required"}
+                </FormErrorMessage>
+              </FormControl>
             </ModalBody>
 
             <ModalFooter>
