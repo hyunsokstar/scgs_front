@@ -4,6 +4,10 @@ export interface IChallengeRefRow {
   description: string;
 }
 
+export interface ITypeForChallengeRefData {
+  challenge_refs: IChallengeRefRow[]
+}
+
 // api type
 export interface IParameterTyperForApiForUpdateForEvaluateResultForChallenge {
   challengeId: number | string;

@@ -19,7 +19,10 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { FaEdit, FaCheck, FaTimes, FaTrash } from "react-icons/fa";
-import { IChallengeRefRow } from "../../types/type_for_challenge";
+import {
+  ITypeForChallengeRefData,
+  IChallengeRefRow,
+} from "../../types/type_for_challenge";
 import { apiForGetChallengeRefsList } from "../../apis/challenge_api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -42,7 +45,7 @@ const ModalButtonForChallengeRefList: React.FC<IProps> = ({
     isLoading: isLoadingForGetChallengeRef,
     data: dataForChallengeRef,
     refetch: refetchForGetChallengeRef,
-  } = useQuery<IChallengeRefRow[]>(
+  } = useQuery<ITypeForChallengeRefData>(
     ["apiForGetChallengeRefsList", challengeId],
     apiForGetChallengeRefsList,
     {
