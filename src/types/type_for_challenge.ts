@@ -1,3 +1,9 @@
+export interface IChallengeRefRow {
+  id: number;
+  url: string;
+  description: string;
+}
+
 // api type
 export interface IParameterTyperForApiForUpdateForEvaluateResultForChallenge {
   challengeId: number | string;

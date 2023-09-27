@@ -3,6 +3,7 @@ import { Box, Text, Table, Tbody, Tr, Td } from "@chakra-ui/react";
 import { ITypeForChallengeRow } from "../../types/type_for_challenge";
 import ListForEvaluationCriteriaForChallenge from "../List/ListForEvaluationCriteriaForChallenge";
 import ModalButtonForAddEvalutationCriteriaForChallenge from "../modal/ModalButtonForAddEvalutationCriteriaForChallenge";
+import ModalButtonForChallengeRefList from "../modal/ModalButtonForChallengeRefList";
 
 interface Props {
   selectedChallenge: ITypeForChallengeRow;
@@ -25,27 +26,39 @@ const ContentForChallenge: React.FC<Props> = ({ selectedChallenge }) => {
         alignItems="center"
         // border="1px dashed blue"
       >
-        {/* <Text>
-          Title : {selectedChallenge.title} <br />
-          Subtitle: {selectedChallenge.subtitle} <br />
-          Description: {selectedChallenge.description}
-        </Text> */}
-        <Table size="sm">
-          <Tbody>
-            <Tr>
-              <Td>Title</Td>
-              <Td>{selectedChallenge.title}</Td>
-            </Tr>
-            <Tr>
-              <Td>Subtitle</Td>
-              <Td>{selectedChallenge.subtitle}</Td>
-            </Tr>
-            <Tr>
-              <Td>Description</Td>
-              <Td>{selectedChallenge.description}</Td>
-            </Tr>
-          </Tbody>
-        </Table>
+        <Box width={"100%"} px={2}>
+          <Table size="sm">
+            <Tbody>
+              <Tr>
+                <Td>Title</Td>
+                <Td>{selectedChallenge.title}</Td>
+              </Tr>
+              <Tr>
+                <Td>Subtitle</Td>
+                <Td>{selectedChallenge.subtitle}</Td>
+              </Tr>
+              <Tr>
+                <Td>Description</Td>
+                <Td>{selectedChallenge.description}</Td>
+              </Tr>
+              <Tr>
+                <Td>Challenge Refs</Td>
+                <Td>
+                  {selectedChallenge ? (
+                    <ModalButtonForChallengeRefList
+                      challengeId={selectedChallenge.id}
+                      buttonLabel={"challenge ref"}
+                    />
+                  ) : (
+                    "no ref"
+                  )}
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
+
+          {/* <Box>Challenge Refs</Box> */}
+        </Box>
       </Box>
       <Box
         width={"50%"}

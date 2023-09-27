@@ -11,7 +11,7 @@ const ListForEvaluationCriteriaForChallenge: React.FC<
 > = ({ selectedChallenge }) => {
   return (
     <Box height={"100%"} width={"100%"} >
-      {selectedChallenge.evaluation_criterials.length > 0 ? (
+      {selectedChallenge.evaluation_criterials && selectedChallenge.evaluation_criterials.length > 0 ? (
         <List spacing={1} width={"100%"}>
           {selectedChallenge.evaluation_criterials.map((criteria, index) => (
             <ListItem key={criteria.id} textAlign={"start"} ml={2}>
