@@ -149,7 +149,6 @@ function UncompletedProjectTaskList({
           status: "success",
           description: data.message,
         });
-        
       },
     }
   );
@@ -562,13 +561,7 @@ function UncompletedProjectTaskList({
         )}
 
         {is_show_for_mobile ? (
-          <Box
-            // height={"450px"}
-            // border={"5px solid black"}
-            bgColor={"orange.200"}
-            alignItems={"center"}
-            flex={1}
-          >
+          <Box bgColor={"orange.200"} alignItems={"center"} flex={1}>
             <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
               <Text fontSize="xl" fontWeight="bold" mb={2}>
                 Today

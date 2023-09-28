@@ -26,6 +26,20 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+
+export const apiForDeleteCompletedTasksForChecked = (checkedRowPks: number[]) => {
+  console.log("study_note_pk , selectedButtonsData : ", checkedRowPks);
+
+  return instance
+    .delete("project_progress/delete-complted-tasks-for-chkeck", {
+      data: checkedRowPks, // [1,2,3,5]
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 // TestResultImageForCompletedTask
 export const createResultImageForCompletedTask = ({
   image_url,

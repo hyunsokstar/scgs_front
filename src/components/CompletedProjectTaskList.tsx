@@ -1,19 +1,28 @@
 import React, { ReactElement, useState, useEffect } from "react";
-import { Box, Button, Input, Text, useBreakpointValue } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { getCompletedTaskList } from "../apis/project_progress_api";
 import {
-  ITypeForResponseForDataForCompletedTask,
-} from "../types/project_progress/project_progress_type";
+  Box,
+  Button,
+  Checkbox,
+  Input,
+  Text,
+  useBreakpointValue,
+  useToast
+} from "@chakra-ui/react";
+import { apiForDeleteCompletedTasksForChecked, getCompletedTaskList } from "../apis/project_progress_api";
+import { ITypeForResponseForDataForCompletedTask } from "../types/project_progress/project_progress_type";
 
 import CompletedTaskRow from "./CompletedTaskRow";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
 import SlideForCompletedTaskList from "./Slide/SlideForCompletedTaskList";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface Props {}
 
 // 1122
 function CompletedProjectTaskList({}: Props): ReactElement {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
   const [checkedRowPks, setCheckedRowPks] = useState<any[]>([]);
 
@@ -128,6 +137,48 @@ function CompletedProjectTaskList({}: Props): ReactElement {
   });
 
   // 2244
+  const handleChangeForAllCheckBox = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const checked = event.target.checked;
+    const rowPks =
+      pageProgressListData?.ProjectProgressList.map((item) => item.id) || [];
+
+    if (checked) {
+      setCheckedRowPks([...checkedRowPks, ...rowPks]);
+    } else {
+      setCheckedRowPks([]);
+    }
+  };
+
+  const mutationForDeleteucompletedTasksForChecked = useMutation(
+    (checkedRowPks: number[]) => {
+      return apiForDeleteCompletedTasksForChecked(checkedRowPks);
+    },
+    {
+      onSettled: () => {},
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        setCheckedRowPks([]);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
+
+        toast({
+          title: "Delete Task For Checked 성공!",
+          status: "success",
+          description: data.message,
+        });
+      },
+    }
+  );
+
+  const deleteTaskForChecked = () => {
+    if (checkedRowPks.length === 0) {
+      alert("Note를 하나 이상 체크 해주세요");
+      return;
+    }
+    mutationForDeleteucompletedTasksForChecked.mutate(checkedRowPks);
+  };
+
   return (
     <Box width={"100%"} border={"2px solid black"}>
       <Box
@@ -219,7 +270,27 @@ function CompletedProjectTaskList({}: Props): ReactElement {
       </Box>
 
       <Box>
-        allcheck
+        {/* 0928 고쳐 */}
+        <Checkbox
+          size={"lg"}
+          onChange={handleChangeForAllCheckBox}
+          checked={
+            checkedRowPks.length ===
+            pageProgressListData?.ProjectProgressList.length
+          }
+          border={"2px solid black"}
+          m={2}
+        />
+
+        <Button
+          variant="outline"
+          size="xs"
+          backgroundColor="red.50"
+          _hover={{ backgroundColor: "red.100" }}
+          onClick={deleteTaskForChecked}
+        >
+          delete for Check
+        </Button>
       </Box>
 
       {/* {is_show_for_mobile ? "모바일" : "큰화면"} */}
