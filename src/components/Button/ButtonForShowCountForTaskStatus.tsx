@@ -5,7 +5,7 @@ interface Props {
   task_status: "ready" | "in_progress" | "testing";
   status_imoge: string;
   status_count: number | undefined;
-  button_size: "md" | "sm" | "lg";
+  button_size: "md" | "sm" | "lg" | "xs";
   task_status_for_search: string;
   set_task_status_for_search: (button_text: string) => void;
 }

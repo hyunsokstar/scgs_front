@@ -325,11 +325,21 @@ function UncompletedTaskRow({
                     flex={1.5}
                     gap={1}
                   >
-                    <Text color={"blue.600"} textAlign={"start"}>
-                      {task.task_manager?.username}
+                    <Text
+                      color="blue.600"
+                      textAlign="start"
+                      fontSize="lg"
+                      fontWeight="bold"
+                    >
+                      담당: {task.task_manager?.username}
                     </Text>
-                    <Text color={"tomato"} textAlign={"start"}>
-                      {task.writer}
+                    <Text
+                      color="tomato"
+                      textAlign="start"
+                      fontSize="lg"
+                      fontWeight="bold"
+                    >
+                      매니저: {task.writer}
                     </Text>
                   </ListItem>
                   <ListItem

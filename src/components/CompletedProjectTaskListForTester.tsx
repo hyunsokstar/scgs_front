@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCompletedTaskList } from "../apis/project_progress_api";
 import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
-import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
+import ButtonsForSelectForTeamTaskListPeriod from "./Button/SelectBoxForSetPeriodForFilteringUncompletedTaskList";
 import CompletedTaskRowForTester from "./CompletedTaskRowForTester";
 import SlideForCompletedTaskListForTest from "./Slide/SlideForCompletedTaskListForTest";
 

@@ -12,7 +12,7 @@ import { apiForDeleteCompletedTasksForChecked, getCompletedTaskList } from "../a
 import { ITypeForResponseForDataForCompletedTask } from "../types/project_progress/project_progress_type";
 
 import CompletedTaskRow from "./CompletedTaskRow";
-import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
+import ButtonsForSelectForTeamTaskListPeriod from "./Button/SelectBoxForSetPeriodForFilteringUncompletedTaskList";
 import SlideForCompletedTaskList from "./Slide/SlideForCompletedTaskList";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 

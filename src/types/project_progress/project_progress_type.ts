@@ -271,13 +271,12 @@ export interface taskRowForUncompleted {
   task_comments: ITaskComment[];
 }
 
-export interface ITypeForProjectProgressList {
-  projectTaskListRefatch?: () => void;
+export interface  ITypeForProjectProgressList {
+  ProjectProgressList: taskRowForUncompleted[] | any[];
   writers_info?: Writer[];
   totalPageCount: number;
   task_number_for_one_page?: number;
   score_by_tester?: number;
-  ProjectProgressList: taskRowForUncompleted[] | any[];
   currentPageNum?: number | undefined;
   setCurrentPageNum?: any;
   count_for_ready?: number;

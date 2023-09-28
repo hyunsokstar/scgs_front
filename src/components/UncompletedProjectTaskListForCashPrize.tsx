@@ -26,7 +26,7 @@ import {
   ITypeForProjectProgressList,
   IUncompletedTaskListForCashPrize,
 } from "../types/project_progress/project_progress_type";
-import ButtonsForSelectForTeamTaskListPeriod from "./Button/ButtonsForSelectForTeamTaskListPeriod";
+import ButtonsForSelectForTeamTaskListPeriod from "./Button/SelectBoxForSetPeriodForFilteringUncompletedTaskList";
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRowForCashPrize from "./UncompletedTaskRowForCashPrize";
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";
