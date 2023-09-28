@@ -1435,6 +1435,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         completed_task_count_for_today:
           response.data.completed_task_count_for_today,
         achievement_rate_for_today: response.data.achievement_rate_for_today,
+        count_for_duedate_passed: response.data.count_for_duedate_passed
       };
 
       return response_data;

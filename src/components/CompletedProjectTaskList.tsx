@@ -269,7 +269,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
         </Box>
       </Box>
 
-      <Box>
+      <Box display={"flex"} alignItems={"center"} gap={2}>
         {/* 0928 고쳐 */}
         <Checkbox
           size={"lg"}

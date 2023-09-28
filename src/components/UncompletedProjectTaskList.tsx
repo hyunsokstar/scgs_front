@@ -94,6 +94,8 @@ function UncompletedProjectTaskList({
     }
   );
 
+  console.log("taskListData??? : ", taskListData);
+
   const [filteredData, setFilteredData] = useState<any>(
     taskListData?.ProjectProgressList
   );
@@ -302,10 +304,11 @@ function UncompletedProjectTaskList({
         >
           <Box display={"flex"} borderBottom={"3px solid #9AE6B4"}>
             <Box textAlign={"center"}>
-              <Text fontSize={20}>uncomplete task</Text>
+              <Text fontSize={20}>UnComplete Task</Text>
               <Text>
-                (total: {taskListData?.totalPageCount}, per :{" "}
-                {taskListData?.task_number_for_one_page})
+                total: {taskListData?.totalPageCount} 개
+                {/* per :{" "}
+                {taskListData?.task_number_for_one_page}) */}
               </Text>
             </Box>
           </Box>
@@ -365,7 +368,7 @@ function UncompletedProjectTaskList({
                   border={"1px solid black"}
                   onClick={() => set_is_task_due_date_has_passed(true)}
                 >
-                  dhp : x
+                  dhp : {taskListData?.count_for_duedate_passed}
                 </Button>
               </Box>
             </Box>

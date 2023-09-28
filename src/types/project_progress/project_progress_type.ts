@@ -283,6 +283,7 @@ export interface ITypeForProjectProgressList {
   count_for_ready?: number;
   count_for_in_progress?: number;
   count_for_in_testing?: number;
+  count_for_duedate_passed?: number;
   total_task_count_for_today?: number;
   completed_task_count_for_today?: number;
   achievement_rate_for_today?: number;
