@@ -36,6 +36,7 @@ import { useNavigate } from "react-router-dom";
 import SlideForUncompletedTaskList from "./Slide/SlideForUncompletedTaskList";
 import StarRatingForSetFilterOptionForTaskList from "./StarRating/StarRatingForSetFilterOptionForTaskList";
 import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
+import HeaderInfoForUncompletedTaskList from "./HeaderInfo/HeaderInfoForUncompletedTaskList";
 
 interface Props {
   basic_due_date_option?: typeForDueDateOption;
@@ -54,7 +55,7 @@ function UncompletedProjectTaskList({
     selectedPeriodOptionForUncompletedTaskList,
     setSelectedPeriodOptionForUncompletedTaskList,
   ] = useState("all");
-  const [username_for_search, set_username_for_search] = useState<string>();
+  const [username_for_search, set_username_for_search] = useState<string | undefined>();
   const [task_status_for_search, set_task_status_for_search] =
     useState<string>("");
 
@@ -96,7 +97,7 @@ function UncompletedProjectTaskList({
 
   console.log("taskListData??? : ", taskListData);
 
-  const [filteredData, setFilteredData] = useState<any>(
+  const [filteredListForUncompleteTask, setFilteredListForUncompleteTask] = useState<any>(
     taskListData?.ProjectProgressList
   );
 
@@ -115,8 +116,13 @@ function UncompletedProjectTaskList({
   // console.log("filteredData  : ", filteredData);
 
   useEffect(() => {
-    setFilteredData(taskListData?.ProjectProgressList);
-  }, [taskListData?.ProjectProgressList]);
+
+    if(!filterValueForTaskManager){
+      setFilteredListForUncompleteTask(taskListData?.ProjectProgressList);
+    } else {
+
+    }
+  }, [taskListData?.ProjectProgressList, filteredListForUncompleteTask]);
 
   const searchUncompletedListforUserName = (username: string) => {
     console.log("username : ", username);
@@ -281,312 +287,36 @@ function UncompletedProjectTaskList({
 
   return (
     <Box border={"1px solid black"} p={0} mt={2} width={"100%"}>
-      <Box
-        border={"0px solid pink"}
-        display={"grid"}
-        gridTemplateColumns={{
-          xl: "repeat(3, 1fr)", // default value for all breakpoints
-          lg: "repeat(3, 1fr)", // for medium-sized screens and up
-          sm: "repeat(1, 1fr)", // for small screens and up
-        }}
-      >
-        <Box
-          bg={"green.200"}
-          flex={1}
-          display={"flex"}
-          flexDirection={"column"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          width={"100%"}
-          pt={2}
-          gap={3}
-          // border={"5px solid blue"}
-        >
-          <Box display={"flex"} borderBottom={"3px solid #9AE6B4"}>
-            <Box textAlign={"center"}>
-              <Text fontSize={20}>UnComplete Task</Text>
-              <Text>
-                total: {taskListData?.totalPageCount} 개
-                {/* per :{" "}
-                {taskListData?.task_number_for_one_page}) */}
-              </Text>
-            </Box>
-          </Box>
-          <Box borderBottom={"3px solid #9AE6B4"}>
-            <Box
-              display={"flex"}
-              justifyContent={"flex-start"}
-              gap={3}
-              borderBottom={"1px solid #9AE6B4"}
-              flexDirection={"column"}
-            >
-              <Box display={"flex"} gap={2}></Box>
-              <Box display={"flex"} gap={2}>
-                <Button
-                  size="xs"
-                  variant={"outline"}
-                  border={"1px solid black"}
-                  onClick={() => {
-                    set_is_task_due_date_has_passed(false);
-                    set_task_status_for_search("");
-                    set_username_for_search("");
-                    set_due_date_option_for_filtering("");
-                    setIsForUrgent(false);
-                    setCheckForCashPrize(false);
-                  }}
-                >
-                  reset
-                </Button>
-
-                <ButtonForShowCountForTaskStatus
-                  task_status={"ready"}
-                  status_imoge={"⚪"}
-                  status_count={taskListData?.count_for_ready}
-                  button_size={"xs"}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-                <ButtonForShowCountForTaskStatus
-                  button_size={"xs"}
-                  task_status={"in_progress"}
-                  status_imoge={"🟡"}
-                  status_count={taskListData?.count_for_in_progress}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-                <ButtonForShowCountForTaskStatus
-                  button_size={"xs"}
-                  task_status={"testing"}
-                  status_imoge={"🟠"}
-                  status_count={taskListData?.count_for_in_testing}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-                <Button
-                  size="xs"
-                  variant={"outline"}
-                  border={"1px solid black"}
-                  onClick={() => set_is_task_due_date_has_passed(true)}
-                >
-                  dhp : {taskListData?.count_for_duedate_passed}
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-          <Box
-            width={"90%"}
-            borderBottom={"3px solid #9AE6B4"}
-            overflowY={"scroll"}
-            maxHeight="240px"
-          >
-            {taskListData?.writers_info?.map((writer) => {
-              return (
-                <Box fontSize="lg" color="blue.900">
-                  <Button
-                    variant={"outline"}
-                    size={"sm"}
-                    // border={"1px solid black"}
-                    mb={1}
-                    width={"98%"}
-                    _hover={{
-                      bg: "#90CDF4",
-                      color: "brown",
-                    }}
-                    onClick={() =>
-                      searchUncompletedListforUserName(writer.username)
-                    }
-                    bgColor={
-                      writer.username === username_for_search ? "#90CDF4" : ""
-                    }
-                  >
-                    {writer.username} : {writer.task_count}
-                  </Button>
-                </Box>
-              );
-            })}
-          </Box>
-        </Box>
-
-        {is_show_for_mobile ? (
-          <Box
-            bg={"blue.100"}
-            alignItems={"center"}
-            width={"100%"}
-            p={3}
-            // border={"5px solid green"}
-          >
-            <Box>
-              {/* {is_show_for_mobile ? 
-            :""} */}
-              <Box mb={2}>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <Box flexBasis="30%" fontWeight="bold">
-                    created_at
-                  </Box>
-                  <Box flexBasis="70%">
-                    <SelectBoxForSetPeriodForFilteringUncompletedTaskList
-                      selectedPeriodOptionForUncompletedTaskList={
-                        selectedPeriodOptionForUncompletedTaskList
-                      }
-                      changeHandler={handleSelectPeriodOptionForTeamTask}
-                    />
-                  </Box>
-                </Box>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <Box flexBasis="30%" fontWeight="bold">
-                    due_date
-                  </Box>
-                  <Box flexBasis="70%">
-                    <ButtonsForSelectOptionForDueDateForUncompletedTaskList
-                      due_date_option_for_filtering={
-                        due_date_option_for_filtering
-                      }
-                      set_due_date_option_for_filtering={
-                        set_due_date_option_for_filtering
-                      }
-                    />
-                  </Box>
-                </Box>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <Box flexBasis="30%" fontWeight="bold">
-                    special option
-                  </Box>
-                  <Box
-                    flexBasis="70%"
-                    display="flex"
-                    alignItems="center"
-                    gap={5}
-                  >
-                    <Box display="flex" alignItems="center">
-                      Is Emergency :{" "}
-                      <Checkbox
-                        size="lg"
-                        ml={2}
-                        border={"1px solid gray"}
-                        isChecked={isForUrgent}
-                        onChange={handleUrgentChange}
-                      />
-                    </Box>
-                    <Box display="flex" alignItems="center">
-                      is_prize :{" "}
-                      <Checkbox
-                        size="lg"
-                        border={"1px solid gray"}
-                        ml={2}
-                        isChecked={checkForCashPrize}
-                        onChange={handleCashPrizeChange}
-                      />
-                    </Box>
-                  </Box>
-                </Box>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <Box flexBasis="30%" fontWeight="bold">
-                    Gropup By
-                  </Box>
-                  <Box flexBasis="70%">
-                    <RadioGroup
-                      value={groupByOption}
-                      onChange={setGroupByOption}
-                    >
-                      <Stack direction="row">
-                        <Radio value="member">member</Radio>
-                        <Radio value="importance">importance</Radio>
-                        {/* <Radio value="option3">Option 3</Radio> */}
-                      </Stack>
-                    </RadioGroup>
-                  </Box>
-                </Box>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <Box flexBasis="30%" fontWeight="bold">
-                    manager
-                  </Box>
-                  <Box flexBasis="70%">
-                    <Input
-                      size="xs"
-                      variant="outline"
-                      bg="blue.50"
-                      borderColor="gray.300"
-                      _focus={{ border: "0px solid blue", boxShadow: "none" }}
-                      _hover={{ bg: "green.50", borderColor: "black" }}
-                      _placeholder={{ color: "black" }}
-                      id="url"
-                      w={"80%"}
-                      value={filterValueForTaskManager}
-                      onChange={handleFilterChangeForTaskManager}
-                    />
-                  </Box>
-                </Box>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <Box flexBasis="30%" fontWeight="bold">
-                    task
-                  </Box>
-                  <Box flexBasis="70%">
-                    <Input
-                      size="xs"
-                      variant="outline"
-                      bg="blue.50"
-                      borderColor="gray.300"
-                      _focus={{ border: "1px solid blue", boxShadow: "none" }}
-                      _hover={{ bg: "green.50", borderColor: "black" }}
-                      _placeholder={{ color: "black" }}
-                      id="url"
-                      w={"80%"}
-                      value={filterValueForTask}
-                      onChange={handleFilterChangeForTask}
-                    />
-                  </Box>
-                </Box>
-                <Box display="flex" alignItems="center" mb={2}>
-                  <Box flexBasis="30%" fontWeight="bold">
-                    class
-                  </Box>
-                  <Box flexBasis="70%">
-                    <Input
-                      size="xs"
-                      variant="outline"
-                      bg="blue.50"
-                      borderColor="gray.300"
-                      _focus={{ border: "1px solid blue", boxShadow: "none" }}
-                      _hover={{ bg: "green.50", borderColor: "black" }}
-                      _placeholder={{ color: "black" }}
-                      id="url"
-                      w={"80%"}
-                      value={filterValueForTaskClassification}
-                      onChange={handleFilterChangeForTaskClassification}
-                    />
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-        ) : (
-          ""
-        )}
-
-        {is_show_for_mobile ? (
-          <Box bgColor={"orange.200"} alignItems={"center"} flex={1}>
-            <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
-              <Text fontSize="xl" fontWeight="bold" mb={2}>
-                Today
-              </Text>
-              <Text>total: {taskListData.total_task_count_for_today}</Text>
-              <Text>
-                complete: {taskListData.completed_task_count_for_today}
-              </Text>
-              <Text>progress:{taskListData.achievement_rate_for_today}%</Text>
-              <Box w="100%">
-                <Progress
-                  value={taskListData.achievement_rate_for_today}
-                  size="xs"
-                  mb={2}
-                />
-              </Box>
-            </Box>
-          </Box>
-        ) : (
-          ""
-        )}
-      </Box>
+      <HeaderInfoForUncompletedTaskList
+        set_is_task_due_date_has_passed={set_is_task_due_date_has_passed}
+        set_task_status_for_search={set_task_status_for_search}
+        set_username_for_search={set_username_for_search}
+        set_due_date_option_for_filtering={set_due_date_option_for_filtering}
+        setCheckForCashPrize={setCheckForCashPrize}
+        setFilterValueForTask={setFilterValueForTask}
+        setIsForUrgent={setIsForUrgent}
+        setSelectedPeriodOptionForUncompletedTaskList={
+          setSelectedPeriodOptionForUncompletedTaskList
+        }
+        setGroupByOption={setGroupByOption}
+        setFilterValueForTaskManager={setFilterValueForTaskManager}
+        setFilterValueForTaskClassification={
+          setFilterValueForTaskClassification
+        }
+        taskListData={taskListData}
+        selectedPeriodOptionForUncompletedTaskList={selectedPeriodOptionForUncompletedTaskList}
+        task_status_for_search={task_status_for_search}
+        username_for_search={username_for_search}
+        isForUrgent={isForUrgent}
+        due_date_option_for_filtering={due_date_option_for_filtering}
+        checkForCashPrize={checkForCashPrize}
+        groupByOption={groupByOption}
+        filterValueForTaskManager={filterValueForTaskManager}
+        filterValueForTask={filterValueForTask}
+        filterValueForTaskClassification={filterValueForTaskClassification}
+        setFilteredListForUncompleteTask = {setFilteredListForUncompleteTask}
+        filteredListForUncompleteTask = {filteredListForUncompleteTask}
+      />
 
       <Box
         display={"grid"}
@@ -693,7 +423,7 @@ function UncompletedProjectTaskList({
         <Box border={"0px solid blue"}>
           {taskListData ? (
             <UncompletedTaskRow
-              ProjectProgressList={filteredData}
+              ProjectProgressList={filteredListForUncompleteTask}
               totalPageCount={taskListData.totalPageCount}
               task_number_for_one_page={taskListData.task_number_for_one_page}
               currentPageNum={currentPageNum}
@@ -708,9 +438,9 @@ function UncompletedProjectTaskList({
         </Box>
       ) : (
         <Box>
-          {filteredData && filteredData.length ? (
+          {filteredListForUncompleteTask && filteredListForUncompleteTask.length ? (
             <SlideForUncompletedTaskList
-              listData={filteredData}
+              listData={filteredListForUncompleteTask}
               handleCheckboxChange={handleCheckboxChange}
               checkedRowPks={checkedRowPks}
               refetch={projectTaskListRefatch}

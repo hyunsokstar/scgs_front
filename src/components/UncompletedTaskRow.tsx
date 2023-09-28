@@ -339,7 +339,7 @@ function UncompletedTaskRow({
                       fontSize="lg"
                       fontWeight="bold"
                     >
-                      매니저: {task.writer}
+                      지시 : {task.writer}
                     </Text>
                   </ListItem>
                   <ListItem

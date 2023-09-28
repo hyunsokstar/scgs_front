@@ -11,35 +11,44 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { ITypeForProjectProgressList } from "../../types/project_progress/project_progress_type";
+import {
+  ITypeForProjectProgressList,
+  taskRowForUncompleted,
+} from "../../types/project_progress/project_progress_type";
 import ButtonForShowCountForTaskStatus from "../Button/ButtonForShowCountForTaskStatus";
 import SelectBoxForSetPeriodForFilteringUncompletedTaskList from "../Button/SelectBoxForSetPeriodForFilteringUncompletedTaskList";
 import ButtonsForSelectOptionForDueDateForUncompletedTaskList from "../Button/ButtonsForSelectOptionForDueDateForUncompletedTaskList";
 
 interface IProps {
+  setFilteredListForUncompleteTask: Dispatch<
+    SetStateAction<taskRowForUncompleted[]>
+  >;
   set_is_task_due_date_has_passed: Dispatch<SetStateAction<boolean>>;
   set_task_status_for_search: Dispatch<SetStateAction<string>>;
-  set_username_for_search: Dispatch<SetStateAction<string>>;
-  set_due_date_option_for_filtering: Dispatch<SetStateAction<string | undefined>>;
+  set_username_for_search: Dispatch<SetStateAction<string | undefined>>;
+  set_due_date_option_for_filtering: Dispatch<
+    SetStateAction<string | undefined>
+  >;
   setCheckForCashPrize: Dispatch<SetStateAction<boolean>>;
-  setFilterValueForTask: Dispatch<SetStateAction<string>>;
+  setFilterValueForTask: Dispatch<SetStateAction<string | undefined>>;
   setIsForUrgent: Dispatch<SetStateAction<boolean>>;
   setSelectedPeriodOptionForUncompletedTaskList: Dispatch<
     SetStateAction<string>
   >;
   setGroupByOption: Dispatch<SetStateAction<string>>;
-  setFilterValueForTaskManager: Dispatch<SetStateAction<string>>;
+  setFilterValueForTaskManager: Dispatch<SetStateAction<string | undefined>>;
   setFilterValueForTaskClassification: Dispatch<SetStateAction<string>>;
+  filteredListForUncompleteTask: taskRowForUncompleted[];
   taskListData: ITypeForProjectProgressList;
   selectedPeriodOptionForUncompletedTaskList: string;
   task_status_for_search: string;
-  username_for_search: string;
+  username_for_search: string | undefined;
   isForUrgent: boolean;
   due_date_option_for_filtering: string | undefined;
   checkForCashPrize: boolean;
   groupByOption: string;
-  filterValueForTaskManager: string;
-  filterValueForTask: string;
+  filterValueForTaskManager: string | undefined;
+  filterValueForTask: string | undefined;
   filterValueForTaskClassification: string;
 }
 
@@ -57,6 +66,7 @@ const HeaderInfoForUncompletedTaskList = ({
   setFilterValueForTask,
   setFilterValueForTaskClassification,
   taskListData,
+  filteredListForUncompleteTask,
   task_status_for_search,
   username_for_search,
   selectedPeriodOptionForUncompletedTaskList,
@@ -66,7 +76,8 @@ const HeaderInfoForUncompletedTaskList = ({
   due_date_option_for_filtering,
   isForUrgent,
   filterValueForTask,
-  filterValueForTaskClassification
+  filterValueForTaskClassification,
+  setFilteredListForUncompleteTask,
 }: IProps) => {
   const is_show_for_mobile = useBreakpointValue({
     base: false, // for mobile and small screens
@@ -99,7 +110,13 @@ const HeaderInfoForUncompletedTaskList = ({
   const handleFilterChangeForTaskManager = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setFilterValueForTaskManager(event.target.value);
+    const filterValue = event.target.value;
+    setFilterValueForTaskManager(filterValue);
+
+    const newFilteredTaskList = filteredListForUncompleteTask.filter((task) => {
+      return task.task_manager.username.includes(filterValue);
+    });
+    setFilteredListForUncompleteTask(newFilteredTaskList);
   };
 
   const handleFilterChangeForTaskClassification = (
@@ -112,7 +129,7 @@ const HeaderInfoForUncompletedTaskList = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setFilterValueForTask(event.target.value);
-  };  
+  };
 
   return (
     <Box>
@@ -349,6 +366,7 @@ const HeaderInfoForUncompletedTaskList = ({
                       value={filterValueForTaskManager}
                       onChange={handleFilterChangeForTaskManager}
                     />
+                    {filterValueForTaskManager}
                   </Box>
                 </Box>
                 <Box display="flex" alignItems="center" mb={2}>
@@ -401,9 +419,7 @@ const HeaderInfoForUncompletedTaskList = ({
         {is_show_for_mobile ? (
           <Box bgColor={"orange.200"} alignItems={"center"} flex={1}>
             <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
-              <Text>
-                Today
-              </Text>
+              <Text>Today</Text>
               <Text>total: {taskListData.total_task_count_for_today}</Text>
               <Text>
                 complete: {taskListData.completed_task_count_for_today}
