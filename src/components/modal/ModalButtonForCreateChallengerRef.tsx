@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiForCreateChallengeRef } from "../../apis/challenge_api";
+import { apiForCreateChallengeRef, apiForCreateChallengerRef } from "../../apis/challenge_api";
 
 interface FormData {
   url: string;
@@ -30,7 +30,7 @@ interface IProps {
   challengeId: any;
 }
 
-const ModalButtonForCreateChallengeRef: React.FC<IProps> = ({
+const ModalButtonForCreateChallengerRef: React.FC<IProps> = ({
   challengeId,
 }) => {
   const toast = useToast();
@@ -42,19 +42,19 @@ const ModalButtonForCreateChallengeRef: React.FC<IProps> = ({
     formState: { errors },
   } = useForm<FormData>();
 
-  // mutationForCreateChallengeRef
-  const mutationForCreateChallengeRef = useMutation(
-    apiForCreateChallengeRef,
+  // mutationForCreateChallengerRef
+  const mutationForCreateChallengerRef = useMutation(
+    apiForCreateChallengerRef,
     {
       onMutate: () => {
         console.log("mutation starting");
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        queryClient.refetchQueries(["apiForGetChallengeRefsList"]);
+        queryClient.refetchQueries(["apiForGetChallengerRefList"]);
 
         toast({
-          title: "challenge register 성공",
+          title: "challenger ref create 성공",
           description: data.message,
           status: "success",
           duration: 1800,
@@ -82,7 +82,7 @@ const ModalButtonForCreateChallengeRef: React.FC<IProps> = ({
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log("challengeId : ", challengeId);
     console.log("Submitted Data:", data);
-    mutationForCreateChallengeRef.mutate({
+    mutationForCreateChallengerRef.mutate({
       challengeId,
       urlText: data.url,
       descriptionText: data.description,
@@ -99,14 +99,14 @@ const ModalButtonForCreateChallengeRef: React.FC<IProps> = ({
           _hover={{ bgColor: "blue.50" }}
           onClick={onOpen}
         >
-          Create Challenge Ref
+          Create Challenger Ref
         </Button>
       </Box>
 
       <Modal isOpen={isOpen} onClose={onClose} size="5xl">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>ModalForCreateChallengeRef</ModalHeader>
+          <ModalHeader>ModalForCreateChallengerRef</ModalHeader>
           <ModalCloseButton />
 
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -150,4 +150,4 @@ const ModalButtonForCreateChallengeRef: React.FC<IProps> = ({
   );
 };
 
-export default ModalButtonForCreateChallengeRef;
+export default ModalButtonForCreateChallengerRef;

@@ -15,6 +15,8 @@ import { apiForGetChallengerRefsList } from "../../apis/challenge_api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ListForChallengeRef from "../List/ListForChallengeRef";
 import ModalButtonForCreateChallengeRef from "./ModalButtonForCreateChallengeRef";
+import ModalButtonForCreateChallengerRef from "./ModalButtonForCreateChallengerRef";
+import ListForChallengerRef from "../List/ListForChallengerRef";
 
 interface IProps {
   buttonLabel: string;
@@ -35,7 +37,7 @@ const ModalButtonForChallengerRefList: React.FC<IProps> = ({
     data: dataForChallengerRef,
     refetch: refetchForGetChallengeRef,
   } = useQuery<ITypeForChallengerRefData>(
-    ["apiForGetChallengerRefsList", challengeId],
+    ["apiForGetChallengerRefList", challengeId],
     apiForGetChallengerRefsList,
     {
       enabled: true,
@@ -57,18 +59,19 @@ const ModalButtonForChallengerRefList: React.FC<IProps> = ({
       <Modal isOpen={isOpen} size="5xl" onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>ChallengeRefList Modal</ModalHeader>
+          <ModalHeader>Challenger Ref List Modal</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <ModalButtonForCreateChallengeRef challengeId={challengeId} />
+            <ModalButtonForCreateChallengerRef challengeId={challengeId} />
 
-            <ListForChallengeRef
-              challengeRefList={
+            <ListForChallengerRef
+              challengerRefList={
                 dataForChallengerRef
                   ? dataForChallengerRef.challengerRefList
                   : []
               }
             />
+
           </ModalBody>
           <ModalFooter>
             <Button variant="outline" onClick={onClose}>

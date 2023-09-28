@@ -9,6 +9,7 @@ import {
   IPrameterForApiForCreateChallengeComment,
   IPrameterForCreateChallengeRef,
   IPrameterForUpdateChallengeRef,
+  IPrameterForUpdateChallengerRef,
   ITypeForCreateChallengeParameter,
   ITypeForEvaluationCriteriaRow,
 } from "../types/type_for_challenge";
@@ -19,6 +20,56 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForDeleteChallengerRef = (challengerRefId: string | number) => {
+  console.log("challengerRefId : ", challengerRefId);
+
+  return instance
+    .delete(`challenger-ref/${challengerRefId}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+// apiForUpdateChallengerRef
+export const apiForUpdateChallengerRef = ({
+  challengerRefId,
+  urlText,
+  descriptionText,
+}: IPrameterForUpdateChallengerRef) => {
+  return instance
+    .put(
+      `/challenger-ref/${challengerRefId}/update`,
+      { urlText, descriptionText },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      return response.data;
+    });
+};
+
+export const apiForCreateChallengerRef = ({
+  challengeId,
+  urlText,
+  descriptionText,
+}: IPrameterForCreateChallengeRef) =>
+  instance
+    .post(
+      `${challengeId}/challenger-ref/create`,
+      { urlText, descriptionText },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForGetChallengerRefsList = ({
   queryKey,
 }: QueryFunctionContext) => {
@@ -69,7 +120,6 @@ export const apiForCreateChallengeRef = ({
     )
     .then((response) => response.data);
 
-// apiForUpdateChallengeRef
 export const apiForUpdateChallengeRef = ({
   challengeRefId,
   urlText,
@@ -142,16 +192,22 @@ export const apiForUpdateChallengeResultMetaInfo = ({
   challengeResultId,
   github_url1,
   github_url2,
-  note_url,
+  github_url3,
+  note_url1,
+  note_url2,
+  note_url3,
 }: IParameterTypeForUpdateChallengeMetaInfo) => {
-  alert(challengeResultId);
+  // alert(challengeResultId);
   return instance
     .put(
       `challenge-result/${challengeResultId}/update`,
       {
         github_url1,
         github_url2,
-        note_url,
+        github_url3,
+        note_url1,
+        note_url2,
+        note_url3,
       },
       {
         headers: {

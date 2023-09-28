@@ -24,13 +24,19 @@ type ModalButtonForUpdateChallengeResultMetaInfoProps = {
   challengeResultId: string | number;
   github_url1: string;
   github_url2: string;
-  note_url: string;
+  github_url3: string;
+  note_url1: string;
+  note_url2: string;
+  note_url3: string;
 };
 
 type FormValues = {
   github_url1: string;
   github_url2: string;
-  note_url: string;
+  github_url3: string;
+  note_url1: string;
+  note_url2: string;
+  note_url3: string;
 };
 
 const isValidURL = (url: string) => {
@@ -40,7 +46,15 @@ const isValidURL = (url: string) => {
 
 const ModalButtonForUpdateChallengeResultMetaInfo: React.FC<
   ModalButtonForUpdateChallengeResultMetaInfoProps
-> = ({ challengeResultId, github_url1, github_url2, note_url }) => {
+> = ({
+  challengeResultId,
+  github_url1,
+  github_url2,
+  github_url3,
+  note_url1,
+  note_url2,
+  note_url3,
+}) => {
   const queryClient = useQueryClient();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -77,7 +91,7 @@ const ModalButtonForUpdateChallengeResultMetaInfo: React.FC<
   );
 
   const onSubmit = (data: FormValues) => {
-    const { github_url1, github_url2, note_url } = data;
+    const { github_url1, github_url2, note_url1 } = data;
 
     if (!isValidURL(github_url1)) {
       toast({
@@ -101,7 +115,7 @@ const ModalButtonForUpdateChallengeResultMetaInfo: React.FC<
       return;
     }
 
-    if (!isValidURL(note_url)) {
+    if (!isValidURL(note_url1)) {
       toast({
         title: "오류",
         description: "Note URL이 유효한 URL 형식이 아닙니다.",
@@ -119,7 +133,10 @@ const ModalButtonForUpdateChallengeResultMetaInfo: React.FC<
       challengeResultId,
       github_url1: data.github_url1,
       github_url2: data.github_url2,
-      note_url: data.note_url,
+      github_url3: data.github_url3,
+      note_url1: data.note_url1,
+      note_url2: data.note_url2,
+      note_url3: data.note_url3,
     });
   };
 
@@ -153,10 +170,30 @@ const ModalButtonForUpdateChallengeResultMetaInfo: React.FC<
                   defaultValue={github_url2}
                 />
               </FormControl>
+
               <FormControl mt={4}>
-                <FormLabel>Note URL</FormLabel>
-                <Input {...register("note_url")} defaultValue={note_url} />
+                <FormLabel>Github URL 3</FormLabel>
+                <Input
+                  {...register("github_url3")}
+                  defaultValue={github_url3}
+                />
               </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Note URL1</FormLabel>
+                <Input {...register("note_url1")} defaultValue={note_url1} />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Note URL2</FormLabel>
+                <Input {...register("note_url2")} defaultValue={note_url2} />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Note URL3</FormLabel>
+                <Input {...register("note_url3")} defaultValue={note_url3} />
+              </FormControl>              
+
             </ModalBody>
             <ModalFooter>
               <Button type="submit" colorScheme="blue">

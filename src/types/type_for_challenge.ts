@@ -50,7 +50,10 @@ export interface ChallengeResultRow {
   created_at_formatted: string;
   github_url1: string;
   github_url2: string;
-  note_url: string;
+  github_url3: string;
+  note_url1: string;
+  note_url2: string;
+  note_url3: string;
 }
 
 export interface ITypeForChallengeRow {
@@ -136,7 +139,10 @@ export interface IParameterTypeForUpdateChallengeMetaInfo {
   challengeResultId: string | number;
   github_url1: string;
   github_url2: string;
-  note_url: string;
+  github_url3: string;
+  note_url1: string;
+  note_url2: string;
+  note_url3: string;
 }
 
 export interface IPrameterForApiForCreateChallengeComment {
@@ -144,6 +150,13 @@ export interface IPrameterForApiForCreateChallengeComment {
   participant_username: string;
   commentText: string;
 }
+
+export interface IPrameterForUpdateChallengerRef {
+  challengerRefId: string | number;
+  urlText: string;
+  descriptionText: string;
+}
+
 
 export interface IPrameterForUpdateChallengeRef {
   challengeRefId: string | number;

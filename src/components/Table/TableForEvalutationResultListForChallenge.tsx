@@ -132,7 +132,10 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                               <LinkButtonsForReferenceForChallengeResult
                                 github_url1={row.github_url1}
                                 github_url2={row.github_url2}
-                                note_url={row.note_url}
+                                github_url3={row.github_url3}
+                                note_url1={row.note_url1}
+                                note_url2={row.note_url2}
+                                note_url3={row.note_url3}
                               />
 
                               {row.challenger.username ===
@@ -141,7 +144,8 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                                   challengeResultId={row.id}
                                   github_url1={row.github_url1}
                                   github_url2={row.github_url2}
-                                  note_url={row.note_url}
+                                  // github_url3={row.github_url3}
+                                  note_url1={row.note_url1}
                                 />
                               ) : (
                                 ""

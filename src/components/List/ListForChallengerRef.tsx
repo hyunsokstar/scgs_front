@@ -14,18 +14,18 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { FaEdit, FaCheck, FaTimes, FaTrash } from "react-icons/fa";
-import { IChallengeRefRow } from "../../types/type_for_challenge";
+import { IChallengerRefRow } from "../../types/type_for_challenge";
 import {
-  apiForDeleteChallengeRef,
-  apiForUpdateChallengeRef,
+    apiForUpdateChallengerRef,
+    apiForDeleteChallengerRef,
 } from "../../apis/challenge_api";
 
 interface IProps {
-  challengeRefList: IChallengeRefRow[];
+  challengerRefList: IChallengerRefRow[];
 }
 
 // 1122
-const ListForChallengeRef = ({ challengeRefList }: IProps) => {
+const ListForChallengerRef = ({ challengerRefList }: IProps) => {
   const toast = useToast();
   const queryClient = useQueryClient();
   const [editingRow, setEditingRow] = useState(-1); // -1은 수정 중이 아님을 나타내는 값
@@ -48,8 +48,8 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
 
   const handleEditClick = (index: number) => {
     setEditingRow(index);
-    setUrlText(challengeRefList[index].url); // 에디트 모드로 진입할 때 commentText를 해당 행의 URL로 초기화
-    setDescriptionText(challengeRefList[index].description); // 에디트 모드로 진입할 때 descriptionText를 해당 행의 description으로 초기화
+    setUrlText(challengerRefList[index].url); // 에디트 모드로 진입할 때 commentText를 해당 행의 URL로 초기화
+    setDescriptionText(challengerRefList[index].description); // 에디트 모드로 진입할 때 descriptionText를 해당 행의 description으로 초기화
   };
 
   const handleCancelClick = () => {
@@ -59,14 +59,14 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
   };
 
   // mutationForUpdateChallengeRef
-  const mutationForUpdateChallengeRef = useMutation(
+  const mutationForUpdateChallengerRef = useMutation(
     // apiForUpdateChallengeRef
-    apiForUpdateChallengeRef,
+    apiForUpdateChallengerRef,
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
         // apiForGetChallengeRefsList
-        queryClient.refetchQueries(["apiForGetChallengeRefsList"]);
+        queryClient.refetchQueries(["apiForGetChallengerRefList"]);
 
         toast({
           status: "success",
@@ -76,59 +76,69 @@ const ListForChallengeRef = ({ challengeRefList }: IProps) => {
           isClosable: true,
         });
       },
+      onError: (error: any) => {
+        console.error("Error updating challenger ref:", error);
+
+        toast({
+          status: "error",
+          title: "Error updating challenger ref",
+          description: error.response.data.message, // 에러 메시지를 사용
+          duration: 1800,
+          isClosable: true,
+        });
+      },
     }
   );
 
-  const handleSaveClick = ({ index, challengeRefId }: any) => {
+  const handleSaveClick = ({ index, challengerRefId }: any) => {
     setEditingRow(-1); // 수정을 완료하고 행을 수정 중이 아님으로 설정
     // TODO: 수정한 내용을 저장하는 로직을 추가하세요.
-    mutationForUpdateChallengeRef.mutate({
-      challengeRefId,
+    mutationForUpdateChallengerRef.mutate({
+      challengerRefId,
       urlText,
       descriptionText,
     });
   };
 
-const mutationForDeleteChallengeRef = useMutation(
-  (challengeRefId: string | number) => {
-    // return apiForDeleteCommentForChallenge(pk);
-    return apiForDeleteChallengeRef(challengeRefId);
-  },
-  {
-    onSettled: () => {
-      // setSelectedItems([]);
+  const mutationForDeleteChallengerRef = useMutation(
+    (challengerRefId: string | number) => {
+      // return apiForDeleteCommentForChallenge(pk);
+      return apiForDeleteChallengerRef(challengerRefId);
     },
-    onError: (error) => {
-      // Handle the error here
-      console.error("Error deleting challengeRef:", error);
-      toast({
-        title: "Error deleting challengeRef",
-        status: "error",
-        description: "An error occurred while deleting the challengeRef.",
-        duration: 1800,
-        isClosable: true,
-      });
-    },
-    onSuccess: (result) => {
-      console.log("data : ", result);
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onError: (error:any) => {
+        // Handle the error here
+        console.error("Error deleting challengeRef:", error);
+        toast({
+          title: "Error deleting challengeRef",
+          status: "error",
+          description: error.response.data.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+      onSuccess: (result) => {
+        console.log("data : ", result);
 
-      queryClient.refetchQueries(["apiForGetChallengeRefsList"]);
+        queryClient.refetchQueries(["apiForGetChallengerRefList"]);
 
-      toast({
-        title: "Delete challengeRef success!",
-        status: "success",
-        description: result.message,
-        duration: 1800,
-        isClosable: true,
-      });
-    },
-  }
-);
+        toast({
+          title: "Delete challenger Ref success!",
+          status: "success",
+          description: result.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
 
-
-  const handleDeleteClick = (challengeRefId: any) => {
+  const handleDeleteClick = (challengerRefId: any) => {
     // TODO: 항목을 삭제하는 로직을 추가하세요.
-    mutationForDeleteChallengeRef.mutate(challengeRefId);
+    mutationForDeleteChallengerRef.mutate(challengerRefId);
   };
 
   return (
@@ -137,16 +147,18 @@ const mutationForDeleteChallengeRef = useMutation(
         <Thead>
           <Tr>
             <Th>Index</Th>
+            <Th>writer</Th>
             <Th>URL</Th>
             <Th>Description</Th>
             <Th>수정/확인/취소/삭제</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {challengeRefList.length !== 0 ? (
-            challengeRefList.map((item, index) => (
+          {challengerRefList.length !== 0 ? (
+            challengerRefList.map((item, index) => (
               <Tr key={item.id}>
                 <Td>{index + 1}</Td>
+                <Td>{item.writer.username}</Td>
                 <Td>
                   {editingRow === index ? (
                     <Input
@@ -182,7 +194,7 @@ const mutationForDeleteChallengeRef = useMutation(
                         onClick={() =>
                           handleSaveClick({
                             index,
-                            challengeRefId: item.id,
+                            challengerRefId: item.id,
                           })
                         }
                         variant={"outline"}
@@ -229,4 +241,4 @@ const mutationForDeleteChallengeRef = useMutation(
   );
 };
 
-export default ListForChallengeRef;
+export default ListForChallengerRef;
