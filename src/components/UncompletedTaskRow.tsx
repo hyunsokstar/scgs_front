@@ -322,7 +322,7 @@ function UncompletedTaskRow({
                     display={"flex"}
                     flexDirection={"column"}
                     border={"0px solid yellow"}
-                    flex={1.5}
+                    flex={2}
                     gap={1}
                   >
                     <Text
@@ -380,7 +380,7 @@ function UncompletedTaskRow({
                     </Button> */}
                   </ListItem>
                   {/* fix */}
-                  <ListItem border={"0px solid blue"} flex={1.5}>
+                  <ListItem border={"0px solid blue"} flex={2.5}>
                     <Box display={"flex"} gap={2}>
                       {task.is_for_today ? (
                         <Button
@@ -414,7 +414,7 @@ function UncompletedTaskRow({
                           _hover={{ bg: "lightblue" }}
                           color={"blue.500"}
                         >
-                          D - {task.d_day_count}
+                          D {task.d_day_count}
                         </Button>
                       ) : (
                         ""
