@@ -47,10 +47,8 @@ const ContainerForTargetTask = ({ checkedRowPks }: IProps) => {
   const handleRowSelect = (rowId: any, rowTask: string) => {
     setSelectedPk(rowId);
 
-    // 모달 열기
     setIsModalOpen(true);
 
-    // 선택한 행의 title 설정
     setSelectedTask(rowTask);
   };
 
@@ -59,9 +57,6 @@ const ContainerForTargetTask = ({ checkedRowPks }: IProps) => {
   };
 
   const handleConfirm = () => {
-    // 여기에서 선택된 행(row.task)의 부가 업무로 전환하는 작업을 수행할 수 있습니다.
-    // 이 부분은 실제로 구현해야 합니다.
-    // 작업이 완료되면 모달을 닫을 수 있습니다.
     closeModal();
   };
 
@@ -85,14 +80,12 @@ const ContainerForTargetTask = ({ checkedRowPks }: IProps) => {
             dataForTaskListForCheckedPks.listForTask.map((row) => (
               <Tr
                 key={row.id}
-                // 선택된 행의 배경색 변경
                 bg={row.id === selectedPk ? "blue.50" : "transparent"}
               >
                 <Td>{row.task_manager.username}</Td>
                 <Td>{row.task}</Td>
                 <Td>{row.current_status}</Td>
                 <Td>
-                  {/* 선택 버튼 클릭 시 해당 행의 id와 title 저장 */}
                   <Button
                     size="sm"
                     onClick={() => handleRowSelect(row.id, row.task)}
@@ -110,7 +103,6 @@ const ContainerForTargetTask = ({ checkedRowPks }: IProps) => {
         </Tbody>
       </Table>
 
-      {/* 모달 */}
       <Modal isOpen={isModalOpen} onClose={closeModal} size="full">
         <ModalOverlay />
         <ModalContent height={"100%"}>

@@ -65,10 +65,7 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
     setIsOpen(true);
 
     // 모달이 열릴 때 enabled를 true로 변경하여 API 요청을 활성화합니다.
-    queryClient.setQueryData(
-      ["getTaskListForCheckedPks", checkedRowPks],
-      true
-    );
+    queryClient.setQueryData(["getTaskListForCheckedPks", checkedRowPks], true);
   };
 
   // useEffect(() => {
@@ -100,6 +97,7 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
           <ModalCloseButton />
           <ModalBody>
             <Flex border={"1px solid red"} height={"100%"}>
+              {/* 1 영역 */}
               <Box flex={1} style={dashedBorderStyle}>
                 <ContainerForCheckedTaskForIntergration
                   checkedRowPks={checkedRowPks}
@@ -108,8 +106,7 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
                 />
               </Box>
               <Divider orientation="vertical" mx={2} />
-              {/* 타겟 task를 검색한뒤 조회 할수 있게할 table 
-              외부 컴퍼넌트화 한다면 이름은 TableForSearchResultForTargetTask */}
+              {/* 2영역 */}
               <Box flex={1} style={dashedBorderStyle}>
                 <ContainerForTargetTask checkedRowPks={checkedRowPks} />
               </Box>
