@@ -1,6 +1,12 @@
 // task_completed update
 import { Switch, SwitchProps } from "@chakra-ui/react";
 
+export interface ITaskManager {
+  pk: number;
+  username: string;
+  profile_image: string;
+}
+
 export interface TaskManagerForCompleted {
   pk: number;
   username: string;
@@ -271,7 +277,7 @@ export interface taskRowForUncompleted {
   task_comments: ITaskComment[];
 }
 
-export interface  ITypeForProjectProgressList {
+export interface ITypeForProjectProgressList {
   ProjectProgressList: taskRowForUncompleted[] | any[];
   writers_info?: Writer[];
   totalPageCount: number;
@@ -593,19 +599,22 @@ export interface IPropsForCardForTodayTaskListBySlide {
   todos: Task[];
 }
 
+// ITaskManager
+export interface ITaskRowForIntergration {
+  id: number;
+  task_manager: ITaskManager;
+  writer: string;
+  task: string;
+  current_status: string;
+  is_for_today: boolean;
+}
+
+export interface ITaskListForCheckedForIntergration {
+  taskListForCheckedForIntergration: ITaskRowForIntergration[];
+}
+
 export interface IDataForTaskListForIntegration {
-  listForTask: Array<{
-    id: number;
-    task_manager: {
-      pk: number;
-      username: string;
-      profile_image: null | string; // 프로필 이미지가 문자열 또는 null일 수 있음
-    };
-    writer: string;
-    task: string;
-    current_status: string;
-    is_for_today: boolean;
-  }>;
+  listForTask: ITaskRowForIntergration[];
   totalCountForTaskList: number;
   perPage: number;
 }
