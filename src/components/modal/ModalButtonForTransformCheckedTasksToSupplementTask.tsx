@@ -19,6 +19,7 @@ import { typeForTaskListForChecked } from "../../types/project_progress/project_
 import { apiForGetTaskListForCheckedPks } from "../../apis/project_progress_api";
 import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
 import ContainerForTargetTask from "../Container/ContainerForTargetTask";
+import ContainerForCheckedTaskForIntergration from "../Container/ContainerForCheckedTaskForIntergration";
 
 interface IProps {
   button_text: string;
@@ -70,12 +71,6 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
     height: "100%", // 영역 높이 100%로 설정
   };
 
-  const centerTextStyle = {
-    textAlign: "center", // 가운데 정렬 설정
-    fontFamily: "sans-serif", // 원하는 글꼴로 설정
-    fontSize: "24px", // 원하는 글꼴 크기로 설정
-  };
-
   useEffect(() => {
     if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
       setIsOpen(false);
@@ -103,18 +98,11 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
           <ModalBody>
             <Flex border={"1px solid red"} height={"100%"}>
               <Box flex={1} style={dashedBorderStyle}>
-                <Text style={centerTextStyle}>Checked Tasks</Text>
-                <Box>
-                  {dataForTaskListForCheckedPks ? (
-                    <TableForTaskListForChecked
-                      data={dataForTaskListForCheckedPks?.ProjectProgressList}
-                      checkedRowPks={checkedRowPks}
-                      setCheckedRowPks={setCheckedRowPks}
-                    />
-                  ) : (
-                    "no data"
-                  )}
-                </Box>
+                <ContainerForCheckedTaskForIntergration
+                  checkedRowPks={checkedRowPks}
+                  setCheckedRowPks={setCheckedRowPks}
+                  setIsOpen={setIsOpen}
+                />
               </Box>
               <Divider orientation="vertical" mx={2} />
               {/* 타겟 task를 검색한뒤 조회 할수 있게할 table 
