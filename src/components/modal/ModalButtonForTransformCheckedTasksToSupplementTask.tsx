@@ -14,7 +14,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { typeForTaskListForChecked } from "../../types/project_progress/project_progress_type";
 import { apiForGetTaskListForCheckedPks } from "../../apis/project_progress_api";
 import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
@@ -35,11 +35,8 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
   const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
 
-  const {
-    isLoading,
-    data: dataForTaskListForCheckedPks,
-    refetch: refatchForTaskListForCheckedPks,
-  } = useQuery<typeForTaskListForChecked>(
+  // useQuery 훅을 컴포넌트 내부에서 호출하도록 변경
+  const { isLoading, data } = useQuery<typeForTaskListForChecked>(
     ["getTaskListForCheckedPks", checkedRowPks],
     apiForGetTaskListForCheckedPks,
     {
@@ -47,35 +44,35 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
     }
   );
 
+  const fetchDataForTaskListForCheckedPks = () => {
+    // 데이터를 처리하거나 상태를 업데이트할 수 있습니다.
+    if (isLoading) {
+      // 데이터가 로딩 중일 때 처리
+    } else {
+      // 데이터가 로딩이 완료된 후 처리
+    }
+  };
+
   const onClose = () => {
     setIsOpen(false);
   };
 
   const onOpen = () => {
-    if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
-      toast({
-        status: "warning",
-        title: "Please select at least one item",
-        duration: 3000,
-        isClosable: true,
-        position: "top",
-      });
-    } else {
-      setIsOpen(true);
-    }
+    // 모달이 열릴 때 fetchDataForTaskListForCheckedPks를 호출하여 API 요청을 보냅니다.
+    fetchDataForTaskListForCheckedPks();
+
+    setIsOpen(true);
   };
+
+  useEffect(() => {
+    // 여기에 다른 초기화나 효과를 넣을 수 있습니다.
+  }, []);
 
   // 인라인 스타일 객체 정의
   const dashedBorderStyle = {
     border: "1px dashed black", // 점선 테두리 설정
     height: "100%", // 영역 높이 100%로 설정
   };
-
-  useEffect(() => {
-    if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
-      setIsOpen(false);
-    }
-  }, [dataForTaskListForCheckedPks]);
 
   return (
     <Box>
@@ -92,7 +89,7 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
         <ModalOverlay />
         <ModalContent height={"100%"}>
           <ModalHeader>
-            Modal ForTransform Checked Tasks To SupplementTask
+            Modal For Transform Checked Tasks To SupplementTask
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -108,7 +105,7 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
               {/* 타겟 task를 검색한뒤 조회 할수 있게할 table 
               외부 컴퍼넌트화 한다면 이름은 TableForSearchResultForTargetTask */}
               <Box flex={1} style={dashedBorderStyle}>
-                <ContainerForTargetTask />
+                <ContainerForTargetTask checkedRowPks={checkedRowPks} />
               </Box>
             </Flex>
           </ModalBody>

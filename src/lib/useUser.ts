@@ -10,7 +10,6 @@ import { useState } from "react";
 export default function useUser() {
   const dispatch = useDispatch();
 
-
   const { isLoading, data, isError } = useQuery<IUser>(["me"], getMe, {
     retry: false,
   });

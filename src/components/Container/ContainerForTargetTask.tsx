@@ -15,14 +15,18 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Flex, // 추가: Flex 컴포넌트 import
+  Divider, // 추가: Divider 컴포넌트 import
 } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForGetTaskListForTaskIntegration } from "../../apis/project_progress_api";
 import { IDataForTaskListForIntegration } from "../../types/project_progress/project_progress_type";
 
-interface Props {}
+interface IProps {
+  checkedRowPks: number[];
+}
 
-const ContainerForTargetTask = (props: Props) => {
+const ContainerForTargetTask = ({ checkedRowPks }: IProps) => {
   const [pageNum, setPageNum] = useState(1);
   const [selectedPk, setSelectedPk] = useState(null);
   const [selectedTask, setSelectedTask] = useState(""); // 추가: 선택한 행의 title을 관리
@@ -45,7 +49,7 @@ const ContainerForTargetTask = (props: Props) => {
 
     // 모달 열기
     setIsModalOpen(true);
-    // alert(rowTask);
+
     // 선택한 행의 title 설정
     setSelectedTask(rowTask);
   };
@@ -107,17 +111,27 @@ const ContainerForTargetTask = (props: Props) => {
       </Table>
 
       {/* 모달 */}
-      <Modal isOpen={isModalOpen} onClose={closeModal} size="5xl">
+      <Modal isOpen={isModalOpen} onClose={closeModal} size="full">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent height={"100%"}>
           <ModalHeader>안내 메세지</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {selectedTask ? (
-              <p>{`체크한 업무들을 선택한 행의 "${selectedTask}"의 부가 업무로 전환하시겠습니까?`}</p>
-            ) : (
-              <p>선택한 업무가 없습니다.</p>
-            )}
+            <Flex height={"100%"}>
+              <Box flex="1" border={"1px solid gray"} height={"100%"}>
+                {/* 1영역 */}
+                1영역 내용
+              </Box>
+              <Divider orientation="vertical" mx="2" />
+              <Box flex="1" border={"1px solid gray"}>
+                {/* 2영역 */}
+                {selectedTask ? (
+                  <p>{`체크한 업무들을 선택한 행의 "${selectedTask}"의 부가 업무로 전환하시겠습니까?`}</p>
+                ) : (
+                  <p>선택한 업무가 없습니다.</p>
+                )}
+              </Box>
+            </Flex>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleConfirm}>
