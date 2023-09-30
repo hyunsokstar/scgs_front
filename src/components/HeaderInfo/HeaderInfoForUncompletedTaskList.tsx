@@ -147,82 +147,77 @@ const HeaderInfoForUncompletedTaskList = ({
           flex={1}
           display={"flex"}
           flexDirection={"column"}
-          justifyContent={"center"}
+          // justifyContent={"center"}
           alignItems={"center"}
           width={"100%"}
           pt={2}
           gap={3}
-          // border={"5px solid blue"}
         >
-          <Box display={"flex"} borderBottom={"3px solid #9AE6B4"}>
-            <Box textAlign={"center"}>
+          <Box
+            display={"flex"}
+            justifyContent={"space-around"}
+            borderBottom={"3px solid #9AE6B4"}
+            width={"100%"}
+          >
+            <Box textAlign={"center"} border={"0px solid blue"}>
               <Text fontSize={20}>UnComplete Task</Text>
-              <Text>
-                total: {taskListData?.totalPageCount} 개
-                {/* per :{" "}
-                {taskListData?.task_number_for_one_page}) */}
-              </Text>
+              <Text>total: {taskListData?.totalPageCount} 개</Text>
             </Box>
-          </Box>
-          <Box borderBottom={"3px solid #9AE6B4"}>
             <Box
-              display={"flex"}
-              justifyContent={"flex-start"}
+              display={"grid"}
+              gridTemplateColumns={"repeat(2, 1fr)"}
               gap={3}
               borderBottom={"1px solid #9AE6B4"}
               flexDirection={"column"}
             >
-              <Box display={"flex"} gap={2}></Box>
-              <Box display={"flex"} gap={2}>
-                <Button
-                  size="xs"
-                  variant={"outline"}
-                  border={"1px solid black"}
-                  onClick={() => {
-                    set_is_task_due_date_has_passed(false);
-                    set_task_status_for_search("");
-                    set_username_for_search("");
-                    set_due_date_option_for_filtering("");
-                    setIsForUrgent(false);
-                    setCheckForCashPrize(false);
-                  }}
-                >
-                  reset
-                </Button>
+              <Button
+                size="xs"
+                variant={"outline"}
+                border={"1px solid black"}
+                onClick={() => {
+                  set_is_task_due_date_has_passed(false);
+                  set_task_status_for_search("");
+                  set_username_for_search("");
+                  set_due_date_option_for_filtering("");
+                  setIsForUrgent(false);
+                  setCheckForCashPrize(false);
+                }}
+              >
+                reset
+              </Button>
 
-                <ButtonForShowCountForTaskStatus
-                  task_status={"ready"}
-                  status_imoge={"⚪"}
-                  status_count={taskListData?.count_for_ready}
-                  button_size={"xs"}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-                <ButtonForShowCountForTaskStatus
-                  button_size={"xs"}
-                  task_status={"in_progress"}
-                  status_imoge={"🟡"}
-                  status_count={taskListData?.count_for_in_progress}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-                <ButtonForShowCountForTaskStatus
-                  button_size={"xs"}
-                  task_status={"testing"}
-                  status_imoge={"🟠"}
-                  status_count={taskListData?.count_for_in_testing}
-                  task_status_for_search={task_status_for_search}
-                  set_task_status_for_search={set_task_status_for_search}
-                />
-                <Button
-                  size="xs"
-                  variant={"outline"}
-                  border={"1px solid black"}
-                  onClick={() => set_is_task_due_date_has_passed(true)}
-                >
-                  dhp : {taskListData?.count_for_duedate_passed}
-                </Button>
-              </Box>
+              <ButtonForShowCountForTaskStatus
+                task_status={"ready"}
+                status_imoge={"⚪"}
+                status_count={taskListData?.count_for_ready}
+                button_size={"xs"}
+                task_status_for_search={task_status_for_search}
+                set_task_status_for_search={set_task_status_for_search}
+              />
+              <ButtonForShowCountForTaskStatus
+                button_size={"xs"}
+                task_status={"in_progress"}
+                status_imoge={"🟡"}
+                status_count={taskListData?.count_for_in_progress}
+                task_status_for_search={task_status_for_search}
+                set_task_status_for_search={set_task_status_for_search}
+              />
+              <ButtonForShowCountForTaskStatus
+                button_size={"xs"}
+                task_status={"testing"}
+                status_imoge={"🟠"}
+                status_count={taskListData?.count_for_in_testing}
+                task_status_for_search={task_status_for_search}
+                set_task_status_for_search={set_task_status_for_search}
+              />
+              <Button
+                size="xs"
+                variant={"outline"}
+                border={"1px solid black"}
+                onClick={() => set_is_task_due_date_has_passed(true)}
+              >
+                dhp : {taskListData?.count_for_duedate_passed}
+              </Button>
             </Box>
           </Box>
           <Box
@@ -230,10 +225,19 @@ const HeaderInfoForUncompletedTaskList = ({
             borderBottom={"3px solid #9AE6B4"}
             overflowY={"scroll"}
             maxHeight="240px"
+            display="grid"
+            gridTemplateColumns="repeat(2, 1fr)"
+            gap={3}
           >
             {taskListData?.writers_info?.map((writer) => {
               return (
-                <Box fontSize="lg" color="blue.900">
+                <Box
+                  key={writer.username}
+                  fontSize="lg"
+                  color="blue.900"
+                  display="flex"
+                  justifyContent="space-between"
+                >
                   <Button
                     variant={"outline"}
                     size={"sm"}
@@ -260,16 +264,8 @@ const HeaderInfoForUncompletedTaskList = ({
         </Box>
 
         {is_show_for_mobile ? (
-          <Box
-            bg={"blue.100"}
-            alignItems={"center"}
-            width={"100%"}
-            p={3}
-            // border={"5px solid green"}
-          >
+          <Box bg={"blue.100"} alignItems={"center"} width={"100%"} p={3}>
             <Box>
-              {/* {is_show_for_mobile ? 
-            :""} */}
               <Box mb={2}>
                 <Box display="flex" alignItems="center" mb={2}>
                   <Box flexBasis="30%" fontWeight="bold">

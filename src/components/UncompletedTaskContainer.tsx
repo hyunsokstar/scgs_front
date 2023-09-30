@@ -6,7 +6,7 @@ import {
   ITypeForProjectProgressList,
   typeForDueDateOption,
 } from "../types/project_progress/project_progress_type";
-import UncompletedTaskRow from "./UncompletedTaskRow";
+import UncompletedTaskList from "./UncompletedTaskList";
 import SlideForUncompletedTaskList from "./Slide/SlideForUncompletedTaskList";
 import HeaderInfoForUncompletedTaskList from "./HeaderInfo/HeaderInfoForUncompletedTaskList";
 import UtilButtonsForUncompletedTaskList from "./Buttons/UtilButtonsForUncompletedTaskList";
@@ -15,7 +15,7 @@ interface Props {
   basic_due_date_option?: typeForDueDateOption;
 }
 
-function UncompletedProjectTaskList({
+function UncompletedTaskContainer({
   basic_due_date_option,
 }: Props): ReactElement {
   const [checkedRowPks, setCheckedRowPks] = useState<number[]>([]);
@@ -150,7 +150,7 @@ function UncompletedProjectTaskList({
       {is_show_for_mobile ? (
         <Box border={"0px solid blue"}>
           {taskListData ? (
-            <UncompletedTaskRow
+            <UncompletedTaskList
               ProjectProgressList={filteredListForUncompleteTask}
               totalPageCount={taskListData.totalPageCount}
               task_number_for_one_page={taskListData.task_number_for_one_page}
@@ -192,4 +192,4 @@ function UncompletedProjectTaskList({
   );
 }
 
-export default UncompletedProjectTaskList;
+export default UncompletedTaskContainer;

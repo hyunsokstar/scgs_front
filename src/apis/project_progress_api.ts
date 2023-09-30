@@ -26,8 +26,24 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+// apiForGetTaskListForTaskIntegration
+export const apiForGetTaskListForTaskIntegration = async ({
+  queryKey,
+}: QueryFunctionContext): Promise<any> => {
+  const [_, pageNum] = queryKey;
 
-export const apiForDeleteCompletedTasksForChecked = (checkedRowPks: number[]) => {
+  const data = await instance
+    .get("project_progress/getTaskListForTaskIntegration", {
+      params: { pageNum: pageNum },
+    })
+    .then((response) => response.data);
+
+  return data;
+};
+
+export const apiForDeleteCompletedTasksForChecked = (
+  checkedRowPks: number[]
+) => {
   console.log("study_note_pk , selectedButtonsData : ", checkedRowPks);
 
   return instance
@@ -189,7 +205,6 @@ export const apiForupdateTesterListForExtraTask = (testPk: string | number) => {
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -209,7 +224,6 @@ export const apiForUpdateTestPassedForExtraTask = (taskPk: string | number) => {
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -233,7 +247,6 @@ export const apiForUpdateCommentForExtraTask = ({
       }
     )
     .then((response): any => {
-      
       return response.data;
     });
 };
@@ -613,7 +626,6 @@ export const updateCashPrizeForTask = ({
       }
     )
     .then((response): any => {
-      
       return response.data;
     });
 };
@@ -632,7 +644,6 @@ export const update_task_for_is_task_for_cash_prize = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -651,7 +662,6 @@ export const update_task_for_is_task_for_urgent = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -723,7 +733,6 @@ export const updateCommentTextForTaskApi = ({
       }
     )
     .then((response): any => {
-      
       return response.data;
     });
 };
@@ -745,7 +754,6 @@ export const updateMutationForCommentEditModeApi = (
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -764,7 +772,6 @@ export const updateTestPassedForTestForTask = (taskPk: string | number) => {
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -783,7 +790,6 @@ export const updateChallengerListByTaskPkApi = (testPk: string | number) => {
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -802,7 +808,6 @@ export const updateTesterListByTestPkApi = (testPk: string | number) => {
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -856,7 +861,6 @@ export const updateExtraTaskImportance = ({ taskPk, star_count }: any) => {
       }
     )
     .then((response): any => {
-      
       return response.data;
     });
 };
@@ -881,7 +885,6 @@ export const updateExtraTaskStatusUsingSelectBox = ({
       }
     )
     .then((response): any => {
-      
       return response.data;
     });
 };
@@ -1010,7 +1013,6 @@ export const updateProjectImportance = ({ taskPk, star_count }: any) => {
       }
     )
     .then((response): any => {
-      
       return response.data;
     });
 };
@@ -1034,7 +1036,6 @@ export const updateProjectStatusByDrag = ({ taskPk, status_to_move }: any) => {
       }
     )
     .then((response): any => {
-      
       return response.data;
     });
 };
@@ -1053,7 +1054,6 @@ export const updateProjectTaskCompleted = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -1137,7 +1137,6 @@ export const apiForUpdateTaskClassificationForChecked = ({
     });
 };
 
-
 // apiForUpdateEvaluateResult
 export const apiForUpdateTaskImportanceForChecked = ({
   checkedRowPks,
@@ -1177,7 +1176,6 @@ export const api_for_update_check_for_cash_prize = ({
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -1194,7 +1192,6 @@ export const apiForUpdateTaskCheckResultByTester = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -1213,7 +1210,6 @@ export const updateProjectInProgress = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -1232,7 +1228,6 @@ export const updateProjectIsTesting = (taskPk: string) => {
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -1435,7 +1430,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         completed_task_count_for_today:
           response.data.completed_task_count_for_today,
         achievement_rate_for_today: response.data.achievement_rate_for_today,
-        count_for_duedate_passed: response.data.count_for_duedate_passed
+        count_for_duedate_passed: response.data.count_for_duedate_passed,
       };
 
       return response_data;
@@ -1493,7 +1488,6 @@ export const updateProjectDueDate = ({ taskPk, due_date }: any) => {
       }
     )
     .then((response): any => {
-      
       return response.data;
     });
 };
@@ -1517,7 +1511,6 @@ export const updateProjectStartedAt = ({
       }
     )
     .then((response): any => {
-      
       return response.data;
     });
 };

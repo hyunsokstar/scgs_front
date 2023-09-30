@@ -42,7 +42,7 @@ interface IProps {
   checkedRowPks: number[];
 }
 
-function UncompletedTaskRow({
+function UncompletedTaskList({
   ProjectProgressList,
   totalPageCount,
   task_number_for_one_page,
@@ -180,21 +180,6 @@ function UncompletedTaskRow({
     const response = deleteMutation.mutate(id);
     console.log("response :", response);
   };
-
-  // const rowColor = (task_status: string) => {
-  //   // console.log("task_staus : ", task_status);
-
-  //   if (task_status === "ready") {
-  //     return "white";
-  //   }
-
-  //   if (task_status === "in_progress") {
-  //     return "rgba(255, 255, 0, 0.2)";
-  //   }
-  //   if (task_status === "testing") {
-  //     return "rgba(255, 165, 0, 0.2)";
-  //   }
-  // };
 
   const update_mutation_for_is_task_for_cash_prize = useMutation(
     update_task_for_is_task_for_cash_prize,
@@ -380,7 +365,7 @@ function UncompletedTaskRow({
                     </Button> */}
                   </ListItem>
                   {/* fix */}
-                  <ListItem border={"0px solid blue"} flex={2.5}>
+                  <ListItem border={"0px solid blue"} flex={2.8}>
                     <Box display={"flex"} gap={2}>
                       {task.is_for_today ? (
                         <Button
@@ -407,7 +392,7 @@ function UncompletedTaskRow({
                         ""
                       )}
 
-                      {task.d_day_count ? (
+                      {task.d_day_count && !task.is_for_today ? (
                         <Button
                           variant="outline"
                           size="sm"
@@ -584,4 +569,4 @@ function UncompletedTaskRow({
   );
 }
 
-export default UncompletedTaskRow;
+export default UncompletedTaskList;

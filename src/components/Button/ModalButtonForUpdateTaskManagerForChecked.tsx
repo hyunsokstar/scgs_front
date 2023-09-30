@@ -41,15 +41,10 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
   setCheckedRowPks,
   size,
 }: IPropTypes) => {
+  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedManager, setSelectedManager] = useState("");
   const toast = useToast();
-
-  const handleChangeForSelectedManager = (
-    event: ChangeEvent<HTMLSelectElement>
-  ) => {
-    setSelectedManager(event.target.value);
-  };
 
   const {
     isLoading,
@@ -70,7 +65,12 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
     error,
   } = useQuery<IUserNamesForCreate[]>(["user_names"], getUserNamesForCreate);
 
-  const queryClient = useQueryClient();
+  const handleChangeForSelectedManager = (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedManager(event.target.value);
+  };
+
 
   const onClose = () => setIsOpen(false);
   const onOpen = () => {

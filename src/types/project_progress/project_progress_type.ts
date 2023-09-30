@@ -592,3 +592,20 @@ export interface IPropsForCardForTodayTaskListBySlide {
   title: "until-noon" | "until-evening" | "until-night";
   todos: Task[];
 }
+
+export interface IDataForTaskListForIntegration {
+  listForTask: Array<{
+    id: number;
+    task_manager: {
+      pk: number;
+      username: string;
+      profile_image: null | string; // 프로필 이미지가 문자열 또는 null일 수 있음
+    };
+    writer: string;
+    task: string;
+    current_status: string;
+    is_for_today: boolean;
+  }>;
+  totalCountForTaskList: number;
+  perPage: number;
+}

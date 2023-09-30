@@ -25,6 +25,7 @@ import ModalButtonForUpdateImortanceForChecked from "../modal/ModalButtonForUpda
 import ModalButtonForUpdateTaskClassificationForChecked from "../modal/ModalButtonForUpdateTaskClassificationForChecked";
 import SelectBoxForDueDateForUnompletedTaskForChecked from "../Button/SelectBoxForDueDateForUnompletedTaskForChecked";
 import ModalButtonForAddProjectTaskWithDuedateOption from "../modal/ModalButtonForAddProjectTaskWithDuedateOption";
+import ModalButtonForTransformCheckedTasksToSupplementTask from "../modal/ModalButtonForTransformCheckedTasksToSupplementTask";
 
 interface IProps {
   taskListData: ITypeForProjectProgressList;
@@ -159,15 +160,22 @@ const UtilButtonsForUncompletedTaskList = ({
         gridTemplateColumns={{
           base: "repeat(2, 1fr)", // 모바일
           md: "repeat(4, 1fr)", // 중간 크기
-          lg: "repeat(4, 1fr)", // 큰 화면
+          lg: "repeat(5, 1fr)", // 큰 화면
         }}
         width={"100%"}
         gap={2}
         p={2}
       >
+        <ModalButtonForTransformCheckedTasksToSupplementTask
+          button_text="transform into supplementary task"
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+        />
+
         <Button
           size="xs"
-          _hover={{ backgroundColor: "red" }}
+          bg="red.50"
+          _hover={{ backgroundColor: "red.100" }}
           variant="outline"
           onClick={deleteTaskForChecked}
         >

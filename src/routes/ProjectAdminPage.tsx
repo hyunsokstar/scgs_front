@@ -1,7 +1,7 @@
 import { Box, HStack, VStack } from "@chakra-ui/react";
 import React, { ReactElement } from "react";
 import CompletedProjectTaskList from "../components/CompletedProjectTaskList";
-import UncompletedProjectTaskList from "../components/UncompletedProjectTaskList";
+import UncompletedTaskContainer from "../components/UncompletedTaskContainer";
 
 type Props = {};
 
@@ -9,7 +9,7 @@ type Props = {};
 function ProjectAdminPage({}: Props): ReactElement {
   return (
     <Box display={"flex"} flexDirection={"column"} gap={5}>
-      <UncompletedProjectTaskList />
+      <UncompletedTaskContainer />
       <CompletedProjectTaskList />
     </Box>
   );

@@ -17,7 +17,7 @@ import {
   ITypeForProjectProgressList,
   typeForDueDateUpdateForChecked,
 } from "../types/project_progress/project_progress_type";
-import UncompletedTaskRow from "./UncompletedTaskRow";
+import UncompletedTaskRow from "./UncompletedTaskList";
 import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
 import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
 import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
