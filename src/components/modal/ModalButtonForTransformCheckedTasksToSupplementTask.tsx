@@ -14,7 +14,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, QueryClient } from "@tanstack/react-query"; // QueryClient를 import 합니다.
 import { typeForTaskListForChecked } from "../../types/project_progress/project_progress_type";
 import { apiForGetTaskListForCheckedPks } from "../../apis/project_progress_api";
 import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
@@ -35,12 +35,14 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
   const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
 
+  const queryClient = new QueryClient(); // QueryClient를 생성합니다.
+
   // useQuery 훅을 컴포넌트 내부에서 호출하도록 변경
   const { isLoading, data } = useQuery<typeForTaskListForChecked>(
     ["getTaskListForCheckedPks", checkedRowPks],
     apiForGetTaskListForCheckedPks,
     {
-      enabled: true,
+      enabled: false, // 초기에 비활성화
     }
   );
 
@@ -62,11 +64,17 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
     fetchDataForTaskListForCheckedPks();
 
     setIsOpen(true);
+
+    // 모달이 열릴 때 enabled를 true로 변경하여 API 요청을 활성화합니다.
+    queryClient.setQueryData(
+      ["getTaskListForCheckedPks", checkedRowPks],
+      true
+    );
   };
 
-  useEffect(() => {
-    // 여기에 다른 초기화나 효과를 넣을 수 있습니다.
-  }, []);
+  // useEffect(() => {
+  //   // 여기에 다른 초기화나 효과를 넣을 수 있습니다.
+  // }, []);
 
   // 인라인 스타일 객체 정의
   const dashedBorderStyle = {
