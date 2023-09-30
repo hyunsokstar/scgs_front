@@ -46,22 +46,21 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
     }
   );
 
-  const fetchDataForTaskListForCheckedPks = () => {
-    // 데이터를 처리하거나 상태를 업데이트할 수 있습니다.
-    if (isLoading) {
-      // 데이터가 로딩 중일 때 처리
-    } else {
-      // 데이터가 로딩이 완료된 후 처리
-    }
-  };
-
   const onClose = () => {
     setIsOpen(false);
   };
 
   const onOpen = () => {
-    // 모달이 열릴 때 fetchDataForTaskListForCheckedPks를 호출하여 API 요청을 보냅니다.
-    fetchDataForTaskListForCheckedPks();
+    if (checkedRowPks.length === 0) {
+      // 배열의 길이가 0이면 toast 메시지를 출력하고 모달을 닫습니다.
+      toast({
+        title: "체크된 항목이 없습니다.",
+        status: "warning",
+        duration: 2000, // 메시지가 보여지는 시간 (2초)
+        isClosable: true, // 닫기 버튼을 표시합니다.
+      });
+      return;
+    }
 
     setIsOpen(true);
 
@@ -73,7 +72,6 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
   };
 
   // useEffect(() => {
-  //   // 여기에 다른 초기화나 효과를 넣을 수 있습니다.
   // }, []);
 
   // 인라인 스타일 객체 정의
