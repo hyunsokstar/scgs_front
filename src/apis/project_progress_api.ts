@@ -7,6 +7,7 @@ import {
   FormTypeForCreateCommentForTask,
   FormTypeForCreateTest,
   FormTypeForExtraTask,
+  IFormTypeForExtraTask,
   IFormTypeForProjectProgress,
   ITypeForTaskDetailUpdate,
   typeForDueDateUpdateForChecked,
@@ -432,31 +433,29 @@ export const apiForCreateTaskUrlForTask = (taskPk: any) =>
     )
     .then((response) => response.data);
 
+// 1002
 export const apiForUpdateExtraTask = ({
   pk,
   task,
+  task_description,
   task_manager,
   task_status,
-  task_url1,
-  task_url2,
-}: any) => {
+}: IFormTypeForExtraTask) => {
   console.log(
     "parameter to backend :: ",
     pk,
     task,
+    task_description,
     task_manager,
     task_status,
-    task_url1,
-    task_url2
   );
 
   const payload = {
     pk,
     task,
+    task_description,
     task_manager,
     task_status,
-    task_url1,
-    task_url2,
   };
 
   return instance

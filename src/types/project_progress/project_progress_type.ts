@@ -642,3 +642,35 @@ export interface IDataForTargetTask {
   due_date: string;
   extra_tasks: IExtraTaskRow[];
 }
+
+export interface IUser {
+  pk: number;
+  username: string;
+  profile_image: string;
+}
+
+export interface IExtraTaskDetailData {
+  pk: number;
+  task_manager: IUser;
+  task: string;
+  task_description: string;
+  task_comments: any[]; // 필요에 따라 타입을 추가하세요
+  task_images: any[]; // 필요에 따라 타입을 추가하세요
+  tests_for_extra_task: any[]; // 필요에 따라 타입을 추가하세요
+  task_urls: any[]; // 필요에 따라 타입을 추가하세요
+  task_url1: string | null;
+  task_url2: string | null;
+  task_status: string;
+  importance: number;
+  started_at: string; // ISO 8601 형식의 날짜 문자열
+  completed_at: string; // ISO 8601 형식의 날짜 문자열
+  started_at_formatted: string;
+}
+
+export interface IFormTypeForExtraTask {
+  pk: number;
+  task_manager: number | string; 
+  task: string; 
+  task_description: string; 
+  task_status: string; 
+}

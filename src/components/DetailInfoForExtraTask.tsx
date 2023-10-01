@@ -1,11 +1,17 @@
 import { Box, Avatar, Text } from "@chakra-ui/react";
-import { DetailForExtraTaskProps } from "../types/project_progress/project_progress_type";
 import UpdateFormForExtraTask from "./InputForm/UpdateFormForExtraTask";
+import { IExtraTaskDetailData } from "../types/project_progress/project_progress_type";
 
-const DetailInfoForExtraTask: React.FC<DetailForExtraTaskProps> = ({
+interface IProps {
+  extraTaskDetail: IExtraTaskDetailData;
+}
+
+const DetailInfoForExtraTask= ({
   extraTaskDetail,
-}) => {
-  const {} = extraTaskDetail;
+}:IProps) => {
+
+  console.log("extraTaskDetail check !! : ", extraTaskDetail);
+  
 
   return (
     <Box bg="green.100" borderRadius="md" height={"730px"} overflowY={"scroll"}>

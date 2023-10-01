@@ -7,14 +7,15 @@ import {
   FormControl,
   FormLabel,
   useToast,
-  IconButton,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { DetailForExtraTaskProps } from "../../types/project_progress/project_progress_type";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  IExtraTaskDetailData,
+  IFormTypeForExtraTask,
+} from "../../types/project_progress/project_progress_type";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getUserNamesForCreate } from "../../apis/user_api";
 import { apiForUpdateExtraTask } from "../../apis/project_progress_api";
-import { MinusIcon } from "@chakra-ui/icons";
 import TaskUrlsListUsingInputForUpdate from "../TaskUrlsListUsingInputForUpdate";
 
 interface IUserNamesForCreate {
@@ -22,44 +23,20 @@ interface IUserNamesForCreate {
   username: any;
 }
 
-interface FormData {
-  pk?: string;
-  task_manager?: any;
-  task?: string;
-  task_urls?: string;
-  task_url1?: string;
-  task_url2?: string;
-  task_status?: string;
+interface IProps {
+  extraTaskDetail: IExtraTaskDetailData;
 }
 
-// 1122
-const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
-  extraTaskDetail,
-}) => {
-  const {
-    pk,
-    task_manager,
-    task,
-    task_urls,
-    task_url1,
-    task_url2,
-    task_status,
-    started_at_formatted,
-  } = extraTaskDetail;
+const UpdateFormForExtraTask: React.FC<IProps> = ({ extraTaskDetail }) => {
+  const { pk, task_manager, task, task_urls, task_description, task_status } =
+    extraTaskDetail;
 
   const toast = useToast();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<IFormTypeForExtraTask>();
 
-  const {
-    isLoading: isLoadingForUserNamesData,
-    data: userNamesData,
-    error,
-  } = useQuery<IUserNamesForCreate[]>(["user_names"], getUserNamesForCreate);
+  const { isLoading: isLoadingForUserNamesData, data: userNamesData } =
+    useQuery<IUserNamesForCreate[]>(["user_names"], getUserNamesForCreate);
 
   const mutationForUpdateExtraTask = useMutation(apiForUpdateExtraTask, {
     onMutate: () => {
@@ -71,34 +48,27 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
         title: "update extra task success!",
         status: "success",
       });
-      // navigate("/estimates");
     },
     onError: (error) => {
       console.log("mutation has an error");
     },
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: IFormTypeForExtraTask) => {
     console.log("form data : ", data);
 
     mutationForUpdateExtraTask.mutate({
       pk,
       task: data.task,
+      task_description: data.task_description,
       task_manager:
         data.task_manager === "" ? task_manager.pk : data.task_manager,
       task_status: data.task_status,
-      task_url1: data.task_url1,
-      task_url2: data.task_url2,
     });
   };
 
   return (
-    <Box
-      bg="green.100"
-      p={4}
-      borderRadius="md"
-
-    >
+    <Box bg="green.100" p={4} borderRadius="md">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box display="flex" flexDirection="column" gap={4}>
           <Input type="hidden" {...register("pk")} value={pk} />
@@ -118,12 +88,22 @@ const UpdateFormForExtraTask: React.FC<DetailForExtraTaskProps> = ({
           </FormControl>
           <FormControl>
             <FormLabel>task</FormLabel>
-            <Textarea
+            <Input
               {...register("task")}
               defaultValue={task}
               borderColor="gray.400"
             />
           </FormControl>
+
+          <FormControl>
+            <FormLabel>Task Description</FormLabel>
+            <Textarea
+              {...register("task_description")}
+              defaultValue={task_description}
+              borderColor="gray.400"
+            />
+          </FormControl>
+
           <TaskUrlsListUsingInputForUpdate
             titleText={"test urls for extra task detail info"}
             extraTaskPk={pk}

@@ -17,7 +17,6 @@ export const apiForGetAllUserNamesWithOutMe = () =>
     return response.data;
   });
 
-
 export const apiForGetAllUserNames = () =>
   instance.get("users/only-user-name").then((response) => {
     return response.data;
