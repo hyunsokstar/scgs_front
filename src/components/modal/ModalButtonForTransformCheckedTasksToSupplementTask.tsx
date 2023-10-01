@@ -108,7 +108,6 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
                 />
               </Box>
               <Divider orientation="vertical" mx={2} />
-              {/* 2영역 */}
               <Box flex={1} style={dashedBorderStyle}>
                 <ContainerForTargetTask
                   checkedRowPks={checkedRowPks}

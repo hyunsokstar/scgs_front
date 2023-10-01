@@ -145,16 +145,6 @@
                     {errors.task && <Box color="red">Task is required</Box>}
                   </FormControl>
 
-                  {/* <FormControl>
-                    <FormLabel>지시자</FormLabel>
-                    <Input
-                      size="sm"
-                      placeholder="Writer"
-                      {...register("writer", { required: true })}
-                    />
-                    {errors.writer && <Box color="red">Writer is required</Box>}
-                  </FormControl> */}
-
                   <FormControl>
                     <FormLabel>Importance</FormLabel>
                     <RadioGroup name="rating">
@@ -179,13 +169,7 @@
                   </FormControl>
 
                   <FormControl>
-                    {/* <FormLabel>Password</FormLabel>
-                    <Input
-                      size="sm"
-                      type="text"
-                      placeholder="Password"
-                      {...register("password", { required: true })}
-                    /> */}
+
                     {errors.password && (
                       <Box color="red">Password is required</Box>
                     )}

@@ -11,15 +11,11 @@ import {
   Checkbox,
   Image,
   HStack,
-  Button,
-  Flex,
+
   Select,
   IconButton,
   useToast,
-  Spacer,
-  Input,
-  InputRightElement,
-  InputGroup,
+
 } from "@chakra-ui/react";
 import { extra_task_row_type } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";
@@ -36,6 +32,19 @@ interface ExtraTasksTableProps {
   orginal_task_pk: any;
   extra_tasks: extra_task_row_type[] | undefined;
   refetch: () => void;
+}
+
+function formatDate(datetimeStr: string): string {
+  const options = {
+    year: "2-digit",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
+  const date = new Date(datetimeStr);
+  return date.toLocaleString(undefined, options);
 }
 
 // 1122
@@ -57,6 +66,7 @@ const ExtraTasksTable = ({
         console.log("data : ", data);
         queryClient.refetchQueries(["getOneProjectTask"]);
         // queryClient.refetchQueries(["getCompletedTaskList"]);
+        refetch();
         toast({
           title: "extra task 삭제 성공!",
           status: "success",
@@ -78,7 +88,11 @@ const ExtraTasksTable = ({
           status: "success",
           title: "extra task update success !",
           description: result.message,
+          duration: 2000, // 닫기 버튼 유지 시간을 2초로 설정
+          isClosable: true, // 닫을 수 있는 버튼 추가
         });
+
+        queryClient.refetchQueries(["getOneProjectTask"]);
       },
       onError: (err) => {
         console.log("error : ", err);
@@ -218,8 +232,8 @@ const ExtraTasksTable = ({
                       }
                     />
                   </Td>
-                  <Td>{row.started_at ? row.started_at_formatted : "미정"}</Td>
-                  <Td>{row.completed_at ? row.completed_at : "미정"}</Td>
+                  <Td>{row.started_at ? formatDate(row.started_at) : "미정"}</Td>
+                  <Td>{row.completed_at ? formatDate(row.completed_at) : "미정"}</Td>
                   <Td>
                     <IconButton
                       aria-label="삭제"

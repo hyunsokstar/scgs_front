@@ -34,11 +34,11 @@ const ContainerForTargetTask = ({
         Target Tasks
       </Box>
 
-      {checkedRowPks.map((value, index) => (
+      {/* {checkedRowPks.map((value, index) => (
         <Box key={index} fontSize="lg" textAlign="center">
           {value}
         </Box>
-      ))}
+      ))} */}
       
       <TableForTargetTaskListForIntergration
         taskListForCheckedForIntergration={

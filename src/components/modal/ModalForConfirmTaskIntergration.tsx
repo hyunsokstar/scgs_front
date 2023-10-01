@@ -16,11 +16,27 @@ import {
   Tr,
   Td,
   Text,
+  Thead,
+  Th,
+  Checkbox,
 } from "@chakra-ui/react";
 import { IDataForTargetTask } from "../../types/project_progress/project_progress_type";
 import { apiForGetTargetTaskInfoForTaskIntergrationByPk } from "../../apis/project_progress_api";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
+
+function formatDate(datetimeStr: string): string {
+  const options = {
+    year: "2-digit",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
+  const date = new Date(datetimeStr);
+  return date.toLocaleString(undefined, options);
+}
 
 interface IProps {
   isModalOpen: boolean;
@@ -31,6 +47,9 @@ interface IProps {
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
   selectedTargetPk: number;
 }
+
+// 관련 api
+// http://127.0.0.1:8000/api/v1/project_progress/target-task/200
 
 const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
   isModalOpen,
@@ -67,18 +86,40 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
                   setCheckedRowPks={setCheckedRowPks}
                 />
               </Box>
-              <Divider orientation="vertical" mx="2" />
+              <Box
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                border={"2px solid red"}
+                flexDirection={"column"}
+                gap={2}
+                px={2}
+              >
+                <Button
+                  size="sm"
+                  variant={"ouline"}
+                  border={"1px solid gray"}
+                  _hover={{ bgColor: "blue" }}
+                >
+                  convert
+                </Button>
+                <Button
+                  size="sm"
+                  variant={"ouline"}
+                  border={"1px solid gray"}
+                  _hover={{ bgColor: "blue" }}
+                >
+                  revert
+                </Button>
+              </Box>
+              {/* <Divider orientation="vertical" mx="2" /> */}
               <Box flex="1" border={"1px solid gray"} px={2}>
-                {/* 2영역 */}
-                2영역 ({selectedTargetPk})
+                Target Task:
+                <Text fontSize={"25px"} mx={2}>
+                  {dataForTargetTask?.task}
+                </Text>
                 <Table variant="striped" colorScheme="gray" size="sm" px={2}>
                   <Tbody>
-                    <Tr>
-                      <Td fontWeight="bold" fontSize="xl">
-                        Task:
-                      </Td>
-                      <Td>{dataForTargetTask?.task}</Td>
-                    </Tr>
                     <Tr>
                       <Td>Due Date:</Td>
                       <Td>
@@ -103,7 +144,39 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
                     </Tr>
                   </Tbody>
                 </Table>
-                <Box mt={2}>extra tasks:</Box>
+                <Box mt={5}>
+                  <Text>extra tasks:</Text>
+                  <Table variant="simple" size={"sm"}>
+                    <Thead>
+                      <Tr>
+                        <Th>체크</Th>
+                        <Th>Task</Th>
+                        <Th>Status</Th>
+                        <Th>Importance</Th>
+                        <Th>Started At</Th>
+                        <Th>Completed At</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {dataForTargetTask && dataForTargetTask.extra_tasks
+                        ? dataForTargetTask.extra_tasks.map(
+                            (task: IExtraTaskRow) => (
+                              <Tr key={task.pk}>
+                                <Td>
+                                  <Checkbox />
+                                </Td>
+                                <Td>{task.task}</Td>
+                                <Td>{task.task_status}</Td>
+                                <Td>{task.importance}</Td>
+                                <Td>{formatDate(task.started_at)}</Td>
+                                <Td>{formatDate(task.completed_at)}</Td>
+                              </Tr>
+                            )
+                          )
+                        : "no data"}
+                    </Tbody>
+                  </Table>
+                </Box>
               </Box>
             </Flex>
           </ModalBody>
