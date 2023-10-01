@@ -26,15 +26,34 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
-// apiForGetTaskListForTaskIntegration
-export const apiForGetTaskListForTaskIntegration = async ({
+export const apiForGetTargetTaskInfoForTaskIntergrationByPk = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
-  const [_, pageNum] = queryKey;
+  const [_, selectedTargetPk] = queryKey;
+
+  console.log("target task 요청 !");
+  
+
+  const data = await instance
+    .get(`project_progress/target-task/${selectedTargetPk}`, {
+      params: {},
+    })
+    .then((response) => response.data);
+
+  return data;
+};
+
+// apiForGetTargetTaskListForTaskIntegration
+export const apiForGetTargetTaskListForTaskIntegration = async ({
+  queryKey,
+}: QueryFunctionContext): Promise<any> => {
+  const [_, pageNum, checkedRowPks] = queryKey;
+
+  console.log("checkedRowPks : ", checkedRowPks);
 
   const data = await instance
     .get("project_progress/getTaskListForTaskIntegration", {
-      params: { pageNum: pageNum },
+      params: { pageNum: pageNum, checkedRowPks: checkedRowPks },
     })
     .then((response) => response.data);
 
@@ -534,9 +553,6 @@ export const apiForGetTaskListForCheckedPks = ({
   const [_, checkedRowPks] = queryKey;
 
   const numericCheckedRowPks = checkedRowPks.map(Number);
-
-  console.log("요청 보내는지 확인 !!!!!!!!!!!!!!!!");
-  
 
   return instance
     .get("project_progress/task-list-for-checked", {

@@ -18,7 +18,6 @@ const StarRatingForUpdateImportanceForChecked = ({
   button_size = "md",
 }: Props) => {
   const handleClick = (star_count: number) => {
-    // console.log("checkedRowPks : ", checkedRowPks);
     setRating(star_count);
   };
 

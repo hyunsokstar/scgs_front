@@ -19,7 +19,7 @@ interface IProps {
 const TableForTargetTaskListForIntergration = ({
   taskListForCheckedForIntergration,
   checkedRowPks,
-  setCheckedRowPks
+  setCheckedRowPks,
 }: IProps) => {
   const queryClient = new QueryClient(); // QueryClient를 생성합니다.
 
@@ -42,7 +42,6 @@ const TableForTargetTaskListForIntergration = ({
     setIsModalOpen(true);
   };
 
-  console.log("confirm model : ", dataForTaskListForCheckedForIntergrations);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -78,7 +77,7 @@ const TableForTargetTaskListForIntergration = ({
                     size="sm"
                     onClick={() => handleRowSelect(row.id, row.task)}
                   >
-                    선택
+                    선택 ({row.id})
                   </Button>
                 </Td>
               </Tr>
@@ -102,6 +101,7 @@ const TableForTargetTaskListForIntergration = ({
         }
         checkedRowPks={checkedRowPks}
         setCheckedRowPks={setCheckedRowPks}
+        selectedTargetPk={selectedTargetPk ? selectedTargetPk : 0}
       />
     </>
   );

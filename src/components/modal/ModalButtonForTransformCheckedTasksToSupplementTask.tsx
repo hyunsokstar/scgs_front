@@ -37,7 +37,7 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
 
   const queryClient = new QueryClient(); // QueryClient를 생성합니다.
 
-  // useQuery 훅을 컴포넌트 내부에서 호출하도록 변경
+  // task list 에서 체크한 목록들 가져 오기
   const { isLoading, data: dataForTaskListForCheckedPks } =
     useQuery<typeForTaskListForChecked>(
       ["getTaskListForCheckedPks", checkedRowPks],
@@ -69,7 +69,6 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
     setIsOpen(true);
   };
 
-  console.log("22222222222222222222222 : ", dataForTaskListForCheckedPks);
   // useEffect(() => {
   // }, []);
 
@@ -94,7 +93,7 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
         <ModalOverlay />
         <ModalContent height={"100%"}>
           <ModalHeader>
-            Modal For Transform Checked Tasks To SupplementTask {isLoading ? "loading.." : "false"}
+            Modal For Transform Checked Tasks To SupplementTask
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>

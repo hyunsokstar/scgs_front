@@ -14,10 +14,11 @@ import {
 } from "@chakra-ui/react";
 import { useQuery, QueryClient } from "@tanstack/react-query"; // QueryClient를 import 합니다.
 import {
+    IDataForTargetTask,
   IOneTaskForProjectTaskType,
   typeForTaskListForChecked,
 } from "../../types/project_progress/project_progress_type";
-import { apiForGetTaskListForCheckedPks } from "../../apis/project_progress_api";
+import { apiForGetTargetTaskInfoForTaskIntergrationByPk, apiForGetTaskListForCheckedPks } from "../../apis/project_progress_api";
 import TableForTargetTaskListForIntergration from "../Table/TableForTargetTaskListForIntergration";
 import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
 
@@ -28,6 +29,7 @@ interface IProps {
   checkedRowPks: number[];
   taskListForCheckedForIntergration: any[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
+  selectedTargetPk: number;
 }
 
 const ModalForConfirmTaskIntergration = ({
@@ -36,12 +38,20 @@ const ModalForConfirmTaskIntergration = ({
   handleConfirm,
   checkedRowPks,
   setCheckedRowPks,
+  selectedTargetPk,
   taskListForCheckedForIntergration,
 }: IProps) => {
-  console.log(
-    "taskListForCheckedForIntergration :",
-    taskListForCheckedForIntergration
-  );
+    
+  const { isLoading, data: dataForTargetTask } =
+  useQuery<IDataForTargetTask>(
+    ["getTaskListForCheckedPks", selectedTargetPk],
+    apiForGetTargetTaskInfoForTaskIntergrationByPk,
+    {
+      enabled: true, // 초기에 비활성화
+    }
+  ); 
+
+  console.log("dataForTargetTask : ", dataForTargetTask)
 
   return (
     <Box>
@@ -64,7 +74,13 @@ const ModalForConfirmTaskIntergration = ({
               <Divider orientation="vertical" mx="2" />
               <Box flex="1" border={"1px solid gray"}>
                 {/* 2영역 */}
-                2영역
+                2영역 ({selectedTargetPk})
+
+                <Box>
+                    task:
+                    {dataForTargetTask?.task}
+                </Box>
+
               </Box>
             </Flex>
           </ModalBody>

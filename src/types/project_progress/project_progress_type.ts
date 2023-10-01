@@ -618,3 +618,27 @@ export interface IDataForTaskListForIntegration {
   totalCountForTaskList: number;
   perPage: number;
 }
+
+export interface IExtraTaskRow {
+  pk: number;
+  task_manager: ITaskManager;
+  task: string;
+  task_url1: string | null;
+  task_url2: string | null;
+  task_status: string;
+  importance: number;
+  started_at: string | null;
+  completed_at: string | null;
+  started_at_formatted: string;
+}
+
+export interface IDataForTargetTask {
+  id: number;
+  task: string;
+  writer: string;
+  task_manager: TaskManager;
+  importance: number;
+  task_completed: boolean;
+  due_date: string;
+  extra_tasks: IExtraTaskRow[];
+}
