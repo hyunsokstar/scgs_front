@@ -635,10 +635,10 @@ export interface IExtraTaskRow {
 export interface IDataForTargetTask {
   id: number;
   task: string;
-  writer: string;
   task_manager: TaskManager;
   importance: number;
   task_completed: boolean;
+  task_images: string[];
   due_date: string;
   extra_tasks: IExtraTaskRow[];
 }
