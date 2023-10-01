@@ -535,6 +535,9 @@ export const apiForGetTaskListForCheckedPks = ({
 
   const numericCheckedRowPks = checkedRowPks.map(Number);
 
+  console.log("요청 보내는지 확인 !!!!!!!!!!!!!!!!");
+  
+
   return instance
     .get("project_progress/task-list-for-checked", {
       params: {

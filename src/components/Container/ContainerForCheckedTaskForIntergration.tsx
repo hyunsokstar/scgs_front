@@ -9,24 +9,26 @@ interface IProps {
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
   setIsOpen: any;
+  dataForTaskListForCheckedPks: typeForTaskListForChecked;
 }
 
 const ContainerForCheckedTaskForIntergration = ({
   checkedRowPks,
   setCheckedRowPks,
   setIsOpen,
+  dataForTaskListForCheckedPks
 }: IProps) => {
-  const {
-    isLoading,
-    data: dataForTaskListForCheckedPks,
-    refetch: refatchForTaskListForCheckedPks,
-  } = useQuery<typeForTaskListForChecked>(
-    ["getTaskListForCheckedPks", checkedRowPks],
-    apiForGetTaskListForCheckedPks,
-    {
-      enabled: true,
-    }
-  );
+  // const {
+  //   isLoading,
+  //   data: dataForTaskListForCheckedPks,
+  //   refetch: refatchForTaskListForCheckedPks,
+  // } = useQuery<typeForTaskListForChecked>(
+  //   ["getTaskListForCheckedPks", checkedRowPks],
+  //   apiForGetTaskListForCheckedPks,
+  //   {
+  //     enabled: false,
+  //   }
+  // );
 
   useEffect(() => {
     if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {

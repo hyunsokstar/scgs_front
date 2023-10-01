@@ -1,41 +1,48 @@
 import React, { useState } from "react";
+import { Button, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+
+import { useQuery, QueryClient } from "@tanstack/react-query"; // QueryClient를 import 합니다.
+
 import {
-  Box,
-  Button,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Flex, // 추가: Flex 컴포넌트 import
-  Divider, // 추가: Divider 컴포넌트 import
-} from "@chakra-ui/react";
-import { ITaskRowForIntergration } from "../../types/project_progress/project_progress_type";
+  ITaskRowForIntergration,
+  typeForTaskListForChecked,
+} from "../../types/project_progress/project_progress_type";
+import ModalForConfirmTaskIntergration from "../modal/ModalForConfirmTaskIntergration";
+import { apiForGetTaskListForCheckedPks } from "../../apis/project_progress_api";
 
 interface IProps {
   taskListForCheckedForIntergration: ITaskRowForIntergration[];
+  checkedRowPks: number[];
+  setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const TableForTargetTaskListForIntergration = ({
   taskListForCheckedForIntergration,
+  checkedRowPks,
+  setCheckedRowPks
 }: IProps) => {
-  const [selectedPk, setSelectedPk] = useState(null);
-  const [selectedTask, setSelectedTask] = useState(""); // 추가: 선택한 행의 title을 관리
+  const queryClient = new QueryClient(); // QueryClient를 생성합니다.
+
+  const [selectedTargetPk, setSelectedrTargetPk] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { isLoading, data: dataForTaskListForCheckedForIntergrations } =
+    useQuery<typeForTaskListForChecked>(
+      ["getTaskListForCheckedForIntergrationConfirm", checkedRowPks],
+      apiForGetTaskListForCheckedPks,
+      {
+        enabled: true, // 초기에 비활성화
+      }
+    );
+
   const handleRowSelect = (rowId: any, rowTask: string) => {
-    setSelectedPk(rowId);
+    console.log("checkedRowPks ?????? ", checkedRowPks);
+
+    setSelectedrTargetPk(rowId);
     setIsModalOpen(true);
-    setSelectedTask(rowTask);
   };
+
+  console.log("confirm model : ", dataForTaskListForCheckedForIntergrations);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -61,7 +68,7 @@ const TableForTargetTaskListForIntergration = ({
             taskListForCheckedForIntergration.map((row) => (
               <Tr
                 key={row.id}
-                bg={row.id === selectedPk ? "blue.50" : "transparent"}
+                bg={row.id === selectedTargetPk ? "blue.50" : "transparent"}
               >
                 <Td>{row.task_manager.username}</Td>
                 <Td>{row.task}</Td>
@@ -84,38 +91,18 @@ const TableForTargetTaskListForIntergration = ({
         </Tbody>
       </Table>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal} size="full">
-        <ModalOverlay />
-        <ModalContent height={"100%"}>
-          <ModalHeader>안내 메세지</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Flex height={"100%"}>
-              <Box flex="1" border={"1px solid gray"} height={"100%"}>
-                {/* 1영역 */}
-                1영역 내용
-              </Box>
-              <Divider orientation="vertical" mx="2" />
-              <Box flex="1" border={"1px solid gray"}>
-                {/* 2영역 */}
-                {selectedTask ? (
-                  <p>{`체크한 업무들을 선택한 행의 "${selectedTask}"의 부가 업무로 전환하시겠습니까?`}</p>
-                ) : (
-                  <p>선택한 업무가 없습니다.</p>
-                )}
-              </Box>
-            </Flex>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleConfirm}>
-              확인
-            </Button>
-            <Button colorScheme="gray" onClick={closeModal}>
-              취소
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <ModalForConfirmTaskIntergration
+        isModalOpen={isModalOpen}
+        closeModal={handleConfirm}
+        handleConfirm={handleConfirm}
+        taskListForCheckedForIntergration={
+          dataForTaskListForCheckedForIntergrations
+            ? dataForTaskListForCheckedForIntergrations?.ProjectProgressList
+            : []
+        }
+        checkedRowPks={checkedRowPks}
+        setCheckedRowPks={setCheckedRowPks}
+      />
     </>
   );
 };

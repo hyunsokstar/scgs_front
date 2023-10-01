@@ -38,13 +38,14 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
   const queryClient = new QueryClient(); // QueryClient를 생성합니다.
 
   // useQuery 훅을 컴포넌트 내부에서 호출하도록 변경
-  const { isLoading, data } = useQuery<typeForTaskListForChecked>(
-    ["getTaskListForCheckedPks", checkedRowPks],
-    apiForGetTaskListForCheckedPks,
-    {
-      enabled: false, // 초기에 비활성화
-    }
-  );
+  const { isLoading, data: dataForTaskListForCheckedPks } =
+    useQuery<typeForTaskListForChecked>(
+      ["getTaskListForCheckedPks", checkedRowPks],
+      apiForGetTaskListForCheckedPks,
+      {
+        enabled: false, // 초기에 비활성화
+      }
+    );
 
   const onClose = () => {
     setIsOpen(false);
@@ -62,12 +63,13 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
       return;
     }
 
-    setIsOpen(true);
-
     // 모달이 열릴 때 enabled를 true로 변경하여 API 요청을 활성화합니다.
-    queryClient.setQueryData(["getTaskListForCheckedPks", checkedRowPks], true);
+    // queryClient.setQueryData(["getTaskListForCheckedPks", checkedRowPks], true);
+
+    setIsOpen(true);
   };
 
+  console.log("22222222222222222222222 : ", dataForTaskListForCheckedPks);
   // useEffect(() => {
   // }, []);
 
@@ -92,7 +94,7 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
         <ModalOverlay />
         <ModalContent height={"100%"}>
           <ModalHeader>
-            Modal For Transform Checked Tasks To SupplementTask
+            Modal For Transform Checked Tasks To SupplementTask {isLoading ? "loading.." : "false"}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -101,6 +103,7 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
               <Box flex={1} style={dashedBorderStyle}>
                 <ContainerForCheckedTaskForIntergration
                   checkedRowPks={checkedRowPks}
+                  dataForTaskListForCheckedPks={dataForTaskListForCheckedPks}
                   setCheckedRowPks={setCheckedRowPks}
                   setIsOpen={setIsOpen}
                 />
@@ -108,7 +111,10 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
               <Divider orientation="vertical" mx={2} />
               {/* 2영역 */}
               <Box flex={1} style={dashedBorderStyle}>
-                <ContainerForTargetTask checkedRowPks={checkedRowPks} />
+                <ContainerForTargetTask
+                  checkedRowPks={checkedRowPks}
+                  setCheckedRowPks={setCheckedRowPks}
+                />
               </Box>
             </Flex>
           </ModalBody>

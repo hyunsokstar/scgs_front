@@ -7,9 +7,11 @@ import TableForTargetTaskListForIntergration from "../Table/TableForTargetTaskLi
 
 interface IProps {
   checkedRowPks: number[];
+  setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
+
 }
 
-const ContainerForTargetTask = ({ checkedRowPks }: IProps) => {
+const ContainerForTargetTask = ({ checkedRowPks, setCheckedRowPks }: IProps) => {
   const [pageNum, setPageNum] = useState(1);
 
   const {
@@ -36,6 +38,8 @@ const ContainerForTargetTask = ({ checkedRowPks }: IProps) => {
             ? dataForTaskListForCheckedPks.listForTask
             : []
         }
+        checkedRowPks={checkedRowPks}
+        setCheckedRowPks={setCheckedRowPks}
       />
     </Box>
   );
