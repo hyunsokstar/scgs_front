@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForGetTargetTaskListForTaskIntegration } from "../../apis/project_progress_api";
 import { IDataForTaskListForIntegration } from "../../types/project_progress/project_progress_type";
 import TableForTargetTaskListForIntergration from "../Table/TableForTargetTaskListForIntergration";
+import PaginationComponent from "../PaginationComponent";
 
 interface IProps {
   checkedRowPks: number[];
@@ -39,7 +40,7 @@ const ContainerForTargetTask = ({
           {value}
         </Box>
       ))} */}
-      
+
       <TableForTargetTaskListForIntergration
         taskListForCheckedForIntergration={
           dataForTaskListForCheckedPks
@@ -49,6 +50,18 @@ const ContainerForTargetTask = ({
         checkedRowPks={checkedRowPks}
         setCheckedRowPks={setCheckedRowPks}
       />
+
+      {dataForTaskListForCheckedPks ? (
+        <PaginationComponent
+          current_page_num={pageNum}
+          setCurrentPageNum={setPageNum}
+          total_page_num={dataForTaskListForCheckedPks.totalCountForTaskList}
+          task_number_for_one_page={dataForTaskListForCheckedPks.perPage}
+        />
+      ) : (
+        ""
+      )}
+      
     </Box>
   );
 };

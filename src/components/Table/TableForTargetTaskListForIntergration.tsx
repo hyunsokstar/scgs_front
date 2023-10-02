@@ -53,7 +53,7 @@ const TableForTargetTaskListForIntergration = ({
 
   return (
     <>
-      <Table variant="simple" size="sm">
+      <Table variant="simple" size="xs">
         <Thead>
           <Tr>
             <Th>task_manager</Th>
@@ -74,7 +74,7 @@ const TableForTargetTaskListForIntergration = ({
                 <Td>{row.current_status}</Td>
                 <Td>
                   <Button
-                    size="sm"
+                    size="xs"
                     onClick={() => handleRowSelect(row.id, row.task)}
                   >
                     선택 ({row.id})
