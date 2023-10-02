@@ -17,7 +17,6 @@ import {
 import { useQuery, QueryClient } from "@tanstack/react-query"; // QueryClient를 import 합니다.
 import { typeForTaskListForChecked } from "../../types/project_progress/project_progress_type";
 import { apiForGetTaskListForCheckedPks } from "../../apis/project_progress_api";
-import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
 import ContainerForTargetTask from "../Container/ContainerForTargetTask";
 import ContainerForCheckedTaskForIntergration from "../Container/ContainerForCheckedTaskForIntergration";
 

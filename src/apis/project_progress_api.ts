@@ -27,6 +27,25 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+// apiForSearchTargetTaskListBySearchWords
+export const apiForSearchTargetTaskListBySearchWords = ({
+  searchWords,
+  checkedRowPks
+}: any) => {
+
+  console.log("searchWords", searchWords);
+  console.log("checkedRows : ", checkedRowPks);  
+
+  return instance
+    .get(`project_progress/target-tasks-for-intergration/by-search-word`, {
+      params: {
+        searchWords: searchWords,
+        checkedRowPks: checkedRowPks
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForGetTargetTaskInfoForTaskIntergrationByPk = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {

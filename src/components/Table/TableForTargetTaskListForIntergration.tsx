@@ -101,7 +101,7 @@ const TableForTargetTaskListForIntergration = ({
         }
         checkedRowPks={checkedRowPks}
         setCheckedRowPks={setCheckedRowPks}
-        selectedTargetPk={selectedTargetPk ? selectedTargetPk : 0}
+        selectedTargetPk={selectedTargetPk}
       />
     </>
   );
