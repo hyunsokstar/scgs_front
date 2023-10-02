@@ -613,10 +613,16 @@ export interface ITaskListForCheckedForIntergration {
   taskListForCheckedForIntergration: ITaskRowForIntergration[];
 }
 
+export interface ITaskManager {
+  task_manager__username: string;
+  task_manager_count: number;
+}
+
 export interface IDataForTaskListForIntegration {
   listForTask: ITaskRowForIntergration[];
   totalCountForTaskList: number;
   perPage: number;
+  taskManagers: ITaskManager;
 }
 
 export interface IExtraTaskRow {

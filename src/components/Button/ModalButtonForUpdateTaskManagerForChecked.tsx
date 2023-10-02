@@ -116,7 +116,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
     if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
       setIsOpen(false);
     }
-  }, [dataForTaskListForCheckedPks]);
+  }, [dataForTaskListForCheckedPks, setIsOpen]);
 
   // 2244
   return (

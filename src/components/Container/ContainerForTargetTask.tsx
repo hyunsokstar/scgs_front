@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Grid,
   Input,
   InputGroup,
   InputRightElement,
@@ -14,11 +15,17 @@ import {
 } from "../../apis/project_progress_api";
 import {
   IDataForTaskListForIntegration,
+  ITaskManager,
   ITaskRowForIntergration,
 } from "../../types/project_progress/project_progress_type";
 import TableForTargetTaskListForIntergration from "../Table/TableForTargetTaskListForIntergration";
 import PaginationComponent from "../PaginationComponent";
-import { apiForSearchSurveyListBySearchWords } from "../../apis/survey_api";
+
+interface ISearchResult {
+  message: string;
+  searchWords: string;
+  results: ITaskRowForIntergration[];
+}
 
 interface IProps {
   checkedRowPks: number[];
@@ -47,11 +54,10 @@ const ContainerForTargetTask = ({
     }
   );
 
-  // mutationForSearchTargetTaskListBySearchWords
   const mutationForSurveyListBySearchWords = useMutation(
     apiForSearchTargetTaskListBySearchWords,
     {
-      onSuccess: (data: any) => {
+      onSuccess: (data: ISearchResult) => {
         console.log("result for search: ", data);
 
         toast({
@@ -59,6 +65,8 @@ const ContainerForTargetTask = ({
           title: "search task list for intergration",
           description: data.message,
         });
+
+        setTargetTaskList(data.results);
       },
       onError: (err) => {
         console.log("error : ", err);
@@ -86,11 +94,12 @@ const ContainerForTargetTask = ({
   };
 
   useEffect(() => {
-    if(dataForTaskListForCheckedPks){
-      setTargetTaskList(dataForTaskListForCheckedPks.listForTask)
+    if (dataForTaskListForCheckedPks) {
+      setTargetTaskList(dataForTaskListForCheckedPks.listForTask);
     }
   }, [dataForTaskListForCheckedPks]);
 
+  // 2244
   return (
     <Box>
       {/* {checkedRowPks.map((value, index) => (
@@ -125,15 +134,35 @@ const ContainerForTargetTask = ({
         </InputGroup>
       </Box>
 
-      <TableForTargetTaskListForIntergration
-        taskListForCheckedForIntergration={
-          dataForTaskListForCheckedPks
-            ? dataForTaskListForCheckedPks.listForTask
-            : []
-        }
-        checkedRowPks={checkedRowPks}
-        setCheckedRowPks={setCheckedRowPks}
-      />
+      <Grid templateColumns="repeat(5, 1fr)" gap={2}>
+        {dataForTaskListForCheckedPks
+          ? dataForTaskListForCheckedPks.taskManagers.map(
+              (manager: ITaskManager) => {
+                return (
+                  <Button
+                    variant={"outline"}
+                    border="1px solid gray"
+                    size="xs"
+                    key={manager.task_manager__username}
+                  >
+                    {manager.task_manager__username}:{" "}
+                    {manager.task_manager_count}
+                  </Button>
+                );
+              }
+            )
+          : "no users"}
+      </Grid>
+
+      <Box mt={2}>
+        <TableForTargetTaskListForIntergration
+          taskListForCheckedForIntergration={
+            targetTaskList ? targetTaskList : []
+          }
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+        />
+      </Box>
 
       {dataForTaskListForCheckedPks ? (
         <PaginationComponent

@@ -120,7 +120,7 @@ const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
     if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
       setIsOpen(false);
     }
-  }, [dataForTaskListForCheckedPks]);
+  }, [setIsOpen]);
 
   // 2244
   return (

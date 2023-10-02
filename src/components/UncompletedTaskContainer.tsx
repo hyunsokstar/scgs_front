@@ -62,7 +62,7 @@ function UncompletedTaskContainer({
     ],
     getUncompletedTaskList,
     {
-      enabled: true,
+      enabled: currentPageNum === 1,
     }
   );
   // console.log("taskListData??? : ", taskListData);
@@ -82,7 +82,7 @@ function UncompletedTaskContainer({
       setFilteredListForUncompleteTask(taskListData?.ProjectProgressList);
     } else {
     }
-  }, [taskListData?.ProjectProgressList, filteredListForUncompleteTask]);
+  }, [taskListData]);
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;

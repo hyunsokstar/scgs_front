@@ -106,7 +106,7 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
     if (dataForTaskListForCheckedPks?.ProjectProgressList.length === 0) {
       setIsOpen(false);
     }
-  }, [dataForTaskListForCheckedPks]);
+  }, [dataForTaskListForCheckedPks, setIsOpen]);
 
   return (
     <Box>

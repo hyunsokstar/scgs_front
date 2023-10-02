@@ -46,7 +46,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
     ],
     getCompletedTaskList,
     {
-      enabled: true,
+      enabled: currentPageNum === 1,
     }
   );
 
