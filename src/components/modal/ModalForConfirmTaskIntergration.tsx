@@ -83,13 +83,17 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        queryClient.refetchQueries(["apiForGetTargetTaskListForTaskIntegration"]);
+        queryClient.refetchQueries([
+          "apiForGetTargetTaskListForTaskIntegration",
+        ]);
+        queryClient.refetchQueries(["getTaskListForCheckedPks"]);
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
 
         toast({
           title: "transform checked tasks success!",
+          description: data.message,
           status: "success",
         });
-        // closeModal();
       },
       onError: (error: any) => {
         console.log("error.message : ", error.message);

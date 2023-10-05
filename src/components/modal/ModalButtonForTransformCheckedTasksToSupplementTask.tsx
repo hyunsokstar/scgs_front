@@ -51,16 +51,16 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
   };
 
   const onOpen = () => {
-    if (checkedRowPks.length === 0) {
-      // 배열의 길이가 0이면 toast 메시지를 출력하고 모달을 닫습니다.
-      toast({
-        title: "체크된 항목이 없습니다.",
-        status: "warning",
-        duration: 2000, // 메시지가 보여지는 시간 (2초)
-        isClosable: true, // 닫기 버튼을 표시합니다.
-      });
-      return;
-    }
+    // if (checkedRowPks.length === 0) {
+    //   // 배열의 길이가 0이면 toast 메시지를 출력하고 모달을 닫습니다.
+    //   toast({
+    //     title: "체크된 항목이 없습니다.",
+    //     status: "warning",
+    //     duration: 2000, // 메시지가 보여지는 시간 (2초)
+    //     isClosable: true, // 닫기 버튼을 표시합니다.
+    //   });
+    //   return;
+    // }
 
     // 모달이 열릴 때 enabled를 true로 변경하여 API 요청을 활성화합니다.
     // queryClient.setQueryData(["getTaskListForCheckedPks", checkedRowPks], true);
