@@ -19,9 +19,13 @@ import {
   Thead,
   Th,
   Checkbox,
+  useToast,
 } from "@chakra-ui/react";
 import { IDataForTargetTask } from "../../types/project_progress/project_progress_type";
-import { apiForGetTargetTaskInfoForTaskIntergrationByPk } from "../../apis/project_progress_api";
+import {
+  apiForGetTargetTaskInfoForTaskIntergrationByPk,
+  apiForTransformCheckedTasksToSupplementTaskForSelected,
+} from "../../apis/project_progress_api";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
 
@@ -50,7 +54,7 @@ interface IProps {
 
 // 관련 api
 // http://127.0.0.1:8000/api/v1/project_progress/target-task/200
-
+// 1122
 const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
   isModalOpen,
   closeModal,
@@ -60,6 +64,9 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
   selectedTargetPk,
   taskListForCheckedForIntergration,
 }: IProps) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
   const { isLoading, data: dataForTargetTask } = useQuery<IDataForTargetTask>(
     ["getTaskListForCheckedPks", selectedTargetPk],
     apiForGetTargetTaskInfoForTaskIntergrationByPk,
@@ -67,6 +74,44 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
       enabled: true,
     }
   );
+
+  // 선택된 업무들을 선택된 업무의 부가 업무로 전환(post)
+  const mutationForTransformCheckedTasksToSupplementTaskForSelected =
+    useMutation(apiForTransformCheckedTasksToSupplementTaskForSelected, {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["apiForGetTargetTaskListForTaskIntegration"]);
+
+        toast({
+          title: "transform checked tasks success!",
+          status: "success",
+        });
+        // closeModal();
+      },
+      onError: (error: any) => {
+        console.log("error.message : ", error.message);
+
+        toast({
+          title: "Error!",
+          description: error.message || "An error occurred.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      },
+    });
+
+  const convertTaskHandler = () => {
+    // alert("옮길 대상 : " + checkedRowPks);
+    // alert("옮길 타겟 : " + selectedTargetPk);
+    mutationForTransformCheckedTasksToSupplementTaskForSelected.mutate({
+      checkedRowPks,
+      selectedTargetPk,
+    });
+  };
 
   return (
     <Box>
@@ -100,6 +145,7 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
                   variant={"ouline"}
                   border={"1px solid gray"}
                   _hover={{ bgColor: "blue" }}
+                  onClick={convertTaskHandler}
                 >
                   convert
                 </Button>

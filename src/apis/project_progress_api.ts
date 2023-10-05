@@ -27,20 +27,39 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+// apiForTransformCheckedTasksToSupplementTaskForSelected
+export const apiForTransformCheckedTasksToSupplementTaskForSelected = ({
+  checkedRowPks,
+  selectedTargetPk,
+}: any) => {
+  return instance
+    .post(
+      `/project_progress/transform/checked-tasks/target-task`,
+      { checkedRowPks, selectedTargetPk },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      return response.data;
+    });
+};
+
 // apiForSearchTargetTaskListBySearchWords
 export const apiForSearchTargetTaskListBySearchWords = ({
   searchWords,
-  checkedRowPks
+  checkedRowPks,
 }: any) => {
-
   console.log("searchWords", searchWords);
-  console.log("checkedRows : ", checkedRowPks);  
+  console.log("checkedRows : ", checkedRowPks);
 
   return instance
     .get(`project_progress/target-tasks-for-intergration/by-search-word`, {
       params: {
         searchWords: searchWords,
-        checkedRowPks: checkedRowPks
+        checkedRowPks: checkedRowPks,
       },
     })
     .then((response) => response.data);
@@ -52,7 +71,6 @@ export const apiForGetTargetTaskInfoForTaskIntergrationByPk = async ({
   const [_, selectedTargetPk] = queryKey;
 
   console.log("target task 요청 !");
-  
 
   const data = await instance
     .get(`project_progress/target-task/${selectedTargetPk}`, {
@@ -466,7 +484,7 @@ export const apiForUpdateExtraTask = ({
     task,
     task_description,
     task_manager,
-    task_status,
+    task_status
   );
 
   const payload = {

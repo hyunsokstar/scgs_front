@@ -680,3 +680,8 @@ export interface IFormTypeForExtraTask {
   task_description: string; 
   task_status: string; 
 }
+
+export interface IParamterForTransformChekcedTaskToTargetTask {
+  checkedRowPks: number[],
+  selectedTargetPk: any
+}
