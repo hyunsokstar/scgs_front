@@ -7,7 +7,7 @@ import {
   ITypeForTaskDetailUpdateForm,
 } from "../types/project_progress/project_progress_type";
 
-import { Box, useToast, Heading, Text } from "@chakra-ui/react";
+import { Box, useToast, Heading, Text, Button } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import "react-datetime/css/react-datetime.css";
 import {
@@ -25,6 +25,7 @@ import TestListForTaskDetail from "../components/TestList/TestListForTaskDetail"
 import TableForTechNote from "../components/Table/TableForTechNote";
 import ChatStyleBoard from "../components/ChatStyleBoard";
 import UpdateFormForTaskDetail from "../components/Form/UpdateFormForTaskDetail";
+import ModalButtonForGetTaskListForIntergration from "../components/modal/ModalButtonForGetTaskListForIntergration";
 
 interface Props {}
 
@@ -454,9 +455,15 @@ function ProjectProgressDetail({}: Props): ReactElement {
           fontSize="20px"
         >
           <Box fontFamily="Arial, sans-serif">부가 업무 리스트</Box>
+          <ModalButtonForGetTaskListForIntergration
+            button_text="부가 업무 가져 오기!"
+            modal_title_text="Task List For Task Intergration !"
+          />
+
           <ModalButtonForExtraTask
             taskPk={taskPk}
             refetch={refetchForTaskDetail}
+            button_text="부가 업무 추가"
           />
         </Box>
         <ExtraTasksTable
