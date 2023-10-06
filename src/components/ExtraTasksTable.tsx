@@ -11,11 +11,9 @@ import {
   Checkbox,
   Image,
   HStack,
-
   Select,
   IconButton,
   useToast,
-
 } from "@chakra-ui/react";
 import { extra_task_row_type } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";

@@ -25,7 +25,7 @@ import TestListForTaskDetail from "../components/TestList/TestListForTaskDetail"
 import TableForTechNote from "../components/Table/TableForTechNote";
 import ChatStyleBoard from "../components/ChatStyleBoard";
 import UpdateFormForTaskDetail from "../components/Form/UpdateFormForTaskDetail";
-import ModalButtonForGetTaskListForIntergration from "../components/modal/ModalButtonForGetTaskListForIntergration";
+import ModalButtonForTaskIntegrationForSeletedOne from "../components/modal/ModalButtonForTaskIntegrationForSeletedOne";
 
 interface Props {}
 
@@ -455,9 +455,10 @@ function ProjectProgressDetail({}: Props): ReactElement {
           fontSize="20px"
         >
           <Box fontFamily="Arial, sans-serif">부가 업무 리스트</Box>
-          <ModalButtonForGetTaskListForIntergration
-            button_text="부가 업무 가져 오기!"
+          <ModalButtonForTaskIntegrationForSeletedOne
+            button_text="부가 업무 가져 오기 !"
             modal_title_text="Task List For Task Intergration !"
+            selectedTaskPk={taskPk}
           />
 
           <ModalButtonForExtraTask
@@ -470,7 +471,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
           extra_tasks={taskData.extra_tasks}
           orginal_task_pk={taskPk}
           refetch={refetchForTaskDetail}
-          // refetch={refetchForTaskDetail}
         />
       </Box>
     );

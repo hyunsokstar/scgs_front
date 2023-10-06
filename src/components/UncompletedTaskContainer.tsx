@@ -65,7 +65,6 @@ function UncompletedTaskContainer({
       enabled: currentPageNum === 1,
     }
   );
-  // console.log("taskListData??? : ", taskListData);
 
   const [filteredListForUncompleteTask, setFilteredListForUncompleteTask] =
     useState<any>(taskListData?.ProjectProgressList);

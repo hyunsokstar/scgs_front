@@ -138,7 +138,6 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
             <Flex height={"100%"}>
               <Box flex="1" border={"1px solid gray"} height={"100%"}>
                 {/* 1영역 */}
-                
                 <TableForTaskListForChecked
                   data={taskListForCheckedForIntergration}
                   checkedRowPks={checkedRowPks}

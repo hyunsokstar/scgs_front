@@ -675,13 +675,33 @@ export interface IExtraTaskDetailData {
 
 export interface IFormTypeForExtraTask {
   pk: number;
-  task_manager: number | string; 
-  task: string; 
-  task_description: string; 
-  task_status: string; 
+  task_manager: number | string;
+  task: string;
+  task_description: string;
+  task_status: string;
 }
 
 export interface IParamterForTransformChekcedTaskToTargetTask {
-  checkedRowPks: number[],
-  selectedTargetPk: any
+  checkedRowPks: number[];
+  selectedTargetPk: any;
+}
+
+export interface ITask {
+  id: number;
+  task_manager: ITaskManager;
+  writer: string;
+  task: string;
+  current_status: string;
+  is_for_today: boolean;
+  extra_tasks: any[]; // 이 부분은 추가 정보가 있는 경우에 더 구체적으로 정의할 수 있음
+}
+
+export interface IDataTypeForTaskListForTaskIntergrationForSelectedOne {
+  listForTask: ITask[];
+  totalCountForTaskList: number;
+  perPage: number;
+  taskManagers: {
+    task_manager__username: string;
+    task_manager_count: number;
+  }[];
 }

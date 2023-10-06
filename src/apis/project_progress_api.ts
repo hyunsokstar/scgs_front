@@ -27,6 +27,26 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+export const apiForGetTaskListForTaskIntergrationForSelectedOne = async ({
+  queryKey,
+}: QueryFunctionContext): Promise<any> => {
+  const [_, pageNum, selectedTaskPk] = queryKey;
+
+  console.log("selectedTaskPk : ", selectedTaskPk);
+
+  const data = await instance
+    // .get("project_progress/getTaskListForTaskIntegration/<int:selectedTaskPk>", {
+    .get(
+      `project_progress/taskListForTaskIntergrationForSelectedOne/${selectedTaskPk}`,
+      {
+        params: {pageNum},
+      }
+    )
+    .then((response) => response.data);
+
+  return data;
+};
+
 // apiForTransformCheckedTasksToSupplementTaskForSelected
 export const apiForTransformCheckedTasksToSupplementTaskForSelected = ({
   checkedRowPks,
