@@ -28,6 +28,7 @@ import {
 } from "../../apis/project_progress_api";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
+import { useNavigate } from 'react-router-dom';
 
 function formatDate(datetimeStr: string): string {
   const options = {
@@ -64,6 +65,7 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
   selectedTargetPk,
   taskListForCheckedForIntergration,
 }: IProps) => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const toast = useToast();
 
@@ -88,6 +90,14 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
         ]);
         queryClient.refetchQueries(["getTaskListForCheckedPks"]);
         queryClient.refetchQueries(["getUncompletedTaskList"]);
+
+        // todo
+        // react에서 http://127.0.0.1:3000/project_admin/{selectedTargetPk} 로 페이지 이동        
+
+        const targetUrl = `/project_admin/${selectedTargetPk}`;
+
+        // 해당 URL로 페이지 이동
+        navigate(targetUrl);
 
         toast({
           title: "transform checked tasks success!",
@@ -128,7 +138,7 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
             <Flex height={"100%"}>
               <Box flex="1" border={"1px solid gray"} height={"100%"}>
                 {/* 1영역 */}
-                List of tasks to be converted into additional tasks
+                
                 <TableForTaskListForChecked
                   data={taskListForCheckedForIntergration}
                   checkedRowPks={checkedRowPks}
