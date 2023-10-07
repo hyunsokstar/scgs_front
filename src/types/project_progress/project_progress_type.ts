@@ -633,8 +633,8 @@ export interface IExtraTaskRow {
   task_url2: string | null;
   task_status: string;
   importance: number;
-  started_at: string | null;
-  completed_at: string | null;
+  started_at: string;
+  completed_at: string;
   started_at_formatted: string;
 }
 

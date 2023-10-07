@@ -11,7 +11,10 @@ import {
   Th,
 } from "@chakra-ui/react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { IDataForTargetTask } from "../../types/project_progress/project_progress_type";
+import {
+  IDataForTargetTask,
+  IExtraTaskRow,
+} from "../../types/project_progress/project_progress_type";
 import { apiForGetTargetTaskInfoForTaskIntergrationByPk } from "../../apis/project_progress_api";
 
 function formatDate(datetimeStr: string): string {
@@ -29,10 +32,16 @@ function formatDate(datetimeStr: string): string {
 
 interface IProps {
   selectedTaskPk: any;
+  checkedRowsForConvertForRevert: number[];
+  setCheckedRowsForConvertForRevert: React.Dispatch<
+    React.SetStateAction<number[]>
+  >;
 }
 
 const ContainerForSelectedTaskForTaskIntergration = ({
   selectedTaskPk,
+  checkedRowsForConvertForRevert,
+  setCheckedRowsForConvertForRevert,
 }: IProps) => {
   const { isLoading, data: dataForTargetTask } = useQuery<IDataForTargetTask>(
     ["getTaskListForCheckedPks", selectedTaskPk],
@@ -42,6 +51,23 @@ const ContainerForSelectedTaskForTaskIntergration = ({
     }
   );
 
+  const handleCheckboxChange = (taskPk: number) => {
+    // 체크박스가 체크되었을 때
+    if (checkedRowsForConvertForRevert.includes(taskPk)) {
+      // 이미 체크되어 있던 항목이면 제거
+      setCheckedRowsForConvertForRevert(
+        checkedRowsForConvertForRevert.filter((pk) => pk !== taskPk)
+      );
+    } else {
+      // 체크되어 있지 않은 항목이면 추가
+      setCheckedRowsForConvertForRevert([
+        ...checkedRowsForConvertForRevert,
+        taskPk,
+      ]);
+    }
+  };
+
+  // 2244
   return (
     <Box>
       <Box flex="1" border={"1px solid gray"} px={2}>
@@ -88,7 +114,14 @@ const ContainerForSelectedTaskForTaskIntergration = ({
                 ? dataForTargetTask.extra_tasks.map((task: IExtraTaskRow) => (
                     <Tr key={task.pk}>
                       <Td>
-                        <Checkbox />
+                        <Checkbox
+                          // 체크박스의 상태와 연동
+                          isChecked={checkedRowsForConvertForRevert.includes(
+                            task.pk
+                          )}
+                          // 체크박스 체크/해제 이벤트 설정
+                          onChange={() => handleCheckboxChange(task.pk)}
+                        />
                       </Td>
                       <Td>{task.task}</Td>
                       <Td>{task.task_status}</Td>
@@ -100,6 +133,8 @@ const ContainerForSelectedTaskForTaskIntergration = ({
                 : "no data"}
             </Tbody>
           </Table>
+          선택한 항:
+          <div>체크한 번호: {checkedRowsForConvertForRevert.join(", ")}</div>
         </Box>
       </Box>
     </Box>

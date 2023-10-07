@@ -14,7 +14,9 @@ import {
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ContainerForTaskIntergrationForSelectedOne from "../Container/ContainerForTaskIntergrationForSelectedOne";
 import ContainerForSelectedTaskForTaskIntergration from "../Container/ContainerForSelectedTaskForTaskIntergration";
-import { apiForTransformCheckedTasksToSupplementTaskForSelected } from "../../apis/project_progress_api";
+import { apiForRevertExtraTaskFromSelectedOne, apiForTransformCheckedTasksToSupplementTaskForSelected } from "../../apis/project_progress_api";
+import { useNavigate } from "react-router-dom";
+
 
 interface ModalButtonProps {
   button_text: string;
@@ -26,10 +28,15 @@ interface ModalButtonProps {
 const ModalButtonForTaskIntegrationForSeletedOne: React.FC<
   ModalButtonProps
 > = ({ button_text, modal_title_text, selectedTaskPk }) => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
-  const [checkedRows, setCheckedRows] = useState<number[]>([]); // 체크된 항목의 번호를 저장하는 상태
+  const [checkedRowsForConvert, setCheckedRowsForConvert] = useState<number[]>(
+    []
+  );
+  const [checkedRowsForConvertForRevert, setCheckedRowsForConvertForRevert] =
+    useState<number[]>([]);
 
   const onClose = () => {
     setIsOpen(false);
@@ -52,14 +59,6 @@ const ModalButtonForTaskIntegrationForSeletedOne: React.FC<
         queryClient.refetchQueries(["getTaskListForCheckedPks"]);
         queryClient.refetchQueries(["getOneProjectTask"]);
 
-        // todo
-        // react에서 http://127.0.0.1:3000/project_admin/{selectedTargetPk} 로 페이지 이동
-
-        // const targetUrl = `/project_admin/${selectedTaskPk}`;
-
-        // 해당 URL로 페이지 이동
-        // navigate(targetUrl);
-
         toast({
           title: "transform checked tasks success!",
           description: data.message,
@@ -80,8 +79,8 @@ const ModalButtonForTaskIntegrationForSeletedOne: React.FC<
     });
 
   const convertTaskButtonHandler = () => {
-    if (checkedRows.length === 0) {
-      // 만약 checkedRows가 비어 있다면
+    if (checkedRowsForConvert.length === 0) {
+      // 만약 checkedRowsForConvert가 비어 있다면
       toast({
         title: "선택한 항목이 없습니다.", // Toast 제목
         description: "하나 이상의 항목을 선택하세요.", // Toast 내용
@@ -93,12 +92,72 @@ const ModalButtonForTaskIntegrationForSeletedOne: React.FC<
     }
 
     // 선택한 항목이 있는 경우에 대한 처리
-    console.log("checkedRows: ", checkedRows);
+    console.log("checkedRowsForConvert: ", checkedRowsForConvert);
     console.log("selectedTaskPk: ", selectedTaskPk);
 
     mutationForTransformCheckedTasksToSupplementTaskForSelected.mutate({
-      checkedRowPks: checkedRows,
-      selectedTargetPk: selectedTaskPk,
+      checkedRowsForConvert,
+      selectedTaskPk,
+    });
+  };
+
+  const mutationForRevertExtraTaskFromSelectedOne =
+    useMutation(apiForRevertExtraTaskFromSelectedOne, {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries([
+          "apiForGetTaskListForSelectedOneForTaskIntergration",
+        ]);
+        queryClient.refetchQueries(["getTaskListForCheckedPks"]);
+        queryClient.refetchQueries(["getOneProjectTask"]);
+
+        toast({
+          title: "transform checked tasks success!",
+          description: data.message,
+          status: "success",
+        });
+        // onClose();
+        // navigate("/project_admin");
+      },
+      onError: (error: any) => {
+        console.log("error.message : ", error.message);
+
+        toast({
+          title: "Error!",
+          description: error.response.data.message || "An error occurred.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      },
+    });  
+
+  const revertTaskButtonHandler = () => {
+    if (checkedRowsForConvertForRevert.length === 0) {
+      // 만약 checkedRowsForConvert가 비어 있다면
+      toast({
+        title: "선택한 항목이 없습니다.", // Toast 제목
+        description: "하나 이상의 항목을 선택하세요.", // Toast 내용
+        status: "warning", // Toast 스타일 (warning은 주황색)
+        duration: 5000, // Toast가 표시될 시간 (밀리초)
+        isClosable: true, // 닫기 버튼 표시 여부
+      });
+      return; // 함수 종료
+    }
+
+    // 선택한 항목이 있는 경우에 대한 처리
+    console.log(
+      "checkedRowsForConvertForRevert: ",
+      checkedRowsForConvertForRevert
+    );
+
+
+    mutationForRevertExtraTaskFromSelectedOne.mutate({
+      checkedRowsForConvertForRevert,
+      selectedTaskPk,
     });
   };
 
@@ -126,8 +185,8 @@ const ModalButtonForTaskIntegrationForSeletedOne: React.FC<
                 {/* 왼쪽 영역 컨테이너(task list (선택한 업무 이외) 를 위한 컨테이너 ) */}
                 <ContainerForTaskIntergrationForSelectedOne
                   selectedTaskPk={selectedTaskPk}
-                  checkedRows={checkedRows}
-                  setCheckedRows={setCheckedRows}
+                  checkedRowsForConvert={checkedRowsForConvert}
+                  setCheckedRowsForConvert={setCheckedRowsForConvert}
                 />
               </Box>
               <Box
@@ -156,6 +215,7 @@ const ModalButtonForTaskIntegrationForSeletedOne: React.FC<
                   borderColor="gray.500" // 단정한 색상 선택
                   _hover={{ backgroundColor: "gray.100" }} // 호버 시 배경색 변경
                   width={"90%"}
+                  onClick={revertTaskButtonHandler}
                 >
                   Revert
                 </Button>
@@ -164,6 +224,12 @@ const ModalButtonForTaskIntegrationForSeletedOne: React.FC<
                 right side
                 <ContainerForSelectedTaskForTaskIntergration
                   selectedTaskPk={selectedTaskPk}
+                  checkedRowsForConvertForRevert={
+                    checkedRowsForConvertForRevert
+                  }
+                  setCheckedRowsForConvertForRevert={
+                    setCheckedRowsForConvertForRevert
+                  }
                 />
               </Box>
             </Box>

@@ -26,6 +26,25 @@ interface ICommentTextUpdateApiParameter {
   commentText: string;
 }
 
+export const apiForRevertExtraTaskFromSelectedOne = ({
+  checkedRowsForConvertForRevert,
+  selectedTargetPk,
+}: any) => {
+  return instance
+    .post(
+      `/project_progress/selected-one/checked-tasks/revert-task`,
+      { checkedRowsForConvertForRevert, selectedTargetPk },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      return response.data;
+    });
+};
+
 // 1122
 export const apiForGetTaskListForTaskIntergrationForSelectedOne = async ({
   queryKey,
@@ -39,7 +58,7 @@ export const apiForGetTaskListForTaskIntergrationForSelectedOne = async ({
     .get(
       `project_progress/taskListForTaskIntergrationForSelectedOne/${selectedTaskPk}`,
       {
-        params: {pageNum},
+        params: { pageNum },
       }
     )
     .then((response) => response.data);
@@ -47,15 +66,14 @@ export const apiForGetTaskListForTaskIntergrationForSelectedOne = async ({
   return data;
 };
 
-// apiForTransformCheckedTasksToSupplementTaskForSelected
 export const apiForTransformCheckedTasksToSupplementTaskForSelected = ({
-  checkedRowPks,
-  selectedTargetPk,
+  checkedRowsForConvert,
+  selectedTaskPk,
 }: any) => {
   return instance
     .post(
       `/project_progress/transform/checked-tasks/target-task`,
-      { checkedRowPks, selectedTargetPk },
+      { checkedRowsForConvert, selectedTaskPk },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",

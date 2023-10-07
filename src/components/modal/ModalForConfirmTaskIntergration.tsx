@@ -28,7 +28,7 @@ import {
 } from "../../apis/project_progress_api";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import TableForTaskListForChecked from "../Table/TableForTaskListForChecked";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function formatDate(datetimeStr: string): string {
   const options = {
@@ -92,7 +92,7 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
         queryClient.refetchQueries(["getUncompletedTaskList"]);
 
         // todo
-        // react에서 http://127.0.0.1:3000/project_admin/{selectedTargetPk} 로 페이지 이동        
+        // react에서 http://127.0.0.1:3000/project_admin/{selectedTargetPk} 로 페이지 이동
 
         const targetUrl = `/project_admin/${selectedTargetPk}`;
 
@@ -122,8 +122,8 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
     // alert("옮길 대상 : " + checkedRowPks);
     // alert("옮길 타겟 : " + selectedTargetPk);
     mutationForTransformCheckedTasksToSupplementTaskForSelected.mutate({
-      checkedRowPks,
-      selectedTargetPk,
+      checkedRowsForConvert: checkedRowPks,
+      selectedTaskPk: selectedTargetPk,
     });
   };
 
