@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ContainerForTaskIntergrationForSelectedOne from "../Container/ContainerForTaskIntergrationForSelectedOne";
+import ContainerForSelectedTaskForTaskIntergration from "../Container/ContainerForSelectedTaskForTaskIntergration";
 
 interface ModalButtonProps {
   button_text: string;
@@ -95,6 +96,9 @@ const ModalButtonForTaskIntegrationForSeletedOne: React.FC<
               </Box>
               <Box flex="5" border="1px dashed">
                 right side
+                <ContainerForSelectedTaskForTaskIntergration
+                  selectedTaskPk={selectedTaskPk}
+                />
               </Box>
             </Box>
           </ModalBody>

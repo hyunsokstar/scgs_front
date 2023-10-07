@@ -8,18 +8,20 @@ import {
   Tr,
   Th,
   Td,
-  Checkbox, // Chakra UI Checkbox 추가
+  Checkbox,
+  Container, // Chakra UI Checkbox 추가
 } from "@chakra-ui/react";
 import { apiForGetTaskListForTaskIntergrationForSelectedOne } from "../../apis/project_progress_api";
 import {
   IDataTypeForTaskListForTaskIntergrationForSelectedOne,
   ITask,
 } from "../../types/project_progress/project_progress_type";
+import PaginationComponent from "../PaginationComponent";
 
 interface IProps {
   selectedTaskPk: any;
   checkedRows: number[]; // checkedRows 상태를 props로 추가
-  setCheckedRows: React.Dispatch<React.SetStateAction<number[]>>; 
+  setCheckedRows: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const ContainerForTaskIntergrationForSelectedOne = ({
@@ -62,7 +64,7 @@ const ContainerForTaskIntergrationForSelectedOne = ({
         "Loading..."
       ) : dataForTaskList ? (
         <>
-          <Table variant="simple">
+          <Table variant="simple" size="sm">
             <Thead>
               <Tr>
                 <Th>체크 박스</Th>
@@ -72,7 +74,6 @@ const ContainerForTaskIntergrationForSelectedOne = ({
               </Tr>
             </Thead>
             <Tbody>
-                
               {dataForTaskList.listForTask.map((task: ITask) => (
                 <Tr key={task.id}>
                   <Td>
@@ -90,6 +91,21 @@ const ContainerForTaskIntergrationForSelectedOne = ({
               ))}
             </Tbody>
           </Table>
+
+          {/* 페이지네이션 추가 */}
+          {dataForTaskList ? (
+            <Container maxW="100%" bg="blue.100" color="red.500" mt={1}>
+              <PaginationComponent
+                current_page_num={pageNum}
+                total_page_num={dataForTaskList.totalCountForTaskList}
+                task_number_for_one_page={dataForTaskList.perPage}
+                setCurrentPageNum={setPageNum}
+              />
+            </Container>
+          ) : (
+            ""
+          )}
+
           {/* 체크된 항목의 번호를 출력 */}
           <div>체크한 번호: {checkedRows.join(", ")}</div>
         </>
