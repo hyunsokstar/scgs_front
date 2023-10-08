@@ -12,13 +12,20 @@ import {
   Box,
   Avatar,
   Text,
+  Spacer,
+  IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import {
   IExtraManager,
   IdataForUserListWitoutOwnerUser,
 } from "../../types/project_progress/project_progress_type";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { apiForGetUserListWithoutOwnerUser } from "../../apis/project_progress_api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  apiForDeleteExtraManagerForTask,
+  apiForGetUserListWithoutOwnerUser,
+} from "../../apis/project_progress_api";
+import { FaTrash } from "react-icons/fa"; // 삭제 아이콘을 사용하기 위해 react-icons 패키지를 설치해야 합니다.
 
 interface ModalButtonProps {
   buttonText: string;
@@ -31,6 +38,9 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
   extra_managers,
   ownerUser,
 }) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
@@ -41,14 +51,51 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
     ["apiForGetUserListWithoutOwnerUser", ownerUser, extra_managers],
     apiForGetUserListWithoutOwnerUser,
     {
-      enabled: !!extra_managers.length,
+      enabled: true,
     }
   );
 
   console.log(
-    "dataForUserListWitoutOwnerUser : ",
-    dataForUserListWitoutOwnerUser
+    "extra_managers !!!!!!!!!!!!!!!!!!!!!!!!! ",
+    extra_managers
   );
+
+  // 삭제 구현
+  const mutationForDeleteExtraManagerForTask = useMutation(
+    (extraManagerId: string | number) => {
+      return apiForDeleteExtraManagerForTask(extraManagerId);
+    },
+    {
+      onSettled: () => {
+        // setSelectedItems([]);
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["apiForGetUserListWithoutOwnerUser"]);
+
+        toast({
+          title: "delete comment 성공!",
+          status: "success",
+        });
+      },
+      onError: (error:any) => {
+        console.error("에러 발생: ", error);
+
+        toast({
+          title: "에러 발생!",
+          description: error.response.data.message,
+          status: "error",
+        });
+      },
+    }
+  );
+
+  const handleDeleteForExtraManager = (extraManagerId: number) => {
+    // alert(extraManagerId);
+    mutationForDeleteExtraManagerForTask.mutate(extraManagerId);
+  };
 
   return (
     <>
@@ -75,15 +122,26 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
                 <Text>current extra managers</Text>
 
                 {extra_managers
-                  ? extra_managers.map((user) => {
+                  ? extra_managers.map((extra_manager) => {
                       return (
                         <Box display={"flex"} gap={2} my={1}>
                           <Avatar
                             name="John Doe" // 이름 설정
-                            src={user.task_manager.profile_image} // 프로필 이미지 URL (선택 사항)
+                            src={extra_manager.task_manager.profile_image} // 프로필 이미지 URL (선택 사항)
                             size="sm" // Avatar 크기 설정 (xs, sm, md, lg, xl 중 선택)
                           />
-                          <Text>{user.task_manager.username}</Text>
+                          <Text>{extra_manager.task_manager.username}</Text>
+                          <Spacer />
+                          {/* 삭제 아이콘 버튼 추가 */}
+                          <IconButton
+                            icon={<FaTrash />} // 삭제 아이콘 사용
+                            aria-label="Delete"
+                            colorScheme="red" // 아이콘 색상 설정
+                            size="xs" // 아이콘 크기 설정
+                            onClick={() =>
+                              handleDeleteForExtraManager(extra_manager.id)
+                            } // 클릭 핸들러 설정
+                          />
                         </Box>
                       );
                     })
@@ -91,7 +149,6 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
               </Box>
 
               <Box flex="1" pl="4">
-
                 <Text>all managers</Text>
 
                 {dataForUserListWitoutOwnerUser

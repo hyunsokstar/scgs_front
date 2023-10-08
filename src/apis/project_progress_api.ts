@@ -27,10 +27,26 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+// apiForDeleteExtraManagerForTask
+export const apiForDeleteExtraManagerForTask = (extraManagerId: any) => {
+  console.log("extraManagerId : ", extraManagerId);
+  return instance
+    // .delete(`project_progress/comment/${commentPk}`, {
+      .delete(`project_progress/extra-manager/${extraManagerId}/delete`, {
+        headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForGetUserListWithoutOwnerUser = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
   const [_, ownerUser, extra_managers] = queryKey;
+
+  console.log("실행 되는지 확인 ????????");
+  
 
   console.log("ownerUser : ", ownerUser);
   console.log("extra_managers : ", extra_managers);

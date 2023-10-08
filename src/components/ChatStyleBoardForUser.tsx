@@ -13,8 +13,7 @@ import {
   Textarea,
   useToast,
   Input,
-  InputGroup,
-  InputRightElement,
+
 } from "@chakra-ui/react";
 
 import { ITaskComment } from "../types/project_progress/project_progress_type";
@@ -107,7 +106,7 @@ function ListItem({ pk, writer, comment, isUser, is_edit_mode }: Message) {
     });
   };
 
-  // mutationForDeleteCommentForChallenge
+  // mutationForDeleteExtraManager
   const mutationForDeleteUserTaskComment = useMutation(
     (pk: string | number) => {
       // return apiForDeleteCommentForChallenge(pk);
