@@ -312,7 +312,8 @@ function UncompletedTaskList({
                     display={"flex"}
                     flexDirection={"column"}
                     border={"0px solid yellow"}
-                    flex={2.4}
+                    flex={2.0}
+                    mr={5}
                     gap={1}
                   >
                     <Text
@@ -324,7 +325,7 @@ function UncompletedTaskList({
                       담당: {task.task_manager?.username}
                     </Text>
 
-                    <Box display={"flex"} gap={2}>
+                    <Box display={"flex"} gap={2} border={"1px solid blue"}>
                       <Text
                         color="tomato"
                         textAlign="start"
@@ -367,7 +368,9 @@ function UncompletedTaskList({
                       <StarRating
                         taskPk={task.id}
                         initialRating={task.importance}
-                        onChangeForStarRatingHandler={onChangeForStarRatingHandler}
+                        onChangeForStarRatingHandler={
+                          onChangeForStarRatingHandler
+                        }
                       />
                     </Box>
                   </ListItem>
