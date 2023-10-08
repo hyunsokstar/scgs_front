@@ -3,7 +3,7 @@ import { Box, useToast, useBreakpointValue } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { getUncompletedTaskList } from "../apis/project_progress_api";
 import {
-  ITypeForProjectProgressList,
+  ITypeForTaskListDataForUncompleted,
   typeForDueDateOption,
 } from "../types/project_progress/project_progress_type";
 import UncompletedTaskList from "./UncompletedTaskList";
@@ -44,9 +44,9 @@ function UncompletedTaskContainer({
 
   const {
     isLoading,
-    data: taskListData,
+    data: taskListDataForUncompleted,
     refetch: projectTaskListRefatch,
-  } = useQuery<ITypeForProjectProgressList>(
+  } = useQuery<ITypeForTaskListDataForUncompleted>(
     [
       "getUncompletedTaskList",
       currentPageNum,
@@ -67,7 +67,7 @@ function UncompletedTaskContainer({
   );
 
   const [filteredListForUncompleteTask, setFilteredListForUncompleteTask] =
-    useState<any>(taskListData?.ProjectProgressList);
+    useState<any>(taskListDataForUncompleted?.ProjectProgressList);
   const [filterValueForTaskManager, setFilterValueForTaskManager] =
     useState<string>();
   const [filterValueForTask, setFilterValueForTask] = useState<string>();
@@ -78,10 +78,10 @@ function UncompletedTaskContainer({
 
   useEffect(() => {
     if (!filterValueForTaskManager) {
-      setFilteredListForUncompleteTask(taskListData?.ProjectProgressList);
+      setFilteredListForUncompleteTask(taskListDataForUncompleted?.ProjectProgressList);
     } else {
     }
-  }, [taskListData]);
+  }, [taskListDataForUncompleted]);
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
@@ -100,7 +100,7 @@ function UncompletedTaskContainer({
     lg: true,
   });
 
-  if (!taskListData) {
+  if (!taskListDataForUncompleted) {
     return <Box>..Loading</Box>;
   }
 
@@ -122,7 +122,7 @@ function UncompletedTaskContainer({
         setFilterValueForTaskClassification={
           setFilterValueForTaskClassification
         }
-        taskListData={taskListData}
+        taskListDataForUncompleted={taskListDataForUncompleted}
         selectedPeriodOptionForUncompletedTaskList={
           selectedPeriodOptionForUncompletedTaskList
         }
@@ -140,7 +140,7 @@ function UncompletedTaskContainer({
       />
 
       <UtilButtonsForUncompletedTaskList
-        taskListData={taskListData}
+        taskListDataForUncompleted={taskListDataForUncompleted}
         checkedRowPks={checkedRowPks}
         setCheckedRowPks={setCheckedRowPks}
         projectTaskListRefatch={projectTaskListRefatch}
@@ -148,11 +148,11 @@ function UncompletedTaskContainer({
 
       {is_show_for_mobile ? (
         <Box border={"0px solid blue"}>
-          {taskListData ? (
+          {taskListDataForUncompleted ? (
             <UncompletedTaskList
               ProjectProgressList={filteredListForUncompleteTask}
-              totalPageCount={taskListData.totalPageCount}
-              task_number_for_one_page={taskListData.task_number_for_one_page}
+              totalPageCount={taskListDataForUncompleted.totalPageCount}
+              task_number_for_one_page={taskListDataForUncompleted.task_number_for_one_page}
               currentPageNum={currentPageNum}
               setCurrentPageNum={setCurrentPageNum}
               projectTaskListRefatch={projectTaskListRefatch}

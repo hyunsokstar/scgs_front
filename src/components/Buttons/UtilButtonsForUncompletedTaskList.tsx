@@ -28,7 +28,7 @@ import ModalButtonForAddProjectTaskWithDuedateOption from "../modal/ModalButtonF
 import ModalButtonForTransformCheckedTasksToSupplementTask from "../modal/ModalButtonForTransformCheckedTasksToSupplementTask";
 
 interface IProps {
-  taskListData: ITypeForProjectProgressList;
+  taskListDataForUncompleted: ITypeForProjectProgressList;
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
   projectTaskListRefatch: () => Promise<
@@ -38,7 +38,7 @@ interface IProps {
 
 // 1122
 const UtilButtonsForUncompletedTaskList = ({
-  taskListData,
+  taskListDataForUncompleted,
   checkedRowPks,
   setCheckedRowPks,
   projectTaskListRefatch,
@@ -78,7 +78,7 @@ const UtilButtonsForUncompletedTaskList = ({
   ) => {
     const checked = event.target.checked;
     const rowPks =
-      taskListData?.ProjectProgressList.map((item) => item.id) || [];
+      taskListDataForUncompleted?.ProjectProgressList.map((item) => item.id) || [];
 
     if (checked) {
       setCheckedRowPks([...checkedRowPks, ...rowPks]);
@@ -220,7 +220,7 @@ const UtilButtonsForUncompletedTaskList = ({
             size={"lg"}
             onChange={handleChangeForAllCheckBox}
             checked={
-              checkedRowPks.length === taskListData?.ProjectProgressList.length
+              checkedRowPks.length === taskListDataForUncompleted?.ProjectProgressList.length
             }
             border={"2px solid black"}
           />

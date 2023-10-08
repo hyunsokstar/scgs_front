@@ -39,7 +39,7 @@ interface IProps {
   setFilterValueForTaskManager: Dispatch<SetStateAction<string | undefined>>;
   setFilterValueForTaskClassification: Dispatch<SetStateAction<string>>;
   filteredListForUncompleteTask: taskRowForUncompleted[];
-  taskListData: ITypeForProjectProgressList;
+  taskListDataForUncompleted: ITypeForProjectProgressList;
   selectedPeriodOptionForUncompletedTaskList: string;
   task_status_for_search: string;
   username_for_search: string | undefined;
@@ -65,7 +65,7 @@ const HeaderInfoForUncompletedTaskList = ({
   setGroupByOption,
   setFilterValueForTask,
   setFilterValueForTaskClassification,
-  taskListData,
+  taskListDataForUncompleted,
   filteredListForUncompleteTask,
   task_status_for_search,
   username_for_search,
@@ -161,7 +161,7 @@ const HeaderInfoForUncompletedTaskList = ({
           >
             <Box textAlign={"center"} border={"0px solid blue"}>
               <Text fontSize={20}>UnComplete Task</Text>
-              <Text>total: {taskListData?.totalPageCount} 개</Text>
+              <Text>total: {taskListDataForUncompleted?.totalPageCount} 개</Text>
             </Box>
             <Box
               display={"grid"}
@@ -189,7 +189,7 @@ const HeaderInfoForUncompletedTaskList = ({
               <ButtonForShowCountForTaskStatus
                 task_status={"ready"}
                 status_imoge={"⚪"}
-                status_count={taskListData?.count_for_ready}
+                status_count={taskListDataForUncompleted?.count_for_ready}
                 button_size={"xs"}
                 task_status_for_search={task_status_for_search}
                 set_task_status_for_search={set_task_status_for_search}
@@ -198,7 +198,7 @@ const HeaderInfoForUncompletedTaskList = ({
                 button_size={"xs"}
                 task_status={"in_progress"}
                 status_imoge={"🟡"}
-                status_count={taskListData?.count_for_in_progress}
+                status_count={taskListDataForUncompleted?.count_for_in_progress}
                 task_status_for_search={task_status_for_search}
                 set_task_status_for_search={set_task_status_for_search}
               />
@@ -206,7 +206,7 @@ const HeaderInfoForUncompletedTaskList = ({
                 button_size={"xs"}
                 task_status={"testing"}
                 status_imoge={"🟠"}
-                status_count={taskListData?.count_for_in_testing}
+                status_count={taskListDataForUncompleted?.count_for_in_testing}
                 task_status_for_search={task_status_for_search}
                 set_task_status_for_search={set_task_status_for_search}
               />
@@ -216,7 +216,7 @@ const HeaderInfoForUncompletedTaskList = ({
                 border={"1px solid black"}
                 onClick={() => set_is_task_due_date_has_passed(true)}
               >
-                dhp : {taskListData?.count_for_duedate_passed}
+                dhp : {taskListDataForUncompleted?.count_for_duedate_passed}
               </Button>
             </Box>
           </Box>
@@ -229,7 +229,7 @@ const HeaderInfoForUncompletedTaskList = ({
             gridTemplateColumns="repeat(2, 1fr)"
             gap={3}
           >
-            {taskListData?.writers_info?.map((writer) => {
+            {taskListDataForUncompleted?.writers_info?.map((writer) => {
               return (
                 <Box
                   key={writer.username}
@@ -416,14 +416,14 @@ const HeaderInfoForUncompletedTaskList = ({
           <Box bgColor={"orange.200"} alignItems={"center"} flex={1}>
             <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
               <Text>Today</Text>
-              <Text>total: {taskListData.total_task_count_for_today}</Text>
+              <Text>total: {taskListDataForUncompleted.total_task_count_for_today}</Text>
               <Text>
-                complete: {taskListData.completed_task_count_for_today}
+                complete: {taskListDataForUncompleted.completed_task_count_for_today}
               </Text>
-              <Text>progress:{taskListData.achievement_rate_for_today}%</Text>
+              <Text>progress:{taskListDataForUncompleted.achievement_rate_for_today}%</Text>
               <Box w="100%">
                 <Progress
-                  value={taskListData.achievement_rate_for_today}
+                  value={taskListDataForUncompleted.achievement_rate_for_today}
                   size="xs"
                   mb={2}
                 />

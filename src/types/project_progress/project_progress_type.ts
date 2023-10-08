@@ -240,6 +240,18 @@ interface TestResultImageForCompletedTask {
   image_url: string;
 }
 
+interface ITypeForManager {
+  pk: number;
+  username: string;
+  profile_image: string;
+}
+
+interface ExtraManager {
+  id: number;
+  task_manager: ITypeForManager;
+  original_task: number;
+}
+
 export interface taskRowForUncompleted {
   score_by_tester?: number;
   id: string;
@@ -275,9 +287,10 @@ export interface taskRowForUncompleted {
   d_day_count: string;
   test_result_images?: TestResultImageForCompletedTask[];
   task_comments: ITaskComment[];
+  extra_managers: ExtraManager[];
 }
 
-export interface ITypeForProjectProgressList {
+export interface ITypeForTaskListDataForUncompleted {
   ProjectProgressList: taskRowForUncompleted[] | any[];
   writers_info?: Writer[];
   totalPageCount: number;

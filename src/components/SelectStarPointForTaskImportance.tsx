@@ -1,5 +1,4 @@
 import { Select } from "@chakra-ui/react";
-import { StarIcon } from "@chakra-ui/icons";
 
 interface SelectStarPointForTaskImportanceProps {
   value: number;

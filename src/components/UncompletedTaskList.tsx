@@ -10,6 +10,7 @@ import {
   HStack,
   useToast,
   Badge,
+  Avatar,
 } from "@chakra-ui/react";
 import { taskRowForUncompleted } from "../types/project_progress/project_progress_type";
 import SlideToggleButton from "./SlideToggleButton";
@@ -30,6 +31,7 @@ import SlideToggleButtonForInProgress from "./SlideToggleButton/SlideToggleButto
 import SlideToggleButtonForIsTesting from "./SlideToggleButton/SlideToggleButtonForIsTesting";
 import CommonDeleteButtonForPk from "./Button/CommonDeleteButtonForPk";
 import ModalButtonForUpdateDueDateOptionForToday from "./modal/ModalButtonForUpdateDueDateOptionForToday";
+import StarRating from "./StarRating";
 
 interface IProps {
   ProjectProgressList: taskRowForUncompleted[];
@@ -288,7 +290,7 @@ function UncompletedTaskList({
       ))} */}
       <Box overflowX={"scroll"} border={"0px solid blue"}>
         {ProjectProgressList
-          ? ProjectProgressList.map((task: any) => {
+          ? ProjectProgressList.map((task: taskRowForUncompleted) => {
               // console.log("task.task_manager : ", task.taskmanager);
               return (
                 <List
@@ -310,7 +312,7 @@ function UncompletedTaskList({
                     display={"flex"}
                     flexDirection={"column"}
                     border={"0px solid yellow"}
-                    flex={2}
+                    flex={2.4}
                     gap={1}
                   >
                     <Text
@@ -321,14 +323,28 @@ function UncompletedTaskList({
                     >
                       담당: {task.task_manager?.username}
                     </Text>
-                    <Text
-                      color="tomato"
-                      textAlign="start"
-                      fontSize="lg"
-                      fontWeight="bold"
-                    >
-                      지시 : {task.writer}
-                    </Text>
+
+                    <Box display={"flex"} gap={2}>
+                      <Text
+                        color="tomato"
+                        textAlign="start"
+                        fontSize="lg"
+                        fontWeight="bold"
+                      >
+                        보조 :
+                      </Text>
+                      {task.extra_managers.map((user) => {
+                        return (
+                          <Box>
+                            <Avatar
+                              name="John Doe" // 이름 설정
+                              src={user.task_manager.profile_image} // 프로필 이미지 URL (선택 사항)
+                              size="sm" // Avatar 크기 설정 (xs, sm, md, lg, xl 중 선택)
+                            />{" "}
+                          </Box>
+                        );
+                      })}
+                    </Box>
                   </ListItem>
                   <ListItem
                     display={"flex"}
@@ -343,32 +359,22 @@ function UncompletedTaskList({
                       >
                         {task.task}
                       </Link>
-                      &nbsp;&nbsp;
-                      <Badge
-                        size="md"
-                        fontSize={"10px"}
-                        colorScheme={getCategoryColor(task.task_classification)}
-                        p={1}
-                      >
-                        {task.task_classification}
-                      </Badge>
-                      <Badge size="md" fontSize={"10px"} mx={1} p={1}>
-                        {task.importance}
-                      </Badge>
                     </Text>
-                    {/* <Button
-                      variant="outline"
-                      size="xs"
-                      p={1}
-                      fontSize={"10px"}
-                      _hover={{ bg: "lightblue" }}
-                      color={"orange.500"}
-                    >
-                      {task.importance}
-                    </Button> */}
                   </ListItem>
                   {/* fix */}
-                  <ListItem border={"0px solid blue"} flex={2.8}>
+                  <ListItem flex={2.6}>
+                    <Box size="md">
+                      <StarRating
+                        taskPk={task.id}
+                        initialRating={task.importance}
+                        onChangeForStarRatingHandler={onChangeForStarRatingHandler}
+                      />
+                    </Box>
+                  </ListItem>
+                  <ListItem flex={1.2}>
+                    <Box size="md">{task.task_classification}</Box>
+                  </ListItem>
+                  <ListItem border={"0px solid blue"} flex={3.4}>
                     <Box display={"flex"} gap={2}>
                       {task.is_for_today ? (
                         <Button
