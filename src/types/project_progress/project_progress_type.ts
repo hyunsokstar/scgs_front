@@ -246,7 +246,7 @@ interface ITypeForManager {
   profile_image: string;
 }
 
-interface ExtraManager {
+export interface IExtraManager {
   id: number;
   task_manager: ITypeForManager;
   original_task: number;
@@ -287,7 +287,7 @@ export interface taskRowForUncompleted {
   d_day_count: string;
   test_result_images?: TestResultImageForCompletedTask[];
   task_comments: ITaskComment[];
-  extra_managers: ExtraManager[];
+  extra_managers: IExtraManager[];
 }
 
 export interface ITypeForTaskListDataForUncompleted {

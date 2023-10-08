@@ -314,7 +314,7 @@ function UncompletedTaskList({
                     display={"flex"}
                     flexDirection={"column"}
                     border={"0px solid yellow"}
-                    flex={1.8}
+                    flex={2.2}
                     mr={5}
                     // gap={1}
                   >
@@ -352,8 +352,13 @@ function UncompletedTaskList({
                           </Box>
                         );
                       })}
-                      <Spacer />
-                      <ModalButtonForAdminExtraManager buttonText="+" />
+                      {/* <Spacer /> */}
+                      <ModalButtonForAdminExtraManager
+                        extra_managers={
+                          task.extra_managers ? task.extra_managers : []
+                        }
+                        buttonText="+"
+                      />
                     </Box>
                   </ListItem>
                   <ListItem
