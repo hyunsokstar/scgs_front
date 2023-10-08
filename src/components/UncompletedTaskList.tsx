@@ -354,6 +354,7 @@ function UncompletedTaskList({
                       })}
                       {/* <Spacer /> */}
                       <ModalButtonForAdminExtraManager
+                        ownerUser={task.task_manager.username}
                         extra_managers={
                           task.extra_managers ? task.extra_managers : []
                         }

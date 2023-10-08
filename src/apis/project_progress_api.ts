@@ -26,6 +26,25 @@ interface ICommentTextUpdateApiParameter {
   commentText: string;
 }
 
+// 1122
+export const apiForGetUserListWithoutOwnerUser = async ({
+  queryKey,
+}: QueryFunctionContext): Promise<any> => {
+  const [_, ownerUser, extra_managers] = queryKey;
+
+  console.log("ownerUser : ", ownerUser);
+  console.log("extra_managers : ", extra_managers);
+  const extraManagersString = JSON.stringify(extra_managers);
+
+  const data = await instance
+    .get(`users/manager-list-without-main-manager/${ownerUser}`, {
+      params: {extra_managers: extraManagersString},
+    })
+    .then((response) => response.data);
+
+  return data;
+};
+
 export const apiForRevertExtraTaskFromSelectedOne = ({
   checkedRowsForConvertForRevert,
   selectedTargetPk,
@@ -45,7 +64,6 @@ export const apiForRevertExtraTaskFromSelectedOne = ({
     });
 };
 
-// 1122
 export const apiForGetTaskListForTaskIntergrationForSelectedOne = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {

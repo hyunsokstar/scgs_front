@@ -718,3 +718,8 @@ export interface IDataTypeForTaskListForTaskIntergrationForSelectedOne {
     task_manager_count: number;
   }[];
 }
+
+export interface IdataForUserListWitoutOwnerUser {
+  message: string;
+  manager_list: ITaskManager[]
+}
