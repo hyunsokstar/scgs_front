@@ -11,6 +11,7 @@ import {
   useToast,
   Badge,
   Avatar,
+  Spacer,
 } from "@chakra-ui/react";
 import { taskRowForUncompleted } from "../types/project_progress/project_progress_type";
 import SlideToggleButton from "./SlideToggleButton";
@@ -32,6 +33,7 @@ import SlideToggleButtonForIsTesting from "./SlideToggleButton/SlideToggleButton
 import CommonDeleteButtonForPk from "./Button/CommonDeleteButtonForPk";
 import ModalButtonForUpdateDueDateOptionForToday from "./modal/ModalButtonForUpdateDueDateOptionForToday";
 import StarRating from "./StarRating";
+import ModalButtonForAdminExtraManager from "./modal/ModalButtonForAdminExtraManager";
 
 interface IProps {
   ProjectProgressList: taskRowForUncompleted[];
@@ -312,9 +314,9 @@ function UncompletedTaskList({
                     display={"flex"}
                     flexDirection={"column"}
                     border={"0px solid yellow"}
-                    flex={2.0}
+                    flex={1.8}
                     mr={5}
-                    gap={1}
+                    // gap={1}
                   >
                     <Text
                       color="blue.600"
@@ -325,7 +327,12 @@ function UncompletedTaskList({
                       담당: {task.task_manager?.username}
                     </Text>
 
-                    <Box display={"flex"} gap={2} border={"1px solid blue"}>
+                    <Box
+                      display={"flex"}
+                      alignItems={"center"}
+                      gap={2}
+                      border={"0px solid blue"}
+                    >
                       <Text
                         color="tomato"
                         textAlign="start"
@@ -345,6 +352,8 @@ function UncompletedTaskList({
                           </Box>
                         );
                       })}
+                      <Spacer />
+                      <ModalButtonForAdminExtraManager buttonText="+" />
                     </Box>
                   </ListItem>
                   <ListItem
