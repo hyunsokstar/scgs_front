@@ -719,7 +719,13 @@ export interface IDataTypeForTaskListForTaskIntergrationForSelectedOne {
   }[];
 }
 
+
+// "listForExtraManager": serializer.data,
+// "totalCountForExtraManagerList": self.totalCountForExtraManagerList,
+// "perPage": self.perPage,
+
 export interface IdataForUserListWitoutOwnerUser {
-  message: string;
-  manager_list: ITaskManager[]
+  listForExtraManager: ITaskManager[]
+  totalCountForExtraManagerList: number;
+  perPage: number;
 }

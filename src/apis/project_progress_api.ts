@@ -62,7 +62,7 @@ export const apiForDeleteExtraManagerForTask = (extraManagerId: any) => {
 export const apiForGetUserListWithoutOwnerUser = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
-  const [_, ownerUser, extra_managers] = queryKey;
+  const [_, ownerUser, extra_managers, pageNum] = queryKey;
 
   console.log("실행 되는지 확인 ????????");
 
@@ -72,7 +72,7 @@ export const apiForGetUserListWithoutOwnerUser = async ({
 
   const data = await instance
     .get(`users/manager-list-without-main-manager/${ownerUser}`, {
-      params: { extra_managers: extraManagersString },
+      params: { extra_managers: extraManagersString, pageNum: pageNum },
     })
     .then((response) => response.data);
 

@@ -28,16 +28,19 @@ import {
   apiForGetUserListWithoutOwnerUser,
 } from "../../apis/project_progress_api";
 import { FaTrash, FaPlus } from "react-icons/fa"; // 삭제 아이콘을 사용하기 위해 react-icons 패키지를 설치해야 합니다.
+import PaginationComponent from "../PaginationComponent";
 
 interface ModalButtonProps {
   buttonText: string;
+  task: string;
   extra_managers: IExtraManager[];
-  ownerUser: string;
+  ownerUser: any;
   targetTaskId: any;
 }
 
 const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
   buttonText,
+  task,
   extra_managers,
   ownerUser,
   targetTaskId,
@@ -47,19 +50,29 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [pageNum, setPageNum] = useState(1);
+
   const {
     isLoading,
     data: dataForUserListWitoutOwnerUser,
     refetch: projectTaskListRefatch,
   } = useQuery<IdataForUserListWitoutOwnerUser>(
-    ["apiForGetUserListWithoutOwnerUser", ownerUser, extra_managers],
+    [
+      "apiForGetUserListWithoutOwnerUser",
+      ownerUser.username,
+      extra_managers,
+      pageNum,
+    ],
     apiForGetUserListWithoutOwnerUser,
     {
       enabled: true,
     }
   );
 
-  console.log("extra_managers !!!!!!!!!!!!!!!!!!!!!!!!! ", extra_managers);
+  console.log(
+    "dataForUserListWitoutOwnerUser !!!!!!!!!!!!!!!!!!!!!!!!! ",
+    dataForUserListWitoutOwnerUser
+  );
 
   // 삭제 구현
   const mutationForDeleteExtraManagerForTask = useMutation(
@@ -151,16 +164,34 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
 
       <Modal isOpen={isOpen} onClose={onClose} size="6xl">
         <ModalOverlay />
-        <ModalContent height={"60%"}>
+        <ModalContent height={"80%"}>
           <ModalHeader>Admin Extra Manager</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <Box
+              mb={2}
+              border="1px solid blue"
+              p={4} // 패딩을 추가하여 요소를 좀 더 간결하게 만듭니다.
+              borderRadius="md" // 테두리를 둥글게 만듭니다.
+              boxShadow="md" // 그림자 효과를 추가합니다.
+            >
+              <Text fontSize={"2xl"} fontWeight="bold">Task Info</Text>
+              <Text>담당: {ownerUser.username}</Text>
+              <Text>업무: {task}</Text>
+            </Box>
+
             <Box display="flex" justifyContent="space-between">
               <Box flex="1" borderRight="1px dashed" pr="4">
                 {/* 왼쪽 내용 */}
 
                 {/* <Text>current extra managers</Text> */}
-                <Text fontSize="lg" fontWeight="bold" bg={"lightblue"} p={1} mb={2}>
+                <Text
+                  fontSize="lg"
+                  fontWeight="bold"
+                  bg={"lightblue"}
+                  p={1}
+                  mb={2}
+                >
                   Current Extra Managers
                 </Text>
 
@@ -192,12 +223,18 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
               </Box>
 
               <Box flex="1" pl="4">
-              <Text fontSize="lg" fontWeight="bold" bg={"lightblue"} p={1} mb={2}>
+                <Text
+                  fontSize="lg"
+                  fontWeight="bold"
+                  bg={"lightblue"}
+                  p={1}
+                  mb={2}
+                >
                   All Managers
                 </Text>
 
                 {dataForUserListWitoutOwnerUser
-                  ? dataForUserListWitoutOwnerUser.manager_list.map(
+                  ? dataForUserListWitoutOwnerUser.listForExtraManager.map(
                       (row: ITaskManager) => {
                         return (
                           <Box display={"flex"} gap={2} my={1}>
@@ -225,6 +262,17 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
                       }
                     )
                   : "no users"}
+
+                <PaginationComponent
+                  current_page_num={pageNum}
+                  setCurrentPageNum={setPageNum}
+                  total_page_num={
+                    dataForUserListWitoutOwnerUser?.totalCountForExtraManagerList
+                  }
+                  task_number_for_one_page={
+                    dataForUserListWitoutOwnerUser?.perPage
+                  }
+                />
               </Box>
             </Box>
           </ModalBody>

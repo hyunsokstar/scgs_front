@@ -112,7 +112,7 @@ function UncompletedTaskList({
         console.log("result : ", result);
         queryClient.refetchQueries(["getUncompletedTaskList"]);
         queryClient.refetchQueries(["getCompletedTaskList"]);
-        projectTaskListRefatch();
+        // projectTaskListRefatch();
         toast({
           status: "success",
           title: "task status update success",
@@ -352,14 +352,14 @@ function UncompletedTaskList({
                           </Box>
                         );
                       })}
-                      {/* <Spacer /> */}
                       <ModalButtonForAdminExtraManager
-                        ownerUser={task.task_manager.username}
+                        task={task.task}
+                        ownerUser={task.task_manager}
                         extra_managers={
                           task.extra_managers ? task.extra_managers : []
                         }
                         buttonText="+"
-                        targetTaskId = {task.id}
+                        targetTaskId={task.id}
                       />
                     </Box>
                   </ListItem>
