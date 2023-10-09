@@ -18,25 +18,29 @@ import {
 } from "@chakra-ui/react";
 import {
   IExtraManager,
+  ITaskManager,
   IdataForUserListWitoutOwnerUser,
 } from "../../types/project_progress/project_progress_type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  apiForCreateExtraManagerForTask,
   apiForDeleteExtraManagerForTask,
   apiForGetUserListWithoutOwnerUser,
 } from "../../apis/project_progress_api";
-import { FaTrash } from "react-icons/fa"; // 삭제 아이콘을 사용하기 위해 react-icons 패키지를 설치해야 합니다.
+import { FaTrash, FaPlus } from "react-icons/fa"; // 삭제 아이콘을 사용하기 위해 react-icons 패키지를 설치해야 합니다.
 
 interface ModalButtonProps {
   buttonText: string;
   extra_managers: IExtraManager[];
   ownerUser: string;
+  targetTaskId: any;
 }
 
 const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
   buttonText,
   extra_managers,
   ownerUser,
+  targetTaskId,
 }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -55,10 +59,7 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
     }
   );
 
-  console.log(
-    "extra_managers !!!!!!!!!!!!!!!!!!!!!!!!! ",
-    extra_managers
-  );
+  console.log("extra_managers !!!!!!!!!!!!!!!!!!!!!!!!! ", extra_managers);
 
   // 삭제 구현
   const mutationForDeleteExtraManagerForTask = useMutation(
@@ -80,7 +81,7 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
           status: "success",
         });
       },
-      onError: (error:any) => {
+      onError: (error: any) => {
         console.error("에러 발생: ", error);
 
         toast({
@@ -95,6 +96,45 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
   const handleDeleteForExtraManager = (extraManagerId: number) => {
     // alert(extraManagerId);
     mutationForDeleteExtraManagerForTask.mutate(extraManagerId);
+  };
+
+  // mutationForAddExtraManagerForTargetTask
+  // apiForCreateExtraManagerForTask
+  const mutationForAddExtraManagerForTargetTask = useMutation(
+    apiForCreateExtraManagerForTask,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "Add Extra Manager",
+          description: data.message,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        queryClient.refetchQueries(["apiForExtraTaskDetail"]);
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["apiForGetUserListWithoutOwnerUser"]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
+
+  const buttonHandlerForRegisterExtraManager = (
+    userNameForRegister: string
+  ) => {
+    // alert(userNameForRegister + targetTaskId);
+    mutationForAddExtraManagerForTargetTask.mutateAsync({
+      targetTaskId,
+      userNameForRegister,
+    });
   };
 
   return (
@@ -152,18 +192,33 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
                 <Text>all managers</Text>
 
                 {dataForUserListWitoutOwnerUser
-                  ? dataForUserListWitoutOwnerUser.manager_list.map((row) => {
-                      return (
-                        <Box display={"flex"} gap={2} my={1}>
-                          <Avatar
-                            name={row.username} // 이름 설정
-                            src={row.profile_image} // 프로필 이미지 URL (선택 사항)
-                            size="sm" // Avatar 크기 설정 (xs, sm, md, lg, xl 중 선택)
-                          />
-                          <Text>{row.username}</Text>
-                        </Box>
-                      );
-                    })
+                  ? dataForUserListWitoutOwnerUser.manager_list.map(
+                      (row: ITaskManager) => {
+                        return (
+                          <Box display={"flex"} gap={2} my={1}>
+                            <Avatar
+                              name={row.username} // 이름 설정
+                              src={row.profile_image} // 프로필 이미지 URL (선택 사항)
+                              size="sm" // Avatar 크기 설정 (xs, sm, md, lg, xl 중 선택)
+                            />
+                            <Text>{row.username}</Text>
+                            <Spacer />
+                            <IconButton
+                              icon={<FaPlus />} // 삭제 아이콘 사용
+                              variant={"outline"}
+                              aria-label="추가"
+                              colorScheme="green" // 아이콘 색상 설정
+                              size="xs" // 아이콘 크기 설정
+                              onClick={() =>
+                                buttonHandlerForRegisterExtraManager(
+                                  row.username
+                                )
+                              }
+                            />
+                          </Box>
+                        );
+                      }
+                    )
                   : "no users"}
               </Box>
             </Box>

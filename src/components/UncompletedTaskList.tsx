@@ -359,6 +359,7 @@ function UncompletedTaskList({
                           task.extra_managers ? task.extra_managers : []
                         }
                         buttonText="+"
+                        targetTaskId = {task.id}
                       />
                     </Box>
                   </ListItem>

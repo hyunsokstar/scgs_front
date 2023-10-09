@@ -27,17 +27,36 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
-// apiForDeleteExtraManagerForTask
+export const apiForCreateExtraManagerForTask = ({
+  targetTaskId,
+  userNameForRegister,
+}: any) =>
+  instance
+    .post(
+      `/project_progress/${targetTaskId}/add-extra-manager`,
+      {
+        userNameForRegister,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForDeleteExtraManagerForTask = (extraManagerId: any) => {
   console.log("extraManagerId : ", extraManagerId);
-  return instance
-    // .delete(`project_progress/comment/${commentPk}`, {
+  return (
+    instance
+      // .delete(`project_progress/comment/${commentPk}`, {
       .delete(`project_progress/extra-manager/${extraManagerId}/delete`, {
         headers: {
-        "X-CSRFToken": Cookie.get("csrftoken") || "",
-      },
-    })
-    .then((response) => response.data);
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      })
+      .then((response) => response.data)
+  );
 };
 
 export const apiForGetUserListWithoutOwnerUser = async ({
@@ -46,7 +65,6 @@ export const apiForGetUserListWithoutOwnerUser = async ({
   const [_, ownerUser, extra_managers] = queryKey;
 
   console.log("실행 되는지 확인 ????????");
-  
 
   console.log("ownerUser : ", ownerUser);
   console.log("extra_managers : ", extra_managers);
@@ -54,7 +72,7 @@ export const apiForGetUserListWithoutOwnerUser = async ({
 
   const data = await instance
     .get(`users/manager-list-without-main-manager/${ownerUser}`, {
-      params: {extra_managers: extraManagersString},
+      params: { extra_managers: extraManagersString },
     })
     .then((response) => response.data);
 

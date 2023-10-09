@@ -13,7 +13,6 @@ import {
   Textarea,
   useToast,
   Input,
-
 } from "@chakra-ui/react";
 
 import { ITaskComment } from "../types/project_progress/project_progress_type";
