@@ -159,14 +159,17 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
               <Box flex="1" borderRight="1px dashed" pr="4">
                 {/* 왼쪽 내용 */}
 
-                <Text>current extra managers</Text>
+                {/* <Text>current extra managers</Text> */}
+                <Text fontSize="lg" fontWeight="bold" bg={"lightblue"} p={1} mb={2}>
+                  Current Extra Managers
+                </Text>
 
                 {extra_managers
                   ? extra_managers.map((extra_manager) => {
                       return (
                         <Box display={"flex"} gap={2} my={1}>
                           <Avatar
-                            name="John Doe" // 이름 설정
+                            name={extra_manager.task_manager.username} // 이름 설정
                             src={extra_manager.task_manager.profile_image} // 프로필 이미지 URL (선택 사항)
                             size="sm" // Avatar 크기 설정 (xs, sm, md, lg, xl 중 선택)
                           />
@@ -189,7 +192,9 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
               </Box>
 
               <Box flex="1" pl="4">
-                <Text>all managers</Text>
+              <Text fontSize="lg" fontWeight="bold" bg={"lightblue"} p={1} mb={2}>
+                  All Managers
+                </Text>
 
                 {dataForUserListWitoutOwnerUser
                   ? dataForUserListWitoutOwnerUser.manager_list.map(

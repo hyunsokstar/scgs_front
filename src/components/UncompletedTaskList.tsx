@@ -345,7 +345,7 @@ function UncompletedTaskList({
                         return (
                           <Box>
                             <Avatar
-                              name="John Doe" // 이름 설정
+                              name={user.task_manager.username} // 이름 설정
                               src={user.task_manager.profile_image} // 프로필 이미지 URL (선택 사항)
                               size="sm" // Avatar 크기 설정 (xs, sm, md, lg, xl 중 선택)
                             />{" "}
