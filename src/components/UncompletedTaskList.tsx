@@ -9,9 +9,8 @@ import {
   Box,
   HStack,
   useToast,
-  Badge,
   Avatar,
-  Spacer,
+  IconButton,
 } from "@chakra-ui/react";
 import { taskRowForUncompleted } from "../types/project_progress/project_progress_type";
 import SlideToggleButton from "./SlideToggleButton";
@@ -34,6 +33,8 @@ import CommonDeleteButtonForPk from "./Button/CommonDeleteButtonForPk";
 import ModalButtonForUpdateDueDateOptionForToday from "./modal/ModalButtonForUpdateDueDateOptionForToday";
 import StarRating from "./StarRating";
 import ModalButtonForAdminExtraManager from "./modal/ModalButtonForAdminExtraManager";
+import { useNavigate } from "react-router-dom";
+import { InfoIcon } from "@chakra-ui/icons";
 
 interface IProps {
   ProjectProgressList: taskRowForUncompleted[];
@@ -46,6 +47,7 @@ interface IProps {
   checkedRowPks: number[];
 }
 
+// 1122
 function UncompletedTaskList({
   ProjectProgressList,
   totalPageCount,
@@ -56,6 +58,7 @@ function UncompletedTaskList({
   projectTaskListRefatch,
   checkedRowPks,
 }: IProps): ReactElement {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   // console.log("ProjectProgressList : ", ProjectProgressList);
@@ -284,6 +287,11 @@ function UncompletedTaskList({
     }
   }
 
+  const handleTextClick = (userPk) => {
+    // task.id를 사용하여 원하는 경로로 이동
+    navigate(`/team-status/${userPk}`);
+  };
+
   // 2244
   return (
     <>
@@ -306,7 +314,7 @@ function UncompletedTaskList({
                       mx={2}
                       border={"1px solid black"}
                       value={task.id}
-                      isChecked={checkedRowPks.includes(task.id)}
+                      isChecked={checkedRowPks.includes(task.task_manager.pk)}
                       onChange={handleCheckboxChange}
                     />
                   </ListItem>
@@ -315,16 +323,28 @@ function UncompletedTaskList({
                     flexDirection={"column"}
                     border={"0px solid yellow"}
                     flex={2.2}
+                    fontSize="lg"
                     mr={5}
-                    // gap={1}
                   >
+                    {/* todo: 아래 text 클릭하면 team-status/{task.id} 로 요청 하도록 하기 with chakra-ui, ts */}
                     <Text
+                      display={"flex"}
+                      alignItems={"center"}
                       color="blue.600"
                       textAlign="start"
-                      fontSize="lg"
                       fontWeight="bold"
+                      gap={``}
+                      onClick={() => handleTextClick(task.task_manager.pk)}
                     >
                       담당: {task.task_manager?.username}
+                      <IconButton
+                        icon={<InfoIcon />}
+                        variant="outline"
+                        aria-label="팀 상태 보기"
+                        ml={2} // 아이콘과 텍스트 사이의 간격 조절
+                        size={"xs"}
+                        onClick={() => handleTextClick(task.task_manager.pk)}
+                      />
                     </Text>
 
                     <Box

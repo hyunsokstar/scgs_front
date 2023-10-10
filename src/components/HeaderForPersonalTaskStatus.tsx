@@ -8,7 +8,7 @@ interface Props {
   userPk: any;
   dataForUncompletedTaskListDataForSelectedUser:
     | typeForUncompletedTaskListForPersonalTaskStatus
-    | undefined;
+    | any;
 }
 
 const HeaderForPersonalTaskStatus = ({

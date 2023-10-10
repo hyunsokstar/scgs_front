@@ -12,6 +12,8 @@ interface Props {}
 const PersonalUserTaskStatusPage = (props: Props) => {
   const { userPk } = useParams();
 
+  console.log("userPk : ", userPk);
+
   const {
     data: dataForUncompletedTaskListDataForSelectedUser,
     isLoading: isLoadingForUncompletedTaskListDataForSelectedUser,
@@ -36,6 +38,8 @@ const PersonalUserTaskStatusPage = (props: Props) => {
         userPk={userPk}
         dataForUncompletedTaskListDataForSelectedUser={
           dataForUncompletedTaskListDataForSelectedUser
+            ? dataForUncompletedTaskListDataForSelectedUser
+            : []
         }
       />
 
@@ -43,6 +47,8 @@ const PersonalUserTaskStatusPage = (props: Props) => {
       <UnCompleteTaskListForPersnalTaskStatus
         dataForUncompletedTaskListDataForSelectedUser={
           dataForUncompletedTaskListDataForSelectedUser
+            ? dataForUncompletedTaskListDataForSelectedUser
+            : []
         }
         refetchForUncompletedTaskListDataForSelectedUser={
           refetchForUncompletedTaskListDataForSelectedUser

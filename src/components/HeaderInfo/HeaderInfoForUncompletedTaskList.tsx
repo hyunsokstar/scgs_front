@@ -12,6 +12,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import {
+  ITaskManager,
   ITypeForProjectProgressList,
   taskRowForUncompleted,
 } from "../../types/project_progress/project_progress_type";
@@ -160,8 +161,10 @@ const HeaderInfoForUncompletedTaskList = ({
             width={"100%"}
           >
             <Box textAlign={"center"} border={"0px solid blue"}>
-              <Text fontSize={20}>UnComplete Task</Text>
-              <Text>total: {taskListDataForUncompleted?.totalPageCount} 개</Text>
+              <Text fontSize={20}>UnComplete Tasks</Text>
+              <Text>
+                total: {taskListDataForUncompleted?.totalPageCount} 개
+              </Text>
             </Box>
             <Box
               display={"grid"}
@@ -229,7 +232,21 @@ const HeaderInfoForUncompletedTaskList = ({
             gridTemplateColumns="repeat(2, 1fr)"
             gap={3}
           >
-            {taskListDataForUncompleted?.writers_info?.map((writer) => {
+            {/* set_username_for_search */}
+            <Button
+                    variant={"outline"}
+                    size={"sm"}
+                    mb={1}
+                    width={"98%"}
+                    _hover={{
+                      bg: "#90CDF4",
+                      color: "brown",
+                    }}
+                    onClick={() =>
+                      searchUncompletedListforUserName("")
+                    }
+            >reset</Button>
+            {taskListDataForUncompleted?.writers_info?.map((writer: any) => {
               return (
                 <Box
                   key={writer.username}
@@ -241,7 +258,6 @@ const HeaderInfoForUncompletedTaskList = ({
                   <Button
                     variant={"outline"}
                     size={"sm"}
-                    // border={"1px solid black"}
                     mb={1}
                     width={"98%"}
                     _hover={{
@@ -416,11 +432,17 @@ const HeaderInfoForUncompletedTaskList = ({
           <Box bgColor={"orange.200"} alignItems={"center"} flex={1}>
             <Box display="flex" flexDirection="column" p={10} mr={20} gap={2}>
               <Text>Today</Text>
-              <Text>total: {taskListDataForUncompleted.total_task_count_for_today}</Text>
               <Text>
-                complete: {taskListDataForUncompleted.completed_task_count_for_today}
+                total: {taskListDataForUncompleted.total_task_count_for_today}
               </Text>
-              <Text>progress:{taskListDataForUncompleted.achievement_rate_for_today}%</Text>
+              <Text>
+                complete:{" "}
+                {taskListDataForUncompleted.completed_task_count_for_today}
+              </Text>
+              <Text>
+                progress:{taskListDataForUncompleted.achievement_rate_for_today}
+                %
+              </Text>
               <Box w="100%">
                 <Progress
                   value={taskListDataForUncompleted.achievement_rate_for_today}

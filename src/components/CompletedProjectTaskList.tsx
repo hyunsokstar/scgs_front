@@ -203,11 +203,12 @@ function CompletedProjectTaskList({}: Props): ReactElement {
           width={["100%", "100%", "100%", "100%"]}
         >
           <Box fontSize={"18px"} width={["100%", "100%", "30%", "30%"]}>
-            <Text>completed Tasks</Text>
+            <Text>Completed Tasks</Text>
             <Text>
               total: {pageProgressListData?.totalPageCount} , per:{" "}
               {pageProgressListData?.task_number_for_one_page} 개
             </Text>
+            period: {selectedPeriodOptionForUncompletedTaskList}
             <Box width={"100%"} border={"0px solid green"}>
               <ButtonsForSelectForTeamTaskListPeriod
                 selectedPeriodOptionForUncompletedTaskList={
@@ -289,8 +290,10 @@ function CompletedProjectTaskList({}: Props): ReactElement {
           _hover={{ backgroundColor: "red.100" }}
           onClick={deleteTaskForChecked}
         >
-          delete for Check
+          delete completed tasks for Check
         </Button>
+
+        
       </Box>
 
       {/* {is_show_for_mobile ? "모바일" : "큰화면"} */}
