@@ -92,14 +92,15 @@ function UncompletedTaskList({
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
-      queryClient.refetchQueries(["getUncompletedTaskList"]);
-      queryClient.refetchQueries(["getCompletedTaskList"]);
-
       toast({
         status: "success",
         title: "task status update success",
         description: result.message,
       });
+
+      queryClient.refetchQueries(["getUncompletedTaskList"]);
+      queryClient.refetchQueries(["getCompletedTaskList"]);
+
     },
   });
 
@@ -113,14 +114,16 @@ function UncompletedTaskList({
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        queryClient.refetchQueries(["getUncompletedTaskList"]);
-        queryClient.refetchQueries(["getCompletedTaskList"]);
         // projectTaskListRefatch();
         toast({
           status: "success",
           title: "task status update success",
           description: result.message,
         });
+
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
+
       },
       onError: (err: any) => {
         console.log("error : ", err);
@@ -138,9 +141,9 @@ function UncompletedTaskList({
     {
       onSuccess: (result: any) => {
         // console.log("result : ", result);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
-        }
+        // if (projectTaskListRefatch) {
+        //   projectTaskListRefatch();
+        // }
         queryClient.refetchQueries(["getUnompletedTaskList"]);
         queryClient.refetchQueries(["getCompletedTaskList"]);
         toast({
@@ -308,6 +311,7 @@ function UncompletedTaskList({
                   justifyContent={"space-between"}
                   alignItems={"center"}
                   width={"2600px"}
+                  key={task.id}
                 >
                   <ListItem border={"0px solid yellow"} flex={0.5}>
                     <Checkbox
@@ -483,7 +487,7 @@ function UncompletedTaskList({
                     display={"flex"}
                     border="0px solid green"
                     justifyContent={"flex-start"}
-                    alignItems={"centerF"}
+                    alignItems={"center"}
                     gap={10}
                     flex={2.8}
                   >

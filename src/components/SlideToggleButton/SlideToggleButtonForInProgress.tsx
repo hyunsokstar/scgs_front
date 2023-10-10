@@ -11,7 +11,7 @@ interface SlideToggleButtonProps {
 const SlideToggleButtonForInProgress: React.FC<SlideToggleButtonProps> = ({
   onChange,
   checked,
-  is_disabled
+  is_disabled = false
 }) => {
   const [isChecked, setIsChecked] = useState<boolean>(checked);
 

@@ -35,7 +35,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
 
   const {
     isLoading,
-    data: pageProgressListData,
+    data: dataForCompletedTaskList,
     refetch: projectTaskListRefatch,
   } = useQuery<ITypeForResponseForDataForCompletedTask>(
     [
@@ -51,7 +51,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
   );
 
   const [filteredData, setFilteredData] = useState<any>(
-    pageProgressListData?.ProjectProgressList
+    dataForCompletedTaskList?.ProjectProgressList
   );
 
   // filterValueForTask
@@ -60,8 +60,8 @@ function CompletedProjectTaskList({}: Props): ReactElement {
   const [filterValueForTask, setFilterValueForTask] = useState<any>();
 
   useEffect(() => {
-    setFilteredData(pageProgressListData?.ProjectProgressList);
-  }, [pageProgressListData?.ProjectProgressList]);
+    setFilteredData(dataForCompletedTaskList?.ProjectProgressList);
+  }, [dataForCompletedTaskList?.ProjectProgressList]);
 
   const changeHandlerForSelectPeriodOptionForTeamTask = (option: string) => {
     setSelectedPeriodOptionForUncompletedTaskList(option);
@@ -69,13 +69,13 @@ function CompletedProjectTaskList({}: Props): ReactElement {
 
   const updateFilteredDataForTask = (filterValueForTask: string) => {
     if (filterValueForTask !== "") {
-      const filteredData = pageProgressListData?.ProjectProgressList.filter(
+      const filteredData = dataForCompletedTaskList?.ProjectProgressList.filter(
         (item) =>
           item.task.toLowerCase().includes(filterValueForTask.toLowerCase())
       );
       setFilteredData(filteredData);
     } else {
-      setFilteredData(pageProgressListData?.ProjectProgressList);
+      setFilteredData(dataForCompletedTaskList?.ProjectProgressList);
       console.log("filterValueForTask : ", filterValueForTask);
     }
   };
@@ -92,7 +92,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
     filterValueForTaskManager: string
   ) => {
     if (filterValueForTaskManager !== "") {
-      const filteredData = pageProgressListData?.ProjectProgressList.filter(
+      const filteredData = dataForCompletedTaskList?.ProjectProgressList.filter(
         (item) =>
           item.task_manager.username
             .toLowerCase()
@@ -100,7 +100,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
       );
       setFilteredData(filteredData);
     } else {
-      setFilteredData(pageProgressListData?.ProjectProgressList);
+      setFilteredData(dataForCompletedTaskList?.ProjectProgressList);
       console.log("filterValueForTaskManager : ", filterValueForTaskManager);
     }
   };
@@ -142,7 +142,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
   ) => {
     const checked = event.target.checked;
     const rowPks =
-      pageProgressListData?.ProjectProgressList.map((item) => item.id) || [];
+      dataForCompletedTaskList?.ProjectProgressList.map((item) => item.id) || [];
 
     if (checked) {
       setCheckedRowPks([...checkedRowPks, ...rowPks]);
@@ -205,8 +205,8 @@ function CompletedProjectTaskList({}: Props): ReactElement {
           <Box fontSize={"18px"} width={["100%", "100%", "30%", "30%"]}>
             <Text>Completed Tasks</Text>
             <Text>
-              total: {pageProgressListData?.totalPageCount} , per:{" "}
-              {pageProgressListData?.task_number_for_one_page} 개
+              total: {dataForCompletedTaskList?.totalPageCount} , per:{" "}
+              {dataForCompletedTaskList?.task_number_for_one_page} 개
             </Text>
             period: {selectedPeriodOptionForUncompletedTaskList}
             <Box width={"100%"} border={"0px solid green"}>
@@ -243,7 +243,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
             maxHeight={["160px", "160px", "160px"]}
             // border="5px solid green"
           >
-            {pageProgressListData?.writers_info?.map((writer) => (
+            {dataForCompletedTaskList?.writers_info?.map((writer) => (
               <Box key={writer.username} fontSize="lg" color="blue.900">
                 <Button
                   variant="outline"
@@ -277,7 +277,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
           onChange={handleChangeForAllCheckBox}
           checked={
             checkedRowPks.length ===
-            pageProgressListData?.ProjectProgressList.length
+            dataForCompletedTaskList?.ProjectProgressList.length
           }
           border={"2px solid black"}
           m={2}
@@ -300,12 +300,12 @@ function CompletedProjectTaskList({}: Props): ReactElement {
       {!is_show_for_mobile ? (
         <Box>
           <Box width={"100%"} border={"0px solid red"}></Box>
-          {pageProgressListData ? (
+          {dataForCompletedTaskList ? (
             <CompletedTaskRow
               ProjectProgressList={filteredData}
-              totalPageCount={pageProgressListData.totalPageCount}
+              totalPageCount={dataForCompletedTaskList.totalPageCount}
               task_number_for_one_page={
-                pageProgressListData.task_number_for_one_page
+                dataForCompletedTaskList.task_number_for_one_page
               }
               projectTaskListRefatch={projectTaskListRefatch}
               currentPageNum={currentPageNum}

@@ -362,7 +362,7 @@ const StudyNoteDetail2 = (props: Props) => {
               button_width="100%"
               study_note_pk={study_note_pk}
             />
-66ㄱ
+            
             <ModalButtonForSearchStudyNoteContent
               study_note_pk={study_note_pk}
             />
