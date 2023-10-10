@@ -18,10 +18,12 @@ const TaskLogList: React.FC<TaskLogListProps> = ({
     <List>
       {dataForTaskLogs.length !== 0 ? (
         dataForTaskLogs.map((taskLog, index) => {
-          if (userOptionForList !== "") {
+          if (userOptionForList !== "") { // 오른쪽 상단의 유저 이름 클릭
             totalMinutes = taskLog.time_distance_from_before_my_task;
-          } else {
+          } else { // default log list
             totalMinutes = taskLog.time_distance_from_before_task;
+            console.log("totalMinutes : ", totalMinutes);
+            
           }
 
           const hours = Math.floor(totalMinutes / 60);
@@ -35,7 +37,7 @@ const TaskLogList: React.FC<TaskLogListProps> = ({
               {index !== 0 && (
                 <Box border={"0px solid black"}>
                   <Text>
-                    {hours > 0 && <Text>| 1 hour |</Text>}
+                    {hours > 0 && <Text>| {hours} hour |</Text>}
                     {minuteBlocks.map((block, index) => (
                       <Text key={index}>{`${block}`}</Text>
                     ))}
