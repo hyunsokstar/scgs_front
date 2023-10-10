@@ -87,6 +87,8 @@ function UncompletedTaskContainer({
     const { value, checked } = e.target;
     const id = parseInt(value, 10);
 
+    // alert("실행 확인"+ id)
+
     if (checked) {
       setCheckedRowPks([...checkedRowPks, id]);
     } else {

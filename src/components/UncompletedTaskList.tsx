@@ -314,7 +314,7 @@ function UncompletedTaskList({
                       mx={2}
                       border={"1px solid black"}
                       value={task.id}
-                      isChecked={checkedRowPks.includes(task.task_manager.pk)}
+                      isChecked={checkedRowPks.includes(task.id)}
                       onChange={handleCheckboxChange}
                     />
                   </ListItem>
