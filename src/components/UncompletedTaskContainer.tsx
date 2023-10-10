@@ -62,7 +62,7 @@ function UncompletedTaskContainer({
     ],
     getUncompletedTaskList,
     {
-      enabled: currentPageNum === 1,
+      enabled: true,
     }
   );
 
@@ -78,7 +78,9 @@ function UncompletedTaskContainer({
 
   useEffect(() => {
     if (!filterValueForTaskManager) {
-      setFilteredListForUncompleteTask(taskListDataForUncompleted?.ProjectProgressList);
+      setFilteredListForUncompleteTask(
+        taskListDataForUncompleted?.ProjectProgressList
+      );
     } else {
     }
   }, [taskListDataForUncompleted]);
@@ -102,9 +104,9 @@ function UncompletedTaskContainer({
     lg: true,
   });
 
-  if (!taskListDataForUncompleted) {
-    return <Box>..Loading</Box>;
-  }
+  // if (!taskListDataForUncompleted) {
+  //   return <Box>..Loading</Box>;
+  // }
 
   return (
     <Box border={"1px solid black"} p={0} mt={2} width={"100%"}>
@@ -124,7 +126,9 @@ function UncompletedTaskContainer({
         setFilterValueForTaskClassification={
           setFilterValueForTaskClassification
         }
-        taskListDataForUncompleted={taskListDataForUncompleted}
+        taskListDataForUncompleted={
+          taskListDataForUncompleted ? taskListDataForUncompleted : []
+        }
         selectedPeriodOptionForUncompletedTaskList={
           selectedPeriodOptionForUncompletedTaskList
         }
@@ -154,7 +158,9 @@ function UncompletedTaskContainer({
             <UncompletedTaskList
               ProjectProgressList={filteredListForUncompleteTask}
               totalPageCount={taskListDataForUncompleted.totalPageCount}
-              task_number_for_one_page={taskListDataForUncompleted.task_number_for_one_page}
+              task_number_for_one_page={
+                taskListDataForUncompleted.task_number_for_one_page
+              }
               currentPageNum={currentPageNum}
               setCurrentPageNum={setCurrentPageNum}
               projectTaskListRefatch={projectTaskListRefatch}

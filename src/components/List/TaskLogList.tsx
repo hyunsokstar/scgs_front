@@ -29,15 +29,24 @@ const TaskLogList: React.FC<TaskLogListProps> = ({
           const hours = Math.floor(totalMinutes / 60);
           const minutes = totalMinutes % 60;
 
+          const hourBlocks =
+            hours > 0 ? Array(hours).fill("| 1 hour |") : [];
+
           const minuteBlocks =
-            minutes > 0 ? Array(Math.floor(minutes / 10)).fill("|") : [];
+            minutes > 0 ? Array(Math.floor(minutes / 10)).fill("| 10 minute |") : [];
 
           return (
             <Box width={"100%"} border={"0px solid red"} height={"100%"}>
               {index !== 0 && (
                 <Box border={"0px solid black"}>
                   <Text>
-                    {hours > 0 && <Text>| {hours} hour |</Text>}
+                    {/* {hours > 0 && <Text>| {hours} hour  |  {minutes} minutes |</Text>} */}
+                    {/* {minutes> 0 && <Text>| {minutes} minutes |</Text>} */}
+
+                    {hourBlocks.map((block, index) => (
+                      <Text key={index}>{`${block}`}</Text>
+                    ))}
+
                     {minuteBlocks.map((block, index) => (
                       <Text key={index}>{`${block}`}</Text>
                     ))}
