@@ -323,8 +323,8 @@ function UncompletedTaskList({
               <Th w={"200px"}>Classification</Th>
               <Th w={"350px"}>Due Date</Th>
               <Th w={"350px"}>Status</Th>
-              <Th w={"400px"}>Start & Due</Th>
-              <Th w={"400px"}>Elapsed Time</Th>
+              <Th w={"400px"}>시작 , 마감 기한</Th>
+              <Th w={"400px"}>경과, 남은 시간</Th>
               <Th w={"200px"}>Urgent</Th>
               <Th w={"200px"}>Cash Prize</Th>
               <Th w={"200px"}>Actions</Th>
@@ -514,10 +514,9 @@ function UncompletedTaskList({
                         </Box>
                       </Td>
                       <Td>
-                        {" "}
                         {/* Your content for "Start & Due" column */}
-                        <Box display={"flex"} gap={1}>
-                          <Text>{task.started_at_formatted}</Text>
+                        <Box display={"flex"} gap={1} mb={2}>
+                          <Text>시작 : {task.started_at_formatted}</Text>
                           <ModalButtonForUpdateProjectTaskStartedAt
                             taskPk={task.id}
                             original_due_date={
@@ -528,13 +527,16 @@ function UncompletedTaskList({
                           />
                         </Box>
                         <Box>
-                          <Text>{task.time_left_to_due_date}</Text>
+                          <Text>마감 : {task.due_date_formatted}</Text>
                         </Box>
                       </Td>
                       <Td>
                         {" "}
                         {/* Your content for "Elapsed Time" column */}
-                        <Text>{task.elapsed_time_from_started_at}</Text>
+                        <Box>
+                          <Text mb={2}>경과 : {task.elapsed_time_from_started_at}</Text>
+                          <Text>남음 : {task.time_left_to_due_date}</Text>
+                        </Box>
                       </Td>
                       <Td>
                         {/* Your content for "Urgent" column */}
