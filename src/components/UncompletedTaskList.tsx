@@ -306,6 +306,7 @@ function UncompletedTaskList({
           ? ProjectProgressList.map((task: taskRowForUncompleted) => {
               // console.log("task.task_manager : ", task.taskmanager);
               return (
+                
                 <List
                   display={"flex"}
                   justifyContent={"space-between"}
@@ -313,6 +314,7 @@ function UncompletedTaskList({
                   width={"2600px"}
                   key={task.id}
                 >
+                  
                   <ListItem border={"0px solid yellow"} flex={0.5}>
                     <Checkbox
                       mx={2}
@@ -468,21 +470,7 @@ function UncompletedTaskList({
                       />
                     </Box>
                   </ListItem>
-                  {/* <ListItem
-                    border={"0px solid blue"}
-                    display={"flex"}
-                    justifyContent={"flex-start"}
-                    alignItems={"center"}
-                    flex={2.2}
-                  >
-                    <StarRating
-                      initialRating={task.importance}
-                      taskPk={task.id}
-                      onChangeForStarRatingHandler={
-                        onChangeForStarRatingHandler
-                      }
-                    />
-                  </ListItem> */}
+
                   <ListItem
                     display={"flex"}
                     border="0px solid green"
