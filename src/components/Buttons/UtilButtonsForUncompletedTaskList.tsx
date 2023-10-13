@@ -18,7 +18,7 @@ import {
   apiForUpdateTaskDueDateForChecked,
 } from "../../apis/project_progress_api";
 import {
-  ITypeForProjectProgressList,
+  ITypeForTaskListDataForUncompleted,
   typeForDueDateUpdateForChecked,
 } from "../../types/project_progress/project_progress_type";
 import ModalButtonForUpdateTaskManagerForChecked from "../Button/ModalButtonForUpdateTaskManagerForChecked";
@@ -29,11 +29,11 @@ import ModalButtonForAddProjectTaskWithDuedateOption from "../modal/ModalButtonF
 import ModalButtonForTransformCheckedTasksToSupplementTask from "../modal/ModalButtonForTransformCheckedTasksToSupplementTask";
 
 interface IProps {
-  taskListDataForUncompleted: ITypeForProjectProgressList;
+  taskListDataForUncompleted: ITypeForTaskListDataForUncompleted[];
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
   projectTaskListRefatch: () => Promise<
-    QueryObserverResult<ITypeForProjectProgressList, unknown>
+    QueryObserverResult<ITypeForTaskListDataForUncompleted[], unknown>
   >;
 }
 
@@ -256,7 +256,7 @@ const UtilButtonsForUncompletedTaskList = ({
         // border={"5px solid blue"}
       >
         <Box>
-          <Checkbox
+          {/* <Checkbox
             size={"md"}
             onChange={handleChangeForAllCheckBox}
             checked={
@@ -264,7 +264,8 @@ const UtilButtonsForUncompletedTaskList = ({
               taskListDataForUncompleted?.ProjectProgressList.length
             }
             border={"2px solid black"}
-          />
+            ml={6}
+          /> */}
         </Box>
       </Box>
     </Box>

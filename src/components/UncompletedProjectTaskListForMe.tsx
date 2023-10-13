@@ -12,7 +12,6 @@ import {
   apiForDeleteTasksForChecked,
   getUncompletedTaskListForMe,
 } from "../apis/project_progress_api";
-import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
 import UncompletedTaskRowForMe from "./UncompletedTaskRowForMe";
 import ButtonForShowCountForTaskStatus from "./Button/ButtonForShowCountForTaskStatus";

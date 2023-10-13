@@ -166,6 +166,8 @@ function UncompletedTaskContainer({
               projectTaskListRefatch={projectTaskListRefatch}
               checkedRowPks={checkedRowPks}
               handleCheckboxChange={handleCheckboxChange}
+              setCheckedRowPks={setCheckedRowPks}
+              taskListDataForUncompleted={taskListDataForUncompleted}
             />
           ) : (
             ""

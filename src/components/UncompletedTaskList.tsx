@@ -1,18 +1,24 @@
 import React, { ReactElement, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  List,
-  ListItem,
   Checkbox,
   Text,
   Button,
   Box,
-  HStack,
   useToast,
   Avatar,
   IconButton,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
 } from "@chakra-ui/react";
-import { taskRowForUncompleted } from "../types/project_progress/project_progress_type";
+import {
+  ITypeForTaskListDataForUncompleted,
+  taskRowForUncompleted,
+} from "../types/project_progress/project_progress_type";
 import SlideToggleButton from "./SlideToggleButton";
 import {
   updateProjectImportance,
@@ -45,6 +51,8 @@ interface IProps {
   handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   projectTaskListRefatch: () => void;
   checkedRowPks: number[];
+  setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
+  taskListDataForUncompleted: ITypeForTaskListDataForUncompleted;
 }
 
 // 1122
@@ -57,6 +65,8 @@ function UncompletedTaskList({
   handleCheckboxChange,
   projectTaskListRefatch,
   checkedRowPks,
+  setCheckedRowPks,
+  taskListDataForUncompleted,
 }: IProps): ReactElement {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -100,7 +110,6 @@ function UncompletedTaskList({
 
       queryClient.refetchQueries(["getUncompletedTaskList"]);
       queryClient.refetchQueries(["getCompletedTaskList"]);
-
     },
   });
 
@@ -123,7 +132,6 @@ function UncompletedTaskList({
 
         queryClient.refetchQueries(["getUncompletedTaskList"]);
         queryClient.refetchQueries(["getCompletedTaskList"]);
-
       },
       onError: (err: any) => {
         console.log("error : ", err);
@@ -253,29 +261,6 @@ function UncompletedTaskList({
     );
   }
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "crud":
-        return "blue";
-      case "new-future":
-        return "green";
-      case "trouble-shooting":
-        return "red";
-      case "ui-task":
-        return "yellow";
-      case "refactoring":
-        return "orange";
-      case "optimization":
-        return "purple";
-      case "boiler-plate":
-        return "teal";
-      case "test-code":
-        return "pink";
-      default:
-        return "gray";
-    }
-  };
-
   type DueDateOption = "until-noon" | "until-evening" | "until-night";
 
   function getDueDateEmoji(dueDateOption: DueDateOption): string {
@@ -295,6 +280,21 @@ function UncompletedTaskList({
     navigate(`/team-status/${userPk}`);
   };
 
+  const handleChangeForAllCheckBox = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const checked = event.target.checked;
+    const rowPks =
+      taskListDataForUncompleted?.ProjectProgressList.map((item) => item.id) ||
+      [];
+
+    if (checked) {
+      setCheckedRowPks([...checkedRowPks, ...rowPks]);
+    } else {
+      setCheckedRowPks([]);
+    }
+  };
+
   // 2244
   return (
     <>
@@ -302,293 +302,285 @@ function UncompletedTaskList({
         <Box key={number}>{number}</Box>
       ))} */}
       <Box overflowX={"scroll"} border={"0px solid blue"}>
-        {ProjectProgressList
-          ? ProjectProgressList.map((task: taskRowForUncompleted) => {
-              // console.log("task.task_manager : ", task.taskmanager);
-              return (
-                
-                <List
-                  display={"flex"}
-                  justifyContent={"space-between"}
-                  alignItems={"center"}
-                  width={"2600px"}
-                  key={task.id}
-                >
-                  
-                  <ListItem border={"0px solid yellow"} flex={0.5}>
-                    <Checkbox
-                      mx={2}
-                      border={"1px solid black"}
-                      value={task.id}
-                      isChecked={checkedRowPks.includes(task.id)}
-                      onChange={handleCheckboxChange}
-                    />
-                  </ListItem>
-                  <ListItem
-                    display={"flex"}
-                    flexDirection={"column"}
-                    border={"0px solid yellow"}
-                    flex={2.2}
-                    fontSize="lg"
-                    mr={5}
-                  >
-                    {/* todo: 아래 text 클릭하면 team-status/{task.id} 로 요청 하도록 하기 with chakra-ui, ts */}
-                    <Text
-                      display={"flex"}
-                      alignItems={"center"}
-                      color="blue.600"
-                      textAlign="start"
-                      fontWeight="bold"
-                      gap={``}
-                      onClick={() => handleTextClick(task.task_manager.pk)}
-                    >
-                      담당: {task.task_manager?.username}
-                      <IconButton
-                        icon={<InfoIcon />}
-                        variant="outline"
-                        aria-label="팀 상태 보기"
-                        ml={2} // 아이콘과 텍스트 사이의 간격 조절
-                        size={"xs"}
-                        onClick={() => handleTextClick(task.task_manager.pk)}
-                      />
-                    </Text>
-
-                    <Box
-                      display={"flex"}
-                      alignItems={"center"}
-                      gap={2}
-                      border={"0px solid blue"}
-                    >
-                      <Text
-                        color="tomato"
-                        textAlign="start"
-                        fontSize="lg"
-                        fontWeight="bold"
-                      >
-                        보조 :
-                      </Text>
-                      {task.extra_managers.map((user) => {
-                        return (
-                          <Box>
-                            <Avatar
-                              name={user.task_manager.username} // 이름 설정
-                              src={user.task_manager.profile_image} // 프로필 이미지 URL (선택 사항)
-                              size="sm" // Avatar 크기 설정 (xs, sm, md, lg, xl 중 선택)
-                            />{" "}
-                          </Box>
-                        );
-                      })}
-                      <ModalButtonForAdminExtraManager
-                        task={task.task}
-                        ownerUser={task.task_manager}
-                        extra_managers={
-                          task.extra_managers ? task.extra_managers : []
-                        }
-                        buttonText="+"
-                        targetTaskId={task.id}
-                      />
-                    </Box>
-                  </ListItem>
-                  <ListItem
-                    display={"flex"}
-                    gap={1}
-                    border={"0px solid blue"}
-                    flex={6}
-                  >
-                    <Text fontSize="sm" fontWeight="bold">
-                      <Link
-                        to={`/project_admin/${task.id}`}
-                        style={{ textDecoration: "underline" }}
-                      >
-                        {task.task}
-                      </Link>
-                    </Text>
-                  </ListItem>
-                  {/* fix */}
-                  <ListItem flex={2.6}>
-                    <Box size="md">
-                      <StarRating
-                        taskPk={task.id}
-                        initialRating={task.importance}
-                        onChangeForStarRatingHandler={
-                          onChangeForStarRatingHandler
-                        }
-                      />
-                    </Box>
-                  </ListItem>
-                  <ListItem flex={1.2}>
-                    <Box size="md">{task.task_classification}</Box>
-                  </ListItem>
-                  <ListItem border={"0px solid blue"} flex={3.4}>
-                    <Box display={"flex"} gap={2}>
-                      {task.is_for_today ? (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          _hover={{ bg: "lightblue" }}
-                          color={"orange.500"}
-                        >
-                          T
-                        </Button>
-                      ) : (
-                        ""
-                      )}
-
-                      {task.is_due_date_has_passed ? (
-                        <ModalButtonForUpdateDueDateOptionForToday
-                          button_text={"DHP"}
-                          button_size={"sm"}
-                          modal_title={"update due date to today"}
-                          modal_size={"5xl"}
-                          taskId={task.id}
+        <Table variant="striped" size="md" width="2800px">
+          <Thead>
+            <Tr>
+              <Th width="50px">
+                <Checkbox
+                  size={"md"}
+                  onChange={handleChangeForAllCheckBox}
+                  checked={
+                    checkedRowPks.length ===
+                    taskListDataForUncompleted?.ProjectProgressList.length
+                  }
+                  border={"2px solid black"}
+                  // ml={6}
+                />{" "}
+              </Th>
+              <Th w={"400px"}>담당</Th>
+              <Th w={"600px"}>Task</Th>
+              <Th w={"300px"}>Importance</Th>
+              <Th w={"200px"}>Classification</Th>
+              <Th w={"350px"}>Due Date</Th>
+              <Th w={"350px"}>Status</Th>
+              <Th w={"400px"}>Start & Due</Th>
+              <Th w={"400px"}>Elapsed Time</Th>
+              <Th w={"200px"}>Urgent</Th>
+              <Th w={"200px"}>Cash Prize</Th>
+              <Th w={"200px"}>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {ProjectProgressList
+              ? ProjectProgressList.map((task: taskRowForUncompleted) => {
+                  return (
+                    <Tr key={task.id}>
+                      <Td>
+                        <Checkbox
+                          // mx={2}
+                          border={"1px solid black"}
+                          value={task.id}
+                          isChecked={checkedRowPks.includes(task.id)}
+                          onChange={handleCheckboxChange}
                         />
-                      ) : (
-                        ""
-                      )}
-
-                      {task.d_day_count && !task.is_for_today ? (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          _hover={{ bg: "lightblue" }}
-                          color={"blue.500"}
+                      </Td>
+                      <Td>
+                        {" "}
+                        <Text
+                          display={"flex"}
+                          alignItems={"center"}
+                          color="blue.600"
+                          textAlign="start"
+                          fontWeight="bold"
+                          gap={``}
+                          onClick={() => handleTextClick(task.task_manager.pk)}
                         >
-                          D {task.d_day_count}
-                        </Button>
-                      ) : (
-                        ""
-                      )}
-
-                      <ModalButtonForUpdateDueDateOptionForToday
-                        taskId={task.id}
-                        button_text={getDueDateEmoji(
-                          task.due_date_option_for_today
-                        )}
-                        button_size={"sm"}
-                        modal_title={"update due date"}
-                        modal_size={"5xl"}
-                      />
-                    </Box>
-                  </ListItem>
-
-                  <ListItem
-                    display={"flex"}
-                    border="0px solid green"
-                    justifyContent={"flex-start"}
-                    alignItems={"center"}
-                    gap={10}
-                    flex={2.8}
-                  >
-                    <SlideToggleButtonForInProgress
-                      onChange={() => {
-                        updateHandlerForTaskInProgress(task.id);
-                      }}
-                      checked={task.in_progress}
-                      is_disabled={task.is_testing}
-                    />
-
-                    <SlideToggleButtonForIsTesting
-                      onChange={() => {
-                        updateHandlerForTaskIsTesting(task.id);
-                      }}
-                      checked={task.is_testing}
-                      is_disabled={!task.in_progress}
-                    />
-
-                    <SlideToggleButton
-                      onChange={() => {
-                        updateHandlerForTaskStatus(task.id);
-                      }}
-                      checked={task.task_completed}
-                      in_progress={!task.in_progress}
-                      is_testing={!task.is_testing}
-                    />
-                  </ListItem>
-                  <ListItem border={"0px solid blue"} flex={2.5}>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>시작</Text>
-                      </Box>
-                      <HStack>
-                        <Text>{task.started_at_formatted}</Text>
-                        <ModalButtonForUpdateProjectTaskStartedAt
+                          담당: {task.task_manager?.username}
+                          <IconButton
+                            icon={<InfoIcon />}
+                            variant="outline"
+                            aria-label="팀 상태 보기"
+                            ml={2} // 아이콘과 텍스트 사이의 간격 조절
+                            size={"xs"}
+                            onClick={() =>
+                              handleTextClick(task.task_manager.pk)
+                            }
+                          />
+                        </Text>
+                        <Box
+                          display={"flex"}
+                          alignItems={"center"}
+                          gap={2}
+                          border={"0px solid blue"}
+                        >
+                          <Text
+                            color="tomato"
+                            textAlign="start"
+                            fontSize="lg"
+                            fontWeight="bold"
+                          >
+                            보조 :
+                          </Text>
+                          {task.extra_managers.map((user) => {
+                            return (
+                              <Box>
+                                <Avatar
+                                  name={user.task_manager.username} // 이름 설정
+                                  src={user.task_manager.profile_image} // 프로필 이미지 URL (선택 사항)
+                                  size="sm" // Avatar 크기 설정 (xs, sm, md, lg, xl 중 선택)
+                                />{" "}
+                              </Box>
+                            );
+                          })}
+                          <ModalButtonForAdminExtraManager
+                            task={task.task}
+                            ownerUser={task.task_manager}
+                            extra_managers={
+                              task.extra_managers ? task.extra_managers : []
+                            }
+                            buttonText="+"
+                            targetTaskId={task.id}
+                          />
+                        </Box>
+                      </Td>
+                      <Td flex={6}>
+                        {/* Your content for "Task" column */}
+                        <Text fontSize="sm" fontWeight="bold">
+                          <Link
+                            to={`/project_admin/${task.id}`}
+                            style={{ textDecoration: "underline" }}
+                          >
+                            {task.task}
+                          </Link>
+                        </Text>
+                      </Td>
+                      <Td>
+                        {" "}
+                        {/* Your content for "Importance" column */}
+                        <StarRating
                           taskPk={task.id}
-                          original_due_date={task.due_date ? task.due_date : ""}
-                          started_at={task.started_at ? task.started_at : ""}
-                          projectTaskListRefatch={projectTaskListRefatch}
+                          initialRating={task.importance}
+                          onChangeForStarRatingHandler={
+                            onChangeForStarRatingHandler
+                          }
                         />
-                      </HStack>
-                    </HStack>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>마감</Text>
-                      </Box>
-                      <Text>{task.due_date_formatted}</Text>
+                      </Td>
+                      <Td>
+                        {" "}
+                        {/* Your content for "Classification" column */}
+                        <Box>{task.task_classification}</Box>
+                      </Td>
+                      <Td>
+                        {" "}
+                        {/* Your content for "Due Date" column */}
+                        <Box display={"flex"} gap={2}>
+                          {task.is_for_today ? (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              _hover={{ bg: "lightblue" }}
+                              color={"orange.500"}
+                            >
+                              T
+                            </Button>
+                          ) : (
+                            ""
+                          )}
 
-                      <ModalButtonForUpdateProjectTaskCompleteDate
-                        taskPk={task.id}
-                        original_due_date={task.due_date ? task.due_date : ""}
-                        started_at={task.started_at ? task.started_at : ""}
-                        projectTaskListRefatch={projectTaskListRefatch}
-                      />
-                    </HStack>
-                  </ListItem>
-                  <ListItem border={"0px solid blue"} flex={2.5}>
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>경과</Text>
-                      </Box>
-                      <Box>
+                          {task.is_due_date_has_passed ? (
+                            <ModalButtonForUpdateDueDateOptionForToday
+                              button_text={"DHP"}
+                              button_size={"sm"}
+                              modal_title={"update due date to today"}
+                              modal_size={"5xl"}
+                              taskId={task.id}
+                            />
+                          ) : (
+                            ""
+                          )}
+
+                          {task.d_day_count && !task.is_for_today ? (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              _hover={{ bg: "lightblue" }}
+                              color={"blue.500"}
+                            >
+                              D {task.d_day_count}
+                            </Button>
+                          ) : (
+                            ""
+                          )}
+
+                          <ModalButtonForUpdateDueDateOptionForToday
+                            taskId={task.id}
+                            button_text={getDueDateEmoji(
+                              task.due_date_option_for_today
+                            )}
+                            button_size={"sm"}
+                            modal_title={"update due date"}
+                            modal_size={"5xl"}
+                          />
+                        </Box>
+                      </Td>
+                      <Td>
+                        {" "}
+                        {/* Your content for "Status" column */}
+                        <Box display={"flex"} gap={5}>
+                          <SlideToggleButtonForInProgress
+                            onChange={() => {
+                              updateHandlerForTaskInProgress(task.id);
+                            }}
+                            checked={task.in_progress}
+                            is_disabled={task.is_testing}
+                          />
+
+                          <SlideToggleButtonForIsTesting
+                            onChange={() => {
+                              updateHandlerForTaskIsTesting(task.id);
+                            }}
+                            checked={task.is_testing}
+                            is_disabled={!task.in_progress}
+                          />
+
+                          <SlideToggleButton
+                            onChange={() => {
+                              updateHandlerForTaskStatus(task.id);
+                            }}
+                            checked={task.task_completed}
+                            in_progress={!task.in_progress}
+                            is_testing={!task.is_testing}
+                          />
+                        </Box>
+                      </Td>
+                      <Td>
+                        {" "}
+                        {/* Your content for "Start & Due" column */}
+                        <Box display={"flex"} gap={1}>
+                          <Text>{task.started_at_formatted}</Text>
+                          <ModalButtonForUpdateProjectTaskStartedAt
+                            taskPk={task.id}
+                            original_due_date={
+                              task.due_date ? task.due_date : ""
+                            }
+                            started_at={task.started_at ? task.started_at : ""}
+                            projectTaskListRefatch={projectTaskListRefatch}
+                          />
+                        </Box>
+                        <Box>
+                          <Text>{task.time_left_to_due_date}</Text>
+                        </Box>
+                      </Td>
+                      <Td>
+                        {" "}
+                        {/* Your content for "Elapsed Time" column */}
                         <Text>{task.elapsed_time_from_started_at}</Text>
-                      </Box>
-                    </HStack>
-
-                    <HStack>
-                      <Box textAlign={"center"}>
-                        <Text>남은 시간</Text>
-                      </Box>
-                      <Box>
-                        <Text>{task.time_left_to_due_date}</Text>
-                      </Box>
-                    </HStack>
-                  </ListItem>
-                  {/* 긴급 여부 확인 */}
-                  <ListItem display={"flex"} flex={1}>
-                    <Text fontSize={"2xl"} mr={1}>
-                      🚨
-                    </Text>
-                    <Checkbox
-                      size="lg"
-                      colorScheme="red"
-                      defaultChecked={task.is_task_for_urgent}
-                      onChange={() => update_For_is_task_for_urgent(task.id)}
-                    />
-                  </ListItem>
-                  <ListItem display={"flex"} flex={1}>
-                    <Text fontSize={"2xl"} mr={1}>
-                      💰
-                    </Text>
-                    <Checkbox
-                      size="lg"
-                      colorScheme="red"
-                      defaultChecked={task.is_task_for_cash_prize}
-                      onChange={() =>
-                        update_For_is_task_for_cash_prize(task.id)
-                      }
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <CommonDeleteButtonForPk
-                      id={task.id}
-                      targetInfoToDelete={task.task}
-                      handlerForDelete={deleteHandelr}
-                    />
-                  </ListItem>
-                  hi
-                </List>
-              );
-            })
-          : ""}
+                      </Td>
+                      <Td>
+                        {/* Your content for "Urgent" column */}
+                        <Box display={"flex"} gap={2}>
+                          <Text fontSize={"2xl"} mr={1}>
+                            🚨
+                          </Text>
+                          <Checkbox
+                            size="lg"
+                            colorScheme="red"
+                            defaultChecked={task.is_task_for_urgent}
+                            onChange={() =>
+                              update_For_is_task_for_urgent(task.id)
+                            }
+                          />
+                        </Box>
+                      </Td>
+                      <Td>
+                        {/* Your content for "Cash Prize" column */}
+                        <Box display={"flex"} gap={2}>
+                          <Text fontSize={"2xl"} mr={1}>
+                            💰
+                          </Text>
+                          <Checkbox
+                            size="lg"
+                            colorScheme="red"
+                            defaultChecked={task.is_task_for_cash_prize}
+                            onChange={() =>
+                              update_For_is_task_for_cash_prize(task.id)
+                            }
+                          />
+                        </Box>
+                      </Td>
+                      <Td>
+                        <CommonDeleteButtonForPk
+                          id={task.id}
+                          targetInfoToDelete={task.task}
+                          handlerForDelete={deleteHandelr}
+                        />
+                      </Td>
+                    </Tr>
+                  );
+                })
+              : ""}
+          </Tbody>
+        </Table>
       </Box>
 
       <Box mt={5}>
