@@ -5,6 +5,7 @@ import {
   useToast,
   useBreakpointValue,
   Checkbox,
+  Spacer,
 } from "@chakra-ui/react";
 import {
   useMutation,
@@ -78,7 +79,8 @@ const UtilButtonsForUncompletedTaskList = ({
   ) => {
     const checked = event.target.checked;
     const rowPks =
-      taskListDataForUncompleted?.ProjectProgressList.map((item) => item.id) || [];
+      taskListDataForUncompleted?.ProjectProgressList.map((item) => item.id) ||
+      [];
 
     if (checked) {
       setCheckedRowPks([...checkedRowPks, ...rowPks]);
@@ -163,24 +165,16 @@ const UtilButtonsForUncompletedTaskList = ({
           lg: "repeat(5, 1fr)", // 큰 화면
         }}
         width={"100%"}
-        gap={2}
-        p={2}
+        gap={1}
+        px={1}
+        py={2}
       >
+        {/* 1013 todo */}
         <ModalButtonForTransformCheckedTasksToSupplementTask
           button_text="transform into supplementary task"
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
         />
-
-        <Button
-          size="xs"
-          bg="red.50"
-          _hover={{ backgroundColor: "red.100" }}
-          variant="outline"
-          onClick={deleteTaskForChecked}
-        >
-          delete for Check
-        </Button>
 
         <ModalButtonForUpdateTaskManagerForChecked
           button_text={"Update Task Manager"}
@@ -204,6 +198,52 @@ const UtilButtonsForUncompletedTaskList = ({
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
         />
+        <Button
+          size="xs"
+          bg="red.50"
+          _hover={{ backgroundColor: "red.100" }}
+          variant="outline"
+          onClick={deleteTaskForChecked}
+        >
+          delete for Check
+        </Button>
+
+        <SelectBoxForDueDateForUnompletedTaskForChecked
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+          deleteTaskForChecked={deleteTaskForChecked}
+          handlerForUpdateTaskDuedateForChecked={
+            handlerForUpdateTaskDuedateForChecked
+          }
+          width={"100%"}
+        />
+
+        {is_show_for_mobile ? (
+          <Button
+            variant={"outline"}
+            border={"1px solid blue"}
+            bg={"blue.100"}
+            size={"xs"}
+            onClick={buttonHandlerForslideShowForCheckedRow}
+            p={2}
+          >
+            Slide For Check
+          </Button>
+        ) : (
+          ""
+        )}
+
+        <Spacer />
+        <Spacer />
+
+        <ModalButtonForAddProjectTaskWithDuedateOption
+          button_text="register"
+          size={"xs"}
+          projectTaskListRefatch={projectTaskListRefatch}
+          bgColor="red.300"
+          hoverColor="red.500"
+          hoverTextColor="yellow"
+        />
       </Box>
 
       <Box
@@ -217,49 +257,15 @@ const UtilButtonsForUncompletedTaskList = ({
       >
         <Box>
           <Checkbox
-            size={"lg"}
+            size={"md"}
             onChange={handleChangeForAllCheckBox}
             checked={
-              checkedRowPks.length === taskListDataForUncompleted?.ProjectProgressList.length
+              checkedRowPks.length ===
+              taskListDataForUncompleted?.ProjectProgressList.length
             }
             border={"2px solid black"}
           />
         </Box>
-        <Box>
-          <SelectBoxForDueDateForUnompletedTaskForChecked
-            checkedRowPks={checkedRowPks}
-            setCheckedRowPks={setCheckedRowPks}
-            deleteTaskForChecked={deleteTaskForChecked}
-            handlerForUpdateTaskDuedateForChecked={
-              handlerForUpdateTaskDuedateForChecked
-            }
-            width={"100%"}
-          />
-        </Box>
-
-        {is_show_for_mobile ? (
-          <Button
-            variant={"outline"}
-            border={"2px solid blue"}
-            bg={"blue.100"}
-            size={"sm"}
-            onClick={buttonHandlerForslideShowForCheckedRow}
-            p={2}
-          >
-            Slide For Check
-          </Button>
-        ) : (
-          ""
-        )}
-
-        <ModalButtonForAddProjectTaskWithDuedateOption
-          button_text="register"
-          size={"sm"}
-          projectTaskListRefatch={projectTaskListRefatch}
-          bgColor="red.300"
-          hoverColor="red.500"
-          hoverTextColor="yellow"
-        />
       </Box>
     </Box>
   );

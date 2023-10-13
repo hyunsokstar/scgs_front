@@ -78,13 +78,14 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
   };
 
   return (
-    <Box>
+    <Box width={"100%"}>
       <Button
         size="xs"
-        bg={"lightblue"}
-        _hover={{ backgroundColor: "lightblue" }}
+        bg="red.50"
+        _hover={{ backgroundColor: "red.100" }}
         variant="outline"
         onClick={onOpen}
+        width={"100%"}
       >
         {button_text}
       </Button>

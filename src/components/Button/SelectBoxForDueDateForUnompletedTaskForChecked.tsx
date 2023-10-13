@@ -35,7 +35,7 @@ const SelectBoxForDueDateForUnompletedTaskForChecked: React.FC<
     <Box width={"100%"} border={"0px solid orange"}>
       <Select
         width={width}
-        size="sm"
+        size="xs"
         backgroundColor="purple.50"
         value={selectedOption}
         onChange={handleSelectChange}
