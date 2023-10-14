@@ -71,8 +71,6 @@ function UncompletedTaskList({
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // console.log("ProjectProgressList : ", ProjectProgressList);
-
   const toast = useToast();
 
   const updateProjectTaskIsTestingMutations = useMutation(
@@ -302,7 +300,7 @@ function UncompletedTaskList({
         <Box key={number}>{number}</Box>
       ))} */}
       <Box overflowX={"scroll"} border={"0px solid blue"}>
-        <Table variant="striped" size="md" width="2800px">
+        <Table variant="striped" size="md" width="3600px">
           <Thead>
             <Tr>
               <Th width="50px">
@@ -318,13 +316,13 @@ function UncompletedTaskList({
                 />{" "}
               </Th>
               <Th w={"400px"}>담당</Th>
-              <Th w={"600px"}>Task</Th>
+              <Th w={"800px"}>Task</Th>
               <Th w={"300px"}>Importance</Th>
               <Th w={"200px"}>Classification</Th>
               <Th w={"350px"}>Due Date</Th>
               <Th w={"350px"}>Status</Th>
-              <Th w={"400px"}>시작 , 마감 기한</Th>
-              <Th w={"400px"}>경과, 남은 시간</Th>
+              <Th w={"500px"}>시작 , 마감 기한</Th>
+              <Th w={"500px"}>경과, 남은 시간</Th>
               <Th w={"200px"}>Urgent</Th>
               <Th w={"200px"}>Cash Prize</Th>
               <Th w={"200px"}>Actions</Th>
@@ -405,14 +403,54 @@ function UncompletedTaskList({
                       </Td>
                       <Td flex={6}>
                         {/* Your content for "Task" column */}
-                        <Text fontSize="sm" fontWeight="bold">
-                          <Link
-                            to={`/project_admin/${task.id}`}
-                            style={{ textDecoration: "underline" }}
-                          >
-                            {task.task}
-                          </Link>
-                        </Text>
+                        <Box
+                          display={"flex"}
+                          gap={2}
+                          flexDirection={"column"}
+                          // alignItems={"center"}
+                          justifyContent={"flex-start"}
+                        >
+                          <Text fontSize="sm" fontWeight="bold">
+                            <Link
+                              to={`/project_admin/${task.id}`}
+                              style={{ textDecoration: "underline" }}
+                            >
+                              {task.task}
+                            </Link>
+                          </Text>
+
+                          <Box display={"flex"} gap={2}>
+                            <Button
+                              variant={"outline"}
+                              border={"1px solid black"}
+                              size={"xs"}
+                            >
+                              i: {task.count_for_task_images}
+                            </Button>
+
+                            <Button
+                              variant={"outline"}
+                              border={"1px solid black"}
+                              size={"xs"}
+                            >
+                              c: {task.count_for_task_comments}
+                            </Button>
+                            <Button
+                              variant={"outline"}
+                              border={"1px solid black"}
+                              size={"xs"}
+                            >
+                              t: {task.count_for_tests_for_task}
+                            </Button>
+                            <Button
+                              variant={"outline"}
+                              border={"1px solid black"}
+                              size={"xs"}
+                            >
+                              s: {task.count_for_extra_tasks}
+                            </Button>
+                          </Box>
+                        </Box>
                       </Td>
                       <Td>
                         {" "}
@@ -526,15 +564,25 @@ function UncompletedTaskList({
                             projectTaskListRefatch={projectTaskListRefatch}
                           />
                         </Box>
-                        <Box>
+                        <Box display={"flex"} gap={1} mb={2}>
                           <Text>마감 : {task.due_date_formatted}</Text>
+                          <ModalButtonForUpdateProjectTaskCompleteDate
+                            taskPk={task.id}
+                            original_due_date={
+                              task.due_date ? task.due_date : ""
+                            }
+                            started_at={task.started_at ? task.started_at : ""}
+                            projectTaskListRefatch={projectTaskListRefatch}
+                          />
                         </Box>
                       </Td>
                       <Td>
                         {" "}
                         {/* Your content for "Elapsed Time" column */}
                         <Box>
-                          <Text mb={2}>경과 : {task.elapsed_time_from_started_at}</Text>
+                          <Text mb={2}>
+                            경과 : {task.elapsed_time_from_started_at}
+                          </Text>
                           <Text>남음 : {task.time_left_to_due_date}</Text>
                         </Box>
                       </Td>

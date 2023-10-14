@@ -91,9 +91,10 @@ const HeaderInfoForUncompletedTaskList = ({
   };
 
   const handleSelectPeriodOptionForTeamTask = (
-    event: React.ChangeEvent<HTMLInputElement>
+    filterOptionForCreatedAt: string
   ) => {
-    setSelectedPeriodOptionForUncompletedTaskList(event.target.value);
+    // alert(event.target.value);
+    setSelectedPeriodOptionForUncompletedTaskList(filterOptionForCreatedAt);
   };
 
   const handleCashPrizeChange = (
@@ -234,18 +235,18 @@ const HeaderInfoForUncompletedTaskList = ({
           >
             {/* set_username_for_search */}
             <Button
-                    variant={"outline"}
-                    size={"sm"}
-                    mb={1}
-                    width={"98%"}
-                    _hover={{
-                      bg: "#90CDF4",
-                      color: "brown",
-                    }}
-                    onClick={() =>
-                      searchUncompletedListforUserName("")
-                    }
-            >reset</Button>
+              variant={"outline"}
+              size={"sm"}
+              mb={1}
+              width={"98%"}
+              _hover={{
+                bg: "#90CDF4",
+                color: "brown",
+              }}
+              onClick={() => searchUncompletedListforUserName("")}
+            >
+              reset
+            </Button>
             {taskListDataForUncompleted?.writers_info?.map((writer: any) => {
               return (
                 <Box
@@ -288,6 +289,7 @@ const HeaderInfoForUncompletedTaskList = ({
                     created_at
                   </Box>
                   <Box flexBasis="70%">
+                    {/* created_at 필터 */}
                     <SelectBoxForSetPeriodForFilteringUncompletedTaskList
                       selectedPeriodOptionForUncompletedTaskList={
                         selectedPeriodOptionForUncompletedTaskList

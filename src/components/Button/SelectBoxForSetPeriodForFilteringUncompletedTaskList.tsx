@@ -2,7 +2,7 @@ import { Box, Select, useBreakpointValue } from "@chakra-ui/react";
 import { useState } from "react";
 
 interface FilterProps {
-  changeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  changeHandler: (filterOptionForCreatedAt: string) => void;
   selectedPeriodOptionForUncompletedTaskList: string;
 }
 
@@ -10,15 +10,17 @@ const SelectBoxForSetPeriodForFilteringUncompletedTaskList = ({
   selectedPeriodOptionForUncompletedTaskList,
   changeHandler,
 }: FilterProps) => {
-  const [selected, setSelected] = useState(
+  const [filterOptionForCreatedAtForUncompletedTaskList, setFileterOptionForCreatedAtForUncompletedTaskList] = useState(
     selectedPeriodOptionForUncompletedTaskList
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const filter = event.target.value;
-    console.log("filter: ", filter);
-    setSelected(filter);
-    changeHandler(filter);
+
+    
+    const filterOption = event.target.value;
+    alert("change 함수 실행 :::::::::::: " + filterOption)
+    setFileterOptionForCreatedAtForUncompletedTaskList(filterOption);
+    changeHandler(filterOption);
   };
 
   const selectWidth = useBreakpointValue({
@@ -35,10 +37,10 @@ const SelectBoxForSetPeriodForFilteringUncompletedTaskList = ({
       width="94%"
       border="1px solid purple"
     >
-      {/* {selectedPeriodOptionForUncompletedTaskList} */}
+      {/* created_at selectbox  */}
       <Select
         size="sm"
-        value={selected}
+        value={filterOptionForCreatedAtForUncompletedTaskList}
         width={selectWidth}
         onChange={handleChange}
       >

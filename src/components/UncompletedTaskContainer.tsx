@@ -145,12 +145,16 @@ function UncompletedTaskContainer({
         filteredListForUncompleteTask={filteredListForUncompleteTask}
       />
 
-      <UtilButtonsForUncompletedTaskList
-        taskListDataForUncompleted={taskListDataForUncompleted}
-        checkedRowPks={checkedRowPks}
-        setCheckedRowPks={setCheckedRowPks}
-        projectTaskListRefatch={projectTaskListRefatch}
-      />
+      {taskListDataForUncompleted ? (
+        <UtilButtonsForUncompletedTaskList
+          taskListDataForUncompleted={taskListDataForUncompleted}
+          checkedRowPks={checkedRowPks}
+          setCheckedRowPks={setCheckedRowPks}
+          projectTaskListRefatch={projectTaskListRefatch}
+        />
+      ) : (
+        ""
+      )}
 
       {is_show_for_mobile ? (
         <Box border={"0px solid blue"}>

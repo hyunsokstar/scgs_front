@@ -192,7 +192,7 @@ export interface IOneTaskForProjectTaskType {
   due_date_formatted: string;
   test_result_images: TestResultImage[];
   extra_tasks?: extra_task_row_type[] | undefined;
-  tests_for_tasks: ItypeFortestRow[];
+  tests_for_task: ItypeFortestRow[];
   task_comments: ITaskComment[];
   task_urls: TypeForTaskUrl[];
 }
@@ -253,14 +253,14 @@ export interface IExtraManager {
 }
 
 export interface taskRowForUncompleted {
-  score_by_tester?: number;
   id: string;
-  writer?: string;
   task_manager: {
     pk: number;
     username: string;
     profile_image: string;
   };
+  extra_managers: IExtraManager[];
+  writer?: string;
   task_classification: string;
   task: string;
   task_images: string[];
@@ -273,21 +273,25 @@ export interface taskRowForUncompleted {
   completed_at_formatted?: string;
   due_date_formatted: string;
   elapsed_time_from_started_at: string;
-  time_consumed_from_start_to_complete?: string;
   time_left_to_due_date?: string;
   due_date?: string;
+  due_date_option_for_today: "until-noon" | "until-evening" | "until-night";
   current_status?: string;
-  check_result_by_tester: boolean;
   is_task_for_cash_prize: boolean;
   is_task_for_urgent: boolean;
-  cash_prize?: number;
-  due_date_option_for_today: "until-noon" | "until-evening" | "until-night";
   is_for_today?: boolean;
   is_due_date_has_passed: boolean;
   d_day_count: string;
-  test_result_images?: TestResultImageForCompletedTask[];
-  task_comments: ITaskComment[];
-  extra_managers: IExtraManager[];
+  count_for_task_images: number;
+  count_for_extra_tasks: number;
+  count_for_tests_for_task: number;
+  count_for_task_comments: number;
+  // score_by_tester?: number;
+  // cash_prize?: number;
+  // check_result_by_tester: boolean;
+  // time_consumed_from_start_to_complete?: string;
+  // test_result_images?: TestResultImageForCompletedTask[];
+  // task_comments: ITaskComment[];
 }
 
 export interface ITypeForTaskListDataForUncompleted {
@@ -422,7 +426,7 @@ export interface ProjectProgress {
   cash_prize: number;
   task_urls?: TypeForTaskUrl[];
   task_comments: ITaskComment[];
-  tests_for_tasks: ItypeFortestRow[];
+  tests_for_task: ItypeFortestRow[];
   extra_tasks?: extra_task_row_type[];
 }
 

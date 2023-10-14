@@ -1553,7 +1553,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         page: pageNum,
         selectedPeriodOptionForUncompletedTaskList,
         username_for_search,
-        task_status_for_search,
+        task_status_for_filter:task_status_for_search,
         due_date_option_for_filtering,
         rating_for_filter_option,
         isForUrgent,

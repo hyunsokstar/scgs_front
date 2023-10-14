@@ -19,6 +19,7 @@ import {
 } from "../../apis/project_progress_api";
 import {
   ITypeForTaskListDataForUncompleted,
+  taskRowForUncompleted,
   typeForDueDateUpdateForChecked,
 } from "../../types/project_progress/project_progress_type";
 import ModalButtonForUpdateTaskManagerForChecked from "../Button/ModalButtonForUpdateTaskManagerForChecked";
@@ -29,11 +30,11 @@ import ModalButtonForAddProjectTaskWithDuedateOption from "../modal/ModalButtonF
 import ModalButtonForTransformCheckedTasksToSupplementTask from "../modal/ModalButtonForTransformCheckedTasksToSupplementTask";
 
 interface IProps {
-  taskListDataForUncompleted: ITypeForTaskListDataForUncompleted[];
+  taskListDataForUncompleted: ITypeForTaskListDataForUncompleted | undefined;
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
   projectTaskListRefatch: () => Promise<
-    QueryObserverResult<ITypeForTaskListDataForUncompleted[], unknown>
+    QueryObserverResult<ITypeForTaskListDataForUncompleted, unknown>
   >;
 }
 
@@ -73,21 +74,6 @@ const UtilButtonsForUncompletedTaskList = ({
       },
     }
   );
-
-  const handleChangeForAllCheckBox = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const checked = event.target.checked;
-    const rowPks =
-      taskListDataForUncompleted?.ProjectProgressList.map((item) => item.id) ||
-      [];
-
-    if (checked) {
-      setCheckedRowPks([...checkedRowPks, ...rowPks]);
-    } else {
-      setCheckedRowPks([]);
-    }
-  };
 
   const deleteTaskForChecked = () => {
     if (checkedRowPks.length === 0) {

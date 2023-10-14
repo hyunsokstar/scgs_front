@@ -38,7 +38,7 @@ const ButtonsForSelectOptionForDueDateForUncompletedTaskList: React.FC<
         <Select
           value={due_date_option_for_filtering}
           onChange={handleChange}
-          placeholder="Select an option"
+          placeholder="Default"
         >
           {options.map((option) => (
             <option key={option.value} value={option.value}>

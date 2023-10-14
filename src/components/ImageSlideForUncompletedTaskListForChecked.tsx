@@ -162,7 +162,7 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
               <TestListForTaskDetail
                 refetch={refetch}
                 taskPk={row.pk}
-                testData={row?.tests_for_tasks}
+                testData={row?.tests_for_task}
               />
             </Box>
             <Box>

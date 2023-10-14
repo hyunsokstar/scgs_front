@@ -443,7 +443,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
         <Box bg={"white"} width={"100%"} border={"1px solid black"}>
           <TestListForTaskDetail
             taskPk={taskPk}
-            testData={taskData?.tests_for_tasks}
+            testData={taskData?.tests_for_task}
             refetch={refetchForTaskDetail}
           />
         </Box>
