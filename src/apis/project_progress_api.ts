@@ -27,6 +27,57 @@ interface ICommentTextUpdateApiParameter {
 }
 
 // 1122
+
+export const getInProgressTaskList = ({ queryKey }: QueryFunctionContext) => {
+  const [
+    _,
+    pageNum,
+    selectedPeriodOptionForUncompletedTaskList,
+    username_for_search,
+    task_status_for_search,
+    due_date_option_for_filtering,
+    rating_for_filter_option,
+    groupByOption,
+    isForUrgent,
+    checkForCashPrize,
+    is_task_due_date_has_passed,
+  ] = queryKey;
+
+  return instance
+    .get("project_progress/in_progress", {
+      params: {
+        page: pageNum,
+        selectedPeriodOptionForUncompletedTaskList,
+        username_for_search,
+        task_status_for_filter:task_status_for_search,
+        due_date_option_for_filtering,
+        rating_for_filter_option,
+        isForUrgent,
+        checkForCashPrize,
+        groupByOption,
+        is_task_due_date_has_passed,
+      },
+    })
+    .then((response) => {
+      const response_data = {
+        ProjectProgressList: response.data.ProjectProgressList,
+        totalPageCount: response.data.totalPageCount,
+        task_number_for_one_page: response.data.task_number_for_one_page,
+        writers_info: response.data.writers_info,
+        count_for_ready: response.data.count_for_ready,
+        count_for_in_progress: response.data.count_for_in_progress,
+        count_for_in_testing: response.data.count_for_in_testing,
+        total_task_count_for_today: response.data.total_task_count_for_today,
+        completed_task_count_for_today:
+          response.data.completed_task_count_for_today,
+        achievement_rate_for_today: response.data.achievement_rate_for_today,
+        count_for_duedate_passed: response.data.count_for_duedate_passed,
+      };
+
+      return response_data;
+    });
+};
+
 export const apiForCreateExtraManagerForTask = ({
   targetTaskId,
   userNameForRegister,

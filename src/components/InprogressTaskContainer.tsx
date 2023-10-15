@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, useEffect } from "react";
 import { Box, useToast, useBreakpointValue } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { getUncompletedTaskList } from "../apis/project_progress_api";
+import { getInProgressTaskList } from "../apis/project_progress_api";
 import {
   ITypeForTaskListDataForUncompleted,
   typeForDueDateOption,
@@ -10,12 +10,15 @@ import UncompletedTaskList from "./UncompletedTaskList";
 import SlideForUncompletedTaskList from "./Slide/SlideForUncompletedTaskList";
 import HeaderInfoForUncompletedTaskList from "./HeaderInfo/HeaderInfoForUncompletedTaskList";
 import UtilButtonsForUncompletedTaskList from "./Buttons/UtilButtonsForUncompletedTaskList";
+import HeaderInfoForInProgressTaskList from "./HeaderInfo/HeaderInfoForInProgressTaskList";
+import InProgressTaskList from "./InProgressTaskList";
+import SlideForInProgressTaskList from "./Slide/SlideForInProgressTaskList";
 
 interface Props {
   basic_due_date_option?: typeForDueDateOption;
 }
 
-function UncompletedTaskContainer({
+function InprogressTaskContainer({
   basic_due_date_option,
 }: Props): ReactElement {
   const [checkedRowPks, setCheckedRowPks] = useState<number[]>([]);
@@ -48,7 +51,7 @@ function UncompletedTaskContainer({
     refetch: projectTaskListRefatch,
   } = useQuery<ITypeForTaskListDataForUncompleted>(
     [
-      "getUncompletedTaskList",
+      "getInprogressTaskList",
       currentPageNum,
       selectedPeriodOptionForUncompletedTaskList,
       username_for_search,
@@ -60,7 +63,7 @@ function UncompletedTaskContainer({
       groupByOption,
       is_task_due_date_has_passed,
     ],
-    getUncompletedTaskList,
+    getInProgressTaskList,
     {
       enabled: true,
     }
@@ -104,9 +107,13 @@ function UncompletedTaskContainer({
     lg: true,
   });
 
+  // if (!taskListDataForUncompleted) {
+  //   return <Box>..Loading</Box>;
+  // }
+
   return (
     <Box border={"1px solid black"} p={0} mt={2} width={"100%"}>
-      <HeaderInfoForUncompletedTaskList
+      <HeaderInfoForInProgressTaskList
         set_is_task_due_date_has_passed={set_is_task_due_date_has_passed}
         set_task_status_for_search={set_task_status_for_search}
         set_username_for_search={set_username_for_search}
@@ -155,7 +162,7 @@ function UncompletedTaskContainer({
       {is_show_for_mobile ? (
         <Box border={"0px solid blue"}>
           {taskListDataForUncompleted ? (
-            <UncompletedTaskList
+            <InProgressTaskList
               ProjectProgressList={filteredListForUncompleteTask}
               totalPageCount={taskListDataForUncompleted.totalPageCount}
               task_number_for_one_page={
@@ -177,7 +184,7 @@ function UncompletedTaskContainer({
         <Box>
           {filteredListForUncompleteTask &&
           filteredListForUncompleteTask.length ? (
-            <SlideForUncompletedTaskList
+            <SlideForInProgressTaskList
               listData={filteredListForUncompleteTask}
               handleCheckboxChange={handleCheckboxChange}
               checkedRowPks={checkedRowPks}
@@ -202,4 +209,4 @@ function UncompletedTaskContainer({
   );
 }
 
-export default UncompletedTaskContainer;
+export default InprogressTaskContainer;

@@ -56,7 +56,7 @@ interface IProps {
 }
 
 // 1122
-function UncompletedTaskList({
+function InProgressTaskList({
   ProjectProgressList,
   totalPageCount,
   task_number_for_one_page,
@@ -636,7 +636,6 @@ function UncompletedTaskList({
       <Box mt={5}>
         {ProjectProgressList ? (
           <Box maxW="100%" bg="blue.100" color="red.500" mt={-3.5}>
-            "currentPageNum" : {currentPageNum}
             <PaginationComponent
               current_page_num={currentPageNum}
               total_page_num={totalPageCount}
@@ -652,4 +651,4 @@ function UncompletedTaskList({
   );
 }
 
-export default UncompletedTaskList;
+export default InProgressTaskList;

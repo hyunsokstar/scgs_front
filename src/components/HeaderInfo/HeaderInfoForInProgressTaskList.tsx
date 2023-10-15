@@ -54,7 +54,7 @@ interface IProps {
 }
 
 // 1122
-const HeaderInfoForUncompletedTaskList = ({
+const HeaderInfoForInProgressTaskList = ({
   set_is_task_due_date_has_passed,
   set_task_status_for_search,
   set_username_for_search,
@@ -162,7 +162,7 @@ const HeaderInfoForUncompletedTaskList = ({
             width={"100%"}
           >
             <Box textAlign={"center"} border={"0px solid blue"}>
-              <Text fontSize={20}>UnComplete Tasks</Text>
+              <Text fontSize={20}>In_Progress Task List</Text>
               <Text>
                 total: {taskListDataForUncompleted?.totalPageCount} 개
               </Text>
@@ -181,23 +181,19 @@ const HeaderInfoForUncompletedTaskList = ({
                 onClick={() => {
                   set_is_task_due_date_has_passed(false);
                   set_due_date_option_for_filtering("");
-                  // set_task_status_for_search("");
-                  // set_username_for_search("");
-                  // setIsForUrgent(false);
-                  // setCheckForCashPrize(false);
                 }}
               >
                 reset
               </Button>
 
-              <ButtonForShowCountForTaskStatus
+              {/* <ButtonForShowCountForTaskStatus
                 task_status={"ready"}
                 status_imoge={"⚪"}
                 status_count={taskListDataForUncompleted?.count_for_ready}
                 button_size={"xs"}
                 task_status_for_search={task_status_for_search}
                 set_task_status_for_search={set_task_status_for_search}
-              />
+              /> */}
               <ButtonForShowCountForTaskStatus
                 button_size={"xs"}
                 task_status={"in_progress"}
@@ -462,4 +458,4 @@ const HeaderInfoForUncompletedTaskList = ({
   );
 };
 
-export default HeaderInfoForUncompletedTaskList;
+export default HeaderInfoForInProgressTaskList;
