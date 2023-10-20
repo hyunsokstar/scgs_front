@@ -162,7 +162,7 @@ const HeaderInfoForUncompletedTaskList = ({
             width={"100%"}
           >
             <Box textAlign={"center"} border={"0px solid blue"}>
-              <Text fontSize={20}>UnComplete Tasks</Text>
+              <Text fontSize={20}>Task List For Ready</Text>
               <Text>
                 total: {taskListDataForUncompleted?.totalPageCount} 개
               </Text>
@@ -198,7 +198,7 @@ const HeaderInfoForUncompletedTaskList = ({
                 task_status_for_search={task_status_for_search}
                 set_task_status_for_search={set_task_status_for_search}
               />
-              <ButtonForShowCountForTaskStatus
+              {/* <ButtonForShowCountForTaskStatus
                 button_size={"xs"}
                 task_status={"in_progress"}
                 status_imoge={"🟡"}
@@ -213,7 +213,7 @@ const HeaderInfoForUncompletedTaskList = ({
                 status_count={taskListDataForUncompleted?.count_for_in_testing}
                 task_status_for_search={task_status_for_search}
                 set_task_status_for_search={set_task_status_for_search}
-              />
+              /> */}
               <Button
                 size="xs"
                 variant={"outline"}

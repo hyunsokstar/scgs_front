@@ -18,6 +18,13 @@ import {
   useToast,
   Avatar,
   useBreakpointValue,
+  Switch,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
 } from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
 import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/ButtonsForPageNumbersForStudyNoteContents";
@@ -51,6 +58,9 @@ const StudyNoteDetail2 = (props: Props) => {
   const [savedPageNumForCurrentPage, setSavedPageNumForCurrentPage] =
     useState(0);
 
+    const [tasking, setTasking] = useState(true); // Initialize the tasking state
+
+
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );
@@ -78,14 +88,10 @@ const StudyNoteDetail2 = (props: Props) => {
     isLoading: logind_for_study_note_content_list,
     refetch: refetch_for_study_note_content_list,
   } = useQuery<StudyNoteData>(
-    [
-      "apiForGetStuyNoteContentList",
-      study_note_pk,
-      currentPage,
-    ],
+    ["apiForGetStuyNoteContentList", study_note_pk, currentPage],
     apiForGetStuyNoteContentList,
     {
-      enabled:true
+      enabled: true,
     }
   );
 
@@ -362,12 +368,12 @@ const StudyNoteDetail2 = (props: Props) => {
               button_width="100%"
               study_note_pk={study_note_pk}
             />
-            
+
             <ModalButtonForSearchStudyNoteContent
               study_note_pk={study_note_pk}
             />
-            
-            {is_authority_for_note ? (
+
+            {response_data_for_api?.authority_for_writing_note_contents ? (
               <>
                 <Button
                   size="sm"
@@ -423,8 +429,9 @@ const StudyNoteDetail2 = (props: Props) => {
                 button_width={"100%"}
               />
             </Box>
+            {/* {response_data_for_api?.authority_for_writing_note_contents ? "authority ok" : "authority no"} */}
 
-            {is_authority_for_note ? (
+            {response_data_for_api?.authority_for_writing_note_contents ? (
               <Box
                 display={"flex"}
                 gap={2}
@@ -469,13 +476,12 @@ const StudyNoteDetail2 = (props: Props) => {
           gap={3}
           my={2}
         >
+          {/* 헤더 인포 for left side */}
           <Box>
             <Text as="span" color="purple.500" fontWeight="bold">
               Writer:
+              {response_data_for_api?.note_user_name}
             </Text>{" "}
-            {response_data_for_api?.note_user_name}
-          </Box>{" "}
-          <Box>
             <Box>
               <Text as="span" color="blue.500" fontWeight="bold">
                 Title:
@@ -488,31 +494,55 @@ const StudyNoteDetail2 = (props: Props) => {
               </Text>{" "}
               {response_data_for_api?.subtitle_for_page}
             </Box>
-          </Box>
-          {/* <Box>page: {currentPage}</Box> */}
+          </Box>{" "}
+          {/* ceter side */}
           <Box>
             <Box>CoWriters: </Box>
             <Box display="flex" gap={2} alignItems="center">
-              {response_data_for_api &&
-              response_data_for_api.co_writers_for_approved.length ? (
-                response_data_for_api.co_writers_for_approved.map((row) => (
-                  <Box display="flex" gap={2} alignItems="center" key={row.id}>
-                    <Box>
-                      <Avatar
-                        name={row.username}
-                        src={row.profile_image}
-                        size="sm"
-                        ml="2px"
-                      />
-                    </Box>
-                    {/* <Text>{row.username}</Text> */}
-                  </Box>
-                ))
+              {response_data_for_api.co_writers_for_approved.length > 0 ? (
+                <Table variant="simple" size={"sm"}>
+                  <Thead>
+                    <Tr>
+                      <Th>Profile</Th>
+                      <Th>is_tasking</Th>
+                      <Th>Current Page</Th>
+                      <Th>Task Description</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {response_data_for_api.co_writers_for_approved.map(
+                      (user) => (
+                        <Tr key={user.id}>
+                          <Td>
+                            <Avatar
+                              name={user.username}
+                              src={user.profile_image || ""}
+                              size="sm"
+                            />
+                          </Td>
+                          <Td>
+                            {" "}
+                            <Switch
+                              colorScheme="teal"
+                              size="sm"
+                              isChecked={user.is_tasking}
+                              onChange={() => setTasking(!tasking)}
+                            />
+                          </Td>
+                          <Td>{user.current_page}</Td>
+                          <Td>{user.task_description}</Td>
+                        </Tr>
+                      )
+                    )}
+                  </Tbody>
+                </Table>
               ) : (
                 <Text>no cowriters</Text>
               )}
             </Box>
           </Box>
+          {/* <Box>page: {currentPage}</Box> */}
+          {/* <Box>right side</Box> */}
         </Box>
 
         <Box>
@@ -522,7 +552,6 @@ const StudyNoteDetail2 = (props: Props) => {
             border={"0px solid pink"}
             my={2}
             zIndex={10}
-            // mx={5}
           >
             <ButtonsForFindToContentWithOrderNum
               numCards={
@@ -553,7 +582,6 @@ const StudyNoteDetail2 = (props: Props) => {
             alignItems={"center"}
             flexDirection={"column"}
             border={"0px solid black"}
-
           >
             {response_data_for_api &&
             response_data_for_api.data_for_study_note_contents.length ? (

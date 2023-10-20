@@ -80,6 +80,7 @@ function InProgressTaskList({
         console.log("result : ", result);
 
         queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getInprogressTaskList"]);
         queryClient.refetchQueries(["getCompletedTaskList"]);
 
         toast({
@@ -107,6 +108,7 @@ function InProgressTaskList({
       });
 
       queryClient.refetchQueries(["getUncompletedTaskList"]);
+      queryClient.refetchQueries(["getInprogressTaskList"]);
       queryClient.refetchQueries(["getCompletedTaskList"]);
     },
   });
@@ -129,6 +131,7 @@ function InProgressTaskList({
         });
 
         queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getInprogressTaskList"]);
         queryClient.refetchQueries(["getCompletedTaskList"]);
       },
       onError: (err: any) => {
@@ -150,8 +153,10 @@ function InProgressTaskList({
         // if (projectTaskListRefatch) {
         //   projectTaskListRefatch();
         // }
-        queryClient.refetchQueries(["getUnompletedTaskList"]);
-        queryClient.refetchQueries(["getCompletedTaskList"]);
+        // queryClient.refetchQueries(["getUnompletedTaskList"]);
+        // queryClient.refetchQueries(["getCompletedTaskList"]);
+        queryClient.refetchQueries(["getInprogressTaskList"]);
+
         toast({
           status: "success",
           title: "task status update success",

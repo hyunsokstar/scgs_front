@@ -21,33 +21,37 @@ export type type_for_insert_study_note = {
 export interface DataForStudyNoteContent {
   pk: number;
   page: number;
-  created_at: string;
   title: string;
   file_name?: string | null;
   content: string;
   content_option: string;
+  youtube_url?: string;
   writer: any;
-  order: number;
   ref_url1: string;
   ref_url2: string;
-  youtube_url?: string;
+  created_at: string;
+  order: number;
 }
 
 export interface CoWriter {
-  pk: number;
+  id: number;
   username: string;
   profile_image: string;
+  is_tasking: boolean;
+  current_page: number;
+  task_description: string;
 }
 
 export interface StudyNoteData {
   note_title: string;
   subtitle_for_page: string;
-  question_count_for_current_page: number;
   note_user_name: string;
-  exist_page_numbers: number[];
   note_user_profile_image: string;
+  exist_page_numbers: number[];
   data_for_study_note_contents: DataForStudyNoteContent[];
   co_writers_for_approved: CoWriter[];
+  question_count_for_current_page: number;
+  authority_for_writing_note_contents: boolean;
 }
 
 export interface type_for_parameter_for_delete_pages_for_study_note {
