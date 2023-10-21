@@ -62,6 +62,8 @@ const StudyNoteDetail2 = (props: Props) => {
     useState(0);
 
   const [tasking, setTasking] = useState(true); // Initialize the tasking state
+  const [authorityForWritingNoteContents, setAuthorityForWritingNoteContents] =
+    useState(false);
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -318,6 +320,14 @@ const StudyNoteDetail2 = (props: Props) => {
     }
   );
 
+  useEffect(() => {
+    if (response_data_for_api) {
+      setAuthorityForWritingNoteContents(
+        response_data_for_api?.authority_for_writing_note_contents
+      );
+    }
+  }, [response_data_for_api]);
+
   if (logind_for_study_note_content_list) {
     return <Box>"loading.."</Box>;
   }
@@ -375,7 +385,7 @@ const StudyNoteDetail2 = (props: Props) => {
               study_note_pk={study_note_pk}
             />
 
-            {response_data_for_api?.authority_for_writing_note_contents ? (
+            {authorityForWritingNoteContents ? (
               <>
                 <Button
                   size="sm"
@@ -433,7 +443,7 @@ const StudyNoteDetail2 = (props: Props) => {
             </Box>
             {/* {response_data_for_api?.authority_for_writing_note_contents ? "authority ok" : "authority no"} */}
 
-            {response_data_for_api?.authority_for_writing_note_contents ? (
+            {authorityForWritingNoteContents ? (
               <Box
                 display={"flex"}
                 gap={2}
@@ -531,6 +541,8 @@ const StudyNoteDetail2 = (props: Props) => {
                             {/* modal for cowriter */}
                             <ModalButtonForUpdateCoworkerInfo
                               studyNotePk={study_note_pk}
+                              currentPage={currentPage}
+                              setAuthorityForWritingNoteContents = {setAuthorityForWritingNoteContents}
                               coWritersInfoData={
                                 response_data_for_api
                                   ? response_data_for_api?.co_writers_for_approved

@@ -25,16 +25,23 @@ import { EditIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons";
 import { CoWriter } from "../../types/study_note_type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForUpdateCoWriterIsTaskingForNote } from "../../apis/study_note_api";
+import { useNavigate } from "react-router-dom";
+
 
 interface IProps {
   studyNotePk: any;
+  currentPage: any;
   coWritersInfoData: CoWriter[];
+  setAuthorityForWritingNoteContents: (value: boolean) => void;
 }
 
 const ModalButtonForUpdateCoworkerInfo = ({
   studyNotePk,
+  currentPage,
+  setAuthorityForWritingNoteContents,
   coWritersInfoData,
 }: IProps) => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const toast = useToast();
 
@@ -69,9 +76,16 @@ const ModalButtonForUpdateCoworkerInfo = ({
         });
 
         setCoWritersInfo(result.cowriters_data); // 상태 업데이트
+        // alert(result.authority_for_writing_note_contents)
+        console.log("authority_for_writing_note_contents : ", result.authority_for_writing_note_contents);
+        
+        setAuthorityForWritingNoteContents(result.authority_for_writing_note_contents)
+        // navigate(`/study-note/${studyNotePk}/${currentPage}`);
 
+        // queryClient.refetchQueries(["apiForGetStuyNoteContentList"]);
         // queryClient.invalidateQueries(["getUncompletedTaskList"]);
-        // onClose();
+        onClose();
+
       },
       //   onSettled: () => {
       //     queryClient.refetchQueries([
