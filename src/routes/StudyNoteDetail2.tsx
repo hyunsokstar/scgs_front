@@ -517,17 +517,20 @@ const StudyNoteDetail2 = (props: Props) => {
                       (user) => (
                         <Tr key={user.id} textAlign={"center"}>
                           <Td>
-                            <Avatar
+                            {/* <Avatar
                               name={user.username}
                               src={user.profile_image || ""}
                               size="sm"
-                            />
+                            /> */}
+                            {user.username}
                           </Td>
                           <Td> {user.is_tasking ? "yes" : "no"}</Td>
                           <Td>{user.current_page}</Td>
                           <Td>{user.task_description}</Td>
                           <Td>
+                            {/* modal for cowriter */}
                             <ModalButtonForUpdateCoworkerInfo
+                              studyNotePk={study_note_pk}
                               coWritersInfoData={
                                 response_data_for_api
                                   ? response_data_for_api?.co_writers_for_approved

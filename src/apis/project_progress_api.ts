@@ -1333,7 +1333,7 @@ export const apiForUpdateTaskClassificationForChecked = ({
     });
 };
 
-// apiForUpdateEvaluateResult
+// apiForUpdateCoWriterIsTaskingForNote
 export const apiForUpdateTaskImportanceForChecked = ({
   checkedRowPks,
   importance,

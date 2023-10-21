@@ -18,19 +18,29 @@ import {
   Td,
   IconButton,
   Switch,
+  useToast,
+  useRadio,
 } from "@chakra-ui/react";
 import { EditIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons";
 import { CoWriter } from "../../types/study_note_type";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiForUpdateCoWriterIsTaskingForNote } from "../../apis/study_note_api";
 
 interface IProps {
-    coWritersInfoData:CoWriter[]
+  studyNotePk: any;
+  coWritersInfoData: CoWriter[];
 }
 
-const ModalButtonForUpdateCoworkerInfo = ({coWritersInfoData}: IProps) => {
+const ModalButtonForUpdateCoworkerInfo = ({
+  studyNotePk,
+  coWritersInfoData,
+}: IProps) => {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
   const [isOpen, setIsOpen] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [coWritersInfo, setCoWritersInfo] = useState(coWritersInfoData); // 상태 추가
-
 
   const onOpen = () => {
     setIsOpen(true);
@@ -45,17 +55,50 @@ const ModalButtonForUpdateCoworkerInfo = ({coWritersInfoData}: IProps) => {
     setIsUpdateMode(true);
   };
 
+  // mutationForUpdateIsTaskingForCowriter
+  const mutationForUpdateTaskImportanceForChecked = useMutation(
+    apiForUpdateCoWriterIsTaskingForNote,
+    {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+
+        toast({
+          status: "success",
+          title: "Update For IsTasking success",
+          description: result.message,
+        });
+
+        setCoWritersInfo(result.cowriters_data); // 상태 업데이트
+
+        // queryClient.invalidateQueries(["getUncompletedTaskList"]);
+        // onClose();
+      },
+      //   onSettled: () => {
+      //     queryClient.refetchQueries([
+      //       "getTaskListForUpdateImportanceForChecked",
+      //     ]);
+      //     queryClient.refetchQueries(["getUncompletedTaskList"]);
+      //   },
+    }
+  );
+
   const handleSwitchChange = (user: CoWriter) => {
     user.is_tasking = !user.is_tasking;
 
     // 여기서 API 요청을 보내는 로직을 추가할 수 있습니다.
     // API 요청을 성공적으로 처리하면 서버에서 반환한 데이터를 사용하여
     // 새로운 상태를 설정하는 것이 좋습니다.
+    // const updatedCoWritersInfo = coWritersInfo.map((u) =>
+    //   u.id === user.id ? user : u
+    // );
 
-    const updatedCoWritersInfo = coWritersInfo.map((u) =>
-      u.id === user.id ? user : u
-    );
-    setCoWritersInfo(updatedCoWritersInfo); // 상태 업데이트
+    mutationForUpdateTaskImportanceForChecked.mutate({
+      coWriterId: user.id,
+      studyNotePk: studyNotePk,
+    });
+
+    //  mutationForUpdateIsTaskingForNote
+    // setCoWritersInfo(updatedCoWritersInfo); // 상태 업데이트
   };
 
   return (
@@ -90,11 +133,12 @@ const ModalButtonForUpdateCoworkerInfo = ({coWritersInfoData}: IProps) => {
                   {coWritersInfo.map((user) => (
                     <Tr key={user.id} textAlign={"center"}>
                       <Td>
-                        <Avatar
+                        {/* <Avatar
                           name={user.username}
                           src={user.profile_image || ""}
                           size="sm"
-                        />
+                        /> */}
+                        {user.username}
                       </Td>
                       <Td>
                         <Switch
