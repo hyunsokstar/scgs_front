@@ -25,6 +25,7 @@ import {
   Tr,
   Th,
   Td,
+  IconButton,
 } from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
 import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/ButtonsForPageNumbersForStudyNoteContents";
@@ -47,6 +48,8 @@ import CardForYoutubeContentForPage from "../components/Card/CardForYoutubeConte
 import ModalButtonForSubtiTitleListForNoteContent from "../components/modal/ModalButtonForSubtititleListForNoteContent";
 import ModalButtonForQnAList from "../components/modal/ModalButtonForQnAList";
 import ModalButtonForRegisterErrorReportForNote from "../components/modal/ModalButtonForRegisterErrorReportForNote";
+import { EditIcon } from "@chakra-ui/icons";
+import ModalButtonForUpdateCoworkerInfo from "../components/modal/ModalButtonForUpdateCoworkerInfo";
 
 interface Props {}
 
@@ -58,8 +61,7 @@ const StudyNoteDetail2 = (props: Props) => {
   const [savedPageNumForCurrentPage, setSavedPageNumForCurrentPage] =
     useState(0);
 
-    const [tasking, setTasking] = useState(true); // Initialize the tasking state
-
+  const [tasking, setTasking] = useState(true); // Initialize the tasking state
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -507,12 +509,13 @@ const StudyNoteDetail2 = (props: Props) => {
                       <Th>is_tasking</Th>
                       <Th>Current Page</Th>
                       <Th>Task Description</Th>
+                      <Th>Update</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
                     {response_data_for_api.co_writers_for_approved.map(
                       (user) => (
-                        <Tr key={user.id}>
+                        <Tr key={user.id} textAlign={"center"}>
                           <Td>
                             <Avatar
                               name={user.username}
@@ -520,17 +523,18 @@ const StudyNoteDetail2 = (props: Props) => {
                               size="sm"
                             />
                           </Td>
-                          <Td>
-                            {" "}
-                            <Switch
-                              colorScheme="teal"
-                              size="sm"
-                              isChecked={user.is_tasking}
-                              onChange={() => setTasking(!tasking)}
-                            />
-                          </Td>
+                          <Td> {user.is_tasking ? "yes" : "no"}</Td>
                           <Td>{user.current_page}</Td>
                           <Td>{user.task_description}</Td>
+                          <Td>
+                            <ModalButtonForUpdateCoworkerInfo
+                              coWritersInfoData={
+                                response_data_for_api
+                                  ? response_data_for_api?.co_writers_for_approved
+                                  : []
+                              }
+                            />
+                          </Td>
                         </Tr>
                       )
                     )}
