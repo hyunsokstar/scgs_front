@@ -35,6 +35,7 @@ import ModalButtonForErrorReportForNote from "../modal/ModalButtonForErrorReport
 import { AiOutlineEye, AiOutlineHeart } from "react-icons/ai";
 import ModalButtonForFaqListForNote from "../modal/ModalButtonForFaqListForNote";
 import ModalButtonForNoteSuggestion from "../modal/ModalButtonForNoteSuggestion";
+import { CopyIcon } from "@chakra-ui/icons";
 
 interface IProps {
   pk: any;
@@ -489,29 +490,33 @@ const CardForStudyNote: React.FC<IProps> = ({
             <Text>2nd: {second_category}</Text>
           </Box>
           <Box display={"flex"} gap={3}>
-            <Box display="flex" alignItems="center" justifyContent="flex-end">
-              <IconButton
-                variant="outline"
-                size={"sm"}
-                colorScheme="blue"
-                aria-label="View count"
-                icon={<Icon as={AiOutlineEye} />}
-                marginRight={2}
-              />
-              <Text>2</Text>
-            </Box>
+            <IconButton
+              variant="outline"
+              size={"sm"}
+              colorScheme="blue"
+              aria-label="View count"
+              icon={<Icon as={AiOutlineEye} />}
+              marginRight={2}
+            />
+            <Text>2</Text>
 
-            <Box display="flex" alignItems="center" justifyContent="flex-end">
-              <IconButton
-                variant="outline"
-                size={"sm"}
-                colorScheme="red"
-                aria-label="Like count"
-                icon={<Icon as={AiOutlineHeart} />}
-                marginRight={2}
-              />
-              <Text>2</Text>
-            </Box>
+            <IconButton
+              variant="outline"
+              size={"sm"}
+              colorScheme="red"
+              aria-label="Like count"
+              icon={<Icon as={AiOutlineHeart} />}
+              marginRight={2}
+            />
+            <Text>2</Text>
+          </Box>
+          <Box>
+            <IconButton
+              aria-label="Copy to clipboard"
+              icon={<CopyIcon />}
+              size="md"
+              colorScheme="teal"
+            />
           </Box>
         </Box>
       </Box>

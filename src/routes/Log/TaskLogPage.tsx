@@ -8,6 +8,7 @@ import { ResponseDataForTaskLog } from "../../types/project_progress/project_pro
 import TaskLogList from "../../components/List/TaskLogList";
 import HeaderForTaskStatusForToday from "../../components/Header/HeaderForTaskStatusForToday";
 
+
 interface Props {}
 
 const TaskLogPage = (props: Props) => {
