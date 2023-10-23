@@ -7,15 +7,21 @@ interface WriterData {
 
 interface TableForUsersTaskCountInfoProps {
   writers: WriterData[];
-  setUserOptionForList: React.Dispatch<React.SetStateAction<string>>;
-  userOptionForList: string;
+  filterOptionForUserNameForTaskLogList: string;
+  setFilterOptionForUserNameForTaskLogList: React.Dispatch<
+    React.SetStateAction<string>
+  >;
 }
 
 const TableForUsersTaskCountInfoForTaskLog: React.FC<
   TableForUsersTaskCountInfoProps
-> = ({ writers, userOptionForList, setUserOptionForList }) => {
+> = ({
+  writers,
+  filterOptionForUserNameForTaskLogList,
+  setFilterOptionForUserNameForTaskLogList,
+}) => {
   const handleWriterClick = (writer: string) => {
-    setUserOptionForList(writer);
+    setFilterOptionForUserNameForTaskLogList(writer);
   };
 
   return (
@@ -50,7 +56,9 @@ const TableForUsersTaskCountInfoForTaskLog: React.FC<
                 size="sm"
                 variant="outline"
                 bgColor={
-                  userOptionForList === writerData.writer ? "red.200" : ""
+                  filterOptionForUserNameForTaskLogList === writerData.writer
+                    ? "red.200"
+                    : ""
                 }
                 _hover={{ bg: "blue.500", color: "white" }}
                 width={"100%"}

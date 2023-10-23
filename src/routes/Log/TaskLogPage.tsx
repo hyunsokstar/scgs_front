@@ -4,23 +4,24 @@ import { Box } from "@chakra-ui/react";
 // data
 import { useQuery } from "@tanstack/react-query";
 import { apiForGetTaskLogList } from "../../apis/project_progress_api";
-import {
-  ResponseDataForTaskLog,
-} from "../../types/project_progress/project_progress_type";
+import { ResponseDataForTaskLog } from "../../types/project_progress/project_progress_type";
 import TaskLogList from "../../components/List/TaskLogList";
 import HeaderForTaskStatusForToday from "../../components/Header/HeaderForTaskStatusForToday";
 
 interface Props {}
 
 const TaskLogPage = (props: Props) => {
-  const [userOptionForList, setUserOptionForList] = useState("");
+  const [
+    filterOptionForUserNameForTaskLogList,
+    setFilterOptionForUserNameForTaskLogList,
+  ] = useState("");
 
   const {
     isLoading: loadingForTaskLog,
     data: dataForTaskLogs,
     refetch: refetchForTaskLogs,
   } = useQuery<ResponseDataForTaskLog>(
-    ["apiForGetTaskLogList", userOptionForList],
+    ["apiForGetTaskLogList", filterOptionForUserNameForTaskLogList],
     apiForGetTaskLogList,
     {
       enabled: true,
@@ -38,13 +39,13 @@ const TaskLogPage = (props: Props) => {
       {/* hi */}
       <HeaderForTaskStatusForToday
         data={dataForTaskLogs}
-        userOptionForList={userOptionForList}
-        setUserOptionForList={setUserOptionForList}
+        filterOptionForUserNameForTaskLogList={filterOptionForUserNameForTaskLogList}
+        setFilterOptionForUserNameForTaskLogList={setFilterOptionForUserNameForTaskLogList}
       />
       <br />
       <TaskLogList
         dataForTaskLogs={dataForTaskLogs.TaskLog}
-        userOptionForList={userOptionForList}
+        userOptionForList={filterOptionForUserNameForTaskLogList}
       />
     </Box>
   );

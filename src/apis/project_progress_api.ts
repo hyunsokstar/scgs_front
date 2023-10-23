@@ -659,9 +659,9 @@ export const apiForExtraTaskDetail = async ({
 export const apiForGetTaskLogList = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
-  const [_, userOptionForList] = queryKey;
+  const [_, filterOptionForUserNameForTaskLogList] = queryKey;
   const data = await instance
-    .get(`project_progress/task-log?userOptionForList=${userOptionForList}`)
+    .get(`project_progress/task-log?filterOptionForUserNameForTaskLogList=${filterOptionForUserNameForTaskLogList}`)
     .then((response) => response.data);
 
   return data;

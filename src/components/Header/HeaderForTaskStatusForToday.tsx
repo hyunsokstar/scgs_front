@@ -1,17 +1,23 @@
-import { Box, Table, Tr, Th, Td, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Table, Tr, Th, Td, useBreakpointValue, Text } from "@chakra-ui/react";
 import TableForUsersTaskCountInfoForTaskLog from "../Table/TableForUsersTaskCountInfoForTaskLog";
 import TableForTaskLogForTasksOfWeekDay from "../Table/TableForTaskLogForTasksOfWeekDay";
 import { ResponseDataForTaskLog } from "../../types/project_progress/project_progress_type";
 
 interface HeaderForTaskStatusForTodayProps {
   data: ResponseDataForTaskLog;
-  setUserOptionForList: React.Dispatch<React.SetStateAction<string>>;
-  userOptionForList: string;
+  filterOptionForUserNameForTaskLogList: string;
+  setFilterOptionForUserNameForTaskLogList: React.Dispatch<
+    React.SetStateAction<string>
+  >;
 }
 
 const HeaderForTaskStatusForToday: React.FC<
   HeaderForTaskStatusForTodayProps
-> = ({ data, setUserOptionForList, userOptionForList }) => {
+> = ({
+  data,
+  setFilterOptionForUserNameForTaskLogList,
+  filterOptionForUserNameForTaskLogList,
+}) => {
   const {
     total_today_task_count,
     total_today_completed_task_count,
@@ -21,9 +27,9 @@ const HeaderForTaskStatusForToday: React.FC<
     writers,
   } = data;
 
-  const completionRate = Math.round(
-    (total_today_completed_task_count / total_today_task_count) * 100
-  );
+  let completionRate =
+    (total_today_completed_task_count / total_today_task_count) * 100;
+  completionRate = isNaN(completionRate) ? 0 : Math.round(completionRate);
 
   const is_show_for_mobile = useBreakpointValue({
     base: true, // for mobile and small screens
@@ -39,7 +45,12 @@ const HeaderForTaskStatusForToday: React.FC<
       px={2}
       gap={2}
       display="grid"
-      gridTemplateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)", "repeat(3, 1fr)", "repeat(3, 1fr)"]} // 1 column for mobile, 3 columns for others
+      gridTemplateColumns={[
+        "repeat(1, 1fr)",
+        "repeat(1, 1fr)",
+        "repeat(3, 1fr)",
+        "repeat(3, 1fr)",
+      ]} // 1 column for mobile, 3 columns for others
     >
       {/* Box 1 */}
       <Box mb={[4, 4, 0]}>
@@ -91,7 +102,7 @@ const HeaderForTaskStatusForToday: React.FC<
             </Td>
             {is_show_for_mobile && (
               <Td fontSize="md" textAlign={"center"}>
-                {completionRate}%
+                {completionRate} %
               </Td>
             )}
           </Tr>
@@ -101,11 +112,11 @@ const HeaderForTaskStatusForToday: React.FC<
               textAlign={"center"}
               colSpan={is_show_for_mobile ? 2 : 3}
             >
-              9:00 ~ 19:00
+              근무 시간
             </Th>
             {is_show_for_mobile && (
               <Th fontSize="md" textAlign={"center"} colSpan={2}>
-                average
+                시간당 평균 처리 건수
               </Th>
             )}
           </Tr>
@@ -115,7 +126,8 @@ const HeaderForTaskStatusForToday: React.FC<
               textAlign={"center"}
               colSpan={is_show_for_mobile ? 2 : 3}
             >
-              {elapsed_time}
+              <Text>9:00 ~ 19:00</Text>
+              <Text>({elapsed_time})</Text>
             </Td>
             {is_show_for_mobile && (
               <Td fontSize="md" textAlign={"center"} colSpan={2}>
@@ -129,8 +141,12 @@ const HeaderForTaskStatusForToday: React.FC<
       <Box>
         <TableForUsersTaskCountInfoForTaskLog
           writers={writers}
-          userOptionForList={userOptionForList}
-          setUserOptionForList={setUserOptionForList}
+          filterOptionForUserNameForTaskLogList={
+            filterOptionForUserNameForTaskLogList
+          }
+          setFilterOptionForUserNameForTaskLogList={
+            setFilterOptionForUserNameForTaskLogList
+          }
         />
       </Box>
     </Box>
