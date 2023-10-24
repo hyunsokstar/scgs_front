@@ -118,6 +118,8 @@ const TaskListUntilYesterday = ({
       onSuccess: (data) => {
         console.log("data : ", data);
         setCheckedRowPks([]);
+
+        queryClient.refetchQueries(["getInprogressTaskList"]);
         queryClient.refetchQueries(["getUncompletedTaskList"]);
 
         toast({
@@ -149,6 +151,7 @@ const TaskListUntilYesterday = ({
       onSuccess: (data) => {
         console.log("data : ", data);
         setCheckedRowPks([]);
+        queryClient.refetchQueries(["getInprogressTaskList"]);
         queryClient.refetchQueries(["getUncompletedTaskList"]);
 
         toast({

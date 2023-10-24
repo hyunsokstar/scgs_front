@@ -36,6 +36,7 @@ import { AiOutlineEye, AiOutlineHeart } from "react-icons/ai";
 import ModalButtonForFaqListForNote from "../modal/ModalButtonForFaqListForNote";
 import ModalButtonForNoteSuggestion from "../modal/ModalButtonForNoteSuggestion";
 import { CopyIcon } from "@chakra-ui/icons";
+import IconButtonForCopyNote from "../Button/IconButtonForCopyNote";
 
 interface IProps {
   pk: any;
@@ -511,12 +512,14 @@ const CardForStudyNote: React.FC<IProps> = ({
             <Text>2</Text>
           </Box>
           <Box>
-            <IconButton
+            {/* <IconButton
               aria-label="Copy to clipboard"
               icon={<CopyIcon />}
               size="md"
               colorScheme="teal"
-            />
+            /> */}
+
+            <IconButtonForCopyNote studyNotePk={pk} studyNoteTitle={title} />
           </Box>
         </Box>
       </Box>

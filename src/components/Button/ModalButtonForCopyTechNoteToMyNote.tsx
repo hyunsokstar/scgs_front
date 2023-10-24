@@ -70,6 +70,7 @@ const ModalButtonForCopyTechNoteToMyNote: React.FC<
     setIsOpen(false);
   };
 
+  // mutationForCopyOneOfNoteToMe
   const mutationForCopySelectedNotesToMyNote = useMutation(
     apiForCopySelectedNotesToMyNote,
     {

@@ -49,7 +49,7 @@ export const getInProgressTaskList = ({ queryKey }: QueryFunctionContext) => {
         page: pageNum,
         selectedPeriodOptionForUncompletedTaskList,
         username_for_search,
-        task_status_for_filter:task_status_for_search,
+        task_status_for_filter: task_status_for_search,
         due_date_option_for_filtering,
         rating_for_filter_option,
         isForUrgent,
@@ -659,9 +659,14 @@ export const apiForExtraTaskDetail = async ({
 export const apiForGetTaskLogList = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
-  const [_, filterOptionForUserNameForTaskLogList] = queryKey;
+  const [_, filterOptionForUserNameForTaskLogList, selectedDay] = queryKey;
   const data = await instance
-    .get(`project_progress/task-log?filterOptionForUserNameForTaskLogList=${filterOptionForUserNameForTaskLogList}`)
+    .get(`project_progress/task-log`, {
+      params: {
+        filterOptionForUserNameForTaskLogList,
+        selectedDay,
+      },
+    })
     .then((response) => response.data);
 
   return data;
@@ -1604,7 +1609,7 @@ export const getUncompletedTaskList = ({ queryKey }: QueryFunctionContext) => {
         page: pageNum,
         selectedPeriodOptionForUncompletedTaskList,
         username_for_search,
-        task_status_for_filter:task_status_for_search,
+        task_status_for_filter: task_status_for_search,
         due_date_option_for_filtering,
         rating_for_filter_option,
         isForUrgent,

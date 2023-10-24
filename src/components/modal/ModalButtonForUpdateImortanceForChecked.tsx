@@ -1,4 +1,4 @@
-import { useState, useEffect  } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Modal,
@@ -77,6 +77,9 @@ const ModalButtonForUpdateImortanceForChecked: React.FC<
         queryClient.refetchQueries([
           "getTaskListForUpdateImportanceForChecked",
         ]);
+
+        queryClient.refetchQueries(["getInprogressTaskList"]);
+
         queryClient.refetchQueries(["getUncompletedTaskList"]);
       },
     }

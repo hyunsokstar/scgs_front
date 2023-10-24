@@ -1,4 +1,12 @@
-import { Box, Table, Tr, Th, Td, useBreakpointValue, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Table,
+  Tr,
+  Th,
+  Td,
+  useBreakpointValue,
+  Text,
+} from "@chakra-ui/react";
 import TableForUsersTaskCountInfoForTaskLog from "../Table/TableForUsersTaskCountInfoForTaskLog";
 import TableForTaskLogForTasksOfWeekDay from "../Table/TableForTaskLogForTasksOfWeekDay";
 import { ResponseDataForTaskLog } from "../../types/project_progress/project_progress_type";
@@ -54,13 +62,44 @@ const HeaderForTaskStatusForToday: React.FC<
     >
       {/* Box 1 */}
       <Box mb={[4, 4, 0]}>
-        <Box>
-          {data.today_info.date} {data.today_info.dayOfWeek}
-          <TableForTaskLogForTasksOfWeekDay
-            today_info={data.today_info}
-            taskCountForWeekdays={data.task_count_for_weekdays}
-          />
-        </Box>
+        <Table
+          variant="striped"
+          colorScheme="black"
+          size="sm"
+          borderRadius="md"
+          border={"1px solid black"}
+          mb={1}
+        >
+          <Tr bg={"green.100"}>
+            <Th
+              fontSize="sm"
+              textAlign={"center"}
+              colSpan={is_show_for_mobile ? 2 : 3}
+            >
+              근무 시간
+            </Th>
+            {is_show_for_mobile && (
+              <Th fontSize="md" textAlign={"center"} colSpan={2}>
+                시간당 평균 처리 건수
+              </Th>
+            )}
+          </Tr>
+          <Tr>
+            <Td
+              fontSize="md"
+              textAlign={"center"}
+              colSpan={is_show_for_mobile ? 2 : 3}
+            >
+              <Text>9:00 ~ 19:00</Text>
+              <Text>({elapsed_time})</Text>
+            </Td>
+            {is_show_for_mobile && (
+              <Td fontSize="md" textAlign={"center"} colSpan={2}>
+                {average_number_per_hour}
+              </Td>
+            )}
+          </Tr>
+        </Table>
       </Box>
 
       {/* Box 2 */}
@@ -103,35 +142,6 @@ const HeaderForTaskStatusForToday: React.FC<
             {is_show_for_mobile && (
               <Td fontSize="md" textAlign={"center"}>
                 {completionRate} %
-              </Td>
-            )}
-          </Tr>
-          <Tr bg={"green.100"}>
-            <Th
-              fontSize="sm"
-              textAlign={"center"}
-              colSpan={is_show_for_mobile ? 2 : 3}
-            >
-              근무 시간
-            </Th>
-            {is_show_for_mobile && (
-              <Th fontSize="md" textAlign={"center"} colSpan={2}>
-                시간당 평균 처리 건수
-              </Th>
-            )}
-          </Tr>
-          <Tr>
-            <Td
-              fontSize="md"
-              textAlign={"center"}
-              colSpan={is_show_for_mobile ? 2 : 3}
-            >
-              <Text>9:00 ~ 19:00</Text>
-              <Text>({elapsed_time})</Text>
-            </Td>
-            {is_show_for_mobile && (
-              <Td fontSize="md" textAlign={"center"} colSpan={2}>
-                {average_number_per_hour}
               </Td>
             )}
           </Tr>

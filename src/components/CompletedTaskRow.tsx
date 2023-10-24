@@ -49,6 +49,10 @@ function CompletedTaskRow({
     onSuccess: (result: any) => {
       console.log("result : ", result);
 
+      // alert("이거 실행 되는거 맞지?")
+
+      queryClient.refetchQueries(["getInprogressTaskList"]);
+
       queryClient.refetchQueries(["getUncompletedTaskList"]);
       queryClient.refetchQueries(["getCompletedTaskLidt"]);
       if (projectTaskListRefatch) {
@@ -76,6 +80,9 @@ function CompletedTaskRow({
         if (projectTaskListRefatch) {
           projectTaskListRefatch();
         }
+        // // alert("이거 실행 되는거 맞지?")
+
+        // queryClient.refetchQueries(["getInprogressTaskList"]);
         queryClient.refetchQueries(["getUncompletedTaskList"]);
         queryClient.refetchQueries(["getCompletedTaskList"]);
 

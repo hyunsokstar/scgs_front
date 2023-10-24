@@ -89,6 +89,7 @@ const ModalButtonForUpdateTaskClassificationForChecked: React.FC<
         queryClient.refetchQueries([
           "getTaskListForUpdateImportanceForChecked",
         ]);
+        queryClient.refetchQueries(["getInprogressTaskList"]);
         queryClient.refetchQueries(["getUncompletedTaskList"]);
       },
     }

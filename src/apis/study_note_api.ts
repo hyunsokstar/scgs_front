@@ -20,6 +20,30 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForCopyOneOfNoteToMe = ({
+  studyNotePk,
+}: any) => {
+  console.log(
+    "selectedRowPksFromOriginalTable at api : ",
+    studyNotePk
+  );
+
+  return instance
+    .post(
+      `/study-note/copy-one-of-note-to-me`,
+      {
+        studyNotePk,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
+
 export const apiForUpdateCoWriterIsTaskingForNote = ({
   studyNotePk,
   coWriterId,
@@ -1004,6 +1028,7 @@ export const apiForUpdateForUpdateIsApprovedForNoteCoWriter = (
     });
 };
 
+// apiForCopyOneOfNoteToMe
 export const apiForCopySelectedNotesToMyNote = ({
   selectedRowPksFromOriginalTable,
 }: typeForParameterForApiForCopySelectedNotesToMyNote) => {

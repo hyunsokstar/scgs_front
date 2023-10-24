@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Box } from "@chakra-ui/react";
-
 // data
 import { useQuery } from "@tanstack/react-query";
 import { apiForGetTaskLogList } from "../../apis/project_progress_api";
 import { ResponseDataForTaskLog } from "../../types/project_progress/project_progress_type";
 import TaskLogList from "../../components/List/TaskLogList";
 import HeaderForTaskStatusForToday from "../../components/Header/HeaderForTaskStatusForToday";
-
+import TableForTaskLogForTasksOfWeekDay from "../../components/Table/TableForTaskLogForTasksOfWeekDay";
 
 interface Props {}
 
@@ -16,23 +15,30 @@ const TaskLogPage = (props: Props) => {
     filterOptionForUserNameForTaskLogList,
     setFilterOptionForUserNameForTaskLogList,
   ] = useState("");
+  const [selectedDay, setSelectedDay] = useState(""); // 초기 선택값은 없음
 
   const {
     isLoading: loadingForTaskLog,
     data: dataForTaskLogs,
     refetch: refetchForTaskLogs,
   } = useQuery<ResponseDataForTaskLog>(
-    ["apiForGetTaskLogList", filterOptionForUserNameForTaskLogList],
+    ["apiForGetTaskLogList", filterOptionForUserNameForTaskLogList, selectedDay],
     apiForGetTaskLogList,
     {
       enabled: true,
     }
   );
-
+  
   console.log("dataForTaskLogs : ", dataForTaskLogs);
 
-  if (!dataForTaskLogs) {
-    return <Box>no data</Box>;
+  useEffect(() => {
+    if (selectedDay === "" && dataForTaskLogs && dataForTaskLogs.today_info) {
+      setSelectedDay(dataForTaskLogs.today_info.dayOfWeek);
+    }
+  }, [dataForTaskLogs, setSelectedDay]);
+
+  if(!dataForTaskLogs){
+    return "...loading"
   }
 
   return (
@@ -40,8 +46,20 @@ const TaskLogPage = (props: Props) => {
       {/* hi */}
       <HeaderForTaskStatusForToday
         data={dataForTaskLogs}
-        filterOptionForUserNameForTaskLogList={filterOptionForUserNameForTaskLogList}
-        setFilterOptionForUserNameForTaskLogList={setFilterOptionForUserNameForTaskLogList}
+        filterOptionForUserNameForTaskLogList={
+          filterOptionForUserNameForTaskLogList
+        }
+        setFilterOptionForUserNameForTaskLogList={
+          setFilterOptionForUserNameForTaskLogList
+        }
+      />
+      <br />
+      {dataForTaskLogs.today_info.date} {dataForTaskLogs.today_info.dayOfWeek}
+      <TableForTaskLogForTasksOfWeekDay
+        today_info={dataForTaskLogs.today_info}
+        taskCountForWeekdays={dataForTaskLogs.task_count_for_weekdays}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
       />
       <br />
       <TaskLogList
