@@ -1,5 +1,5 @@
-import React, { useState, useEffect} from "react";
-import { Box } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Box, Text } from "@chakra-ui/react";
 // data
 import { useQuery } from "@tanstack/react-query";
 import { apiForGetTaskLogList } from "../../apis/project_progress_api";
@@ -15,6 +15,7 @@ const TaskLogPage = (props: Props) => {
     filterOptionForUserNameForTaskLogList,
     setFilterOptionForUserNameForTaskLogList,
   ] = useState("");
+  
   const [selectedDay, setSelectedDay] = useState(""); // 초기 선택값은 없음
 
   const {
@@ -22,13 +23,17 @@ const TaskLogPage = (props: Props) => {
     data: dataForTaskLogs,
     refetch: refetchForTaskLogs,
   } = useQuery<ResponseDataForTaskLog>(
-    ["apiForGetTaskLogList", filterOptionForUserNameForTaskLogList, selectedDay],
+    [
+      "apiForGetTaskLogList",
+      filterOptionForUserNameForTaskLogList,
+      selectedDay,
+    ],
     apiForGetTaskLogList,
     {
       enabled: true,
     }
   );
-  
+
   console.log("dataForTaskLogs : ", dataForTaskLogs);
 
   useEffect(() => {
@@ -37,8 +42,8 @@ const TaskLogPage = (props: Props) => {
     }
   }, [dataForTaskLogs, setSelectedDay]);
 
-  if(!dataForTaskLogs){
-    return "...loading"
+  if (!dataForTaskLogs) {
+    return "...loading";
   }
 
   return (
@@ -53,8 +58,10 @@ const TaskLogPage = (props: Props) => {
           setFilterOptionForUserNameForTaskLogList
         }
       />
-      <br />
-      {dataForTaskLogs.today_info.date} {dataForTaskLogs.today_info.dayOfWeek}
+      {/* <Text my={1}>
+        {dataForTaskLogs.today_info.date} {dataForTaskLogs.today_info.dayOfWeek}
+      </Text> */}
+      <Box mt={1}></Box>
       <TableForTaskLogForTasksOfWeekDay
         today_info={dataForTaskLogs.today_info}
         taskCountForWeekdays={dataForTaskLogs.task_count_for_weekdays}

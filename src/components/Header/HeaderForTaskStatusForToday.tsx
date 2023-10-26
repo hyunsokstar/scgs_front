@@ -76,7 +76,7 @@ const HeaderForTaskStatusForToday: React.FC<
               textAlign={"center"}
               colSpan={is_show_for_mobile ? 2 : 3}
             >
-              근무 시간
+              <Text>근무 시간 ( 9:00 ~ 19:00 )</Text>
             </Th>
             {is_show_for_mobile && (
               <Th fontSize="md" textAlign={"center"} colSpan={2}>
@@ -90,8 +90,9 @@ const HeaderForTaskStatusForToday: React.FC<
               textAlign={"center"}
               colSpan={is_show_for_mobile ? 2 : 3}
             >
-              <Text>9:00 ~ 19:00</Text>
-              <Text>({elapsed_time})</Text>
+              <Text>
+                {elapsed_time}
+              </Text>
             </Td>
             {is_show_for_mobile && (
               <Td fontSize="md" textAlign={"center"} colSpan={2}>
@@ -104,7 +105,7 @@ const HeaderForTaskStatusForToday: React.FC<
 
       {/* Box 2 */}
       <Box>
-        {is_show_for_mobile && <Box>Today Task Statistics</Box>}
+        {/* {is_show_for_mobile && <Box>Today Task Statistics</Box>} */}
         <Table
           variant="striped"
           colorScheme="black"

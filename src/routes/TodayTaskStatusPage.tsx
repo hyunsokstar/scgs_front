@@ -48,6 +48,7 @@ const taskColors = {
   night_tasks: "blue.800", // or "purple.500"
 };
 
+
 const TodayTaskStatusPage = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
@@ -63,6 +64,7 @@ const TodayTaskStatusPage = () => {
   );
 
   const [tasks, setTasks] = useState<any>(initialTasks);
+  const [selectedDay, setSelectedDay] = useState(""); // 초기 선택값은 없음
 
   console.log("tasks : ", tasks);
 
@@ -198,20 +200,49 @@ const TodayTaskStatusPage = () => {
     lg: true, // for large screens and up
   });
 
+  // dataForTaskStatusForToday?.today_info.dayOfWeek
+  useEffect(() => {
+    if (
+      selectedDay === "" &&
+      dataForTaskStatusForToday &&
+      dataForTaskStatusForToday.today_info
+    ) {
+      setSelectedDay(dataForTaskStatusForToday.today_info.dayOfWeek);
+    }
+  }, [dataForTaskStatusForToday, setSelectedDay]);
+
   // 2244
   return (
     <Box width={"100%"} border={"0px solid purple"}>
-      <Box
+      {/* <Box
         fontSize="3xl"
         color={"black"}
         fontWeight="bold"
         textAlign="center"
         bg={"yellow.200"}
-        py={10}
+        py={5}
         my={2}
       >
         Today Task Status
-      </Box>{" "}
+      </Box>{" "} */}
+
+      <Box display={"flex"} gap={2} my={2}>
+        <Text>
+          {dataForTaskStatusForToday &&
+            dataForTaskStatusForToday?.today_info.date}
+        </Text>
+        <Text>
+          {dataForTaskStatusForToday &&
+            dataForTaskStatusForToday?.today_info.dayOfWeek}
+        </Text>
+
+        <ModalButtonForTaskListWithDeadlineUntilYesterDay
+          buttonText={
+            dataForTaskStatusForToday?.task_count_for_uncompleted_task_until_yesterday
+          }
+        />
+      </Box>
+
       <Box
         display={"grid"}
         gridTemplateColumns={{
@@ -224,37 +255,10 @@ const TodayTaskStatusPage = () => {
         bg="gray.200"
         width={"100%"}
         p={4}
+        mt={2}
         // border={"5px solid blue"}
         // mx={2}
       >
-        <Box width={"100%"}>
-          <Box display={"flex"} gap={2} mb={1}>
-            <Text>
-              {dataForTaskStatusForToday &&
-                dataForTaskStatusForToday?.today_info.date}
-            </Text>
-            <Text>
-              {dataForTaskStatusForToday &&
-                dataForTaskStatusForToday?.today_info.dayOfWeek}
-            </Text>
-
-            <ModalButtonForTaskListWithDeadlineUntilYesterDay
-              buttonText={
-                dataForTaskStatusForToday?.task_count_for_uncompleted_task_until_yesterday
-              }
-            />
-          </Box>
-          
-          {dataForTaskStatusForToday && (
-            <TableForTaskLogForTasksOfWeekDay
-              today_info={dataForTaskStatusForToday?.today_info}
-              taskCountForWeekdays={
-                dataForTaskStatusForToday?.task_count_for_weekdays
-              }
-            />
-          )}
-        </Box>
-
         <Box
           color="teal.800"
           width={"100%"}
@@ -289,6 +293,35 @@ const TodayTaskStatusPage = () => {
           />
         </Box>
       </Box>
+      <Box width={"100%"} mt={2}>
+        {/* <Box display={"flex"} gap={2} mb={1}>
+          <Text>
+            {dataForTaskStatusForToday &&
+              dataForTaskStatusForToday?.today_info.date}
+          </Text>
+          <Text>
+            {dataForTaskStatusForToday &&
+              dataForTaskStatusForToday?.today_info.dayOfWeek}
+          </Text>
+
+          <ModalButtonForTaskListWithDeadlineUntilYesterDay
+            buttonText={
+              dataForTaskStatusForToday?.task_count_for_uncompleted_task_until_yesterday
+            }
+          />
+        </Box> */}
+
+        {dataForTaskStatusForToday && (
+          <TableForTaskLogForTasksOfWeekDay
+            today_info={dataForTaskStatusForToday?.today_info}
+            taskCountForWeekdays={
+              dataForTaskStatusForToday?.task_count_for_weekdays
+            }
+            selectedDay={selectedDay}
+            setSelectedDay={setSelectedDay}
+          />
+        )}
+      </Box>
       {/* fix */}
       {is_show_for_mobile ? (
         <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -309,7 +342,7 @@ const TodayTaskStatusPage = () => {
                     style={{
                       backgroundColor: teamColors[Time],
                       width: "100%",
-                      padding: "10px",
+                      padding: "5px",
                       margin: "1%",
                       borderRadius: "10px",
                       boxSizing: "border-box",
@@ -350,8 +383,8 @@ const TodayTaskStatusPage = () => {
                               {...provided.dragHandleProps}
                               ref={provided.innerRef}
                               style={{
-                                padding: "10px",
-                                margin: "10px 0",
+                                padding: "5px",
+                                margin: "5px 0",
                                 backgroundColor: "white",
                                 borderRadius: "5px",
                                 ...provided.draggableProps.style,
@@ -364,7 +397,7 @@ const TodayTaskStatusPage = () => {
                       ))
                     ) : (
                       <Box
-                        fontSize={"20px"}
+                        fontSize={"15px"}
                         bgColor={"white"}
                         display={"flex"}
                         justifyContent={"center"}
