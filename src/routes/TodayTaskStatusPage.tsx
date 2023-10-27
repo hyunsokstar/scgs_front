@@ -48,23 +48,24 @@ const taskColors = {
   night_tasks: "blue.800", // or "purple.500"
 };
 
-
 const TodayTaskStatusPage = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
-
+  const [checkedPksForUserList, setCheckedPksForUserList] =
+    useState<number[]>([]);
+    const [selectedDay, setSelectedDay] = useState(""); // 초기 선택값은 없음
+  
   const {
     data: dataForTaskStatusForToday,
     isLoading,
     isError,
     refetch: refetchForGetProgectTasksStatusForToday,
   } = useQuery<ITypeForTaskStatusForToday | any>(
-    ["getTaskStatusForToday"],
+    ["getTaskStatusForToday", checkedPksForUserList, selectedDay],
     apiForgetTaskStatusForToday
-  );
-
+    );
+    
   const [tasks, setTasks] = useState<any>(initialTasks);
-  const [selectedDay, setSelectedDay] = useState(""); // 초기 선택값은 없음
 
   console.log("tasks : ", tasks);
 
@@ -200,7 +201,6 @@ const TodayTaskStatusPage = () => {
     lg: true, // for large screens and up
   });
 
-  // dataForTaskStatusForToday?.today_info.dayOfWeek
   useEffect(() => {
     if (
       selectedDay === "" &&
@@ -214,18 +214,6 @@ const TodayTaskStatusPage = () => {
   // 2244
   return (
     <Box width={"100%"} border={"0px solid purple"}>
-      {/* <Box
-        fontSize="3xl"
-        color={"black"}
-        fontWeight="bold"
-        textAlign="center"
-        bg={"yellow.200"}
-        py={5}
-        my={2}
-      >
-        Today Task Status
-      </Box>{" "} */}
-
       <Box display={"flex"} gap={2} my={2}>
         <Text>
           {dataForTaskStatusForToday &&
@@ -256,19 +244,12 @@ const TodayTaskStatusPage = () => {
         width={"100%"}
         p={4}
         mt={2}
-        // border={"5px solid blue"}
-        // mx={2}
       >
-        <Box
-          color="teal.800"
-          width={"100%"}
-          // mx={"auto"}
-          // border={"1px solid red"}
-        >
+        <Box color="teal.800" width={"100%"}>
           <Box width={"100%"}>
             <TableForStaticsForTodayTaskStatus
-              toal_task_count_for_today={
-                dataForTaskStatusForToday?.toal_task_count_for_today
+              total_task_count_for_today={
+                dataForTaskStatusForToday?.total_task_count_for_today
               }
               task_count_for_ready={
                 dataForTaskStatusForToday?.task_count_for_ready
@@ -287,12 +268,16 @@ const TodayTaskStatusPage = () => {
           </Box>
         </Box>
 
+        {/* 유저 리스트 for today task status */}
         <Box width={"100%"} overflowY={"scroll"} maxHeight={"160px"}>
           <TableForTaskManagersForTasksForToday
             task_managers_data={dataForTaskStatusForToday?.task_managers_data}
+            checkedPksForUserList={checkedPksForUserList}
+            setCheckedPksForUserList={setCheckedPksForUserList}
           />
         </Box>
       </Box>
+
       <Box width={"100%"} mt={2}>
         {/* <Box display={"flex"} gap={2} mb={1}>
           <Text>

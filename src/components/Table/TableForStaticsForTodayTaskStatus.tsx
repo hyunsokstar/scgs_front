@@ -2,7 +2,7 @@ import { Box, Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import React from "react";
 
 type TableProps = {
-  toal_task_count_for_today: number;
+  total_task_count_for_today: number;
   task_count_for_ready: number;
   task_count_for_in_progress: number;
   task_count_for_testing: number;
@@ -11,7 +11,7 @@ type TableProps = {
 };
 
 const TableForStaticsForTodayTaskStatus: React.FC<TableProps> = ({
-  toal_task_count_for_today,
+  total_task_count_for_today,
   task_count_for_ready,
   task_count_for_in_progress,
   task_count_for_testing,
@@ -41,7 +41,7 @@ const TableForStaticsForTodayTaskStatus: React.FC<TableProps> = ({
         </Thead>
         <Tbody>
           <Tr>
-            <Td textAlign="center">{toal_task_count_for_today}</Td>
+            <Td textAlign="center">{total_task_count_for_today}</Td>
             <Td textAlign="center">{task_count_for_ready}</Td>
             <Td textAlign="center">{task_count_for_in_progress}</Td>
             <Td textAlign="center">{task_count_for_testing}</Td>

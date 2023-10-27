@@ -485,13 +485,14 @@ export interface TaskManager {
 }
 
 export type TaskManagerData = {
+  id: number;
   task_manager: string;
   uncompleted_count: number;
   completed_count: number;
 };
 
 export interface ITypeForTaskStatusForToday {
-  toal_task_count_for_today: number;
+  total_task_count_for_today: number;
   progress_rate: number;
   task_count_for_uncompleted_task_until_yesterday: number;
   task_count_for_ready: number;

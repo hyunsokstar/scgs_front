@@ -705,15 +705,38 @@ export const apiForUpdateTaskDueDateAndOrder = ({
     .then((response) => response.data);
 };
 
-export const apiForgetTaskStatusForToday = () => {
+// http://127.0.0.1:8000/api/v1/project_progress/task-status-view-for-today
+export const apiForgetTaskStatusForToday = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, checkedPksForUserList, selectedDay] = queryKey;
+
+  // alert(checkedPksForUserList)
+  console.log("checkedPksForUserList : ", checkedPksForUserList);
+  console.log("selectedDay : ", selectedDay);
+
+  // const config: AxiosRequestConfig = {
+  //   method: "get",
+  //   url: "project_progress/task-status-view-for-today",
+  //   params: {checkedPksForUserList},
+  // };
+
+  // return instance
+  //   .get("project_progress/task-status-view-for-today", {
+  //     params: { checkedPksForUserList },
+  //   })
+  //   .then((response) => {
+  //     // console.log("response for getProgectTasksStatusData: ", response);
+  //     return response.data;
+  //   });
+
   const config: AxiosRequestConfig = {
     method: "get",
-    url: "project_progress/task-status-view-for-today",
-    params: {},
+    url: `project_progress/task-status-view-for-today?checkedPksForUserList=${checkedPksForUserList}`,
+    params: {selectedDay}
   };
 
   return instance.request(config).then((response) => {
-    // console.log("response for getProgectTasksStatusData: ", response);
     return response.data;
   });
 };

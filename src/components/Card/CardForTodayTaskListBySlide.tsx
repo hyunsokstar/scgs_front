@@ -17,7 +17,6 @@ const CardForTodayTaskListBySlide = ({
   todos,
 }: IPropsForCardForTodayTaskListBySlide) => {
   const [checkedRows, setCheckedRows] = useState([]);
-  console.log("todos : ", todos);
 
   function getBackgroundColor(
     title: "until-noon" | "until-evening" | "until-night"
