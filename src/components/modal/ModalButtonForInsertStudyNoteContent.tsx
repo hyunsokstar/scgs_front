@@ -205,7 +205,7 @@ function ModalButtonForInsertStudyNoteContent({
               <Input
                 type="text"
                 placeholder="Enter the file name"
-                {...register("file", { required: true })}
+                {...register("file", { required: false })}
                 isInvalid={errors.file != null}
               />
             </FormControl>
