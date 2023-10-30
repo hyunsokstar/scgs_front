@@ -68,6 +68,7 @@ import SuggestionBoardPage from "./routes/SuggestionBoardPage";
 import FAQBoardPage from "./routes/FAQBoardPage";
 import ChallengesPage from "./routes/ChallengesPage";
 import SurveyPage from "./routes/SurveyPage";
+import LoadMapPage from "./routes/LoadMapPage";
 
 const router = createBrowserRouter([
   {
@@ -226,6 +227,10 @@ const router = createBrowserRouter([
       {
         path: "my-tech-note",
         element: <MyTechNote />,
+      },
+      {
+        path: "loadmap",
+        element: <LoadMapPage />,
       },
       {
         path: "tech-note",

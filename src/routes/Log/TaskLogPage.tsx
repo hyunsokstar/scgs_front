@@ -15,7 +15,7 @@ const TaskLogPage = (props: Props) => {
     filterOptionForUserNameForTaskLogList,
     setFilterOptionForUserNameForTaskLogList,
   ] = useState("");
-  
+
   const [selectedDay, setSelectedDay] = useState(""); // 초기 선택값은 없음
 
   const {
@@ -47,8 +47,7 @@ const TaskLogPage = (props: Props) => {
   }
 
   return (
-    <Box>
-      {/* hi */}
+    <Box py={1}>
       <HeaderForTaskStatusForToday
         data={dataForTaskLogs}
         filterOptionForUserNameForTaskLogList={
