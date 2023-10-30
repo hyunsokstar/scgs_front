@@ -56,6 +56,8 @@ const CardListForRoadMap = () => {
             justifyContent="space-between"
             alignItems="center"
             bg="white"
+            flexWrap="wrap" // flex-wrap 추가
+            gap={2}
           >
             <Box display="flex">
               <IconButton
@@ -95,7 +97,6 @@ const CardListForRoadMap = () => {
             right="0"
             opacity="0"
             transition="opacity 0.3s"
-            _hover={{ opacity: 0.5, bg: "black" }}
           />
         </Box>
       ))}

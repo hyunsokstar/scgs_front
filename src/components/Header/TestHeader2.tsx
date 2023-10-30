@@ -297,7 +297,7 @@ const Header = () => {
         </NavLink>
 
         <NavLink
-          to="/loadmap"
+          to="/roadmap"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
           <Text
@@ -307,7 +307,7 @@ const Header = () => {
             cursor="pointer"
             _hover={{ color: "blue.100", transform: "scale(1.1)" }}
           >
-            LoadMap
+            RoadMap
           </Text>
         </NavLink>
 

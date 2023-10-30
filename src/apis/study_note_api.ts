@@ -20,6 +20,23 @@ const instance = axios.create({
 });
 
 // 1122
+
+
+export const apiForRoadMapList = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, pageNum] = queryKey;
+
+  return instance
+    .get(`/study-note/roadmap`, {
+      params: { pageNum: pageNum },
+    })
+    .then((response) => {
+
+      return response.data;
+    });
+};
+
 export const apiForCopyOneOfNoteToMe = ({
   studyNotePk,
 }: any) => {

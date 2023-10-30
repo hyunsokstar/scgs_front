@@ -68,7 +68,8 @@ import SuggestionBoardPage from "./routes/SuggestionBoardPage";
 import FAQBoardPage from "./routes/FAQBoardPage";
 import ChallengesPage from "./routes/ChallengesPage";
 import SurveyPage from "./routes/SurveyPage";
-import LoadMapPage from "./routes/LoadMapPage";
+import LoadMapPage from "./routes/RoadMapPage";
+import RoadMapPage from "./routes/RoadMapPage";
 
 const router = createBrowserRouter([
   {
@@ -229,8 +230,8 @@ const router = createBrowserRouter([
         element: <MyTechNote />,
       },
       {
-        path: "loadmap",
-        element: <LoadMapPage />,
+        path: "roadmap",
+        element: <RoadMapPage />,
       },
       {
         path: "tech-note",
