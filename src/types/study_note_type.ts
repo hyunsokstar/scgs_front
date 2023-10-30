@@ -218,20 +218,6 @@ export interface AnswerForQaBoard {
   created_at_formatted: string;
 }
 
-// export interface FAQRow {
-//   pk: number;
-//   study_note: number;
-//   title: string;
-//   content: string;
-//   writer: {
-//     pk: number;
-//     username: string;
-//     profile_image: null | string;
-//   };
-//   created_at_formatted: string;
-//   updated_at: string;
-// }
-
 export interface QnARow {
   pk: string;
   study_note: number;
@@ -257,4 +243,15 @@ export interface ErrorReportForStudyNoteData {
   is_resolved: boolean;
   created_at_formatted: string;
   updated_at: string;
+}
+
+export interface RowTypeForRoadmapList {
+  id: number;
+  writer: UserProfileImage;
+  title: string;
+  sub_title: string;
+}
+
+export interface DataTypeForRoadMapList {
+  listForRoadMap : RowTypeForRoadmapList[];
 }

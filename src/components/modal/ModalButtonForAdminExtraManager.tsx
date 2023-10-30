@@ -69,11 +69,6 @@ const ModalButtonForAdminExtraManager: React.FC<ModalButtonProps> = ({
     }
   );
 
-  console.log(
-    "dataForUserListWitoutOwnerUser !!!!!!!!!!!!!!!!!!!!!!!!! ",
-    dataForUserListWitoutOwnerUser
-  );
-
   // 삭제 구현
   const mutationForDeleteExtraManagerForTask = useMutation(
     (extraManagerId: string | number) => {

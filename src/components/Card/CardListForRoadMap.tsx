@@ -1,6 +1,7 @@
 import { Grid, Box, Text, Button, IconButton } from "@chakra-ui/react";
 import { faker } from "@faker-js/faker";
 import { FaHeart, FaBookmark } from "react-icons/fa";
+import { DataTypeForRoadMapList } from "../../types/study_note_type";
 
 // 가상 로드맵 데이터 생성
 const generateFakeRoadmapData = (count) => {
@@ -23,10 +24,14 @@ const generateFakeRoadmapData = (count) => {
 
 const roadmapData = generateFakeRoadmapData(8); // 8개의 가상 데이터 생성
 
-const CardListForRoadMap = () => {
+interface IProps {
+  dataForRoadMap: DataTypeForRoadMapList;
+}
+
+const CardListForRoadMap = ({dataForRoadMap}: IProps) => {
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-      {roadmapData.map((data, index) => (
+      {dataForRoadMap.listForRoadMap.map((data, index) => (
         <Box
           key={index}
           maxW="sm"
@@ -36,7 +41,7 @@ const CardListForRoadMap = () => {
           position="relative"
         >
           <img
-            src={data.image}
+            src={"https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg"}
             alt={data.title}
             style={{ height: "40%", width: "100%", objectFit: "cover" }}
           />
@@ -44,7 +49,7 @@ const CardListForRoadMap = () => {
             <Text fontWeight="semibold" fontSize="lg">
               {data.title}
             </Text>
-            <Text color="gray.600">{data.spec}</Text>
+            <Text color="gray.600">{data.sub_title}</Text>
           </Box>
           <Box
             position="absolute"

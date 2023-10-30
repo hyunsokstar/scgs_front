@@ -115,10 +115,6 @@ export const apiForGetUserListWithoutOwnerUser = async ({
 }: QueryFunctionContext): Promise<any> => {
   const [_, ownerUser, extra_managers, pageNum] = queryKey;
 
-  console.log("실행 되는지 확인 ????????");
-
-  console.log("ownerUser : ", ownerUser);
-  console.log("extra_managers : ", extra_managers);
   const extraManagersString = JSON.stringify(extra_managers);
 
   const data = await instance
