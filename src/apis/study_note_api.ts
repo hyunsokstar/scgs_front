@@ -20,6 +20,21 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForgetStudyNoteListForRoadMap = async ({
+  queryKey,
+}: QueryFunctionContext): Promise<any> => {
+  const [_, pageNum] = queryKey;
+  const params = new URLSearchParams();
+  params.append("page", pageNum as string);
+  // params.append("first_category", first_category as string);
+  // params.append("second_category", second_category as string);
+  // params.append("selectedNoteWriter", selectedNoteWriter as string); // Add selectedNoteWriter to
+
+  return await instance.get(`study-note/?${params}`).then((response) => {
+    return response.data;
+  });
+};
+
 // apiForDeleteRoadMap
 export const apiForDeleteRoadMap = (
   roadMapId: string | number

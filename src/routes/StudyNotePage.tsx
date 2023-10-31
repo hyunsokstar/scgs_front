@@ -16,7 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { apiForGetStudyNoteList, apiForSearchStudyNoteListBySearchWords } from "../apis/study_note_api";
 import CardForStudyNote from "../components/Card/CardForStudyNote";
 import ModalButtonForAddStudyNote from "../components/modal/ModalButtonForAddStudyNote";
-import { TypeForNote, TypeForNoteList } from "../types/study_note_type";
+import { TypeForNote, DataTyprForNoteList } from "../types/study_note_type";
 import { Link } from "react-router-dom";
 import PaginationComponent from "../components/PaginationComponent";
 import { useSelector } from "react-redux";
@@ -75,7 +75,7 @@ const StudyNotePage = () => {
     isLoading: studyNoteLoading,
     data: dataForStudyNote,
     refetch: studyNoteListRefatch,
-  } = useQuery<TypeForNoteList>(
+  } = useQuery<DataTyprForNoteList>(
     [
       "apiForgetStudyNoteList",
       pageNum,

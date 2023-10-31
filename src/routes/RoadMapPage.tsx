@@ -5,10 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import { apiForRoadMapList } from "../apis/study_note_api";
 import { DataTypeForRoadMapList } from "../types/study_note_type";
 import ModalButtonForCreateRoadMap from "../components/modal/ModalButtonForCreateRoadMap";
+import useUser from "../lib/useUser";
 
 interface Props {}
 
 const RoadMapPage = (props: Props) => {
+  const { userLoading, user: loginUser, isLoggedIn } = useUser();
   const [pageNum, setPageNum] = useState(1);
 
   const {
@@ -26,12 +28,13 @@ const RoadMapPage = (props: Props) => {
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"flex-end"} p={2}>
-        <ModalButtonForCreateRoadMap buttonText="create road map" />
-      </Box>
       <Grid templateColumns="3fr 1fr" gap={4}>
         {/* 왼쪽 사이드 */}
         <Box>
+          <Box display={"flex"} justifyContent={"flex-end"} py={2 }>
+            <ModalButtonForCreateRoadMap buttonText="create road map" />
+          </Box>
+
           {dataForRoadMap ? (
             <CardListForRoadMap
               dataForRoadMap={dataForRoadMap}
@@ -42,7 +45,6 @@ const RoadMapPage = (props: Props) => {
             ""
           )}
         </Box>
-        {/* 오른쪽 사이드 */}
         <Box bg="gray.200">오른쪽 사이드 영역</Box>{" "}
       </Grid>
     </Box>

@@ -13,27 +13,7 @@ import PaginationComponent from "../PaginationComponent";
 import useUser from "../../lib/useUser";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForDeleteRoadMap } from "../../apis/study_note_api";
-
-// 가상 로드맵 데이터 생성
-// const generateFakeRoadmapData = (count: number) => {
-//   const data = [];
-
-//   for (let i = 0; i < count; i++) {
-//     const title = faker.lorem.words();
-//     const spec = faker.lorem.sentence();
-//     const image = faker.internet.avatar(); // 가상 이미지 URL 생성
-
-//     // 가상 좋아요 숫자와 즐겨찾기 숫자
-//     const likes = faker.datatype.number(100);
-//     const bookmarks = faker.datatype.number(50);
-
-//     data.push({ title, spec, image, likes, bookmarks });
-//   }
-
-//   return data;
-// };
-
-// const roadmapData = generateFakeRoadmapData(8); // 8개의 가상 데이터 생성
+import ModalButtonForRegisterRoadMap from "../../routes/ModalButtonForRegisterRoadMap";
 
 interface IProps {
   dataForRoadMap: DataTypeForRoadMapList;
@@ -56,8 +36,7 @@ const CardListForRoadMap = ({
       return apiForDeleteRoadMap(roadMapId);
     },
     {
-      onSettled: () => {
-      },
+      onSettled: () => {},
       onSuccess: (data) => {
         console.log("data : ", data);
 
@@ -82,14 +61,15 @@ const CardListForRoadMap = ({
 
   return (
     <>
-      <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+      <Grid templateColumns="repeat(4, 1fr)" gap={4} height={"60%"}>
         {dataForRoadMap.listForRoadMap.map((data, index) => (
           <Box
             key={index}
-            maxW="sm"
             borderWidth="1px"
             borderRadius="lg"
             overflow="hidden"
+            // height={"50%"}
+            border={"5px solid green"}
             position="relative"
           >
             {isLoggedIn &&
@@ -102,7 +82,6 @@ const CardListForRoadMap = ({
                 top={1}
                 right={1}
                 border={"1px solid blue"}
-                zIndex={1}
                 size={"sm"}
                 onClick={() => deleteHandlerForRoadMap(data.id)}
               >
@@ -126,17 +105,17 @@ const CardListForRoadMap = ({
               <Text color="gray.600">{data.sub_title}</Text>
             </Box>
             <Box
-              position="absolute"
-              bottom="0"
-              left="0"
-              right="0"
-              p="4"
               display="flex"
               justifyContent="space-between"
               alignItems="center"
               bg="white"
               flexWrap="wrap" // flex-wrap 추가
               gap={2}
+              position={"absolute"}
+              border={"2px solid red"}
+              bottom={0}
+              width={"100%"}
+              p={2}
             >
               <Box display="flex">
                 <IconButton
@@ -160,23 +139,19 @@ const CardListForRoadMap = ({
                 <Text fontSize="sm">1</Text>
               </Box>
               <Box display={"flex"} gap={2}>
-                <Button variant="outline" colorScheme="blue" flex={1}>
-                  Register()
-                </Button>
-                <Button variant="outline" colorScheme="blue" flex={1}>
+                <ModalButtonForRegisterRoadMap button_text={"register"} />
+
+                <Button
+                  variant="outline"
+                  colorScheme="blue"
+                  onClick={() => {
+                    console.log("button click !");
+                  }}
+                >
                   Enter
                 </Button>
               </Box>
             </Box>
-            <Box
-              position="absolute"
-              top="0"
-              bottom="0"
-              left="0"
-              right="0"
-              opacity="0"
-              transition="opacity 0.3s"
-            />
           </Box>
         ))}
       </Grid>

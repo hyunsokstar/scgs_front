@@ -150,7 +150,7 @@ export interface TypeForNote {
   count_for_class_list: number;
 }
 
-export interface TypeForNoteList {
+export interface DataTyprForNoteList {
   noteList: TypeForNote[];
   totalPageCount: number;
   note_count_per_page: number;
