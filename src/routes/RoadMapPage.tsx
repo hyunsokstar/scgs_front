@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Box, Center, Grid } from "@chakra-ui/react"; // Grid 추가
+import { Box, Button, Center, Grid } from "@chakra-ui/react"; // Grid 추가
 import CardListForRoadMap from "../components/Card/CardListForRoadMap";
 import { useQuery } from "@tanstack/react-query";
 import { apiForRoadMapList } from "../apis/study_note_api";
 import { DataTypeForRoadMapList } from "../types/study_note_type";
+import ModalButtonForCreateRoadMap from "../components/modal/ModalButtonForCreateRoadMap";
 
 interface Props {}
 
@@ -25,12 +26,18 @@ const RoadMapPage = (props: Props) => {
 
   return (
     <Box>
-      <Center>카드 리스트</Center>
+      <Box display={"flex"} justifyContent={"flex-end"} p={2}>
+        <ModalButtonForCreateRoadMap buttonText="create road map" />
+      </Box>
       <Grid templateColumns="3fr 1fr" gap={4}>
         {/* 왼쪽 사이드 */}
         <Box>
           {dataForRoadMap ? (
-            <CardListForRoadMap dataForRoadMap={dataForRoadMap} />
+            <CardListForRoadMap
+              dataForRoadMap={dataForRoadMap}
+              pageNum={pageNum}
+              setPageNum={setPageNum}
+            />
           ) : (
             ""
           )}

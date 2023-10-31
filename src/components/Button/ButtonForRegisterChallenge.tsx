@@ -11,7 +11,7 @@ const ButtonForRegisterChallenge: React.FC<IProps> = ({ challengeId }) => {
   const toast = useToast();
   const queryClient = useQueryClient();
 
-  // mutationForCreateChallengeRef
+  // apiForCreateRoadMap
   const mutationForCreateSuggestionForBoard = useMutation(
     apiForRegisterForChallenge,
     {

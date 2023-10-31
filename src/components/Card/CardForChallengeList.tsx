@@ -86,7 +86,6 @@ const CardForChallengeList: React.FC<CardProps> = ({
   description,
   mainImage,
   evaluationCriterials,
-  createdAtFormatted,
   clickEvent,
   started_at,
   deadline,

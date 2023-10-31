@@ -42,7 +42,7 @@ const ListForSuggestionForBoard: React.FC<ITypeForPropsForSuggestionList> = ({
     setIsModalOpen(false);
   };
 
-  // mutationForDeleteSuggestionForNote
+
   const mutationForDeleteCommentForSuggestion = useMutation(
     (suggestionPk: string | number) => {
       return apiForDeleteSuggestionForBoard(suggestionPk);

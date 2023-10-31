@@ -20,11 +20,40 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForDeleteRoadMap
+export const apiForDeleteRoadMap = (
+  roadMapId: string | number
+) => {
+  return (
+    instance
+      .delete(`/study-note/roadmap/${roadMapId}/delete`, {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      })
+      .then((response) => response.data)
+  );
+};
 
 
-export const apiForRoadMapList = ({
-  queryKey,
-}: QueryFunctionContext) => {
+// apiForCreateRoadMap
+export const apiForCreateRoadMap = ({ title, subTitle }: any) =>
+  instance
+    .post(
+      `/study-note/roadmap/create`,
+      {
+        title,
+        subTitle,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
+export const apiForRoadMapList = ({ queryKey }: QueryFunctionContext) => {
   const [_, pageNum] = queryKey;
 
   return instance
@@ -32,18 +61,12 @@ export const apiForRoadMapList = ({
       params: { pageNum: pageNum },
     })
     .then((response) => {
-
       return response.data;
     });
 };
 
-export const apiForCopyOneOfNoteToMe = ({
-  studyNotePk,
-}: any) => {
-  console.log(
-    "selectedRowPksFromOriginalTable at api : ",
-    studyNotePk
-  );
+export const apiForCopyOneOfNoteToMe = ({ studyNotePk }: any) => {
+  console.log("selectedRowPksFromOriginalTable at api : ", studyNotePk);
 
   return instance
     .post(
@@ -59,7 +82,6 @@ export const apiForCopyOneOfNoteToMe = ({
     )
     .then((response) => response.data);
 };
-
 
 export const apiForUpdateCoWriterIsTaskingForNote = ({
   studyNotePk,

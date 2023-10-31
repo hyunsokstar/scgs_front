@@ -253,5 +253,7 @@ export interface RowTypeForRoadmapList {
 }
 
 export interface DataTypeForRoadMapList {
-  listForRoadMap : RowTypeForRoadmapList[];
+  listForRoadMap: RowTypeForRoadmapList[];
+  totalCount: number;
+  perPage: number;
 }

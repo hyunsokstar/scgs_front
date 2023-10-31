@@ -8,6 +8,7 @@ interface IProtectedPageProps {
 
 export default function ProtectedPage({ children }: IProtectedPageProps) {
     const { isLoggedIn, userLoading } = useUser();
+    
     const navigate = useNavigate();
     useEffect(() => {
         if (!userLoading) {

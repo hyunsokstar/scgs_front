@@ -214,7 +214,7 @@ export const apiForGetCommentListForSuggestionForBoard = ({
     });
 };
 
-// apiForDeleteSuggestionForBoard
+// apiForDeleteRoadMap
 export const apiForDeleteSuggestionForBoard = (
   suggestionPk: string | number
 ) => {
