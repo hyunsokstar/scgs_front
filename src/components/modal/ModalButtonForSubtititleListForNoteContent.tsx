@@ -68,13 +68,19 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
         size={button_size}
         onClick={onOpen}
         width={button_width}
+        display="flex"
+        justifyContent="space-between" // 양쪽 끝에 정렬하도록 지정
+        px={2}
       >
-        {button_text}{" "}
+        <Text>{button_text}</Text>
+        <Text>({total_count_for_subtitle})</Text>
+
+        {/* {button_text}{" "}
         {total_count_for_subtitle ? (
           <Box>({total_count_for_subtitle})</Box>
         ) : (
           ""
-        )}
+        )} */}
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size="7xl">
         <ModalOverlay />

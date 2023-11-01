@@ -429,7 +429,7 @@ const StudyNoteDetail2 = (props: Props) => {
                 modal_size={"6xl"}
                 study_note_pk={study_note_pk}
                 note_page_num={note_page_num}
-                count_for_qna_boards={
+                total_count_for_qna_board={
                   response_data_for_api?.question_count_for_current_page
                 }
               />

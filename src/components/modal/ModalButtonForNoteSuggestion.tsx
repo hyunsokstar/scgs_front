@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Button,
   Box,
+  Text,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -30,6 +31,7 @@ interface ModalButtonProps {
   modal_title: string;
   modal_size: "xs" | "sm" | "md" | "lg" | "xl" | "full";
   study_note_pk: any;
+  total_count_for_suggestion_list: number;
 }
 
 
@@ -46,6 +48,7 @@ function ModalButtonForNoteSuggestion(props: ModalButtonProps) {
     modal_title,
     modal_size,
     study_note_pk,
+    total_count_for_suggestion_list
   } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [pageNum, setPageNum] = useState(1);
@@ -118,8 +121,13 @@ function ModalButtonForNoteSuggestion(props: ModalButtonProps) {
         _hover={{ bgColor: "yellow.100" }}
         size={button_size}
         width={button_width}
+        display="flex"
+        justifyContent="space-between" // 양쪽 끝에 정렬하도록 지정
+        px={2}
       >
-        {button_text}
+        {/* {button_text} ({ModalButtonForNoteSuggestion}) */}
+        <Text>{button_text}</Text>
+        <Text>({total_count_for_suggestion_list})</Text>
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} size={modal_size}>

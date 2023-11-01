@@ -14,6 +14,7 @@ import {
   Button,
   InputGroup,
   Input,
+  Text,
   InputRightElement,
   useDisclosure,
   useToast,
@@ -33,6 +34,7 @@ interface IProps {
   modal_title: string;
   modal_size: string;
   study_note_pk: any;
+  total_count_for_error_report_list: number
 }
 
 // 1122
@@ -43,6 +45,7 @@ const ModalButtonForErrorReportForNote = ({
   button_size,
   button_width,
   study_note_pk,
+  total_count_for_error_report_list
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -110,8 +113,12 @@ const ModalButtonForErrorReportForNote = ({
         size={button_size}
         width={button_width}
         onClick={onOpen}
+        display="flex"
+        justifyContent="space-between" // 양쪽 끝에 정렬하도록 지정
+        px={2}
       >
-        {button_text}
+        <Text>{button_text}</Text>
+        <Text>({total_count_for_error_report_list})</Text>
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} size={modal_size}>

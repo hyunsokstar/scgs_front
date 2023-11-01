@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Box,
   Button,
   Modal,
   ModalOverlay,
@@ -12,14 +13,17 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  useToast,  
+  Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { apiForGetFAQBoardList, apiForSearchFaqListBySearchWords } from "../../apis/study_note_api";
+import {
+  apiForGetFAQBoardList,
+  apiForSearchFaqListBySearchWords,
+} from "../../apis/study_note_api";
 import TableForFAQListForStudyNote from "../Table/TableForFAQListForStudyNote";
 import PaginationComponent from "../PaginationComponent";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 
 interface IProps {
   button_text: string;
@@ -28,6 +32,7 @@ interface IProps {
   modal_title: string;
   modal_size: string;
   study_note_pk: any;
+  total_count_for_faq_list: number;
 }
 
 const ModalButtonFaqForNote: React.FC<IProps> = ({
@@ -37,6 +42,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
   button_size,
   button_width,
   study_note_pk,
+  total_count_for_faq_list,
 }: IProps) => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,7 +61,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
       cacheTime: 0, // 캐싱 비활성화
     }
   );
-  
+
   const [faqList, setFaqList] = useState([]);
 
   const mutationForSearchFaqListBySearchWords = useMutation(
@@ -63,7 +69,7 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
     {
       onSuccess: (result: any) => {
         console.log("result for search: ", result);
-        setFaqList(result.data)
+        setFaqList(result.data);
 
         toast({
           status: "success",
@@ -81,8 +87,8 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
     // console.log("handleSearch check : ", searchWords);
     mutationForSearchFaqListBySearchWords.mutate({
       study_note_pk,
-      searchWords
-    })
+      searchWords,
+    });
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -113,8 +119,12 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
         size={button_size}
         width={button_width}
         onClick={onOpen}
+        display="flex"
+        justifyContent="space-between" // 양쪽 끝에 정렬하도록 지정
+        px={2}
       >
-        {button_text}
+        <Text>{button_text}</Text>
+        <Text>({total_count_for_faq_list})</Text>
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} size={modal_size}>
@@ -163,7 +173,6 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
             ) : (
               ""
             )}
-            
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Cancel</Button>

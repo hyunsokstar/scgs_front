@@ -13,7 +13,10 @@ import {
 } from "@chakra-ui/react";
 import { FaSync } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
-import { apiForGetStudyNoteList, apiForSearchStudyNoteListBySearchWords } from "../apis/study_note_api";
+import {
+  apiForGetStudyNoteList,
+  apiForSearchStudyNoteListBySearchWords,
+} from "../apis/study_note_api";
 import CardForStudyNote from "../components/Card/CardForStudyNote";
 import ModalButtonForAddStudyNote from "../components/modal/ModalButtonForAddStudyNote";
 import { TypeForNote, DataTyprForNoteList } from "../types/study_note_type";
@@ -25,13 +28,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 // 1122
 const StudyNotePage = () => {
-  const toast = useToast();  
+  const toast = useToast();
   const [pageNum, setPageNum] = useState(1);
   const [selectedNoteWriter, setSelectedNoteWriter] = useState("");
   const [first_category, set_first_category] = useState("");
   const [second_category, set_second_category] = useState("");
   const [searchWords, setSearchWords] = useState("");
-  const [studyNoteList, setStudyNoteList] = useState<TypeForNote[]>([]);  
+  const [studyNoteList, setStudyNoteList] = useState<TypeForNote[]>([]);
 
   const firstCategoryOptions = [
     { value: "frontend", label: "Frontend" },
@@ -284,12 +287,13 @@ const StudyNotePage = () => {
                   writer={note.writer}
                   note_cowriters={note.note_cowriters}
                   count_for_note_contents={note.count_for_note_contents}
-                  count_for_note_comments={note.count_for_note_comments}
-                  count_for_qna_boards={note.count_for_qna_boards}
-                  total_count_for_subtitle={
-                    note.total_count_for_subtitle
-                  }
-                  count_for_class_list={note.count_for_class_list}
+                  total_count_for_comments={note.total_count_for_comments}
+                  total_count_for_qna_board={note.total_count_for_qna_board}
+                  total_count_for_faq_list={note.total_count_for_faq_list}
+                  total_count_for_subtitle={note.total_count_for_subtitle}
+                  total_count_for_class_list={note.total_count_for_class_list}
+                  total_count_for_suggestion_list = {note.total_count_for_suggestion_list}
+                  total_count_for_error_report_list = {note.total_count_for_error_report_list}
                   first_category={note.first_category}
                   second_category={note.second_category}
                   studyNoteListRefatch={studyNoteListRefatch}

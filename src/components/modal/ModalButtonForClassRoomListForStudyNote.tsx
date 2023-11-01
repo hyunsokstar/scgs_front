@@ -11,6 +11,7 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { ITypeForClassRoomRowForStudyNote } from "../../types/study_note_type";
@@ -65,8 +66,12 @@ const ModalButtonForClassRoomListForStudyNote = ({
         width={button_width}
         _hover={{ bgColor: "yellow.100" }}
         size={button_size}
+        display="flex"
+        justifyContent="space-between" // 양쪽 끝에 정렬하도록 지정
+        px={2}
       >
-        {button_text} ({count_for_class_list})
+        <Text>{button_text}</Text>
+        <Text>({count_for_class_list})</Text>
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size={modal_size}>
         <ModalOverlay />
@@ -83,7 +88,7 @@ const ModalButtonForClassRoomListForStudyNote = ({
                 dataForClassRoom && dataForClassRoom.class_room_list
               }
               is_registered={dataForClassRoom.is_registered}
-              refetchForGetClassRoomList = {refetchForGetClassRoomList}
+              refetchForGetClassRoomList={refetchForGetClassRoomList}
             />
           </ModalBody>
           <ModalFooter>

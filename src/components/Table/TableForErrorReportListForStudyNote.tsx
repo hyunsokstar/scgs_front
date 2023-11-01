@@ -148,23 +148,28 @@ const TableForErrorReportListForStudyNote: React.FC<
                   justifyContent="space-between"
                   w="100%"
                 >
-                  <Image
+                  {/* <Image
                     src={report.writer.profile_image}
                     alt={`Profile Image of ${report.writer.username}`}
                     boxSize="50px"
                     borderRadius="full"
                     mr={4}
-                  />
+                  /> */}
+                  <Text>{report.writer.username}</Text>
                   <Text>
                     {report.content} ({report.comments.length})
                   </Text>
-                  <Text>{report.page} , {report.created_at_formatted}</Text>
+                  <Text>page: {report.page}</Text>
+                  <Text>{report.created_at_formatted}</Text>
                 </Box>
               </AccordionButton>
             </h2>
             <AccordionPanel>
               {/* 댓글 영역 for 에러 레포트 */}
-              <CommentListForErrorReport error_report_pk = {report.pk} comments={report.comments} />
+              <CommentListForErrorReport
+                error_report_pk={report.pk}
+                comments={report.comments}
+              />
             </AccordionPanel>
           </AccordionItem>
         </Accordion>

@@ -48,10 +48,13 @@ interface IProps {
   first_category: string;
   second_category: string;
   count_for_note_contents: number;
-  count_for_note_comments: number;
-  count_for_qna_boards: number;
+  total_count_for_comments: number;
+  total_count_for_qna_board: number;
   total_count_for_subtitle: number;
-  count_for_class_list: number;
+  total_count_for_class_list: number;
+  total_count_for_faq_list: number;
+  total_count_for_suggestion_list: number;
+  total_count_for_error_report_list: number;
 }
 
 // 1122
@@ -64,10 +67,13 @@ const CardForStudyNote: React.FC<IProps> = ({
   first_category,
   second_category,
   count_for_note_contents,
-  count_for_note_comments,
-  count_for_qna_boards,
+  total_count_for_comments,
+  total_count_for_qna_board,
   total_count_for_subtitle,
-  count_for_class_list,
+  total_count_for_class_list,
+  total_count_for_faq_list,
+  total_count_for_suggestion_list,
+  total_count_for_error_report_list,
   studyNoteListRefatch,
 }) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
@@ -401,9 +407,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                   study_note_pk={pk}
                   button_size={"sm"}
                   button_width="100%" // 수정된 부분
-                  total_count_for_subtitle={
-                    total_count_for_subtitle
-                  }
+                  total_count_for_subtitle={total_count_for_subtitle}
                 />
               </Box>
 
@@ -412,10 +416,10 @@ const CardForStudyNote: React.FC<IProps> = ({
                 <ModalButtonForBriefingBoardForNote
                   note_owner_user_name={writer.username}
                   modal_title={`${title}'s Briefing Board`}
-                  button_text={"Briefing"}
+                  button_text={"Briefing Board"}
                   button_size={"sm"}
                   study_note_pk={pk}
-                  count_for_note_comments={count_for_note_comments}
+                  total_count_for_comments={total_count_for_comments}
                   button_width="100%" // 수정된 부분
                 />
               </Box>
@@ -428,7 +432,7 @@ const CardForStudyNote: React.FC<IProps> = ({
                   modal_title={`${title} 에 대한 Class Room`}
                   study_note_pk={pk}
                   modal_size={"6xl"}
-                  count_for_class_list={count_for_class_list}
+                  count_for_class_list={total_count_for_class_list}
                 />
               </Box>
 
@@ -440,18 +444,19 @@ const CardForStudyNote: React.FC<IProps> = ({
                   modal_title={`${title} 에 대한 Q& A`}
                   study_note_pk={pk}
                   modal_size={"6xl"}
-                  count_for_qna_boards={count_for_qna_boards}
+                  total_count_for_qna_board={total_count_for_qna_board}
                 />
               </Box>
 
               <Box>
                 <ModalButtonForFaqListForNote
-                  button_text={"Faq"}
+                  button_text={"Faq Board"}
                   button_size={"sm"}
                   button_width={"100%"}
                   modal_title={`${title} 에 대한 faq`}
                   study_note_pk={pk}
                   modal_size={""}
+                  total_count_for_faq_list={total_count_for_faq_list}
                 />
               </Box>
 
@@ -463,6 +468,9 @@ const CardForStudyNote: React.FC<IProps> = ({
                   modal_title={"건의 사항"}
                   modal_size="full"
                   study_note_pk={pk}
+                  total_count_for_suggestion_list={
+                    total_count_for_suggestion_list
+                  }
                 />
               </Box>
 
@@ -474,6 +482,9 @@ const CardForStudyNote: React.FC<IProps> = ({
                   modal_title={`${title} 에 대한 error report`}
                   study_note_pk={pk}
                   modal_size={""}
+                  total_count_for_error_report_list={
+                    total_count_for_error_report_list
+                  }
                 />
               </Box>
             </Grid>

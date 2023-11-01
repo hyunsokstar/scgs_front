@@ -11,6 +11,7 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  Text,
   useDisclosure,
   Input,
   InputGroup,
@@ -30,7 +31,7 @@ interface IProps {
   modal_title: string;
   modal_size: string;
   study_note_pk: string | undefined;
-  count_for_qna_boards: number | undefined;
+  total_count_for_qna_board: number | undefined;
 }
 
 // 1122
@@ -41,7 +42,7 @@ const ModalButtonForQnAList = ({
   button_size,
   button_width,
   study_note_pk,
-  count_for_qna_boards,
+  total_count_for_qna_board,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();  
@@ -110,8 +111,13 @@ const ModalButtonForQnAList = ({
         _hover={{ bgColor: "yellow.100" }}
         size={button_size}
         width={button_width}
+        display="flex"
+        justifyContent="space-between" // 양쪽 끝에 정렬하도록 지정
+        px={2}
       >
-        {button_text} ({count_for_qna_boards})
+        {/* {button_text} ({total_count_for_qna_board}) */}
+        <Text>{button_text}</Text>
+        <Text>({total_count_for_qna_board})</Text>
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size={modal_size}>
         <ModalOverlay />

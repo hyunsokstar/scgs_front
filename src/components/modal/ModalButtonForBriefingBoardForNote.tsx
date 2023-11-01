@@ -10,15 +10,18 @@ import {
   Button,
   useDisclosure,
   Input,
+  Text,
   useToast,
 } from "@chakra-ui/react";
-import { apiForCreateCommentForNote, apiForGetCommentListForNote } from "../../apis/study_note_api";
+import {
+  apiForCreateCommentForNote,
+  apiForGetCommentListForNote,
+} from "../../apis/study_note_api";
 import ChatStyleBoardForBriefingBoard from "../ChatStyleBoard/ChatStyleBoardForBriefingBoard";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 
 interface IProps {
   button_text: string;
@@ -26,7 +29,7 @@ interface IProps {
   modal_title: string;
   study_note_pk: string | undefined;
   note_owner_user_name: string;
-  count_for_note_comments: number;
+  total_count_for_comments: number;
   button_width: string;
 }
 
@@ -37,8 +40,8 @@ const ModalButtonForBriefingBoardForNote = ({
   button_size,
   study_note_pk,
   note_owner_user_name,
-  count_for_note_comments,
-  button_width 
+  total_count_for_comments,
+  button_width,
 }: IProps) => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -90,8 +93,8 @@ const ModalButtonForBriefingBoardForNote = ({
     } else {
     }
 
-    if(commentTextToUpload === ""){
-      alert("내용을 입력해 주세요 !")
+    if (commentTextToUpload === "") {
+      alert("내용을 입력해 주세요 !");
       return;
     }
 
@@ -113,8 +116,13 @@ const ModalButtonForBriefingBoardForNote = ({
         _hover={{ bgColor: "yellow.100" }}
         size={button_size}
         width={button_width}
+        display="flex"
+        justifyContent="space-between" // 양쪽 끝에 정렬하도록 지정
+        px={2}
       >
-        {button_text} ({count_for_note_comments})
+        {/* {button_text} ({total_count_for_comments}) */}
+        <Text>{button_text}</Text>
+        <Text>({total_count_for_comments})</Text>
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size="6xl">
         <ModalOverlay />

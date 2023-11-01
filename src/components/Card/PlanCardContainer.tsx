@@ -24,7 +24,7 @@ const PlanCardContainer = ({ topic, cardDataArray }: Props) => {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          px={3} // Horizontal padding for mobile and larger screens
+          px={2} // Horizontal padding for mobile and larger screens
         >
           {topic}
         </Box>

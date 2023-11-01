@@ -144,10 +144,13 @@ export interface TypeForNote {
   first_category: FirstCategory;
   second_category: SecondCategory;
   count_for_note_contents: number;
-  count_for_note_comments: number;
-  count_for_qna_boards: number;
+  total_count_for_comments: number;
+  total_count_for_qna_board: number;
   total_count_for_subtitle: number;
-  count_for_class_list: number;
+  total_count_for_faq_list: number;
+  total_count_for_class_list: number;
+  total_count_for_suggestion_list: number;
+  total_count_for_error_report_list: number;
 }
 
 export interface DataTyprForNoteList {

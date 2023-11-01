@@ -104,7 +104,7 @@ const ModalButtonForInsertSubtitleForPage = ({
         size={button_size}
         _hover={{ bgColor: "yellow.100" }}
         width={button_width}
-        px={5}
+        px={2}
       >
         {button_text}
       </Button>
