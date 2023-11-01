@@ -17,7 +17,7 @@ import PaginationComponent from "../PaginationComponent";
 interface IProps {
   // 적합한 Props 추가
   checkedIdsForNoteList: number[];
-  setCheckedIdsForNoteList: () => void;
+  setCheckedIdsForNoteList: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const TableForNoteList = ({
@@ -55,7 +55,7 @@ const TableForNoteList = ({
       {checkedIdsForNoteList.map((id, index) => (
         <p key={index}>{id}</p>
       ))}
-      <Table>
+      <Table size={"xs"}>
         <Thead>
           <Tr>
             <Th>

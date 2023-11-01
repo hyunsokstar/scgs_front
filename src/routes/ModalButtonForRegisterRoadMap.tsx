@@ -14,6 +14,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import TableForNoteList from "../components/Table/TableForNoteList";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
+import TableForContentListForRoadMapPk from "../components/Table/TableForContentListForRoadMapPk";
 
 interface IProps {
   button_text: string;
@@ -59,6 +60,8 @@ const ModalButtonForRegisterRoadMap = ({ button_text }: IProps) => {
               <Divider orientation="vertical" borderColor="gray.300" />
               <Box flex={1} border="1px dashed" borderColor="gray.300" m={1}>
                 left side
+                <TableForContentListForRoadMapPk />
+                {/* <TableForRoadMapContentListForRoadMapPk /> */}
               </Box>
               <Box
                 display={"flex"}
@@ -76,8 +79,8 @@ const ModalButtonForRegisterRoadMap = ({ button_text }: IProps) => {
                 <br />
                 <Box>
                   <TableForNoteList
-                    checkedIdsForNoteList = {checkedIdsForNoteList}
-                    setCheckedIdsForNoteList = {setCheckedIdsForNoteList}
+                    checkedIdsForNoteList={checkedIdsForNoteList}
+                    setCheckedIdsForNoteList={setCheckedIdsForNoteList}
                   />
                 </Box>
               </Box>

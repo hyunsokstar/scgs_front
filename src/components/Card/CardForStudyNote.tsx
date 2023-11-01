@@ -50,7 +50,7 @@ interface IProps {
   count_for_note_contents: number;
   count_for_note_comments: number;
   count_for_qna_boards: number;
-  count_for_note_contents_for_subtitle: number;
+  total_count_for_subtitle: number;
   count_for_class_list: number;
 }
 
@@ -66,7 +66,7 @@ const CardForStudyNote: React.FC<IProps> = ({
   count_for_note_contents,
   count_for_note_comments,
   count_for_qna_boards,
-  count_for_note_contents_for_subtitle,
+  total_count_for_subtitle,
   count_for_class_list,
   studyNoteListRefatch,
 }) => {
@@ -223,17 +223,6 @@ const CardForStudyNote: React.FC<IProps> = ({
                 pk={pk}
                 textAlign="center" // 수정된 부분
               />
-
-              <Button
-                variant={"outline"}
-                size={"sm"}
-                border={"1px solid black"}
-                _hover={{ bgColor: "yellow.100" }}
-                onClick={() => buttonHandlerForMoveSlidePageForThisNote(pk)}
-                textAlign="center" // 수정된 부분
-              >
-                Slide
-              </Button>
 
               <ModalButtonForUpdateStudyNote
                 button_text={"update for study note"}
@@ -392,14 +381,28 @@ const CardForStudyNote: React.FC<IProps> = ({
               </Box>
 
               <Box>
+                <Button
+                  variant={"outline"}
+                  size={"sm"}
+                  border={"1px solid black"}
+                  _hover={{ bgColor: "yellow.100" }}
+                  onClick={() => buttonHandlerForMoveSlidePageForThisNote(pk)}
+                  textAlign="center" // 수정된 부분
+                  width="100%" // 수정된 부분
+                >
+                  Slide
+                </Button>
+              </Box>
+
+              <Box>
                 <ModalButtonForSubtititleListForNoteContent
                   modal_title={`${title}'s subtitle list`}
                   button_text={"SubTitle"}
                   study_note_pk={pk}
                   button_size={"sm"}
                   button_width="100%" // 수정된 부분
-                  count_for_note_contents_for_subtitle={
-                    count_for_note_contents_for_subtitle
+                  total_count_for_subtitle={
+                    total_count_for_subtitle
                   }
                 />
               </Box>

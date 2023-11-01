@@ -146,7 +146,7 @@ export interface TypeForNote {
   count_for_note_contents: number;
   count_for_note_comments: number;
   count_for_qna_boards: number;
-  count_for_note_contents_for_subtitle: number;
+  total_count_for_subtitle: number;
   count_for_class_list: number;
 }
 

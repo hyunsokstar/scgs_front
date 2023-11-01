@@ -30,7 +30,7 @@ interface IProps {
   study_note_pk: string | undefined;
   button_size: string;
   button_width?: string;
-  count_for_note_contents_for_subtitle?: any;
+  total_count_for_subtitle?: any;
 }
 
 // 1122
@@ -40,7 +40,7 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
   modal_title,
   study_note_pk,
   button_size,
-  count_for_note_contents_for_subtitle,
+  total_count_for_subtitle,
 }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // const [dataForGetSubTitleListForNote, setDataForGetSubTitleListForNote] =
@@ -70,8 +70,8 @@ const ModalButtonForSubtiTitleListForNoteContent = ({
         width={button_width}
       >
         {button_text}{" "}
-        {count_for_note_contents_for_subtitle ? (
-          <Box>({count_for_note_contents_for_subtitle})</Box>
+        {total_count_for_subtitle ? (
+          <Box>({total_count_for_subtitle})</Box>
         ) : (
           ""
         )}

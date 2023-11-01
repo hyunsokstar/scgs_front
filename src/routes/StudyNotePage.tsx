@@ -270,12 +270,9 @@ const StudyNotePage = () => {
             md: "repeat(1, 1fr)", // for medium-sized screens and up
             sm: "repeat(1, 1fr)", // for small screens and up
           }}
-          // width={"100%"}
           border={"0px solid blue"}
           gap={5}
-          // px={2}
           width={"100%"}
-          // mx={"auto"}
         >
           {studyNoteList
             ? studyNoteList.map((note: TypeForNote) => (
@@ -289,8 +286,8 @@ const StudyNotePage = () => {
                   count_for_note_contents={note.count_for_note_contents}
                   count_for_note_comments={note.count_for_note_comments}
                   count_for_qna_boards={note.count_for_qna_boards}
-                  count_for_note_contents_for_subtitle={
-                    note.count_for_note_contents_for_subtitle
+                  total_count_for_subtitle={
+                    note.total_count_for_subtitle
                   }
                   count_for_class_list={note.count_for_class_list}
                   first_category={note.first_category}

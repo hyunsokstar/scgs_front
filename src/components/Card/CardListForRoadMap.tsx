@@ -6,7 +6,6 @@ import {
   IconButton,
   useToast,
 } from "@chakra-ui/react";
-import { faker } from "@faker-js/faker";
 import { FaHeart, FaBookmark } from "react-icons/fa";
 import { DataTypeForRoadMapList } from "../../types/study_note_type";
 import PaginationComponent from "../PaginationComponent";
@@ -14,6 +13,7 @@ import useUser from "../../lib/useUser";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiForDeleteRoadMap } from "../../apis/study_note_api";
 import ModalButtonForRegisterRoadMap from "../../routes/ModalButtonForRegisterRoadMap";
+import ModalButtonForRoadMapDetail from "../modal/ModalButtonForRoadMapDetail";
 
 interface IProps {
   dataForRoadMap: DataTypeForRoadMapList;
@@ -61,14 +61,13 @@ const CardListForRoadMap = ({
 
   return (
     <>
-      <Grid templateColumns="repeat(4, 1fr)" gap={4} height={"60%"}>
+      <Grid templateColumns="repeat(3, 1fr)" gap={4} height={"60%"}>
         {dataForRoadMap.listForRoadMap.map((data, index) => (
           <Box
             key={index}
             borderWidth="1px"
             borderRadius="lg"
             overflow="hidden"
-            // height={"50%"}
             border={"5px solid green"}
             position="relative"
           >
@@ -141,15 +140,12 @@ const CardListForRoadMap = ({
               <Box display={"flex"} gap={2}>
                 <ModalButtonForRegisterRoadMap button_text={"register"} />
 
-                <Button
-                  variant="outline"
-                  colorScheme="blue"
-                  onClick={() => {
-                    console.log("button click !");
-                  }}
-                >
-                  Enter
-                </Button>
+                <ModalButtonForRoadMapDetail
+                  roadMapId={data.id}
+                  button_text={"RoadMap Detail"}
+                  roadMapTitle={data.title}
+                  roadMapSubTitle={data.sub_title}
+                />
               </Box>
             </Box>
           </Box>
