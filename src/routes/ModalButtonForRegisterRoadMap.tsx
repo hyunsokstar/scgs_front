@@ -62,9 +62,8 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
             <Flex>
               <Divider orientation="vertical" borderColor="gray.300" />
               <Box flex={1} border="1px dashed" borderColor="gray.300" m={1}>
-                left side (current road map list)
-                {roadMapId}
-                <TableForContentListForRoadMapPk />
+                table for road map register <br />
+                <TableForContentListForRoadMapPk roadMapId={roadMapId}/>
                 {/* <TableForRoadMapContentListForRoadMapPk /> */}
               </Box>
               <Box

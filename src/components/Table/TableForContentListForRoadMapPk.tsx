@@ -9,18 +9,21 @@ import {
   TableCaption,
 } from "@chakra-ui/react";
 
-interface IProps {}
+interface IProps {
+  roadMapId: number;
+}
 
-const TableForContentListForRoadMapPk = (props: IProps) => {
+const TableForContentListForRoadMapPk = ({ roadMapId }: IProps) => {
   // 예시 데이터 - 여기에 실제 데이터를 넣어주세요
-  const data = [
-    { id: 1, title: "Title 1", description: "Description 1" },
-    { id: 2, title: "Title 2", description: "Description 2" },
-    // ... 더 많은 데이터
-  ];
+  // const data = [
+  //   { id: 1, title: "Title 1", description: "Description 1" },
+  //   { id: 2, title: "Title 2", description: "Description 2" },
+  //   // ... 더 많은 데이터
+  // ];
 
   return (
-    <div>
+    <>
+    road map id: {roadMapId}
       <Table variant="simple" size={"xs"}>
         <TableCaption>Content List for RoadMap</TableCaption>
         <Thead>
@@ -31,16 +34,16 @@ const TableForContentListForRoadMapPk = (props: IProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((item) => (
+          {/* {data.map((item) => (
             <Tr key={item.id}>
               <Td>{item.id}</Td>
               <Td>{item.title}</Td>
               <Td>{item.description}</Td>
             </Tr>
-          ))}
+          ))} */}
         </Tbody>
       </Table>
-    </div>
+    </>
   );
 };
 

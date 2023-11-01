@@ -11,19 +11,6 @@ interface IProps {
 }
 
 const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
-  // 가짜 데이터 예시 (임시로 작성된 데이터)
-  const fakeData = [
-    {
-      id: 1,
-      title: "가짜 데이터 1",
-      description: "이것은 첫 번째 가짜 데이터입니다.",
-    },
-    {
-      id: 2,
-      title: "가짜 데이터 2",
-      description: "두 번째 가짜 데이터입니다.",
-    },
-  ];
 
   const {
     isLoading: isRoading,
@@ -51,9 +38,6 @@ const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
       flexDirection={"column"}
       gap={10}
     >
-      {/* <Text fontSize="xl" fontWeight="bold">
-        로드맵 for {roadMapId}
-      </Text> */}
 
       <Box border={"1px solid black"} textAlign={"end"} p={2} mt={2}>
         <ModalButtonForRegisterRoadMap  
