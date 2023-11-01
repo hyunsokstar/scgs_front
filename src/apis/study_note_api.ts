@@ -19,13 +19,14 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+
 // 1122
 export const apiForRoadMapContentList = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
   const [_, roadMapId] = queryKey;
 
-  return await instance.get(`study-note/contents/${roadMapId}`).then((response) => {
+  return await instance.get(`study-note/roadmap/${roadMapId}/content`).then((response) => {
     return response.data;
   });
 };

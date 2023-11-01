@@ -260,3 +260,13 @@ export interface DataTypeForRoadMapList {
   totalCount: number;
   perPage: number;
 }
+
+export interface RowTypeForRoadMapContent {
+  id: number;
+  writer: UserProfileImage;
+  study_note: TypeForNote
+}
+
+export interface DataTypeForRoadMapContentList {
+  road_map_contents: RowTypeForRoadMapContent[]
+}

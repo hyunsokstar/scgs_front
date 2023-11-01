@@ -18,13 +18,16 @@ import TableForContentListForRoadMapPk from "../components/Table/TableForContent
 
 interface IProps {
   button_text: string;
+  roadMapId: number;
 }
 
 // 1122
-const ModalButtonForRegisterRoadMap = ({ button_text }: IProps) => {
+const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [pageNum, setPageNum] = useState(1);
-  const [checkedIdsForNoteList, setCheckedIdsForNoteList] = useState([]);
+  const [checkedIdsForNoteList, setCheckedIdsForNoteList] = useState<number[]>(
+    []
+  );
 
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
@@ -42,7 +45,7 @@ const ModalButtonForRegisterRoadMap = ({ button_text }: IProps) => {
         flex={1}
         onClick={buttonHandlerForModalOpen}
       >
-        {button_text}
+        {button_text} ({roadMapId})
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} size="full">
@@ -59,7 +62,8 @@ const ModalButtonForRegisterRoadMap = ({ button_text }: IProps) => {
             <Flex>
               <Divider orientation="vertical" borderColor="gray.300" />
               <Box flex={1} border="1px dashed" borderColor="gray.300" m={1}>
-                left side
+                left side (current road map list)
+                {roadMapId}
                 <TableForContentListForRoadMapPk />
                 {/* <TableForRoadMapContentListForRoadMapPk /> */}
               </Box>

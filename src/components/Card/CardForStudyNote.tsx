@@ -184,7 +184,7 @@ const CardForStudyNote: React.FC<IProps> = ({
 
   // 2244
   return (
-    <Box border={"1px solid blue"} width={"100%"}>
+    <Box border={"0px solid blue"} width={"100%"}>
       <Box
         borderWidth="1px"
         borderRadius="lg"

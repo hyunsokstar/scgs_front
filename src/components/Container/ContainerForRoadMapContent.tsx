@@ -1,7 +1,10 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import CardForStudyNote from "../Card/CardForStudyNote";
+import { DataTypeForRoadMapContentList } from "../../types/study_note_type";
 import { apiForRoadMapContentList } from "../../apis/study_note_api";
+import ModalButtonForRegisterRoadMap from "../../routes/ModalButtonForRegisterRoadMap";
 
 interface IProps {
   roadMapId: number;
@@ -10,15 +13,23 @@ interface IProps {
 const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
   // 가짜 데이터 예시 (임시로 작성된 데이터)
   const fakeData = [
-    { id: 1, title: "가짜 데이터 1", description: "이것은 첫 번째 가짜 데이터입니다." },
-    { id: 2, title: "가짜 데이터 2", description: "두 번째 가짜 데이터입니다." },
+    {
+      id: 1,
+      title: "가짜 데이터 1",
+      description: "이것은 첫 번째 가짜 데이터입니다.",
+    },
+    {
+      id: 2,
+      title: "가짜 데이터 2",
+      description: "두 번째 가짜 데이터입니다.",
+    },
   ];
 
   const {
     isLoading: isRoading,
     data: dataForRoadMapContent,
     refetch: refetchForDataForLoadMap,
-  } = useQuery<any>(
+  } = useQuery<DataTypeForRoadMapContentList>(
     ["apiForGetRoloadMapList", roadMapId],
     apiForRoadMapContentList,
     {
@@ -26,30 +37,74 @@ const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
     }
   );
 
+  console.log("dataForRoadMapContent : ", dataForRoadMapContent);
+
+  if (!dataForRoadMapContent) {
+    return <Box>...Loading</Box>;
+  }
+
   return (
-    <Box width="80%" margin="auto">
-      <Text fontSize="xl" fontWeight="bold">로드맵 for {roadMapId}</Text>
-      {fakeData.map((data) => (
-        <Box
-          key={data.id}
-          border="1px"
-          borderColor="gray.200"
-          borderRadius="md"
-          p={4}
-          my={4}
-          width="100%"
-          display="flex"
-          flexDirection="column"
-        >
-          <img
-            src={"https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg"}
-            alt={data.title}
-            style={{ height: "40%", width: "100%", objectFit: "cover" }}
-          />
-          <Text fontWeight="bold">{data.title}</Text>
-          <Text>{data.description}</Text>
-        </Box>
-      ))}
+    <Box
+      width="80%"
+      margin="auto"
+      display={"flex"}
+      flexDirection={"column"}
+      gap={10}
+    >
+      {/* <Text fontSize="xl" fontWeight="bold">
+        로드맵 for {roadMapId}
+      </Text> */}
+
+      <Box border={"1px solid black"} textAlign={"end"} p={2} mt={2}>
+        <ModalButtonForRegisterRoadMap  
+          roadMapId={roadMapId}
+          button_text={"register road map"}
+        />
+      </Box>
+
+      {dataForRoadMapContent
+        ? dataForRoadMapContent.road_map_contents.map((row: any) => {
+            return (
+              <Box>
+                <CardForStudyNote
+                  pk={row.study_note.pk}
+                  key={row.study_note.title}
+                  title={row.study_note.title}
+                  description={row.study_note.description}
+                  writer={row.study_note.writer}
+                  note_cowriters={row.study_note.note_cowriters}
+                  count_for_note_contents={
+                    row.study_note.count_for_note_contents
+                  }
+                  total_count_for_comments={
+                    row.study_note.total_count_for_comments
+                  }
+                  total_count_for_qna_board={
+                    row.study_note.total_count_for_qna_board
+                  }
+                  total_count_for_faq_list={
+                    row.study_note.total_count_for_faq_list
+                  }
+                  total_count_for_subtitle={
+                    row.study_note.total_count_for_subtitle
+                  }
+                  total_count_for_class_list={
+                    row.study_note.total_count_for_class_list
+                  }
+                  total_count_for_suggestion_list={
+                    row.study_note.total_count_for_suggestion_list
+                  }
+                  total_count_for_error_report_list={
+                    row.study_note.total_count_for_error_report_list
+                  }
+                  first_category={row.study_note.first_category}
+                  second_category={row.study_note.second_category}
+                  studyNoteListRefatch={refetchForDataForLoadMap}
+                />
+              </Box>
+            );
+          })
+        : ""}
     </Box>
   );
 };

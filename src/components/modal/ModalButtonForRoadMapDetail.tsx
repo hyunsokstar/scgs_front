@@ -12,7 +12,6 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import ContainerForRoadMapContent from "../Container/ContainerForRoadMapContent";
-import { useQuery } from "@tanstack/react-query";
 
 interface ModalButtonForRoadMapDetailProps {
   button_text: string;
@@ -30,7 +29,7 @@ const ModalButtonForRoadMapDetail: React.FC<
 
   return (
     <>
-      <Button variant="outline" colorScheme="blue" onClick={onOpen} size="full">
+      <Button variant="outline" colorScheme="blue" onClick={onOpen} size="md">
         {button_text} ({roadMapId})
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size="full">
