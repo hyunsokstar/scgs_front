@@ -10,17 +10,18 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { apiForgetStudyNoteListForRoadMap } from "../../apis/study_note_api";
 import { DataTyprForNoteList } from "../../types/study_note_type";
 import PaginationComponent from "../PaginationComponent";
+import { apiForgetStudyNoteListForRegisterRoadMap } from "../../apis/study_note_api";
 
 interface IProps {
-  // 적합한 Props 추가
+  roadMapId: number;
   checkedIdsForNoteList: number[];
   setCheckedIdsForNoteList: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-const TableForNoteList = ({
+const TableForNoteListForRegisterRoadMap = ({
+  roadMapId,
   checkedIdsForNoteList,
   setCheckedIdsForNoteList,
 }: IProps) => {
@@ -32,13 +33,14 @@ const TableForNoteList = ({
     refetch: studyNoteListRefatch,
   } = useQuery<DataTyprForNoteList>(
     [
-      "apiForgetStudyNoteListForRoadMap",
+      "apiForListViewForStudyNoteForRegisterRoadMapContent",
+      roadMapId,
       pageNum,
       //   selectedNoteWriter,
       //   first_category,
       //   second_category,
     ],
-    apiForgetStudyNoteListForRoadMap,
+    apiForgetStudyNoteListForRegisterRoadMap,
     {
       enabled: true,
     }
@@ -67,37 +69,38 @@ const TableForNoteList = ({
           </Tr>
         </Thead>
         <Tbody>
-          {dataForStudyNote
-            ? dataForStudyNote.noteList.map((row) => {
-                return (
-                  <Tr>
-                    <Td>
-                      <Checkbox
-                        checked={checkedIdsForNoteList.includes(row.id)}
-                        onChange={(e) => {
-                          const checked = e.target.checked;
-                          if (checked) {
-                            // alert("here 11")
-                            setCheckedIdsForNoteList((prev) => [
-                              ...prev,
-                              row.pk,
-                            ]);
-                          } else {
-                            // alert("here 22")
-                            setCheckedIdsForNoteList((prev) =>
-                              prev.filter((id) => id !== row.pk)
-                            );
-                          }
-                        }}
-                      />
-                    </Td>
-                    <Td>{row.writer.username}</Td>
-                    <Td>{row.title}</Td>
-                    <Td>{row.description}</Td>
-                  </Tr>
-                );
-              })
-            : "no data"}
+          {dataForStudyNote.noteList.length !== 0 ? (
+            dataForStudyNote.noteList.map((row) => {
+              return (
+                <Tr key={row.pk}>
+                  <Td>
+                    <Checkbox
+                      checked={checkedIdsForNoteList.includes(row.pk)}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        if (checked) {
+                          // alert("here 11")
+                          setCheckedIdsForNoteList((prev) => [...prev, row.pk]);
+                        } else {
+                          // alert("here 22")
+                          setCheckedIdsForNoteList((prev) =>
+                            prev.filter((id) => id !== row.pk)
+                          );
+                        }
+                      }}
+                    />
+                  </Td>
+                  <Td>{row.writer.username}</Td>
+                  <Td>{row.title}</Td>
+                  <Td>{row.description}</Td>
+                </Tr>
+              );
+            })
+          ) : (
+            <Tr>
+              <Td colSpan={"5"}>no data</Td>
+            </Tr>
+          )}
         </Tbody>
       </Table>
 
@@ -117,4 +120,4 @@ const TableForNoteList = ({
   );
 };
 
-export default TableForNoteList;
+export default TableForNoteListForRegisterRoadMap;

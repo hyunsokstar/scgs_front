@@ -270,3 +270,16 @@ export interface RowTypeForRoadMapContent {
 export interface DataTypeForRoadMapContentList {
   road_map_contents: RowTypeForRoadMapContent[]
 }
+
+export interface TypeForNoteBasic {
+  id:number;
+  title: string;
+  descript: string;
+  writer: UserProfileImage;
+}
+
+export interface DataTypeForRoadMapContentListForRegister {
+  id: number;
+  writer: UserProfileImage;
+  study_note: TypeForNoteBasic;
+}

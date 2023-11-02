@@ -1,5 +1,7 @@
 import React from "react";
 import {
+  Box,
+  Checkbox,
   Table,
   Thead,
   Tbody,
@@ -8,39 +10,75 @@ import {
   Td,
   TableCaption,
 } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import { apiForRoadMapContentListForRegister } from "../../apis/study_note_api";
+import { DataTypeForRoadMapContentListForRegister } from "../../types/study_note_type";
 
 interface IProps {
   roadMapId: number;
 }
 
+function formatDate(dateString: string): string {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "2-digit",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  return new Date(dateString).toLocaleString("ko-KR", options);
+}
+
 const TableForContentListForRoadMapPk = ({ roadMapId }: IProps) => {
-  // 예시 데이터 - 여기에 실제 데이터를 넣어주세요
-  // const data = [
-  //   { id: 1, title: "Title 1", description: "Description 1" },
-  //   { id: 2, title: "Title 2", description: "Description 2" },
-  //   // ... 더 많은 데이터
-  // ];
+  const {
+    isLoading: isRoadingForRoadMapContentForRegister,
+    data: dataForRoadMapContentForRegister,
+    refetch: refetchDataForLoadMapContentForRegister,
+  } = useQuery<DataTypeForRoadMapContentListForRegister>(
+    ["apiForGetRoloadMapListForRegister", roadMapId],
+    apiForRoadMapContentListForRegister,
+    {
+      enabled: true,
+    }
+  );
+
+  console.log(
+    "dataForRoadMapContentForRegister : ",
+    dataForRoadMapContentForRegister
+  );
+
+  if (!dataForRoadMapContentForRegister) {
+    return <Box>Loading..</Box>;
+  }
 
   return (
     <>
-    road map id: {roadMapId}
+      road map id: {roadMapId}
       <Table variant="simple" size={"xs"}>
         <TableCaption>Content List for RoadMap</TableCaption>
         <Thead>
           <Tr>
-            <Th>ID</Th>
+            <Th>
+              <Checkbox />
+            </Th>
+            <Th>Writer</Th>
             <Th>Title</Th>
             <Th>Description</Th>
+            <Th>created_at</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {/* {data.map((item) => (
-            <Tr key={item.id}>
-              <Td>{item.id}</Td>
-              <Td>{item.title}</Td>
-              <Td>{item.description}</Td>
+          {dataForRoadMapContentForRegister.road_map_contents.map((row) => (
+            <Tr key={row.study_note.id}>
+              <Td>
+                <Checkbox />
+              </Td>
+              <Td>{row.study_note.writer.username}</Td>
+              <Td>{row.study_note.title}</Td>
+              <Td>{row.study_note.description}</Td>
+              <Td>{formatDate(row.study_note.created_at)}</Td>
             </Tr>
-          ))} */}
+          ))}
         </Tbody>
       </Table>
     </>
