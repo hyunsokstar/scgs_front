@@ -26,7 +26,7 @@ import CommentListForFaqBoard from "../Comments/CommentListForFaqBoard";
 interface ModalForFAQDetailForNoteProps {
   isOpen: boolean;
   closeModal: () => void;
-  faqData: FAQRow;
+  faqData: any;
   refetchForGetQnABoardList: () => void;
 }
 

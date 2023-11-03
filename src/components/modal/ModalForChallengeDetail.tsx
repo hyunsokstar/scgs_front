@@ -109,7 +109,7 @@ const ModalForChallengeDetail: React.FC<any> = ({
               textAlign="center" // 텍스트 가운데 정렬
               border="2px dashed blue"
             >
-              <Box display={"flex"} justifyContent={"flex-end"} my2={2}>
+              <Box display={"flex"} justifyContent={"flex-end"} my={2}>
                 {dataForChallengeDetail &&
                 dataForChallengeDetail.is_exist_for_evaluation_result ===
                   false ? (

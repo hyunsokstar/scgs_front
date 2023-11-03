@@ -14,7 +14,7 @@ export interface TaskManagerForCompleted {
 }
 
 export interface TestResultImageForCompleted {
-  pk: number;
+  id: number;
   image_url: string;
 }
 
@@ -295,7 +295,7 @@ export interface taskRowForUncompleted {
 }
 
 export interface ITypeForTaskListDataForUncompleted {
-  ProjectProgressList: taskRowForUncompleted[] | any[];
+  ProjectProgressList: taskRowForUncompleted[];
   writers_info?: Writer[];
   totalPageCount: number;
   task_number_for_one_page?: number;

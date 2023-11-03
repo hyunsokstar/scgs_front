@@ -34,7 +34,7 @@ interface Suggestion {
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  suggestion: Suggestion | "";
+  suggestion: Suggestion;
   title: string;
   content: string;
   suggestionPk: any;
@@ -105,7 +105,7 @@ const ModalForSuggestionDetailForNote: React.FC<ModalProps> = ({
     }
     // alert(comment)
     mutationForAddCommentForSuggestionForNote.mutate({
-      suggestionPk: suggestion.pk,
+      suggestionPk: suggestionPk,
       content: comment,
     });
     setComment("");

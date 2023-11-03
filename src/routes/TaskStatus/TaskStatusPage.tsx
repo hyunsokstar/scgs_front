@@ -120,7 +120,7 @@ const TaskStatusPage = () => {
     isLoading: userNamesLoading,
     data: userNamesData,
     error: userNamesError,
-  } = useQuery<IUserNamesForSelectOption[]>(
+  } = useQuery<any>(
     ["users_list_for_select_option"],
     getUserNamesForSelectOption
   );
@@ -379,7 +379,7 @@ const TaskStatusPage = () => {
               value={taskManagerForFiltering}
               onChange={handleTaskManagerChange}
             >
-              {userNamesData?.map((user) => (
+              {userNamesData?.map((user:any) => (
                 <option key={user.pk} value={user.pk}>
                   {user.username}
                 </option>

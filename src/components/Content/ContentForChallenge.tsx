@@ -7,7 +7,7 @@ import ModalButtonForChallengeRefList from "../modal/ModalButtonForChallengeRefL
 import ModalButtonForChallengerRefList from "../modal/ModalButtonForChallengerRefList";
 
 interface Props {
-  selectedChallenge: ITypeForChallengeRow;
+  selectedChallenge: any;
 }
 
 const ContentForChallenge: React.FC<Props> = ({ selectedChallenge }) => {

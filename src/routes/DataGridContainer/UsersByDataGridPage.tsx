@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 
 import DataGrid from "react-data-grid";
-import { faker } from "@faker-js/faker";
+// import { faker } from "@faker-js/faker";
 import styles from "./grid.module.css";
 import button_styles from "./button.module.css";
 import TextEditor from "../../components/Editor/textEditor";
@@ -322,25 +322,25 @@ function UsersByDataGridPage({}: Props): ReactElement {
   ];
 
   const createRandomUserRowHandler = () => {
-    if (faker && gridRows !== undefined) {
-      const newRow = {
-        pk: gridRows.length + 1,
-        name: `name_${
-          english_names[Math.floor(Math.random() * english_names.length)]
-        }`,
-        username: `user_${
-          english_names[Math.floor(Math.random() * english_names.length)]
-        }_${Math.floor(Math.random() * 100) + 1}`,
-        email: `${`my_${
-          english_names[Math.floor(Math.random() * english_names.length)]
-        }`}@daum.net`,
-        admin_level: 1,
-        position: 1,
-        selected: true,
-        is_new_row: true,
-      };
-      setGridRows([newRow, ...gridRows]);
-    }
+    // if (faker && gridRows !== undefined) {
+    //   const newRow = {
+    //     pk: gridRows.length + 1,
+    //     name: `name_${
+    //       english_names[Math.floor(Math.random() * english_names.length)]
+    //     }`,
+    //     username: `user_${
+    //       english_names[Math.floor(Math.random() * english_names.length)]
+    //     }_${Math.floor(Math.random() * 100) + 1}`,
+    //     email: `${`my_${
+    //       english_names[Math.floor(Math.random() * english_names.length)]
+    //     }`}@daum.net`,
+    //     admin_level: 1,
+    //     position: 1,
+    //     selected: true,
+    //     is_new_row: true,
+    //   };
+    //   setGridRows([newRow, ...gridRows]);
+    // }
   };
 
   /////////////////////////////////////////////////////////////////////////////////////

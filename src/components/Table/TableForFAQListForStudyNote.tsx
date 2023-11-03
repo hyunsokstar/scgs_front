@@ -13,7 +13,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { FAQRow } from "../../types/study_note_type";
+// import { FAQRow } from "../../types/study_note_type";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -24,7 +24,7 @@ import ModalButtonForUpdateFaqForNote from "../modal/ModalButtonForUpdateFaqForN
 
 interface TabelForFAQListForStudyNoteProps {
   study_note_pk: number | string | undefined;
-  data: FAQRow[] | undefined;
+  data: any;
   refetchForGetQnABoardList: () => void;
 }
 
@@ -40,10 +40,10 @@ const TableForFAQListForStudyNote: React.FC<
   );
 
   const [isOpen, setIsOpen] = useState(false);
-  const [faqData, setFaqData] = useState<FAQRow | null>(null);
+  const [faqData, setFaqData] = useState<any>(null);
 
   // todo
-  const openModal = (question: FAQRow) => {
+  const openModal = (question: any) => {
     setFaqData(question);
     setIsOpen(true);
   };
@@ -106,7 +106,7 @@ const TableForFAQListForStudyNote: React.FC<
         </Thead>
         <Tbody>
           {data && data.length ? (
-            data.map((row, index) => (
+            data.map((row:any, index:number) => (
               <Tr key={index}>
                 <Td>
                   <Checkbox />

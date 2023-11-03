@@ -27,7 +27,7 @@ import { getUploadURL, uploadImage } from "../../api";
 import { createResultImageForCompletedTask } from "../../apis/project_progress_api";
 
 interface SlideForUncompletedTaskListProps {
-  listData: taskRowForUncompleted[] | any[];
+  listData: any;
   handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checkedRowPks: any[];
   refetch?: () => void;
@@ -45,7 +45,7 @@ export default function SlideForCompletedTaskList({
   const sliderRef = useRef<any>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [taskId, setTaskId] = useState<Number>();
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<any>(null);
 
   const toast = useToast();
   const queryClient = useQueryClient();
@@ -176,7 +176,7 @@ export default function SlideForCompletedTaskList({
     }
   };
 
-  function openImageInNewTab(imageUrl) {
+  function openImageInNewTab(imageUrl: string) {
     window.open(imageUrl, "_blank");
   }
 
@@ -186,8 +186,8 @@ export default function SlideForCompletedTaskList({
       {listData && listData.length ? (
         <Box>
           <Slider {...settings} ref={sliderRef}>
-            {listData && listData.length ? (
-              listData.map((row, index) => (
+            {listData ? (
+              listData.map((row: any, index: any) => (
                 <Card
                   key={index}
                   height="46vh"
@@ -317,7 +317,7 @@ export default function SlideForCompletedTaskList({
                       justifyContent="center"
                     >
                       {" "}
-                      {row.test_result_images.length
+                      {row.test_result_images
                         ? row.test_result_images.map(
                             (img: TestResultImageForCompleted) => (
                               <Box

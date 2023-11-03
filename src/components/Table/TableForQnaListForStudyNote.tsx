@@ -148,11 +148,10 @@ const TableForQnaListForStudyNote: React.FC<
                       button_size={"sm"}
                       modal_title={"update question"}
                       modal_size={"6xl"}
-                      study_note_pk={study_note_pk}
-                      pk={row.pk}
                       title={row.title}
                       content={row.content}
                       page={row.page}
+                      pk={row.pk}
                     />
                     <IconButton
                       onClick={() => buttonHandlerForDeleteQuestion(row.pk)}

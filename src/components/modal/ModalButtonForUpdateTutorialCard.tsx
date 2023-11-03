@@ -176,7 +176,7 @@ const ModalButtonForUpdateTutorialCard = ({ tutorialPk, refetchTutorialList }: I
         setSubmitLoading(true);
     };
 
-    const validateUrl = (value: string | URL) => {
+    const validateUrl = (value: any) => {
         try {
             new URL(value);
             return true;

@@ -34,7 +34,7 @@ interface IProps {
   currentPageNum: number;
   setCurrentPageNum: any;
   task_number_for_one_page: number | undefined;
-  projectTaskListRefatch: () => void;
+  projectTaskListRefetch: any;
   handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checkedRowPks: number[];
 }
@@ -45,7 +45,7 @@ function UncompletedTaskRowForMe({
   totalPageCount,
   currentPageNum,
   setCurrentPageNum,
-  projectTaskListRefatch,
+  projectTaskListRefetch,
   handleCheckboxChange,
   checkedRowPks,
 }: IProps): ReactElement {
@@ -83,8 +83,8 @@ function UncompletedTaskRowForMe({
     {
       onSuccess: (result: any) => {
         // console.log("result : ", result);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
+        if (projectTaskListRefetch) {
+          projectTaskListRefetch();
         }
         queryClient.refetchQueries(["getUnompletedTaskList"]);
         queryClient.refetchQueries(["getCompletedTaskList"]);
@@ -115,8 +115,8 @@ function UncompletedTaskRowForMe({
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
+        if (projectTaskListRefetch) {
+          projectTaskListRefetch();
         }
         // queryClient.refetchQueries(["getUnompletedTaskList"]);
         // queryClient.refetchQueries(["getCompletedTaskList"]);
@@ -131,8 +131,8 @@ function UncompletedTaskRowForMe({
   const deleteHandelr = (id: number) => {
     const response = deleteMutation.mutate(id);
     console.log("response :", response);
-    // if (projectTaskListRefatch) {
-    //   projectTaskListRefatch();
+    // if (projectTaskListRefetch) {
+    //   projectTaskListRefetch();
     // }
   };
 
@@ -142,10 +142,10 @@ function UncompletedTaskRowForMe({
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        projectTaskListRefatch();
+        projectTaskListRefetch();
         // queryClient.refetchQueries(["getUncompletedTaskList"]);
         // queryClient.refetchQueries(["getCompletedTaskList"]);
-        // projectTaskListRefatch()
+        // projectTaskListRefetch()
 
         toast({
           status: "success",
@@ -170,7 +170,7 @@ function UncompletedTaskRowForMe({
       onSuccess: (result: any) => {
         console.log("result : ", result);
 
-        projectTaskListRefatch();
+        projectTaskListRefetch();
 
         toast({
           status: "success",
@@ -312,7 +312,7 @@ function UncompletedTaskRowForMe({
                               task.due_date ? task.due_date : ""
                             }
                             started_at={task.started_at ? task.started_at : ""}
-                            projectTaskListRefatch={projectTaskListRefatch}
+                            projectTaskListRefetch={projectTaskListRefetch}
                           />
                         </HStack>
                       </HStack>
@@ -326,7 +326,7 @@ function UncompletedTaskRowForMe({
                           taskPk={task.id}
                           original_due_date={task.due_date ? task.due_date : ""}
                           started_at={task.started_at ? task.started_at : ""}
-                          projectTaskListRefatch={projectTaskListRefatch}
+                          projectTaskListRefetch={projectTaskListRefetch}
                         />
                       </HStack>
                     </Box>

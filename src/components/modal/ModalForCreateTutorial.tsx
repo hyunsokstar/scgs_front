@@ -147,7 +147,7 @@ function ModalForCreateTutorial({ refetchTutorialList }: Props) {
         }
     };
 
-    const validateUrl = (value: string | URL) => {
+    const validateUrl = (value: any) => {
         try {
             new URL(value);
             return true;

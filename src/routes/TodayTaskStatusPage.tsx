@@ -189,7 +189,7 @@ const TodayTaskStatusPage = () => {
     }
   };
 
-  const column_option_for_responsive = useBreakpointValue({
+  const column_option_for_responsive = useBreakpointValue<any>({
     base: "column", // for mobile and small screens
     md: "row", // for medium-sized screens and up
     lg: "row", // for large screens and up
@@ -347,7 +347,7 @@ const TodayTaskStatusPage = () => {
                       </Heading>
 
                       <ModalButtonForAddProjectTaskWithDuedateOption
-                        projectTaskListRefatch={
+                        projectTaskListRefetch={
                           refetchForGetProgectTasksStatusForToday
                         }
                         button_text={"Create"}

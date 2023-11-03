@@ -45,7 +45,7 @@ function UncompletedTaskContainer({
   const {
     isLoading,
     data: taskListDataForUncompleted,
-    refetch: projectTaskListRefatch,
+    refetch: projectTaskListRefetch,
   } = useQuery<ITypeForTaskListDataForUncompleted>(
     [
       "getUncompletedTaskList",
@@ -146,7 +146,7 @@ function UncompletedTaskContainer({
           taskListDataForUncompleted={taskListDataForUncompleted}
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
-          projectTaskListRefatch={projectTaskListRefatch}
+          projectTaskListRefetch={projectTaskListRefetch}
         />
       ) : (
         ""
@@ -163,7 +163,7 @@ function UncompletedTaskContainer({
               }
               currentPageNum={currentPageNum}
               setCurrentPageNum={setCurrentPageNum}
-              projectTaskListRefatch={projectTaskListRefatch}
+              projectTaskListRefetch={projectTaskListRefetch}
               checkedRowPks={checkedRowPks}
               handleCheckboxChange={handleCheckboxChange}
               setCheckedRowPks={setCheckedRowPks}
@@ -181,7 +181,7 @@ function UncompletedTaskContainer({
               listData={filteredListForUncompleteTask}
               handleCheckboxChange={handleCheckboxChange}
               checkedRowPks={checkedRowPks}
-              refetch={projectTaskListRefatch}
+              refetch={projectTaskListRefetch}
             />
           ) : (
             <Box

@@ -25,8 +25,8 @@ import SlideToggleButton from "../SlideToggleButton";
 
 interface IProps {
   modal_text: string;
-  current_status: string;
-  task: TaskForTaskStatusForToday;
+  current_status: any;
+  task: any;
   refetch?: () => void;
 }
 

@@ -46,7 +46,7 @@ const ModalForQuestionDetailForNote: React.FC<
   const queryClient = useQueryClient();
   const toast = useToast();
   const [contentForComment, setContentForComment] = useState("");
-  const [questionInfo, setQuestionInfo] = useState();
+  const [questionInfo, setQuestionInfo] = useState<any>();
 
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
@@ -239,7 +239,7 @@ const ModalForQuestionDetailForNote: React.FC<
                     {/* rome-ignore lint/complexity/useOptionalChain: <explanation> */}
                     {questionInfo &&
                       questionInfo.answers_for_qa_board.map(
-                        (row: AnswerForQaBoard, rowIndex) => (
+                        (row: AnswerForQaBoard, rowIndex:any) => (
                           <Tr key={row.pk}>
                             <Td>
                               <Box

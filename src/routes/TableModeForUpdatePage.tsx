@@ -21,7 +21,7 @@ import {
   apiForGetStudyNoteListForCopyMode,
   apiForGetStudyNoteListForMe,
 } from "../apis/study_note_api";
-import { TypeForNote, TypeForNoteList } from "../types/study_note_type";
+import { TypeForNote } from "../types/study_note_type";
 import PaginationComponent from "../components/PaginationComponent";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -55,7 +55,7 @@ const TableModeForUpdatePage = (props: Props) => {
     isLoading: isLoadingForGetStudyNoteList,
     data: dataForGetStudyNoteList,
     refetch: refetchForGetStudyNoteList,
-  } = useQuery<TypeForNoteList>(
+  } = useQuery<any>(
     ["getStudyNoteListForCopyMode", pageNum, selectedNoteWriter],
     apiForGetStudyNoteListForCopyMode,
     {
@@ -67,7 +67,7 @@ const TableModeForUpdatePage = (props: Props) => {
     isLoading: isLoadingForGetStudyNoteListForMe,
     data: dataForGetStudyNoteListForMe,
     refetch: refetchForGetStudyNoteListForMe,
-  } = useQuery<TypeForNoteList>(
+  } = useQuery<any>(
     ["getStudyNoteListForCopyModeForMe", pageNumForMe],
     apiForGetStudyNoteListForMe,
     {

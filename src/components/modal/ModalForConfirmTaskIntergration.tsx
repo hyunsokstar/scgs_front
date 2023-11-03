@@ -50,7 +50,7 @@ interface IProps {
   checkedRowPks: number[];
   taskListForCheckedForIntergration: any[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
-  selectedTargetPk: number;
+  selectedTargetPk: any;
 }
 
 // 관련 api
@@ -83,7 +83,7 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
       onMutate: () => {
         console.log("mutation starting");
       },
-      onSuccess: (data) => {
+      onSuccess: (data:any) => {
         console.log("data : ", data);
         queryClient.refetchQueries([
           "apiForGetTargetTaskListForTaskIntegration",
@@ -219,7 +219,7 @@ const ModalForConfirmTaskIntergration: React.FC<IProps> = ({
                     <Tbody>
                       {dataForTargetTask && dataForTargetTask.extra_tasks
                         ? dataForTargetTask.extra_tasks.map(
-                            (task: IExtraTaskRow) => (
+                            (task: any) => (
                               <Tr key={task.pk}>
                                 <Td>
                                   <Checkbox />

@@ -43,7 +43,7 @@ const TaskLogPage = (props: Props) => {
   }, [dataForTaskLogs, setSelectedDay]);
 
   if (!dataForTaskLogs) {
-    return "...loading";
+    return <Box>"...loading"</Box>;
   }
 
   return (

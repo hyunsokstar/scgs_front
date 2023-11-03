@@ -304,9 +304,9 @@ const StudyNoteDetail2 = (props: Props) => {
     mutationForLoadSavedPageForThisNote.mutate({ study_note_pk });
   };
 
-  const direction_option_for_note_meta_info = useBreakpointValue({
-    base: "column", // for mobile and small screens
-    md: "row", // for medium-sized screens and up
+  const direction_option_for_note_meta_info= useBreakpointValue<any>({
+    base: "column",
+    md: "row",
   });
 
   // 2244
@@ -331,8 +331,11 @@ const StudyNoteDetail2 = (props: Props) => {
   if (logind_for_study_note_content_list) {
     return <Box>"loading.."</Box>;
   }
-
   // 컴포넌트 내에서 화면 사이즈에 따라 top 값을 동적으로 조절하는 방법
+
+  if(!response_data_for_api){
+    return <Box>loading..</Box>;
+  }
 
   return (
     <Box
@@ -428,7 +431,6 @@ const StudyNoteDetail2 = (props: Props) => {
                 modal_title={`QA list for page ${note_page_num}`}
                 modal_size={"6xl"}
                 study_note_pk={study_note_pk}
-                note_page_num={note_page_num}
                 total_count_for_qna_board={
                   response_data_for_api?.question_count_for_current_page
                 }

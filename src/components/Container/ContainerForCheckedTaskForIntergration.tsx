@@ -9,7 +9,7 @@ interface IProps {
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
   setIsOpen: any;
-  dataForTaskListForCheckedPks: typeForTaskListForChecked;
+  dataForTaskListForCheckedPks: any;
 }
 
 const ContainerForCheckedTaskForIntergration = ({

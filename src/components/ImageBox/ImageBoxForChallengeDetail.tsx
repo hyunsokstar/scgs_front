@@ -6,7 +6,7 @@ import { apiForUpdateChallengeMainImage } from "../../apis/challenge_api";
 import { ITypeForChallengeRow } from "../../types/type_for_challenge";
 
 interface IPropTypes {
-  selectedChallenge: ITypeForChallengeRow;
+  selectedChallenge: any;
 }
 
 const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {

@@ -261,7 +261,7 @@ function DataItem({
         </Flex>
 
         <CommonDeleteButtonForPk
-          pk={pk}
+          id={pk}
           targetInfoToDelete={test_description}
           handlerForDelete={deleteTestHandler}
         />

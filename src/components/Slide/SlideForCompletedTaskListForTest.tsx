@@ -21,7 +21,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForUpdateScoreByTester } from "../../apis/project_progress_api";
 
 interface SlideForUncompletedTaskListProps {
-  listData: taskRowForUncompleted[] | any[];
+  listData: any;
   handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checkedRowPks: any[];
   refetch?: () => void;
@@ -43,12 +43,13 @@ function SlideForCompletedTaskListForTest({
   const [scoreValues, setScoreValues] = useState<number[]>([]);
 
   // console.log("listData : ", listData);
-  useEffect(() => {
-    const initialScores =
-      listData?.map((task) => task.score_by_tester ?? 0) || [];
-    setOriginalScoreValues(initialScores);
-    setScoreValues(initialScores);
-  }, [listData]);
+  // useEffect(() => {
+  //   const initialScores = listData.map((task: any) =>
+  //     task.score_by_tester ? task.score_by_tester : 0
+  //   );
+  //   setOriginalScoreValues(initialScores);
+  //   setScoreValues(initialScores);
+  // }, [listData]);
 
   const handleSlideChange = (index: any) => {
     setActiveSlide(index);
@@ -150,11 +151,11 @@ function SlideForCompletedTaskListForTest({
   // 2244
   return (
     <Box>
-      {listData && listData.length ? (
+      {listData ? (
         <Box>
           <Slider {...settings} ref={sliderRef}>
-            {listData && listData.length ? (
-              listData.map((row, index) => (
+            {listData ? (
+              listData.map((row: any, index: any) => (
                 <Card
                   key={index}
                   height="46vh"
@@ -253,7 +254,12 @@ function SlideForCompletedTaskListForTest({
             <Button variant={"outline"} size={"sm"} onClick={prevSlide}>
               Prev
             </Button>
-            <Box display="grid" gridTemplateColumns="repeat(5, 1fr)" mx={2} my={1}>
+            <Box
+              display="grid"
+              gridTemplateColumns="repeat(5, 1fr)"
+              mx={2}
+              my={1}
+            >
               {renderCustomPaging()}
             </Box>{" "}
             <Button variant={"outline"} size={"sm"} onClick={nextSlide}>

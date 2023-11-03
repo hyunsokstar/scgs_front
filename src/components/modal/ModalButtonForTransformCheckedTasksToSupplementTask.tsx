@@ -102,7 +102,7 @@ const ModalButtonForTransformCheckedTasksToSupplementTask = ({
               <Box flex={1} style={dashedBorderStyle}>
                 <ContainerForCheckedTaskForIntergration
                   checkedRowPks={checkedRowPks}
-                  dataForTaskListForCheckedPks={dataForTaskListForCheckedPks}
+                  dataForTaskListForCheckedPks={dataForTaskListForCheckedPks ? dataForTaskListForCheckedPks: []}
                   setCheckedRowPks={setCheckedRowPks}
                   setIsOpen={setIsOpen}
                 />

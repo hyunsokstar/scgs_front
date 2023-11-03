@@ -31,7 +31,7 @@ interface IProps {
   taskPk: number | string;
   task_manager: User | undefined;
   task_comments: ITaskComment[];
-  refetch: () => void | undefined;
+  refetch: any;
   button_width?: string;
 }
 

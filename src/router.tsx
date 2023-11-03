@@ -183,7 +183,7 @@ const router = createBrowserRouter([
       },
       {
         path: "test10",
-        element: <Test10 />,
+        element: <Test10 posts={[]} />,
       },
       {
         path: "wanted",

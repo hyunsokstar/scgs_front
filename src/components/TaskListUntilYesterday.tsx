@@ -13,16 +13,11 @@ import {
   apiForUpdateTaskDueDateForChecked,
   getUncompletedTaskList,
 } from "../apis/project_progress_api";
-import {
-  ITypeForProjectProgressList,
-  typeForDueDateUpdateForChecked,
-} from "../types/project_progress/project_progress_type";
+import { typeForDueDateUpdateForChecked } from "../types/project_progress/project_progress_type";
 import UncompletedTaskRow from "./UncompletedTaskList";
 import ModalButtonForUpdateTaskManagerForChecked from "./Button/ModalButtonForUpdateTaskManagerForChecked";
-import ModalButtonForUpdateImortanceForChecked from "./modal/ModalButtonForUpdateImortanceForChecked";
 import ModalButtonForUpdateTaskClassificationForChecked from "./modal/ModalButtonForUpdateTaskClassificationForChecked";
 import ModalButtonForAddProjectTaskWithDuedateOption from "./modal/ModalButtonForAddProjectTaskWithDuedateOption";
-import RadioButtonForGroupByOptionForTaskListUntilYesterday from "./Button/RadioButtonForGroupByOptionForTaskListUntilYesterday";
 import SlideForUncompletedTaskList from "./Slide/SlideForUncompletedTaskList";
 
 interface Props {
@@ -38,17 +33,13 @@ interface Props {
 }
 
 // 1122
-const TaskListUntilYesterday = ({
-  basic_due_date_option,
-}: Props) => {
+const TaskListUntilYesterday = ({ basic_due_date_option }: Props) => {
   // const theme = useTheme();
   const queryClient = useQueryClient();
 
   const [checkedRowPks, setCheckedRowPks] = useState<number[]>([]);
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
-  const [
-    selectedPeriodOptionForUncompletedTaskList,
-  ] = useState("all");
+  const [selectedPeriodOptionForUncompletedTaskList] = useState("all");
   const [username_for_search, set_username_for_search] = useState<string>();
   const [task_status_for_search, set_task_status_for_search] =
     useState<string>("");
@@ -65,8 +56,8 @@ const TaskListUntilYesterday = ({
   const {
     isLoading,
     data: taskListData,
-    refetch: projectTaskListRefatch,
-  } = useQuery<ITypeForProjectProgressList>(
+    refetch: projectTaskListRefetch,
+  } = useQuery<any>(
     [
       "getUncompletedTaskList",
       currentPageNum,
@@ -208,7 +199,6 @@ const TaskListUntilYesterday = ({
 
   return (
     <Box w={"100%"} border={"1px solid purple"}>
-    
       <Box display={"flex"} flexDirection={"column"} gap={2} p={2}>
         <Box
           width={"100%"}
@@ -368,10 +358,10 @@ const TaskListUntilYesterday = ({
           <ModalButtonForAddProjectTaskWithDuedateOption
             button_text="Add Task For Team Project"
             size={"sm"}
-            projectTaskListRefatch={projectTaskListRefatch}
             bgColor="blue.300"
             hoverColor="red.500"
             hoverTextColor="yellow"
+            projectTaskListRefetch={projectTaskListRefetch}
           />
         </Box>
       </Box>
@@ -384,9 +374,11 @@ const TaskListUntilYesterday = ({
               task_number_for_one_page={taskListData.task_number_for_one_page}
               currentPageNum={currentPageNum}
               setCurrentPageNum={setCurrentPageNum}
-              projectTaskListRefatch={projectTaskListRefatch}
+              projectTaskListRefetch={projectTaskListRefetch}
               handleCheckboxChange={handleCheckboxChange}
               checkedRowPks={checkedRowPks}
+              setCheckedRowPks={setCheckedRowPks}
+              taskListDataForUncompleted={filteredData}
             />
           ) : (
             ""
@@ -401,6 +393,6 @@ const TaskListUntilYesterday = ({
       )}
     </Box>
   );
-}
+};
 
 export default TaskListUntilYesterday;

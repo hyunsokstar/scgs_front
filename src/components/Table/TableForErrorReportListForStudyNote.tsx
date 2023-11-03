@@ -27,7 +27,7 @@ import ErrorReportTableRow from "../Row/ErrorReportTableRow";
 import CommentListForErrorReport from "../Comments/CommentListForErrorReport";
 
 interface TableForErrorReportListForStudyNoteProps {
-  errorReportList: any[] | undefined;
+  errorReportList: any;
   refetchForGetErrorReportListForStudyNote: () => void;
 }
 
@@ -45,7 +45,7 @@ const TableForErrorReportListForStudyNote: React.FC<
   );
 
   const toggleAccordion = () => {
-    setIsAccordionOpen(!isAccordionOpen);
+    // setIsAccordionOpen(!isAccordionOpen);
   };
 
   const { loginUser, isLoggedIn } = useSelector(
@@ -125,7 +125,7 @@ const TableForErrorReportListForStudyNote: React.FC<
   // 2244
   return (
     <Box overflowX="auto" overflowY="scroll" height="100%">
-      {errorReportList?.map((report, index) => (
+      {errorReportList?.map((report:any, index:any) => (
         <Accordion allowToggle key={report.pk}>
           <AccordionItem>
             <h2>

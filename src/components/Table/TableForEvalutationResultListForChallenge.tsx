@@ -48,11 +48,11 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
   console.log("evaluationResults : ", evaluationResults);
 
   const usernames = Object.keys(evaluationResults);
-  const criteriaSet = new Set<string>();
+  const criteriaSet = new Set();
 
   // 모든 평가 결과에서 사용된 criteria 수집
-  usernames.forEach((username) => {
-    Object.keys(evaluationResults[username]).forEach((criteria) => {
+  usernames.forEach((username:any) => {
+    Object.keys(evaluationResults[username]).forEach((criteria:any) => {
       criteriaSet.add(criteria);
     });
   });
@@ -73,7 +73,7 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
           </Tr>
         </Thead>
         <Tbody>
-          {usernames.map((username) => (
+          {usernames.map((username:any) => (
             <Tr key={username}>
               <Td>{username}</Td>
               <Td key={username}>
@@ -82,7 +82,7 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                   height={"180px"}
                   border={"1px solid lightgray"}
                 >
-                  {[...criteriaSet].map((criteria, index) => (
+                  {[...criteriaSet].map((criteria:any, index:number) => (
                     <Box
                       display={"flex"}
                       justifyContent={"space-between"}
@@ -105,14 +105,14 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
               </Td>
 
               {challenge_results
-                ? challenge_results.map((row) => {
+                ? challenge_results.map((row:any) => {
                     if (row.challenger.username) {
                       // return <Box>{row.pass_status ? "passed" : "fail"}</Box>;
                       return (
                         <>
                           <Td>
                             {challenge_results
-                              ? challenge_results.map((row) => {
+                              ? challenge_results.map((row:any) => {
                                   if (row.challenger.username === username) {
                                     // return <Box>{row.pass_status ? "passed" : "fail"}</Box>;
                                     return (
@@ -139,13 +139,16 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
                               />
 
                               {row.challenger.username ===
-                              loginUser.username ? (
+                              loginUser?.username ? (
                                 <ModalButtonForUpdateChallengeResultMetaInfo
                                   challengeResultId={row.id}
                                   github_url1={row.github_url1}
                                   github_url2={row.github_url2}
                                   // github_url3={row.github_url3}
                                   note_url1={row.note_url1}
+                                  github_url3={""}
+                                  note_url2={""}
+                                  note_url3={""}
                                 />
                               ) : (
                                 ""

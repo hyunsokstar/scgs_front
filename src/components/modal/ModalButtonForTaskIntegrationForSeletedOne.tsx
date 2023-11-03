@@ -51,7 +51,7 @@ const ModalButtonForTaskIntegrationForSeletedOne: React.FC<
       onMutate: () => {
         console.log("mutation starting");
       },
-      onSuccess: (data) => {
+      onSuccess: (data:any) => {
         console.log("data : ", data);
         queryClient.refetchQueries([
           "apiForGetTaskListForSelectedOneForTaskIntergration",
@@ -106,7 +106,7 @@ const ModalButtonForTaskIntegrationForSeletedOne: React.FC<
       onMutate: () => {
         console.log("mutation starting");
       },
-      onSuccess: (data) => {
+      onSuccess: (data:any) => {
         console.log("data : ", data);
         queryClient.refetchQueries([
           "apiForGetTaskListForSelectedOneForTaskIntergration",

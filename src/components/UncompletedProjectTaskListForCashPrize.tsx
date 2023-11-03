@@ -23,8 +23,6 @@ import {
   getTasksWithCashPrize,
 } from "../apis/project_progress_api";
 import {
-  ITypeForProjectProgressList,
-  IUncompletedTaskListForCashPrize,
 } from "../types/project_progress/project_progress_type";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/SelectBoxForSetPeriodForFilteringUncompletedTaskList";
 import ModalButtonForAddProjectTask from "./modal/ModalButtonForAddProjectTask";
@@ -50,8 +48,8 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
   const {
     isLoading,
     data: taskListData,
-    refetch: projectTaskListRefatch,
-  } = useQuery<IUncompletedTaskListForCashPrize>(
+    refetch: projectTaskListRefetch,
+  } = useQuery<any>(
     [
       "getTasksWithCashPrize",
       currentPageNum,
@@ -92,7 +90,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
 
   const updateFilteredDataForTask = (filterValueForTask: string) => {
     if (filterValueForTask !== "") {
-      const filteredData = taskListData?.ProjectProgressList.filter((item) =>
+      const filteredData = taskListData?.ProjectProgressList.filter((item:any) =>
         item.task.toLowerCase().includes(filterValueForTask.toLowerCase())
       );
       setFilteredData(filteredData);
@@ -114,7 +112,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
     filterValueForTaskManager: string
   ) => {
     if (filterValueForTaskManager !== "") {
-      const filteredData = taskListData?.ProjectProgressList.filter((item) =>
+      const filteredData = taskListData?.ProjectProgressList.filter((item:any) =>
         item.task_manager.username
           .toLowerCase()
           .includes(filterValueForTaskManager.toLowerCase())
@@ -217,7 +215,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
                   </Tr>
                   <Tr height="30px" borderBottom={"2px solid #fafad2"}>
                     <Td>
-                      {taskListData?.writers_info?.map((writer) => {
+                      {taskListData?.writers_info?.map((writer:any) => {
                         return (
                           <Box fontSize="lg" color="blue.900">
                             <VStack>
@@ -309,7 +307,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
         <Box textAlign={"right"} m={0}>
           <ModalButtonForAddProjectTask
             button_text="task 추가"
-            projectTaskListRefatch={projectTaskListRefatch}
+            projectTaskListRefetch={projectTaskListRefetch}
           />
         </Box>
       </Box>
@@ -322,7 +320,7 @@ function UncompletedProjectTaskList({}: Props): ReactElement {
             task_number_for_one_page={taskListData.task_number_for_one_page}
             currentPageNum={currentPageNum}
             setCurrentPageNum={setCurrentPageNum}
-            projectTaskListRefatch={projectTaskListRefatch}
+            projectTaskListRefetch={projectTaskListRefetch}
           />
         ) : (
           ""

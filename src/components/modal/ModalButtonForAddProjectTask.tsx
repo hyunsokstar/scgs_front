@@ -29,7 +29,7 @@ import { insertProjectProgressRow } from "../../apis/project_progress_api";
 import { getUserNamesForCreate } from "../../apis/user_api";
 
 interface IProps {
-  projectTaskListRefatch: () => void;
+  projectTaskListRefetch: any;
   button_text: string;
 }
 
@@ -50,7 +50,7 @@ const options = [
 
 // 1122 ModalButtonForAddProjectTaskWithDuedateOption
 const ModalButtonForAddProjectTask: FC<IProps> = ({
-  projectTaskListRefatch,
+  projectTaskListRefetch,
   button_text = "add task",
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -91,7 +91,7 @@ const ModalButtonForAddProjectTask: FC<IProps> = ({
           title: "welcome back!",
           status: "success",
         });
-        projectTaskListRefatch();
+        projectTaskListRefetch();
         onClose();
       },
       onError: (error: any) => {

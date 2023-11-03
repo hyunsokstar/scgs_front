@@ -68,7 +68,7 @@ const TableForNoteList = ({
         </Thead>
         <Tbody>
           {dataForStudyNote
-            ? dataForStudyNote.noteList.map((row) => {
+            ? dataForStudyNote.noteList.map((row:any) => {
                 return (
                   <Tr>
                     <Td>

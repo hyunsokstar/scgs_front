@@ -104,7 +104,7 @@ const ModalForSurveyDetail: React.FC<ModalForSurveyDetailProps> = ({
                     <InputFormForCreateSurveyOption
                       dataForForSurveyDetail={dataForForSurveyDetail}
                       selectedSurveyId={selectedSurveyId}
-                      loginUserName={loginUser.username}
+                      loginUserName={loginUser?.username}
                       writerUserName={
                         dataForForSurveyDetail?.writer?.username
                           ? dataForForSurveyDetail?.writer?.username

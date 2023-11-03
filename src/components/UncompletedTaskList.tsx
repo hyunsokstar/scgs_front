@@ -49,7 +49,7 @@ interface IProps {
   setCurrentPageNum: any;
   task_number_for_one_page?: number;
   handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  projectTaskListRefatch: () => void;
+  projectTaskListRefetch: any;
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
   taskListDataForUncompleted: ITypeForTaskListDataForUncompleted;
@@ -63,7 +63,7 @@ function UncompletedTaskList({
   currentPageNum,
   setCurrentPageNum,
   handleCheckboxChange,
-  projectTaskListRefatch,
+  projectTaskListRefetch,
   checkedRowPks,
   setCheckedRowPks,
   taskListDataForUncompleted,
@@ -123,7 +123,7 @@ function UncompletedTaskList({
     {
       onSuccess: (result: any) => {
         console.log("result : ", result);
-        // projectTaskListRefatch();
+        // projectTaskListRefetch();
         toast({
           status: "success",
           title: "task status update success",
@@ -150,8 +150,8 @@ function UncompletedTaskList({
     {
       onSuccess: (result: any) => {
         // console.log("result : ", result);
-        // if (projectTaskListRefatch) {
-        //   projectTaskListRefatch();
+        // if (projectTaskListRefetch) {
+        //   projectTaskListRefetch();
         // }
         queryClient.refetchQueries(["getUnompletedTaskList"]);
         // queryClient.refetchQueries(["getInprogressTaskList"]);
@@ -183,8 +183,8 @@ function UncompletedTaskList({
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
+        if (projectTaskListRefetch) {
+          projectTaskListRefetch();
         }
         // queryClient.refetchQueries(["getUnompletedTaskList"]);
         // queryClient.refetchQueries(["getCompletedTaskList"]);
@@ -206,8 +206,8 @@ function UncompletedTaskList({
     {
       onSuccess: (result: any) => {
         // console.log("result : ", result);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
+        if (projectTaskListRefetch) {
+          projectTaskListRefetch();
         }
         queryClient.refetchQueries(["getUnompletedTaskList"]);
 
@@ -233,8 +233,8 @@ function UncompletedTaskList({
     {
       onSuccess: (result: any) => {
         // console.log("result : ", result);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
+        if (projectTaskListRefetch) {
+          projectTaskListRefetch();
         }
         queryClient.refetchQueries(["getUnompletedTaskList"]);
 
@@ -277,25 +277,38 @@ function UncompletedTaskList({
     }
   }
 
-  const handleTextClick = (userPk) => {
+  const handleTextClick = (userPk: any) => {
     // task.id를 사용하여 원하는 경로로 이동
     navigate(`/team-status/${userPk}`);
   };
+
+  // const handleChangeForAllCheckBox = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   const checked = event.target.checked;
+  //   const rowPks = taskListDataForUncompleted.ProjectProgressList.map((item: any) => (item as any).id)
+
+  //   if (checked) {
+  //     setCheckedRowPks([...checkedRowPks, ...rowPks]);
+  //   } else {
+  //     setCheckedRowPks([]);
+  //   }
+  // };
 
   const handleChangeForAllCheckBox = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const checked = event.target.checked;
-    const rowPks =
-      taskListDataForUncompleted?.ProjectProgressList.map((item) => item.id) ||
-      [];
-
+  
+    // 가장 좋은 방법은 아래에서 타입을 명시적으로 정의하는 것입니다.
+    const rowPks: Array<number> = taskListDataForUncompleted.ProjectProgressList.map((item: any) => item.id) ;
+  
     if (checked) {
-      setCheckedRowPks([...checkedRowPks, ...rowPks]);
+      setCheckedRowPks((prevCheckedRowPks: Array<number>) => [...prevCheckedRowPks, ...rowPks]);
     } else {
       setCheckedRowPks([]);
     }
-  };
+  };  
 
   // 2244
   return (
@@ -565,7 +578,7 @@ function UncompletedTaskList({
                               task.due_date ? task.due_date : ""
                             }
                             started_at={task.started_at ? task.started_at : ""}
-                            projectTaskListRefatch={projectTaskListRefatch}
+                            projectTaskListRefetch={projectTaskListRefetch}
                           />
                         </Box>
                         <Box display={"flex"} gap={1} mb={2}>
@@ -576,7 +589,7 @@ function UncompletedTaskList({
                               task.due_date ? task.due_date : ""
                             }
                             started_at={task.started_at ? task.started_at : ""}
-                            projectTaskListRefatch={projectTaskListRefatch}
+                            projectTaskListRefetch={projectTaskListRefetch}
                           />
                         </Box>
                       </Td>

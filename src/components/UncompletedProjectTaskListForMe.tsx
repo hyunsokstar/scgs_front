@@ -37,8 +37,8 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
   const {
     isLoading,
     data: taskListDataForMe,
-    refetch: projectTaskListRefatch,
-  } = useQuery<ITypeForProjectProgressList>(
+    refetch: projectTaskListRefetch,
+  } = useQuery<any>(
     [
       "getUncompletedTaskListForMe",
       currentPageNum,
@@ -51,7 +51,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
     }
   );
 
-  const flex_direction_option_for_responsive = useBreakpointValue({
+  const flex_direction_option_for_responsive = useBreakpointValue<any>({
     base: "column", // for mobile and small screens
     md: "row", // for medium-sized screens and up
     lg: "row", // for large screens and up
@@ -62,7 +62,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
   ) => {
     const checked = event.target.checked;
     const rowPks =
-      taskListDataForMe?.ProjectProgressList.map((item) => item.id) || [];
+      taskListDataForMe?.ProjectProgressList.map((item:any) => item.id) || [];
 
     if (checked) {
       setCheckedRowPks([...checkedRowPks, ...rowPks]);
@@ -242,7 +242,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
         <Box textAlign={"right"} flex={1}>
           <ModalButtonForAddProjectTask
             button_text="task 추가"
-            projectTaskListRefatch={projectTaskListRefatch}
+            projectTaskListRefetch={projectTaskListRefetch}
           />
         </Box>
       </Box>
@@ -280,7 +280,7 @@ function UncompletedProjectTaskListForMe({}: Props): ReactElement {
                 totalPageCount={taskListDataForMe.totalPageCount}
                 currentPageNum={currentPageNum}
                 setCurrentPageNum={setCurrentPageNum}
-                projectTaskListRefatch={projectTaskListRefatch}
+                projectTaskListRefetch={projectTaskListRefetch}
                 checkedRowPks={checkedRowPks}
                 handleCheckboxChange={handleCheckboxChange}
               />

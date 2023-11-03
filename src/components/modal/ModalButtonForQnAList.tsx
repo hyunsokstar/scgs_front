@@ -55,7 +55,7 @@ const ModalButtonForQnAList = ({
     isLoading: isLoadingForGetQnABoardList,
     data: dataForQa,
     refetch: refetchForGetQnABoardList,
-  } = useQuery<any[]>(
+  } = useQuery<any>(
     ["apiForGetQnABoardList", study_note_pk, pageNum],
     apiForGetQnABoardList,
     {

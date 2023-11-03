@@ -364,7 +364,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
     return <Box>Loading</Box>;
   }
 
-  if (!(taskData || isLoadingForTaskData)) {
+  if (!taskData ) {
     return <Box>Loading..</Box>;
   } else {
     return (

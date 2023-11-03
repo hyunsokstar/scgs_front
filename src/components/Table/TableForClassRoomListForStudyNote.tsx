@@ -178,7 +178,7 @@ const TableForClassRoomListForStudyNote: React.FC<TableComponentProps> = ({
         </Thead>
         <Tbody>
           {dataForGetClassRoomList &&
-            dataForGetClassRoomList.map((row) => (
+            dataForGetClassRoomList.map((row:any) => (
               <Tr key={row.id}>
                 <Td>{row.id}</Td>
                 <Td>{row.current_page}</Td>

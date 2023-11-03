@@ -5,9 +5,7 @@ import { typeForUncompletedTaskListForPersonalTaskStatus } from "../types/user/u
 import UncompletedTaskListForUser from "./UncompletedTaskListForUser";
 
 interface Props {
-  dataForUncompletedTaskListDataForSelectedUser?:
-    | typeForUncompletedTaskListForPersonalTaskStatus
-    | undefined;
+  dataForUncompletedTaskListDataForSelectedUser: any;
   refetchForUncompletedTaskListDataForSelectedUser: any;
 }
 
@@ -19,7 +17,10 @@ const UnCompleteTaskListForPersnalTaskStatus = ({
     useState<string>("");
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
 
-  
+  if(!dataForUncompletedTaskListDataForSelectedUser){
+    return <Box>roading..</Box>
+  }
+
   return (
     <Box>
       <Box
@@ -80,8 +81,9 @@ const UnCompleteTaskListForPersnalTaskStatus = ({
       <Box>
         <UncompletedTaskListForUser
           ProjectProgressList={
-            dataForUncompletedTaskListDataForSelectedUser &&
-            dataForUncompletedTaskListDataForSelectedUser.ProjectProgressList
+            dataForUncompletedTaskListDataForSelectedUser
+              ? dataForUncompletedTaskListDataForSelectedUser.ProjectProgressList
+              : []
           }
           task_number_for_one_page={
             dataForUncompletedTaskListDataForSelectedUser &&

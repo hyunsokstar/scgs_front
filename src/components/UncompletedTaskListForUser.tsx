@@ -211,14 +211,17 @@ function UncompletedTaskListForUser({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const checked = event.target.checked;
-    const rowPks = ProjectProgressList.map((item) => item.pk) || [];
-
+    
+    // ProjectProgressList가 올바른 형태의 배열이라고 가정합니다.
+    const rowPks = ProjectProgressList.map((item: any) => item.pk) || [];
+  
     if (checked) {
-      setCheckedRowPks([...checkedRowPks, ...rowPks]);
+      setCheckedRowPks((prevCheckedRowPks: Array<number>) => [...prevCheckedRowPks, ...rowPks]);
     } else {
       setCheckedRowPks([]);
     }
   };
+  
 
   const is_show_for_mobile = useBreakpointValue({
     base: false, // for mobile and small screens

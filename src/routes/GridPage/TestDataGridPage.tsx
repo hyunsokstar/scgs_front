@@ -3,7 +3,7 @@ import "react-data-grid/lib/styles.css";
 import DataGrid from "react-data-grid";
 import React, { useState } from "react";
 
-import { faker } from "@faker-js/faker";
+// import { faker } from "@faker-js/faker";
 
 import styles from "./grid.module.css";
 import { Box, Button } from "@chakra-ui/react";
@@ -61,30 +61,30 @@ const columns = [
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>
 function createRows(): any {
-  const now = Date.now();
-  const rows: Row[] = [];
+  // const now = Date.now();
+  // const rows: Row[] = [];
 
-  for (let i = 0; i < 100; i++) {
-    rows.push({
-      id: i,
-      title: `Task #${i + 1}`,
-      client: faker.company.name(),
-      area: faker.name.jobArea(),
-      country: faker.address.country(),
-      contact: faker.internet.exampleEmail(),
-      assignee: faker.name.fullName(),
-      progress: Math.random() * 100,
-      startTimestamp: now - Math.round(Math.random() * 1e10),
-      endTimestamp: now + Math.round(Math.random() * 1e10),
-      budget: 500 + Math.random() * 10500,
-      transaction: faker.finance.transactionType(),
-      account: faker.finance.iban(),
-      version: faker.system.semver(),
-      available: Math.random() > 0.5,
-    });
-  }
+  // for (let i = 0; i < 100; i++) {
+  //   rows.push({
+  //     id: i,
+  //     title: `Task #${i + 1}`,
+  //     client: faker.company.name(),
+  //     area: faker.name.jobArea(),
+  //     country: faker.address.country(),
+  //     contact: faker.internet.exampleEmail(),
+  //     assignee: faker.name.fullName(),
+  //     progress: Math.random() * 100,
+  //     startTimestamp: now - Math.round(Math.random() * 1e10),
+  //     endTimestamp: now + Math.round(Math.random() * 1e10),
+  //     budget: 500 + Math.random() * 10500,
+  //     transaction: faker.finance.transactionType(),
+  //     account: faker.finance.iban(),
+  //     version: faker.system.semver(),
+  //     available: Math.random() > 0.5,
+  //   });
+  // }
 
-  return rows;
+  // return rows;
 }
 
 function gridElement() {

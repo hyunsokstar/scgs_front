@@ -41,7 +41,7 @@ interface IProps {
   currentPageNum: number;
   setCurrentPageNum: any;
   task_number_for_one_page?: number;
-  projectTaskListRefatch: () => void;
+  projectTaskListRefetch: any;
 }
 
 function UncompletedTaskRow({
@@ -50,7 +50,7 @@ function UncompletedTaskRow({
   task_number_for_one_page,
   currentPageNum,
   setCurrentPageNum,
-  projectTaskListRefatch,
+  projectTaskListRefetch,
 }: IProps): ReactElement {
   const toast = useToast();
   const queryClient = useQueryClient();
@@ -70,8 +70,8 @@ function UncompletedTaskRow({
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
+        if (projectTaskListRefetch) {
+          projectTaskListRefetch();
         }
         // queryClient.refetchQueries(["getUnompletedTaskList"]);
         // queryClient.refetchQueries(["getCompletedTaskList"]);
@@ -110,8 +110,8 @@ function UncompletedTaskRow({
     {
       onSuccess: (result: any) => {
         // console.log("result : ", result);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
+        if (projectTaskListRefetch) {
+          projectTaskListRefetch();
         }
         queryClient.refetchQueries(["getUnompletedTaskList"]);
 
@@ -214,8 +214,8 @@ function UncompletedTaskRow({
 
       queryClient.refetchQueries(["getTasksWithCashPrize"]);
       // queryClient.refetchQueries(["getCompletedTaskList"]);
-      // if (projectTaskListRefatch) {
-      //   projectTaskListRefatch();
+      // if (projectTaskListRefetch) {
+      //   projectTaskListRefetch();
       // }
 
       toast({

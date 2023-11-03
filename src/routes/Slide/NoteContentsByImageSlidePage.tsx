@@ -41,6 +41,10 @@ const NoteContentsByImageSlidePage = (props: Props) => {
     console.log("hi");
   };
 
+  if (!dataForNoteContentListForPage) {
+    return <Box>loading..</Box>;
+  }
+
   const is_authority_for_note =
     dataForNoteContentListForPage?.note_user_name === loginUser.username ||
     dataForNoteContentListForPage?.co_writers_for_approved.includes(
@@ -58,14 +62,14 @@ const NoteContentsByImageSlidePage = (props: Props) => {
         // border={"5px solid brown"}
       >
         <Box>
-          <Box>{dataForNoteContentListForPage?.note_title}</Box>
+          <Box>{dataForNoteContentListForPage.note_title}</Box>
           <Box display={"fex"} gap={2}>
             page: {note_page_num}
             <ButtonsForSelectPageForNoteSlide
               button_text={"select page"}
               study_note_pk={study_note_pk}
               exist_page_numbers={
-                dataForNoteContentListForPage?.exist_page_numbers
+                dataForNoteContentListForPage.exist_page_numbers
               }
             />
           </Box>
@@ -85,7 +89,7 @@ const NoteContentsByImageSlidePage = (props: Props) => {
                   (row) => {
                     return (
                       <Box
-                        key={row.pk}
+                        key={row.id}
                         display={"flex"}
                         gap={2}
                         alignItems={"center"}
@@ -165,7 +169,11 @@ const NoteContentsByImageSlidePage = (props: Props) => {
               }
               note_title={""}
               note_writer={""}
-              is_authority_for_note={is_authority_for_note !== undefined ? is_authority_for_note : false}
+              is_authority_for_note={
+                is_authority_for_note !== undefined
+                  ? is_authority_for_note
+                  : false
+              }
             />
           ) : (
             "no data"

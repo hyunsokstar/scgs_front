@@ -26,7 +26,7 @@ const ErrorReportTableRow = ({
   buttonHandlerForDeleteErrorReportByPk,
   openModalForReportDetail,
   loginUser,
-}) => {
+}:any) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   return (

@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForRegisterForChallenge } from "../../apis/challenge_api";
 
 interface IProps {
-  challengeId: string;
+  challengeId: any;
 }
 
 const ButtonForRegisterChallenge: React.FC<IProps> = ({ challengeId }) => {

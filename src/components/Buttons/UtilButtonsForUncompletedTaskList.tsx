@@ -33,9 +33,7 @@ interface IProps {
   taskListDataForUncompleted: ITypeForTaskListDataForUncompleted | undefined;
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
-  projectTaskListRefetch: () => Promise<
-    QueryObserverResult<ITypeForTaskListDataForUncompleted, unknown>
-  >;
+  projectTaskListRefetch: any;
 }
 
 // 1122

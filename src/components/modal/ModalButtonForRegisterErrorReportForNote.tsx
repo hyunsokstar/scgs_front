@@ -134,7 +134,7 @@ const ModalButtonForRegisterErrorReportForNote = ({
           <ModalCloseButton />
           <ModalBody>
             <TableForErrorReportListForStudyNote
-              data={
+              errorReportList={
                 dataForErrorReportList &&
                 dataForErrorReportList
               }

@@ -40,7 +40,7 @@ const TableForTaskListForChecked: React.FC<Props> = ({
     const { checked } = e.target;
 
     if (checked) {
-      setCheckedRowPks(data.map((task) => task.id));
+      setCheckedRowPks(data.map((task:any) => task.id));
     } else {
       setCheckedRowPks([]);
     }
@@ -71,7 +71,7 @@ const TableForTaskListForChecked: React.FC<Props> = ({
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((task) => (
+          {data.map((task:any) => (
             <Tr key={task.id}>
               <Td>
                 <Checkbox

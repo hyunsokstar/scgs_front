@@ -46,10 +46,7 @@ const SuggestionListForNote: React.FC<SuggestionListProps> = ({
   // 모달 열기/닫기 상태 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSuggestion, setSelectedSuggestion] =
-    useState<Suggestion | null>(null);
-
-
-
+    useState<any>("");
 
   // mutationForDeleteCommentForChallenge
   const mutationForDeleteCommentForSuggestion = useMutation(
@@ -93,7 +90,7 @@ const SuggestionListForNote: React.FC<SuggestionListProps> = ({
   // 모달 닫기 함수
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedSuggestion(null);
+    setSelectedSuggestion("");
   };
 
   // 현재 마우스가 호버 상태인 항목의 인덱스를 저장
@@ -164,7 +161,7 @@ const SuggestionListForNote: React.FC<SuggestionListProps> = ({
       <ModalForSuggestionDetailForNote
         isOpen={isModalOpen}
         onClose={closeModal}
-        suggestion={selectedSuggestion ? selectedSuggestion : ""}
+        suggestion={selectedSuggestion}
         suggestionPk={selectedSuggestion?.pk}
         title={selectedSuggestion?.title || ""}
         content={selectedSuggestion?.content || ""}

@@ -26,7 +26,7 @@ import { createRefImageForTask } from "../../apis/project_progress_api";
 import ModalButtonForBriefingBoard from "../modal/ModalButtonForBriefingBoard";
 
 interface SlideForUncompletedTaskListProps {
-  listData: taskRowForUncompleted[];
+  listData: any[];
   handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checkedRowPks: any[];
   refetch?: () => void;
@@ -46,7 +46,7 @@ const SlideForInProgressTaskList = ({
   const numSlides = listData && listData.length | 0;
   const sliderRef = useRef<any>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<any>(null);
   const [taskId, setTaskId] = useState<Number>();
   const [isUploading, setIsUploading] = useState(false);
 
@@ -113,7 +113,7 @@ const SlideForInProgressTaskList = ({
     }
   }
 
-  function openImageInNewTab(imageUrl) {
+  function openImageInNewTab(imageUrl:string) {
     window.open(imageUrl, "_blank");
   }
 
@@ -352,7 +352,7 @@ const SlideForInProgressTaskList = ({
                     size="sm"
                     variant="ghost"
                     _hover={{ bgColor: "blue.100" }}
-                    onClick={buttonHandlerForConfirmFileUpload}
+                    onClick={() => buttonHandlerForConfirmFileUpload(row.id)}
                   />
                 )}
                 <input
@@ -372,7 +372,7 @@ const SlideForInProgressTaskList = ({
                       gap="2"
                       justifyContent="center"
                     >
-                      {row.task_images.map((row: string) => (
+                      {row.task_images.map((row: any) => (
                         <Box key={row.id} w="50px" h="50px">
                           <Box
                             key={row.id}
