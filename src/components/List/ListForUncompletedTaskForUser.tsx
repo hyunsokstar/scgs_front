@@ -5,7 +5,6 @@ import {
   ListItem,
   Checkbox,
   Text,
-  Link,
   HStack,
   IconButton,
 } from "@chakra-ui/react";
@@ -17,6 +16,8 @@ import SlideToggleButtonForIsTesting from "../SlideToggleButton/SlideToggleButto
 import SlideToggleButton from "../SlideToggleButton";
 import SlideToggleButtonForInProgress from "../SlideToggleButton/SlideToggleButtonForInProgress";
 import { ProjectProgress } from "../../types/user/user_types";
+import { Link as RouterLink } from "react-router-dom";
+
 
 interface ListForUncompletedTaskForUserProps {
   ProjectProgressList: ProjectProgress[];
@@ -70,7 +71,6 @@ const ListForUncompletedTaskForUser: React.FC<
                   _hover={{ backgroundColor: "gray.100" }}
                   width={"100%"}
                 >
-
                   <Box border={"0px solid yellow"} width={"50px"}>
                     <Checkbox
                       mx={2}
@@ -89,12 +89,12 @@ const ListForUncompletedTaskForUser: React.FC<
 
                   <Box border={"0px solid blue"} width={"480px"}>
                     <Text fontSize="sm" fontWeight="bold">
-                      <Link
+                      <RouterLink
                         to={`/project_admin/${task.id}`}
                         style={{ textDecoration: "underline" }}
                       >
                         {task.task}
-                      </Link>
+                      </RouterLink>
                     </Text>
                   </Box>
 

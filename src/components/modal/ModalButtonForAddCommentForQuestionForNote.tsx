@@ -22,7 +22,7 @@ const ModalButtonForInsertToApiDocu = () => {
   const borderColor = useColorModeValue("gray.400", "gray.500");
   const errorColor = useColorModeValue("red.500", "red.200");
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data:any) => {
     setSubmitting(true);
     console.log(data); // do something with the form data
     onClose();

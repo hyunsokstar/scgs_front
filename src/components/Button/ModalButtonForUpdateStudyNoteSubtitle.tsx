@@ -72,7 +72,7 @@ const ModalButtonForUpdateStudyNoteSubtitle = (props: IProps) => {
     }
   );
 
-  const onSubmit = (data: IProps) => {
+  const onSubmit = (data: any) => {
     // 폼 데이터 처리 로직 추가
     console.log(data);
 

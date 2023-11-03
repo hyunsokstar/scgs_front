@@ -19,11 +19,11 @@ import { apiForGetTargetTaskInfoForTaskIntergrationByPk } from "../../apis/proje
 
 function formatDate(datetimeStr: string): string {
   const options = {
-    year: "2-digit",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
+    year: "2-digit" as const,
+    month: "2-digit" as const,
+    day: "2-digit" as const,
+    hour: "2-digit" as const,
+    minute: "2-digit" as const,
   };
 
   const date = new Date(datetimeStr);

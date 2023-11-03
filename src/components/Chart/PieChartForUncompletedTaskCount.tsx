@@ -96,7 +96,7 @@ const PieChartForUncompletedTaskCount = ({ data }: IProps) => {
       </HStack>
 
       <ResponsiveContainer>
-        {/* <Box border={"1px solid green"}> */}
+        <Box border={"1px solid green"}>
           <PieChart>
             <Pie
               data={data}
@@ -116,7 +116,7 @@ const PieChartForUncompletedTaskCount = ({ data }: IProps) => {
               ))}
             </Pie>
           </PieChart>
-        {/* </Box> */}
+        </Box>
       </ResponsiveContainer>
     </Box>
   );

@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 interface Props {
   study_note_pk: string | undefined;
   button_text: string;
-  exist_page_numbers: numbers[];
+  exist_page_numbers: number[];
 }
 
 const ButtonsForSelectPageForNoteSlide = ({

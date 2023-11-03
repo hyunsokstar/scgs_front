@@ -48,7 +48,7 @@ function InprogressTaskContainer({
   const {
     isLoading,
     data: taskListDataForUncompleted,
-    refetch: projectTaskListRefatch,
+    refetch: projectTaskListRefetch,
   } = useQuery<ITypeForTaskListDataForUncompleted>(
     [
       "getInprogressTaskList",
@@ -153,7 +153,7 @@ function InprogressTaskContainer({
           taskListDataForUncompleted={taskListDataForUncompleted}
           checkedRowPks={checkedRowPks}
           setCheckedRowPks={setCheckedRowPks}
-          projectTaskListRefatch={projectTaskListRefatch}
+          projectTaskListRefetch={projectTaskListRefetch}
         />
       ) : (
         ""
@@ -170,7 +170,7 @@ function InprogressTaskContainer({
               }
               currentPageNum={currentPageNum}
               setCurrentPageNum={setCurrentPageNum}
-              projectTaskListRefatch={projectTaskListRefatch}
+              projectTaskListRefetch={projectTaskListRefetch}
               checkedRowPks={checkedRowPks}
               handleCheckboxChange={handleCheckboxChange}
               setCheckedRowPks={setCheckedRowPks}
@@ -188,7 +188,7 @@ function InprogressTaskContainer({
               listData={filteredListForUncompleteTask}
               handleCheckboxChange={handleCheckboxChange}
               checkedRowPks={checkedRowPks}
-              refetch={projectTaskListRefatch}
+              refetch={projectTaskListRefetch}
             />
           ) : (
             <Box

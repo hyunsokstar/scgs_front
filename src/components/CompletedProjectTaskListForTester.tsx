@@ -2,7 +2,7 @@ import React, { ReactElement, useState, useEffect } from "react";
 import { Box, Grid, Input, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { getCompletedTaskList } from "../apis/project_progress_api";
-import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
+import { ProjectProgress } from "../types/project_progress/project_progress_type";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import ButtonsForSelectForTeamTaskListPeriod from "./Button/SelectBoxForSetPeriodForFilteringUncompletedTaskList";
 import CompletedTaskRowForTester from "./CompletedTaskRowForTester";
@@ -22,7 +22,7 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
     isLoading,
     data: pageProgressListData,
     refetch: projectTaskListRefetch,
-  } = useQuery<ITypeForProjectProgressList>(
+  } = useQuery<any>(
     [
       "getCompletedTaskListForTester",
       currentPageNum,
@@ -55,7 +55,7 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
   const updateFilteredDataForTask = (filterValueForTask: string) => {
     if (filterValueForTask !== "") {
       const filteredData = pageProgressListData?.ProjectProgressList.filter(
-        (item) =>
+        (item:any) =>
           item.task.toLowerCase().includes(filterValueForTask.toLowerCase())
       );
       setFilteredData(filteredData);
@@ -77,7 +77,7 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
   ) => {
     if (filterValueForTaskManager !== "") {
       const filteredData = pageProgressListData?.ProjectProgressList.filter(
-        (item) =>
+        (item:any) =>
           item.task_manager.username
             .toLowerCase()
             .includes(filterValueForTaskManager.toLowerCase())
@@ -162,7 +162,7 @@ function CompletedProjectTaskListForTester({}: Props): ReactElement {
                   width={"90%"}
                 >
                   <Tbody>
-                    {pageProgressListData?.writers_info?.map((writer) => (
+                    {pageProgressListData?.writers_info?.map((writer:any) => (
                       <Tr key={writer.username} border={"1px solid black"}>
                         <Td>{writer.username}</Td>
                         <Td>{writer.task_count}</Td>

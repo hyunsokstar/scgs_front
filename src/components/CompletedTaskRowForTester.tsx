@@ -16,7 +16,7 @@ import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 
 import {
   IResponseTypeForProjectTaskUpdate,
-  ITypeForProjectProgressList,
+  // ITypeForProjectProgressList,
 } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
@@ -44,7 +44,7 @@ function CompletedTaskRowForTester({
   checkedRowPks,
   setCheckedRowPks,
   projectTaskListRefatch,
-}: ITypeForProjectProgressList): ReactElement {
+}: any): ReactElement {
   const queryClient = useQueryClient();
 
   const [originalScoreValues, setOriginalScoreValues] = useState<number[]>([]);
@@ -52,7 +52,7 @@ function CompletedTaskRowForTester({
 
   useEffect(() => {
     const initialScores =
-      ProjectProgressList?.map((task) => task.score_by_tester ?? 0) || [];
+      ProjectProgressList?.map((task: any) => task.score_by_tester ?? 0) || [];
     setOriginalScoreValues(initialScores);
     setScoreValues(initialScores);
   }, [ProjectProgressList]);
@@ -216,7 +216,7 @@ function CompletedTaskRowForTester({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const checked = event.target.checked;
-    const rowPks = ProjectProgressList.map((item) => item.id) || [];
+    const rowPks = ProjectProgressList.map((item: any) => item.id) || [];
 
     if (checked) {
       setCheckedRowPks([...checkedRowPks, ...rowPks]);
@@ -240,7 +240,7 @@ function CompletedTaskRowForTester({
         />
       </Box>
       <Box overflowX={"scroll"}>
-        {ProjectProgressList?.map((task, index) => {
+        {ProjectProgressList?.map((task: any, index: any) => {
           return (
             <List
               display={"flex"}

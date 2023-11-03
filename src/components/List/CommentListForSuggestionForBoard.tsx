@@ -23,7 +23,7 @@ interface Comment {
   writer: {
     pk: number;
     username: string;
-    profile_image: string | null;
+    profile_image: any;
   };
   content: string;
   created_at: string;

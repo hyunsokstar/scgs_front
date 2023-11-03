@@ -210,7 +210,7 @@ export interface FormTypeForCreateCommentForNote {
 export interface UserProfileImage {
   pk: number;
   username: string;
-  profile_image: string | null;
+  profile_image: any;
 }
 
 export interface AnswerForQaBoard {

@@ -166,7 +166,7 @@ const ImageSlideForUncompletedTaskListForChecked: React.FC<
               />
             </Box>
             <Box>
-              <ModalButtonForExtraTask refetch={refetch} taskPk={row.pk} />
+              <ModalButtonForExtraTask refetch={refetch} taskPk={row.pk} button_text={"부가 업무"} />
               <ExtraTasksTable
                 extra_tasks={row.extra_tasks}
                 orginal_task_pk={row.pk}

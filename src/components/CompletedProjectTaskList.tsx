@@ -36,7 +36,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
   const {
     isLoading,
     data: dataForCompletedTaskList,
-    refetch: projectTaskListRefatch,
+    refetch: projectTaskListRefetch,
   } = useQuery<ITypeForResponseForDataForCompletedTask>(
     [
       "getCompletedTaskList",
@@ -307,7 +307,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
               task_number_for_one_page={
                 dataForCompletedTaskList.task_number_for_one_page
               }
-              projectTaskListRefatch={projectTaskListRefatch}
+              projectTaskListRefetch={projectTaskListRefetch}
               currentPageNum={currentPageNum}
               setCurrentPageNum={setCurrentPageNum}
               handleCheckboxChange={handleCheckboxChange}
@@ -325,7 +325,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
               listData={filteredData}
               handleCheckboxChange={handleCheckboxChange}
               checkedRowPks={checkedRowPks}
-              refetch={projectTaskListRefatch}
+              refetch={projectTaskListRefetch}
             />
           ) : (
             "no data"

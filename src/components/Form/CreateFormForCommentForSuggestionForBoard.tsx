@@ -21,7 +21,7 @@ const CreateFormForCommentForSuggestionForBoard = ({
     setIsCommentOpen(!isCommentOpen);
   };
 
-  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCommentChange = (e: any) => {
     setComment(e.target.value);
   };
 

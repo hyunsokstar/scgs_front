@@ -20,7 +20,6 @@ import {
 import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
 import {
   IResponseTypeForProjectTaskUpdate,
-  ITypeForProjectProgressList,
 } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
@@ -44,7 +43,7 @@ function CompletedTaskRowForMe({
   setCurrentPageNum,
   handleCheckboxChange,
   checkedRowPks,
-}: ITypeForProjectProgressList): ReactElement {
+}: any): ReactElement {
   const queryClient = useQueryClient();
 
   const handleSlideToggleChange = (checked: boolean) => {
@@ -138,7 +137,7 @@ function CompletedTaskRowForMe({
     <Box border={"0px solid blue"} maxWidth={"100%"}>
       <Box overflowX="auto" width="100%">
         <List>
-          {ProjectProgressList?.map((task) => {
+          {ProjectProgressList?.map((task:any) => {
             return (
               <ListItem
                 key={task.id}

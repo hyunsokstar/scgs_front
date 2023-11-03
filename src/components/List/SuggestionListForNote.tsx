@@ -27,7 +27,7 @@ interface Suggestion {
   title: string;
   writer: {
     username: string;
-    profile_image: string | null;
+    profile_image: any;
   };
   created_at_formatted: string;
   content: string; // 내용 추가

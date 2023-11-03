@@ -172,7 +172,7 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
                         {comment.comment}
                       </Box>
                       <Box display={"flex"} alignItems={"center"}>
-                        {comment.writer.username === loginUser.username ? (
+                        {comment.writer.username === loginUser?.username ? (
                           <IconButton
                             icon={<DeleteIcon />}
                             aria-label="삭제"

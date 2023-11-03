@@ -13,7 +13,7 @@ import {
   useToast,
   Button,
 } from "@chakra-ui/react";
-import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
+// import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
 import { FaTrash } from "react-icons/fa";
 import StarRating from "./StarRating";
 import SlideToggleButton from "./SlideToggleButton";
@@ -39,8 +39,8 @@ function CompletedTaskRow({
   task_number_for_one_page,
   currentPageNum,
   setCurrentPageNum,
-  projectTaskListRefatch,
-}: ITypeForProjectProgressList): ReactElement {
+  projectTaskListRefetch,
+}: any): ReactElement {
   const queryClient = useQueryClient();
 
   const toast = useToast();
@@ -55,8 +55,8 @@ function CompletedTaskRow({
 
       queryClient.refetchQueries(["getUncompletedTaskList"]);
       queryClient.refetchQueries(["getCompletedTaskLidt"]);
-      if (projectTaskListRefatch) {
-        projectTaskListRefatch();
+      if (projectTaskListRefetch) {
+        projectTaskListRefetch();
       }
 
       toast({
@@ -77,8 +77,8 @@ function CompletedTaskRow({
     {
       onSuccess: (result: any) => {
         // console.log("result : ", result);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
+        if (projectTaskListRefetch) {
+          projectTaskListRefetch();
         }
         // // alert("이거 실행 되는거 맞지?")
 
@@ -113,8 +113,8 @@ function CompletedTaskRow({
       },
       onSuccess: (data) => {
         console.log("data : ", data);
-        if (projectTaskListRefatch) {
-          projectTaskListRefatch();
+        if (projectTaskListRefetch) {
+          projectTaskListRefetch();
         }
         // queryClient.refetchQueries(["getUnompletedTaskList"]);
         // queryClient.refetchQueries(["getCompletedTaskList"]);
@@ -129,8 +129,8 @@ function CompletedTaskRow({
   const deleteHandelr = (id: number) => {
     const response = deleteMutation.mutate(id);
     console.log("response :", response);
-    // if (projectTaskListRefatch) {
-    //   projectTaskListRefatch();
+    // if (projectTaskListRefetch) {
+    //   projectTaskListRefetch();
     // }
   };
 
@@ -138,7 +138,7 @@ function CompletedTaskRow({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const checked = event.target.checked;
-    const rowPks = ProjectProgressList?.map((item) => item.id) || [];
+    const rowPks = ProjectProgressList?.map((item:any) => item.id) || [];
 
     if (checked) {
       // Add all ids to the checkedRowPks array
@@ -202,7 +202,7 @@ function CompletedTaskRow({
       <Box overflowX="auto" width="100%">
         <List>
           {ProjectProgressList && ProjectProgressList.length !== 0 ? (
-            ProjectProgressList?.map((task) => {
+            ProjectProgressList?.map((task:any) => {
               return (
                 <ListItem
                   key={task.id}
@@ -293,7 +293,7 @@ function CompletedTaskRow({
                               task.due_date ? task.due_date : ""
                             }
                             started_at={task.started_at ? task.started_at : ""}
-                            projectTaskListRefatch={projectTaskListRefatch}
+                            projectTaskListRefetch={projectTaskListRefetch}
                           />
                         </HStack>
                       </HStack>
@@ -310,7 +310,7 @@ function CompletedTaskRow({
                           taskPk={task.id}
                           original_due_date={task.due_date ? task.due_date : ""}
                           started_at={task.started_at ? task.started_at : ""}
-                          projectTaskListRefatch={projectTaskListRefatch}
+                          projectTaskListRefetch={projectTaskListRefetch}
                         />
                       </HStack>
                     </Box>

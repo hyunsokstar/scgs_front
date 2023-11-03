@@ -14,9 +14,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForDeleteCommentForSuggestion, apiForUpdateCommentForSuggestion } from "../../apis/study_note_api";
 
 interface Comment {
+  id: number;
   writer: {
     username: string;
-    profile_image: string | null;
+    profile_image: any;
   };
   content: string;
   created_at: string;

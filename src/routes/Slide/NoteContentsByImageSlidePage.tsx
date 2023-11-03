@@ -165,7 +165,7 @@ const NoteContentsByImageSlidePage = (props: Props) => {
               }
               note_title={""}
               note_writer={""}
-              is_authority_for_note={is_authority_for_note}
+              is_authority_for_note={is_authority_for_note !== undefined ? is_authority_for_note : false}
             />
           ) : (
             "no data"

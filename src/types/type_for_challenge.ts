@@ -1,7 +1,7 @@
 export interface IWriter {
   pk: number;
   username: string;
-  profile_image: string | null;
+  profile_image: any;
 }
 
 export interface IChallengerRefRow {
@@ -66,7 +66,7 @@ export interface ITypeForChallengeRow {
   writer: {
     pk: number;
     username: string;
-    profile_image: string | null;
+    profile_image: any;
   };
   created_at: string;
   created_at_formatted: string;

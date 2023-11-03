@@ -166,7 +166,7 @@ export const ProfileCardForTeamStatus: React.FC<any> = ({
             </Tbody>
             <Tr>
               <Td>현재 작업</Td>
-              <Td colSpan={"2"}>{currentTask} </Td>
+              <Td colSpan={2}>{currentTask} </Td>
             </Tr>
           </Table>
 

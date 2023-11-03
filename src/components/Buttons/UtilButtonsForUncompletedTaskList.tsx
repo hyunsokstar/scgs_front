@@ -33,7 +33,7 @@ interface IProps {
   taskListDataForUncompleted: ITypeForTaskListDataForUncompleted | undefined;
   checkedRowPks: number[];
   setCheckedRowPks: React.Dispatch<React.SetStateAction<number[]>>;
-  projectTaskListRefatch: () => Promise<
+  projectTaskListRefetch: () => Promise<
     QueryObserverResult<ITypeForTaskListDataForUncompleted, unknown>
   >;
 }
@@ -43,7 +43,7 @@ const UtilButtonsForUncompletedTaskList = ({
   taskListDataForUncompleted,
   checkedRowPks,
   setCheckedRowPks,
-  projectTaskListRefatch,
+  projectTaskListRefetch,
 }: IProps) => {
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -225,7 +225,7 @@ const UtilButtonsForUncompletedTaskList = ({
         <ModalButtonForAddProjectTaskWithDuedateOption
           button_text="register"
           size={"xs"}
-          projectTaskListRefatch={projectTaskListRefatch}
+          projectTaskListRefetch={projectTaskListRefetch}
           bgColor="red.300"
           hoverColor="red.500"
           hoverTextColor="yellow"

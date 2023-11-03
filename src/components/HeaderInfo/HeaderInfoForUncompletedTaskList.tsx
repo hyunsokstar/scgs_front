@@ -13,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import {
   ITaskManager,
-  ITypeForProjectProgressList,
   taskRowForUncompleted,
 } from "../../types/project_progress/project_progress_type";
 import ButtonForShowCountForTaskStatus from "../Button/ButtonForShowCountForTaskStatus";
@@ -40,7 +39,7 @@ interface IProps {
   setFilterValueForTaskManager: Dispatch<SetStateAction<string | undefined>>;
   setFilterValueForTaskClassification: Dispatch<SetStateAction<string>>;
   filteredListForUncompleteTask: taskRowForUncompleted[];
-  taskListDataForUncompleted: ITypeForProjectProgressList;
+  taskListDataForUncompleted: any;
   selectedPeriodOptionForUncompletedTaskList: string;
   task_status_for_search: string;
   username_for_search: string | undefined;

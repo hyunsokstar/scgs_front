@@ -18,20 +18,18 @@ import {
 } from "../../apis/study_note_api";
 
 interface Comment {
+  id: number;
   writer: {
     username: string;
-    profile_image: string | null;
+    profile_image: any;
   };
   content: string;
   created_at: string;
 }
 
-interface CommentList {
-  commentList: Comment[];
-}
 
 interface IProps {
-  commentList: CommentList;
+  commentList: Comment[];
 }
 
 const CommentListForFaqBoard: React.FC<IProps> = ({ commentList }) => {

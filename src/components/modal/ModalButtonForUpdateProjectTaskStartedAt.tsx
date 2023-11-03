@@ -28,14 +28,14 @@ interface IProps {
   taskPk: string;
   original_due_date: string;
   started_at: string;
-  projectTaskListRefatch: any;
+  projectTaskListRefetch: any;
 }
 
 function ModalButtonForUpdateProjectTaskCompleteDate({
   taskPk,
   original_due_date,
   started_at,
-  projectTaskListRefatch,
+  projectTaskListRefetch,
 }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
@@ -60,7 +60,7 @@ function ModalButtonForUpdateProjectTaskCompleteDate({
         title: data.message,
         status: "success",
       });
-      projectTaskListRefatch();
+      projectTaskListRefetch();
       setIsOpen(false);
     },
     onError: (error) => {

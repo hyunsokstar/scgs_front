@@ -5,7 +5,7 @@ import { apiForUpdateTaskDueDateByPk } from "../../apis/project_progress_api";
 
 interface ButtonsForChangeDueDateForTaskForTodayProps {
   id: number;
-  title: "until-noon" | "until-evening" | "until-night";
+  title: string;
 }
 
 const ButtonsForChangeDueDateForTaskForToday: React.FC<

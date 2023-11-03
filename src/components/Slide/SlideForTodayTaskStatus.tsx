@@ -14,7 +14,7 @@ interface Task {
   task_manager: {
     pk: number;
     username: string;
-    profile_image: string | null;
+    profile_image: any;
   };
   task_completed: boolean;
   current_status: string;

@@ -16,10 +16,10 @@ const CardForTodayTaskListBySlide = ({
   title,
   todos,
 }: IPropsForCardForTodayTaskListBySlide) => {
-  const [checkedRows, setCheckedRows] = useState([]);
+  const [checkedRows, setCheckedRows] = useState<number[]>([]);
 
   function getBackgroundColor(
-    title: "until-noon" | "until-evening" | "until-night"
+    title: string
   ) {
     let backgroundColor = "orange.100"; // 기본 배경색
 
@@ -123,14 +123,7 @@ const CardForTodayTaskListBySlide = ({
                           size="sm"
                         />
                       ) : (
-                        <Avatar
-                          name={todo.task_manager?.username
-                            .charAt(0)
-                            .toUpperCase()}
-                          size="sm"
-                          bg="teal.500"
-                          color="white"
-                        />
+                        "no manager"
                       )}
                     </Box>
                     <Box bgColor={"blue.50"} px={1}>

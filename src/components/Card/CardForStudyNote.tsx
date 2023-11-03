@@ -84,13 +84,7 @@ const CardForStudyNote: React.FC<IProps> = ({
   const toast = useToast();
   const navigate = useNavigate();
 
-  const note_card_direction = useBreakpointValue({
-    base: "column", // default value for all breakpoints
-    md: "row", // for medium-sized screens and up
-    lg: "row", // for small screens and up
-  });
-
-  const note_card_width = useBreakpointValue({
+  const note_card_width = useBreakpointValue<any>({
     base: "100%", // default value for all breakpoints
     md: "50%", // for medium-sized screens and up
     lg: "50%", // for small screens and up
@@ -172,15 +166,21 @@ const CardForStudyNote: React.FC<IProps> = ({
     mutationForRegisterForCoWriterForOtherUserNote.mutate({ notePk });
   };
 
+  const note_card_direction = useBreakpointValue<any>({
+    base: "column", // default value for all breakpoints
+    md: "row", // for medium-sized screens and up
+    lg: "row", // for small screens and up
+  });
+
+  const note_header_direction = useBreakpointValue<any>({
+    base: "column", // for mobile and small screens
+    md: "row", // for medium-sized screens and up
+  });
+
   const buttonHandlerForMoveSlidePageForThisNote = (pk: any) => {
     // alert(pk);
     navigate(`/study-note/${pk}/1/slide`);
   };
-
-  const note_header_direction = useBreakpointValue({
-    base: "column", // for mobile and small screens
-    md: "row", // for medium-sized screens and up
-  });
 
   // 2244
   return (

@@ -20,7 +20,7 @@ import {
 } from "../../apis/study_note_api";
 
 interface TableComponentProps {
-  dataForGetClassRoomList: ITypeForClassRoomRowForStudyNote[] | undefined;
+  dataForGetClassRoomList: any;
   is_registered: boolean;
   study_note_pk: any;
 }

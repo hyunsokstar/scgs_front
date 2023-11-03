@@ -18,7 +18,7 @@ const ImageBoxForChallengeDetail = ({ selectedChallenge }: IPropTypes) => {
   const [thumbNailImage, setThumbnailImage] = useState("");
 
   // 업로드할 이미지 파일 정보
-  const [imageFileToUpload, setImageFileToUpload] = useState();
+  const [imageFileToUpload, setImageFileToUpload] = useState<File | null>(null);
 
   // 업로드용 url
   const [uploadUrlToCloud, setUploadUrlToCloud] = useState("");

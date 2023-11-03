@@ -14,8 +14,6 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import {
   DeadlineOption,
-  ITypeForProjectProgressList,
-  IUserNamesForSelectOption,
 } from "../../types/project_progress/project_progress_type";
 import {
   getProgectTasksStatusData,

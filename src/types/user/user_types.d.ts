@@ -41,7 +41,7 @@ export interface IUserRow {
 
 export type TaskInfoPerUser = {
   username: string;
-  profile_image: string | null;
+  profile_image: any;
   position: string | null;
   cash: number;
   total_count_for_task: number;
@@ -67,7 +67,7 @@ export interface parameterTypeForCreateUserTaskComment {
 export interface Writer {
   pk: number;
   username: string;
-  profile_image: string | null;
+  profile_image: any;
 }
 
 export interface UserTaskComment {
@@ -137,7 +137,8 @@ export type typeForUncompletedTaskListForPersonalTaskStatus = {
 };
 
 export interface typeForCompletedTaskRow {
-  pk: string;
+  id?: any;
+  pk?: any;
   task_classification: string;
   task: string;
   writer: string;

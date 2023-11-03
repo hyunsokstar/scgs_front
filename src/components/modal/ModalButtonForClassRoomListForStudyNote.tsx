@@ -44,7 +44,7 @@ const ModalButtonForClassRoomListForStudyNote = ({
     isLoading: isLoadingForGetClassRoomList,
     data: dataForClassRoom,
     refetch: refetchForGetClassRoomList,
-  } = useQuery<ITypeForClassRoomRowForStudyNote[]>(
+  } = useQuery<any>(
     ["apiForGetClassRoomList", study_note_pk],
     apiForGetClassRoomList,
     {
@@ -88,7 +88,6 @@ const ModalButtonForClassRoomListForStudyNote = ({
                 dataForClassRoom && dataForClassRoom.class_room_list
               }
               is_registered={dataForClassRoom.is_registered}
-              refetchForGetClassRoomList={refetchForGetClassRoomList}
             />
           </ModalBody>
           <ModalFooter>

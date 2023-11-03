@@ -50,13 +50,14 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
     isLoading,
     data: dataForTaskListForCheckedPks,
     refetch: refatchForTaskListForCheckedPks,
-  } = useQuery<typeForTaskListForChecked>(
+  } = useQuery<any>(
     ["getTaskListForCheckedPks", checkedRowPks],
     apiForGetTaskListForCheckedPks,
     {
       enabled: true,
     }
   );
+  
 
   // user data 가져 오기
   const {

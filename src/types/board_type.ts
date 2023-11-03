@@ -6,7 +6,7 @@ export interface ITypeForFaqRow {
   writer: {
     pk: number;
     username: string;
-    profile_image: string | null;
+    profile_image: any;
   };
   created_at_formatted: string;
   updated_at_formatted: string;
@@ -21,7 +21,7 @@ export interface ITypeForDataForFaq {
 export interface Writer {
   pk: number;
   username: string;
-  profile_image: string | null;
+  profile_image: any;
 }
 
 export interface TypeForSuggestionRow {
@@ -45,7 +45,7 @@ export interface ITypeForCommentListForSuggestionForBoard {
     writer: {
       pk: number;
       username: string;
-      profile_image: string | null;
+      profile_image: any;
     };
     content: string;
     created_at: string;

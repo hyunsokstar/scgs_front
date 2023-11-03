@@ -146,7 +146,7 @@ export default function NoteSlideForStudyNoteSpecificPage({
   return (
     <Box height={"100%"}>
       <Slider {...settings} ref={sliderRef}>
-        {dataForSlides.map((note, index) => {
+        {dataForSlides.map((note: any, index: number) => {
           if (note.content_option === "subtitle_for_page") {
             return (
               <Box border={"0px solid blue"} key={note.pk} height={"100%"}>

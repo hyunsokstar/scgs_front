@@ -28,7 +28,7 @@ import { insertProjectProgressRow } from "../../apis/project_progress_api";
 import { getUserNamesForCreate } from "../../apis/user_api";
 
 interface IProps {
-  projectTaskListRefatch: () => void;
+  projectTaskListRefetch: () => void;
   button_text: string;
   size: string;
   due_date_option_for_button?:
@@ -80,7 +80,7 @@ const dueDateOptionsForButton = {
 };
 
 const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
-  projectTaskListRefatch,
+  projectTaskListRefetch,
   button_text = "add task",
   size,
   due_date_option_for_button = "night_tasks",
@@ -125,7 +125,7 @@ const ModalButtonForAddProjectTaskWithDuedateOption: FC<IProps> = ({
           title: "welcome back!",
           status: "success",
         });
-        projectTaskListRefatch();
+        projectTaskListRefetch();
         onClose();
       },
       onError: (error: any) => {

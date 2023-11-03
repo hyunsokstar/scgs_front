@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiForDeleteTasksForChecked, getCompletedTaskListForMe } from "../apis/project_progress_api";
-import { ITypeForProjectProgressList } from "../types/project_progress/project_progress_type";
+import { ITypeForProjectProgressForCompleted } from "../types/project_progress/project_progress_type";
 import CompletedTaskRowForMe from "./CompletedTaskRowForMe";
 import SlideForUncompletedTaskList from "./Slide/SlideForUncompletedTaskList";
 
@@ -26,7 +26,7 @@ function CompletedProjectTaskListForMe({}: Props): ReactElement {
     isLoading,
     data: pageProgressListData,
     refetch: projectTaskListRefatch,
-  } = useQuery<ITypeForProjectProgressList>(
+  } = useQuery<any>(
     ["getCompletedTaskListForMe", currentPageNum],
     getCompletedTaskListForMe,
     {
@@ -39,7 +39,7 @@ function CompletedProjectTaskListForMe({}: Props): ReactElement {
   ) => {
     const checked = event.target.checked;
     const rowPks =
-      pageProgressListData?.ProjectProgressList.map((item) => item.id) || [];
+      pageProgressListData?.ProjectProgressList.map((item:any) => item.id) || [];
 
     if (checked) {
       setCheckedRowPks([...checkedRowPks, ...rowPks]);

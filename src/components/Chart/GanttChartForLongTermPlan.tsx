@@ -1,4 +1,3 @@
-// LongTermPlanContent
 import React, { useState } from "react";
 import { FrappeGantt, ViewMode, Task } from "frappe-gantt-react";
 import { LongTermPlanContentList } from "../../types/type_for_plan_maker";
@@ -24,11 +23,8 @@ const GanttChartForPlanContents: React.FC<Props> = ({ dataForPlanContents }) => 
   const handleTasksChange = (updatedTasks: Task[]) => {
     console.log("updatedTasks : ", updatedTasks);
 
-    // Update the local state
     setTasks(updatedTasks);
 
-    // Call API to update the server, if necessary
-    // ...
   };
 
   return (
@@ -41,3 +37,19 @@ const GanttChartForPlanContents: React.FC<Props> = ({ dataForPlanContents }) => 
 };
 
 export default GanttChartForPlanContents;
+
+// import React from 'react'
+
+// interface Props {
+  
+// }
+
+// const GanttChartForLongTermPlan = (props: Props) => {
+//   return (
+//     <div>
+//       hi
+//     </div>
+//   )
+// }
+
+// export default GanttChartForLongTermPlan

@@ -199,7 +199,7 @@ export interface IOneTaskForProjectTaskType {
 
 interface Writer {
   username: string;
-  profile_image: string | null;
+  profile_image: any;
   task_count: number;
   cash: number;
 }
@@ -253,7 +253,7 @@ export interface IExtraManager {
 }
 
 export interface taskRowForUncompleted {
-  id: string;
+  id: any;
   task_manager: {
     pk: number;
     username: string;
@@ -402,7 +402,7 @@ export interface TaskManager {
 }
 
 export interface ProjectProgress {
-  pk: number;
+  id: number;
   task: string;
   task_description: string;
   writer: string;
@@ -603,7 +603,7 @@ export interface Task {
   task_manager: {
     pk: number;
     username: string;
-    profile_image: string | null;
+    profile_image: any;
   };
   task_completed: boolean;
   current_status: string;
@@ -613,7 +613,7 @@ export interface Task {
 }
 
 export interface IPropsForCardForTodayTaskListBySlide {
-  title: "until-noon" | "until-evening" | "until-night";
+  title: string;
   todos: Task[];
 }
 
@@ -640,7 +640,7 @@ export interface IDataForTaskListForIntegration {
   listForTask: ITaskRowForIntergration[];
   totalCountForTaskList: number;
   perPage: number;
-  taskManagers: ITaskManager;
+  taskManagers: ITaskManager[];
 }
 
 export interface IExtraTaskRow {
@@ -663,7 +663,7 @@ export interface IDataForTargetTask {
   importance: number;
   task_completed: boolean;
   task_images: string[];
-  due_date: string;
+  due_date: any;
   extra_tasks: IExtraTaskRow[];
 }
 
