@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, Text, Image, Flex, Button, IconButton, Container, Badge, HStack, VStack, Icon, useColorModeValue, Textarea } from "@chakra-ui/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";

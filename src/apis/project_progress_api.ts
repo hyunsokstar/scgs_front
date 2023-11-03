@@ -749,7 +749,7 @@ export const apiForGetDataForDailyTaskCountForPersonalUser = ({
 
 export const apiForGetTaskListForCheckedPks = ({
   queryKey,
-}: QueryFunctionContext) => {
+}: QueryFunctionContext<[unknown, number[]]>) => {
   const [_, checkedRowPks] = queryKey;
 
   const numericCheckedRowPks = checkedRowPks.map(Number);

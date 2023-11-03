@@ -12,7 +12,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import TableForNoteListForRegisterRoadMap from "../components/Table/TableForNoteListForRegisterRoadMap";
+import TableForNoteList from "../components/Table/TableForNoteList";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import TableForContentListForRoadMapPk from "../components/Table/TableForContentListForRoadMapPk";
 
@@ -63,7 +63,8 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
               <Divider orientation="vertical" borderColor="gray.300" />
               <Box flex={1} border="1px dashed" borderColor="gray.300" m={1}>
                 table for road map register <br />
-                <TableForContentListForRoadMapPk roadMapId={roadMapId} />
+                <TableForContentListForRoadMapPk roadMapId={roadMapId}/>
+                {/* <TableForRoadMapContentListForRoadMapPk /> */}
               </Box>
               <Box
                 display={"flex"}
@@ -80,8 +81,7 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
                 <Box>right side</Box>
                 <br />
                 <Box>
-                  <TableForNoteListForRegisterRoadMap
-                    roadMapId={roadMapId}
+                  <TableForNoteList
                     checkedIdsForNoteList={checkedIdsForNoteList}
                     setCheckedIdsForNoteList={setCheckedIdsForNoteList}
                   />

@@ -21,36 +21,6 @@ const instance = axios.create({
 
 
 // 1122
-export const apiForRoadMapContentListForRegister = async ({
-  queryKey,
-}: QueryFunctionContext): Promise<any> => {
-  const [_, roadMapId] = queryKey;
-
-  return await instance.get(`study-note/roadmap/${roadMapId}/content/for-register`).then((response) => {
-    return response.data;
-  });
-};
-
-export const apiForgetStudyNoteListForRegisterRoadMap = async ({
-  queryKey,
-}: QueryFunctionContext): Promise<any> => {
-  const [_, roadMapId, pageNum] = queryKey;
-  
-  const params = new URLSearchParams();
-  params.append("page", pageNum as string);
-  params.append("roadMapId", roadMapId as string); // roadMapId 추가
-
-  const config = {
-    params: params, // params를 axios config에 추가
-  };
-
-  return await instance.get("study-note/for-register-roadmap", config)
-    .then((response) => {
-      return response.data;
-    });
-};
-
-
 export const apiForRoadMapContentList = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
@@ -61,6 +31,21 @@ export const apiForRoadMapContentList = async ({
   });
 };
 
+
+export const apiForgetStudyNoteListForRoadMap = async ({
+  queryKey,
+}: QueryFunctionContext): Promise<any> => {
+  const [_, pageNum] = queryKey;
+  const params = new URLSearchParams();
+  params.append("page", pageNum as string);
+  // params.append("first_category", first_category as string);
+  // params.append("second_category", second_category as string);
+  // params.append("selectedNoteWriter", selectedNoteWriter as string); // Add selectedNoteWriter to
+
+  return await instance.get(`study-note/?${params}`).then((response) => {
+    return response.data;
+  });
+};
 
 // apiForDeleteRoadMap
 export const apiForDeleteRoadMap = (
