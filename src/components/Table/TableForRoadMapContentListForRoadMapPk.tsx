@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Box,
+  Button,
   Table,
   Thead,
   Tbody,
@@ -9,24 +10,31 @@ import {
   Td,
   TableCaption,
   Checkbox,
+  useToast,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { apiForGetRoadMapContentListForRoadMapIdForRegister } from "../../apis/study_note_api";
+import {
+  apiForDeleteRoadMapContentForCheckedIds,
+  apiForGetRoadMapContentListForRoadMapIdForRegister,
+} from "../../apis/study_note_api";
 import {
   DataTypeForRoadMapContentListForRegister,
   RowTypeForRoadMapContentForRegister,
 } from "../../types/study_note_type";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   roadMapId: number;
 }
 
 const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
-  // step1 checkbox 와 연동할 상태값 설정
-  const [checkedIdsForRoadMap, setCheckedIdsForRoadMap] = useState<number[]>(
-    []
-  );
+  const toast = useToast();
+  const queryClient = useQueryClient();
 
+  // step1 checkbox 와 연동할 상태값 설정
+  const [checkedIdsForRoadMapContent, setCheckedIdsForRoadMapContent] =
+    useState<number[]>([]);
+
+  // apiForDeleteRoadMapContentForCheckedIds
   const {
     isLoading: loadingForRoadMapContentForRegister,
     data: dataForRoadMapContentForRegister,
@@ -44,6 +52,37 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
     dataForRoadMapContentForRegister
   );
 
+  const mutationForDeleteRoadMapContentForCheckedIds = useMutation(
+    () => {
+      return apiForDeleteRoadMapContentForCheckedIds(
+        roadMapId,
+        checkedIdsForRoadMapContent
+      );
+    },
+    {
+      onSettled: () => {},
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        queryClient.refetchQueries([
+          "apiForGetRoadMapContentListForRoadMapIdForRegister",
+        ]);
+
+        toast({
+          title: "delete roadmap content 성공!",
+          status: "success",
+          description: data.message,
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
+  const deleteRoadMapContentHandlerForCheckedIds = () => {
+    mutationForDeleteRoadMapContentForCheckedIds.mutate();
+  };
+
   if (!dataForRoadMapContentForRegister) {
     return <Box>loading ..</Box>;
   }
@@ -52,35 +91,49 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
   const isAllChecked =
     dataForRoadMapContentForRegister &&
     dataForRoadMapContentForRegister.road_map_contents.length > 0 &&
-    checkedIdsForRoadMap.length ===
+    checkedIdsForRoadMapContent.length ===
       dataForRoadMapContentForRegister.road_map_contents.length;
 
-  // step5 전체 체크 이벤트 설정
+  // step6 전체 체크 이벤트 설정
   const handleAllCheck = () => {
     if (isAllChecked) {
-      setCheckedIdsForRoadMap([]);
+      setCheckedIdsForRoadMapContent([]);
     } else {
       const allIds = dataForRoadMapContentForRegister.road_map_contents.map(
         (row) => row.id
       );
-      setCheckedIdsForRoadMap(allIds);
+      setCheckedIdsForRoadMapContent(allIds);
     }
   };
 
   // step3 개별 체크 박스 체크 이벤트 함수 설정
   const handleRowCheck = (rowId: number) => {
-    let updatedIds = [...checkedIdsForRoadMap];
-    if (checkedIdsForRoadMap.includes(rowId)) {
+    let updatedIds = [...checkedIdsForRoadMapContent];
+    if (checkedIdsForRoadMapContent.includes(rowId)) {
       updatedIds = updatedIds.filter((id) => id !== rowId);
     } else {
       updatedIds.push(rowId);
     }
-    setCheckedIdsForRoadMap(updatedIds);
+    setCheckedIdsForRoadMapContent(updatedIds);
   };
 
   return (
     <>
-      road map id: {roadMapId}
+      {checkedIdsForRoadMapContent.length > 0 ? (
+        <Box textAlign="right" m="2">
+          <Button
+            variant="outline"
+            borderColor="blue"
+            size="md"
+            onClick={deleteRoadMapContentHandlerForCheckedIds}
+          >
+            delete for check
+          </Button>
+        </Box>
+      ) : (
+        ""
+      )}
+
       <Table variant="simple" size={"xs"}>
         <TableCaption>Content List for RoadMap</TableCaption>
         <Thead>
@@ -103,7 +156,9 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
                       <Td>
                         {/* step2: 개별 checkbox 와 상태값 연동 + 체인지 이벤트 설정 */}
                         <Checkbox
-                          isChecked={checkedIdsForRoadMap.includes(row.id)}
+                          isChecked={checkedIdsForRoadMapContent.includes(
+                            row.id
+                          )}
                           onChange={() => handleRowCheck(row.id)}
                         />
                       </Td>

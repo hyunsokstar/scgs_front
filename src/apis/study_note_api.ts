@@ -20,6 +20,21 @@ const instance = axios.create({
 });
 
 // 1122
+// ForDeleteRoadMapContentForCheckedIds
+export const apiForDeleteRoadMapContentForCheckedIds = (
+  roadMapId:number,
+  checkedIdsForRoadMapContent: number[]
+) => {
+  return instance
+    .delete(`/study-note/roadmap/content/delete-for-checked-ids`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+      data: { roadMapId, checkedIdsForRoadMapContent }, // 데이터를 요청에 첨부
+    })
+    .then((response) => response.data);
+};
+
 // apiForRegisterRoadMapFromCheckedNoteIds
 export const apiForRegisterRoadMapFromCheckedNoteIds = ({
   roadMapId,
