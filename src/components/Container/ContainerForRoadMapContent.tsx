@@ -11,13 +11,12 @@ interface IProps {
 }
 
 const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
-
   const {
     isLoading: isRoading,
     data: dataForRoadMapContent,
     refetch: refetchForDataForLoadMap,
   } = useQuery<DataTypeForRoadMapContentList>(
-    ["apiForGetRoloadMapList", roadMapId],
+    ["apiForRoadMapContentList", roadMapId],
     apiForRoadMapContentList,
     {
       enabled: true,
@@ -38,15 +37,15 @@ const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
       flexDirection={"column"}
       gap={10}
     >
-
       <Box border={"1px solid black"} textAlign={"end"} p={2} mt={2}>
-        <ModalButtonForRegisterRoadMap  
+        <ModalButtonForRegisterRoadMap
           roadMapId={roadMapId}
           button_text={"register road map"}
         />
       </Box>
-
-      {dataForRoadMapContent
+      
+      {dataForRoadMapContent &&
+      dataForRoadMapContent.road_map_contents.length !== 0
         ? dataForRoadMapContent.road_map_contents.map((row: any) => {
             return (
               <Box key={row.pk}>
@@ -88,7 +87,7 @@ const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
               </Box>
             );
           })
-        : ""}
+        : "no road map contents"}
     </Box>
   );
 };

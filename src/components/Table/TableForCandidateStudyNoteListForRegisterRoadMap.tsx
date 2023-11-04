@@ -87,7 +87,7 @@ const TableForCandidateStudyNoteListForRegisterRoadMap = ({
                           } else {
                             // alert("here 22")
                             setCheckedIdsForNoteList((prev) =>
-                              prev.filter((id) => id !== row.pk)
+                              prev.filter((id) => id !== row.id)
                             );
                           }
                         }}

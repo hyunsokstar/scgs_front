@@ -62,7 +62,7 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {dataForRoadMapContentForRegister.road_map_contents.map((row) => {
+          {dataForRoadMapContentForRegister ? dataForRoadMapContentForRegister.road_map_contents.map((row) => {
             return (
               <Tr>
                 <Td>
@@ -73,7 +73,7 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
                 <Td>{row.study_note.description}</Td>
               </Tr>
             );
-          })}
+          }): "no contents"}
         </Tbody>
       </Table>
     </>
