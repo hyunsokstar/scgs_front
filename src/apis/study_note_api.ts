@@ -19,8 +19,18 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-
 // 1122
+export const apiForGetRoadMapContentListForRoadMapIdForRegister = async ({
+  queryKey,
+}: QueryFunctionContext): Promise<any> => {
+  const [_, roadMapId] = queryKey;
+  // const params = new URLSearchParams();
+
+  return await instance.get(`study-note/roadmap/${roadMapId}/content/for-register`).then((response) => {
+    return response.data;
+  });
+};
+
 export const apiForRoadMapContentList = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
@@ -32,17 +42,16 @@ export const apiForRoadMapContentList = async ({
 };
 
 
-export const apiForgetStudyNoteListForRoadMap = async ({
+export const apiForgetCandidateStudyNoteListForRegisterRoadMap = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
-  const [_, pageNum] = queryKey;
+  const [_, roadMapId, pageNum] = queryKey;
   const params = new URLSearchParams();
   params.append("page", pageNum as string);
+  params.append("roadMapId", roadMapId as string);
   // params.append("first_category", first_category as string);
-  // params.append("second_category", second_category as string);
-  // params.append("selectedNoteWriter", selectedNoteWriter as string); // Add selectedNoteWriter to
 
-  return await instance.get(`study-note/?${params}`).then((response) => {
+  return await instance.get(`study-note/for-register-roadmap?${params}`).then((response) => {
     return response.data;
   });
 };

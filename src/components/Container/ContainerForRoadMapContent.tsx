@@ -49,7 +49,7 @@ const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
       {dataForRoadMapContent
         ? dataForRoadMapContent.road_map_contents.map((row: any) => {
             return (
-              <Box>
+              <Box key={row.pk}>
                 <CardForStudyNote
                   pk={row.study_note.pk}
                   key={row.study_note.title}

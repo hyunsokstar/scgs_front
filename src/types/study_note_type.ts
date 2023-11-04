@@ -264,9 +264,29 @@ export interface DataTypeForRoadMapList {
 export interface RowTypeForRoadMapContent {
   id: number;
   writer: UserProfileImage;
-  study_note: TypeForNote
+  study_note: TypeForNote;
 }
 
 export interface DataTypeForRoadMapContentList {
-  road_map_contents: RowTypeForRoadMapContent[]
+  road_map_contents: RowTypeForRoadMapContent[];
+}
+
+export interface TypeForBasicStudyNote {
+  id: number;
+  title: string;
+  description: string;
+  writer: UserProfileImage;
+  created_at: string;
+  first_category: string;
+  second_category: string;
+}
+
+export interface RowTypeForRoadMapContentForRegister {
+  id: number;
+  writer: UserProfileImage;
+  study_note: TypeForBasicStudyNote;
+}
+
+export interface DataTypeForRoadMapContentListForRegister {
+  road_map_contents: RowTypeForRoadMapContentForRegister[];
 }

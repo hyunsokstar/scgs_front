@@ -12,9 +12,9 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import TableForNoteList from "../components/Table/TableForNoteList";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import TableForContentListForRoadMapPk from "../components/Table/TableForContentListForRoadMapPk";
+import TableForRoadMapContentListForRoadMapPk from "../components/Table/TableForRoadMapContentListForRoadMapPk";
+import TableForCandidateStudyNoteListForRegisterRoadMap from "../components/Table/TableForCandidateStudyNoteListForRegisterRoadMap";
 
 interface IProps {
   button_text: string;
@@ -49,12 +49,9 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} size="full">
-        {" "}
-        {/* size 속성 추가 */}
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            {/* Close button in the header */}
             <ModalCloseButton />
           </ModalHeader>
 
@@ -63,8 +60,7 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
               <Divider orientation="vertical" borderColor="gray.300" />
               <Box flex={1} border="1px dashed" borderColor="gray.300" m={1}>
                 table for road map register <br />
-                <TableForContentListForRoadMapPk roadMapId={roadMapId}/>
-                {/* <TableForRoadMapContentListForRoadMapPk /> */}
+                <TableForRoadMapContentListForRoadMapPk roadMapId={roadMapId}/>
               </Box>
               <Box
                 display={"flex"}
@@ -75,15 +71,17 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
                   leftIcon={<ChevronLeftIcon />}
                   fontSize={"lg"}
                   size={"sm"}
-                ></Button>{" "}
+                ></Button>
+                
               </Box>
               <Box flex={1} border="1px dashed" borderColor="gray.300" m={1}>
                 <Box>right side</Box>
                 <br />
                 <Box>
-                  <TableForNoteList
+                  <TableForCandidateStudyNoteListForRegisterRoadMap
                     checkedIdsForNoteList={checkedIdsForNoteList}
                     setCheckedIdsForNoteList={setCheckedIdsForNoteList}
+                    roadMapId={roadMapId}
                   />
                 </Box>
               </Box>

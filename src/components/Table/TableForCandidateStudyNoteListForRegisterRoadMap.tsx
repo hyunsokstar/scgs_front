@@ -10,19 +10,20 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { apiForgetStudyNoteListForRoadMap } from "../../apis/study_note_api";
+import { apiForgetCandidateStudyNoteListForRegisterRoadMap } from "../../apis/study_note_api";
 import { DataTyprForNoteList } from "../../types/study_note_type";
 import PaginationComponent from "../PaginationComponent";
 
 interface IProps {
-  // 적합한 Props 추가
   checkedIdsForNoteList: number[];
   setCheckedIdsForNoteList: React.Dispatch<React.SetStateAction<number[]>>;
+  roadMapId: number;
 }
 
-const TableForNoteList = ({
+const TableForCandidateStudyNoteListForRegisterRoadMap = ({
   checkedIdsForNoteList,
   setCheckedIdsForNoteList,
+  roadMapId,
 }: IProps) => {
   const [pageNum, setPageNum] = useState(1);
 
@@ -32,13 +33,14 @@ const TableForNoteList = ({
     refetch: studyNoteListRefatch,
   } = useQuery<DataTyprForNoteList>(
     [
-      "apiForgetStudyNoteListForRoadMap",
+      "apiForgetCandidateStudyNoteListForRegisterRoadMap",
+      roadMapId,
       pageNum,
       //   selectedNoteWriter,
       //   first_category,
       //   second_category,
     ],
-    apiForgetStudyNoteListForRoadMap,
+    apiForgetCandidateStudyNoteListForRegisterRoadMap,
     {
       enabled: true,
     }
@@ -68,7 +70,7 @@ const TableForNoteList = ({
         </Thead>
         <Tbody>
           {dataForStudyNote
-            ? dataForStudyNote.noteList.map((row:any) => {
+            ? dataForStudyNote.noteList.map((row: any) => {
                 return (
                   <Tr>
                     <Td>
@@ -80,7 +82,7 @@ const TableForNoteList = ({
                             // alert("here 11")
                             setCheckedIdsForNoteList((prev) => [
                               ...prev,
-                              row.pk,
+                              row.id,
                             ]);
                           } else {
                             // alert("here 22")
@@ -117,4 +119,4 @@ const TableForNoteList = ({
   );
 };
 
-export default TableForNoteList;
+export default TableForCandidateStudyNoteListForRegisterRoadMap;
