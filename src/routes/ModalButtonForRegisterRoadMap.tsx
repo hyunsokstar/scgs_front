@@ -10,11 +10,14 @@ import {
   Divider,
   ModalHeader,
   ModalCloseButton,
+  useToast,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import TableForRoadMapContentListForRoadMapPk from "../components/Table/TableForRoadMapContentListForRoadMapPk";
 import TableForCandidateStudyNoteListForRegisterRoadMap from "../components/Table/TableForCandidateStudyNoteListForRegisterRoadMap";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiForRegisterRoadMapFromCheckedNoteIds } from "../apis/study_note_api";
 
 interface IProps {
   button_text: string;
@@ -23,7 +26,11 @@ interface IProps {
 
 // 1122
 const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
   const [isOpen, setIsOpen] = useState(false);
+
   const [pageNum, setPageNum] = useState(1);
   const [checkedIdsForNoteList, setCheckedIdsForNoteList] = useState<number[]>(
     []
@@ -34,6 +41,52 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
 
   const buttonHandlerForModalOpen = () => {
     onOpen();
+  };
+
+
+  const mutationForRegisterRoadMapFromCheckedNoteIds = useMutation(
+    apiForRegisterRoadMapFromCheckedNoteIds,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data: any) => {
+        console.log("data : ", data);
+        queryClient.refetchQueries(["apiForGetRoadMapContentListForRoadMapIdForRegister"]);
+        queryClient.refetchQueries(["apiForgetCandidateStudyNoteListForRegisterRoadMap"]);
+
+        toast({
+          title: "challenge register 성공",
+          description: data.message,
+          status: "success",
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+
+        // 에러 메시지를 토스트로 표시
+        toast({
+          title: "에러 발생",
+          description: error.response.data.message, // 에러 메시지를 사용
+          status: "error",
+          duration: 1800,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
+  const registerRoadMapFromSelectedStudyNoteIds = (
+    roadMapId: number,
+    checkedIdsForNoteList: number[]
+  ) => {
+    mutationForRegisterRoadMapFromCheckedNoteIds.mutate({
+      roadMapId,
+      checkedIdsForNoteList,
+    });
   };
 
   // 2244
@@ -60,7 +113,7 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
               <Divider orientation="vertical" borderColor="gray.300" />
               <Box flex={1} border="1px dashed" borderColor="gray.300" m={1}>
                 table for road map register <br />
-                <TableForRoadMapContentListForRoadMapPk roadMapId={roadMapId}/>
+                <TableForRoadMapContentListForRoadMapPk roadMapId={roadMapId} />
               </Box>
               <Box
                 display={"flex"}
@@ -71,8 +124,13 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
                   leftIcon={<ChevronLeftIcon />}
                   fontSize={"lg"}
                   size={"sm"}
+                  onClick={() =>
+                    registerRoadMapFromSelectedStudyNoteIds(
+                      roadMapId,
+                      checkedIdsForNoteList
+                    )
+                  }
                 ></Button>
-                
               </Box>
               <Box flex={1} border="1px dashed" borderColor="gray.300" m={1}>
                 <Box>right side</Box>

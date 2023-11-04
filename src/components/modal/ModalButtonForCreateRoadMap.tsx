@@ -28,11 +28,12 @@ const ModalButtonForCreateRoadMap: React.FC<
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit } = useForm();
 
+  // mutationForRegisterRoadMapFromCheckedNoteIds
   const mutationForCreateRoadMap = useMutation(apiForCreateRoadMap, {
     onMutate: () => {
       console.log("mutation starting");
     },
-    onSuccess: (data) => {
+    onSuccess: (data:any) => {
       console.log("data : ", data);
       queryClient.refetchQueries(["apiForGetRoloadMapList"]);
 

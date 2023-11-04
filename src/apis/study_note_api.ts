@@ -20,15 +20,37 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForRegisterRoadMapFromCheckedNoteIds
+export const apiForRegisterRoadMapFromCheckedNoteIds = ({
+  roadMapId,
+  checkedIdsForNoteList,
+}: any) =>
+  instance
+    .post(
+      `/study-note/roadmap/register-from-checked-note-ids`,
+      {
+        roadMapId,
+        checkedIdsForNoteList,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForGetRoadMapContentListForRoadMapIdForRegister = async ({
   queryKey,
 }: QueryFunctionContext): Promise<any> => {
   const [_, roadMapId] = queryKey;
   // const params = new URLSearchParams();
 
-  return await instance.get(`study-note/roadmap/${roadMapId}/content/for-register`).then((response) => {
-    return response.data;
-  });
+  return await instance
+    .get(`study-note/roadmap/${roadMapId}/content/for-register`)
+    .then((response) => {
+      return response.data;
+    });
 };
 
 export const apiForRoadMapContentList = async ({
@@ -36,11 +58,12 @@ export const apiForRoadMapContentList = async ({
 }: QueryFunctionContext): Promise<any> => {
   const [_, roadMapId] = queryKey;
 
-  return await instance.get(`study-note/roadmap/${roadMapId}/content`).then((response) => {
-    return response.data;
-  });
+  return await instance
+    .get(`study-note/roadmap/${roadMapId}/content`)
+    .then((response) => {
+      return response.data;
+    });
 };
-
 
 export const apiForgetCandidateStudyNoteListForRegisterRoadMap = async ({
   queryKey,
@@ -51,28 +74,25 @@ export const apiForgetCandidateStudyNoteListForRegisterRoadMap = async ({
   params.append("roadMapId", roadMapId as string);
   // params.append("first_category", first_category as string);
 
-  return await instance.get(`study-note/for-register-roadmap?${params}`).then((response) => {
-    return response.data;
-  });
+  return await instance
+    .get(`study-note/for-register-roadmap?${params}`)
+    .then((response) => {
+      return response.data;
+    });
 };
 
 // apiForDeleteRoadMap
-export const apiForDeleteRoadMap = (
-  roadMapId: string | number
-) => {
-  return (
-    instance
-      .delete(`/study-note/roadmap/${roadMapId}/delete`, {
-        headers: {
-          "X-CSRFToken": Cookie.get("csrftoken") || "",
-        },
-      })
-      .then((response) => response.data)
-  );
+export const apiForDeleteRoadMap = (roadMapId: string | number) => {
+  return instance
+    .delete(`/study-note/roadmap/${roadMapId}/delete`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
 };
 
-
-// apiForCreateRoadMap
+// apiForRegisterRoadMapFromCheckedNoteIds
 export const apiForCreateRoadMap = ({ title, subTitle }: any) =>
   instance
     .post(

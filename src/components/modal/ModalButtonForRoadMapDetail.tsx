@@ -35,7 +35,7 @@ const ModalButtonForRoadMapDetail: React.FC<
       <Modal isOpen={isOpen} onClose={onClose} size="full">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Modal For Roadmap Detail</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Box display={"flex"}>
@@ -60,6 +60,8 @@ const ModalButtonForRoadMapDetail: React.FC<
                   <Text color="gray.600">{roadMapSubTitle}</Text>
                 </Box>
               </Flex>
+
+              {/* register road map and card list for load map 이 여기에 포함 */}
               <Flex flex="4" border="1px dashed black" m={2}>
                 <ContainerForRoadMapContent roadMapId={roadMapId} />
               </Flex>
