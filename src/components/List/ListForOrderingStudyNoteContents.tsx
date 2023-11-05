@@ -55,7 +55,6 @@ function ListForOrderingStudyNoteContents({
   const toast = useToast();
 
   //   const mutationForReOrderForStudyNoteContent =
-
   const mutationForReOrderForStudyNoteContentsForSpecificNoteAndPage =
     useMutation(apiForReOrderForStudyNoteContentsForSpecificNoteAndPage, {
       onSuccess: (result: any) => {
@@ -81,20 +80,8 @@ function ListForOrderingStudyNoteContents({
     }
 
     const itemsCopy = [...listItems];
-    let [reorderedItem] = itemsCopy.splice(result.source.index, 1);
-    let reorderedItem_for_update = itemsCopy.splice(
-      result.destination.index,
-      0,
-      reorderedItem
-    );
 
     console.log("itemsCopy : ", itemsCopy); // 이거 그대로 보내서 order 만 수정하면 됨
-
-    const itmes_for_update = itemsCopy.map((row: any, index: number) => {
-      const rowCopy = { ...row };
-      row.order = index + 1;
-      return rowCopy;
-    });
 
     mutationForReOrderForStudyNoteContentsForSpecificNoteAndPage.mutate({
       study_note_pk,

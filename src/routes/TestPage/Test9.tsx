@@ -1,6 +1,11 @@
-import { Box } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import { Box } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
 
 type Item = {
   id: string;
@@ -14,7 +19,11 @@ const getItems = (count: number): Item[] =>
     content: `item ${k + 1}`,
   }));
 
-const reorder = (list: Item[], startIndex: number, endIndex: number): Item[] => {
+const reorder = (
+  list: Item[],
+  startIndex: number,
+  endIndex: number
+): Item[] => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
@@ -23,16 +32,19 @@ const reorder = (list: Item[], startIndex: number, endIndex: number): Item[] => 
 
 const grid = 8;
 
-const getItemStyle = (draggableStyle: any, isDragging: boolean): React.CSSProperties => ({
-  userSelect: 'none',
+const getItemStyle = (
+  draggableStyle: any,
+  isDragging: boolean
+): React.CSSProperties => ({
+  userSelect: "none",
   padding: grid * 2,
   marginBottom: grid,
-  background: isDragging ? 'lightgreen' : 'grey',
+  background: isDragging ? "lightgreen" : "grey",
   ...draggableStyle,
 });
 
 const getListStyle = (isDraggingOver: boolean): React.CSSProperties => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  background: isDraggingOver ? "lightblue" : "lightgrey",
   padding: grid,
   width: 250,
 });
@@ -45,7 +57,11 @@ const App: React.FC = () => {
       return;
     }
 
-    const newItems = reorder(items, result.source.index, result.destination.index);
+    const newItems = reorder(
+      items,
+      result.source.index,
+      result.destination.index
+    );
     setItems(newItems);
   };
 
@@ -53,7 +69,10 @@ const App: React.FC = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable">
         {(provided, snapshot) => (
-          <Box ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+          <Box
+            ref={provided.innerRef}
+            style={getListStyle(snapshot.isDraggingOver)}
+          >
             {items.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided, snapshot) => (
@@ -62,9 +81,12 @@ const App: React.FC = () => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      style={getItemStyle(provided.draggableProps.style, snapshot.isDragging)}
+                      style={getItemStyle(
+                        provided.draggableProps.style,
+                        snapshot.isDragging
+                      )}
                     >
-                      {item.content} 
+                      {item.content}
                     </div>
                   </div>
                 )}

@@ -14,6 +14,13 @@ import { apiForgetCandidateStudyNoteListForRegisterRoadMap } from "../../apis/st
 import { DataTyprForNoteList } from "../../types/study_note_type";
 import PaginationComponent from "../PaginationComponent";
 
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
+
 interface IProps {
   checkedIdsForNoteList: number[];
   setCheckedIdsForNoteList: React.Dispatch<React.SetStateAction<number[]>>;
@@ -79,13 +86,11 @@ const TableForCandidateStudyNoteListForRegisterRoadMap = ({
                         onChange={(e) => {
                           const checked = e.target.checked;
                           if (checked) {
-                            // alert("here 11")
                             setCheckedIdsForNoteList((prev) => [
                               ...prev,
                               row.id,
                             ]);
                           } else {
-                            // alert("here 22")
                             setCheckedIdsForNoteList((prev) =>
                               prev.filter((id) => id !== row.id)
                             );
