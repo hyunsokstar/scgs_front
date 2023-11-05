@@ -43,7 +43,6 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
     onOpen();
   };
 
-
   const mutationForRegisterRoadMapFromCheckedNoteIds = useMutation(
     apiForRegisterRoadMapFromCheckedNoteIds,
     {
@@ -52,8 +51,12 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
       },
       onSuccess: (data: any) => {
         console.log("data : ", data);
-        queryClient.refetchQueries(["apiForGetRoadMapContentListForRoadMapIdForRegister"]);
-        queryClient.refetchQueries(["apiForgetCandidateStudyNoteListForRegisterRoadMap"]);
+        queryClient.refetchQueries([
+          "apiForGetRoadMapContentListForRoadMapIdForRegister",
+        ]);
+        queryClient.refetchQueries([
+          "apiForgetCandidateStudyNoteListForRegisterRoadMap",
+        ]);
 
         toast({
           title: "challenge register 성공",
@@ -62,6 +65,8 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
           duration: 1800,
           isClosable: true,
         });
+
+        setCheckedIdsForNoteList([]);
       },
       onError: (error: any) => {
         console.log("error.response : ", error.response);
@@ -132,8 +137,9 @@ const ModalButtonForRegisterRoadMap = ({ button_text, roadMapId }: IProps) => {
                   }
                 ></Button>
               </Box>
+
               <Box flex={1} border="1px dashed" borderColor="gray.300" m={1}>
-                <Box>right side</Box>
+                <Box>right side for roadmap candidate</Box>
                 <br />
                 <Box>
                   <TableForCandidateStudyNoteListForRegisterRoadMap

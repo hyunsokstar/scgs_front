@@ -285,6 +285,7 @@ export interface RowTypeForRoadMapContentForRegister {
   id: number;
   writer: UserProfileImage;
   study_note: TypeForBasicStudyNote;
+  order: number;
 }
 
 export interface DataTypeForRoadMapContentListForRegister {

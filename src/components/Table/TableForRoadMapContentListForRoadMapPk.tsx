@@ -29,26 +29,18 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 
-// add
-// type Item = {
-//   id: string;
-//   content: string;
-// };
-
-// const getItems = (count: number): Item[] =>
-//   Array.from({ length: count }, (v, k) => k).map((k) => ({
-//     id: `item-${k}`,
-//     content: `item ${k + 1}`,
-//   }));
-
 const reorder = (
   list: RowTypeForRoadMapContentForRegister[],
   startIndex: number,
   endIndex: number
 ): RowTypeForRoadMapContentForRegister[] => {
   const result = Array.from(list);
+
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
+
+  console.log("result : ", result);
+
   return result;
 };
 
@@ -61,7 +53,7 @@ const getItemStyle = (
   userSelect: "none",
   padding: grid * 2,
   marginBottom: grid,
-  background: isDragging ? "lightgreen" : "grey",
+  background: isDragging ? "lightgreen" : "white",
   ...draggableStyle,
 });
 
@@ -114,9 +106,20 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
       result.destination.index
     );
 
-    console.log("roadMapContentListForRegister: ", roadMapContentListForRegister);
+    console.log(
+      "roadMapContentListForRegister: ",
+      roadMapContentListForRegister
+    );
+    console.log("newItems: ", newItems);
 
     setRoadMapContentListForRegister(newItems);
+    const updatedOrder = newItems.map((item, index) => ({
+      id: item.id,
+      order: index + 1, // Assuming 'order' starts from 1
+    }));
+
+    console.log("updatedOrder : ", updatedOrder);
+
   };
 
   console.log(
@@ -138,6 +141,9 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
 
         queryClient.refetchQueries([
           "apiForGetRoadMapContentListForRoadMapIdForRegister",
+        ]);
+        queryClient.refetchQueries([
+          "apiForgetCandidateStudyNoteListForRegisterRoadMap",
         ]);
 
         toast({
@@ -214,43 +220,6 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
         ""
       )}
 
-      {/* <Table variant="simple" size={"xs"}>
-        <TableCaption>Content List for RoadMap</TableCaption>
-        <Thead>
-          <Tr>
-            <Th>
-              <Checkbox onChange={handleAllCheck} isChecked={isAllChecked} />
-            </Th>
-            <Th>writer</Th>
-            <Th>Title</Th>
-            <Th>Description</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {dataForRoadMapContentForRegister
-            ? dataForRoadMapContentForRegister.road_map_contents.map(
-                (row: RowTypeForRoadMapContentForRegister) => {
-                  return (
-                    <Tr>
-                      <Td>
-                        <Checkbox
-                          isChecked={checkedIdsForRoadMapContent.includes(
-                            row.id
-                          )}
-                          onChange={() => handleRowCheck(row.id)}
-                        />
-                      </Td>
-                      <Td>{row.study_note.writer.username}</Td>
-                      <Td>{row.study_note.title}</Td>
-                      <Td>{row.study_note.description}</Td>
-                    </Tr>
-                  );
-                }
-              )
-            : "no contents"}
-        </Tbody>
-      </Table> */}
-
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
@@ -277,12 +246,14 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
                     <Th>writer</Th>
                     <Th>Title</Th>
                     <Th>Description</Th>
+                    <Th>Order</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
                   {roadMapContentListForRegister.map((item, index) => (
                     <Draggable
                       key={String(item.id)}
+                      {...item}
                       draggableId={String(item.id)}
                       index={index}
                     >
@@ -307,6 +278,7 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
                           <Td>{item.study_note.writer.username}</Td>
                           <Td>{item.study_note.title}</Td>
                           <Td>{item.study_note.description}</Td>
+                          <Td>{item.order}</Td>
                         </Tr>
                       )}
                     </Draggable>
