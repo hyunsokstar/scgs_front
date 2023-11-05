@@ -12,7 +12,6 @@ type Item = {
   content: string;
 };
 
-// count 받아서 배열 만들기
 const getItems = (count: number): Item[] =>
   Array.from({ length: count }, (v, k) => k).map((k) => ({
     id: `item-${k}`,

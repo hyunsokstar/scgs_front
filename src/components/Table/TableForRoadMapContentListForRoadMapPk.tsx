@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -22,10 +22,60 @@ import {
 } from "../../types/study_note_type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
+
+// add
+// type Item = {
+//   id: string;
+//   content: string;
+// };
+
+// const getItems = (count: number): Item[] =>
+//   Array.from({ length: count }, (v, k) => k).map((k) => ({
+//     id: `item-${k}`,
+//     content: `item ${k + 1}`,
+//   }));
+
+const reorder = (
+  list: RowTypeForRoadMapContentForRegister[],
+  startIndex: number,
+  endIndex: number
+): RowTypeForRoadMapContentForRegister[] => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+};
+
+const grid = 8;
+
+const getItemStyle = (
+  draggableStyle: any,
+  isDragging: boolean
+): React.CSSProperties => ({
+  userSelect: "none",
+  padding: grid * 2,
+  marginBottom: grid,
+  background: isDragging ? "lightgreen" : "grey",
+  ...draggableStyle,
+});
+
+const getListStyle = (isDraggingOver: boolean): React.CSSProperties => ({
+  background: isDraggingOver ? "lightblue" : "lightgrey",
+  padding: grid,
+  width: 250,
+});
+
 interface IProps {
   roadMapId: number;
 }
 
+// 1122
 const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
   const toast = useToast();
   const queryClient = useQueryClient();
@@ -34,7 +84,10 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
   const [checkedIdsForRoadMapContent, setCheckedIdsForRoadMapContent] =
     useState<number[]>([]);
 
-  // apiForDeleteRoadMapContentForCheckedIds
+  const [state, setstate] = useState("");
+  const [roadMapContentListForRegister, setRoadMapContentListForRegister] =
+    useState<RowTypeForRoadMapContentForRegister[]>([]);
+
   const {
     isLoading: loadingForRoadMapContentForRegister,
     data: dataForRoadMapContentForRegister,
@@ -46,6 +99,25 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
       enabled: true,
     }
   );
+
+  // const [items, setItems] = useState<Item[]>(getItems(10));
+
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) {
+      return;
+    }
+
+    // const roadMapListAfterChange = [...roadMapContentListForRegister];
+    const newItems = reorder(
+      roadMapContentListForRegister,
+      result.source.index,
+      result.destination.index
+    );
+
+    console.log("roadMapContentListForRegister: ", roadMapContentListForRegister);
+
+    setRoadMapContentListForRegister(newItems);
+  };
 
   console.log(
     "dataForRoadMapContentForRegister : ",
@@ -83,6 +155,14 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
     mutationForDeleteRoadMapContentForCheckedIds.mutate();
   };
 
+  useEffect(() => {
+    if (dataForRoadMapContentForRegister) {
+      setRoadMapContentListForRegister(
+        dataForRoadMapContentForRegister.road_map_contents
+      );
+    }
+  }, [dataForRoadMapContentForRegister]);
+
   if (!dataForRoadMapContentForRegister) {
     return <Box>loading ..</Box>;
   }
@@ -118,7 +198,7 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
   };
 
   return (
-    <>
+    <Box width={"100%"} border={"2px solid yellow"}>
       {checkedIdsForRoadMapContent.length > 0 ? (
         <Box textAlign="right" m="2">
           <Button
@@ -134,12 +214,11 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
         ""
       )}
 
-      <Table variant="simple" size={"xs"}>
+      {/* <Table variant="simple" size={"xs"}>
         <TableCaption>Content List for RoadMap</TableCaption>
         <Thead>
           <Tr>
             <Th>
-              {/* step4 전체 체크 박스 박스 설정 */}
               <Checkbox onChange={handleAllCheck} isChecked={isAllChecked} />
             </Th>
             <Th>writer</Th>
@@ -154,7 +233,6 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
                   return (
                     <Tr>
                       <Td>
-                        {/* step2: 개별 checkbox 와 상태값 연동 + 체인지 이벤트 설정 */}
                         <Checkbox
                           isChecked={checkedIdsForRoadMapContent.includes(
                             row.id
@@ -171,8 +249,76 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
               )
             : "no contents"}
         </Tbody>
-      </Table>
-    </>
+      </Table> */}
+
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <Box
+              ref={provided.innerRef}
+              width={"100%"}
+              border={"2px solid red"}
+            >
+              <Table
+                variant="simple"
+                size={"xs"}
+                width={"100%"}
+                border={"1px solid blue"}
+              >
+                <TableCaption>Content List for RoadMap</TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th>
+                      <Checkbox
+                        onChange={handleAllCheck}
+                        isChecked={isAllChecked}
+                      />
+                    </Th>
+                    <Th>writer</Th>
+                    <Th>Title</Th>
+                    <Th>Description</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {roadMapContentListForRegister.map((item, index) => (
+                    <Draggable
+                      key={String(item.id)}
+                      draggableId={String(item.id)}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <Tr
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={getItemStyle(
+                            provided.draggableProps.style,
+                            snapshot.isDragging
+                          )}
+                        >
+                          <Td>
+                            <Checkbox
+                              isChecked={checkedIdsForRoadMapContent.includes(
+                                item.id
+                              )}
+                              onChange={() => handleRowCheck(item.id)}
+                            />
+                          </Td>
+                          <Td>{item.study_note.writer.username}</Td>
+                          <Td>{item.study_note.title}</Td>
+                          <Td>{item.study_note.description}</Td>
+                        </Tr>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </Tbody>
+              </Table>
+            </Box>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </Box>
   );
 };
 
