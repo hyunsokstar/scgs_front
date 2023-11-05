@@ -99,17 +99,27 @@ function InProgressTaskList({
 
   const updateProjectTaskMutations = useMutation(updateProjectTaskCompleted, {
     onSuccess: (result: any) => {
-      console.log("result : ", result);
+      if (result.warning) {
+        toast({
+          status: "warning",
+          title: "task status update failed",
+          description: result.warning,
+          duration: 1800,
+          isClosable: true,
+        });
+      } else {
+        console.log("result : ", result);
 
-      toast({
-        status: "success",
-        title: "task status update success",
-        description: result.message,
-      });
+        toast({
+          status: "success",
+          title: "task status update success",
+          description: result.message,
+        });
 
-      queryClient.refetchQueries(["getUncompletedTaskList"]);
-      queryClient.refetchQueries(["getInprogressTaskList"]);
-      queryClient.refetchQueries(["getCompletedTaskList"]);
+        queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getInprogressTaskList"]);
+        queryClient.refetchQueries(["getCompletedTaskList"]);
+      }
     },
   });
 
@@ -290,9 +300,11 @@ function InProgressTaskList({
 
     let rowPks: number[] = [];
 
-    rowPks = taskListDataForUncompleted.ProjectProgressList.map((item: taskRowForUncompleted) => {
-      return item.id;
-    });
+    rowPks = taskListDataForUncompleted.ProjectProgressList.map(
+      (item: taskRowForUncompleted) => {
+        return item.id;
+      }
+    );
 
     if (checked) {
       setCheckedRowPks([...checkedRowPks, ...rowPks]);

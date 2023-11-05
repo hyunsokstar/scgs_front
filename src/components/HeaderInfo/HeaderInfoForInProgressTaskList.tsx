@@ -185,14 +185,7 @@ const HeaderInfoForInProgressTaskList = ({
                 reset
               </Button>
 
-              {/* <ButtonForShowCountForTaskStatus
-                task_status={"ready"}
-                status_imoge={"⚪"}
-                status_count={taskListDataForUncompleted?.count_for_ready}
-                button_size={"xs"}
-                task_status_for_search={task_status_for_search}
-                set_task_status_for_search={set_task_status_for_search}
-              /> */}
+
               <ButtonForShowCountForTaskStatus
                 button_size={"xs"}
                 task_status={"in_progress"}
@@ -284,7 +277,6 @@ const HeaderInfoForInProgressTaskList = ({
                     created_at
                   </Box>
                   <Box flexBasis="70%">
-                    {/* created_at 필터 */}
                     <SelectBoxForSetPeriodForFilteringUncompletedTaskList
                       selectedPeriodOptionForUncompletedTaskList={
                         selectedPeriodOptionForUncompletedTaskList
@@ -352,7 +344,6 @@ const HeaderInfoForInProgressTaskList = ({
                       <Stack direction="row">
                         <Radio value="member">member</Radio>
                         <Radio value="importance">importance</Radio>
-                        {/* <Radio value="option3">Option 3</Radio> */}
                       </Stack>
                     </RadioGroup>
                   </Box>
