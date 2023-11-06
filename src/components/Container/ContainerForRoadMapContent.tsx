@@ -40,7 +40,7 @@ const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
       <Box border={"1px solid black"} textAlign={"end"} p={2} mt={2}>
         <ModalButtonForRegisterRoadMap
           roadMapId={roadMapId}
-          button_text={"register road map"}
+          button_text={"RoadMap Admin"}
         />
       </Box>
       

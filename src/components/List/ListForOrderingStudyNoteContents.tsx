@@ -54,7 +54,8 @@ function ListForOrderingStudyNoteContents({
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  //   const mutationForReOrderForStudyNoteContent =
+  //  mutationForUpdateRoadMapListOrder
+  //  roadMapId, updatedRoadMapOrderList
   const mutationForReOrderForStudyNoteContentsForSpecificNoteAndPage =
     useMutation(apiForReOrderForStudyNoteContentsForSpecificNoteAndPage, {
       onSuccess: (result: any) => {

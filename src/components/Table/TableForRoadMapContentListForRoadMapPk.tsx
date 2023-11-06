@@ -15,6 +15,7 @@ import {
 import {
   apiForDeleteRoadMapContentForCheckedIds,
   apiForGetRoadMapContentListForRoadMapIdForRegister,
+  apiForReorderingForRoadMapContentListByDnd,
 } from "../../apis/study_note_api";
 import {
   DataTypeForRoadMapContentListForRegister,
@@ -57,11 +58,11 @@ const getItemStyle = (
   ...draggableStyle,
 });
 
-const getListStyle = (isDraggingOver: boolean): React.CSSProperties => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  width: 250,
-});
+// const getListStyle = (isDraggingOver: boolean): React.CSSProperties => ({
+//   background: isDraggingOver ? "lightblue" : "lightgrey",
+//   padding: grid,
+//   width: 250,
+// });
 
 interface IProps {
   roadMapId: number;
@@ -76,7 +77,6 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
   const [checkedIdsForRoadMapContent, setCheckedIdsForRoadMapContent] =
     useState<number[]>([]);
 
-  const [state, setstate] = useState("");
   const [roadMapContentListForRegister, setRoadMapContentListForRegister] =
     useState<RowTypeForRoadMapContentForRegister[]>([]);
 
@@ -92,7 +92,21 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
     }
   );
 
-  // const [items, setItems] = useState<Item[]>(getItems(10));
+  const mutationForUpdateRoadMapOrder =
+    useMutation(apiForReorderingForRoadMapContentListByDnd, {
+      onSuccess: (result: any) => {
+        console.log("result : ", result);
+        queryClient.refetchQueries(["apiForGetRoadMapContentListForRoadMapIdForRegister"]);
+
+        toast({
+          status: "success",
+          title:
+            "ReOrder For StudyNoteContents For SpecificNoteAndPage success",
+          description: result.message,
+        });
+
+      },
+    });
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
@@ -113,12 +127,17 @@ const TableForRoadMapContentListForRoadMapPk = ({ roadMapId }: IProps) => {
     console.log("newItems: ", newItems);
 
     setRoadMapContentListForRegister(newItems);
-    const updatedOrder = newItems.map((item, index) => ({
+
+    const updatedRoadMapOrderList = newItems.map((item, index) => ({
       id: item.id,
       order: index + 1, // Assuming 'order' starts from 1
     }));
+    console.log("updatedOrder : ", updatedRoadMapOrderList);
 
-    console.log("updatedOrder : ", updatedOrder);
+    mutationForUpdateRoadMapOrder.mutate({
+      roadMapId,
+      updatedRoadMapOrderList
+    })
 
   };
 

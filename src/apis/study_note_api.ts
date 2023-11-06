@@ -20,6 +20,30 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForReorderingForRoadMapContentListByDnd
+//  roadMapId, updatedRoadMapOrderList
+export const apiForReorderingForRoadMapContentListByDnd = ({
+  roadMapId,
+  updatedRoadMapOrderList,
+}: any) => {
+  console.log("hi");
+
+  return instance
+    .put(
+      `study-note/roadmap/content/order/update`,
+      {
+        roadMapId,
+        updatedRoadMapOrderList
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 // ForDeleteRoadMapContentForCheckedIds
 export const apiForDeleteRoadMapContentForCheckedIds = (
   roadMapId:number,
@@ -1289,6 +1313,8 @@ export const ForSearchContentListForStudyNote = ({
     .then((response) => response.data);
 };
 
+// apiForReorderingForRoadMapContentListByDnd
+//  roadMapId, updatedRoadMapOrderList
 export const apiForReOrderForStudyNoteContentsForSpecificNoteAndPage = ({
   study_note_pk,
   currentPage,
