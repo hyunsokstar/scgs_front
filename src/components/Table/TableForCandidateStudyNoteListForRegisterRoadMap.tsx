@@ -79,7 +79,7 @@ const TableForCandidateStudyNoteListForRegisterRoadMap = ({
           {dataForStudyNote
             ? dataForStudyNote.noteList.map((row: any) => {
                 return (
-                  <Tr>
+                  <Tr key={row.id}>
                     <Td>
                       <Checkbox
                         checked={checkedIdsForNoteList.includes(row.id)}
