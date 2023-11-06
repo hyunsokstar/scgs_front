@@ -252,6 +252,21 @@ const Header = () => {
         </NavLink>
 
         <NavLink
+          to="/shortcuthub"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            ShortCutHub
+          </Text>
+        </NavLink>
+
+        <NavLink
           to="/shortcut"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >

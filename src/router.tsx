@@ -70,6 +70,7 @@ import ChallengesPage from "./routes/ChallengesPage";
 import SurveyPage from "./routes/SurveyPage";
 import LoadMapPage from "./routes/RoadMapPage";
 import RoadMapPage from "./routes/RoadMapPage";
+import ShortCutHubPage from "./routes/ShortCutHubPage";
 
 const router = createBrowserRouter([
   {
@@ -132,6 +133,11 @@ const router = createBrowserRouter([
       {
         path: "shortcut/:shortcut_pk",
         element: <ShortCutDetail />,
+      },
+      
+      {
+        path: "shortcuthub",
+        element: <ShortCutHubPage />,
       },
       {
         path: "shortcut",
