@@ -1,10 +1,13 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, IconButton } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import SearchInputForShortcutHubPage from '../components/Input/SearchInputForShortcutHubPage';
 import CardListForShortCutHub from '../components/Card/CardListForShortCutHub';
 import { useQuery } from "@tanstack/react-query";
 import { apiForShortCutHubList } from '../apis/api_for_shortcut';
 import { ITypeForDataForShortCutHub } from '../types/type_for_shortcut';
+import { AiOutlinePlus } from 'react-icons/ai'; // React Icons에서 필요한 아이콘 가져오기
+import ModalButtonForCreateShortCutHub from '../components/modal/ModalButtonForCreateShortCutHub';
+import PaginationComponent from '../components/PaginationComponent';
 
 // export type rowTypeForShortCutHubList = {
 //     id: number;
@@ -13,7 +16,7 @@ import { ITypeForDataForShortCutHub } from '../types/type_for_shortcut';
 //     writer: WriterType;
 //     created_at: string;
 //   }
-  
+
 //   export type ITypeForDataForShortCutHub = {
 //     listForShortCutHub: rowTypeForShortCutHubList[]
 //     totalCountForShortCutHub: number;
@@ -57,21 +60,40 @@ const ShortCutHubPage: React.FC<Props> = (props) => {
     }
 
     return (
-        <Box display="flex" width="100%">
-            {/* 왼쪽 2 */}
-            <Box flex="2" bg="lightgrey" border={"1px dotted black"} m={2}>
-                <CardListForShortCutHub dataForShortCutHub={dataForShortCutHub} />
-            </Box>
+        <Box>
+            <Box display="flex" width="100%">
+                {/* 왼쪽 2 */}
+                <Box flex="2" bg="lightgrey" border={"1px dotted black"} m={2}>
+                    <Box textAlign={"right"} p={2}>
+                    </Box>
+                    <Box px={2}>
+                        <CardListForShortCutHub dataForShortCutHub={dataForShortCutHub} />
+                    </Box>
 
-            {/* 오른쪽 1 */}
-            <Box flex="1" bg="lightgreen" border={"1px dotted black"} m={2}>
-                <Flex justifyContent="flex-end">
-                    <SearchInputForShortcutHubPage
-                        searchValue={searchValue}
-                        onSearch={handleSearch}
-                        onInputChange={handleInputChange}
-                    />
-                </Flex>
+                    {dataForShortCutHub ? (
+                        <PaginationComponent
+                            current_page_num={pageNum}
+                            setCurrentPageNum={setPageNum}
+                            total_page_num={dataForShortCutHub.totalCountForShortCutHub}
+                            task_number_for_one_page={dataForShortCutHub.perPageForShortCutHub}
+                        />
+                    ) : (
+                        ""
+                    )}
+
+                </Box>
+
+                {/* 오른쪽 1 */}
+                <Box flex="1" bg="lightgreen" border={"1px dotted black"} m={2}>
+                    <Flex justifyContent="flex-end" flexDirection={"column"} p={2} gap={2}>
+                        <ModalButtonForCreateShortCutHub />
+                        <SearchInputForShortcutHubPage
+                            searchValue={searchValue}
+                            onSearch={handleSearch}
+                            onInputChange={handleInputChange}
+                        />
+                    </Flex>
+                </Box>
             </Box>
         </Box>
     );

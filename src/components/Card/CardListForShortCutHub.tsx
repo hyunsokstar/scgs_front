@@ -1,6 +1,8 @@
-import { Grid, Box, Text, Avatar, Flex } from '@chakra-ui/react';
+import { Grid, Box, Button, Text, Avatar, Flex, IconButton } from '@chakra-ui/react';
 import React from 'react';
 import { ITypeForDataForShortCutHub } from '../../types/type_for_shortcut';
+import { AiOutlinePlus } from 'react-icons/ai';
+import ModalButtonForRegisterShortCutHub from '../modal/ModalButtonForRegisterShortCutHub';
 
 type IProps = {
     dataForShortCutHub: ITypeForDataForShortCutHub
@@ -8,13 +10,16 @@ type IProps = {
 
 const CardListForShortCutHub = ({ dataForShortCutHub }: IProps) => {
     return (
-        <Box p={2}>
+        <Box>
             <Grid templateColumns="repeat(2, 1fr)" gap={4}>
                 {dataForShortCutHub.listForShortCutHub.map((shortcut_hub, index) => (
                     <Box key={index} borderWidth="1px" borderRadius="lg" boxShadow="md" bg="white">
                         {/* 카드 헤더 */}
-                        <Box p={4} borderBottom="1px solid #E2E8F0">
+                        <Box p={2} borderBottom="1px solid #E2E8F0" display={"flex"} justifyContent={"space-between"}>
                             <Text fontSize="xl" fontWeight="bold">{shortcut_hub.title}</Text>
+                            {/* <IconButton icon={<AiOutlinePlus />} variant="outline" aria-label="shortcut hub 추가" onClick={registerShorcutHubContents} /> */}
+                            <ModalButtonForRegisterShortCutHub />
+
                         </Box>
                         {/* 카드 바디 */}
                         <Box p={4}>
@@ -30,6 +35,7 @@ const CardListForShortCutHub = ({ dataForShortCutHub }: IProps) => {
                     </Box>
                 ))}
             </Grid>
+
         </Box>
     );
 };

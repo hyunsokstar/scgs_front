@@ -20,7 +20,7 @@ const SearchInputForShortcutHubPage: React.FC<SearchInputProps> = ({ searchValue
     };
 
     return (
-        <InputGroup size="sm" m={2}>
+        <InputGroup size="sm">
             <Input
                 placeholder="Search..."
                 value={searchValue}

@@ -17,7 +17,6 @@ import {
 } from "../../types/type_for_challenge";
 import ToggleButtonForUpdatePassedForChallengeResult from "../ToggleButton/ToggleButtonForUpdatePassedForChallengeResult";
 import LinkButtonsForReferenceForChallengeResult from "../Buttons/LinkButtonsForReferenceForChallengeResult";
-import { EditIcon } from "@chakra-ui/icons"; // 수정 아이콘을 가져오기
 import useUser from "../../lib/useUser";
 import ModalButtonForUpdateChallengeResultMetaInfo from "../modal/ModalButtonForUpdateChallengeResultMetaInfo";
 import ModalButtonForCommentList from "../modal/ModalButtonForCommentList";

@@ -19,6 +19,22 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForCreateShortCutHub = ({ title, description }: any) =>
+  instance
+    .post(
+      `/shortcut/hub/create`,
+      {
+        title,
+        description
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForShortCutHubList = ({
   queryKey,
 }: QueryFunctionContext) => {
@@ -41,7 +57,7 @@ export const apiForDeleteRelatedShortcutForCheckedRow = (
   console.log("checkedRowPks: ", selectedRows);
 
   return instance
-    .delete("shortcut/related-shortcut/delete-for-chekced-row", {
+    .delete("shortcut/related-shortcut/delete-for-checked-row", {
       headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",
       },
