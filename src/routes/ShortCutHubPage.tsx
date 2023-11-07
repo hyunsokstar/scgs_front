@@ -9,20 +9,6 @@ import { AiOutlinePlus } from 'react-icons/ai'; // React Icons에서 필요한 �
 import ModalButtonForCreateShortCutHub from '../components/modal/ModalButtonForCreateShortCutHub';
 import PaginationComponent from '../components/PaginationComponent';
 
-// export type rowTypeForShortCutHubList = {
-//     id: number;
-//     title: string;
-//     description: string;
-//     writer: WriterType;
-//     created_at: string;
-//   }
-
-//   export type ITypeForDataForShortCutHub = {
-//     listForShortCutHub: rowTypeForShortCutHubList[]
-//     totalCountForShortCutHub: number;
-//     perPageForShortCutHub: number;
-//   }
-
 
 type Props = {};
 
@@ -31,7 +17,7 @@ const ShortCutHubPage: React.FC<Props> = (props) => {
     const [pageNum, setPageNum] = useState(1);
 
     const {
-        isLoading: isLoadingForShortcut,
+        isLoading: isLoadingForShortcutHub,
         data: dataForShortCutHub,
         refetch: refetchForShortCutHubData,
     } = useQuery<ITypeForDataForShortCutHub>(

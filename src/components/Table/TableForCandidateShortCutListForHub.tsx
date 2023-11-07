@@ -27,10 +27,8 @@ import {
 import ModalButtonForInsertShortCut from "../modal/ModalButtonForInsertShortCut";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ModalButtonForUpdateShortCut from "../modal/ModalButtonForUpdateShortCut";
-import CopyButtonByPropsText from "../Button/CopyButtonByPropsText";
 import { Shortcut, ShortcutsResponse } from "../../types/type_for_shortcut";
 import PaginationComponent from "../PaginationComponent";
-import ModalButtonForShowShortcut from "../modal/modalButtonForShowShortcut";
 import { Link } from "react-router-dom";
 
 const favorite_color = ["blue", "red", "orange", "red", "purple"];
@@ -152,7 +150,7 @@ const TableForCandidateShortCutListForHub = () => {
             border={"1px solid green"}
         >
             <Text fontFamily="heading" fontSize="3xl" color="black">
-                Table For Shortcut 11
+                Table For Candidate ShortcutList
             </Text>{" "}
             {filterValueForTag}
             <Box

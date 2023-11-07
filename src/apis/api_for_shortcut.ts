@@ -1,10 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { backendApi } from "./common_api";
-
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
-
-
 import {
   Shortcut,
   ShortcutsResponse,
@@ -19,6 +16,22 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForShortCutHubContentList = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, hub_id] = queryKey;
+
+  return instance
+    .get(`/shortcut/hub/${hub_id}/content`, {
+      params: {},
+    })
+    .then((response) => {
+
+      return response.data;
+    });
+};
+
+
 export const apiForCreateShortCutHub = ({ title, description }: any) =>
   instance
     .post(

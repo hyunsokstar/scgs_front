@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Button,
   IconButton,
   Modal,
   ModalOverlay,
@@ -13,12 +14,14 @@ import {
 } from '@chakra-ui/react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import TableForCandidateShortCutListForHub from '../Table/TableForCandidateShortCutListForHub';
+import TableForShortCutHubContentList from '../Table/TableForShortCutHubContentList';
+import { ArrowLeftIcon } from '@chakra-ui/icons';
 
 interface IProps {
-
+  shortcut_hub_id: number;
 }
 
-const ModalButtonForRegisterShortCutHub = ({ }: IProps) => {
+const ModalButtonForRegisterShortCutHub = ({ shortcut_hub_id }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => setIsOpen(true);
@@ -39,13 +42,28 @@ const ModalButtonForRegisterShortCutHub = ({ }: IProps) => {
         <ModalContent>
           <ModalHeader>Register Shortcut Hub</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <HStack>
+          <ModalBody border={"1px solid red"}>
+            <HStack border={"1px solid green"} height={"80vh"} gap={0}>
+
               <Box flex="1" border="1px dashed" m={2}>
-                왼쪽 테이블 영역
+                <Box textAlign={"center"} fontSize={"28px"} my={5}>
+                  ShortCutHub Content List
+                </Box>
+
+                <TableForShortCutHubContentList shortcut_hub_id={shortcut_hub_id} data={[]} />
+
               </Box>
-              <Box flex="1" border="1px dashed" m={2}>
-                오른쪽 테이블 영역 <br />
+              <Box h={"100%"} display={"flex"} alignItems={"center"} border={"1px solid blue"}>
+                <IconButton
+                  icon={<ArrowLeftIcon />}
+                  aria-label="Move Data Left"
+                  variant="outline"
+                  size="sm"
+                  // m={2}
+                  borderColor="black"
+                />
+              </Box>
+              <Box flex="1" border="1px dashed" p={2}>
                 여기에 전체 short cut list 출력 <br />
                 <TableForCandidateShortCutListForHub />
               </Box>
