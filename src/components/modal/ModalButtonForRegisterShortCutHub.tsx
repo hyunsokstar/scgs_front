@@ -27,6 +27,8 @@ const ModalButtonForRegisterShortCutHub = ({ shortcut_hub_id }: IProps) => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  const [checkedIdsForShorCutToRegisterToHub, setCheckedIdsForShorCutToRegisterToHub] = useState<number[]>([]);
+
   return (
     <>
       <IconButton
@@ -54,19 +56,25 @@ const ModalButtonForRegisterShortCutHub = ({ shortcut_hub_id }: IProps) => {
 
               </Box>
               <Box h={"100%"} display={"flex"} alignItems={"center"} border={"1px solid blue"}>
+                이동 <br />
                 <IconButton
                   icon={<ArrowLeftIcon />}
                   aria-label="Move Data Left"
                   variant="outline"
                   size="sm"
-                  // m={2}
                   borderColor="black"
                 />
               </Box>
+
               <Box flex="1" border="1px dashed" p={2}>
                 여기에 전체 short cut list 출력 <br />
-                <TableForCandidateShortCutListForHub />
+                <TableForCandidateShortCutListForHub
+                  checkedIdsForShorCutToRegisterToHub={checkedIdsForShorCutToRegisterToHub}
+                  setCheckedIdsForShorCutToRegisterToHub={setCheckedIdsForShorCutToRegisterToHub}
+                  shortcut_hub_id={shortcut_hub_id}
+                />
               </Box>
+
             </HStack>
           </ModalBody>
           <ModalFooter>

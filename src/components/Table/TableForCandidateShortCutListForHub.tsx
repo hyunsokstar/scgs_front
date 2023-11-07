@@ -14,15 +14,13 @@ import {
     Tag,
     TagLabel,
     Text,
-    Flex,
     Input,
-    Textarea,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useQuery } from "@tanstack/react-query";
 import {
+    apiForGetShortCutListForRegisterToHub,
     apiFordeleteShortcut,
-    api_for_get_shortcut_list,
 } from "../../apis/api_for_shortcut";
 import ModalButtonForInsertShortCut from "../modal/ModalButtonForInsertShortCut";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -33,8 +31,18 @@ import { Link } from "react-router-dom";
 
 const favorite_color = ["blue", "red", "orange", "red", "purple"];
 
+interface IProps {
+    shortcut_hub_id: number
+    checkedIdsForShorCutToRegisterToHub: number[];
+    setCheckedIdsForShorCutToRegisterToHub: React.Dispatch<React.SetStateAction<number[]>>;
+}
+
 // 1122
-const TableForCandidateShortCutListForHub = () => {
+const TableForCandidateShortCutListForHub = ({
+    shortcut_hub_id,
+    checkedIdsForShorCutToRegisterToHub,
+    setCheckedIdsForShorCutToRegisterToHub
+}: IProps) => {
     const queryClient = useQueryClient();
     const toast = useToast();
 
@@ -45,16 +53,16 @@ const TableForCandidateShortCutListForHub = () => {
         data: data_for_shortcut,
         refetch: refetch_for_shortcut_data,
     } = useQuery<ShortcutsResponse>(
-        ["get_shortcut_list", currentPageNum],
-        api_for_get_shortcut_list
+        ["get_shortcut_list", shortcut_hub_id, currentPageNum],
+        apiForGetShortCutListForRegisterToHub
     );
 
     const [filteredData, setFilteredData] = useState(
         data_for_shortcut?.shortcut_list
     );
-    // filterValueForTag
     const [filterValueForTag, setFilterValueForTag] = useState<any>();
     const [filterValueForShortcut, setFilterValueForShortcut] = useState<any>();
+
 
     console.log("data_for_shortcut : ", data_for_shortcut);
     console.log("filteredData : ", filteredData);
@@ -135,10 +143,40 @@ const TableForCandidateShortCutListForHub = () => {
         }
     };
 
+    const handleRowCheck = (rowId: number) => {
+        let updatedIds = [...checkedIdsForShorCutToRegisterToHub];
+        if (checkedIdsForShorCutToRegisterToHub.includes(rowId)) {
+            updatedIds = updatedIds.filter((id) => id !== rowId);
+        } else {
+            updatedIds.push(rowId);
+        }
+        setCheckedIdsForShorCutToRegisterToHub(updatedIds);
+    };
+
+
     // 2244
     if (loading_for_shorcut_list || !data_for_shortcut) {
         return <Box>Loading for shortcut list..</Box>;
     }
+
+    // 체크 박스 상태 설정
+    const isAllChecked =
+        data_for_shortcut &&
+        data_for_shortcut.shortcut_list.length > 0 &&
+        checkedIdsForShorCutToRegisterToHub.length ===
+        data_for_shortcut.shortcut_list.length;
+
+    // 전체 체크 이벤트 설정
+    const handleAllCheck = () => {
+        if (isAllChecked) {
+            setCheckedIdsForShorCutToRegisterToHub([]);
+        } else {
+            const allIds = data_for_shortcut.shortcut_list.map(
+                (row: any) => row.id
+            );
+            setCheckedIdsForShorCutToRegisterToHub(allIds);
+        }
+    };
 
     return (
         <Box
@@ -150,7 +188,14 @@ const TableForCandidateShortCutListForHub = () => {
             border={"1px solid green"}
         >
             <Text fontFamily="heading" fontSize="3xl" color="black">
-                Table For Candidate ShortcutList
+                Table For Candidate ShortcutList <br />
+                shortcut_hub_id : {shortcut_hub_id}
+                {checkedIdsForShorCutToRegisterToHub.map((id) => {
+                    return (
+                        <Box>{id}</Box>
+                    )
+
+                })}
             </Text>{" "}
             {filterValueForTag}
             <Box
@@ -199,7 +244,8 @@ const TableForCandidateShortCutListForHub = () => {
                 <Thead>
                     <Tr>
                         <Th fontFamily="monospace" fontSize="lg" color="teal.500">
-                            <Checkbox />
+                            {/* 1108 todo */}
+                            <Checkbox onChange={handleAllCheck} isChecked={isAllChecked} />
                         </Th>
                         <Th fontFamily="monospace" fontSize="lg" color="teal.500">
                             Writer
@@ -222,8 +268,10 @@ const TableForCandidateShortCutListForHub = () => {
                     {filteredData?.map((shortcut: Shortcut, index: number) => (
                         <Tr key={shortcut.id}>
                             <Td>
-                                <Checkbox />
-                            </Td>
+                                <Checkbox
+                                    isChecked={checkedIdsForShorCutToRegisterToHub.includes(shortcut.id)}
+                                    onChange={() => handleRowCheck(shortcut.id)}
+                                />                            </Td>
                             <Td>
                                 {/* <Text>{shortcut?.writer.username}</Text> */}
 
