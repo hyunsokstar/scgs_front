@@ -73,3 +73,17 @@ export type formTypeForCreateRelatedShortcut = {
   shortcut_content: string;
   description: string;
 };
+
+export type rowTypeForShortCutHubList = {
+  id: number;
+  title: string;
+  description: string;
+  writer: WriterType;
+  created_at: string;
+}
+
+export type ITypeForDataForShortCutHub = {
+  listForShortCutHub: rowTypeForShortCutHubList[]
+  totalCountForShortCutHub: number;
+  perPageForShortCutHub: number;
+}

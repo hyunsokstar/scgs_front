@@ -4,6 +4,7 @@ import { backendApi } from "./common_api";
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 
+
 import {
   Shortcut,
   ShortcutsResponse,
@@ -18,6 +19,20 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiForShortCutHubList = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, pageNum] = queryKey;
+
+  return instance
+    .get(`/shortcut/hub`, {
+      params: { pageNum: pageNum },
+    })
+    .then((response) => {
+
+      return response.data;
+    });
+};
 
 // apiForDeleteRelatedShortcutForCheckedRow
 export const apiForDeleteRelatedShortcutForCheckedRow = (
