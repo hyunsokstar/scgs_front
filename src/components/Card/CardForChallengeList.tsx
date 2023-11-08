@@ -149,7 +149,7 @@ const CardForChallengeList: React.FC<CardProps> = ({
       </Box>
 
       {/* 텍스트 내용 컨테이너 */}
-      <Box mt="2" height="60%">
+      <Box mt="2">
         <Box display={"flex"} gap={2}>
           <Avatar size="md" name={username} src={profile_image || ""} />
           <Text fontSize={"xl"}>{title}</Text>
