@@ -91,7 +91,7 @@ const CardForChallengeList: React.FC<CardProps> = ({
   deadline,
   username,
   profile_image,
-  count_for_challenge_results
+  count_for_challenge_results,
 }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -126,7 +126,7 @@ const CardForChallengeList: React.FC<CardProps> = ({
 
   return (
     <Box
-      height="100%" // 전체 Box 크기 350px로 설정
+      height="480px" // 전체 Box 크기 350px로 설정
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
@@ -135,15 +135,17 @@ const CardForChallengeList: React.FC<CardProps> = ({
       border={"2px solid green"}
     >
       {/* 이미지 컨테이너 */}
-      <Box>
+      <Box height={"200px"}>
         {mainImage ? (
-          <Image src={mainImage} alt={title} />
+          <Image src={mainImage} alt={title} height={"200px"} w={"100%"} />
         ) : (
           <Image
             src={
               "https://t4.ftcdn.net/jpg/00/89/55/15/240_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg"
             }
             alt={title}
+            height={"200px"}
+            w={"100%"}
           />
         )}
       </Box>
@@ -193,9 +195,16 @@ const CardForChallengeList: React.FC<CardProps> = ({
           <Spacer />
           <Text>Dday: {dday}</Text>
         </Box>
-        <Box height={"45%"} border={"1px solid lightgray"}>
+        <Box height={"180px"} border={"1px solid lightgray"}>
           {evaluationCriterials && evaluationCriterials.length > 0 && (
-            <Stack mt={0} spacing={0} overflowY={"scroll"} height={"100%"} gap={1} p={1}>
+            <Stack
+              mx={2}
+              spacing={0}
+              overflowY={"scroll"}
+              height={"160px"}
+              gap={1}
+              p={1}
+            >
               {evaluationCriterials.map((criterion, index) => (
                 <Box display={"flex"} gap={2}>
                   <Button variant={"outline"} size={"xs"}>
