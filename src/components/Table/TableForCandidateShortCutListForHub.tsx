@@ -33,15 +33,15 @@ const favorite_color = ["blue", "red", "orange", "red", "purple"];
 
 interface IProps {
     shortcut_hub_id: number
-    checkedIdsForShorCutToRegisterToHub: number[];
-    setCheckedIdsForShorCutToRegisterToHub: React.Dispatch<React.SetStateAction<number[]>>;
+    checkedIdsForShortCutToRegisterToHub: number[];
+    setCheckedIdsForShortCutToRegisterToHub: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 // 1122
 const TableForCandidateShortCutListForHub = ({
     shortcut_hub_id,
-    checkedIdsForShorCutToRegisterToHub,
-    setCheckedIdsForShorCutToRegisterToHub
+    checkedIdsForShortCutToRegisterToHub,
+    setCheckedIdsForShortCutToRegisterToHub
 }: IProps) => {
     const queryClient = useQueryClient();
     const toast = useToast();
@@ -53,7 +53,7 @@ const TableForCandidateShortCutListForHub = ({
         data: data_for_shortcut,
         refetch: refetch_for_shortcut_data,
     } = useQuery<ShortcutsResponse>(
-        ["get_shortcut_list", shortcut_hub_id, currentPageNum],
+        ["get_shortcut_list_for_register_to_hub", shortcut_hub_id, currentPageNum],
         apiForGetShortCutListForRegisterToHub
     );
 
@@ -144,13 +144,13 @@ const TableForCandidateShortCutListForHub = ({
     };
 
     const handleRowCheck = (rowId: number) => {
-        let updatedIds = [...checkedIdsForShorCutToRegisterToHub];
-        if (checkedIdsForShorCutToRegisterToHub.includes(rowId)) {
+        let updatedIds = [...checkedIdsForShortCutToRegisterToHub];
+        if (checkedIdsForShortCutToRegisterToHub.includes(rowId)) {
             updatedIds = updatedIds.filter((id) => id !== rowId);
         } else {
             updatedIds.push(rowId);
         }
-        setCheckedIdsForShorCutToRegisterToHub(updatedIds);
+        setCheckedIdsForShortCutToRegisterToHub(updatedIds);
     };
 
 
@@ -163,18 +163,18 @@ const TableForCandidateShortCutListForHub = ({
     const isAllChecked =
         data_for_shortcut &&
         data_for_shortcut.shortcut_list.length > 0 &&
-        checkedIdsForShorCutToRegisterToHub.length ===
+        checkedIdsForShortCutToRegisterToHub.length ===
         data_for_shortcut.shortcut_list.length;
 
     // 전체 체크 이벤트 설정
     const handleAllCheck = () => {
         if (isAllChecked) {
-            setCheckedIdsForShorCutToRegisterToHub([]);
+            setCheckedIdsForShortCutToRegisterToHub([]);
         } else {
             const allIds = data_for_shortcut.shortcut_list.map(
                 (row: any) => row.id
             );
-            setCheckedIdsForShorCutToRegisterToHub(allIds);
+            setCheckedIdsForShortCutToRegisterToHub(allIds);
         }
     };
 
@@ -190,7 +190,7 @@ const TableForCandidateShortCutListForHub = ({
             <Text fontFamily="heading" fontSize="3xl" color="black">
                 Table For Candidate ShortcutList <br />
                 shortcut_hub_id : {shortcut_hub_id}
-                {checkedIdsForShorCutToRegisterToHub.map((id) => {
+                {checkedIdsForShortCutToRegisterToHub.map((id) => {
                     return (
                         <Box>{id}</Box>
                     )
@@ -269,7 +269,7 @@ const TableForCandidateShortCutListForHub = ({
                         <Tr key={shortcut.id}>
                             <Td>
                                 <Checkbox
-                                    isChecked={checkedIdsForShorCutToRegisterToHub.includes(shortcut.id)}
+                                    isChecked={checkedIdsForShortCutToRegisterToHub.includes(shortcut.id)}
                                     onChange={() => handleRowCheck(shortcut.id)}
                                 />                            </Td>
                             <Td>

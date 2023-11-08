@@ -16,6 +16,25 @@ const instance = axios.create({
 });
 
 // 1122
+export const apiToRegisterForShortCutHubFromCheckedShortCutIds = ({
+  shortcut_hub_id,
+  checkedIdsForShortCutToRegisterToHub,
+}: any) =>
+  instance
+    .post(
+      `/shortcut/hub/content/register-from-checked-ids`,
+      {
+        shortcut_hub_id,
+        checkedIdsForShortCutToRegisterToHub,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 export const apiForGetShortCutListForRegisterToHub = async ({
   queryKey,
 }: QueryFunctionContext): Promise<ShortcutsResponse> => {
