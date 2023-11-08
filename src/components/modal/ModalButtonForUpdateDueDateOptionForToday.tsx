@@ -59,6 +59,7 @@ const ModalButtonForUpdateDueDateOptionForToday = ({
         });
 
         queryClient.refetchQueries(["getUncompletedTaskList"]);
+        queryClient.refetchQueries(["getInprogressTaskList"]);
         onClose();
       },
     }
