@@ -71,6 +71,7 @@ import SurveyPage from "./routes/SurveyPage";
 import LoadMapPage from "./routes/RoadMapPage";
 import RoadMapPage from "./routes/RoadMapPage";
 import ShortCutHubPage from "./routes/ShortCutHubPage";
+import ShortCutHubDetailPage from "./routes/ShortCutHubDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -139,6 +140,12 @@ const router = createBrowserRouter([
         path: "shortcuthub",
         element: <ShortCutHubPage />,
       },
+
+      {
+        path: "shortcuthub/:hubPk",
+        element: <ShortCutHubDetailPage />,
+      },      
+
       {
         path: "shortcut",
         element: <ShortCutPage />,

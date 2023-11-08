@@ -1,7 +1,9 @@
-import { Grid, Box, Button, Text, Avatar, Flex, IconButton } from '@chakra-ui/react';
 import React from 'react';
+import { Grid, Box, Button, Text, Avatar, Flex, IconButton } from '@chakra-ui/react';
 import { ITypeForDataForShortCutHub } from '../../types/type_for_shortcut';
 import ModalButtonForRegisterShortCutHub from '../modal/ModalButtonForRegisterShortCutHub';
+import { Link } from "react-router-dom";
+
 
 type IProps = {
     dataForShortCutHub: ITypeForDataForShortCutHub
@@ -16,8 +18,6 @@ const CardListForShortCutHub = ({ dataForShortCutHub }: IProps) => {
                         {/* 카드 헤더 */}
                         <Box borderBottom="1px solid #E2E8F0" display={"flex"} justifyContent={"space-between"}>
                             <Text fontSize="xl" fontWeight="bold">{shortcut_hub.title}</Text>
-
-                            {/* 숏컷 등록하는 + 버튼 */}
                             <Box p={2}>
                                 <ModalButtonForRegisterShortCutHub shortcut_hub_id={shortcut_hub.id} />
                             </Box>
@@ -25,7 +25,12 @@ const CardListForShortCutHub = ({ dataForShortCutHub }: IProps) => {
                         {/* 카드 바디 */}
                         <Box p={4} display={"flex"} justifyContent={"space-between"}>
                             <Text color="gray.600" mb={4}>{shortcut_hub.description}</Text>
-                            <Button>Detail</Button>
+                            <Link
+                                to={`/shortcuthub/${shortcut_hub.id}`}
+                                style={{ textDecoration: "underline" }}
+                            >
+                                <Button>Detail</Button>
+                            </Link>
                         </Box>
                         {/* 카드 푸터 */}
                         <Box p={4} borderTop="1px solid #E2E8F0">
