@@ -15,7 +15,6 @@ const CardListForShortCutHub = ({ dataForShortCutHub }: IProps) => {
             <Grid templateColumns="repeat(2, 1fr)" gap={4}>
                 {dataForShortCutHub.listForShortCutHub.map((shortcut_hub, index) => (
                     <Box key={index} borderWidth="1px" borderRadius="lg" boxShadow="md" bg="white">
-                        {/* 카드 헤더 */}
                         <Box borderBottom="1px solid #E2E8F0" display={"flex"} justifyContent={"space-between"}>
                             <Text fontSize="xl" fontWeight="bold">{shortcut_hub.title}</Text>
                             <Box p={2}>
@@ -32,7 +31,6 @@ const CardListForShortCutHub = ({ dataForShortCutHub }: IProps) => {
                                 <Button>Detail</Button>
                             </Link>
                         </Box>
-                        {/* 카드 푸터 */}
                         <Box p={4} borderTop="1px solid #E2E8F0">
                             <Flex alignItems="center">
                                 <Avatar size="sm" name={shortcut_hub.writer.username} src={shortcut_hub.writer.profile_image} mr={2} />
