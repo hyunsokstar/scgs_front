@@ -72,7 +72,7 @@ const TableForShortCutHubContentList: React.FC<Props> = ({ shortcut_hub_id, data
     }
 
     return (
-        <Box>
+        <Box width={"100%"} border={"1px solid black"}>
             <Table variant="simple">
                 <Thead>
                     <Tr>

@@ -11,6 +11,7 @@ import {
   ModalCloseButton,
   Box,
   HStack,
+  VStack,
   useToast
 } from '@chakra-ui/react';
 import { AiOutlinePlus } from 'react-icons/ai';
@@ -98,13 +99,13 @@ const ModalButtonForRegisterShortCutHub = ({ shortcut_hub_id }: IProps) => {
 
       <Modal isOpen={isOpen} onClose={closeModal} size={"full"}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent width={"100%"}>
           <ModalHeader>Register Shortcut Hub</ModalHeader>
           <ModalCloseButton />
-          <ModalBody border={"1px solid red"}>
-            <HStack border={"1px solid green"} height={"80vh"} gap={0}>
+          <ModalBody border={"1px solid red"} width={"100%"} overflowY="scroll" height="70vh">
+            <VStack border={"1px solid green"} height={"100%"} gap={0} width={"100%"}>
 
-              <Box flex="1" border="1px dashed" m={2}>
+              <Box flex="1" border="1px dashed" m={2} width={"100%"}>
                 <Box textAlign={"center"} fontSize={"28px"} my={5}>
                   ShortCutHub Content List
                 </Box>
@@ -112,9 +113,7 @@ const ModalButtonForRegisterShortCutHub = ({ shortcut_hub_id }: IProps) => {
                 <TableForShortCutHubContentList shortcut_hub_id={shortcut_hub_id} data={[]} />
 
               </Box>
-              <Box h={"100%"} display={"flex"} alignItems={"center"} border={"1px solid blue"}>
-                {/* todo 1108 */}
-                이동 1108 <br />
+              <Box display={"flex"} justifyContent={"center"} my={2}>
                 <IconButton
                   icon={<ArrowLeftIcon />}
                   aria-label="Move Data Left"
@@ -128,7 +127,7 @@ const ModalButtonForRegisterShortCutHub = ({ shortcut_hub_id }: IProps) => {
                 />
               </Box>
 
-              <Box flex="1" border="1px dashed" p={2}>
+              <Box flex="1" border="1px dashed" width={"100%"}>
                 <TableForCandidateShortCutListForHub
                   checkedIdsForShortCutToRegisterToHub={checkedIdsForShortCutToRegisterToHub}
                   setCheckedIdsForShortCutToRegisterToHub={setCheckedIdsForShortCutToRegisterToHub}
@@ -136,7 +135,7 @@ const ModalButtonForRegisterShortCutHub = ({ shortcut_hub_id }: IProps) => {
                 />
               </Box>
 
-            </HStack>
+            </VStack>
           </ModalBody>
           <ModalFooter>
             {/* Footer content, if needed */}
