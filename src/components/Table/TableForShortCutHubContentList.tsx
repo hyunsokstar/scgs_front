@@ -7,6 +7,7 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
+const favorite_color = ["blue", "red", "orange", "red", "purple"];
 
 type TableData = {
     id: number;
@@ -14,18 +15,15 @@ type TableData = {
     description: string;
 };
 
-type Props = {
+type IProps = {
     shortcut_hub_id: number;
     data: TableData[];
 };
 
-const favorite_color = ["blue", "red", "orange", "red", "purple"];
-
-
-const TableForShortCutHubContentList: React.FC<Props> = ({ shortcut_hub_id, data }) => {
+const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, data }) => {
     const queryClient = useQueryClient();
     const toast = useToast();
-    // 난 나야
+
     const {
         isLoading: isLoadingForShortCutHubContent,
         data: dataForShortCutHubContent,
@@ -41,8 +39,8 @@ const TableForShortCutHubContentList: React.FC<Props> = ({ shortcut_hub_id, data
     console.log("dataForShortCutHubContent : ", dataForShortCutHubContent);
 
     const mutationForDeleteShortCut = useMutation(
-        (shorcut_pk: number) => {
-            return apiFordeleteShortcut(shorcut_pk);
+        (shortcut_pk: number) => {
+            return apiFordeleteShortcut(shortcut_pk);
         },
         {
             onSettled: () => {
@@ -51,11 +49,10 @@ const TableForShortCutHubContentList: React.FC<Props> = ({ shortcut_hub_id, data
             onSuccess: (data) => {
                 console.log("data : ", data);
 
-                // refetch_for_api_docu();
                 queryClient.refetchQueries(["get_shortcut_list"]);
 
                 toast({
-                    title: "delete api docu 성공!",
+                    title: "delete shortcut 성공!",
                     status: "success",
                 });
             },
@@ -67,7 +64,7 @@ const TableForShortCutHubContentList: React.FC<Props> = ({ shortcut_hub_id, data
         mutationForDeleteShortCut.mutate(pk);
     };
 
-    if(!dataForShortCutHubContent){
+    if (!dataForShortCutHubContent) {
         return (<Box>Loading ..</Box>)
     }
 
@@ -103,12 +100,9 @@ const TableForShortCutHubContentList: React.FC<Props> = ({ shortcut_hub_id, data
                                 <Checkbox />
                             </Td>
                             <Td>
-                                {/* <Text>{shortcut?.writer.username}</Text> */}
-
                                 {hub_content.shortcut.writer !== null ? (
                                     <Avatar
                                         size={"sm"}
-                                        // src={shortcut.writer.profile_image}
                                         src={
                                             hub_content.shortcut.writer.profile_image !== null
                                                 ? hub_content.shortcut.writer.profile_image
@@ -121,8 +115,6 @@ const TableForShortCutHubContentList: React.FC<Props> = ({ shortcut_hub_id, data
                                     <Text>no writer</Text>
                                 )}
                             </Td>
-
-                            {/* <Td>{shortcut.description}</Td> */}
 
                             <Td>
                                 <Box
@@ -141,7 +133,7 @@ const TableForShortCutHubContentList: React.FC<Props> = ({ shortcut_hub_id, data
                             <Td>{hub_content.shortcut.description}</Td>
                             <Td>
                                 {hub_content.shortcut.tags && hub_content.shortcut.tags.length > 0
-                                    ? hub_content.shortcut.tags.map((tag:any, i:number) => {
+                                    ? hub_content.shortcut.tags.map((tag: any, i: number) => {
                                         return (
                                             <Box>
                                                 <Tag
@@ -161,7 +153,6 @@ const TableForShortCutHubContentList: React.FC<Props> = ({ shortcut_hub_id, data
                             </Td>
                             <Td>
                                 <Box display={"flex"} gap={1}>
-                                    {/* {shortcut.classification} */}
                                     <ModalButtonForUpdateShortCut shortcutObj={hub_content.shortcut} />
 
                                     <IconButton
@@ -181,5 +172,6 @@ const TableForShortCutHubContentList: React.FC<Props> = ({ shortcut_hub_id, data
         </Box>
     );
 };
+
 
 export default TableForShortCutHubContentList;
