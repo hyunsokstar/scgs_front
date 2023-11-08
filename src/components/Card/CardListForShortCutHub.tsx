@@ -16,11 +16,16 @@ const CardListForShortCutHub = ({ dataForShortCutHub }: IProps) => {
                         {/* 카드 헤더 */}
                         <Box borderBottom="1px solid #E2E8F0" display={"flex"} justifyContent={"space-between"}>
                             <Text fontSize="xl" fontWeight="bold">{shortcut_hub.title}</Text>
-                            <ModalButtonForRegisterShortCutHub shortcut_hub_id={shortcut_hub.id} />
+
+                            {/* 숏컷 등록하는 + 버튼 */}
+                            <Box p={2}>
+                                <ModalButtonForRegisterShortCutHub shortcut_hub_id={shortcut_hub.id} />
+                            </Box>
                         </Box>
                         {/* 카드 바디 */}
-                        <Box p={4}>
+                        <Box p={4} display={"flex"} justifyContent={"space-between"}>
                             <Text color="gray.600" mb={4}>{shortcut_hub.description}</Text>
+                            <Button>Detail</Button>
                         </Box>
                         {/* 카드 푸터 */}
                         <Box p={4} borderTop="1px solid #E2E8F0">

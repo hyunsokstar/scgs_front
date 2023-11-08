@@ -93,7 +93,7 @@ const ModalButtonForRegisterShortCutHub = ({ shortcut_hub_id }: IProps) => {
         variant="outline"
         aria-label="shortcut hub register"
         onClick={openModal}
-        size="full"
+        size="sm"
       />
 
       <Modal isOpen={isOpen} onClose={closeModal} size={"full"}>
@@ -129,7 +129,6 @@ const ModalButtonForRegisterShortCutHub = ({ shortcut_hub_id }: IProps) => {
               </Box>
 
               <Box flex="1" border="1px dashed" p={2}>
-                여기에 전체 short cut list 출력 <br />
                 <TableForCandidateShortCutListForHub
                   checkedIdsForShortCutToRegisterToHub={checkedIdsForShortCutToRegisterToHub}
                   setCheckedIdsForShortCutToRegisterToHub={setCheckedIdsForShortCutToRegisterToHub}
