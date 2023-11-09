@@ -71,6 +71,22 @@ function ListForOrderingStudyNoteContents({
       },
     });
 
+
+  const reorder = (
+    listItems: any,
+    startIndex: number,
+    endIndex: number
+  ): any[] => {
+    const result = Array.from(listItems);
+
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    console.log("result : ", result);
+
+    return result;
+  };
+
   const handleDragEnd = (result: any) => {
     console.log("contentPk : ", result.draggableId);
     console.log("destination : ", result.destination.index + 1);
@@ -80,9 +96,21 @@ function ListForOrderingStudyNoteContents({
       return;
     }
 
-    const itemsCopy = [...listItems];
+    // const itemsCopy = [...listItems];
+    let itemsCopy = reorder(
+      listItems,
+      result.source.index,
+      result.destination.index
+    );
 
     console.log("itemsCopy : ", itemsCopy); // 이거 그대로 보내서 order 만 수정하면 됨
+    
+    itemsCopy = itemsCopy.map((item, index) => ({
+      ...item,
+      content_pk: item.content_pk,
+      order: index + 1, // Assuming 'order' starts from 1
+    }));
+    setListItems(itemsCopy);
 
     mutationForReOrderForStudyNoteContentsForSpecificNoteAndPage.mutate({
       study_note_pk,
@@ -90,7 +118,6 @@ function ListForOrderingStudyNoteContents({
       items: itemsCopy,
     });
 
-    setListItems(itemsCopy);
   };
 
   return (

@@ -25,62 +25,6 @@ interface ListItemProps {
   title: string;
 }
 
-interface ListProps {
-  items: ListItemProps[];
-}
-
-function List({ items }: ListProps) {
-  const [listItems, setListItems] = useState(items);
-
-  const handleDragEnd = (result: any) => {
-    if (!result.destination) {
-      return;
-    }
-
-    const itemsCopy = [...listItems];
-    const [reorderedItem] = itemsCopy.splice(result.source.index, 1);
-    itemsCopy.splice(result.destination.index, 0, reorderedItem);
-
-    setListItems(itemsCopy);
-  };
-
-  return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="list">
-        {(provided) => (
-          <ul {...provided.droppableProps} ref={provided.innerRef}>
-            {listItems.map((item, index) => (
-              <ListItem key={item.order} {...item} index={index} />
-            ))}
-            {provided.placeholder}
-          </ul>
-        )}
-      </Droppable>
-    </DragDropContext>
-  );
-}
-
-function ListItem({ order, title, index }: ListItemProps & { index: number }) {
-  return (
-    <Draggable draggableId={order.toString()} index={index}>
-      {(provided) => (
-        <Flex
-          p={4}
-          _hover={{ bg: "blue.50" }}
-          cursor="pointer"
-          borderBottom="1px"
-          borderColor="gray.100"
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <Text mr={4}>{order}</Text>
-          <Text>{title}</Text>
-        </Flex>
-      )}
-    </Draggable>
-  );
-}
 
 interface ModalButtonProps {
   study_note_pk: string | undefined;

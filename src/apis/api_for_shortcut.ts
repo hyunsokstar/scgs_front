@@ -16,6 +16,19 @@ const instance = axios.create({
 });
 
 // 1122
+
+export const apiFordeleteShortcutHubContent = (hub_content_id: number) => {
+  console.log("hub_content_id : ", hub_content_id);
+  return instance
+    .delete(`shortcut/hub/content/${hub_content_id}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
+
 export const apiToRegisterForShortCutHubFromCheckedShortCutIds = ({
   shortcut_hub_id,
   checkedIdsForShortCutToRegisterToHub,

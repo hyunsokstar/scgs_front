@@ -23,7 +23,7 @@ import { apiToRegisterForShortCutHubFromCheckedShortCutIds } from '../../apis/ap
 
 
 interface IProps {
-  shortcut_hub_id: number;
+  shortcut_hub_id: any;
 }
 
 const ModalButtonForRegisterShortCutHub = ({ shortcut_hub_id }: IProps) => {

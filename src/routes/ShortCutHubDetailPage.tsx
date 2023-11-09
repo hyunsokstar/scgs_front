@@ -1,12 +1,12 @@
 import React from 'react'
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { apiForShortCutHubContentList, apiFordeleteShortcut } from '../apis/api_for_shortcut';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Avatar, Text, Box, Table, Thead, Tbody, Tr, Th, Td, Checkbox, TagLabel, Tag, IconButton, useToast, Button } from '@chakra-ui/react';
-import ModalButtonForUpdateShortCut from '../components/modal/ModalButtonForUpdateShortCut';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { apiForShortCutHubContentList, apiFordeleteShortcutHubContent } from '../apis/api_for_shortcut';
+import ModalButtonForRegisterShortCutHub from '../components/modal/ModalButtonForRegisterShortCutHub';
 
 const favorite_color = ["blue", "red", "orange", "red", "purple"];
 
@@ -31,9 +31,9 @@ const ShortCutHubDetailPage = (props: Props) => {
 
     console.log("dataForShortCutHubContent : ", dataForShortCutHubContent);
 
-    const mutationForDeleteShortCut = useMutation(
-        (shortcut_pk: number) => {
-            return apiFordeleteShortcut(shortcut_pk);
+    const mutationForDeleteShortCutHubContent = useMutation(
+        (hub_content_id: number) => {
+            return apiFordeleteShortcutHubContent(hub_content_id);
         },
         {
             onSettled: () => {
@@ -42,7 +42,7 @@ const ShortCutHubDetailPage = (props: Props) => {
             onSuccess: (data) => {
                 console.log("data : ", data);
 
-                queryClient.refetchQueries(["get_shortcut_list"]);
+                queryClient.refetchQueries(["apiForGetShortcutHubContentList"]);
 
                 toast({
                     title: "delete shortcut 성공!",
@@ -52,8 +52,8 @@ const ShortCutHubDetailPage = (props: Props) => {
         }
     );
 
-    const deleteHandlerForShortCut = (pk: number) => {
-        mutationForDeleteShortCut.mutate(pk);
+    const deleteHandlerForShortCutHubContent = (id: number) => {
+        mutationForDeleteShortCutHubContent.mutate(id);
     };
 
     if (!dataForShortCutHubContent) {
@@ -63,20 +63,16 @@ const ShortCutHubDetailPage = (props: Props) => {
     return (
         <Box p={2}>
 
-            {/* <Link
-                to={`/shortcuthub/${shortcut_hub.id}`}
-                style={{ textDecoration: "underline" }}
-            >
-                <Button>Detail</Button>
-            </Link> */}
-
-
-            <Button
-                as={Link}
-                to={`/shortcuthub/`}
-            >
-                뒤로 가기
-            </Button>
+            <Box display={"flex"} justifyContent={"space-between"}>
+                <Button
+                    as={Link}
+                    to={`/shortcuthub/`}
+                >
+                    뒤로 가기
+                </Button>
+                <Text>Shortcut Hub Content List</Text>
+                <ModalButtonForRegisterShortCutHub shortcut_hub_id={hubPk} />
+            </Box>
 
             <Table variant="simple">
                 <Thead>
@@ -161,15 +157,13 @@ const ShortCutHubDetailPage = (props: Props) => {
                             </Td>
                             <Td>
                                 <Box display={"flex"} gap={1}>
-                                    <ModalButtonForUpdateShortCut shortcutObj={hub_content.shortcut} />
-
                                     <IconButton
                                         aria-label="Delete"
                                         variant="outline"
                                         size="xs"
                                         icon={<DeleteIcon />}
                                         colorScheme="pink"
-                                        onClick={() => deleteHandlerForShortCut(hub_content.shortcut.id)}
+                                        onClick={() => deleteHandlerForShortCutHubContent(hub_content.id)}
                                     />
                                 </Box>
                             </Td>

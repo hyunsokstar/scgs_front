@@ -1,8 +1,7 @@
 import React from 'react';
 import { Avatar, Text, Box, Table, Thead, Tbody, Tr, Th, Td, Checkbox, TagLabel, Tag, IconButton, useToast } from '@chakra-ui/react';
 import { useQuery } from "@tanstack/react-query";
-import { apiForShortCutHubContentList, apiFordeleteShortcut } from '../../apis/api_for_shortcut';
-import ModalButtonForUpdateShortCut from '../modal/ModalButtonForUpdateShortCut';
+import { apiForShortCutHubContentList, apiFordeleteShortcut, apiFordeleteShortcutHubContent } from '../../apis/api_for_shortcut';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -38,9 +37,9 @@ const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, dat
 
     console.log("dataForShortCutHubContent : ", dataForShortCutHubContent);
 
-    const mutationForDeleteShortCut = useMutation(
-        (shortcut_pk: number) => {
-            return apiFordeleteShortcut(shortcut_pk);
+    const mutationForDeleteShortCutHubContent = useMutation(
+        (hub_content_id: number) => {
+            return apiFordeleteShortcutHubContent(hub_content_id);
         },
         {
             onSettled: () => {
@@ -49,7 +48,8 @@ const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, dat
             onSuccess: (data) => {
                 console.log("data : ", data);
 
-                queryClient.refetchQueries(["get_shortcut_list"]);
+                queryClient.refetchQueries(["apiForGetShortcutHubContentList"]);
+                queryClient.refetchQueries(["get_shortcut_list_for_register_to_hub"]);
 
                 toast({
                     title: "delete shortcut 성공!",
@@ -59,13 +59,12 @@ const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, dat
         }
     );
 
-    const deleteHandlerForShortCut = (pk: number) => {
-        console.log("hi");
-        mutationForDeleteShortCut.mutate(pk);
+    const deleteHandlerForShortCutHubContent = (id: number) => {
+        mutationForDeleteShortCutHubContent.mutate(id);
     };
 
     if (!dataForShortCutHubContent) {
-        return (<Box>Loading ..</Box>)
+        return (<Box>Loading..</Box>)
     }
 
     return (
@@ -153,15 +152,13 @@ const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, dat
                             </Td>
                             <Td>
                                 <Box display={"flex"} gap={1}>
-                                    <ModalButtonForUpdateShortCut shortcutObj={hub_content.shortcut} />
-
                                     <IconButton
                                         aria-label="Delete"
                                         variant="outline"
                                         size="xs"
                                         icon={<DeleteIcon />}
                                         colorScheme="pink"
-                                        onClick={() => deleteHandlerForShortCut(hub_content.shortcut.id)}
+                                        onClick={() => deleteHandlerForShortCutHubContent(hub_content.id)}
                                     />
                                 </Box>
                             </Td>
