@@ -34,7 +34,7 @@ import ModalButtonForUpdateStudyNote from "../modal/ModalButtonForUpdateStudyNot
 import ModalButtonForClassRoomListForStudyNote from "../modal/ModalButtonForClassRoomListForStudyNote";
 import ModalButtonForQnAList from "../modal/ModalButtonForQnAList";
 import ModalButtonForErrorReportForNote from "../modal/ModalButtonForErrorReportForNote";
-import { AiOutlineEye, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineEye, AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { RiBookmarkLine, RiBookmarkFill } from 'react-icons/ri';
 
 import ModalButtonForFaqListForNote from "../modal/ModalButtonForFaqListForNote";
@@ -59,6 +59,7 @@ interface IProps {
   total_count_for_suggestion_list: number;
   total_count_for_error_report_list: number;
   is_bookmark_for_note: boolean;
+  is_like_for_note: boolean;
 }
 
 
@@ -80,6 +81,7 @@ const CardForStudyNote: React.FC<IProps> = ({
   total_count_for_suggestion_list,
   total_count_for_error_report_list,
   is_bookmark_for_note,
+  is_like_for_note,
   studyNoteListRefatch,
 }) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
@@ -595,7 +597,7 @@ const CardForStudyNote: React.FC<IProps> = ({
             </Button>
 
             <Button
-              leftIcon={is_bookmark_for_note ? <AiOutlineHeart color={"red"} /> : <RiBookmarkLine color={"gray"} />} // 북마크 여부에 따라 아이콘 변경
+              leftIcon={is_like_for_note ? <AiFillHeart color={"red"} /> : <AiOutlineHeart color={"gray"} />} // 북마크 여부에 따라 아이콘 변경
               variant={"outline"}
               size={"md"}
               onClick={likeHandlerForNote}

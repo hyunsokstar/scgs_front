@@ -303,6 +303,7 @@ const StudyNotePage = () => {
                   second_category={note.second_category}
                   studyNoteListRefatch={studyNoteListRefatch}
                   is_bookmark_for_note = {note.is_bookmark_for_note}
+                  is_like_for_note = {note.is_like_for_note}
                 />
               ))
             : ""}

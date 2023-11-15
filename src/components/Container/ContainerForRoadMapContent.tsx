@@ -43,51 +43,52 @@ const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
           button_text={"RoadMap Admin"}
         />
       </Box>
-      
+
       {dataForRoadMapContent &&
-      dataForRoadMapContent.road_map_contents.length !== 0
+        dataForRoadMapContent.road_map_contents.length !== 0
         ? dataForRoadMapContent.road_map_contents.map((row: any) => {
-            return (
-              <Box key={row.id}>
-                <CardForStudyNote
-                  pk={row.study_note.pk}
-                  key={row.study_note.title}
-                  title={row.study_note.title}
-                  description={row.study_note.description}
-                  writer={row.study_note.writer}
-                  note_cowriters={row.study_note.note_cowriters}
-                  count_for_note_contents={
-                    row.study_note.count_for_note_contents
-                  }
-                  total_count_for_comments={
-                    row.study_note.total_count_for_comments
-                  }
-                  total_count_for_qna_board={
-                    row.study_note.total_count_for_qna_board
-                  }
-                  total_count_for_faq_list={
-                    row.study_note.total_count_for_faq_list
-                  }
-                  total_count_for_subtitle={
-                    row.study_note.total_count_for_subtitle
-                  }
-                  total_count_for_class_list={
-                    row.study_note.total_count_for_class_list
-                  }
-                  total_count_for_suggestion_list={
-                    row.study_note.total_count_for_suggestion_list
-                  }
-                  total_count_for_error_report_list={
-                    row.study_note.total_count_for_error_report_list
-                  }
-                  first_category={row.study_note.first_category}
-                  second_category={row.study_note.second_category}
-                  is_bookmark_for_note = {row.study_note.is_bookmark_for_note}
-                  studyNoteListRefatch={refetchForDataForLoadMap}
-                />
-              </Box>
-            );
-          })
+          return (
+            <Box key={row.id}>
+              <CardForStudyNote
+                pk={row.study_note.pk}
+                key={row.study_note.title}
+                title={row.study_note.title}
+                description={row.study_note.description}
+                writer={row.study_note.writer}
+                note_cowriters={row.study_note.note_cowriters}
+                count_for_note_contents={
+                  row.study_note.count_for_note_contents
+                }
+                total_count_for_comments={
+                  row.study_note.total_count_for_comments
+                }
+                total_count_for_qna_board={
+                  row.study_note.total_count_for_qna_board
+                }
+                total_count_for_faq_list={
+                  row.study_note.total_count_for_faq_list
+                }
+                total_count_for_subtitle={
+                  row.study_note.total_count_for_subtitle
+                }
+                total_count_for_class_list={
+                  row.study_note.total_count_for_class_list
+                }
+                total_count_for_suggestion_list={
+                  row.study_note.total_count_for_suggestion_list
+                }
+                total_count_for_error_report_list={
+                  row.study_note.total_count_for_error_report_list
+                }
+                first_category={row.study_note.first_category}
+                second_category={row.study_note.second_category}
+                is_bookmark_for_note={row.study_note.is_bookmark_for_note}
+                is_like_for_note={row.study_note.is_like_for_note}
+                studyNoteListRefatch={refetchForDataForLoadMap}
+              />
+            </Box>
+          );
+        })
         : "no road map contents"}
     </Box>
   );
