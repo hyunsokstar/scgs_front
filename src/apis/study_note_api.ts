@@ -20,7 +20,53 @@ const instance = axios.create({
 });
 
 // 1122
-// apiForBookMarkEventForStudyNote
+// apiForMyLikeNoteList
+export const apiForMyLikeNoteList = async ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_] = queryKey;
+
+  return await instance
+    .get(`study-note/my-like-note-list`, {
+      params: {},
+    })
+    .then((response) => response.data);
+};
+
+
+// apiForLikeEventForStudyNote
+export const apiForLikeEventForStudyNote = ({
+  noteId,
+}: any) => {
+
+  return instance
+    .post(
+      `/study-note/${noteId}/like`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
+// apiForMyLikeNoteList
+export const apiForGetBookMarkList = async ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_] = queryKey;
+
+  return await instance
+    .get(`study-note/mybookmark`, {
+      params: {
+        // currentPage,
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const apiForBookMarkEventForStudyNote = ({
   noteId,
 }: any) => {
@@ -65,7 +111,7 @@ export const apiForReorderingForRoadMapContentListByDnd = ({
 
 // ForDeleteRoadMapContentForCheckedIds
 export const apiForDeleteRoadMapContentForCheckedIds = (
-  roadMapId:number,
+  roadMapId: number,
   checkedIdsForRoadMapContent: number[]
 ) => {
   return instance

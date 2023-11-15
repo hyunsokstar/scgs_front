@@ -292,3 +292,32 @@ export interface RowTypeForRoadMapContentForRegister {
 export interface DataTypeForRoadMapContentListForRegister {
   road_map_contents: RowTypeForRoadMapContentForRegister[];
 }
+
+
+export interface IRowForBookMark {
+  user: UserProfileImage;
+  study_note: {
+    id: number;
+    title: string;
+    description: string;
+    writer: UserProfileImage;
+    created_at: string;
+    first_category: string;
+    second_category: string;
+  }
+  bookmarked_at: string;
+}
+
+export interface IRowForLike {
+  user: UserProfileImage;
+  study_note: {
+    id: number;
+    title: string;
+    description: string;
+    writer: UserProfileImage;
+    created_at: string;
+    first_category: string;
+    second_category: string;
+  }
+  liked_at: string;
+}

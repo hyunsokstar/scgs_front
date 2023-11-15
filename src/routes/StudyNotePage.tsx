@@ -25,6 +25,8 @@ import PaginationComponent from "../components/PaginationComponent";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import ModalButtonForMyBookMarkList from "../components/modal/ModalButtonForMyBookMarkList";
+import ModalButtonForMyLikeNoteList from "../components/modal/ModalButtonForMyLikeNoteList";
 
 // 1122
 const StudyNotePage = () => {
@@ -230,6 +232,9 @@ const StudyNotePage = () => {
           aria-label="Refresh"
           px={2}
         />
+
+        <ModalButtonForMyBookMarkList />
+        <ModalButtonForMyLikeNoteList />
 
         <Spacer />
         <Box display={"flex"} justifyContent={"space-between"} gap={2}>

@@ -18,6 +18,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   apiForBookMarkEventForStudyNote,
+  apiForLikeEventForStudyNote,
   apiForRegisterForCoWriterForOtherUserNote,
   apiFordeleteOneStudyNote,
 } from "../../apis/study_note_api";
@@ -187,7 +188,7 @@ const CardForStudyNote: React.FC<IProps> = ({
     navigate(`/study-note/${pk}/1/slide`);
   };
 
-  // mutationForBookMarkForNoteForPk
+  // mutationForLikeForNote
   const mutationForBookMarkForNoteForPk = useMutation(
     apiForBookMarkEventForStudyNote,
     {
@@ -220,6 +221,41 @@ const CardForStudyNote: React.FC<IProps> = ({
       return;
     } else {
       mutationForBookMarkForNoteForPk.mutate({ noteId: pk })
+    }
+  }
+
+  const mutationForLikeForNote = useMutation(
+    apiForLikeEventForStudyNote,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "book mark for note !!",
+          description: data.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+
+        queryClient.refetchQueries(["apiForgetStudyNoteList"]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
+
+  const likeHandlerForNote = () => {
+    if (!isLoggedIn) {
+      alert("로그인 해주세요")
+      return;
+    } else {
+      mutationForLikeForNote.mutate({ noteId: pk })
     }
   }
 
@@ -558,25 +594,17 @@ const CardForStudyNote: React.FC<IProps> = ({
               {/* 버튼 내용 */}
             </Button>
 
-
-            <IconButton
-              variant="outline"
+            <Button
+              leftIcon={is_bookmark_for_note ? <AiOutlineHeart color={"red"} /> : <RiBookmarkLine color={"gray"} />} // 북마크 여부에 따라 아이콘 변경
+              variant={"outline"}
               size={"md"}
-              colorScheme="red"
-              aria-label="Like count"
-              icon={<Icon as={AiOutlineHeart} />}
-              marginRight={2}
-            />
-            <Text>2</Text>
+              onClick={likeHandlerForNote}
+              border={"1px solid black"}
+            >
+            </Button>
+
           </Box>
           <Box>
-            {/* <IconButton
-              aria-label="Copy to clipboard"
-              icon={<CopyIcon />}
-              size="md"
-              colorScheme="teal"
-            /> */}
-
             <IconButtonForCopyNote studyNotePk={pk} studyNoteTitle={title} />
           </Box>
         </Box>
