@@ -151,6 +151,7 @@ export interface TypeForNote {
   total_count_for_class_list: number;
   total_count_for_suggestion_list: number;
   total_count_for_error_report_list: number;
+  is_bookmark_for_note: boolean;
 }
 
 export interface DataTyprForNoteList {

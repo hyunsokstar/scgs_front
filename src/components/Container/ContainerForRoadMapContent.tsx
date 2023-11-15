@@ -82,6 +82,7 @@ const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
                   }
                   first_category={row.study_note.first_category}
                   second_category={row.study_note.second_category}
+                  is_bookmark_for_note = {row.study_note.is_bookmark_for_note}
                   studyNoteListRefatch={refetchForDataForLoadMap}
                 />
               </Box>

@@ -17,6 +17,7 @@ import {
 } from "../../types/study_note_type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  apiForBookMarkEventForStudyNote,
   apiForRegisterForCoWriterForOtherUserNote,
   apiFordeleteOneStudyNote,
 } from "../../apis/study_note_api";
@@ -33,9 +34,10 @@ import ModalButtonForClassRoomListForStudyNote from "../modal/ModalButtonForClas
 import ModalButtonForQnAList from "../modal/ModalButtonForQnAList";
 import ModalButtonForErrorReportForNote from "../modal/ModalButtonForErrorReportForNote";
 import { AiOutlineEye, AiOutlineHeart } from "react-icons/ai";
+import { RiBookmarkLine, RiBookmarkFill } from 'react-icons/ri';
+
 import ModalButtonForFaqListForNote from "../modal/ModalButtonForFaqListForNote";
 import ModalButtonForNoteSuggestion from "../modal/ModalButtonForNoteSuggestion";
-import { CopyIcon } from "@chakra-ui/icons";
 import IconButtonForCopyNote from "../Button/IconButtonForCopyNote";
 
 interface IProps {
@@ -55,7 +57,9 @@ interface IProps {
   total_count_for_faq_list: number;
   total_count_for_suggestion_list: number;
   total_count_for_error_report_list: number;
+  is_bookmark_for_note: boolean;
 }
+
 
 // 1122
 const CardForStudyNote: React.FC<IProps> = ({
@@ -74,6 +78,7 @@ const CardForStudyNote: React.FC<IProps> = ({
   total_count_for_faq_list,
   total_count_for_suggestion_list,
   total_count_for_error_report_list,
+  is_bookmark_for_note,
   studyNoteListRefatch,
 }) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
@@ -181,6 +186,42 @@ const CardForStudyNote: React.FC<IProps> = ({
     // alert(pk);
     navigate(`/study-note/${pk}/1/slide`);
   };
+
+  // mutationForBookMarkForNoteForPk
+  const mutationForBookMarkForNoteForPk = useMutation(
+    apiForBookMarkEventForStudyNote,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (data) => {
+        console.log("data : ", data);
+
+        toast({
+          title: "book mark for note !!",
+          description: data.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+
+        queryClient.refetchQueries(["apiForgetStudyNoteList"]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
+
+  const bookMarkHandlerForPk = () => {
+    if (!isLoggedIn) {
+      alert("로그인 해주세요")
+      return;
+    } else {
+      mutationForBookMarkForNoteForPk.mutate({ noteId: pk })
+    }
+  }
 
   // 2244
   return (
@@ -505,19 +546,22 @@ const CardForStudyNote: React.FC<IProps> = ({
             <Text>2nd: {second_category}</Text>
           </Box>
           <Box display={"flex"} gap={3}>
-            <IconButton
-              variant="outline"
-              size={"sm"}
-              colorScheme="blue"
-              aria-label="View count"
-              icon={<Icon as={AiOutlineEye} />}
-              marginRight={2}
-            />
-            <Text>2</Text>
+
+            {/* 1115 */}
+            <Button
+              leftIcon={is_bookmark_for_note ? <RiBookmarkFill color={"blue"} /> : <RiBookmarkLine color={"gray"} />} // 북마크 여부에 따라 아이콘 변경
+              variant={"outline"}
+              size={"md"}
+              onClick={bookMarkHandlerForPk}
+              border={"1px solid black"}
+            >
+              {/* 버튼 내용 */}
+            </Button>
+
 
             <IconButton
               variant="outline"
-              size={"sm"}
+              size={"md"}
               colorScheme="red"
               aria-label="Like count"
               icon={<Icon as={AiOutlineHeart} />}
@@ -537,7 +581,7 @@ const CardForStudyNote: React.FC<IProps> = ({
           </Box>
         </Box>
       </Box>
-    </Box>
+    </Box >
   );
 };
 

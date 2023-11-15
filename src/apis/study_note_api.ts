@@ -20,6 +20,25 @@ const instance = axios.create({
 });
 
 // 1122
+// apiForBookMarkEventForStudyNote
+export const apiForBookMarkEventForStudyNote = ({
+  noteId,
+}: any) => {
+
+  return instance
+    .post(
+      `/study-note/${noteId}/bookmark`,
+      {},
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
+
 // apiForReorderingForRoadMapContentListByDnd
 //  roadMapId, updatedRoadMapOrderList
 export const apiForReorderingForRoadMapContentListByDnd = ({

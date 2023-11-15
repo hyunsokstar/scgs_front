@@ -152,7 +152,7 @@ const ModalButtonForInsertSubtitleForPage = ({
                 <Input
                   type="text"
                   placeholder="Enter the reference URL 1"
-                  {...register("ref_url1", { required: true })}
+                  {...register("ref_url1", { required: false })}
                   isInvalid={errors.ref_url1 != null}
                 />
               </FormControl>
@@ -161,7 +161,7 @@ const ModalButtonForInsertSubtitleForPage = ({
                 <Input
                   type="text"
                   placeholder="Enter the reference URL 2"
-                  {...register("ref_url2", { required: true })}
+                  {...register("ref_url2", { required: false })}
                   isInvalid={errors.ref_url2 != null}
                 />
               </FormControl>
@@ -169,7 +169,7 @@ const ModalButtonForInsertSubtitleForPage = ({
                 <FormLabel>Content</FormLabel>
                 <Textarea
                   placeholder="Enter the content"
-                  {...register("content", { required: true })}
+                  {...register("content", { required: false })}
                   isInvalid={errors.content != null}
                 />
               </FormControl>

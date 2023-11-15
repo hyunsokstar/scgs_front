@@ -92,7 +92,7 @@ const StudyNotePage = () => {
     }
   );
 
-  // console.log("dataForStudyNote : ", dataForStudyNote);
+  console.log("dataForStudyNote : ", dataForStudyNote);
 
   const buttonHandlerForRefreshFilterOption = () => {
     setSelectedNoteWriter("");
@@ -297,6 +297,7 @@ const StudyNotePage = () => {
                   first_category={note.first_category}
                   second_category={note.second_category}
                   studyNoteListRefatch={studyNoteListRefatch}
+                  is_bookmark_for_note = {note.is_bookmark_for_note}
                 />
               ))
             : ""}

@@ -459,7 +459,7 @@ const StudyNoteDetail2 = (props: Props) => {
                   button_size={"sm"}
                 />
                 <ModalButtonForInsertSubtitleForPage
-                  button_text={"subtitle for page"}
+                  button_text={"Subtitle"}
                   study_note_pk={study_note_pk}
                   currentPage={currentPage}
                   button_size={"sm"}

@@ -58,7 +58,7 @@ export const apiForUpdateCommentForFaqForBoard = ({
     });
 };
 
-// apiForCreateCommentForFaqForBoard 구현중
+// apiForBookMarkEventForStudyNote
 export const apiForCreateCommentForFaqForBoard = ({
   faqId,
   content,
