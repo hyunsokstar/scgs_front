@@ -31,13 +31,13 @@ const ContainerForRoadMapContent = ({ roadMapId }: IProps) => {
 
   return (
     <Box
-      width="80%"
-      margin="auto"
+      width="100%"
+      // margin="auto"
       display={"flex"}
       flexDirection={"column"}
       gap={10}
     >
-      <Box border={"1px solid black"} textAlign={"end"} p={2} mt={2}>
+      <Box border={"1px solid black"} textAlign={"end"} p={2}>
         <ModalButtonForRegisterRoadMap
           roadMapId={roadMapId}
           button_text={"RoadMap Admin"}

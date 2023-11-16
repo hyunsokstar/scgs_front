@@ -130,6 +130,7 @@ const CardForRoadMapList = ({ listForRoadMap }: IProps) => {
                 button_text={"RoadMap Detail"}
                 roadMapTitle={data.title}
                 roadMapSubTitle={data.sub_title}
+                roadMapWriterName = {data.writer.username}
               />
             </Box>
           </Box>
