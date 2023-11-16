@@ -17,6 +17,32 @@ const instance = axios.create({
 
 // 1122
 
+interface IParameterForReorderingForShortCutHubContentList {
+  shortcut_hub_id: number;
+  reorderedShortCutHubList: any
+}
+
+export const apiForReorderingForShortCutHubContentList = ({
+  shortcut_hub_id,
+  reorderedShortCutHubList
+}: IParameterForReorderingForShortCutHubContentList) => {
+  console.log("hi");
+
+  return instance
+    .put(
+      `shortcut/hub/${shortcut_hub_id}/content/reordering`,
+      {
+        reorderedShortCutHubList,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 export const apiFordeleteShortcutHubContent = (hub_content_id: number) => {
   console.log("hub_content_id : ", hub_content_id);
   return instance

@@ -6,7 +6,7 @@ import {
     DropResult,
 } from "react-beautiful-dnd"; import { Avatar, Text, Box, Table, Thead, Tbody, Tr, Th, Td, Checkbox, TagLabel, Tag, IconButton, useToast } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiForShortCutHubContentList, apiFordeleteShortcut, apiFordeleteShortcutHubContent } from '../../apis/api_for_shortcut';
+import { apiForReorderingForShortCutHubContentList, apiForShortCutHubContentList, apiFordeleteShortcut, apiFordeleteShortcutHubContent } from '../../apis/api_for_shortcut';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Link } from "react-router-dom";
 import { IDataTypeForShortCutHubContent, IRowForShortCutHubContentList } from '../../types/type_for_shortcut';
@@ -83,16 +83,6 @@ const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, dat
         mutationForDeleteShortCutHubContent.mutate(id);
     };
 
-    useEffect(() => {
-        if (dataForShortCutHubContent) {
-            setListForShortCutHubContent(dataForShortCutHubContent.listForShortCutHubContent)
-        }
-    }, [dataForShortCutHubContent])
-
-    if (!dataForShortCutHubContent) {
-        return (<Box>Loading..</Box>)
-    }
-
     const reorder = (
         list: IRowForShortCutHubContentList[],
         startIndex: number,
@@ -107,6 +97,21 @@ const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, dat
 
         return result;
     };
+
+    const mutationForShortCutHubContentList =
+        useMutation(apiForReorderingForShortCutHubContentList, {
+            onSuccess: (result: any) => {
+                console.log("result : ", result);
+                queryClient.refetchQueries(["apiForGetShortcutHubContentList"]);
+
+                toast({
+                    status: "success",
+                    title:
+                        "ReOrder For ShortcutHubContentList success",
+                    description: result.message,
+                });
+            },
+        });
 
     const onDragEnd = (result: DropResult) => {
         if (!result.destination) {
@@ -126,16 +131,40 @@ const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, dat
                 result.destination.index
             );
         } else {
+            newItems = listForShortCutHubContent
         }
 
         console.log("newItems: ", newItems);
 
+        if (newItems) {
+            const reorderedShortCutHubList = newItems.map((item, index) => ({
+                ...item,
+                hub_content_id: item.id,
+                order: index + 1, // Assuming 'order' starts from 1
+            }));
+
+            console.log("reorderedShortCutHubList : ", reorderedShortCutHubList);
+            mutationForShortCutHubContentList.mutate({
+                shortcut_hub_id,
+                reorderedShortCutHubList
+            })
+
+        }
+
 
         setListForShortCutHubContent(newItems);
 
-
     };
 
+    useEffect(() => {
+        if (dataForShortCutHubContent) {
+            setListForShortCutHubContent(dataForShortCutHubContent.listForShortCutHubContent)
+        }
+    }, [dataForShortCutHubContent])
+
+    if (!dataForShortCutHubContent) {
+        return (<Box>Loading..</Box>)
+    }
 
     return (
         <Box width={"100%"} border={"1px solid black"}>

@@ -20,6 +20,8 @@ const instance = axios.create({
 });
 
 // 1122
+
+
 // apiForMyLikeNoteList
 export const apiForMyLikeNoteList = async ({
   queryKey,
@@ -1378,8 +1380,6 @@ export const ForSearchContentListForStudyNote = ({
     .then((response) => response.data);
 };
 
-// apiForReorderingForRoadMapContentListByDnd
-//  roadMapId, updatedRoadMapOrderList
 export const apiForReOrderForStudyNoteContentsForSpecificNoteAndPage = ({
   study_note_pk,
   currentPage,
