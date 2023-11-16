@@ -5,6 +5,7 @@ import { apiForShortCutHubContentList, apiFordeleteShortcut, apiFordeleteShortcu
 import { DeleteIcon } from '@chakra-ui/icons';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { IDataTypeForShortCutHubContent } from '../../types/type_for_shortcut';
 
 const favorite_color = ["blue", "red", "orange", "red", "purple"];
 
@@ -27,7 +28,7 @@ const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, dat
         isLoading: isLoadingForShortCutHubContent,
         data: dataForShortCutHubContent,
         refetch: refetchForShortCutHubContentData,
-    } = useQuery<any>(
+    } = useQuery<IDataTypeForShortCutHubContent>(
         ["apiForGetShortcutHubContentList", shortcut_hub_id],
         apiForShortCutHubContentList,
         {
@@ -35,6 +36,7 @@ const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, dat
         }
     );
 
+    // alert("shortcut_hub_id : " + shortcut_hub_id)
     console.log("dataForShortCutHubContent : ", dataForShortCutHubContent);
 
     const mutationForDeleteShortCutHubContent = useMutation(
@@ -76,6 +78,9 @@ const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, dat
                             <Checkbox />
                         </Th>
                         <Th fontFamily="monospace" fontSize="lg" color="teal.500">
+                            Order
+                        </Th>
+                        <Th fontFamily="monospace" fontSize="lg" color="teal.500">
                             Writer
                         </Th>
 
@@ -97,6 +102,9 @@ const TableForShortCutHubContentList: React.FC<IProps> = ({ shortcut_hub_id, dat
                         <Tr key={hub_content.shortcut.id}>
                             <Td>
                                 <Checkbox />
+                            </Td>
+                            <Td>
+                                {hub_content.order}
                             </Td>
                             <Td>
                                 {hub_content.shortcut.writer !== null ? (

@@ -60,6 +60,8 @@ interface IProps {
   total_count_for_error_report_list: number;
   is_bookmark_for_note: boolean;
   is_like_for_note: boolean;
+  total_count_for_bookmark: number;
+  total_count_for_like: number;
 }
 
 
@@ -82,6 +84,8 @@ const CardForStudyNote: React.FC<IProps> = ({
   total_count_for_error_report_list,
   is_bookmark_for_note,
   is_like_for_note,
+  total_count_for_bookmark,
+  total_count_for_like,
   studyNoteListRefatch,
 }) => {
   const cardBgColor = useColorModeValue("gray.100", "gray.700");
@@ -594,6 +598,7 @@ const CardForStudyNote: React.FC<IProps> = ({
               border={"1px solid black"}
             >
               {/* 버튼 내용 */}
+              {total_count_for_bookmark}
             </Button>
 
             <Button
@@ -603,6 +608,7 @@ const CardForStudyNote: React.FC<IProps> = ({
               onClick={likeHandlerForNote}
               border={"1px solid black"}
             >
+              {total_count_for_like}
             </Button>
 
           </Box>

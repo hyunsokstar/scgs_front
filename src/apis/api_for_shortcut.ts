@@ -111,7 +111,6 @@ export const apiForShortCutHubList = ({
     });
 };
 
-// apiForDeleteRelatedShortcutForCheckedRow
 export const apiForDeleteRelatedShortcutForCheckedRow = (
   selectedRows: number[]
 ) => {

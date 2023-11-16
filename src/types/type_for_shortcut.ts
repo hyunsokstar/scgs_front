@@ -79,6 +79,31 @@ export type rowTypeForShortCutHubList = {
   title: string;
   description: string;
   writer: WriterType;
+  total_count_for_shortcut_hub_contents: number;
+  created_at: string;
+}
+
+export interface IRowForTag {
+  id: number;
+  name: string;
+}
+
+
+export interface IRowForShortCutList {
+  id: number;
+  writer: Writer;
+  description: string;
+  classification: string;
+  tags: IRowForTag[]
+  related_shortcut_count: number
+}
+
+export interface IRowForShortCutHubContentList {
+  id: number;
+  shortcut: IRowForShortCutList;
+  shortcut_hub: number;
+  writer: number;
+  order: number
   created_at: string;
 }
 
@@ -86,4 +111,11 @@ export type ITypeForDataForShortCutHub = {
   listForShortCutHub: rowTypeForShortCutHubList[]
   totalCountForShortCutHub: number;
   perPageForShortCutHub: number;
+}
+
+// dataForShortCutHubContent
+export interface IDataTypeForShortCutHubContent {
+  listForShortCutHubContent: IRowForShortCutHubContentList[];
+  perPageForShortCutHubContent: number;
+  totalCountForShortCutHubContent: number;
 }

@@ -28,7 +28,7 @@ const CardListForShortCutHub = ({ dataForShortCutHub }: IProps) => {
                                 to={`/shortcuthub/${shortcut_hub.id}`}
                                 style={{ textDecoration: "underline" }}
                             >
-                                <Button>Detail</Button>
+                                <Button>Detail ({shortcut_hub.total_count_for_shortcut_hub_contents})</Button>
                             </Link>
                         </Box>
                         <Box p={4} borderTop="1px solid #E2E8F0">

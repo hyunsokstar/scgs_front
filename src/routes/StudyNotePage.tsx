@@ -304,6 +304,8 @@ const StudyNotePage = () => {
                   studyNoteListRefatch={studyNoteListRefatch}
                   is_bookmark_for_note = {note.is_bookmark_for_note}
                   is_like_for_note = {note.is_like_for_note}
+                  total_count_for_bookmark = {note.total_count_for_bookmark}
+                  total_count_for_like = {note.total_count_for_like}
                 />
               ))
             : ""}

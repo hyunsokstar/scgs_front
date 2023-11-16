@@ -153,6 +153,8 @@ export interface TypeForNote {
   total_count_for_error_report_list: number;
   is_bookmark_for_note: boolean;
   is_like_for_note: boolean;
+  total_count_for_bookmark: number;
+  total_count_for_like: number;
 }
 
 export interface DataTyprForNoteList {
