@@ -586,7 +586,7 @@ const StudyNoteDetail2 = (props: Props) => {
         <Box
           pt={30}
           id="card-container"
-          height={"68vh"}
+          height={"90vh"}
           overflowY={"scroll"}
           // mr={1}
           position={"relative"}

@@ -18,19 +18,6 @@ export default function useUser() {
     (state: RootState) => state.loginInfo
   );
 
-  // console.log("data : ", data);
-
-  // if (!isError) {
-  //   dispatch(login(data));
-  // }
-
-  // console.log("get user data : ", data);
-  // console.log("isError : ", isError);
-
-  // if (isError) {
-  //   dispatch(logout());
-  // }
-
   if (!isError && !isLoading && data) {
     dispatch(login(data));
   } else {

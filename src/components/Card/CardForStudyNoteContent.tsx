@@ -126,10 +126,11 @@ const CardForStudyNoteContent = ({
     <Box
       borderRadius="lg"
       p="4"
-      border={"2px solid black"}
+      border={"5px solid black"}
       mb={2}
       w={card_width}
       id={`card-${order}`}
+      height={"550px"}
     >
       <Box
         display="flex"
@@ -179,7 +180,8 @@ const CardForStudyNoteContent = ({
         </Box>
 
         <Box
-          maxHeight={"390px"}
+          minHeight={"370px"}
+          maxHeight={"370px"}
           overflowY={"scroll"}
           dangerouslySetInnerHTML={{ __html: content }}
         ></Box>

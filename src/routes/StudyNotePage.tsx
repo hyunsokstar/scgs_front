@@ -37,6 +37,7 @@ const StudyNotePage = () => {
   const [second_category, set_second_category] = useState("");
   const [searchWords, setSearchWords] = useState("");
   const [studyNoteList, setStudyNoteList] = useState<TypeForNote[]>([]);
+  
 
   const firstCategoryOptions = [
     { value: "frontend", label: "Frontend" },

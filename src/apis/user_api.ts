@@ -3,7 +3,10 @@ import Cookie from "js-cookie";
 
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { backendApi } from "./common_api";
-import { IUserRow, parameterTypeForCreateUserTaskComment } from "../types/user/user_types";
+import {
+  IUserRow,
+  parameterTypeForCreateUserTaskComment,
+} from "../types/user/user_types";
 
 const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
@@ -23,22 +26,26 @@ export const apiForGetAllUserNames = () =>
   });
 
 // apiForDeleteCommentForChallenge
-export const apiForDeleteUserTaskCommentForPk = (commentPk: string | number) => {
+export const apiForDeleteUserTaskCommentForPk = (
+  commentPk: string | number
+) => {
   console.log("commentPk : ", commentPk);
-  return instance
-    // .delete(`project_progress/comment/${commentPk}`, {
+  return (
+    instance
+      // .delete(`project_progress/comment/${commentPk}`, {
       .delete(`users/comment/${commentPk}/delete`, {
         headers: {
-        "X-CSRFToken": Cookie.get("csrftoken") || "",
-      },
-    })
-    .then((response) => response.data);
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      })
+      .then((response) => response.data)
+  );
 };
 
 export const apiForCreateUserTaskComment = ({
   userPk,
   comment,
-}: parameterTypeForCreateUserTaskComment ) =>
+}: parameterTypeForCreateUserTaskComment) =>
   instance
     .post(
       `/users/${userPk}/comment`,
@@ -54,7 +61,9 @@ export const apiForCreateUserTaskComment = ({
     )
     .then((response) => response.data);
 
-export const apiForGetCompletedTaskListForPersonalTaskStatus = async ({ queryKey }: QueryFunctionContext) => {
+export const apiForGetCompletedTaskListForPersonalTaskStatus = async ({
+  queryKey,
+}: QueryFunctionContext) => {
   const [_, userPk] = queryKey;
 
   return await instance
@@ -62,7 +71,9 @@ export const apiForGetCompletedTaskListForPersonalTaskStatus = async ({ queryKey
     .then((response) => response.data);
 };
 
-export const apiForGetTaskDataForSelectedUser = async ({ queryKey }: QueryFunctionContext) => {
+export const apiForGetTaskDataForSelectedUser = async ({
+  queryKey,
+}: QueryFunctionContext) => {
   const [_, userPk] = queryKey;
 
   return await instance
@@ -96,7 +107,6 @@ export const apiForUpdateEditModeForStudyNoteContent = (
       }
     )
     .then((response): AxiosResponse => {
-      
       return response.data;
     });
 };
@@ -189,6 +199,7 @@ export const createProfilePhoto = ({
 export const loginCheck = () =>
   instance.get(`users/me`).then((response) => response.data);
 
+// apiForLoginWithUserName;
 export const usernameLogIn = ({
   username,
   password,

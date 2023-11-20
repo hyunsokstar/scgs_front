@@ -20,8 +20,6 @@ const instance = axios.create({
 });
 
 // 1122
-
-
 // apiForMyLikeNoteList
 export const apiForMyLikeNoteList = async ({
   queryKey,

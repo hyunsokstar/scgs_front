@@ -65,8 +65,10 @@ const ModalButtonForUpdateStudyNote = ({
       console.log("data : ", data);
 
       toast({
-        title: "welcome back!",
+        title: "study note update success!",
         status: "success",
+        duration: 1800,
+        isClosable: true,
       });
       queryClient.refetchQueries(["apiForgetStudyNoteList"]);
       reset();

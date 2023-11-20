@@ -171,6 +171,7 @@ const ModalButtonForInsertSubtitleForPage = ({
                   placeholder="Enter the content"
                   {...register("content", { required: false })}
                   isInvalid={errors.content != null}
+                  height={"25vh"}
                 />
               </FormControl>
 

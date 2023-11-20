@@ -93,7 +93,7 @@ function ModalButtonForAddStudyNote({ button_text, button_size }: IProps) {
         <ModalOverlay />
         <ModalContent borderRadius="20px" border={"0px solid black"}>
           <ModalHeader bg="purple.100" color="white">
-            Modal Title
+            노트 생성
           </ModalHeader>
           <ModalCloseButton variant="outline" colorScheme="purple" />
           <ModalBody height="80%" overflowY="auto" bg="purple.50">
@@ -115,7 +115,7 @@ function ModalButtonForAddStudyNote({ button_text, button_size }: IProps) {
                 <Textarea
                   id="description"
                   placeholder="Enter description"
-                  {...register("description", { required: true })}
+                  {...register("description", { required: false })}
                 />
                 <FormErrorMessage>Please enter a description</FormErrorMessage>
               </FormControl>
