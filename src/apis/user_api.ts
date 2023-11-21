@@ -206,7 +206,7 @@ export const usernameLogIn = ({
 }: IUsernameLoginVariables) =>
   instance
     .post(
-      `/users/log-in`,
+      `/users/login`,
       { username, password },
       {
         headers: {
