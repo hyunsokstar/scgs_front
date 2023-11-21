@@ -101,7 +101,6 @@ function ModalButtonForStudyNoteContentOrdering({
             </HStack>
           </ModalHeader>
           <ModalBody bg="white" p={4}>
-            {/* <List items={items} /> */}
             <ListForOrderingStudyNoteContents
               study_note_pk={study_note_pk}
               currentPage={currentPage}

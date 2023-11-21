@@ -19,7 +19,34 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+interface IParamterForMoveNoteContentsToSelectedPage {
+  checkedIds: string[];
+  selectedPage: number;
+}
+
 // 1122
+export const apiForMoveNoteContentsToOtherPage = ({
+  checkedIds,
+  selectedPage,
+}: IParamterForMoveNoteContentsToSelectedPage) => {
+  console.log(checkedIds, selectedPage);
+
+  return instance
+    .put(
+      "/study-note/content/move-contents-to-selected-page",
+      { checkedIds, selectedPage: selectedPage },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response): AxiosResponse => {
+      console.log("response : ", response);
+      return response.data;
+    });
+};
+
 // apiForMyLikeNoteList
 export const apiForMyLikeNoteList = async ({
   queryKey,
@@ -33,12 +60,8 @@ export const apiForMyLikeNoteList = async ({
     .then((response) => response.data);
 };
 
-
 // apiForLikeEventForStudyNote
-export const apiForLikeEventForStudyNote = ({
-  noteId,
-}: any) => {
-
+export const apiForLikeEventForStudyNote = ({ noteId }: any) => {
   return instance
     .post(
       `/study-note/${noteId}/like`,
@@ -67,10 +90,7 @@ export const apiForGetBookMarkList = async ({
     .then((response) => response.data);
 };
 
-export const apiForBookMarkEventForStudyNote = ({
-  noteId,
-}: any) => {
-
+export const apiForBookMarkEventForStudyNote = ({ noteId }: any) => {
   return instance
     .post(
       `/study-note/${noteId}/bookmark`,
@@ -83,7 +103,6 @@ export const apiForBookMarkEventForStudyNote = ({
     )
     .then((response) => response.data);
 };
-
 
 // apiForReorderingForRoadMapContentListByDnd
 //  roadMapId, updatedRoadMapOrderList
@@ -98,7 +117,7 @@ export const apiForReorderingForRoadMapContentListByDnd = ({
       `study-note/roadmap/content/order/update`,
       {
         roadMapId,
-        updatedRoadMapOrderList
+        updatedRoadMapOrderList,
       },
       {
         headers: {

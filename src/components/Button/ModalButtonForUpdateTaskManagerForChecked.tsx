@@ -88,6 +88,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
     }
   };
 
+  // apiForMoveNoteContentsToOtherPage;
   const mutationForUpdateTaskManagerForCheckedTasks = useMutation(
     apiForUpdateTaskManagerForCheckedTasks,
     {
@@ -137,7 +138,7 @@ const ModalButtonForUpdateTaskManagerForChecked: React.FC<IPropTypes> = ({
         <ModalOverlay />
         <ModalContent bg="gray.50">
           <ModalHeader bg="green.100">
-            Update Task Manger
+            Update Task Manager
             <IconButton
               aria-label="Close modal"
               icon={<CloseIcon />}

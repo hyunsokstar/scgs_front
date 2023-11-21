@@ -1,9 +1,18 @@
-import { Box, HStack, Spacer, useToast, Flex, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  HStack,
+  Spacer,
+  useToast,
+  Flex,
+  Text,
+  Checkbox,
+} from "@chakra-ui/react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import React, { useState } from "react";
 import { apiForReOrderForStudyNoteContentsForSpecificNoteAndPage } from "../../apis/study_note_api";
+import ModalButtonForMoveCheckedNoteContentsToSelectedPage from "../modal/ModalButtonForMoveCheckedNoteContentsToSelectedPage";
 
 interface ListItemProps {
   order: number;
@@ -22,7 +31,17 @@ function ListItem({
   title,
   order,
   index,
-}: ListItemProps & { index: number }) {
+  isChecked,
+  onCheckboxChange,
+}: ListItemProps & {
+  index: number;
+  isChecked: boolean;
+  onCheckboxChange: (content_pk: number) => void;
+}) {
+  const handleCheckboxChange = () => {
+    onCheckboxChange(content_pk);
+  };
+
   return (
     <Draggable draggableId={content_pk.toString()} index={index}>
       {(provided) => (
@@ -35,7 +54,10 @@ function ListItem({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          gap={3}
         >
+          <Checkbox isChecked={isChecked} onChange={handleCheckboxChange} />
+          <Text>{content_pk}</Text>
           <Text mr={4}>{order}</Text>
           <Text>{title}</Text>
         </Flex>
@@ -44,18 +66,27 @@ function ListItem({
   );
 }
 
-// 1122
 function ListForOrderingStudyNoteContents({
   study_note_pk,
   currentPage,
   items,
 }: ListProps) {
-  const [listItems, setListItems] = useState(items);
+  const [checkedIds, setCheckedIds] = useState<string[]>([]);
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  //  mutationForUpdateRoadMapListOrder
-  //  roadMapId, updatedRoadMapOrderList
+  const [allChecked, setAllChecked] = useState(false);
+
+  const handleAllCheckboxChange = () => {
+    setAllChecked(!allChecked);
+    if (!allChecked) {
+      const allIds = items.map((item) => item.content_pk.toString());
+      setCheckedIds(allIds);
+    } else {
+      setCheckedIds([]);
+    }
+  };
+
   const mutationForReOrderForStudyNoteContentsForSpecificNoteAndPage =
     useMutation(apiForReOrderForStudyNoteContentsForSpecificNoteAndPage, {
       onSuccess: (result: any) => {
@@ -71,68 +102,80 @@ function ListForOrderingStudyNoteContents({
       },
     });
 
+  const handleCheckboxChange = (content_pk: number) => {
+    const updatedCheckedIds = [...checkedIds]; // 새로운 배열 생성
+    const contentPkStr = content_pk.toString();
 
-  const reorder = (
-    listItems: any,
-    startIndex: number,
-    endIndex: number
-  ): any[] => {
-    const result = Array.from(listItems);
-
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-
-    console.log("result : ", result);
-
-    return result;
+    if (updatedCheckedIds.includes(contentPkStr)) {
+      setCheckedIds(updatedCheckedIds.filter((id) => id !== contentPkStr));
+    } else {
+      setCheckedIds([...updatedCheckedIds, contentPkStr]);
+    }
   };
 
   const handleDragEnd = (result: any) => {
-    console.log("contentPk : ", result.draggableId);
-    console.log("destination : ", result.destination.index + 1);
-    console.log("listItems : ", listItems);
-
     if (!result.destination) {
       return;
     }
 
-    // const itemsCopy = [...listItems];
-    let itemsCopy = reorder(
-      listItems,
-      result.source.index,
-      result.destination.index
-    );
+    let itemsCopy = Array.from(items);
+    const startIndex = result.source.index;
+    const endIndex = result.destination.index;
+    const [removed] = itemsCopy.splice(startIndex, 1);
+    itemsCopy.splice(endIndex, 0, removed);
 
-    console.log("itemsCopy : ", itemsCopy); // 이거 그대로 보내서 order 만 수정하면 됨
-    
     itemsCopy = itemsCopy.map((item, index) => ({
-      ...item,
+      order: index + 1,
+      title: item.title,
       content_pk: item.content_pk,
-      order: index + 1, // Assuming 'order' starts from 1
     }));
-    setListItems(itemsCopy);
 
     mutationForReOrderForStudyNoteContentsForSpecificNoteAndPage.mutate({
       study_note_pk,
       currentPage,
       items: itemsCopy,
     });
-
   };
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="list">
-        {(provided) => (
-          <ul {...provided.droppableProps} ref={provided.innerRef}>
-            {listItems.map((item, index) => (
-              <ListItem key={item.order} {...item} index={index} />
-            ))}
-            {provided.placeholder}
-          </ul>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <Box display={"flex"} justifyContent={"space-between"} px={2}>
+        {/* todo : 아래 체크 박스 클릭하면 items 의 모든 요소들의 content_pk가 updatedCheckedIds 에 추가 되도록 즉 all check 되도록 하기 all check 해제 구현*/}
+        <Checkbox onChange={handleAllCheckboxChange} isChecked={allChecked}>
+          &nbsp;
+          {checkedIds ? checkedIds.length + "개" : ""}
+        </Checkbox>
+
+        <ModalButtonForMoveCheckedNoteContentsToSelectedPage
+          items={items}
+          checkedIds={checkedIds}
+          study_note_pk={study_note_pk}
+          currentPage={currentPage}
+          setCheckedIds={setCheckedIds}
+        />
+      </Box>
+
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="list">
+          {(provided) => (
+            <ul {...provided.droppableProps} ref={provided.innerRef}>
+              {items.map((item, index) => (
+                <ListItem
+                  key={item.order}
+                  index={index}
+                  isChecked={checkedIds.includes(item.content_pk.toString())}
+                  onCheckboxChange={handleCheckboxChange}
+                  content_pk={item.content_pk}
+                  order={item.order}
+                  title={item.title}
+                />
+              ))}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </>
   );
 }
 
