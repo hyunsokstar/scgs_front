@@ -3,6 +3,7 @@ import { useState } from "react";
 
 interface CheckboxProps {
   value: number;
+  checkedValues: number[];
   setCheckedValues: React.Dispatch<React.SetStateAction<number[]>>;
   colorScheme: string;
   border: string;
@@ -13,6 +14,7 @@ interface CheckboxProps {
 
 const CheckboxComponentForList = ({
   value,
+  checkedValues,
   setCheckedValues,
   defaultChecked,
   size,
@@ -23,10 +25,11 @@ const CheckboxComponentForList = ({
   const [isChecked, setIsChecked] = useState<boolean>(defaultChecked);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = event.target.checked;
-    setIsChecked(isChecked);
 
-    if (isChecked) {
+    const isChecked = checkedValues.includes(value);
+    // setIsChecked(isChecked);
+
+    if (!isChecked) {
       // Add value to checkedValues array
       setCheckedValues((prev) => [...prev, value]);
     } else {
@@ -40,7 +43,7 @@ const CheckboxComponentForList = ({
       size={size}
       border={border}
       colorScheme={colorScheme}
-      isChecked={isChecked}
+      isChecked={checkedValues.includes(value) ? true : false}
       mr={mr}
       value={value}
       onChange={handleCheckboxChange}

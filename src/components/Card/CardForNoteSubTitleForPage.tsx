@@ -29,6 +29,7 @@ const CardForNoteSubTitleForPage = ({
   content,
   order,
   card_width,
+  checkedValues,
   setCheckedValues,
   is_authority_for_note,
   youtube_url,
@@ -92,6 +93,7 @@ const CardForNoteSubTitleForPage = ({
       >
         <CheckboxComponentForList
           value={pk}
+          checkedValues={checkedValues}
           setCheckedValues={setCheckedValues}
           defaultChecked={false}
           size={"lg"}

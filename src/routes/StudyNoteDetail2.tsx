@@ -309,7 +309,6 @@ const StudyNoteDetail2 = (props: Props) => {
     md: "row",
   });
 
-  // 2244
   const is_authority_for_note =
     response_data_for_api?.note_user_name === loginUser.username ||
     response_data_for_api?.co_writers_for_approved.includes(loginUser.username);
@@ -337,27 +336,28 @@ const StudyNoteDetail2 = (props: Props) => {
     return <Box>loading..</Box>;
   }
 
+  // 2244
   return (
     <Box
       display={"flex"}
-      border={"1px solid gray"}
+      border={"2px solid gray"}
       height={"100%"}
       width={"100%"}
       flexDirection={["column", "column", "column", "column", "row"]}
     >
       <Box
         width={["100%", "100%", "100%", "100%", "80%"]}
-        border={"0px solid black"}
+        border={"1px solid black"}
       >
         <Box
           display="flex"
           justifyContent={"space-between"}
           alignItems="center"
           my={2}
+          // border={"2px solid blue"}
         >
           <Box
             display={"flex"}
-            // border={"5px solid green"}
             gap={2}
             px={2}
             flexWrap={"wrap"}
@@ -443,7 +443,6 @@ const StudyNoteDetail2 = (props: Props) => {
                 button_width={"100%"}
               />
             </Box>
-            {/* {response_data_for_api?.authority_for_writing_note_contents ? "authority ok" : "authority no"} */}
 
             {authorityForWritingNoteContents ? (
               <Box
@@ -592,8 +591,10 @@ const StudyNoteDetail2 = (props: Props) => {
           position={"relative"}
           display={"flex"}
           justifyContent={"center"}
-          border={"1px solid gray"}
+          border={"2px solid gray"}
         >
+          {/* 여기야  */}
+
           <Box
             position={"absolute"}
             top={"10px"}
@@ -625,6 +626,7 @@ const StudyNoteDetail2 = (props: Props) => {
                         refetch_for_study_note_content_list={
                           refetch_for_study_note_content_list
                         }
+                        checkedValues={checkedValues}
                         setCheckedValues={setCheckedValues}
                         is_authority_for_note={is_authority_for_note}
                       />
@@ -638,6 +640,7 @@ const StudyNoteDetail2 = (props: Props) => {
                         content={row.content}
                         writer={row.writer}
                         order={i + 1}
+                        checkedValues={checkedValues}
                         setCheckedValues={setCheckedValues}
                         is_authority_for_note={is_authority_for_note}
                         ref_url1={row.ref_url1}
@@ -652,6 +655,7 @@ const StudyNoteDetail2 = (props: Props) => {
                     return (
                       <CardForYoutubeContentForPage
                         order={i + 1}
+                        checkedValues={checkedValues}
                         setCheckedValues={setCheckedValues}
                         is_authority_for_note={is_authority_for_note}
                         card_width={"98%"}
@@ -680,6 +684,7 @@ const StudyNoteDetail2 = (props: Props) => {
             )}
           </Box>
         </Box>
+        
       </Box>
       {/* fix this */}
       <Box

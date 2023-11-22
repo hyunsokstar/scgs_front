@@ -23,6 +23,7 @@ import PlayerForYouTube from "../Player/PlayerForYouTube";
 
 // 1122
 const CardForYoutubeContentForPage = ({
+  checkedValues,
   setCheckedValues,
   is_authority_for_note,
   card_width,
@@ -91,6 +92,7 @@ const CardForYoutubeContentForPage = ({
       >
         <CheckboxComponentForList
           value={pk}
+          checkedValues={checkedValues}
           setCheckedValues={setCheckedValues}
           defaultChecked={false}
           size={"lg"}

@@ -39,6 +39,7 @@ const CardForStudyNoteContent = ({
   index,
   order,
   card_width,
+  checkedValues,
   setCheckedValues,
   is_authority_for_note,
 }: any) => {
@@ -142,6 +143,7 @@ const CardForStudyNoteContent = ({
       >
         <CheckboxComponentForList
           value={pk}
+          checkedValues={checkedValues}
           setCheckedValues={setCheckedValues}
           defaultChecked={false}
           size={"lg"}
