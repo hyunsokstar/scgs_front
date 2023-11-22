@@ -26,6 +26,7 @@ import {
   Th,
   Td,
   IconButton,
+  Checkbox,
 } from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
 import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/ButtonsForPageNumbersForStudyNoteContents";
@@ -50,6 +51,7 @@ import ModalButtonForQnAList from "../components/modal/ModalButtonForQnAList";
 import ModalButtonForRegisterErrorReportForNote from "../components/modal/ModalButtonForRegisterErrorReportForNote";
 import { EditIcon } from "@chakra-ui/icons";
 import ModalButtonForUpdateCoworkerInfo from "../components/modal/ModalButtonForUpdateCoworkerInfo";
+import MasterCheckBox from "../components/MasterCheckBox/MasterCheckBox";
 
 interface Props {}
 
@@ -304,7 +306,7 @@ const StudyNoteDetail2 = (props: Props) => {
     mutationForLoadSavedPageForThisNote.mutate({ study_note_pk });
   };
 
-  const direction_option_for_note_meta_info= useBreakpointValue<any>({
+  const direction_option_for_note_meta_info = useBreakpointValue<any>({
     base: "column",
     md: "row",
   });
@@ -332,7 +334,7 @@ const StudyNoteDetail2 = (props: Props) => {
   }
   // 컴포넌트 내에서 화면 사이즈에 따라 top 값을 동적으로 조절하는 방법
 
-  if(!response_data_for_api){
+  if (!response_data_for_api) {
     return <Box>loading..</Box>;
   }
 
@@ -390,16 +392,6 @@ const StudyNoteDetail2 = (props: Props) => {
 
             {authorityForWritingNoteContents ? (
               <>
-                <Button
-                  size="sm"
-                  colorScheme="red"
-                  variant="outline"
-                  _hover={{ backgroundColor: "red.50" }}
-                  onClick={deleteContentsForChecked}
-                  leftIcon={<DeleteIcon />}
-                >
-                  Delete for check
-                </Button>
                 <ModalButtonForStudyNoteContentOrdering
                   study_note_pk={study_note_pk}
                   currentPage={currentPage}
@@ -543,7 +535,9 @@ const StudyNoteDetail2 = (props: Props) => {
                             <ModalButtonForUpdateCoworkerInfo
                               studyNotePk={study_note_pk}
                               currentPage={currentPage}
-                              setAuthorityForWritingNoteContents = {setAuthorityForWritingNoteContents}
+                              setAuthorityForWritingNoteContents={
+                                setAuthorityForWritingNoteContents
+                              }
                               coWritersInfoData={
                                 response_data_for_api
                                   ? response_data_for_api?.co_writers_for_approved
@@ -591,10 +585,8 @@ const StudyNoteDetail2 = (props: Props) => {
           position={"relative"}
           display={"flex"}
           justifyContent={"center"}
-          border={"2px solid gray"}
+          border={"5px solid gray"}
         >
-          {/* 여기야  */}
-
           <Box
             position={"absolute"}
             top={"10px"}
@@ -605,6 +597,40 @@ const StudyNoteDetail2 = (props: Props) => {
             flexDirection={"column"}
             border={"0px solid black"}
           >
+            {/* 1122 here */}
+            {authorityForWritingNoteContents ? (
+              <Box
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+                mb={2}
+                width={"98%"}
+                px={2}
+                border={"1px solid green"}
+              >
+                
+                <MasterCheckBox
+                  checkedIds={checkedValues}
+                  setCheckedIds={setCheckedValues}
+                  listData={response_data_for_api?.data_for_study_note_contents}
+                />
+
+                <Button
+                  size="sm"
+                  colorScheme="red"
+                  variant="outline"
+                  _hover={{ backgroundColor: "red.50" }}
+                  onClick={deleteContentsForChecked}
+                  leftIcon={<DeleteIcon />}
+                >
+                  Delete for check
+                </Button>
+                
+              </Box>
+            ) : (
+              ""
+            )}
+
             {response_data_for_api &&
             response_data_for_api.data_for_study_note_contents.length ? (
               response_data_for_api.data_for_study_note_contents.map(
@@ -684,7 +710,6 @@ const StudyNoteDetail2 = (props: Props) => {
             )}
           </Box>
         </Box>
-        
       </Box>
       {/* fix this */}
       <Box

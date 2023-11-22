@@ -57,7 +57,7 @@ function ListItem({
           gap={3}
         >
           <Checkbox isChecked={isChecked} onChange={handleCheckboxChange} />
-          <Text>{content_pk}</Text>
+          {/* <Text>{content_pk}</Text> */}
           <Text mr={4}>{order}</Text>
           <Text>{title}</Text>
         </Flex>
