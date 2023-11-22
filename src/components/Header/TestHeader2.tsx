@@ -116,8 +116,7 @@ const Header = () => {
 
   return (
     <>
-
-      <Counter />
+      {/* <Counter /> */}
     
       <Box
         display="grid"

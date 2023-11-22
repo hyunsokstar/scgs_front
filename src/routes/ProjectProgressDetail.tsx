@@ -27,15 +27,25 @@ import ChatStyleBoard from "../components/ChatStyleBoard";
 import UpdateFormForTaskDetail from "../components/Form/UpdateFormForTaskDetail";
 import ModalButtonForTaskIntegrationForSeletedOne from "../components/modal/ModalButtonForTaskIntegrationForSeletedOne";
 
+import { RootState } from "../store";
+import { useSelector, useDispatch } from "react-redux";
+import { initializeImageFileToUpload } from "../reducers/referImageUploadSlice";
+
 interface Props {}
 
 // 1122
 function ProjectProgressDetail({}: Props): ReactElement {
   const { taskPk } = useParams();
   const [taskUrls, setTaskUrls] = useState<any>([]);
+  const [fileToUpload, setFileToUpload] = useState<any>();
 
   const queryClient = useQueryClient();
   const toast = useToast();
+  const dispatch = useDispatch();
+
+  const { imageFileToUpload } = useSelector(
+    (state: RootState) => state.imageUpload
+  );
 
   const {
     data: taskData,
@@ -187,11 +197,12 @@ function ProjectProgressDetail({}: Props): ReactElement {
   const getImageUploadUrlMutation = useMutation(getUploadURL, {
     onSuccess: (result: any) => {
       console.log("result : ", result);
-      console.log("file to upload", imageFile);
+      console.log("file to upload 22 : ", imageFileToUpload);
+      // dispatch(increment());
 
       uploadImageMutation.mutate({
         uploadURL: result.uploadURL,
-        file: imageFile,
+        file: imageFileToUpload,
       });
     },
   });
@@ -200,7 +211,10 @@ function ProjectProgressDetail({}: Props): ReactElement {
     event.preventDefault();
     setIsUploadingForRefImage(true);
     imageFile = event.dataTransfer.files[0];
-    // setImageToUpload(imageFile)
+    dispatch(initializeImageFileToUpload(imageFile));
+    console.log("file to upload", imageFile);
+
+    getImageUploadUrlMutation.mutate();
 
     if (imageFile) {
       const imageUrl = URL.createObjectURL(imageFile);
@@ -210,8 +224,6 @@ function ProjectProgressDetail({}: Props): ReactElement {
         ...prevImages,
       ]);
     }
-
-    getImageUploadUrlMutation.mutate();
   };
 
   const deleteRefImageMutation = useMutation(
@@ -364,7 +376,7 @@ function ProjectProgressDetail({}: Props): ReactElement {
     return <Box>Loading</Box>;
   }
 
-  if (!taskData ) {
+  if (!taskData) {
     return <Box>Loading..</Box>;
   } else {
     return (

@@ -106,6 +106,8 @@ const ModalButtonForImageUploadForTestResult = ({ testPk }: IProps) => {
     e.preventDefault();
     setIsDragging(false);
 
+    console.log("e : ", e);
+
     // 0407 st1
     if (e.dataTransfer.files[0]) {
       setImageFileToUpload(e.dataTransfer.files[0]);
