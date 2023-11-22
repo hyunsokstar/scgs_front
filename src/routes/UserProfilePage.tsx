@@ -18,7 +18,7 @@ import {
   getProfile,
 } from "../apis/user_api";
 import { useQuery } from "@tanstack/react-query";
-import { IUser } from "../types";
+import { IResponseDataForLoginCheck } from "../types";
 import { createPhoto, getUploadURL, uploadImage } from "../api";
 import { createProfilePhoto } from "../apis/user_api";
 import ToggleButtonForUpdate from "../components/Button/ToggleButtonForUpdate";
@@ -33,10 +33,8 @@ const UserProfilePage = () => {
   const { userPk } = useParams();
   const queryClient = useQueryClient();
 
-  const { isLoading, data: userProfileData } = useQuery<IUser>(
-    [`user_profile2`, userPk],
-    getProfile
-  );
+  const { isLoading, data: userProfileData } =
+    useQuery<IResponseDataForLoginCheck>([`user_profile2`, userPk], getProfile);
   const [profileImage, setProfileImage] = useState<any>();
   const [fileToUpload, setFileToUpload] = useState<any>();
   const [originalImage, setOriginalImage] = useState<any>();

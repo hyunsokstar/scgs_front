@@ -95,7 +95,7 @@ const CardForChallengeList: React.FC<CardProps> = ({
 }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
-  const { userLoading, user: loginUser, isLoggedIn } = useUser();
+  const { userLoading, loginUser, isLoggedIn } = useUser();
 
   const formattedStartedAt = formatDateString(started_at);
   const formattedDeadline = formatDateString(deadline);

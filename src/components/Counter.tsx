@@ -18,7 +18,7 @@ function Counter() {
 
   return (
     <div>
-      <div>{isLoggedIn ? "true" :  "false"}</div>
+      {/* <div>{isLoggedIn ? "true" :  "false"}</div> */}
       <h1>Count: {count}</h1>
       <button onClick={() => dispatch(increment())}>+</button>
       <button onClick={() => dispatch(decrement())}>-</button>

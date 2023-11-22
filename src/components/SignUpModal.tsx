@@ -55,7 +55,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
         title: "login check success!",
         status: "success",
       });
-      queryClient.refetchQueries(["me"]);
+      queryClient.refetchQueries(["loginCheck"]);
       onClose();
     },
     onError: (error) => {
@@ -75,7 +75,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
       });
       onClose();
       // loginCheckMutation.mutate();
-      queryClient.refetchQueries(["me"]);
+      queryClient.refetchQueries(["loginCheck"]);
     },
     onError: (error: any) => {
       if (error) {

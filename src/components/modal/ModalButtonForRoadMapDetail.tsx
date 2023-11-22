@@ -29,7 +29,7 @@ const ModalButtonForRoadMapDetail: React.FC<
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
 
-  const { userLoading, isLoggedIn, user: loginUser } = useUser();
+  const { userLoading, isLoggedIn, loginUser } = useUser();
 
   return (
     <>

@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import useUser from "../lib/useUser";
 
 export default function useHostOnlyPage() {
-    const { user, userLoading } = useUser();
+    const { loginUser, userLoading } = useUser();
     const navigate = useNavigate();
     useEffect(() => {
-        if (!userLoading) {
-        }
-    }, [userLoading, user, navigate]);
+      if (!userLoading) {
+      }
+    }, [userLoading, loginUser, navigate]);
     return;
 }

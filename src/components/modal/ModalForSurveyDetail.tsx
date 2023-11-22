@@ -48,7 +48,7 @@ const ModalForSurveyDetail: React.FC<ModalForSurveyDetailProps> = ({
   const toast = useToast();
   const queryClient = useQueryClient();
 
-  const { userLoading, user: loginUser, isLoggedIn } = useUser();
+  const { userLoading, loginUser, isLoggedIn } = useUser();
   const [newOption, setNewOption] = useState("");
 
   const { isLoading: isLoadingForSurveyDetail, data: dataForForSurveyDetail } =

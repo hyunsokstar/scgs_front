@@ -38,7 +38,7 @@ const TableForEvalutationResultListForChallenge: React.FC<IProps> = ({
   challenge_results,
   challenge_comments,
 }: IProps) => {
-  const { userLoading, user: loginUser, isLoggedIn } = useUser();
+  const { userLoading, loginUser, isLoggedIn } = useUser();
 
   if (!evaluationResults || Object.keys(evaluationResults).length === 0) {
     return <div>No data for 평가 결과</div>;

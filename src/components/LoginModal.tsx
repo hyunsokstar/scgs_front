@@ -70,8 +70,12 @@ export default function LoginModal({
       setLogOutSuccess(false)
       setloginErrorExist("");
       onClose();
-      queryClient.refetchQueries(["me"]);
+      queryClient.refetchQueries(["loginCheck"]);
       dispatch(login(data));
+
+      console.log("data : ", data);
+      
+
     },
     onError: (error: any) => {
       console.log("error : ", error);

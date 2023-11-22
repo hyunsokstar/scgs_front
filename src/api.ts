@@ -78,10 +78,10 @@ export const getRoomReviews = ({ queryKey }: QueryFunctionContext) => {
 
 // export const getUsersList = () => instance.get(`users`).then((response) => response.data);
 
-export const getMe = () =>
-  instance.get(`users/me`).then((response) => {
-    // console.log("response2 : ", response);
-    
+export const loginCheck = () =>
+  instance.get(`users/login-check`).then((response) => {
+    console.log("response for loginCheck : ", response);
+
     return response.data;
   });
 

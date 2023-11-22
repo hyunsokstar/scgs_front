@@ -10,7 +10,7 @@ import useUser from "../lib/useUser";
 interface Props {}
 
 const RoadMapPage = (props: Props) => {
-  const { userLoading, user: loginUser, isLoggedIn } = useUser();
+  const { userLoading, loginUser, isLoggedIn } = useUser();
   const [pageNum, setPageNum] = useState(1);
 
   const {

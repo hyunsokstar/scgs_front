@@ -21,13 +21,13 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { createPhoto, getUploadURL, uploadImage } from "../../api";
 import { createProfilePhoto } from "../../apis/user_api";
-import { IUser } from "../../types";
+import { IResponseDataForLoginCheck } from "../../types";
 
 type Props = {
   // userPk: string | undefined;
   // profile_image: string | undefined;
   // setProfileImage?: any;
-  loginUser: IUser;
+  loginUser: IResponseDataForLoginCheck;
 };
 
 function ModalForUserProfileImageUpdate({ loginUser }: Props) {

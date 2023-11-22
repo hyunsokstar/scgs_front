@@ -86,7 +86,7 @@ export interface IReview {
     user: IRoomOwner;
 }
 
-export interface IUser {
+export interface IResponseDataForLoginCheck {
     pk:any;
     username: string;
     email: string;

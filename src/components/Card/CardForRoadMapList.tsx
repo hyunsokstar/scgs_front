@@ -15,7 +15,7 @@ interface IProps {
 const CardForRoadMapList = ({ listForRoadMap }: IProps) => {
   const toast = useToast();
   const queryClient = useQueryClient();
-  const { userLoading, user: loginUser, isLoggedIn } = useUser();
+  const { userLoading, loginUser, isLoggedIn } = useUser();
 
   // mutationForDeleteRoadMap
   const mutationForDeleteRoadMap = useMutation(

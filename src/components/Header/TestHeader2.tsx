@@ -29,6 +29,7 @@ import SignUpModal from "../SignUpModal";
 
 import { login, logout } from "../../reducers/userSlice";
 import { RootState } from "../../store";
+import Counter from "../Counter";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -48,9 +49,9 @@ const Header = () => {
     onOpen: onSignUpOpen,
   } = useDisclosure();
 
-  const { userLoading, user, isLoggedIn } = useUser();
+  const { userLoading, loginUser, isLoggedIn } = useUser();
   const [logoutSuccess, setLogoutSuccess] = useState(false);
-  const { loginUser } = useSelector((state: RootState) => state.loginInfo);
+  // const { loginUser } = useSelector((state: RootState) => state.loginInfo);
   const [isHomePage, setIsHomePage] = useState(false);
 
   // useEffect(()=> {
@@ -72,7 +73,7 @@ const Header = () => {
           dispatch(logout());
         }
 
-        queryClient.refetchQueries(["me"]);
+        queryClient.refetchQueries(["loginCheck"]);
 
         toast({
           title: "logout 성공!",
@@ -115,6 +116,9 @@ const Header = () => {
 
   return (
     <>
+
+      <Counter />
+    
       <Box
         display="grid"
         gridTemplateColumns={{
@@ -450,7 +454,7 @@ const Header = () => {
                   <MenuButton>
                     <Circle size="38px" bg="blue.500">
                       <Avatar
-                        src={user?.profile_image}
+                        src={loginUser?.profile_image}
                         height="34px"
                         width="34px"
                       />
@@ -458,7 +462,7 @@ const Header = () => {
                   </MenuButton>
 
                   <MenuList>
-                    <MenuItem onClick={() => goToUserProfile(user?.pk)}>
+                    <MenuItem onClick={() => goToUserProfile(loginUser?.pk)}>
                       유저 프로필
                     </MenuItem>
                     <MenuItem onClick={onLogOut}>Log out</MenuItem>

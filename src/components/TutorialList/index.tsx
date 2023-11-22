@@ -72,7 +72,7 @@ const settings = {
 };
 
 const TutorialList = () => {
-    const { userLoading, isLoggedIn, user } = useUser();
+    const { userLoading, isLoggedIn, loginUser } = useUser();
 
     const {
         isLoading: tutorialListDataLoading,
@@ -90,99 +90,148 @@ const TutorialList = () => {
 
 
     return (
-        <Box pl={"0px"} maxW={"100%"} height={560} bgColor={"gray.100"} border={"1px solid blue"}>
-
-            <Box border={"0px solid red"} >
-                {user && user.admin_level > 0 ? (
-                    <Box border={"px solid green"} width="97%" mx={"auto"} mr={0}>
-                        <ModalForCreateTutorial refetchTutorialList={refetchTutorialList} />
-                    </Box>
-                ) : (
-                    ""
-                )}
-
-                {!tutorialListDataLoading && tutorialListData && tutorialListData.length ? (
-                    <Slider {...settings}>
-                        {tutorialListData?.map((tutorial, index) => (
-                            <Box key={index} ml={"28px"} border={"0px solid red"}>
-                                {user && user.username && tutorial.author &&
-                                    user.username === tutorial.author.username ?
-                                    <Box ml={1.5} mb={0} border={"0px solid blue"} width={"82%"}>
-                                        <Flex justifyContent={"flex-end"}>
-                                            <ModalButtonForUpdateTutorialCard
-                                                tutorialPk={tutorial.pk}
-                                                refetchTutorialList={refetchTutorialList}
-                                            />
-                                            <DeleteButtonForTutorial
-                                                tutorialPk={tutorial.pk}
-                                                refetchTutorialList={refetchTutorialList}
-                                            />
-                                        </Flex>
-                                    </Box>
-                                    : <Box visibility="hidden" mt={4}>12</Box>
-                                }
-                                <Box borderWidth="0px" borderRadius="lg" width={"84%"} height={"100%"} border="0px solid green" >
-                                    <Box border={"1px solid black"}>
-
-                                        <Box border={"0px solid blue"}>
-                                            <Image
-                                                src={tutorial.tutorial_image ? tutorial.tutorial_image : alt_image}
-                                                alt={tutorial.tutorial_image}
-                                                objectFit={"fill"}
-                                                height={220}
-                                                width={1100}
-                                            />
-                                        </Box>
-                                        <Box border="0px solid black" height={200} position={"relative"}>
-                                            <Flex justify="space-between" align="center" p={0}>
-                                                <Text fontSize={"16px"} as="h3" fontWeight="bold">
-                                                    {tutorial.title}
-                                                </Text>
-                                                <Text fontWeight="bold" fontSize={"10px"}>{tutorial.price}</Text>
-                                            </Flex>
-                                            <Box textOverflow="ellipsis" border="0px solid black" mt={1} h={60}>
-                                                <CharacterLimit text={tutorial.description} maxLength={50} />
-                                            </Box>
-                                            <Box border={"0px solid black"} position={"absolute"} bottom={0} width={"100%"}>
-                                                <HStack p={1}>
-                                                    <LikeDislike
-                                                        likes={tutorial.like_count}
-                                                        dislikes={tutorial.unlike_count}
-                                                        tutorialPk={tutorial.pk}
-                                                        refetchTutorialList={refetchTutorialList}
-                                                    />
-                                                </HStack>
-                                                <HStack p={1}>
-                                                    <Box border={"0px solid blue"}>
-                                                        <HStack>
-                                                            <Box>
-                                                                teacher: {tutorial.teacher}
-                                                            </Box>
-                                                            <Box>
-
-                                                                writer: {tutorial.author && tutorial.author.username}
-                                                            </Box>
-                                                        </HStack>
-                                                    </Box>
-                                                    <Box>
-                                                        <Badge size="sm" ml={0} colorScheme="green">{tutorial.backend_framework_option}</Badge>
-                                                        <Badge size="sm" ml={1} colorScheme="red">{tutorial.frontend_framework_option}</Badge>
-                                                    </Box>
-                                                </HStack>
-                                            </Box>
-                                        </Box>
-                                    </Box>
-                                </Box>
-                            </Box>
-                        ))}
-                    </Slider>
-                ) : (
-                    <Box w="200px" h="100px" bg="blue.1000">
-                        "Loading"
-                    </Box>
-                )}
+      <Box
+        pl={"0px"}
+        maxW={"100%"}
+        height={560}
+        bgColor={"gray.100"}
+        border={"1px solid blue"}
+      >
+        <Box border={"0px solid red"}>
+          {loginUser && loginUser.admin_level > 0 ? (
+            <Box border={"px solid green"} width="97%" mx={"auto"} mr={0}>
+              <ModalForCreateTutorial
+                refetchTutorialList={refetchTutorialList}
+              />
             </Box>
-        </Box >
+          ) : (
+            ""
+          )}
+
+          {!tutorialListDataLoading &&
+          tutorialListData &&
+          tutorialListData.length ? (
+            <Slider {...settings}>
+              {tutorialListData?.map((tutorial, index) => (
+                <Box key={index} ml={"28px"} border={"0px solid red"}>
+                  {loginUser &&
+                  loginUser.username &&
+                  tutorial.author &&
+                  loginUser.username === tutorial.author.username ? (
+                    <Box
+                      ml={1.5}
+                      mb={0}
+                      border={"0px solid blue"}
+                      width={"82%"}
+                    >
+                      <Flex justifyContent={"flex-end"}>
+                        <ModalButtonForUpdateTutorialCard
+                          tutorialPk={tutorial.pk}
+                          refetchTutorialList={refetchTutorialList}
+                        />
+                        <DeleteButtonForTutorial
+                          tutorialPk={tutorial.pk}
+                          refetchTutorialList={refetchTutorialList}
+                        />
+                      </Flex>
+                    </Box>
+                  ) : (
+                    <Box visibility="hidden" mt={4}>
+                      12
+                    </Box>
+                  )}
+                  <Box
+                    borderWidth="0px"
+                    borderRadius="lg"
+                    width={"84%"}
+                    height={"100%"}
+                    border="0px solid green"
+                  >
+                    <Box border={"1px solid black"}>
+                      <Box border={"0px solid blue"}>
+                        <Image
+                          src={
+                            tutorial.tutorial_image
+                              ? tutorial.tutorial_image
+                              : alt_image
+                          }
+                          alt={tutorial.tutorial_image}
+                          objectFit={"fill"}
+                          height={220}
+                          width={1100}
+                        />
+                      </Box>
+                      <Box
+                        border="0px solid black"
+                        height={200}
+                        position={"relative"}
+                      >
+                        <Flex justify="space-between" align="center" p={0}>
+                          <Text fontSize={"16px"} as="h3" fontWeight="bold">
+                            {tutorial.title}
+                          </Text>
+                          <Text fontWeight="bold" fontSize={"10px"}>
+                            {tutorial.price}
+                          </Text>
+                        </Flex>
+                        <Box
+                          textOverflow="ellipsis"
+                          border="0px solid black"
+                          mt={1}
+                          h={60}
+                        >
+                          <CharacterLimit
+                            text={tutorial.description}
+                            maxLength={50}
+                          />
+                        </Box>
+                        <Box
+                          border={"0px solid black"}
+                          position={"absolute"}
+                          bottom={0}
+                          width={"100%"}
+                        >
+                          <HStack p={1}>
+                            <LikeDislike
+                              likes={tutorial.like_count}
+                              dislikes={tutorial.unlike_count}
+                              tutorialPk={tutorial.pk}
+                              refetchTutorialList={refetchTutorialList}
+                            />
+                          </HStack>
+                          <HStack p={1}>
+                            <Box border={"0px solid blue"}>
+                              <HStack>
+                                <Box>teacher: {tutorial.teacher}</Box>
+                                <Box>
+                                  writer:{" "}
+                                  {tutorial.author && tutorial.author.username}
+                                </Box>
+                              </HStack>
+                            </Box>
+                            <Box>
+                              <Badge size="sm" ml={0} colorScheme="green">
+                                {tutorial.backend_framework_option}
+                              </Badge>
+                              <Badge size="sm" ml={1} colorScheme="red">
+                                {tutorial.frontend_framework_option}
+                              </Badge>
+                            </Box>
+                          </HStack>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              ))}
+            </Slider>
+          ) : (
+            <Box w="200px" h="100px" bg="blue.1000">
+              "Loading"
+            </Box>
+          )}
+        </Box>
+      </Box>
     );
 };
 

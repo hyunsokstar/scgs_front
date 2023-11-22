@@ -27,7 +27,7 @@ function IconButtonForCopyNote({ studyNotePk, studyNoteTitle }: IProps) {
   const queryClient = useQueryClient();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { userLoading, user: loginUser, isLoggedIn } = useUser();
+  const { userLoading, loginUser, isLoggedIn } = useUser();
 
   const handleCopyClick = () => {
     setIsModalOpen(true);

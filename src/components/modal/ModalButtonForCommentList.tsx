@@ -45,7 +45,7 @@ const ModalButtonForCommentList: React.FC<ModalButtonForCommentListProps> = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [commentText, setCommentText] = useState<string>("");
 
-  const { userLoading, user: loginUser, isLoggedIn } = useUser();
+  const { userLoading, loginUser, isLoggedIn } = useUser();
 
   const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCommentText(event.target.value);

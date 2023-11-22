@@ -18,7 +18,7 @@ const ListForChallege: React.FC<ITypeForPropsForSuggestionList> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChallenge, setSelectedChange] =
     useState<ITypeForChallengeRow>();
-  const { userLoading, user: loginUser, isLoggedIn } = useUser();
+  const { userLoading, loginUser, isLoggedIn } = useUser();
 
   const handleTitleClick = (challenge: ITypeForChallengeRow) => {
     if (challenge && isLoggedIn) {

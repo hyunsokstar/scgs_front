@@ -99,10 +99,10 @@ const columns = [
 
 // 1122
 function UsersByDataGridPage({}: Props): ReactElement {
-  const { userLoading, isLoggedIn, user } = useUser();
+  const { userLoading, isLoggedIn, loginUser } = useUser();
   const [allCheckBoxSelected, setAllCheckBoxSelected] = useState(false);
 
-  console.log("user ::::::::::: ", user);
+  console.log("loginUser ::::::::::: ", loginUser);
 
   const toast = useToast();
 
@@ -157,7 +157,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
 
   // user save fix 0617
   const handleSaveRow = () => {
-    if (user && user?.admin_level > 3) {
+    if (loginUser && loginUser?.admin_level > 3) {
     } else {
       alert("admin_level이 3 이상이어야 저장 가능 합니다.");
       return;
@@ -243,7 +243,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
   );
 
   const deleteButtonForCheckHandler = () => {
-    if (user && user?.admin_level > 3) {
+    if (loginUser && loginUser?.admin_level > 3) {
     } else {
       alert("admin_level이 3 이상이어야 삭제 가능 합니다.");
       return;
@@ -378,7 +378,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
             명
           </Box>
           <Box display={"flex"} justifyContent={"space-betwwen"} gap={2}>
-            {user && user?.admin_level > 3 ? (
+            {loginUser && loginUser?.admin_level > 3 ? (
               <Box display={"flex"} gap={2}>
                 <Button
                   size="md"
@@ -435,7 +435,7 @@ function UsersByDataGridPage({}: Props): ReactElement {
             columns={columns.map((col) => ({
               ...col,
               isLoggedIn,
-              user,
+              loginUser,
               allCheckHandler,
             }))}
             rows={gridRows}
