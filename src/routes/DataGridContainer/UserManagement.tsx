@@ -1,21 +1,47 @@
 import React, { useState } from "react";
-import ReactDataGrid, { Column, RenderCellProps } from "react-data-grid";
-import { Box } from "@chakra-ui/react";
+import ReactDataGrid, {
+  Column,
+  RenderCellProps,
+  RenderEditCellProps,
+  RenderCheckboxProps,
+  RenderHeaderCellProps,
+  useRowSelection,
+} from "react-data-grid";
+import { Box, Input } from "@chakra-ui/react";
 
-function UserManagement() {
-  const SELECT_COLUMN_KEY = "select-row";
-
-  const [checkedIds, setCheckedIds] = useState<number[]>([]);
-
-  function SelectFormatter(props: RenderCellProps<any>) {
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-      console.log("props : ", props);
-      console.log("id : ", props.row.id);
-    }
-
-    return <input type="checkbox" {...props} onChange={handleChange} />;
+function SelectFormatter(props: RenderCellProps<any>) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("props : ", props);
+    console.log("id : ", props.row.id);
   }
 
+  return <input type="checkbox" {...props} onChange={handleChange} />;
+}
+
+function autoFocusAndSelect(input: HTMLInputElement | null) {
+  input?.focus();
+  input?.select();
+}
+
+function textEditor<TRow, TSummaryRow>({
+  row,
+  column,
+  onRowChange,
+  onClose,
+}: RenderEditCellProps<TRow, TSummaryRow>) {
+  return (
+    <Input
+      ref={autoFocusAndSelect}
+      value={row[column.key as keyof TRow] as unknown as string}
+      onChange={(event) =>
+        onRowChange({ ...row, [column.key]: event.target.value })
+      }
+      onBlur={() => onClose(true, false)}
+    />
+  );
+}
+
+function UserManagement() {
   const SelectColumn: Column<any, any> = {
     key: "selected",
     name: "",
@@ -25,9 +51,9 @@ function UserManagement() {
     resizable: false,
     sortable: false,
     frozen: true,
-    renderHeaderCell(props) {
-      return <input type="checkbox" />;
-    },
+    // renderHeaderCell(props) {
+    //   return <HeaderRenderer {...props} />;
+    // },
     renderCell(props: any) {
       return <SelectFormatter {...props} />;
     },
@@ -36,23 +62,26 @@ function UserManagement() {
   const columns = [
     SelectColumn,
     { key: "id", name: "ID" },
-    { key: "title", name: "Title"},
+    {
+      key: "title",
+      name: "title",
+      frozen: true,
+      renderEditCell: textEditor,
+      renderSummaryCell({ row }: any) {
+        return `${row.totalCount} records`;
+      },
+    },
   ];
 
-  const rows = [
-    { id: 0, title: "Example"},
+  const rowsData = [
+    { id: 0, title: "Example" },
     { id: 1, title: "Demo" },
   ];
 
-  return (
-    <ReactDataGrid
-      columns={columns}
-      rows={rows}
-      onRowsChange={() => {
-        console.log("change !");
-      }}
-    />
-  );
+  const [rows, setRows] = useState(rowsData);
+  const [checkedIds, setCheckedIds] = useState<number[]>([]);
+
+  return <ReactDataGrid columns={columns} rows={rows} onRowsChange={setRows} />;
 }
 
 export default UserManagement;
