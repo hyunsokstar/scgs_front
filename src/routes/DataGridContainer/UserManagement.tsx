@@ -8,7 +8,7 @@ import DataGrid, {
   RenderGroupCellProps,
   useRowSelection,
 } from "react-data-grid";
-import { Box, Input } from "@chakra-ui/react";
+import { Box, Button, Input } from "@chakra-ui/react";
 
 export function renderCheckbox({ onChange, ...props }: RenderCheckboxProps) {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -153,12 +153,12 @@ function UserManagement() {
     {
       key: "title",
       name: "title",
-      frozen: true,
       renderEditCell: textEditor,
-      renderSummaryCell({ row }: any) {
-        return `${row.totalCount} records`;
+      // frozen: true,
+      // renderSummaryCell({ row }: any) {
+        //   return `${row.totalCount} records`;
+        // },
       },
-    },
   ];
 
   const rowsData = [
@@ -171,6 +171,19 @@ function UserManagement() {
     (): ReadonlySet<number> => new Set()
   );
 
+  // 행 추가 함수
+  const addRow = () => {
+    const newRow = { id: rows.length, title: "New Row" }; // 새로운 행 데이터 생성
+    const updatedRows = [...rows, newRow]; // 기존 행에 새로운 행 추가
+    setRows(updatedRows); // 업데이트된 행으로 상태 업데이트
+  };
+
+  const deleteSelectedRows = () => {
+    const updatedRows = rows.filter((row) => !selectedRows.has(row.id)); // 선택되지 않은 행만 필터링
+    setRows(updatedRows); // 선택된 행이 제외된 업데이트된 행으로 상태 업데이트
+    setSelectedRows(new Set()); // 선택된 행 상태 초기화
+  };
+
   function rowKeyGetter(row: any) {
     return row.id;
   }
@@ -181,7 +194,11 @@ function UserManagement() {
   return (
     <Box>
       {/* 선택된 행의 ID들 출력 */}
-      <div>Selected Row IDs: {selectedRowIds.join(", ")}</div>
+      {/* <div>Selected Row IDs: {selectedRowIds.join(", ")}</div> */}
+      <Box display={"flex"} justifyContent={"flex-end"} p={2} gap={2}>
+        <Button onClick={addRow}>Add Row</Button>
+        <Button onClick={deleteSelectedRows}>Delete Selected Rows</Button>
+      </Box>
 
       <DataGrid
         rowKeyGetter={rowKeyGetter}
