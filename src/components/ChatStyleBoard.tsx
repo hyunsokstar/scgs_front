@@ -387,7 +387,7 @@ function ChatStyleBoard({
             colorScheme={"purple"}
             onClick={() => commentButtonHandler()}
           >
-            입력
+            입력 2
           </Button>
         </Box>
       </Box>

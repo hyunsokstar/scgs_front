@@ -78,7 +78,7 @@ export default function Home() {
           imageSrc={image_array[3].image_url}
           title={"팀 관리"}
           description={"팀 관리"}
-          linkTo="/data-grid/users"
+          linkTo="/user-management"
         /> */}
 
         {/* <SampleCard

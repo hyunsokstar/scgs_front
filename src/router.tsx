@@ -17,7 +17,6 @@ import TestPageForGayou from "./routes/TestPageForGayou";
 import ProjectAdminPage from "./routes/ProjectAdminPage";
 import TestPage from "./routes/TestPage/TestPage";
 import TestDataGridPage from "./routes/GridPage/TestDataGridPage";
-import UsersByDataGridPage from "./routes/DataGridContainer/UsersByDataGridPage";
 import ProjectProgressDetail from "./routes/ProjectProgressDetail";
 import MyTaskPage from "./routes/MyTaskPage";
 import KakaoLoginPage from "./routes/KaKaoLoginPage";
@@ -68,10 +67,10 @@ import SuggestionBoardPage from "./routes/SuggestionBoardPage";
 import FAQBoardPage from "./routes/FAQBoardPage";
 import ChallengesPage from "./routes/ChallengesPage";
 import SurveyPage from "./routes/SurveyPage";
-import LoadMapPage from "./routes/RoadMapPage";
 import RoadMapPage from "./routes/RoadMapPage";
 import ShortCutHubPage from "./routes/ShortCutHubPage";
 import ShortCutHubDetailPage from "./routes/ShortCutHubDetailPage";
+import UserManagement from "./routes/DataGridContainer/UserManagement";
 
 const router = createBrowserRouter([
   {
@@ -303,8 +302,8 @@ const router = createBrowserRouter([
         element: <ExtraTaskDetailPage />,
       },
       {
-        path: "data-grid/users",
-        element: <UsersByDataGridPage />,
+        path: "user-management",
+        element: <UserManagement />,
       },
       {
         path: "test-data-grid",

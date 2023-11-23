@@ -117,7 +117,7 @@ const Header = () => {
   return (
     <>
       {/* <Counter /> */}
-    
+
       <Box
         display="grid"
         gridTemplateColumns={{
@@ -239,7 +239,7 @@ const Header = () => {
           </Text>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/long-term-plan"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -252,7 +252,7 @@ const Header = () => {
           >
             long term plan
           </Text>
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
           to="/shortcuthub"
@@ -300,6 +300,21 @@ const Header = () => {
         </NavLink> */}
 
         <NavLink
+          to="/roadmap"
+          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
+        >
+          <Text
+            fontSize="xl"
+            fontWeight="medium"
+            mr={{ base: 0, md: "1rem" }}
+            cursor="pointer"
+            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
+          >
+            RoadMap
+          </Text>
+        </NavLink>
+
+        <NavLink
           to="/study-note"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -315,22 +330,6 @@ const Header = () => {
         </NavLink>
 
         <NavLink
-          to="/roadmap"
-          style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
-        >
-          <Text
-            fontSize="xl"
-            fontWeight="medium"
-            mr={{ base: 0, md: "1rem" }}
-            cursor="pointer"
-            _hover={{ color: "blue.100", transform: "scale(1.1)" }}
-          >
-            RoadMap
-          </Text>
-        </NavLink>
-
-
-        <NavLink
           to="/challenges"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
@@ -343,7 +342,7 @@ const Header = () => {
           >
             Challenges
           </Text>
-        </NavLink> 
+        </NavLink>
 
         <NavLink
           to="/survey"
@@ -388,10 +387,7 @@ const Header = () => {
           >
             FAQBoard
           </Text>
-        </NavLink> 
-
-
-        
+        </NavLink>
 
         {/* <NavLink
           to="/team-management"
@@ -408,8 +404,10 @@ const Header = () => {
           </Text>
         </NavLink>
 
+      */}
+
         <NavLink
-          to="/data-grid/users"
+          to="/user-management"
           style={({ isActive }) => (isActive ? activeStyle : unactiveStyle)}
         >
           <Text
@@ -421,7 +419,7 @@ const Header = () => {
           >
             Members Table
           </Text>
-        </NavLink> */}
+        </NavLink>
 
         <Box>
           {!isLoggedIn || logoutSuccess === true ? (
@@ -443,7 +441,6 @@ const Header = () => {
               />
 
               {/* 간단 회원 가입을 위한 아이콘 버튼 추가 */}
-
             </ButtonGroup>
           ) : (
             <Box>
