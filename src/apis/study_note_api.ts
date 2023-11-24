@@ -25,6 +25,27 @@ interface IParamterForMoveNoteContentsToSelectedPage {
 }
 
 // 1122
+export const apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy = async ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [_, studyNotePk] = queryKey;
+  console.log("studyNotePk at api : ", studyNotePk);
+
+  return await instance
+    .get(
+      `study-note/${studyNotePk}/GetMyNoteInfoAndTargetNoteInforToPartialCopy`,
+      {
+        // studyNotePk,
+      },
+      // {
+      //   headers: {
+      //     "X-CSRFToken": Cookie.get("csrftoken") || "",
+      //   },
+      // }
+    )
+    .then((response) => response.data);
+};
+
 export const apiForMoveNoteContentsToOtherPage = ({
   checkedIds,
   selectedPage,
@@ -47,7 +68,7 @@ export const apiForMoveNoteContentsToOtherPage = ({
     });
 };
 
-// apiForMyLikeNoteList
+// apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy
 export const apiForMyLikeNoteList = async ({
   queryKey,
 }: QueryFunctionContext) => {

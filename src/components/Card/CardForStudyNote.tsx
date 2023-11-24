@@ -621,7 +621,10 @@ const CardForStudyNote: React.FC<IProps> = ({
           </Box>
           <Box display={"flex"} gap={2}>
             {/* 1124 부분 복사 버튼 추가 */}
-            <ModalButtonForPartialCopyForStudyNote buttonText="partial copy" />
+            <ModalButtonForPartialCopyForStudyNote
+              buttonText="partial copy"
+              studyNotePk={pk}
+            />
 
             <IconButtonForCopyNote studyNotePk={pk} studyNoteTitle={title} />
           </Box>
