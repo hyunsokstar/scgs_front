@@ -35,11 +35,12 @@ import ModalButtonForClassRoomListForStudyNote from "../modal/ModalButtonForClas
 import ModalButtonForQnAList from "../modal/ModalButtonForQnAList";
 import ModalButtonForErrorReportForNote from "../modal/ModalButtonForErrorReportForNote";
 import { AiOutlineEye, AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { RiBookmarkLine, RiBookmarkFill } from 'react-icons/ri';
+import { RiBookmarkLine, RiBookmarkFill } from "react-icons/ri";
 
 import ModalButtonForFaqListForNote from "../modal/ModalButtonForFaqListForNote";
 import ModalButtonForNoteSuggestion from "../modal/ModalButtonForNoteSuggestion";
 import IconButtonForCopyNote from "../Button/IconButtonForCopyNote";
+import ModalButtonForPartialCopyForStudyNote from "../modal/ModalButtonForPartialCopyForStudyNote";
 
 interface IProps {
   pk: any;
@@ -63,7 +64,6 @@ interface IProps {
   total_count_for_bookmark: number;
   total_count_for_like: number;
 }
-
 
 // 1122
 const CardForStudyNote: React.FC<IProps> = ({
@@ -223,47 +223,44 @@ const CardForStudyNote: React.FC<IProps> = ({
 
   const bookMarkHandlerForPk = () => {
     if (!isLoggedIn) {
-      alert("로그인 해주세요")
+      alert("로그인 해주세요");
       return;
     } else {
-      mutationForBookMarkForNoteForPk.mutate({ noteId: pk })
+      mutationForBookMarkForNoteForPk.mutate({ noteId: pk });
     }
-  }
+  };
 
-  const mutationForLikeForNote = useMutation(
-    apiForLikeEventForStudyNote,
-    {
-      onMutate: () => {
-        console.log("mutation starting");
-      },
-      onSuccess: (data) => {
-        console.log("data : ", data);
+  const mutationForLikeForNote = useMutation(apiForLikeEventForStudyNote, {
+    onMutate: () => {
+      console.log("mutation starting");
+    },
+    onSuccess: (data) => {
+      console.log("data : ", data);
 
-        toast({
-          title: "book mark for note !!",
-          description: data.message,
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
+      toast({
+        title: "book mark for note !!",
+        description: data.message,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
 
-        queryClient.refetchQueries(["apiForgetStudyNoteList"]);
-      },
-      onError: (error: any) => {
-        console.log("error.response : ", error);
-        console.log("mutation has an error", error.response.data);
-      },
-    }
-  );
+      queryClient.refetchQueries(["apiForgetStudyNoteList"]);
+    },
+    onError: (error: any) => {
+      console.log("error.response : ", error);
+      console.log("mutation has an error", error.response.data);
+    },
+  });
 
   const likeHandlerForNote = () => {
     if (!isLoggedIn) {
-      alert("로그인 해주세요")
+      alert("로그인 해주세요");
       return;
     } else {
-      mutationForLikeForNote.mutate({ noteId: pk })
+      mutationForLikeForNote.mutate({ noteId: pk });
     }
-  }
+  };
 
   // 2244
   return (
@@ -588,10 +585,15 @@ const CardForStudyNote: React.FC<IProps> = ({
             <Text>2nd: {second_category}</Text>
           </Box>
           <Box display={"flex"} gap={3}>
-
             {/* 1115 */}
             <Button
-              leftIcon={is_bookmark_for_note ? <RiBookmarkFill color={"blue"} /> : <RiBookmarkLine color={"gray"} />} // 북마크 여부에 따라 아이콘 변경
+              leftIcon={
+                is_bookmark_for_note ? (
+                  <RiBookmarkFill color={"blue"} />
+                ) : (
+                  <RiBookmarkLine color={"gray"} />
+                )
+              } // 북마크 여부에 따라 아이콘 변경
               variant={"outline"}
               size={"md"}
               onClick={bookMarkHandlerForPk}
@@ -602,7 +604,13 @@ const CardForStudyNote: React.FC<IProps> = ({
             </Button>
 
             <Button
-              leftIcon={is_like_for_note ? <AiFillHeart color={"red"} /> : <AiOutlineHeart color={"gray"} />} // 북마크 여부에 따라 아이콘 변경
+              leftIcon={
+                is_like_for_note ? (
+                  <AiFillHeart color={"red"} />
+                ) : (
+                  <AiOutlineHeart color={"gray"} />
+                )
+              } // 북마크 여부에 따라 아이콘 변경
               variant={"outline"}
               size={"md"}
               onClick={likeHandlerForNote}
@@ -610,14 +618,16 @@ const CardForStudyNote: React.FC<IProps> = ({
             >
               {total_count_for_like}
             </Button>
-
           </Box>
-          <Box>
+          <Box display={"flex"} gap={2}>
+            {/* 1124 부분 복사 버튼 추가 */}
+            <ModalButtonForPartialCopyForStudyNote buttonText="partial copy" />
+
             <IconButtonForCopyNote studyNotePk={pk} studyNoteTitle={title} />
           </Box>
         </Box>
       </Box>
-    </Box >
+    </Box>
   );
 };
 
