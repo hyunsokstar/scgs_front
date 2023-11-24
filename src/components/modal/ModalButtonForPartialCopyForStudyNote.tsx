@@ -48,18 +48,23 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
     }
   };
 
-  const { data: dataForMyNoteAndSelectedNoteForPartialCopy, isLoading } = useQuery<any>(
-    ["myNoteInfo", studyNotePk], // 이 쿼리의 고유한 키
-    apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy, // API 함수
-    {
-      enabled: false, // 초기에는 비활성 상태로 설정
-    }
-  );
+  const { data: dataForMyNoteAndSelectedNoteForPartialCopy, isLoading } =
+    useQuery<any>(
+      ["myNoteInfo", studyNotePk], // 이 쿼리의 고유한 키
+      apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy, // API 함수
+      {
+        enabled: false, // 초기에는 비활성 상태로 설정
+      }
+    );
 
   console.log(
     "dataForMyNoteAndSelectedNoteForPartialCopy : ",
     dataForMyNoteAndSelectedNoteForPartialCopy
   );
+
+  // if (isLoading) {
+  //   return <Box> loading</Box>;
+  // }
 
   return (
     <>
@@ -80,10 +85,24 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
           <ModalBody>
             <HStack>
               {/* Left Side for my note*/}
-              <Box style={{ width: "50%" }}>Left Side For My Note</Box>
+              <Box style={{ width: "50%" }}>
+                my note data:
+                <br />
+                {dataForMyNoteAndSelectedNoteForPartialCopy
+                  ? dataForMyNoteAndSelectedNoteForPartialCopy.my_notes.map(
+                      (row: any) => {
+                        return <Box>{row.title}</Box>;
+                      }
+                    )
+                  : ""}
+              </Box>
               <Divider orientation="vertical" border={"1px solid black"} />
               {/* Right Side */}
-              <Box style={{ width: "50%" }}>Right Side For My Note</Box>
+              <Box style={{ width: "50%" }}>
+                target note title:
+                <br />
+                {dataForMyNoteAndSelectedNoteForPartialCopy?.target_note_title}
+              </Box>
             </HStack>
           </ModalBody>
         </ModalContent>
