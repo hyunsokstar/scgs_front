@@ -58,6 +58,40 @@ function SelectFormatter(props: RenderCellProps<unknown>) {
   );
 }
 
+// TextEditFormatter;
+function TextEditFormatter({ row, column, onRowChange, onClose }: any) {
+  const [isRowSelected, onRowSelectionChange] = useRowSelection();
+
+  return (
+    <Input
+      value={row[column.key] as unknown as string}
+      onChange={(event) => {
+        onRowChange({ ...row, [column.key]: event.target.value });
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          onRowSelectionChange({
+            type: "ROW",
+            row,
+            checked: true,
+            isShiftClick: false,
+          });
+        }
+      }}
+      onBlur={(event) => {
+        onRowChange({ ...row, [column.key]: event.target.value });
+        onRowSelectionChange({
+          type: "ROW",
+          row,
+          checked: true,
+          isShiftClick: false,
+        });
+        onClose(true, false);
+      }}
+    />
+  );
+}
+
 function autoFocusAndSelect(input: HTMLInputElement | null) {
   input?.focus();
   input?.select();
@@ -69,9 +103,10 @@ function textEditor<TRow, TSummaryRow>({
   onRowChange,
   onClose,
 }: RenderEditCellProps<TRow, TSummaryRow>) {
+  // const [isRowSelected, onRowSelectionChange] = useRowSelection();
+
   return (
     <Input
-      ref={autoFocusAndSelect}
       value={row[column.key as keyof TRow] as unknown as string}
       onChange={(event) =>
         onRowChange({ ...row, [column.key]: event.target.value })
@@ -146,6 +181,11 @@ const SelectColumn: Column<any, any> = {
   // },
 };
 
+interface IUserRow {
+  id: number;
+  title: string;
+}
+
 function UserManagement() {
   const columns = [
     SelectColumn,
@@ -153,20 +193,21 @@ function UserManagement() {
     {
       key: "title",
       name: "title",
-      renderEditCell: textEditor,
-      // frozen: true,
-      // renderSummaryCell({ row }: any) {
-        //   return `${row.totalCount} records`;
-        // },
+
+      renderEditCell(props: any) {
+        return <TextEditFormatter {...props} />;
       },
+
+      // renderEditCell: textEditor,
+    },
   ];
 
-  const rowsData = [
+  const rowsData: IUserRow[] = [
     { id: 0, title: "Example" },
     { id: 1, title: "Demo" },
   ];
 
-  const [rows, setRows] = useState(rowsData);
+  const [rows, setRows] = useState<IUserRow[]>(rowsData);
   const [selectedRows, setSelectedRows] = useState(
     (): ReadonlySet<number> => new Set()
   );
@@ -189,12 +230,15 @@ function UserManagement() {
   }
 
   // 선택된 행의 ID를 배열로 얻기 위해
-  const selectedRowIds = Array.from(selectedRows);
+  // const selectedRowIds = Array.from(selectedRows);
+
+  const handleRowChange = (updatedRows: IUserRow[]) => {
+    setRows(updatedRows);
+  };
 
   return (
     <Box>
       {/* 선택된 행의 ID들 출력 */}
-      {/* <div>Selected Row IDs: {selectedRowIds.join(", ")}</div> */}
       <Box display={"flex"} justifyContent={"flex-end"} p={2} gap={2}>
         <Button onClick={addRow}>Add Row</Button>
         <Button onClick={deleteSelectedRows}>Delete Selected Rows</Button>
@@ -206,7 +250,7 @@ function UserManagement() {
         rows={rows}
         selectedRows={selectedRows}
         onSelectedRowsChange={setSelectedRows}
-        onRowsChange={setRows}
+        onRowsChange={handleRowChange}
       />
     </Box>
   );
