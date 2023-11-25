@@ -64,6 +64,16 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
     page_numbers_for_selected_my_note: [],
   });
 
+  // 1125
+  const [
+    checkedPageNumbersForDestination,
+    setCheckedPageNumbersForDestination,
+  ] = useState<number[]>([]);
+
+  const [checkedPageNumbersToCopy, setCheckedNumbersToCopy] = useState<
+    number[]
+  >([]);
+
   const { data: dataForMyNoteAndSelectedNoteForPartialCopy, isLoading } =
     useQuery<IResponseDataTypeForMyNoteInfoAndTargetNoteInforToPartialCopy>(
       ["myNoteInfo", pageNum, studyNotePk], // 이 쿼리의 고유한 키
@@ -123,8 +133,10 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
       title_for_my_selected_note: "",
       page_numbers_for_selected_my_note: [],
     });
-    queryClient.invalidateQueries(["myNoteInfo", studyNotePk]);
-  }, [queryClient, studyNotePk]);
+    setCheckedPageNumbersForDestination([]);
+    setCheckedNumbersToCopy([]);
+    queryClient.invalidateQueries(["myNoteInfo", pageNum, studyNotePk]);
+  }, [selectedMyNoteInfoForPartialCopy]);
 
   useEffect(() => {
     if (dataForMyNoteAndSelectedNoteForPartialCopy) {
@@ -136,6 +148,53 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
     handleBackButtonClick,
   ]);
 
+  const handleDestinationNumberClick = (pageNum: any) => {
+    const isSelected = checkedPageNumbersForDestination.includes(pageNum);
+
+    if (checkedPageNumbersForDestination.length > 0) {
+      const maxSelectedNumber = Math.max(...checkedPageNumbersForDestination);
+      if (pageNum > maxSelectedNumber + 1) {
+        // 추가하려는 번호가 연속되지 않은 경우 알람 표시
+        alert("연속된 번호를 선택하세요!");
+        return;
+      }
+    }
+
+    if (isSelected) {
+      setCheckedPageNumbersForDestination((prevIds) =>
+        prevIds.filter((id) => id !== pageNum)
+      );
+    } else {
+      setCheckedPageNumbersForDestination((prevIds) => [...prevIds, pageNum]);
+    }
+  };
+
+  // handleCopyTargetNumberClick;
+  const handleCopyTargetNumberClick = (pageNum: any) => {
+    // 이미 선택된 번호인지 확인합니다.
+    const isSelected = checkedPageNumbersToCopy.includes(pageNum);
+
+    if (checkedPageNumbersToCopy.length > 0) {
+      const maxSelectedNumber = Math.max(...checkedPageNumbersToCopy);
+      if (pageNum > maxSelectedNumber + 1) {
+        // 추가하려는 번호가 연속되지 않은 경우 알람 표시
+        alert("연속된 번호를 선택하세요!");
+        return;
+      }
+    }
+
+    // 이미 선택된 번호라면 선택 해제를 위해 배열에서 제거합니다.
+    if (isSelected) {
+      setCheckedNumbersToCopy((prevIds) =>
+        prevIds.filter((id) => id !== pageNum)
+      );
+    } else {
+      // 선택되지 않은 번호라면 해당 번호를 추가합니다.
+      setCheckedNumbersToCopy((prevIds) => [...prevIds, pageNum]);
+    }
+  };
+
+  // 2244
   return (
     <>
       <Button
@@ -161,7 +220,7 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                 {myNoteList.length > 0 &&
                 selectedMyNoteInfoForPartialCopy.title_for_my_selected_note ===
                   "" ? (
-                  <Table>
+                  <Table size={"sm"}>
                     <Thead>
                       <Tr>
                         <Th>체크</Th>
@@ -191,7 +250,9 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                 ) : (
                   "no data"
                 )}
-                {dataForMyNoteAndSelectedNoteForPartialCopy ? (
+                {dataForMyNoteAndSelectedNoteForPartialCopy &&
+                selectedMyNoteInfoForPartialCopy.title_for_my_selected_note ===
+                  "" ? (
                   <PaginationComponent
                     current_page_num={pageNum}
                     total_page_num={
@@ -222,6 +283,12 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                         back
                       </Button>
                     </Box>
+                    {/* 1125 노트 페이지 선택 */}
+                    pageNumbers for destination:
+                    {checkedPageNumbersForDestination.length} 개
+                    {/* {checkedPageNumbersForDestination.map((pageNum) => {
+                      return <span>{pageNum}</span>;
+                    })} */}
                     <Box
                       style={{
                         display: "grid",
@@ -234,6 +301,10 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                           selectedMyNoteInfoForPartialCopy.page_numbers_for_selected_my_note.includes(
                             pageNum
                           );
+
+                        const isChecked =
+                          checkedPageNumbersForDestination.includes(pageNum);
+
                         return (
                           <Button
                             key={pageNum}
@@ -242,7 +313,11 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                                 ? "3px solid lightgreen"
                                 : "none",
                               margin: "2px",
+                              backgroundColor: isChecked ? "yellow" : "initial", // 선택된 번호의 배경색을 변경합니다.
                             }}
+                            onClick={() =>
+                              handleDestinationNumberClick(pageNum)
+                            } // 번호를 클릭할 때 해당 번호를 전달합니다.
                           >
                             {pageNum}
                           </Button>
@@ -261,21 +336,84 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                 display={"flex"}
                 justifyContent={"center"}
                 alignContent={"center"}
+                flexDirection={"column"}
+                gap={2}
               >
-                <Button>
-                  <FaArrowCircleLeft /> &nbsp;&nbsp;
-                  <Text>Copy</Text>
-                </Button>
+                {checkedPageNumbersForDestination.length ===
+                  checkedPageNumbersToCopy.length &&
+                checkedPageNumbersForDestination.length !== 0 ? (
+                  <>
+                    <Button
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        width: "120px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          width: "100px",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <FaArrowCircleLeft />
+                        <Text>Replace</Text>
+                      </span>
+                    </Button>
+
+                    <Button
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        width: "120px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          width: "100px",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <FaArrowCircleLeft />
+                        <Text>Copy !!</Text>
+                      </span>
+                    </Button>
+                  </>
+                ) : (
+                  <Box
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      width: "120px",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    select page !!
+                  </Box>
+                )}
               </Box>
 
               {/* Right Side */}
               <Box style={{ width: "50%" }}>
                 <Box>
-                  <Text>target note title:</Text>
-                  {
-                    dataForMyNoteAndSelectedNoteForPartialCopy?.target_note_title
-                  }
+                  <Text>
+                    target note title:
+                    {
+                      dataForMyNoteAndSelectedNoteForPartialCopy?.target_note_title
+                    }
+                  </Text>
                 </Box>
+                {/* 1125 hyun */}
+                {/* checkedPageNumbersToCopy */}
+                pageNumbers to copy:
+                {checkedPageNumbersToCopy.length} 개
+                {/* {checkedPageNumbersToCopy.map((pageNum) => {
+                      return <span>{pageNum}</span>;
+                    })} */}
                 <Box
                   style={{
                     display: "grid",
@@ -288,13 +426,19 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                       dataForMyNoteAndSelectedNoteForPartialCopy?.target_note_page_numbers.includes(
                         pageNum
                       );
+
+                    const isChecked =
+                      checkedPageNumbersToCopy.includes(pageNum);
+
                     return (
                       <Button
                         key={pageNum}
                         style={{
                           border: isSelected ? "3px solid purple" : "none",
                           margin: "2px",
+                          backgroundColor: isChecked ? "lightblue" : "initial", // 선택된 번호의 배경색을 변경합니다.
                         }}
+                        onClick={() => handleCopyTargetNumberClick(pageNum)} // 번호를 클릭할 때 해당 번호를 전달합니다.
                       >
                         {pageNum}
                       </Button>
