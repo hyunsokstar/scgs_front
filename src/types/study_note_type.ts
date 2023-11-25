@@ -336,6 +336,8 @@ export interface IMyNoteRowTypeForPartialCopy {
 
 export interface IResponseDataTypeForMyNoteInfoAndTargetNoteInforToPartialCopy {
   my_note_list: IMyNoteRowTypeForPartialCopy[];
+  totalCount: number;
+  perPage: number;
   target_note_title: string;
   target_note_page_numbers: number[];
   message: string;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   Button,
   Modal,
@@ -23,7 +23,7 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy,
+  apiForGetMyNoteInfoAndTargetNoteInfoForToPartialCopy,
   apiForSelectedNoteInfoAndPageNumberList,
 } from "../../apis/study_note_api";
 import { RootState } from "../../store";
@@ -33,6 +33,7 @@ import {
   IResponseDataTypeForMyNoteInfoAndTargetNoteInforToPartialCopy,
   responseDataTypeForSelectedMyNoteInfoForPartialCopy,
 } from "../../types/study_note_type";
+import PaginationComponent from "../PaginationComponent";
 
 interface IProps {
   buttonText: string;
@@ -43,18 +44,18 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
   buttonText,
   studyNotePk,
 }) => {
-  const queryClient = useQueryClient();
-  const [isOpen, setIsOpen] = useState(false);
-  const handleClose = () => setIsOpen(false);
-
-  // 로그인 체크
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );
+  const queryClient = useQueryClient();
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClose = () => setIsOpen(false);
+  const [pageNum, setPageNum] = useState(1);
 
   const [myNoteList, setmyNoteList] = useState<IMyNoteRowTypeForPartialCopy[]>(
     []
   );
+
   const [
     selectedMyNoteInfoForPartialCopy,
     setSelectedMyNoteInfoForPartialCopy,
@@ -63,24 +64,10 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
     page_numbers_for_selected_my_note: [],
   });
 
-  const handleOpen = () => {
-    if (isLoggedIn) {
-      setIsOpen(true);
-      queryClient.prefetchQuery(
-        ["myNoteInfo", studyNotePk],
-        apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy
-      );
-    } else {
-      console.log("로그인 해주세요");
-      alert("로그인 해주세요 !");
-      return;
-    }
-  };
-
   const { data: dataForMyNoteAndSelectedNoteForPartialCopy, isLoading } =
     useQuery<IResponseDataTypeForMyNoteInfoAndTargetNoteInforToPartialCopy>(
-      ["myNoteInfo", studyNotePk], // 이 쿼리의 고유한 키
-      apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy, // API 함수
+      ["myNoteInfo", pageNum, studyNotePk], // 이 쿼리의 고유한 키
+      apiForGetMyNoteInfoAndTargetNoteInfoForToPartialCopy, // API 함수
       {
         enabled: false, // 초기에는 비활성 상태로 설정
       }
@@ -111,19 +98,33 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
     }
   );
 
+  const handleOpen = () => {
+    if (isLoggedIn) {
+      setIsOpen(true);
+      queryClient.prefetchQuery(
+        ["myNoteInfo", pageNum, studyNotePk],
+        apiForGetMyNoteInfoAndTargetNoteInfoForToPartialCopy
+      );
+    } else {
+      console.log("로그인 해주세요");
+      alert("로그인 해주세요 !");
+      return;
+    }
+  };
+
   const selectMyNote = (myNoteId: any) => {
     // alert(myNoteId);
     setmyNoteList([]);
     mutationForGetSelectedNoteInfoAndPageNumberList.mutate({ myNoteId });
   };
 
-  const handleBackButtonClick = () => {
+  const handleBackButtonClick = useCallback(() => {
     setSelectedMyNoteInfoForPartialCopy({
       title_for_my_selected_note: "",
       page_numbers_for_selected_my_note: [],
     });
     queryClient.invalidateQueries(["myNoteInfo", studyNotePk]);
-  };
+  }, [queryClient, studyNotePk]);
 
   useEffect(() => {
     if (dataForMyNoteAndSelectedNoteForPartialCopy) {
@@ -187,6 +188,20 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                         ))}
                     </Tbody>
                   </Table>
+                ) : (
+                  "no data"
+                )}
+                {dataForMyNoteAndSelectedNoteForPartialCopy ? (
+                  <PaginationComponent
+                    current_page_num={pageNum}
+                    total_page_num={
+                      dataForMyNoteAndSelectedNoteForPartialCopy.totalCount
+                    }
+                    task_number_for_one_page={
+                      dataForMyNoteAndSelectedNoteForPartialCopy.perPage
+                    }
+                    setCurrentPageNum={setPageNum}
+                  />
                 ) : (
                   ""
                 )}

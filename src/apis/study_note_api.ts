@@ -42,17 +42,17 @@ export const apiForSelectedNoteInfoAndPageNumberList = ({ myNoteId }: any) => {
     );
 };
 
-export const apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy = async ({
+export const apiForGetMyNoteInfoAndTargetNoteInfoForToPartialCopy = async ({
   queryKey,
 }: QueryFunctionContext) => {
-  const [_, studyNotePk] = queryKey;
+  const [_, pageNum, studyNotePk] = queryKey;
   console.log("studyNotePk at api : ", studyNotePk);
 
   return await instance
     .get(
       `study-note/${studyNotePk}/GetMyNoteInfoAndTargetNoteInforToPartialCopy`,
       {
-        // studyNotePk,
+        params: { pageNum },
       }
       // {
       //   headers: {
