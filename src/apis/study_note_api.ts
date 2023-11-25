@@ -26,6 +26,30 @@ interface IParamterForMoveNoteContentsToSelectedPage {
 }
 
 // 1122
+// apiForPageToPageContentReplacement
+export const apiForPageToPageContentReplacement = ({
+  selectedMyNoteId,
+  checkedPageNumbersForDestination,
+  copyTargetNoteId,
+  checkedPageNumbersToCopy,
+}: any) =>
+  instance
+    .post(
+      `/study-note/content/PageToPageContentReplacement`,
+      {
+        selectedMyNoteId,
+        checkedPageNumbersForDestination,
+        copyTargetNoteId,
+        checkedPageNumbersToCopy,
+      },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
+
 // apiForSelectedNoteInfoAndPageNumberList;
 export const apiForSelectedNoteInfoAndPageNumberList = ({ myNoteId }: any) => {
   // console.log("my note id for apiForSelectedNoteInfoAndPageNumberList");

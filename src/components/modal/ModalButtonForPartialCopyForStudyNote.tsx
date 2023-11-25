@@ -18,12 +18,14 @@ import {
   Th,
   Td,
   Checkbox,
+  useToast
 } from "@chakra-ui/react";
 import { FaArrowCircleLeft } from "react-icons/fa";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   apiForGetMyNoteInfoAndTargetNoteInfoForToPartialCopy,
+  apiForPageToPageContentReplacement,
   apiForSelectedNoteInfoAndPageNumberList,
 } from "../../apis/study_note_api";
 import { RootState } from "../../store";
@@ -48,9 +50,11 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
     (state: RootState) => state.loginInfo
   );
   const queryClient = useQueryClient();
+  const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => setIsOpen(false);
   const [pageNum, setPageNum] = useState(1);
+  const [selectedMyNoteId, setSelectedMyNoteId] = useState<number>();
 
   const [myNoteList, setmyNoteList] = useState<IMyNoteRowTypeForPartialCopy[]>(
     []
@@ -64,7 +68,6 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
     page_numbers_for_selected_my_note: [],
   });
 
-  // 1125
   const [
     checkedPageNumbersForDestination,
     setCheckedPageNumbersForDestination,
@@ -79,7 +82,7 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
       ["myNoteInfo", pageNum, studyNotePk], // 이 쿼리의 고유한 키
       apiForGetMyNoteInfoAndTargetNoteInfoForToPartialCopy, // API 함수
       {
-        enabled: false, // 초기에는 비활성 상태로 설정
+        enabled: true, // 초기에는 비활성 상태로 설정
       }
     );
 
@@ -125,6 +128,7 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
   const selectMyNote = (myNoteId: any) => {
     // alert(myNoteId);
     setmyNoteList([]);
+    setSelectedMyNoteId(myNoteId);
     mutationForGetSelectedNoteInfoAndPageNumberList.mutate({ myNoteId });
   };
 
@@ -194,6 +198,54 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
     }
   };
 
+  // mutationForPageToPageContentReplacement;
+  const mutationForPageToPageContentReplacement = useMutation(
+    apiForPageToPageContentReplacement,
+    {
+      onMutate: () => {
+        console.log("mutation starting");
+      },
+      onSuccess: (result) => {
+        console.log("data : ", result);
+
+        toast({
+          title: "page to page replacement success",
+          description: result.message,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        queryClient.refetchQueries([
+          "apiForGetMyNoteInfoAndTargetNoteInfoForToPartialCopy",
+        ]);
+      },
+      onError: (error: any) => {
+        console.log("error.response : ", error.response);
+        console.log("mutation has an error", error.response.data);
+      },
+    }
+  );
+
+  const replaceButtonHandler = () => {
+    if (
+      checkedPageNumbersForDestination.length === 0 ||
+      checkedPageNumbersToCopy.length === 0
+    ) {
+      // 선택된 페이지가 없을 때 알림 표시 후 리턴
+      alert("하나 이상의 페이지를 선택해주세요!");
+      return;
+    }
+
+    alert("replace button click");
+
+    mutationForPageToPageContentReplacement.mutate({
+      selectedMyNoteId: selectedMyNoteId,
+      checkedPageNumbersForDestination: checkedPageNumbersForDestination,
+      copyTargetNoteId: studyNotePk,
+      checkedPageNumbersToCopy: checkedPageNumbersToCopy
+    });
+  };
+
   // 2244
   return (
     <>
@@ -209,7 +261,7 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
       <Modal isOpen={isOpen} onClose={handleClose} size="7xl">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Page to Page Copy</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <HStack>
@@ -217,16 +269,17 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
               <Box style={{ width: "50%" }}>
                 my note data:
                 <br />
+                선택한 note id: {selectedMyNoteId}
                 {myNoteList.length > 0 &&
                 selectedMyNoteInfoForPartialCopy.title_for_my_selected_note ===
                   "" ? (
                   <Table size={"sm"}>
                     <Thead>
                       <Tr>
-                        <Th>체크</Th>
-                        <Th>제목</Th>
-                        <Th>설명</Th>
-                        <Th>선택</Th>
+                        <Th style={{ width: "10%" }}>체크</Th>
+                        <Th style={{ width: "40%" }}>제목</Th>
+                        <Th style={{ width: "40%" }}>설명</Th>
+                        <Th style={{ width: "10%" }}>선택</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
@@ -250,9 +303,12 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                 ) : (
                   "no data"
                 )}
+                {/* {pageNum} */}
+                {/* {dataForMyNoteAndSelectedNoteForPartialCopy || myNoteList
+                  ? "yes"
+                  : "no"} */}
                 {dataForMyNoteAndSelectedNoteForPartialCopy &&
-                selectedMyNoteInfoForPartialCopy.title_for_my_selected_note ===
-                  "" ? (
+                selectedMyNoteId === undefined ? (
                   <PaginationComponent
                     current_page_num={pageNum}
                     total_page_num={
@@ -264,7 +320,7 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                     setCurrentPageNum={setPageNum}
                   />
                 ) : (
-                  ""
+                  "??"
                 )}
                 {selectedMyNoteInfoForPartialCopy.title_for_my_selected_note !==
                 "" ? (
@@ -283,7 +339,6 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                         back
                       </Button>
                     </Box>
-                    {/* 1125 노트 페이지 선택 */}
                     pageNumbers for destination:
                     {checkedPageNumbersForDestination.length} 개
                     {/* {checkedPageNumbersForDestination.map((pageNum) => {
@@ -349,8 +404,9 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                         alignItems: "center",
                         width: "120px",
                       }}
+                      onClick={replaceButtonHandler}
                     >
-                      <span
+                      <Box
                         style={{
                           display: "flex",
                           alignItems: "center",
@@ -360,7 +416,7 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                       >
                         <FaArrowCircleLeft />
                         <Text>Replace</Text>
-                      </span>
+                      </Box>
                     </Button>
 
                     <Button
@@ -370,7 +426,7 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                         width: "120px",
                       }}
                     >
-                      <span
+                      <Box
                         style={{
                           display: "flex",
                           alignItems: "center",
@@ -380,7 +436,7 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                       >
                         <FaArrowCircleLeft />
                         <Text>Copy !!</Text>
-                      </span>
+                      </Box>
                     </Button>
                   </>
                 ) : (
@@ -407,7 +463,6 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
                     }
                   </Text>
                 </Box>
-                {/* 1125 hyun */}
                 {/* checkedPageNumbersToCopy */}
                 pageNumbers to copy:
                 {checkedPageNumbersToCopy.length} 개
