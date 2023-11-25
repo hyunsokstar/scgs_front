@@ -12,6 +12,7 @@ import {
   typeForParameterForApiForCopySelectedNotesToMyNote,
   IFormTypeForCreateYoutubeContentForNote,
   FormTypeForCreateCommentForNote,
+  responseDataTypeForSelectedMyNoteInfoForPartialCopy,
 } from "../types/study_note_type";
 
 const instance = axios.create({
@@ -25,6 +26,22 @@ interface IParamterForMoveNoteContentsToSelectedPage {
 }
 
 // 1122
+// apiForSelectedNoteInfoAndPageNumberList;
+export const apiForSelectedNoteInfoAndPageNumberList = ({ myNoteId }: any) => {
+  // console.log("my note id for apiForSelectedNoteInfoAndPageNumberList");
+
+  return instance
+    .get(`/study-note/${myNoteId}/getSelectedNoteInfoAndPageNumberList`, {})
+    .then(
+      (
+        response
+      ): Promise<responseDataTypeForSelectedMyNoteInfoForPartialCopy> => {
+        console.log("response : ", response);
+        return response.data;
+      }
+    );
+};
+
 export const apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy = async ({
   queryKey,
 }: QueryFunctionContext) => {
@@ -36,7 +53,7 @@ export const apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy = async ({
       `study-note/${studyNotePk}/GetMyNoteInfoAndTargetNoteInforToPartialCopy`,
       {
         // studyNotePk,
-      },
+      }
       // {
       //   headers: {
       //     "X-CSRFToken": Cookie.get("csrftoken") || "",

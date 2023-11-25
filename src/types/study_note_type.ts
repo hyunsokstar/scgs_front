@@ -296,7 +296,6 @@ export interface DataTypeForRoadMapContentListForRegister {
   road_map_contents: RowTypeForRoadMapContentForRegister[];
 }
 
-
 export interface IRowForBookMark {
   user: UserProfileImage;
   study_note: {
@@ -307,7 +306,7 @@ export interface IRowForBookMark {
     created_at: string;
     first_category: string;
     second_category: string;
-  }
+  };
   bookmarked_at: string;
 }
 
@@ -321,6 +320,28 @@ export interface IRowForLike {
     created_at: string;
     first_category: string;
     second_category: string;
-  }
+  };
   liked_at: string;
+}
+
+export interface IMyNoteRowTypeForPartialCopy {
+  id: 9;
+  title: string;
+  description: string;
+  writer: UserProfileImage;
+  created_at: string;
+  first_category: string;
+  second_category: string;
+}
+
+export interface IResponseDataTypeForMyNoteInfoAndTargetNoteInforToPartialCopy {
+  my_note_list: IMyNoteRowTypeForPartialCopy[];
+  target_note_title: string;
+  target_note_page_numbers: number[];
+  message: string;
+}
+
+export interface responseDataTypeForSelectedMyNoteInfoForPartialCopy {
+  title_for_my_selected_note: string;
+  page_numbers_for_selected_my_note: number[];
 }

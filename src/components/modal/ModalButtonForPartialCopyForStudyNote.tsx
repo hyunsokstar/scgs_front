@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Modal,
@@ -10,12 +10,29 @@ import {
   HStack,
   Divider,
   Box,
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Checkbox,
 } from "@chakra-ui/react";
+import { FaArrowCircleLeft } from "react-icons/fa";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy } from "../../apis/study_note_api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy,
+  apiForSelectedNoteInfoAndPageNumberList,
+} from "../../apis/study_note_api";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
+import {
+  IMyNoteRowTypeForPartialCopy,
+  IResponseDataTypeForMyNoteInfoAndTargetNoteInforToPartialCopy,
+  responseDataTypeForSelectedMyNoteInfoForPartialCopy,
+} from "../../types/study_note_type";
 
 interface IProps {
   buttonText: string;
@@ -30,9 +47,21 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => setIsOpen(false);
 
+  // 로그인 체크
   const { loginUser, isLoggedIn } = useSelector(
     (state: RootState) => state.loginInfo
   );
+
+  const [myNoteList, setmyNoteList] = useState<IMyNoteRowTypeForPartialCopy[]>(
+    []
+  );
+  const [
+    selectedMyNoteInfoForPartialCopy,
+    setSelectedMyNoteInfoForPartialCopy,
+  ] = useState<responseDataTypeForSelectedMyNoteInfoForPartialCopy>({
+    title_for_my_selected_note: "",
+    page_numbers_for_selected_my_note: [],
+  });
 
   const handleOpen = () => {
     if (isLoggedIn) {
@@ -49,7 +78,7 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
   };
 
   const { data: dataForMyNoteAndSelectedNoteForPartialCopy, isLoading } =
-    useQuery<any>(
+    useQuery<IResponseDataTypeForMyNoteInfoAndTargetNoteInforToPartialCopy>(
       ["myNoteInfo", studyNotePk], // 이 쿼리의 고유한 키
       apiForGetMyNoteInfoAndTargetNoteInforToPartialCopy, // API 함수
       {
@@ -62,9 +91,49 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
     dataForMyNoteAndSelectedNoteForPartialCopy
   );
 
-  // if (isLoading) {
-  //   return <Box> loading</Box>;
-  // }
+  // useMutation 훅을 이용한 API 요청
+  const mutationForGetSelectedNoteInfoAndPageNumberList = useMutation(
+    apiForSelectedNoteInfoAndPageNumberList,
+    {
+      onSuccess: (
+        data: responseDataTypeForSelectedMyNoteInfoForPartialCopy
+      ) => {
+        // 성공적으로 데이터를 가져왔을 때 수행할 작업
+        // 예: 가져온 데이터를 queryClient에 업데이트하거나 다른 작업 수행
+        console.log("data for selected my note: ", data);
+        setSelectedMyNoteInfoForPartialCopy(data);
+      },
+      onError: (error) => {
+        // 오류가 발생했을 때 처리할 작업
+        console.error(error);
+        // 예: 사용자에게 오류를 보여주거나 다른 오류 처리
+      },
+    }
+  );
+
+  const selectMyNote = (myNoteId: any) => {
+    // alert(myNoteId);
+    setmyNoteList([]);
+    mutationForGetSelectedNoteInfoAndPageNumberList.mutate({ myNoteId });
+  };
+
+  const handleBackButtonClick = () => {
+    setSelectedMyNoteInfoForPartialCopy({
+      title_for_my_selected_note: "",
+      page_numbers_for_selected_my_note: [],
+    });
+    queryClient.invalidateQueries(["myNoteInfo", studyNotePk]);
+  };
+
+  useEffect(() => {
+    if (dataForMyNoteAndSelectedNoteForPartialCopy) {
+      setmyNoteList(dataForMyNoteAndSelectedNoteForPartialCopy.my_note_list);
+    }
+  }, [
+    dataForMyNoteAndSelectedNoteForPartialCopy,
+    isOpen,
+    handleBackButtonClick,
+  ]);
 
   return (
     <>
@@ -88,20 +157,135 @@ const ModalButtonForPartialCopyForStudyNote: React.FC<IProps> = ({
               <Box style={{ width: "50%" }}>
                 my note data:
                 <br />
-                {dataForMyNoteAndSelectedNoteForPartialCopy
-                  ? dataForMyNoteAndSelectedNoteForPartialCopy.my_notes.map(
-                      (row: any) => {
-                        return <Box>{row.title}</Box>;
+                {myNoteList.length > 0 &&
+                selectedMyNoteInfoForPartialCopy.title_for_my_selected_note ===
+                  "" ? (
+                  <Table>
+                    <Thead>
+                      <Tr>
+                        <Th>체크</Th>
+                        <Th>제목</Th>
+                        <Th>설명</Th>
+                        <Th>선택</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {myNoteList &&
+                        myNoteList.map((row: any) => (
+                          <Tr key={row.id}>
+                            <Td>
+                              <Checkbox />
+                            </Td>
+                            <Td>{row.title}</Td>
+                            <Td>{row.description}</Td>
+                            <Td>
+                              <Button onClick={() => selectMyNote(row.id)}>
+                                선택
+                              </Button>
+                            </Td>
+                          </Tr>
+                        ))}
+                    </Tbody>
+                  </Table>
+                ) : (
+                  ""
+                )}
+                {selectedMyNoteInfoForPartialCopy.title_for_my_selected_note !==
+                "" ? (
+                  <>
+                    <Box display={"flex"} justifyContent={"space-between"}>
+                      note title:{" "}
+                      {
+                        selectedMyNoteInfoForPartialCopy.title_for_my_selected_note
                       }
-                    )
-                  : ""}
+                      <Button
+                        variant={"outline"}
+                        mr={1}
+                        mb={2}
+                        onClick={handleBackButtonClick}
+                      >
+                        back
+                      </Button>
+                    </Box>
+                    <Box
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(10, 1fr)",
+                      }}
+                    >
+                      {Array.from({ length: 100 }, (_, index) => {
+                        const pageNum = index + 1;
+                        const isSelected =
+                          selectedMyNoteInfoForPartialCopy.page_numbers_for_selected_my_note.includes(
+                            pageNum
+                          );
+                        return (
+                          <Button
+                            key={pageNum}
+                            style={{
+                              border: isSelected
+                                ? "3px solid lightgreen"
+                                : "none",
+                              margin: "2px",
+                            }}
+                          >
+                            {pageNum}
+                          </Button>
+                        );
+                      })}
+                    </Box>
+                  </>
+                ) : (
+                  ""
+                )}
               </Box>
               <Divider orientation="vertical" border={"1px solid black"} />
+
+              <Box
+                height={"100%"}
+                display={"flex"}
+                justifyContent={"center"}
+                alignContent={"center"}
+              >
+                <Button>
+                  <FaArrowCircleLeft /> &nbsp;&nbsp;
+                  <Text>Copy</Text>
+                </Button>
+              </Box>
+
               {/* Right Side */}
               <Box style={{ width: "50%" }}>
-                target note title:
-                <br />
-                {dataForMyNoteAndSelectedNoteForPartialCopy?.target_note_title}
+                <Box>
+                  <Text>target note title:</Text>
+                  {
+                    dataForMyNoteAndSelectedNoteForPartialCopy?.target_note_title
+                  }
+                </Box>
+                <Box
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(10, 1fr)",
+                  }}
+                >
+                  {Array.from({ length: 100 }, (_, index) => {
+                    const pageNum = index + 1;
+                    const isSelected =
+                      dataForMyNoteAndSelectedNoteForPartialCopy?.target_note_page_numbers.includes(
+                        pageNum
+                      );
+                    return (
+                      <Button
+                        key={pageNum}
+                        style={{
+                          border: isSelected ? "3px solid purple" : "none",
+                          margin: "2px",
+                        }}
+                      >
+                        {pageNum}
+                      </Button>
+                    );
+                  })}
+                </Box>
               </Box>
             </HStack>
           </ModalBody>
