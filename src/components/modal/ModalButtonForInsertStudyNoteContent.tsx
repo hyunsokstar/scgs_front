@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import {
   Button,
@@ -131,6 +131,52 @@ function ModalButtonForInsertStudyNoteContent({
     set_note_content_content(value);
   };
 
+  const handleKeyPress = (e: any) => {
+    // Ctrl + Enter를 눌렀을 때 버튼 클릭
+    if (e.ctrlKey && e.key === "Enter") {
+      openModal();
+    }
+
+    if (e.shiftKey && e.key === "Enter") {
+      handleSubmit(handleFormSubmit)();
+      closeModal();
+    }
+
+    if (e.ctrlKey && e.key === "ArrowRight") {
+      const currentURL = window.location.href;
+      const urlParts = currentURL.split("/");
+      const lastPart = urlParts[urlParts.length - 1];
+      const nextNumber = parseInt(lastPart, 10) + 1;
+      const newURL = currentURL.replace(lastPart, nextNumber.toString());
+      // alert(`이동할 URL은 ${newURL} 입니다.`);
+
+      window.location.href = newURL;
+    }
+
+    if (e.ctrlKey && e.key === "ArrowLeft") {
+      const currentURL = window.location.href;
+      const lastSlashIndex = currentURL.lastIndexOf("/");
+      const lastPart = currentURL.substring(lastSlashIndex + 1);
+      const currentNumber = parseInt(lastPart, 10);
+
+      if (!isNaN(currentNumber)) {
+        const nextNumber = currentNumber - 1;
+        const newURL = currentURL.replace(`/${lastPart}`, `/${nextNumber}`);
+        // alert(`이동할 URL은 ${newURL} 입니다.`);
+
+        window.location.href = newURL;
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+
+  // 2244
   return (
     <Box pr={1}>
       <Button
@@ -140,6 +186,7 @@ function ModalButtonForInsertStudyNoteContent({
         border={"1px solid black"}
         size={button_size}
         width={"100%"}
+        onKeyDownCapture={handleKeyPress}
       >
         {button_text}
       </Button>{" "}
@@ -198,6 +245,7 @@ function ModalButtonForInsertStudyNoteContent({
                 placeholder="Enter the title"
                 {...register("title", { required: true })}
                 isInvalid={errors.title != null}
+                autoFocus
               />
             </FormControl>
             <FormControl mt={4}>

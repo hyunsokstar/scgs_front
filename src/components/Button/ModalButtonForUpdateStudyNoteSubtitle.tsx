@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -82,6 +82,24 @@ const ModalButtonForUpdateStudyNoteSubtitle = (props: IProps) => {
     reset();
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.key === "Enter" &&
+        (event.target as HTMLElement).tagName !== "TEXTAREA"
+      ) {
+        event.preventDefault();
+        document.getElementById("submitBtn")?.click();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
       <Button variant="outline" onClick={onOpen}>
@@ -138,6 +156,7 @@ const ModalButtonForUpdateStudyNoteSubtitle = (props: IProps) => {
                   {...register("content", { required: true })}
                   defaultValue={props.content}
                   isInvalid={errors.content != null}
+                  height={"300px"}
                 />
               </FormControl>
               <FormControl mt={4}>

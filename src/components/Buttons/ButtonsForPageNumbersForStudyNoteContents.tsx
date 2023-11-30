@@ -371,7 +371,7 @@ const ButtonsForPageNumbersForStudyNoteContents: React.FC<
         />
         <Spacer />
 
-        {loginUser.username && is_authority_for_note ? (
+        {loginUser.username || is_authority_for_note ? (
           <Box>
             <ToggleButtonForUpdate
               currentState={loginUser.is_edit_mode_for_study_note_contents}
