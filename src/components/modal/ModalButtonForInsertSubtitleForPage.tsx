@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -95,6 +95,26 @@ const ModalButtonForInsertSubtitleForPage = ({
     mutationForCreateSubTitleForNote.mutate(data);
   };
 
+  const handleKeyPress = (e: KeyboardEvent) => {
+    if (e.altKey && e.key === "1") {
+      e.preventDefault(); // 기본 동작 방지
+      const button = document.querySelector(
+        'button[aria-label="subtitle-button"]'
+      );
+      if (button) {
+        (button as HTMLElement).click(); // 버튼 클릭
+      }
+    }
+  };
+
+  // 단축키 2 for shortcut note
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+
   return (
     <>
       <Button
@@ -105,6 +125,7 @@ const ModalButtonForInsertSubtitleForPage = ({
         _hover={{ bgColor: "yellow.100" }}
         width={button_width}
         px={2}
+        aria-label="subtitle-button" // 버튼에 aria-label 추가
       >
         {button_text}
       </Button>
@@ -145,6 +166,7 @@ const ModalButtonForInsertSubtitleForPage = ({
                   placeholder="Enter the title"
                   {...register("title", { required: true })}
                   isInvalid={errors.title != null}
+                  autoFocus
                 />
               </FormControl>
               <FormControl mt={4}>

@@ -101,14 +101,6 @@ const StudyNoteDetail2 = (props: Props) => {
     }
   );
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      mutationForInitializeSavedPageNumForThisNote.mutate({ study_note_pk });
-    }
-    if (note_page_num) {
-      dispatch(initializeCurrentPage(parseInt(note_page_num)));
-    }
-  }, [note_page_num]);
 
   const mutationForDeleteContentsForChecked = useMutation(
     (pageNumbersToEdit: number[]) => {
@@ -321,13 +313,30 @@ const StudyNoteDetail2 = (props: Props) => {
     }
   );
 
+  // useEffect(() => {
+  //   if (response_data_for_api) {
+  //     setAuthorityForWritingNoteContents(
+  //       response_data_for_api?.authority_for_writing_note_contents
+  //     );
+  //   }
+  // }, [response_data_for_api]);
+
   useEffect(() => {
+    if (isLoggedIn) {
+      mutationForInitializeSavedPageNumForThisNote.mutate({ study_note_pk });
+    }
+    if (note_page_num) {
+      dispatch(initializeCurrentPage(parseInt(note_page_num)));
+    }
+
     if (response_data_for_api) {
       setAuthorityForWritingNoteContents(
         response_data_for_api?.authority_for_writing_note_contents
       );
     }
-  }, [response_data_for_api]);
+
+    // alert("위치 확인")
+  }, [note_page_num, response_data_for_api]);
 
   if (logind_for_study_note_content_list) {
     return <Box>"loading.."</Box>;
@@ -338,6 +347,7 @@ const StudyNoteDetail2 = (props: Props) => {
     return <Box>loading..</Box>;
   }
 
+  
   // 2244
   return (
     <Box
@@ -597,7 +607,6 @@ const StudyNoteDetail2 = (props: Props) => {
             flexDirection={"column"}
             border={"0px solid black"}
           >
-            {/* 1122 here */}
             {authorityForWritingNoteContents ? (
               <Box
                 display={"flex"}

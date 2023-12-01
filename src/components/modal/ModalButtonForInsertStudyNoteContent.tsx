@@ -131,6 +131,7 @@ function ModalButtonForInsertStudyNoteContent({
     set_note_content_content(value);
   };
 
+  // 단축키 1 설정 for study note
   const handleKeyPress = (e: any) => {
     // Ctrl + Enter를 눌렀을 때 버튼 클릭
     if (e.ctrlKey && e.key === "Enter") {
@@ -138,19 +139,20 @@ function ModalButtonForInsertStudyNoteContent({
     }
 
     if (e.shiftKey && e.key === "Enter") {
-      handleSubmit(handleFormSubmit)();
+      // handleSubmit(handleFormSubmit)();
+      document.getElementById("submitBtn")?.click(); // Submit 버튼 클릭
       closeModal();
     }
 
     if (e.ctrlKey && e.key === "ArrowRight") {
-      const currentURL = window.location.href;
-      const urlParts = currentURL.split("/");
-      const lastPart = urlParts[urlParts.length - 1];
-      const nextNumber = parseInt(lastPart, 10) + 1;
-      const newURL = currentURL.replace(lastPart, nextNumber.toString());
-      // alert(`이동할 URL은 ${newURL} 입니다.`);
+      let currentUrl: string = window.location.href; // 현재 URL 가져오기
+      let urlParts: string[] = currentUrl.split("/"); // URL을 '/'로 분할하여 배열로 변환
+      let lastSegment: string = urlParts[urlParts.length - 1]; // URL에서 마지막 세그먼트(숫자) 가져오기
+      let incrementedSegment: number = parseInt(lastSegment) + 1; // 숫자에 1 더하기
+      urlParts[urlParts.length - 1] = String(incrementedSegment); // 증가된 숫자를 문자열로 변환하여 배열 업데이트
 
-      window.location.href = newURL;
+      let newUrl: string = urlParts.join("/"); // 배열을 다시 URL로 조합
+      window.location.href = newUrl; // 새로운 URL로 페이지 요청
     }
 
     if (e.ctrlKey && e.key === "ArrowLeft") {
@@ -279,6 +281,7 @@ function ModalButtonForInsertStudyNoteContent({
               onClick={handleSubmit(handleFormSubmit)}
               isLoading={isLoading}
               w={"50%"}
+              id="submitBtn" // Submit 버튼에 ID 부여
             >
               Submit
             </Button>
