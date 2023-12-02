@@ -13,8 +13,6 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   apiFordeleteOneStudyNoteContent,
-  apiForOrderMinusOneForNoteContent,
-  apiForOrderPlusOneForNoteContent,
 } from "../../apis/study_note_api";
 import IconButtonForCopyText from "../IconButtonForCopyText";
 import CheckboxComponentForList from "../CheckBox/CheckboxComponentForList";
@@ -84,43 +82,6 @@ const CardForStudyNoteContent = ({
     }
   };
 
-  const mutation_for_order_plus_1_for_note_content = useMutation(
-    (order_pk: number) => {
-      return apiForOrderPlusOneForNoteContent(order_pk);
-    },
-    {
-      onSettled: () => {},
-      onSuccess: (data) => {
-        console.log("data : ", data);
-
-        window.location.reload();
-
-        toast({
-          title: "order update 성공!",
-          status: "success",
-        });
-      },
-    }
-  );
-
-  const mutation_for_order_minus_1_for_note_content = useMutation(
-    (order_pk: number) => {
-      return apiForOrderMinusOneForNoteContent(order_pk);
-    },
-    {
-      onSettled: () => {},
-      onSuccess: (data) => {
-        console.log("data : ", data);
-
-        window.location.reload();
-
-        toast({
-          title: "order update 성공!",
-          status: "success",
-        });
-      },
-    }
-  );
 
   // 2244
   return (
@@ -137,7 +98,8 @@ const CardForStudyNoteContent = ({
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bgColor={"blue.200"}
+        // bgColor={"blue.200"}
+        bgColor={title.includes("#refer") ? "yellow.200" : "blue.200"}
         px={2}
         py={2}
       >

@@ -134,7 +134,7 @@ function ModalButtonForInsertStudyNoteContent({
   // 단축키 1 설정 for study note
   const handleKeyPress = (e: any) => {
     // Ctrl + Enter를 눌렀을 때 버튼 클릭
-    if (e.ctrlKey && e.key === "Enter") {
+    if (e.altKey && e.key === "2") {
       openModal();
     }
 
@@ -251,7 +251,7 @@ function ModalButtonForInsertStudyNoteContent({
               />
             </FormControl>
             <FormControl mt={4}>
-              <FormLabel>File</FormLabel>
+              <FormLabel>File2</FormLabel>
               <Input
                 type="text"
                 placeholder="Enter the file name"
