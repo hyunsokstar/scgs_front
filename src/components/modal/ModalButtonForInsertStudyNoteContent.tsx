@@ -35,6 +35,9 @@ function ModalButtonForInsertStudyNoteContent({
   refetch,
 }: Props) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [filePath, setFilePath] = useState("");
+  const [titleValue, setTitleValue] = useState(""); // title input의 값을 상태로 관리
+
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -42,6 +45,8 @@ function ModalButtonForInsertStudyNoteContent({
 
   const closeModal = () => {
     setModalIsOpen(false);
+    setFilePath("")
+    setTitleValue("")
   };
 
   const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +54,7 @@ function ModalButtonForInsertStudyNoteContent({
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
     reset,
   } = useForm<StudyNoteContentFormData>({
     mode: "onBlur",
@@ -66,6 +72,9 @@ function ModalButtonForInsertStudyNoteContent({
       },
       onSuccess: (data) => {
         console.log("data : ", data);
+
+        // setFilePath("")
+        // setTitleValue("")
 
         toast({
           title: "welcome back!",
@@ -171,6 +180,23 @@ function ModalButtonForInsertStudyNoteContent({
     }
   };
 
+  const handleSrcButtonClick = () => {
+    const { file } = getValues(); // 'title' 인풋의 값을 가져옴
+
+    const srcIndex = file.indexOf("src");
+
+    if (srcIndex !== -1) {
+      const truncatedPath = file.substring(srcIndex);
+      // alert("filePathFromInput : " + truncatedPath); // 콘솔에 로그 출력
+      setFilePath(truncatedPath)
+    }
+
+  }
+
+  const handleTestButtonClick = () => {
+    setTitleValue("test 및 result");
+  };
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
     return () => {
@@ -241,22 +267,36 @@ function ModalButtonForInsertStudyNoteContent({
 
           <HStack>
             <FormControl>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Title
+                <Button size={"xs"} variant={"outline"} onClick={handleTestButtonClick}>test</Button>
+              </FormLabel>
               <Input
                 type="text"
                 placeholder="Enter the title"
                 {...register("title", { required: true })}
                 isInvalid={errors.title != null}
                 autoFocus
+                value={titleValue}
+                onChange={(e) => setTitleValue(e.target.value)}
               />
             </FormControl>
             <FormControl mt={4}>
-              <FormLabel>File2</FormLabel>
+
+              <FormLabel>File
+                <Button
+                  variant={"outline"}
+                  size={"xs"}
+                  ml={2}
+                  onClick={handleSrcButtonClick}
+                >src</Button>
+              </FormLabel>
               <Input
                 type="text"
                 placeholder="Enter the file name"
                 {...register("file", { required: false })}
                 isInvalid={errors.file != null}
+                value={filePath}
+                onChange={(e) => setFilePath(e.target.value)}
               />
             </FormControl>
           </HStack>

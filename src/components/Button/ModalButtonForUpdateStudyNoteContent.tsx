@@ -35,14 +35,14 @@ interface FormData {
 
 const ModalButtonForUpdateStudyNoteContent: React.FC<
   ModalButtonForSearchStudyNoteContentProps
-> = ({ pk, title, file_name, content , button_text}: any) => {
+> = ({ pk, title, file_name, content, button_text }: any) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const toast = useToast();
-  const { handleSubmit, register, formState } = useForm<FormData>();
+  const { handleSubmit, register, formState, getValues } = useForm<FormData>();
   const [note_content_content, set_note_content_content] =
     useState<string>(content);
-
   const queryClient = useQueryClient();
+  const [filePath, setFilePath] = useState(file_name);
 
 
   useEffect(() => {
@@ -125,6 +125,19 @@ const ModalButtonForUpdateStudyNoteContent: React.FC<
     },
   };
 
+  const handleSrcButtonClick = () => {
+    const { file_name } = getValues(); // 'title' 인풋의 값을 가져옴
+
+    const srcIndex = file_name.indexOf("src");
+
+    if (srcIndex !== -1) {
+      const truncatedPath = file_name.substring(srcIndex);
+      // alert("filePathFromInput : " + truncatedPath); // 콘솔에 로그 출력
+      setFilePath(truncatedPath)
+    }
+
+  }
+
   // 2244
   return (
     <Box>
@@ -175,6 +188,13 @@ const ModalButtonForUpdateStudyNoteContent: React.FC<
                   placeholder="Title"
                   defaultValue={title}
                   {...register("title", { required: true })}
+                  // todo 현 인풋에서 엔터 누르면 submit 하도록
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault(); // 기본 엔터 액션 취소
+                      handleSubmit(onSubmit)();
+                    }
+                  }}
                 />
                 <FormErrorMessage>
                   {formState.errors.title?.message}
@@ -182,12 +202,28 @@ const ModalButtonForUpdateStudyNoteContent: React.FC<
               </FormControl>
 
               <FormControl isInvalid={!!formState.errors.file_name}>
-                <FormLabel htmlFor="file">File</FormLabel>
+                <FormLabel htmlFor="file">File
+                  <Button
+                    variant={"outline"}
+                    size={"xs"}
+                    ml={2}
+                    onClick={handleSrcButtonClick}
+                  >src</Button>
+                </FormLabel>
                 <Input
                   id="file"
                   type="text"
                   defaultValue={file_name}
                   {...register("file_name", { required: true })}
+                  value={filePath}
+                  onChange={(e) => setFilePath(e.target.value)}
+
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault(); // 기본 엔터 액션 취소
+                      handleSubmit(onSubmit)();
+                    }
+                  }}
                 />
                 <FormErrorMessage>
                   {formState.errors.file_name?.message}
@@ -234,8 +270,8 @@ const ModalButtonForUpdateStudyNoteContent: React.FC<
         </Box>
 
         {/* <button onClick={closeModal}>Close Modal</button> */}
-      </Modal>
-    </Box>
+      </Modal >
+    </Box >
   );
 };
 

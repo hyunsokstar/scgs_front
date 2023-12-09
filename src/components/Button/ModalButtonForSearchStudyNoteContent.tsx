@@ -29,8 +29,9 @@ interface IProps {
 const ModalButtonForSearchStudyNoteContent = ({ study_note_pk }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchTerm, setSearchTerm] = useState("");
-  const [contentListForSearchList, setContentListForSearchList] =
-    useState<type_for_content_list_from_search_result[]>([]);
+  const [contentListForSearchList, setContentListForSearchList] = useState<
+    type_for_content_list_from_search_result[]
+  >([]);
 
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -42,7 +43,7 @@ const ModalButtonForSearchStudyNoteContent = ({ study_note_pk }: IProps) => {
         console.log("result : ", result);
 
         setContentListForSearchList(result);
-        setSearchTerm("")
+        setSearchTerm("");
 
         toast({
           status: "success",
@@ -58,20 +59,21 @@ const ModalButtonForSearchStudyNoteContent = ({ study_note_pk }: IProps) => {
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      // 엔터 키가 눌렸을 때 실행할 코드를 여기에 작성하세요.
       console.log("Enter key pressed. Search term:", searchTerm);
       mutationForSearchContentListForStudyNote.mutate({
         study_note_pk,
         searchTerm,
       });
-    //   alert(searchTerm);
     }
   };
 
-  const handleMouseEnter = () => {
-    // InputRightAddon에 호버 이벤트가 발생했을 때 실행할 코드를 여기에 작성하세요.
+  const searchButtonHandler = () => {
     console.log("Mouse entered InputRightAddon");
-    // alert(searchTerm)
+
+    mutationForSearchContentListForStudyNote.mutate({
+      study_note_pk,
+      searchTerm,
+    });
   };
 
   return (
@@ -95,30 +97,31 @@ const ModalButtonForSearchStudyNoteContent = ({ study_note_pk }: IProps) => {
             <InputGroup>
               <Input
                 type="text"
-                placeholder="검색어를 입력하세요."
+                placeholder="검색어를 입력하세요"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
               />
               <InputRightAddon
                 border={"1px solid lightgray"}
-                onMouseEnter={handleMouseEnter}
+                // onMouseEnter={handleMouseEnter}
                 px={0}
               >
                 <IconButton
                   width={"80px"}
                   aria-label="Search"
                   icon={<SearchIcon color="gray.500" />}
-                  onClick={() => console.log("Search button clicked")}
+                  onClick={searchButtonHandler}
                 />
               </InputRightAddon>
             </InputGroup>
             <Box mt={2}>
-                총 {contentListForSearchList.length} 개
+              총 {contentListForSearchList.length} 개
               {contentListForSearchList ? (
                 <TableForSearchResultForStudyNoteContent
+                  study_note_pk={study_note_pk}
                   contentListForSearchList={contentListForSearchList}
-                  onClose = {onClose}
+                  onClose={onClose}
                 />
               ) : (
                 ""

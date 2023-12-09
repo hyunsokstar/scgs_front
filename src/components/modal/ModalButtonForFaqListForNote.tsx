@@ -32,7 +32,7 @@ interface IProps {
   modal_title: string;
   modal_size: string;
   study_note_pk: any;
-  total_count_for_faq_list: number;
+  total_count_for_faq_list?: number;
 }
 
 const ModalButtonFaqForNote: React.FC<IProps> = ({
@@ -124,7 +124,9 @@ const ModalButtonFaqForNote: React.FC<IProps> = ({
         px={2}
       >
         <Text>{button_text}</Text>
-        <Text>({total_count_for_faq_list})</Text>
+        <Text>
+          ({total_count_for_faq_list ? total_count_for_faq_list : ""})
+        </Text>
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} size={modal_size}>

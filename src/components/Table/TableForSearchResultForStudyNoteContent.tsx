@@ -20,11 +20,13 @@ import {
 
 interface IProps {
   contentListForSearchList: type_for_content_list_from_search_result[];
+  study_note_pk: string | number | undefined;
   onClose: () => void;
 }
 
 const TableForSearchResultForStudyNoteContent = ({
   contentListForSearchList,
+  study_note_pk,
   onClose,
 }: IProps) => {
   const dispatch = useDispatch();
@@ -34,9 +36,11 @@ const TableForSearchResultForStudyNoteContent = ({
   }
 
   const clickHandlerForPageMove = (page: number) => {
-    dispatch(go_to_specific_page(page));
-    onClose();
-    // dispatch(moveToNextPage(page + 1));
+    const currentUrl = window.location.href;
+    const baseUrl = currentUrl.split("/study-note/")[0]; // 현재 URL에서 /study-note/ 이전의 부분을 추출
+    const url = `${baseUrl}/study-note/${study_note_pk}/${page}`;
+
+    window.location.href = url;
   };
 
   // 2244

@@ -16,7 +16,7 @@ import {
   Textarea,
   useToast,
   Select,
-  
+
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -93,12 +93,10 @@ function ModalButtonForAddStudyNote({ button_text, button_size }: IProps) {
         <ModalOverlay />
         <ModalContent borderRadius="20px" border={"0px solid black"}>
           <ModalHeader bg="purple.100" color="white">
-            노트 생성
+            새 노트 생성
           </ModalHeader>
           <ModalCloseButton variant="outline" colorScheme="purple" />
           <ModalBody height="80%" overflowY="auto" bg="purple.50">
-            {/* 내용을 여기에 작성 */}
-
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormControl>
                 <FormLabel htmlFor="title">Title</FormLabel>
@@ -129,6 +127,7 @@ function ModalButtonForAddStudyNote({ button_text, button_size }: IProps) {
                 >
                   <option value="frontend">Frontend</option>
                   <option value="backend">Backend</option>
+                  <option value="full-stack">Full Stack</option>
                 </Select>
                 {errors.first_category && (
                   <FormErrorMessage>

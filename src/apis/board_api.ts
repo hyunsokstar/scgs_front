@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { backendApi } from "../apis/common_api";
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
-import {} from "../types/study_note_type";
+import { } from "../types/study_note_type";
 
 const instance = axios.create({
   baseURL: `${backendApi}/api/v1/`,
@@ -30,8 +30,8 @@ export const apiForCreateFaqForBoard = ({ title, content }: any) =>
 export const apiForDeleteForCommentForFaqForBoard = (commentPk: string | number) => {
   console.log("commentPk : ", commentPk);
   return instance
-      .delete(`/board/faq-board/comment/${commentPk}/delete`, {
-        headers: {
+    .delete(`/board/faq-board/comment/${commentPk}/delete`, {
+      headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",
       },
     })
@@ -138,11 +138,6 @@ export const apiForGetFaqListForBoard = ({
       params: { pageNum: pageNum },
     })
     .then((response) => {
-      // response_data = {
-      //     "listForSuggestion": serializer.data,
-      //     "totalCountForSuggestionList": self.totalCountForSuggestionList,
-      //     "perPage": self.perPage,
-      // }
 
       return response.data;
     });

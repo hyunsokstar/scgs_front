@@ -80,7 +80,8 @@ export const getRoomReviews = ({ queryKey }: QueryFunctionContext) => {
 
 export const loginCheck = () =>
   instance.get(`users/login-check`).then((response) => {
-    console.log("response for loginCheck : ", response);
+    // to fix
+    // console.log("response for loginCheck : ", response);
 
     return response.data;
   });

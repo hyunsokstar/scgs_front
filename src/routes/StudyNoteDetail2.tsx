@@ -27,6 +27,7 @@ import {
   Td,
   IconButton,
   Checkbox,
+  Grid,
 } from "@chakra-ui/react";
 import CardForStudyNoteContent from "../components/Card/CardForStudyNoteContent";
 import ButtonsForPageNumbersForStudyNoteContents from "../components/Buttons/ButtonsForPageNumbersForStudyNoteContents";
@@ -52,6 +53,7 @@ import ModalButtonForRegisterErrorReportForNote from "../components/modal/ModalB
 import { EditIcon } from "@chakra-ui/icons";
 import ModalButtonForUpdateCoworkerInfo from "../components/modal/ModalButtonForUpdateCoworkerInfo";
 import MasterCheckBox from "../components/MasterCheckBox/MasterCheckBox";
+import ModalButtonForFaqListForNote from "../components/modal/ModalButtonForFaqListForNote";
 
 interface Props {}
 
@@ -617,7 +619,6 @@ const StudyNoteDetail2 = (props: Props) => {
                 px={2}
                 border={"1px solid green"}
               >
-                
                 <MasterCheckBox
                   checkedIds={checkedValues}
                   setCheckedIds={setCheckedValues}
@@ -634,7 +635,6 @@ const StudyNoteDetail2 = (props: Props) => {
                 >
                   Delete for check
                 </Button>
-                
               </Box>
             ) : (
               ""
@@ -783,6 +783,18 @@ const StudyNoteDetail2 = (props: Props) => {
             ""
           )}
         </Box>
+        <Grid templateColumns="repeat(2, 1fr)" gap={2} p={2}>
+          <ModalButtonForFaqListForNote
+            button_text={"Faq Board"}
+            button_size={"sm"}
+            button_width={"100%"}
+            modal_title={`${response_data_for_api?.note_title} 에 대한 faq`}
+            study_note_pk={study_note_pk}
+            modal_size={""}
+            // total_count_for_faq_list={total_count_for_faq_list}
+          />
+          <Box>{/* 첫 번째 열에 들어갈 내용 */}</Box>
+        </Grid>
       </Box>
     </Box>
 

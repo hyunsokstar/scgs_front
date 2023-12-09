@@ -10,6 +10,8 @@ import {
   Input,
   InputRightElement,
   useToast,
+  Center,
+  Flex,
 } from "@chakra-ui/react";
 import { FaSync } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
@@ -37,7 +39,6 @@ const StudyNotePage = () => {
   const [second_category, set_second_category] = useState("");
   const [searchWords, setSearchWords] = useState("");
   const [studyNoteList, setStudyNoteList] = useState<TypeForNote[]>([]);
-  
 
   const firstCategoryOptions = [
     { value: "frontend", label: "Frontend" },
@@ -147,7 +148,7 @@ const StudyNotePage = () => {
         <InputGroup my={3}>
           <Input
             type="text"
-            placeholder="검색어를 입력하세요"
+            placeholder="검색어를 입력하세요 !"
             value={searchWords}
             onChange={(e) => setSearchWords(e.target.value)}
             onKeyDown={(e) => {
@@ -283,33 +284,53 @@ const StudyNotePage = () => {
           gap={5}
           width={"100%"}
         >
-          {studyNoteList
-            ? studyNoteList.map((note: TypeForNote) => (
-                <CardForStudyNote
-                  pk={note.pk}
-                  key={note.title}
-                  title={note.title}
-                  description={note.description}
-                  writer={note.writer}
-                  note_cowriters={note.note_cowriters}
-                  count_for_note_contents={note.count_for_note_contents}
-                  total_count_for_comments={note.total_count_for_comments}
-                  total_count_for_qna_board={note.total_count_for_qna_board}
-                  total_count_for_faq_list={note.total_count_for_faq_list}
-                  total_count_for_subtitle={note.total_count_for_subtitle}
-                  total_count_for_class_list={note.total_count_for_class_list}
-                  total_count_for_suggestion_list = {note.total_count_for_suggestion_list}
-                  total_count_for_error_report_list = {note.total_count_for_error_report_list}
-                  first_category={note.first_category}
-                  second_category={note.second_category}
-                  studyNoteListRefatch={studyNoteListRefatch}
-                  is_bookmark_for_note = {note.is_bookmark_for_note}
-                  is_like_for_note = {note.is_like_for_note}
-                  total_count_for_bookmark = {note.total_count_for_bookmark}
-                  total_count_for_like = {note.total_count_for_like}
-                />
-              ))
-            : ""}
+          {studyNoteList.length > 0 ? (
+            studyNoteList.map((note: TypeForNote) => (
+              <CardForStudyNote
+                pk={note.pk}
+                key={note.title}
+                title={note.title}
+                description={note.description}
+                writer={note.writer}
+                note_cowriters={note.note_cowriters}
+                count_for_note_contents={note.count_for_note_contents}
+                total_count_for_comments={note.total_count_for_comments}
+                total_count_for_qna_board={note.total_count_for_qna_board}
+                total_count_for_faq_list={note.total_count_for_faq_list}
+                total_count_for_subtitle={note.total_count_for_subtitle}
+                total_count_for_class_list={note.total_count_for_class_list}
+                total_count_for_suggestion_list={
+                  note.total_count_for_suggestion_list
+                }
+                total_count_for_error_report_list={
+                  note.total_count_for_error_report_list
+                }
+                first_category={note.first_category}
+                second_category={note.second_category}
+                studyNoteListRefatch={studyNoteListRefatch}
+                is_bookmark_for_note={note.is_bookmark_for_note}
+                is_like_for_note={note.is_like_for_note}
+                total_count_for_bookmark={note.total_count_for_bookmark}
+                total_count_for_like={note.total_count_for_like}
+              />
+            ))
+          ) : (
+            <Box
+              gridColumn="span 2"
+              textAlign="center"
+              fontSize="3xl"
+              fontWeight="bold"
+              color="black" // 내용의 색상을 원하시는 색으로 변경해주세요
+              py={8} // 상하 여백 조정
+              bg="green.100"
+              borderRadius="xl"
+              height={"50vh"}
+            >
+              <Flex h="full" align="center" justify="center">
+                No notes have been registered yet.
+              </Flex>{" "}
+            </Box>
+          )}
         </Box>
       </Box>
 
