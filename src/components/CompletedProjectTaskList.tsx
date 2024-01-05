@@ -16,10 +16,10 @@ import ButtonsForSelectForTeamTaskListPeriod from "./Button/SelectBoxForSetPerio
 import SlideForCompletedTaskList from "./Slide/SlideForCompletedTaskList";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-interface Props {}
+interface Props { }
 
 // 1122
-function CompletedProjectTaskList({}: Props): ReactElement {
+function CompletedProjectTaskList({ }: Props): ReactElement {
   const queryClient = useQueryClient();
   const toast = useToast();
 
@@ -156,7 +156,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
       return apiForDeleteCompletedTasksForChecked(checkedRowPks);
     },
     {
-      onSettled: () => {},
+      onSettled: () => { },
       onSuccess: (data) => {
         console.log("data : ", data);
         setCheckedRowPks([]);
@@ -188,7 +188,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
         bg={"purple.100"}
         width={"100%"}
         p={3}
-        // border={"5px solid orange"}
+      // border={"5px solid orange"}
       >
         <Box
           display={"flex"}
@@ -241,7 +241,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
             width={["100%", "100%", "40%", "30%"]}
             overflowY={"scroll"}
             maxHeight={["160px", "160px", "160px"]}
-            // border="5px solid green"
+          // border="5px solid green"
           >
             {dataForCompletedTaskList?.writers_info?.map((writer) => (
               <Box key={writer.username} fontSize="lg" color="blue.900">
@@ -293,7 +293,7 @@ function CompletedProjectTaskList({}: Props): ReactElement {
           delete completed tasks for Check
         </Button>
 
-        
+
       </Box>
 
       {/* {is_show_for_mobile ? "모바일" : "큰화면"} */}

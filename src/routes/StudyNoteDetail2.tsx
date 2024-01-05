@@ -55,7 +55,7 @@ import ModalButtonForUpdateCoworkerInfo from "../components/modal/ModalButtonFor
 import MasterCheckBox from "../components/MasterCheckBox/MasterCheckBox";
 import ModalButtonForFaqListForNote from "../components/modal/ModalButtonForFaqListForNote";
 
-interface Props {}
+interface Props { }
 
 // 1122
 const StudyNoteDetail2 = (props: Props) => {
@@ -349,7 +349,7 @@ const StudyNoteDetail2 = (props: Props) => {
     return <Box>loading..</Box>;
   }
 
-  
+
   // 2244
   return (
     <Box
@@ -368,7 +368,7 @@ const StudyNoteDetail2 = (props: Props) => {
           justifyContent={"space-between"}
           alignItems="center"
           my={2}
-          // border={"2px solid blue"}
+        // border={"2px solid blue"}
         >
           <Box
             display={"flex"}
@@ -591,13 +591,13 @@ const StudyNoteDetail2 = (props: Props) => {
         <Box
           pt={30}
           id="card-container"
-          height={"90vh"}
+          height={"100rem"}
           overflowY={"scroll"}
           // mr={1}
           position={"relative"}
           display={"flex"}
           justifyContent={"center"}
-          border={"5px solid gray"}
+          border={"5px solid red"}
         >
           <Box
             position={"absolute"}
@@ -641,7 +641,7 @@ const StudyNoteDetail2 = (props: Props) => {
             )}
 
             {response_data_for_api &&
-            response_data_for_api.data_for_study_note_contents.length ? (
+              response_data_for_api.data_for_study_note_contents.length ? (
               response_data_for_api.data_for_study_note_contents.map(
                 (row: DataForStudyNoteContent, i) => {
                   if (row.content_option === "note_content") {
@@ -791,7 +791,7 @@ const StudyNoteDetail2 = (props: Props) => {
             modal_title={`${response_data_for_api?.note_title} 에 대한 faq`}
             study_note_pk={study_note_pk}
             modal_size={""}
-            // total_count_for_faq_list={total_count_for_faq_list}
+          // total_count_for_faq_list={total_count_for_faq_list}
           />
           <Box>{/* 첫 번째 열에 들어갈 내용 */}</Box>
         </Grid>
